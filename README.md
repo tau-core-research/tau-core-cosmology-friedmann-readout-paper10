@@ -407,6 +407,23 @@ It declares a future `300`-row COSEBIs theory vector for the active
 the vector. It also forbids using KiDS data-vector values, posterior chains,
 residuals, or fit-improvement flags to choose the theory vector.
 
+The first COSEBIs web/path mapping readiness policy is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_web_path_mapping_policy_v1.csv
+data/derived/kids1000_cosebis_web_path_mapping_readiness_v1.csv
+data/derived/kids1000_cosebis_web_path_mapping_readiness_v1_summary.csv
+docs/kids1000_cosebis_web_path_mapping_policy_v1.md
+scripts/build_kids1000_cosebis_web_path_mapping_readiness_v1.py
+scripts/validate_kids1000_cosebis_web_path_mapping_readiness_v1.py
+```
+
+It declares the source-side inputs required before a future `W_WEB_ANISOTROPY`
+and `W_PATH_PROJECTION` COSEBIs theory vector can be built. It does not compute
+a mapping, does not compute a theory vector, and forbids KiDS data-vector values,
+posterior chains, residuals, fit-improvement flags, and post-hoc sky-direction
+selection.
+
 The first tiny pilot product freeze is recorded in:
 
 ```text

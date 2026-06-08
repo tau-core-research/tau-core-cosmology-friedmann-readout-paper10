@@ -141,6 +141,12 @@ requirement for a 300-row theory vector. It does not compute that vector and
 does not use KiDS data-vector values, posterior chains, residuals, or
 fit-improvement information to choose a lensing formula.
 
+The COSEBIs web/path mapping readiness inventory declares only the future
+source-side mapping requirements for the active web/path channels. It does not
+compute a mapping vector or theory vector and does not use KiDS data-vector
+values, posterior chains, residuals, fit-improvement information, or post-hoc
+sky-direction choices.
+
 The pilot frozen-product manifest includes three public distance-side files
 under `data/raw/` only to test acquisition, hashing, covariance-shape checks,
 and local provenance. These files are not sufficient for endpoint scoring

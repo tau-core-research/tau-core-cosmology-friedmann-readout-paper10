@@ -432,6 +432,13 @@ fit-improvement flags to choose the vector. A future endpoint must therefore
 freeze the web/path mapping and null controls before any lensing likelihood is
 allowed.
 
+The web/path mapping gate is also declared but not computed. It requires future
+source-frozen web-environment, lensing-path mask or depth-map, redshift-kernel,
+and null sky-rotation or pair-shuffle products before a COSEBIs theory vector
+can be constructed. The mapping policy explicitly forbids KiDS data-vector
+values, posterior chains, residuals, fit-improvement flags, and post-hoc sky
+direction choices.
+
 Finally, the repository includes a tiny pilot product-freeze manifest in the
 source-manifest data folder. It hash-locks three public distance-side files: a
 cosmic-chronometer \(H(z)\) table, a Pantheon+ distance table, and a Pantheon+

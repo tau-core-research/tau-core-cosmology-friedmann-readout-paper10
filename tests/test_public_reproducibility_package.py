@@ -101,6 +101,9 @@ def test_public_files_exist() -> None:
         "data/source_manifest/kids1000_cosebis_theory_vector_policy_v1.csv",
         "data/derived/kids1000_cosebis_theory_vector_readiness_v1.csv",
         "data/derived/kids1000_cosebis_theory_vector_readiness_v1_summary.csv",
+        "data/source_manifest/kids1000_cosebis_web_path_mapping_policy_v1.csv",
+        "data/derived/kids1000_cosebis_web_path_mapping_readiness_v1.csv",
+        "data/derived/kids1000_cosebis_web_path_mapping_readiness_v1_summary.csv",
         "docs/void_web_source_native_products_v1.md",
         "docs/void_web_source_native_transform_rule_v1.md",
         "docs/pantheon_void_web_source_native_design_matrix_v1.md",
@@ -124,6 +127,7 @@ def test_public_files_exist() -> None:
         "docs/kids1000_cosebis_covariance_subselection_policy_v1.md",
         "docs/kids1000_cosebis_covariance_inversion_policy_v1.md",
         "docs/kids1000_cosebis_theory_vector_policy_v1.md",
+        "docs/kids1000_cosebis_web_path_mapping_policy_v1.md",
         "scripts/acquire_void_web_source_native_products_v1.py",
         "scripts/validate_void_web_source_native_products_v1.py",
         "scripts/build_void_web_source_native_inventory_v1.py",
@@ -167,6 +171,8 @@ def test_public_files_exist() -> None:
         "scripts/validate_kids1000_cosebis_covariance_inversion_readiness_v1.py",
         "scripts/build_kids1000_cosebis_theory_vector_readiness_v1.py",
         "scripts/validate_kids1000_cosebis_theory_vector_readiness_v1.py",
+        "scripts/build_kids1000_cosebis_web_path_mapping_readiness_v1.py",
+        "scripts/validate_kids1000_cosebis_web_path_mapping_readiness_v1.py",
         "scripts/acquire_pilot_products.py",
         "scripts/validate_pilot_products.py",
         "data/source_manifest/pilot_frozen_product_manifest.csv",
@@ -1050,6 +1056,58 @@ def test_kids1000_cosebis_theory_vector_policy_is_declared_not_computed() -> Non
     assert len(rows) == 1
     assert rows[0]["contains_theory_vector"] == "false"
     assert rows[0]["uses_kids_data_vector_values"] == "false"
+
+
+def test_kids1000_cosebis_web_path_mapping_policy_is_declared_not_computed() -> None:
+    with (
+        ROOT / "data/source_manifest/kids1000_cosebis_web_path_mapping_policy_v1.csv"
+    ).open(newline="") as f:
+        policy = list(csv.DictReader(f))[0]
+    assert policy["status"] == "KIDS1000_COSEBIS_WEB_PATH_MAPPING_POLICY_DECLARED_NOT_COMPUTED"
+    assert policy["endpoint_scoring_allowed"] == "false"
+    assert policy["current_mapping_computed"] == "false"
+    assert policy["expected_target_rows"] == "300"
+    assert "W_WEB_ANISOTROPY" in policy["active_channels"]
+    assert "W_PATH_PROJECTION" in policy["active_channels"]
+    for marker in [
+        "source_frozen_web_environment_catalog",
+        "source_frozen_lensing_path_mask_or_depth_map",
+        "source_frozen_redshift_kernel_mapping",
+        "source_frozen_null_sky_rotation_or_pair_shuffle",
+    ]:
+        assert marker in policy["required_future_source_products"]
+    for marker in [
+        "kids_data_vector_values",
+        "posthoc_sky_direction_selection",
+        "posthoc_web_environment_labels",
+    ]:
+        assert marker in policy["forbidden_inputs"]
+    with (
+        ROOT / "data/derived/kids1000_cosebis_web_path_mapping_readiness_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["status"] == "KIDS1000_COSEBIS_WEB_PATH_MAPPING_READINESS_BUILT_NOT_COMPUTED"
+    assert summary["endpoint_scoring_allowed"] == "false"
+    assert summary["current_mapping_computed"] == "false"
+    assert summary["contains_mapping_vector"] == "false"
+    assert summary["contains_theory_vector"] == "false"
+    assert summary["contains_predictions"] == "false"
+    assert summary["contains_residuals"] == "false"
+    assert summary["contains_fit_statistics"] == "false"
+    assert summary["uses_kids_data_vector_values"] == "false"
+    assert summary["uses_posterior_chains"] == "false"
+    assert summary["uses_posthoc_sky_direction_selection"] == "false"
+    assert summary["target_rows"] == "300"
+    assert summary["n_tomographic_pairs"] == "15"
+    assert summary["n_modes_per_pair"] == "20"
+    assert summary["required_future_source_product_count"] == "4"
+    with (
+        ROOT / "data/derived/kids1000_cosebis_web_path_mapping_readiness_v1.csv"
+    ).open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    assert len(rows) == 1
+    assert rows[0]["contains_mapping_vector"] == "false"
+    assert rows[0]["uses_posthoc_sky_direction_selection"] == "false"
 
 
 def test_pilot_products_are_frozen_but_not_endpoint_enabled() -> None:
