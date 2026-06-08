@@ -49,6 +49,12 @@ The product-freeze plan also contains no raw survey products. It records product
 roles and unresolved acquisition policies. Every current product row has
 `endpoint_allowed=false`.
 
+The void/web source-native freeze plan similarly contains no raw void or
+cosmic-web catalogue. It records the preferred candidate routes for replacing
+the proxy `W_void` and `W_web` bases with a future VAST/SDSS DR7 void product
+and an SDSS DR17 MCPM cosmic-web product. Both rows remain selected-not-fetched
+and endpoint disabled.
+
 The pilot frozen-product manifest includes three public distance-side files
 under `data/raw/` only to test acquisition, hashing, covariance-shape checks,
 and local provenance. These files are not sufficient for endpoint scoring

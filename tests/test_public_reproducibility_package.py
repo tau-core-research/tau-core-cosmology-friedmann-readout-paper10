@@ -41,6 +41,9 @@ def test_public_files_exist() -> None:
         "data/source_manifest/paper10_product_freeze_plan.csv",
         "docs/product_freeze_plan.md",
         "scripts/validate_product_freeze_plan.py",
+        "data/source_manifest/void_web_source_native_freeze_plan_v1.csv",
+        "docs/void_web_source_native_freeze_plan_v1.md",
+        "scripts/validate_void_web_source_native_freeze_plan_v1.py",
         "scripts/acquire_pilot_products.py",
         "scripts/validate_pilot_products.py",
         "data/source_manifest/pilot_frozen_product_manifest.csv",
@@ -299,6 +302,36 @@ def test_product_freeze_plan_covers_sources_without_endpoint_permission() -> Non
     for row in product_rows:
         assert row["transform_rule_id"].startswith("TR_")
         assert row["endpoint_forbidden_inputs"]
+
+
+def test_void_web_source_native_freeze_plan_blocks_endpoint_leakage() -> None:
+    with (
+        ROOT / "data/source_manifest/void_web_source_native_freeze_plan_v1.csv"
+    ).open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    assert {row["channel_id"] for row in rows} == {
+        "W_VOID_MATURITY",
+        "W_WEB_ANISOTROPY",
+    }
+    assert {row["freeze_status"] for row in rows} == {
+        "SOURCE_NATIVE_CANDIDATE_SELECTED_NOT_FETCHED"
+    }
+    assert {row["endpoint_scoring_allowed"] for row in rows} == {"false"}
+    forbidden = ";".join(row["endpoint_forbidden_inputs"] for row in rows)
+    for marker in [
+        "distance_residuals",
+        "growth_residuals",
+        "lensing_residuals",
+        "fit_improvement_flags",
+        "posthoc_void_thresholds",
+        "posthoc_environment_labels",
+    ]:
+        assert marker in forbidden
+    for row in rows:
+        assert row["planned_local_path"].startswith("data/raw/")
+        assert row["required_transform_rule"].startswith("TR_")
+        assert row["required_hash"] == "sha256"
+        assert row["null_control"]
 
 
 def test_pilot_products_are_frozen_but_not_endpoint_enabled() -> None:

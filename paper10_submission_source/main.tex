@@ -284,6 +284,16 @@ each source family. In this scaffold every product row has
 data-acquisition step, but still does not contain endpoint data or a
 measurement result.
 
+The next void/web-specific preflight artifact is a source-native freeze plan.
+It selects a preferred source-native void route through a VAST/SDSS DR7 archive
+candidate~\cite{VASTSDSSDR7VoidZenodo} and a preferred web route through the
+SDSS DR17 MCPM cosmic-web catalogue identified by the SDSS value-added
+catalogue page~\cite{SDSSCosmicWebVAC}. This artifact exists because the
+current \(W_{\rm void}+W_{\rm web}\) pilot still uses redshift/scale-factor
+proxy bases. The rows in this new plan are selected but not fetched, and
+endpoint scoring remains disabled; they freeze candidate routes, not numerical
+endpoint inputs.
+
 Finally, the repository includes a tiny pilot product-freeze manifest in the
 source-manifest data folder. It hash-locks three public distance-side files: a
 cosmic-chronometer \(H(z)\) table, a Pantheon+ distance table, and a Pantheon+

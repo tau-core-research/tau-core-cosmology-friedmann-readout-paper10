@@ -130,6 +130,19 @@ docs/product_freeze_plan.md
 It declares the product roles, transformation-rule IDs, covariance/mask policy
 requirements, and `endpoint_allowed=false` status for every planned product.
 
+The next source-native void/web upgrade gate is recorded in:
+
+```text
+data/source_manifest/void_web_source_native_freeze_plan_v1.csv
+docs/void_web_source_native_freeze_plan_v1.md
+scripts/validate_void_web_source_native_freeze_plan_v1.py
+```
+
+It declares one preferred VAST/SDSS DR7 void-catalogue route and one SDSS DR17
+MCPM cosmic-web route for replacing the proxy `W_void` and `W_web` bases. Both
+rows are `SOURCE_NATIVE_CANDIDATE_SELECTED_NOT_FETCHED`, and both keep
+`endpoint_scoring_allowed=false`.
+
 The first tiny pilot product freeze is recorded in:
 
 ```text
