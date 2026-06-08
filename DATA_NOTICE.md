@@ -98,6 +98,12 @@ tarball member names, sizes, and the predeclared COSEBIs member route. It does
 not extract a lensing likelihood, does not score a model, and does not contain
 residuals or fitted Tau parameters.
 
+The COSEBIs HDU inventory reads only FITS metadata and array/table dimensions
+from the selected KiDS product. It records the covariance/data-vector/redshift
+distribution HDU roles and checks covariance positive definiteness, but it does
+not compute lensing predictions, residuals, likelihood values, or posterior
+weights.
+
 The pilot frozen-product manifest includes three public distance-side files
 under `data/raw/` only to test acquisition, hashing, covariance-shape checks,
 and local provenance. These files are not sufficient for endpoint scoring

@@ -77,6 +77,9 @@ def test_public_files_exist() -> None:
         "data/raw/weak_lensing/kids1000/KiDS1000_cosmic_shear_data_release.tgz",
         "data/derived/kids1000_lensing_inventory_v1.csv",
         "data/derived/kids1000_lensing_inventory_v1_summary.csv",
+        "data/source_manifest/kids1000_cosebis_hdu_policy_v1.csv",
+        "data/derived/kids1000_cosebis_hdu_inventory_v1.csv",
+        "data/derived/kids1000_cosebis_hdu_inventory_v1_summary.csv",
         "docs/void_web_source_native_products_v1.md",
         "docs/void_web_source_native_transform_rule_v1.md",
         "docs/pantheon_void_web_source_native_design_matrix_v1.md",
@@ -92,6 +95,7 @@ def test_public_files_exist() -> None:
         "docs/kids1000_lensing_route_v1.md",
         "docs/kids1000_lensing_products_v1.md",
         "docs/kids1000_cosebis_lensing_route_v1.md",
+        "docs/kids1000_cosebis_hdu_policy_v1.md",
         "scripts/acquire_void_web_source_native_products_v1.py",
         "scripts/validate_void_web_source_native_products_v1.py",
         "scripts/build_void_web_source_native_inventory_v1.py",
@@ -119,6 +123,8 @@ def test_public_files_exist() -> None:
         "scripts/validate_kids1000_lensing_products_v1.py",
         "scripts/build_kids1000_lensing_inventory_v1.py",
         "scripts/validate_kids1000_lensing_inventory_v1.py",
+        "scripts/build_kids1000_cosebis_hdu_inventory_v1.py",
+        "scripts/validate_kids1000_cosebis_hdu_inventory_v1.py",
         "scripts/acquire_pilot_products.py",
         "scripts/validate_pilot_products.py",
         "data/source_manifest/pilot_frozen_product_manifest.csv",
@@ -679,6 +685,39 @@ def test_kids1000_lensing_tarball_inventory_and_cosebis_route_are_not_scored() -
     assert len(selected) == 1
     assert selected[0]["member_kind"] == "fits_product"
     assert "cosebis_" in selected[0]["member_name"]
+
+
+def test_kids1000_cosebis_hdu_policy_freezes_roles_without_scoring() -> None:
+    with (ROOT / "data/source_manifest/kids1000_cosebis_hdu_policy_v1.csv").open(
+        newline=""
+    ) as f:
+        policy = list(csv.DictReader(f))[0]
+    assert policy["status"] == "KIDS1000_COSEBIS_HDU_POLICY_FROZEN_NOT_SCORED"
+    assert policy["endpoint_scoring_allowed"] == "false"
+    assert policy["selected_hdu_data_vector"] == "En"
+    assert policy["selected_hdu_covariance"] == "COVMAT"
+    assert policy["selected_hdu_redshift_distribution"] == "NZ_SOURCE"
+    assert "lensing_residuals" in policy["forbidden_inputs"]
+    assert "posthoc_mode_cuts" in policy["forbidden_inputs"]
+    with (ROOT / "data/derived/kids1000_cosebis_hdu_inventory_v1_summary.csv").open(
+        newline=""
+    ) as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["status"] == "KIDS1000_COSEBIS_HDU_INVENTORY_BUILT_NOT_SCORED"
+    assert summary["endpoint_scoring_allowed"] == "false"
+    assert summary["contains_predictions"] == "false"
+    assert summary["contains_residuals"] == "false"
+    assert summary["contains_fit_statistics"] == "false"
+    assert summary["data_vector_rows"] == "300"
+    assert summary["covariance_shape"] == "300x300"
+    assert summary["redshift_distribution_rows"] == "119"
+    assert summary["covariance_positive_definite"] == "true"
+    with (ROOT / "data/derived/kids1000_cosebis_hdu_inventory_v1.csv").open(
+        newline=""
+    ) as f:
+        rows = list(csv.DictReader(f))
+    roles = {row["role"] for row in rows}
+    assert {"data_vector", "covariance", "redshift_distribution"} <= roles
 
 
 def test_pilot_products_are_frozen_but_not_endpoint_enabled() -> None:

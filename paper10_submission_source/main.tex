@@ -371,6 +371,15 @@ fiducial analysis statistic for the cosmic-shear products. The artifact remains
 endpoint disabled: it records file membership and the future COSEBIs route, not
 a lensing likelihood or a Tau Core lensing score.
 
+Finally, the selected COSEBIs FITS product is inspected at the HDU-policy level.
+The frozen roles are \( \mathrm{COVMAT} \) for the \(300\times300\) covariance
+matrix, \(\mathrm{En}\) for the 300-row COSEBIs data-vector table, and
+\(\mathrm{NZ\_SOURCE}\) for the 119-row source redshift-distribution table.
+The covariance is positive definite. This closes the first source-side
+lensing-survival route down to an identifiable statistic and covariance block,
+but it still does not define a theory prediction, likelihood, residual, or Tau
+Core lensing amplitude.
+
 Finally, the repository includes a tiny pilot product-freeze manifest in the
 source-manifest data folder. It hash-locks three public distance-side files: a
 cosmic-chronometer \(H(z)\) table, a Pantheon+ distance table, and a Pantheon+

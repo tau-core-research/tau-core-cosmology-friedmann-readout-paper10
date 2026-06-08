@@ -278,6 +278,22 @@ The inventory finds `28` non-directory tarball members, `3` FITS products, and
 exactly one selected COSEBIs FITS product for the future narrow lensing route.
 This remains endpoint disabled and contains no lensing score.
 
+The first COSEBIs FITS HDU policy is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_hdu_policy_v1.csv
+data/derived/kids1000_cosebis_hdu_inventory_v1.csv
+data/derived/kids1000_cosebis_hdu_inventory_v1_summary.csv
+docs/kids1000_cosebis_hdu_policy_v1.md
+scripts/build_kids1000_cosebis_hdu_inventory_v1.py
+scripts/validate_kids1000_cosebis_hdu_inventory_v1.py
+```
+
+It freezes `COVMAT` as a `300x300` covariance matrix, `En` as a 300-row
+COSEBIs data-vector table, and `NZ_SOURCE` as a 119-row redshift-distribution
+table. The covariance is positive definite. This is still not a lensing
+likelihood and contains no model residuals or fit statistics.
+
 The first tiny pilot product freeze is recorded in:
 
 ```text
