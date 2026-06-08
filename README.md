@@ -375,6 +375,22 @@ rows are retained. It records the contiguous 20-row covariance intervals for
 each of the `15` tomographic pairs, but it does not save an inverse covariance,
 select a likelihood, or compute a lensing score.
 
+The first COSEBIs covariance-inversion readiness policy is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_covariance_inversion_policy_v1.csv
+data/derived/kids1000_cosebis_covariance_inversion_readiness_v1.csv
+data/derived/kids1000_cosebis_covariance_inversion_readiness_v1_summary.csv
+docs/kids1000_cosebis_covariance_inversion_policy_v1.md
+scripts/build_kids1000_cosebis_covariance_inversion_readiness_v1.py
+scripts/validate_kids1000_cosebis_covariance_inversion_readiness_v1.py
+```
+
+It freezes the future numerical solve policy as Cholesky solve on the full
+`300x300` covariance, but explicitly does not execute the solve and does not
+store an inverse covariance. A frozen theory vector and scoring protocol are
+still required before any lensing likelihood can be evaluated.
+
 The first tiny pilot product freeze is recorded in:
 
 ```text

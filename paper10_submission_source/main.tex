@@ -418,6 +418,12 @@ corresponding to each retained tomographic pair, but removes no covariance rows
 or columns. No inverse covariance is saved at this stage. This keeps the lensing
 route source-complete while still below the likelihood endpoint.
 
+The covariance-inversion policy is also frozen, but only as a future numerical
+method: a Cholesky solve against the full covariance, without materializing or
+storing an inverse covariance matrix. The solve is not executed in the present
+artifact because no source-frozen theory vector or lensing scoring protocol has
+yet been declared.
+
 Finally, the repository includes a tiny pilot product-freeze manifest in the
 source-manifest data folder. It hash-locks three public distance-side files: a
 cosmic-chronometer \(H(z)\) table, a Pantheon+ distance table, and a Pantheon+

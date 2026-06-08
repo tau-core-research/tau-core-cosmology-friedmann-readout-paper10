@@ -131,6 +131,11 @@ covariance block and records the 20-row pair blocks. It does not save an inverse
 covariance, does not select a likelihood, and does not remove covariance rows or
 columns using endpoint behavior.
 
+The COSEBIs covariance-inversion readiness inventory freezes only the future
+numerical solve policy: Cholesky solve against the full covariance after a
+theory vector is frozen. It does not execute the solve, does not store an
+inverse covariance, and does not compute predictions, residuals, or likelihoods.
+
 The pilot frozen-product manifest includes three public distance-side files
 under `data/raw/` only to test acquisition, hashing, covariance-shape checks,
 and local provenance. These files are not sufficient for endpoint scoring
