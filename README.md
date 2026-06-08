@@ -689,6 +689,21 @@ It expands the preferred route into a 196-row acquisition manifest. Three mask
 products are currently present locally and 193 remain missing; therefore the
 full-mask source-native route is not accepted for `F_overlap` yet.
 
+The `F_overlap` full-mask batch plan is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_f_overlap_full_mask_batch_plan_policy_v1.csv
+data/derived/kids1000_cosebis_f_overlap_full_mask_batch_plan_v1.csv
+data/derived/kids1000_cosebis_f_overlap_full_mask_batch_plan_v1_summary.csv
+docs/kids1000_cosebis_f_overlap_full_mask_batch_plan_policy_v1.md
+scripts/build_kids1000_cosebis_f_overlap_full_mask_batch_plan_v1.py
+scripts/validate_kids1000_cosebis_f_overlap_full_mask_batch_plan_v1.py
+```
+
+It splits the 193 missing mask products into ten future acquisition batches of
+at most 20 files each. Future large FITS products are assigned to an ignored
+cache directory; only manifests and derived summaries should be committed.
+
 The COSEBIs path-mapping source-preflight ledger is recorded in:
 
 ```text

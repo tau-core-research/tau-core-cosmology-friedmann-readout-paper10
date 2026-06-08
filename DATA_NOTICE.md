@@ -247,6 +247,11 @@ The `F_overlap` full-mask acquisition manifest expands the preferred route into
 locally present and 193 are missing, so the full source-native overlap route is
 still not accepted.
 
+The `F_overlap` full-mask batch plan splits the 193 missing products into ten
+future acquisition batches and assigns future large FITS files to an ignored
+cache directory. No products are fetched by this gate; it only records the
+source-side acquisition plan.
+
 The COSEBIs path-mapping source-preflight ledger combines only source-side
 availability flags. It records that COSEBIs target rows, redshift kernels, and
 the 196-tile route coordinate index, the 300-row design skeleton, and the

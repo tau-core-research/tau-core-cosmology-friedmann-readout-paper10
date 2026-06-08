@@ -158,6 +158,9 @@ def test_public_files_exist() -> None:
         "data/source_manifest/kids1000_cosebis_f_overlap_full_mask_acquisition_policy_v1.csv",
         "data/derived/kids1000_cosebis_f_overlap_full_mask_acquisition_manifest_v1.csv",
         "data/derived/kids1000_cosebis_f_overlap_full_mask_acquisition_manifest_v1_summary.csv",
+        "data/source_manifest/kids1000_cosebis_f_overlap_full_mask_batch_plan_policy_v1.csv",
+        "data/derived/kids1000_cosebis_f_overlap_full_mask_batch_plan_v1.csv",
+        "data/derived/kids1000_cosebis_f_overlap_full_mask_batch_plan_v1_summary.csv",
         "data/source_manifest/kids1000_cosebis_path_mapping_source_preflight_policy_v1.csv",
         "data/derived/kids1000_cosebis_path_mapping_source_preflight_v1.csv",
         "data/derived/kids1000_cosebis_path_mapping_source_preflight_v1_summary.csv",
@@ -207,6 +210,7 @@ def test_public_files_exist() -> None:
         "docs/kids1000_cosebis_f_overlap_rule_shell_policy_v1.md",
         "docs/kids1000_cosebis_f_overlap_source_availability_policy_v1.md",
         "docs/kids1000_cosebis_f_overlap_full_mask_acquisition_policy_v1.md",
+        "docs/kids1000_cosebis_f_overlap_full_mask_batch_plan_policy_v1.md",
         "docs/kids1000_cosebis_path_mapping_source_preflight_policy_v1.md",
         "docs/kids1000_cosebis_null_control_policy_v1.md",
         "docs/kids1000_cosebis_null_control_seed_policy_v1.md",
@@ -287,6 +291,8 @@ def test_public_files_exist() -> None:
         "scripts/validate_kids1000_cosebis_f_overlap_source_availability_v1.py",
         "scripts/build_kids1000_cosebis_f_overlap_full_mask_acquisition_manifest_v1.py",
         "scripts/validate_kids1000_cosebis_f_overlap_full_mask_acquisition_manifest_v1.py",
+        "scripts/build_kids1000_cosebis_f_overlap_full_mask_batch_plan_v1.py",
+        "scripts/validate_kids1000_cosebis_f_overlap_full_mask_batch_plan_v1.py",
         "scripts/build_kids1000_cosebis_path_mapping_source_preflight_v1.py",
         "scripts/validate_kids1000_cosebis_path_mapping_source_preflight_v1.py",
         "scripts/build_kids1000_cosebis_null_control_readiness_v1.py",
@@ -2137,6 +2143,50 @@ def test_kids1000_cosebis_f_overlap_full_mask_acquisition_manifest_preserves_mis
     assert all(row["overlap_rule_computed"] == "false" for row in rows)
     assert all(row["path_mapping_computed"] == "false" for row in rows)
     assert all(row["uses_kids_data_vector_values"] == "false" for row in rows)
+    assert all(row["endpoint_scoring_allowed"] == "false" for row in rows)
+
+
+def test_kids1000_cosebis_f_overlap_full_mask_batch_plan_is_unfetched_and_git_safe() -> None:
+    with (
+        ROOT / "data/source_manifest/kids1000_cosebis_f_overlap_full_mask_batch_plan_policy_v1.csv"
+    ).open(newline="") as f:
+        policy = list(csv.DictReader(f))[0]
+    assert policy["status"] == "KIDS1000_COSEBIS_F_OVERLAP_FULL_MASK_BATCH_PLAN_DECLARED_NOT_FETCHED"
+    assert policy["endpoint_scoring_allowed"] == "false"
+    assert policy["current_batch_plan_declared"] == "true"
+    assert policy["current_external_products_fetched"] == "false"
+    assert policy["current_overlap_rule_computed"] == "false"
+    with (
+        ROOT / "data/derived/kids1000_cosebis_f_overlap_full_mask_batch_plan_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["status"] == "KIDS1000_COSEBIS_F_OVERLAP_FULL_MASK_BATCH_PLAN_BUILT_NOT_FETCHED"
+    assert summary["expected_mask_count"] == "196"
+    assert summary["local_present_count"] == "3"
+    assert summary["missing_mask_count"] == "193"
+    assert summary["batch_size_limit"] == "20"
+    assert summary["batch_count"] == "10"
+    assert summary["cache_git_policy"] == "large_fits_files_ignored_manifest_only_committed"
+    assert summary["batch_fetches_executed"] == "false"
+    assert summary["external_products_fetched"] == "false"
+    assert summary["overlap_rule_computed"] == "false"
+    assert summary["path_mapping_computed"] == "false"
+    assert summary["contains_mapping_vector"] == "false"
+    assert summary["contains_theory_vector"] == "false"
+    assert "full_route_cache_v1/*.fits.gz" in (ROOT / ".gitignore").read_text()
+    with (
+        ROOT / "data/derived/kids1000_cosebis_f_overlap_full_mask_batch_plan_v1.csv"
+    ).open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    sizes = [int(row["batch_size"]) for row in rows]
+    assert len(rows) == 10
+    assert sum(sizes) == 193
+    assert max(sizes) <= 20
+    assert sizes[-1] == 13
+    assert all(row["batch_fetch_executed"] == "false" for row in rows)
+    assert all(row["external_products_fetched"] == "false" for row in rows)
+    assert all(row["overlap_rule_computed"] == "false" for row in rows)
+    assert all(row["path_mapping_computed"] == "false" for row in rows)
     assert all(row["endpoint_scoring_allowed"] == "false" for row in rows)
 
 
