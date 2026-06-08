@@ -34,6 +34,17 @@ PILOT_PRODUCTS = [
         "endpoint_allowed": "false",
         "endpoint_blocker": "covariance_matrix_not_frozen",
     },
+    {
+        "product_id": "PANTHEON_PLUS_LIGHTCURVE_OR_MU",
+        "pilot_product_id": "PANTHEON_PLUS_SH0ES_STAT_SYS_COV",
+        "source_id": "PANTHEON_PLUS_SN",
+        "url": "https://raw.githubusercontent.com/PantheonPlusSH0ES/DataRelease/main/Pantheon+_Data/4_DISTANCES_AND_COVAR/Pantheon+SH0ES_STAT+SYS.cov",
+        "local_path": "data/raw/pantheon_plus/pantheon_plus_mu_covariance/Pantheon+SH0ES_STAT+SYS.cov",
+        "transform_rule_id": "TR_DISTANCE_SN_COV_V1",
+        "freeze_scope": "pilot_distance_covariance_without_mask_policy",
+        "endpoint_allowed": "false",
+        "endpoint_blocker": "mask_and_calibration_policy_not_frozen",
+    },
 ]
 
 
@@ -44,7 +55,7 @@ def download(url: str) -> tuple[int, bytes]:
     )
     with urllib.request.urlopen(request, timeout=60) as response:
         status = getattr(response, "status", 200)
-        payload = response.read(5_000_000)
+        payload = response.read(40_000_000)
     return int(status), payload
 
 

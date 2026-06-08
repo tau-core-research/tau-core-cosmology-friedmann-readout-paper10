@@ -49,7 +49,8 @@ The product-freeze plan also contains no raw survey products. It records product
 roles and unresolved acquisition policies. Every current product row has
 `endpoint_allowed=false`.
 
-The pilot frozen-product manifest includes two small public distance-side files
-under `data/raw/` only to test acquisition, hashing, and local provenance. These
-files are not sufficient for endpoint scoring because their covariance or
-systematics policies are not frozen.
+The pilot frozen-product manifest includes three public distance-side files
+under `data/raw/` only to test acquisition, hashing, covariance-shape checks,
+and local provenance. These files are not sufficient for endpoint scoring
+because the endpoint mask, calibration, nuisance-parameter, or systematics
+policies are not frozen.

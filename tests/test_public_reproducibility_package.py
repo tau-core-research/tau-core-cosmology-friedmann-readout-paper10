@@ -125,7 +125,7 @@ def test_product_freeze_plan_covers_sources_without_endpoint_permission() -> Non
 def test_pilot_products_are_frozen_but_not_endpoint_enabled() -> None:
     with (ROOT / "data/source_manifest/pilot_frozen_product_manifest.csv").open(newline="") as f:
         rows = list(csv.DictReader(f))
-    assert len(rows) == 2
+    assert len(rows) == 3
     assert {row["status"] for row in rows} == {"PILOT_PRODUCT_FETCHED_FROZEN"}
     assert {row["endpoint_allowed"] for row in rows} == {"false"}
     for row in rows:
@@ -134,3 +134,5 @@ def test_pilot_products_are_frozen_but_not_endpoint_enabled() -> None:
         assert int(row["byte_count"]) > 0
         assert row["sha256"]
         assert row["endpoint_blocker"]
+    ids = {row["pilot_product_id"] for row in rows}
+    assert "PANTHEON_PLUS_SH0ES_STAT_SYS_COV" in ids

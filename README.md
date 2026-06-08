@@ -108,8 +108,10 @@ data/source_manifest/pilot_frozen_product_manifest.csv
 docs/pilot_product_freeze_001.md
 ```
 
-It freezes two small public distance-side files for provenance testing only.
-Both remain `endpoint_allowed=false`.
+It freezes three public distance-side files for provenance and covariance-shape
+testing only: one Cosmic Chronometers table, one Pantheon+ distance table, and
+one Pantheon+ STAT+SYS covariance matrix. All rows remain
+`endpoint_allowed=false`.
 
 ## Scope
 

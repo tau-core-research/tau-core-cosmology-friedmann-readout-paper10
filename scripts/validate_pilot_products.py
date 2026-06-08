@@ -11,6 +11,23 @@ PILOT_MANIFEST = ROOT / "data" / "source_manifest" / "pilot_frozen_product_manif
 PRODUCT_PLAN = ROOT / "data" / "source_manifest" / "paper10_product_freeze_plan.csv"
 
 
+def count_data_rows(path: Path) -> int:
+    with path.open() as f:
+        lines = [line for line in f if line.strip()]
+    if not lines:
+        return 0
+    return len(lines) - 1
+
+
+def read_covariance_dimension(path: Path) -> int:
+    with path.open() as f:
+        first = f.readline().strip()
+    try:
+        return int(float(first))
+    except ValueError as exc:
+        raise SystemExit(f"invalid covariance dimension in {path}") from exc
+
+
 def main() -> None:
     if not PILOT_MANIFEST.exists():
         raise SystemExit("pilot frozen product manifest is missing")
@@ -50,6 +67,22 @@ def main() -> None:
 
     if failures:
         raise SystemExit("pilot product validation failed: " + "; ".join(failures))
+
+    rows_by_id = {row["pilot_product_id"]: row for row in rows}
+    required_pantheon = {
+        "PANTHEON_PLUS_SH0ES_DAT",
+        "PANTHEON_PLUS_SH0ES_STAT_SYS_COV",
+    }
+    if required_pantheon <= rows_by_id.keys():
+        data_path = ROOT / rows_by_id["PANTHEON_PLUS_SH0ES_DAT"]["local_path"]
+        cov_path = ROOT / rows_by_id["PANTHEON_PLUS_SH0ES_STAT_SYS_COV"]["local_path"]
+        data_rows = count_data_rows(data_path)
+        cov_dim = read_covariance_dimension(cov_path)
+        if data_rows != cov_dim:
+            raise SystemExit(
+                "Pantheon+ table/covariance mismatch: "
+                f"data_rows={data_rows} cov_dim={cov_dim}"
+            )
 
     print(
         "PAPER10_PILOT_PRODUCTS_VALIDATED "

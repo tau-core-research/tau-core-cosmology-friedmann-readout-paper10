@@ -283,11 +283,13 @@ data-acquisition step, but still does not contain endpoint data or a
 measurement result.
 
 Finally, the repository includes a tiny pilot product-freeze manifest in the
-source-manifest data folder. It hash-locks two small public distance-side files:
-a cosmic-chronometer \(H(z)\) table and a Pantheon+ distance table. These are
-provenance tests, not endpoint inputs. Both rows keep the endpoint permission
-flag set to false, because the associated covariance, systematics, and mask
-policies are not yet frozen.
+source-manifest data folder. It hash-locks three public distance-side files: a
+cosmic-chronometer \(H(z)\) table, a Pantheon+ distance table, and a Pantheon+
+STAT+SYS covariance matrix. These are provenance and covariance-shape tests,
+not endpoint inputs. The Pantheon+ table and covariance dimensions are checked
+during reproduction. All pilot rows keep the endpoint permission flag set to
+false, because the associated mask, calibration, nuisance-parameter, and
+systematics policies are not yet frozen.
 
 \section{CMB role}
 
