@@ -87,6 +87,11 @@ late-time void/web basis functions are zero at a conservative high-redshift
 safety floor and at a recombination-scale proxy. Passing this check is a
 known-limit sanity condition, not CMB evidence.
 
+The KiDS-1000 lensing route check contains only HTTP HEAD metadata for a public
+cosmic-shear tarball. It does not fetch, store, or redistribute KiDS lensing
+catalogues, data vectors, covariance matrices, posterior chains, or likelihood
+files. It is a source-route/provenance gate only.
+
 The pilot frozen-product manifest includes three public distance-side files
 under `data/raw/` only to test acquisition, hashing, covariance-shape checks,
 and local provenance. These files are not sufficient for endpoint scoring

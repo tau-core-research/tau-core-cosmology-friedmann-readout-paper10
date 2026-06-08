@@ -240,6 +240,23 @@ conservative safety floor (`z=10`) and at a recombination proxy (`z=1089.92`).
 The check passes, so the current late-time pilots do not directly modify the
 early-universe safety regime.
 
+The first lensing route-freeze check is recorded in:
+
+```text
+data/source_manifest/kids1000_lensing_route_v1.csv
+data/derived/kids1000_lensing_route_v1_head.csv
+data/derived/kids1000_lensing_route_v1_summary.csv
+docs/kids1000_lensing_route_v1.md
+scripts/check_kids1000_lensing_route_v1.py
+scripts/validate_kids1000_lensing_route_v1.py
+```
+
+This checks the public KiDS-1000 cosmic-shear tarball route by HEAD metadata
+only. It does not fetch or redistribute the lensing tarball and contains no
+data vector, covariance matrix, posterior chain, lensing residual, or fit
+statistic. Lensing scoring remains forbidden until tomographic-bin policy,
+statistic choice, covariance block, mask policy, and readout policy are frozen.
+
 The first tiny pilot product freeze is recorded in:
 
 ```text
