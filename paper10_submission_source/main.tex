@@ -388,6 +388,15 @@ future lensing pilot, but still does not choose a mode cut, invert the
 covariance, define a theory vector, or score any \(W_{\rm web}\) or
 \(W_{\rm path}\) lensing residual.
 
+The covariance block is separately audited as a readiness object. The selected
+\(\mathrm{COVMAT}\) matrix is checked for shape, symmetry, positive diagonal,
+eigenvalue spectrum, condition number, and Cholesky readiness. No inverse
+covariance is saved, and no likelihood is evaluated. Thus the lensing route now
+has a source-side statistic, data-vector structure, and covariance-readiness
+record, but it remains below the endpoint threshold until the theory-vector,
+mode-cut, mask, tomographic-weight, and covariance-inversion policies are
+predeclared.
+
 Finally, the repository includes a tiny pilot product-freeze manifest in the
 source-manifest data folder. It hash-locks three public distance-side files: a
 cosmic-chronometer \(H(z)\) table, a Pantheon+ distance table, and a Pantheon+

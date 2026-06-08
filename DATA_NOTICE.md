@@ -110,6 +110,12 @@ tomographic bin pairs, 20 modes per pair, and 300 rows. It does not define a
 theory vector, covariance inverse, mode cut, residual, likelihood, posterior
 weight, or fitted Tau parameter.
 
+The COSEBIs covariance-readiness inventory records only numerical diagnostics
+of the selected `COVMAT` block: shape, symmetry, diagonal positivity, eigenvalue
+range, condition number, and Cholesky readiness. It does not store an inverse
+covariance and does not compute lensing predictions, residuals, likelihood
+values, posterior weights, or fitted Tau parameters.
+
 The pilot frozen-product manifest includes three public distance-side files
 under `data/raw/` only to test acquisition, hashing, covariance-shape checks,
 and local provenance. These files are not sufficient for endpoint scoring

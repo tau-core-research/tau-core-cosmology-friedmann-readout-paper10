@@ -311,6 +311,22 @@ rows. This is a source-side structure freeze only: it does not set a mode cut,
 does not invert the covariance, and does not compute lensing predictions,
 residuals, likelihood values, or Tau Core amplitudes.
 
+The COSEBIs covariance-readiness policy is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_covariance_readiness_policy_v1.csv
+data/derived/kids1000_cosebis_covariance_readiness_v1.csv
+data/derived/kids1000_cosebis_covariance_readiness_v1_summary.csv
+docs/kids1000_cosebis_covariance_readiness_policy_v1.md
+scripts/build_kids1000_cosebis_covariance_readiness_v1.py
+scripts/validate_kids1000_cosebis_covariance_readiness_v1.py
+```
+
+It records only source-side covariance diagnostics for the selected `COVMAT`
+block: shape, symmetry error, diagonal positivity, eigenvalue range, condition
+number, and Cholesky readiness. It does not save an inverse covariance, select a
+data-vector mask, choose a theory vector, or compute lensing scores.
+
 The first tiny pilot product freeze is recorded in:
 
 ```text

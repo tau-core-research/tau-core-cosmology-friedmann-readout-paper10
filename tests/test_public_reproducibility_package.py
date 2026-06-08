@@ -83,6 +83,9 @@ def test_public_files_exist() -> None:
         "data/source_manifest/kids1000_cosebis_tomographic_mode_policy_v1.csv",
         "data/derived/kids1000_cosebis_tomographic_mode_inventory_v1.csv",
         "data/derived/kids1000_cosebis_tomographic_mode_inventory_v1_summary.csv",
+        "data/source_manifest/kids1000_cosebis_covariance_readiness_policy_v1.csv",
+        "data/derived/kids1000_cosebis_covariance_readiness_v1.csv",
+        "data/derived/kids1000_cosebis_covariance_readiness_v1_summary.csv",
         "docs/void_web_source_native_products_v1.md",
         "docs/void_web_source_native_transform_rule_v1.md",
         "docs/pantheon_void_web_source_native_design_matrix_v1.md",
@@ -100,6 +103,7 @@ def test_public_files_exist() -> None:
         "docs/kids1000_cosebis_lensing_route_v1.md",
         "docs/kids1000_cosebis_hdu_policy_v1.md",
         "docs/kids1000_cosebis_tomographic_mode_policy_v1.md",
+        "docs/kids1000_cosebis_covariance_readiness_policy_v1.md",
         "scripts/acquire_void_web_source_native_products_v1.py",
         "scripts/validate_void_web_source_native_products_v1.py",
         "scripts/build_void_web_source_native_inventory_v1.py",
@@ -131,6 +135,8 @@ def test_public_files_exist() -> None:
         "scripts/validate_kids1000_cosebis_hdu_inventory_v1.py",
         "scripts/build_kids1000_cosebis_tomographic_mode_inventory_v1.py",
         "scripts/validate_kids1000_cosebis_tomographic_mode_inventory_v1.py",
+        "scripts/build_kids1000_cosebis_covariance_readiness_v1.py",
+        "scripts/validate_kids1000_cosebis_covariance_readiness_v1.py",
         "scripts/acquire_pilot_products.py",
         "scripts/validate_pilot_products.py",
         "data/source_manifest/pilot_frozen_product_manifest.csv",
@@ -778,6 +784,42 @@ def test_kids1000_cosebis_tomographic_mode_policy_freezes_structure_without_scor
     assert {row["rows_for_pair"] for row in rows} == {"20"}
     assert {row["modes"] for row in rows} == {";".join(str(value) for value in range(1, 21))}
     assert {row["endpoint_scoring_allowed"] for row in rows} == {"false"}
+
+
+def test_kids1000_cosebis_covariance_readiness_is_not_an_inverse_likelihood() -> None:
+    with (
+        ROOT / "data/source_manifest/kids1000_cosebis_covariance_readiness_policy_v1.csv"
+    ).open(newline="") as f:
+        policy = list(csv.DictReader(f))[0]
+    assert policy["status"] == "KIDS1000_COSEBIS_COVARIANCE_READINESS_POLICY_FROZEN_NOT_SCORED"
+    assert policy["endpoint_scoring_allowed"] == "false"
+    assert policy["current_inversion_allowed"] == "false"
+    assert policy["selected_hdu_covariance"] == "COVMAT"
+    assert "lensing_residuals" in policy["forbidden_inputs"]
+    assert "posthoc_mode_cuts" in policy["forbidden_inputs"]
+    with (
+        ROOT / "data/derived/kids1000_cosebis_covariance_readiness_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["status"] == "KIDS1000_COSEBIS_COVARIANCE_READINESS_BUILT_NOT_SCORED"
+    assert summary["endpoint_scoring_allowed"] == "false"
+    assert summary["current_inversion_allowed"] == "false"
+    assert summary["inverse_saved"] == "false"
+    assert summary["contains_predictions"] == "false"
+    assert summary["contains_residuals"] == "false"
+    assert summary["contains_fit_statistics"] == "false"
+    assert summary["covariance_shape"] == "300x300"
+    assert summary["positive_diagonal"] == "true"
+    assert summary["positive_definite"] == "true"
+    assert summary["cholesky_ready"] == "true"
+    assert float(summary["min_eigenvalue"]) > 0.0
+    assert float(summary["condition_number"]) > 1.0
+    with (
+        ROOT / "data/derived/kids1000_cosebis_covariance_readiness_v1.csv"
+    ).open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    assert len(rows) == 1
+    assert rows[0]["inverse_saved"] == "false"
 
 
 def test_pilot_products_are_frozen_but_not_endpoint_enabled() -> None:
