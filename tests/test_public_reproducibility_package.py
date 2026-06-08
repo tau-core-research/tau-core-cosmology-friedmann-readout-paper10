@@ -42,6 +42,12 @@ def test_public_files_exist() -> None:
         "data/source_manifest/pantheon_scoring_protocol_v1.csv",
         "docs/pantheon_scoring_protocol_v1.md",
         "scripts/validate_pantheon_scoring_protocol_v1.py",
+        "data/source_manifest/pantheon_design_matrix_protocol_v1.csv",
+        "data/derived/pantheon_design_matrix_v1.csv",
+        "data/derived/pantheon_design_matrix_v1_summary.csv",
+        "docs/pantheon_design_matrix_v1.md",
+        "scripts/build_pantheon_design_matrix_v1.py",
+        "scripts/validate_pantheon_design_matrix_v1.py",
     ]
     for rel in required:
         assert (ROOT / rel).exists(), rel
@@ -176,3 +182,21 @@ def test_pantheon_scoring_protocol_is_frozen_not_run() -> None:
     assert "distance_residuals" in forbidden
     assert "posthoc_row_masks" in forbidden
     assert not (ROOT / "data/derived/pantheon_scoring_v1_results.csv").exists()
+
+
+def test_pantheon_design_matrix_is_not_a_score_artifact() -> None:
+    with (ROOT / "data/derived/pantheon_design_matrix_v1_summary.csv").open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    assert len(rows) == 1
+    row = rows[0]
+    assert row["status"] == "DESIGN_MATRIX_FROZEN_NOT_SCORED"
+    assert row["endpoint_scoring_allowed"] == "false"
+    assert int(row["rows"]) == 1371
+    assert row["contains_model_predictions"] == "false"
+    assert row["contains_residuals"] == "false"
+    assert row["contains_fit_statistics"] == "false"
+    with (ROOT / "data/derived/pantheon_design_matrix_v1.csv").open(newline="") as f:
+        columns = set(csv.DictReader(f).fieldnames or [])
+    assert "model_mu" not in columns
+    assert "distance_residuals" not in columns
+    assert "chi2" not in columns

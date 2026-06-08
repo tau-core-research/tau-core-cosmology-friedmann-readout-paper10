@@ -134,6 +134,18 @@ docs/pantheon_scoring_protocol_v1.md
 It declares the baseline family, nuisance policy, Tau activation family, and
 required future controls. It also keeps `scoring_allowed=false`.
 
+The dry-run design matrix is frozen here:
+
+```text
+data/source_manifest/pantheon_design_matrix_protocol_v1.csv
+data/derived/pantheon_design_matrix_v1.csv
+data/derived/pantheon_design_matrix_v1_summary.csv
+docs/pantheon_design_matrix_v1.md
+```
+
+It contains source and activation-basis columns only. It contains no model
+predictions, residuals, likelihoods, or fit statistics.
+
 ## Scope
 
 This is a protocol scaffold and branch-opening paper package. The next

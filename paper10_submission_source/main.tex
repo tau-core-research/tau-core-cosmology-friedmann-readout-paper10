@@ -309,6 +309,13 @@ required future controls include baseline-only, Tau-shell, shuffled-activation,
 and wrong-activation branches. The validation script fails if score artifacts
 are present in the current scaffold.
 
+As a final dry-run layer, the repository builds a Pantheon+ design matrix with
+1371 rows. It contains source columns, the scale factor \(a=1/(1+z_{\rm HD})\),
+and fixed activation-family basis columns. It deliberately excludes model
+predictions, residuals, likelihoods, \(\chi^2\) values, fit-improvement flags,
+and fitted Tau parameters. This verifies that the frozen scope and scoring
+grammar can produce numerical inputs without crossing into endpoint scoring.
+
 \section{CMB role}
 
 CMB maps are relevant, but not as the first standalone discovery target. The

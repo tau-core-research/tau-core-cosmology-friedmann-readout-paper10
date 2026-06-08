@@ -61,3 +61,7 @@ fitted Tau parameters, or endpoint scores.
 
 The Pantheon+ scoring protocol manifest is also non-data. It freezes the future
 scoring grammar and explicitly forbids score artifacts in the current scaffold.
+
+The Pantheon+ design matrix is a dry-run input matrix. It contains source
+columns and fixed basis columns only; it does not contain predictions,
+residuals, likelihoods, or fitted parameters.
