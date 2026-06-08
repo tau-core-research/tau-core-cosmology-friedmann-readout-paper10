@@ -610,6 +610,22 @@ footprint/row-tile overlap, full path/depth support, web/environment support,
 and normalization after nonzero factors exist. It fetches no products and
 computes no weights.
 
+The source-product route candidate manifest is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_path_source_product_route_policy_v1.csv
+data/derived/kids1000_cosebis_path_source_product_route_manifest_v1.csv
+data/derived/kids1000_cosebis_path_source_product_route_manifest_v1_summary.csv
+docs/kids1000_cosebis_path_source_product_route_policy_v1.md
+scripts/build_kids1000_cosebis_path_source_product_route_manifest_v1.py
+scripts/validate_kids1000_cosebis_path_source_product_route_manifest_v1.py
+```
+
+It declares ten source-product routes for the next source-gathering step:
+two already-supported locks, five blocker-resolving candidates, and three
+control/deferred routes. It still fetches no external products, computes no
+factor values, and creates no path mapping or score.
+
 The COSEBIs path-mapping source-preflight ledger is recorded in:
 
 ```text

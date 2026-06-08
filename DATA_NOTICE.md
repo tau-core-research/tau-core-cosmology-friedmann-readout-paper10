@@ -216,6 +216,12 @@ no factor values. It identifies footprint overlap, full path/depth support,
 web/environment support, and later normalization as the current direct blockers
 for numeric path weights.
 
+The COSEBIs source-product route candidate manifest declares which source
+routes can later be used to resolve those blockers. It records locked existing
+ingredients, blocker-resolution candidates, and controls/deferred routes, but
+fetches no products and computes no factor values, path mapping, theory vector,
+prediction, residual, likelihood value, or endpoint score.
+
 The COSEBIs path-mapping source-preflight ledger combines only source-side
 availability flags. It records that COSEBIs target rows, redshift kernels, and
 the 196-tile route coordinate index, the 300-row design skeleton, and the

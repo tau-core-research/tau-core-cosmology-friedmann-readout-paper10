@@ -499,6 +499,11 @@ path/depth factor beyond the three-mask shell, attach a source-frozen
 web-environment catalogue or predeclared null-web control, and define the
 normalization only after nonzero source factors exist. No products are fetched
 and no factors are evaluated in this gate.
+We also freeze a source-product route manifest for the next step. It lists ten
+candidate routes: two already-supported locks, five blocker-resolution
+candidates, and three control/deferred routes. This manifest is still
+source-side only: it fetches no products, computes no factor values, and does
+not construct a path mapping or score.
 The resulting source-preflight ledger is correspondingly mixed: the 300 COSEBIs
 target rows, five-bin redshift-kernel inventory, 196-tile route-coordinate
 index, 300-row design skeleton, and 58{,}800-row domain skeleton are available;
