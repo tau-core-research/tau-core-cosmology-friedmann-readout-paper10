@@ -528,6 +528,24 @@ three frozen masks. This is a pre-mapping source observable only: mask-value
 semantics are not interpreted as a physical lensing path weight, no COSEBIs-row
 mapping is constructed, and no theory vector or endpoint score is computed.
 
+The COSEBIs path-mapping source-preflight ledger is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_path_mapping_source_preflight_policy_v1.csv
+data/derived/kids1000_cosebis_path_mapping_source_preflight_v1.csv
+data/derived/kids1000_cosebis_path_mapping_source_preflight_v1_summary.csv
+docs/kids1000_cosebis_path_mapping_source_preflight_policy_v1.md
+scripts/build_kids1000_cosebis_path_mapping_source_preflight_v1.py
+scripts/validate_kids1000_cosebis_path_mapping_source_preflight_v1.py
+```
+
+It summarizes the current source-side state for a future path-aware COSEBIs
+endpoint: target row structure and redshift kernels are available, the
+three-mask observable shell is only partial, the full path/depth footprint
+mapping and web-environment catalogue remain missing, and null controls are
+declared but not executed. It contains no mapping vector, theory vector,
+predictions, residuals, or scores.
+
 The first COSEBIs null-control readiness policy is recorded in:
 
 ```text

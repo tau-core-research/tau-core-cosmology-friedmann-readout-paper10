@@ -187,6 +187,13 @@ as a physical path weight in this gate. The shell contains no COSEBIs-row
 mapping vector, no theory vector, no predictions, no residuals, no likelihood
 values, and no endpoint score.
 
+The COSEBIs path-mapping source-preflight ledger combines only source-side
+availability flags. It records that COSEBIs target rows and redshift kernels are
+available, that the three-mask observable shell is partial, and that a full
+source-frozen path/depth footprint mapping and web-environment catalogue remain
+missing. It does not compute a mapping vector, theory vector, predictions,
+residuals, likelihood values, or endpoint score.
+
 The COSEBIs null-control readiness inventory declares four future control
 families but does not execute them. It contains no control scores, predictions,
 residuals, fit statistics, posterior-chain use, or data-vector-value use.

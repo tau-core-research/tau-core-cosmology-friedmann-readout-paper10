@@ -1,0 +1,89 @@
+#!/usr/bin/env python3
+from __future__ import annotations
+
+import csv
+from pathlib import Path
+
+
+ROOT = Path(__file__).resolve().parents[1]
+POLICY = ROOT / "data" / "source_manifest" / "kids1000_cosebis_path_mapping_source_preflight_policy_v1.csv"
+OUT = ROOT / "data" / "derived" / "kids1000_cosebis_path_mapping_source_preflight_v1.csv"
+SUMMARY = ROOT / "data" / "derived" / "kids1000_cosebis_path_mapping_source_preflight_v1_summary.csv"
+
+
+def main() -> None:
+    with POLICY.open(newline="") as f:
+        policy = list(csv.DictReader(f))[0]
+    with OUT.open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    with SUMMARY.open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+
+    if policy["status"] != "KIDS1000_COSEBIS_PATH_MAPPING_SOURCE_PREFLIGHT_POLICY_FROZEN_NOT_SCORED":
+        raise SystemExit("unexpected path-mapping source preflight policy status")
+    if policy["endpoint_scoring_allowed"] != "false":
+        raise SystemExit("path-mapping source preflight policy must remain endpoint disabled")
+    if len(rows) != 6:
+        raise SystemExit("path-mapping source preflight must contain six components")
+    if summary["status"] != "KIDS1000_COSEBIS_PATH_MAPPING_SOURCE_PREFLIGHT_BUILT_NOT_MAPPED":
+        raise SystemExit("unexpected path-mapping source preflight summary status")
+    if summary["component_count"] != "6":
+        raise SystemExit("unexpected component count")
+    if summary["target_rows"] != "300":
+        raise SystemExit("path-mapping source preflight must target 300 COSEBIs rows")
+    if summary["mapping_ready"] != "false":
+        raise SystemExit("mapping must not be marked ready")
+    expected_states = {
+        "cosebis_target_rows": "available",
+        "redshift_kernel_inventory": "available",
+        "mask_observable_shell": "partial_available",
+        "full_path_depth_footprint_mapping": "missing",
+        "web_environment_catalog": "missing",
+        "null_control_seed_policy": "declared_not_executed",
+    }
+    by_component = {row["component_id"]: row for row in rows}
+    if set(by_component) != set(expected_states):
+        raise SystemExit("unexpected path-mapping source preflight components")
+    for component_id, expected_state in expected_states.items():
+        if by_component[component_id]["source_state"] != expected_state:
+            raise SystemExit(f"unexpected state for {component_id}")
+    if by_component["mask_observable_shell"]["source_count"] != "3":
+        raise SystemExit("mask observable shell should carry only the three-mask subset")
+    if by_component["redshift_kernel_inventory"]["source_count"] != "5":
+        raise SystemExit("redshift kernel inventory should carry five source bins")
+    if by_component["full_path_depth_footprint_mapping"]["blocking_status"] != "blocking":
+        raise SystemExit("full path/depth footprint mapping must remain blocking")
+    if by_component["web_environment_catalog"]["blocking_status"] != "blocking":
+        raise SystemExit("web environment catalogue must remain blocking")
+    for key in [
+        "path_mapping_computed",
+        "contains_mapping_vector",
+        "contains_theory_vector",
+        "contains_predictions",
+        "contains_residuals",
+        "contains_fit_statistics",
+        "uses_kids_data_vector_values",
+        "uses_posterior_chains",
+        "uses_posthoc_sky_direction_selection",
+        "endpoint_scoring_allowed",
+    ]:
+        if summary[key] != "false":
+            raise SystemExit(f"summary must keep {key}=false")
+        if any(row[key] != "false" for row in rows):
+            raise SystemExit(f"rows must keep {key}=false")
+    for marker in [
+        "kids_data_vector_values",
+        "posterior_chains",
+        "lensing_residuals",
+        "fit_improvement_flags",
+        "posthoc_path_projection_labels",
+        "posthoc_sky_direction_selection",
+        "posthoc_web_environment_labels",
+    ]:
+        if marker not in policy["forbidden_inputs"]:
+            raise SystemExit(f"missing forbidden input: {marker}")
+    print("PAPER10_KIDS1000_COSEBIS_PATH_MAPPING_SOURCE_PREFLIGHT_V1_VALIDATED endpoint_allowed=false")
+
+
+if __name__ == "__main__":
+    main()
