@@ -52,12 +52,15 @@ The first explicit multi-channel readout manifest is:
 data/source_manifest/cosmology_channel_manifest_v1.csv
 data/source_manifest/cosmology_activation_rule_manifest_v1.csv
 data/source_manifest/cosmology_activation_parameter_freeze_plan_v1.csv
+data/source_manifest/cosmology_source_grounding_gate_v1.csv
 docs/cosmology_channel_manifest_v1.md
 docs/cosmology_activation_rule_manifest_v1.md
 docs/cosmology_activation_parameter_freeze_plan_v1.md
+docs/cosmology_source_grounding_gate_v1.md
 scripts/validate_cosmology_channel_manifest_v1.py
 scripts/validate_cosmology_activation_rule_manifest_v1.py
 scripts/validate_cosmology_activation_parameter_freeze_plan_v1.py
+scripts/validate_cosmology_source_grounding_gate_v1.py
 ```
 
 It declares the four source-frozen channel families `W_void`, `W_web`,
@@ -66,8 +69,10 @@ fields, activation-rule IDs, null controls, and projection-induction roles.
 The activation-rule manifest adds non-numeric formula shells and source-only
 parameter-freeze policies. The parameter-freeze plan declares how scales such
 as `S_void_star`, `Q_env_star`, `P_lens_star`, and `Delta_clock_star` may later
-be frozen from source-native data. Every row remains
-`endpoint_scoring_allowed=false`.
+be frozen from source-native data. The source-grounding manifest then freezes
+the four missing projection-induction checks for each channel: activation,
+quotient survival, closure stability, and 4D readout survival. Every row
+remains `endpoint_scoring_allowed=false`.
 
 ## Reproduce
 

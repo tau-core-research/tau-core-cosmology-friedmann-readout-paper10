@@ -133,6 +133,20 @@ Paper 10 does not prove this gate. It uses the gate to state what would be
 needed for `W_void`, `W_web`, `W_path`, or `W_time` to become Tau-side induced
 cosmological closure sources rather than source-frozen proxies.
 
+The gate is now tracked explicitly in:
+
+```text
+data/source_manifest/cosmology_source_grounding_gate_v1.csv
+docs/cosmology_source_grounding_gate_v1.md
+```
+
+All rows remain:
+
+```text
+SOURCE_GROUNDING_GATE_DECLARED_NOT_DERIVED
+endpoint_scoring_allowed=false
+```
+
 ## Audit Rule
 
 Each channel must be selected from independent source-side observables before

@@ -75,3 +75,10 @@ The companion non-numeric activation-rule layer is:
 data/source_manifest/cosmology_activation_rule_manifest_v1.csv
 docs/cosmology_activation_rule_manifest_v1.md
 ```
+
+The source-grounding gate ledger is:
+
+```text
+data/source_manifest/cosmology_source_grounding_gate_v1.csv
+docs/cosmology_source_grounding_gate_v1.md
+```

@@ -22,6 +22,7 @@ def main() -> None:
     run(["python", "scripts/validate_cosmology_channel_manifest_v1.py"])
     run(["python", "scripts/validate_cosmology_activation_rule_manifest_v1.py"])
     run(["python", "scripts/validate_cosmology_activation_parameter_freeze_plan_v1.py"])
+    run(["python", "scripts/validate_cosmology_source_grounding_gate_v1.py"])
     run(["python", "scripts/validate_cached_source_pages.py"])
     run(["python", "scripts/validate_product_freeze_plan.py"])
     run(["python", "scripts/validate_pilot_products.py"])

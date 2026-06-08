@@ -478,6 +478,36 @@ it only to state the next derivation target: the future \(W_{\rm void}\),
 \(W_{\rm web}\), \(W_{\rm path}\), and \(W_{\rm time}\) channels should
 eventually be induced closure sources, not merely source-frozen proxies.
 
+For this reason the repository now includes a separate source-grounding gate
+ledger, \url{cosmology_source_grounding_gate_v1.csv}.  The ledger
+keeps all four channels below derivation status and records which future test
+would be needed at each projection-induction step.  Table~\ref{tab:source-grounding-gate}
+summarizes the current status.
+
+\begin{table}[t]
+\centering
+\caption{Source-grounding gate status for the four cosmological channels.  All
+rows are claim-boundary rows, not endpoint permissions.}
+\label{tab:source-grounding-gate}
+\footnotesize
+\begin{tabular}{p{0.21\linewidth}p{0.29\linewidth}p{0.36\linewidth}}
+\toprule
+Channel & Activation candidate & Current source-grounding status\\
+\midrule
+\(W_{\rm void}\) & void maturity from void radius, filling, and redshift
+statistics & gate declared; quotient, closure, and 4D readout survival not yet
+derived\\
+\(W_{\rm web}\) & web anisotropy from environment and filament/sheet/node labels
+& gate declared; growth/lensing closure survival not yet derived\\
+\(W_{\rm path}\) & observer/path load from lensing weights, masks, and
+null-geodesic-bundle environment & gate declared; path-dependent distance,
+lensing, and CMB-safety readout survival not yet derived\\
+\(W_{\rm time}\) & clock/readout consistency from chronometer, BAO, and CMB
+summary inputs & gate declared; time-readout closure source not yet derived\\
+\bottomrule
+\end{tabular}
+\end{table}
+
 This multi-channel form also clarifies why the first full-covariance Pantheon+
 pilot is expected to be weak. Pantheon+ distance moduli alone mainly test a
 smooth distance readout. They do not directly freeze void maturity, cosmic-web
@@ -542,7 +572,8 @@ judged not by \(w(z)\ne -1\) alone, but by the joint pattern
 
 The next paper-grade step is a public-data pilot analysis with DESI/SNe/\(H(z)\)
 distance data, void and web source proxies, growth/lensing blocks, CMB safety
-checks, and predeclared null controls.
+checks, predeclared null controls, and an explicit source-grounding gate ledger
+for any channel promoted beyond proxy status.
 
 \bibliographystyle{plain}
 \bibliography{refs}
