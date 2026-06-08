@@ -63,6 +63,11 @@ endpoint scoring inputs. The derived inventory records only source-side row
 counts and hashes; it contains no residuals, no fitted parameters, and no
 endpoint scores.
 
+The source-native void/web design matrix maps those products into fixed
+`W_void` and `W_web` basis columns without using endpoint residuals. The
+subsequent full-covariance pilot is explicitly labelled non-validation and
+should not be read as empirical evidence for a cosmological signal.
+
 The pilot frozen-product manifest includes three public distance-side files
 under `data/raw/` only to test acquisition, hashing, covariance-shape checks,
 and local provenance. These files are not sufficient for endpoint scoring

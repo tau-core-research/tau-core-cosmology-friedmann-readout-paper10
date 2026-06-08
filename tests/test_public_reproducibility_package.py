@@ -46,11 +46,24 @@ def test_public_files_exist() -> None:
         "scripts/validate_void_web_source_native_freeze_plan_v1.py",
         "data/source_manifest/void_web_source_native_frozen_products_v1.csv",
         "data/derived/void_web_source_native_inventory_v1.csv",
+        "data/source_manifest/void_web_source_native_transform_rule_v1.csv",
+        "data/derived/pantheon_void_web_source_native_design_matrix_v1.csv",
+        "data/derived/pantheon_void_web_source_native_design_matrix_v1_summary.csv",
+        "data/source_manifest/pantheon_void_web_source_native_full_cov_pilot_v1.csv",
+        "data/derived/pantheon_void_web_source_native_full_cov_pilot_v1_summary.csv",
+        "data/derived/pantheon_void_web_source_native_full_cov_pilot_v1_grid.csv",
         "docs/void_web_source_native_products_v1.md",
+        "docs/void_web_source_native_transform_rule_v1.md",
+        "docs/pantheon_void_web_source_native_design_matrix_v1.md",
+        "docs/pantheon_void_web_source_native_full_cov_pilot_v1.md",
         "scripts/acquire_void_web_source_native_products_v1.py",
         "scripts/validate_void_web_source_native_products_v1.py",
         "scripts/build_void_web_source_native_inventory_v1.py",
         "scripts/validate_void_web_source_native_inventory_v1.py",
+        "scripts/build_pantheon_void_web_source_native_design_matrix_v1.py",
+        "scripts/validate_pantheon_void_web_source_native_design_matrix_v1.py",
+        "scripts/run_pantheon_void_web_source_native_full_cov_pilot_v1.py",
+        "scripts/validate_pantheon_void_web_source_native_full_cov_pilot_v1.py",
         "scripts/acquire_pilot_products.py",
         "scripts/validate_pilot_products.py",
         "data/source_manifest/pilot_frozen_product_manifest.csv",
@@ -373,6 +386,58 @@ def test_void_web_source_native_inventory_is_not_endpoint_scoring() -> None:
     assert {row["endpoint_allowed"] for row in rows} == {"false"}
     assert {row["contains_endpoint_scores"] for row in rows} == {"false"}
     assert {row["contains_residuals"] for row in rows} == {"false"}
+
+
+def test_void_web_source_native_design_matrix_is_not_endpoint_scoring() -> None:
+    with (
+        ROOT / "data/derived/pantheon_void_web_source_native_design_matrix_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["status"] == "TRANSFORM_RULE_FROZEN_NOT_SCORED"
+    assert summary["endpoint_scoring_allowed"] == "false"
+    assert int(summary["rows"]) == 1371
+    assert int(summary["void_nonzero_rows"]) == 426
+    assert int(summary["web_nonzero_rows"]) == 1333
+    assert summary["contains_model_predictions"] == "false"
+    assert summary["contains_residuals"] == "false"
+    assert summary["contains_fit_statistics"] == "false"
+    with (ROOT / "data/derived/pantheon_void_web_source_native_design_matrix_v1.csv").open(
+        newline=""
+    ) as f:
+        columns = set(csv.DictReader(f).fieldnames or [])
+    assert "W_void_source_native_basis" in columns
+    assert "W_web_source_native_basis" in columns
+    assert "distance_residuals" not in columns
+    assert "chi2" not in columns
+
+
+def test_void_web_source_native_full_cov_pilot_is_nonvalidation() -> None:
+    with (
+        ROOT / "data/source_manifest/pantheon_void_web_source_native_full_cov_pilot_v1.csv"
+    ).open(newline="") as f:
+        manifest = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/pantheon_void_web_source_native_full_cov_pilot_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert manifest["status"] == "VOID_WEB_SOURCE_NATIVE_FULL_COV_PILOT_NOT_VALIDATION"
+    assert summary["status"] == manifest["status"]
+    assert summary["claim_boundary"] == "void_web_source_native_full_cov_pilot_not_validation"
+    assert "W_PATH_PROJECTION" in summary["disabled_channels"]
+    assert "W_TIME_READOUT" in summary["disabled_channels"]
+    forbidden = manifest["forbidden_inputs"]
+    assert "distance_residuals" in forbidden
+    assert "posthoc_environment_labels" in forbidden
+    for key in [
+        "baseline_best_chi2",
+        "source_native_void_web_best_chi2",
+        "source_native_void_only_best_chi2",
+        "source_native_web_only_best_chi2",
+        "wrong_web_sign_best_chi2",
+        "shuffled_best_chi2",
+        "delta_aic_source_native_void_web_minus_baseline",
+    ]:
+        float(summary[key])
 
 
 def test_pilot_products_are_frozen_but_not_endpoint_enabled() -> None:

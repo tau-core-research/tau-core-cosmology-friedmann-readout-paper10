@@ -161,6 +161,26 @@ file. The inventory records `void_rows=1163` and
 `fits_bintable_rows=638820`. These products remain endpoint-disabled because
 the catalogue-to-scoring transform is not yet frozen.
 
+The first source-native transform and distance-only pilot are recorded in:
+
+```text
+data/source_manifest/void_web_source_native_transform_rule_v1.csv
+data/derived/pantheon_void_web_source_native_design_matrix_v1.csv
+data/source_manifest/pantheon_void_web_source_native_full_cov_pilot_v1.csv
+data/derived/pantheon_void_web_source_native_full_cov_pilot_v1_summary.csv
+docs/void_web_source_native_transform_rule_v1.md
+docs/pantheon_void_web_source_native_design_matrix_v1.md
+docs/pantheon_void_web_source_native_full_cov_pilot_v1.md
+```
+
+The design matrix is not scored and contains no residuals. The separate
+full-covariance pilot remains
+`VOID_WEB_SOURCE_NATIVE_FULL_COV_PILOT_NOT_VALIDATION`. It improves
+Pantheon-only full-covariance chi-square by `0.508` relative to the
+flat-Lambda-CDM branch, but loses under AIC by `3.492`, and the deterministic
+shuffled control can still do better in chi-square. This is therefore a useful
+source-native pipeline step, not a detection or endpoint validation.
+
 The first tiny pilot product freeze is recorded in:
 
 ```text

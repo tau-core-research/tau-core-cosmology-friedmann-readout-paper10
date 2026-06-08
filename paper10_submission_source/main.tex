@@ -304,6 +304,17 @@ but still not endpoint inputs: the transform from catalogue quantities to
 \(W_{\rm void}\) and \(W_{\rm web}\) scoring columns remains a future frozen
 gate.
 
+The current package then adds that first transform as a separate non-scoring
+design-matrix step. It maps the maximal-void catalogue to a cumulative
+source-only void load and the MCPM catalogue to a redshift-binned web-density
+load. In the retained Pantheon+ scope, 426 rows receive nonzero void support and
+1333 rows receive nonzero web support. A separate source-native full-covariance
+pilot can score these columns under the same distance-only grammar. It improves
+\(\chi^2\) by \(0.508\) relative to the flat-\(\Lambda\)CDM branch, but loses
+under AIC by \(3.49\), and the deterministic shuffled control still reaches a
+lower \(\chi^2\). This is therefore a useful source-native pipeline step, not a
+void/web detection and not endpoint validation.
+
 Finally, the repository includes a tiny pilot product-freeze manifest in the
 source-manifest data folder. It hash-locks three public distance-side files: a
 cosmic-chronometer \(H(z)\) table, a Pantheon+ distance table, and a Pantheon+
