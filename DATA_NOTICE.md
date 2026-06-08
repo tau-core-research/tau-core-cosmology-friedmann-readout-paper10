@@ -180,6 +180,13 @@ a path mapping vector, does not connect mask pixels to COSEBIs rows, does not
 build a theory vector, and does not use KiDS data-vector values or endpoint
 residuals.
 
+The KiDS DR4 path-mask observable shell uses only that three-product subset
+inventory. It records filename-derived tile coordinates and a centered
+zero-fraction shell across the three masks. The mask values are not interpreted
+as a physical path weight in this gate. The shell contains no COSEBIs-row
+mapping vector, no theory vector, no predictions, no residuals, no likelihood
+values, and no endpoint score.
+
 The COSEBIs null-control readiness inventory declares four future control
 families but does not execute them. It contains no control scores, predictions,
 residuals, fit statistics, posterior-chain use, or data-vector-value use.

@@ -511,6 +511,23 @@ basic finite/nonzero pixel summaries. The three masks total `15,091,583` bytes
 and `1,323,000,000` image pixels. This still does not compute a path map, does
 not connect masks to COSEBIs rows, and does not score a lensing model.
 
+The first source-only mask observable shell is recorded in:
+
+```text
+data/source_manifest/kids1000_dr4_path_mask_observable_shell_policy_v1.csv
+data/derived/kids1000_dr4_path_mask_observable_shell_v1.csv
+data/derived/kids1000_dr4_path_mask_observable_shell_v1_summary.csv
+docs/kids1000_dr4_path_mask_observable_shell_policy_v1.md
+scripts/build_kids1000_dr4_path_mask_observable_shell_v1.py
+scripts/validate_kids1000_dr4_path_mask_observable_shell_v1.py
+```
+
+It parses only filename tile coordinates and the subset inventory's nonzero
+mask-pixel fractions, then builds a centered zero-fraction shell across the
+three frozen masks. This is a pre-mapping source observable only: mask-value
+semantics are not interpreted as a physical lensing path weight, no COSEBIs-row
+mapping is constructed, and no theory vector or endpoint score is computed.
+
 The first COSEBIs null-control readiness policy is recorded in:
 
 ```text

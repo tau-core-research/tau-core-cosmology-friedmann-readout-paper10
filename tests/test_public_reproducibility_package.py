@@ -125,6 +125,9 @@ def test_public_files_exist() -> None:
         "data/raw/weak_lensing/kids1000_path_masks/mask_subset_v1/KiDS_DR4.1_5.6_-28.2_ugriZYJHKs_msk.fits.gz",
         "data/derived/kids1000_dr4_path_mask_subset_inventory_v1.csv",
         "data/derived/kids1000_dr4_path_mask_subset_inventory_v1_summary.csv",
+        "data/source_manifest/kids1000_dr4_path_mask_observable_shell_policy_v1.csv",
+        "data/derived/kids1000_dr4_path_mask_observable_shell_v1.csv",
+        "data/derived/kids1000_dr4_path_mask_observable_shell_v1_summary.csv",
         "data/source_manifest/kids1000_cosebis_null_control_policy_v1.csv",
         "data/derived/kids1000_cosebis_null_control_readiness_v1.csv",
         "data/derived/kids1000_cosebis_null_control_readiness_v1_summary.csv",
@@ -160,6 +163,7 @@ def test_public_files_exist() -> None:
         "docs/kids1000_dr4_path_mask_route_scripts_v1.md",
         "docs/kids1000_dr4_path_mask_head_sample_policy_v1.md",
         "docs/kids1000_dr4_path_mask_subset_policy_v1.md",
+        "docs/kids1000_dr4_path_mask_observable_shell_policy_v1.md",
         "docs/kids1000_cosebis_null_control_policy_v1.md",
         "docs/kids1000_cosebis_null_control_seed_policy_v1.md",
         "scripts/acquire_void_web_source_native_products_v1.py",
@@ -217,6 +221,8 @@ def test_public_files_exist() -> None:
         "scripts/validate_kids1000_dr4_path_mask_head_sample_v1.py",
         "scripts/acquire_kids1000_dr4_path_mask_subset_v1.py",
         "scripts/validate_kids1000_dr4_path_mask_subset_v1.py",
+        "scripts/build_kids1000_dr4_path_mask_observable_shell_v1.py",
+        "scripts/validate_kids1000_dr4_path_mask_observable_shell_v1.py",
         "scripts/build_kids1000_cosebis_null_control_readiness_v1.py",
         "scripts/validate_kids1000_cosebis_null_control_readiness_v1.py",
         "scripts/build_kids1000_cosebis_null_control_seed_inventory_v1.py",
@@ -1420,6 +1426,72 @@ def test_kids1000_dr4_path_mask_subset_is_inventory_not_mapping() -> None:
         assert row["uses_kids_data_vector_values"] == "false"
         assert float(row["finite_fraction"]) > 0.0
         assert float(row["nonzero_finite_fraction"]) > 0.0
+
+
+def test_kids1000_dr4_path_mask_observable_shell_is_source_only() -> None:
+    with (
+        ROOT / "data/source_manifest/kids1000_dr4_path_mask_observable_shell_policy_v1.csv"
+    ).open(newline="") as f:
+        policy = list(csv.DictReader(f))[0]
+    assert policy["status"] == "KIDS_DR4_PATH_MASK_OBSERVABLE_SHELL_POLICY_FROZEN_NOT_SCORED"
+    assert policy["endpoint_scoring_allowed"] == "false"
+    assert policy["observable_rule"] == "filename_tile_coordinate_plus_centered_zero_fraction_shell"
+    assert policy["expected_subset_count"] == "3"
+    assert policy["current_source_observable_shell_computed"] == "true"
+    assert policy["current_path_mapping_computed"] == "false"
+    assert policy["current_theory_vector_computed"] == "false"
+    assert policy["current_endpoint_scores_computed"] == "false"
+    for marker in [
+        "kids_data_vector_values",
+        "posterior_chains",
+        "lensing_residuals",
+        "fit_improvement_flags",
+        "posthoc_path_projection_labels",
+        "posthoc_mask_subset_selection",
+    ]:
+        assert marker in policy["forbidden_inputs"]
+    with (
+        ROOT / "data/derived/kids1000_dr4_path_mask_observable_shell_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["status"] == "KIDS_DR4_PATH_MASK_OBSERVABLE_SHELL_BUILT_SOURCE_ONLY_NOT_SCORED"
+    assert summary["subset_count"] == "3"
+    assert summary["endpoint_scoring_allowed"] == "false"
+    assert summary["source_observable_shell_computed"] == "true"
+    assert summary["path_mapping_computed"] == "false"
+    assert summary["contains_mapping_vector"] == "false"
+    assert summary["contains_theory_vector"] == "false"
+    assert summary["contains_predictions"] == "false"
+    assert summary["contains_residuals"] == "false"
+    assert summary["uses_kids_data_vector_values"] == "false"
+    assert float(summary["min_source_mask_shell_value"]) < 0.0
+    assert float(summary["max_source_mask_shell_value"]) > 0.0
+    with (
+        ROOT / "data/derived/kids1000_dr4_path_mask_observable_shell_v1.csv"
+    ).open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    assert [row["sample_index_zero_based"] for row in rows] == ["0", "98", "195"]
+    assert [(row["tile_ra_deg_filename_proxy"], row["tile_dec_deg_filename_proxy"]) for row in rows] == [
+        ("0.0", "-28.2"),
+        ("206.0", "1.5"),
+        ("5.6", "-28.2"),
+    ]
+    shell_values = [float(row["source_mask_shell_value"]) for row in rows]
+    assert min(shell_values) < 0.0
+    assert max(shell_values) > 0.0
+    assert all(abs(value) <= 1.0 for value in shell_values)
+    for row in rows:
+        assert row["source_shell_scope"] == "three_mask_subset_only"
+        assert row["tile_coordinate_source"] == "KiDS_mask_filename_token"
+        assert row["mask_value_semantics_interpreted"] == "false"
+        assert row["source_observable_shell_computed"] == "true"
+        assert row["path_mapping_computed"] == "false"
+        assert row["contains_mapping_vector"] == "false"
+        assert row["contains_theory_vector"] == "false"
+        assert row["contains_predictions"] == "false"
+        assert row["contains_residuals"] == "false"
+        assert row["uses_kids_data_vector_values"] == "false"
+        assert 0.0 <= float(row["mask_zero_finite_fraction_proxy"]) <= 1.0
 
 
 def test_kids1000_cosebis_null_control_policy_is_declared_not_run() -> None:
