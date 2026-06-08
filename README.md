@@ -458,6 +458,25 @@ tokens in the statistic FITS products are classified as statistic-product
 metadata, not as survey path maps. The future `W_PATH_PROJECTION` route
 therefore remains blocked on an external source-frozen path/mask/depth product.
 
+The first official KiDS DR4 path-mask route-script freeze is recorded in:
+
+```text
+data/source_manifest/kids1000_dr4_path_mask_route_scripts_v1.csv
+data/raw/weak_lensing/kids1000_path_masks/kids_dr4.1_9band_msk_wget.sh
+data/raw/weak_lensing/kids1000_path_masks/kids_dr4.0_9band_msk_wget.sh
+data/raw/weak_lensing/kids1000_path_masks/kids_dr4.0_msk_wget.sh
+data/derived/kids1000_dr4_path_mask_route_scripts_inventory_v1.csv
+data/derived/kids1000_dr4_path_mask_route_scripts_inventory_v1_summary.csv
+docs/kids1000_dr4_path_mask_route_scripts_v1.md
+scripts/acquire_kids1000_dr4_path_mask_route_scripts_v1.py
+scripts/validate_kids1000_dr4_path_mask_route_scripts_v1.py
+```
+
+This freezes the small official KiDS DR4 wget scripts that point to external
+mask FITS products. The preferred DR4.1 9-band route script lists `196` mask
+products. Those mask FITS files are not downloaded in this package, and no
+path-mapping vector or COSEBIs theory vector is computed.
+
 The first COSEBIs null-control readiness policy is recorded in:
 
 ```text

@@ -160,6 +160,13 @@ or equivalent path-load product. The inventory contains no path mapping vector,
 theory vector, predictions, residuals, likelihood values, posterior-chain use,
 fit statistics, or data-vector-value use.
 
+The KiDS DR4 path-mask route-script inventory freezes only the official wget
+scripts that list external mask FITS products. The preferred DR4.1 9-band route
+script lists 196 mask products, but those mask FITS products are not downloaded
+or redistributed here. The inventory contains no parsed mask map, no path
+mapping vector, no theory vector, no predictions, no residuals, no likelihood
+values, and no data-vector-value use.
+
 The COSEBIs null-control readiness inventory declares four future control
 families but does not execute them. It contains no control scores, predictions,
 residuals, fit statistics, posterior-chain use, or data-vector-value use.

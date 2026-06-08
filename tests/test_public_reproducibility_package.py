@@ -110,6 +110,12 @@ def test_public_files_exist() -> None:
         "data/source_manifest/kids1000_cosebis_path_mask_depth_gap_policy_v1.csv",
         "data/derived/kids1000_cosebis_path_mask_depth_gap_inventory_v1.csv",
         "data/derived/kids1000_cosebis_path_mask_depth_gap_inventory_v1_summary.csv",
+        "data/source_manifest/kids1000_dr4_path_mask_route_scripts_v1.csv",
+        "data/raw/weak_lensing/kids1000_path_masks/kids_dr4.1_9band_msk_wget.sh",
+        "data/raw/weak_lensing/kids1000_path_masks/kids_dr4.0_9band_msk_wget.sh",
+        "data/raw/weak_lensing/kids1000_path_masks/kids_dr4.0_msk_wget.sh",
+        "data/derived/kids1000_dr4_path_mask_route_scripts_inventory_v1.csv",
+        "data/derived/kids1000_dr4_path_mask_route_scripts_inventory_v1_summary.csv",
         "data/source_manifest/kids1000_cosebis_null_control_policy_v1.csv",
         "data/derived/kids1000_cosebis_null_control_readiness_v1.csv",
         "data/derived/kids1000_cosebis_null_control_readiness_v1_summary.csv",
@@ -142,6 +148,7 @@ def test_public_files_exist() -> None:
         "docs/kids1000_cosebis_web_path_mapping_policy_v1.md",
         "docs/kids1000_cosebis_redshift_kernel_policy_v1.md",
         "docs/kids1000_cosebis_path_mask_depth_gap_policy_v1.md",
+        "docs/kids1000_dr4_path_mask_route_scripts_v1.md",
         "docs/kids1000_cosebis_null_control_policy_v1.md",
         "docs/kids1000_cosebis_null_control_seed_policy_v1.md",
         "scripts/acquire_void_web_source_native_products_v1.py",
@@ -193,6 +200,8 @@ def test_public_files_exist() -> None:
         "scripts/validate_kids1000_cosebis_redshift_kernel_inventory_v1.py",
         "scripts/build_kids1000_cosebis_path_mask_depth_gap_inventory_v1.py",
         "scripts/validate_kids1000_cosebis_path_mask_depth_gap_inventory_v1.py",
+        "scripts/acquire_kids1000_dr4_path_mask_route_scripts_v1.py",
+        "scripts/validate_kids1000_dr4_path_mask_route_scripts_v1.py",
         "scripts/build_kids1000_cosebis_null_control_readiness_v1.py",
         "scripts/validate_kids1000_cosebis_null_control_readiness_v1.py",
         "scripts/build_kids1000_cosebis_null_control_seed_inventory_v1.py",
@@ -1236,6 +1245,55 @@ def test_kids1000_cosebis_path_mask_depth_gap_keeps_path_route_blocked() -> None
         assert row["contains_predictions"] == "false"
         assert row["contains_residuals"] == "false"
         assert row["uses_kids_data_vector_values"] == "false"
+
+
+def test_kids1000_dr4_path_mask_route_scripts_are_frozen_not_scored() -> None:
+    with (
+        ROOT / "data/source_manifest/kids1000_dr4_path_mask_route_scripts_v1.csv"
+    ).open(newline="") as f:
+        manifest = list(csv.DictReader(f))
+    assert len(manifest) == 3
+    assert {row["endpoint_allowed"] for row in manifest} == {"false"}
+    assert "KIDS_DR41_9BAND_MASK_WGET_SCRIPT" in {row["route_id"] for row in manifest}
+    for row in manifest:
+        for marker in [
+            "posthoc_path_projection_labels",
+            "posthoc_sky_direction_selection",
+            "kids_data_vector_values",
+        ]:
+            assert marker in row["forbidden_inputs"]
+    with (
+        ROOT / "data/derived/kids1000_dr4_path_mask_route_scripts_inventory_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["status"] == "KIDS_DR4_PATH_MASK_ROUTE_SCRIPTS_FETCHED_FROZEN_NOT_SCORED"
+    assert summary["endpoint_scoring_allowed"] == "false"
+    assert summary["preferred_route_id"] == "KIDS_DR41_9BAND_MASK_WGET_SCRIPT"
+    assert summary["preferred_listed_mask_product_count"] == "196"
+    assert summary["mask_products_fetched"] == "false"
+    assert summary["path_mapping_computed"] == "false"
+    assert summary["contains_mapping_vector"] == "false"
+    assert summary["contains_theory_vector"] == "false"
+    assert summary["contains_predictions"] == "false"
+    assert summary["contains_residuals"] == "false"
+    assert summary["uses_kids_data_vector_values"] == "false"
+    with (
+        ROOT / "data/derived/kids1000_dr4_path_mask_route_scripts_inventory_v1.csv"
+    ).open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    assert len(rows) == 3
+    assert {row["route_id"] for row in rows} == {row["route_id"] for row in manifest}
+    for row in rows:
+        assert row["status"] == "KIDS_DR4_PATH_MASK_ROUTE_SCRIPT_FETCHED_FROZEN"
+        assert row["http_status"] == "200"
+        assert len(row["sha256"]) == 64
+        assert int(row["listed_mask_product_count"]) > 0
+        assert row["mask_products_fetched"] == "false"
+        assert row["path_mapping_computed"] == "false"
+        assert row["contains_predictions"] == "false"
+        assert row["contains_residuals"] == "false"
+        assert row["uses_kids_data_vector_values"] == "false"
+        assert (ROOT / row["local_path"]).exists()
 
 
 def test_kids1000_cosebis_null_control_policy_is_declared_not_run() -> None:
