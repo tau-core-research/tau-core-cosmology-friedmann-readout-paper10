@@ -343,6 +343,22 @@ This deliberately avoids residual-based row or mode removal. It is not an
 endpoint and does not define a theory vector, inverse covariance, likelihood, or
 Tau Core lensing amplitude.
 
+The first COSEBIs tomographic-pair retention-weight policy is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_tomographic_weight_policy_v1.csv
+data/derived/kids1000_cosebis_tomographic_weight_inventory_v1.csv
+data/derived/kids1000_cosebis_tomographic_weight_inventory_v1_summary.csv
+docs/kids1000_cosebis_tomographic_weight_policy_v1.md
+scripts/build_kids1000_cosebis_tomographic_weight_inventory_v1.py
+scripts/validate_kids1000_cosebis_tomographic_weight_inventory_v1.py
+```
+
+It assigns unit source-retention weights to all `15` tomographic pairs. These
+are not likelihood weights, fitted amplitudes, or covariance weights; they only
+state that no pair is upweighted or downweighted using residuals, fit
+statistics, posterior chains, or endpoint behavior.
+
 The first tiny pilot product freeze is recorded in:
 
 ```text

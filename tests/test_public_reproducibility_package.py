@@ -89,6 +89,9 @@ def test_public_files_exist() -> None:
         "data/source_manifest/kids1000_cosebis_mask_modecut_policy_v1.csv",
         "data/derived/kids1000_cosebis_mask_modecut_inventory_v1.csv",
         "data/derived/kids1000_cosebis_mask_modecut_inventory_v1_summary.csv",
+        "data/source_manifest/kids1000_cosebis_tomographic_weight_policy_v1.csv",
+        "data/derived/kids1000_cosebis_tomographic_weight_inventory_v1.csv",
+        "data/derived/kids1000_cosebis_tomographic_weight_inventory_v1_summary.csv",
         "docs/void_web_source_native_products_v1.md",
         "docs/void_web_source_native_transform_rule_v1.md",
         "docs/pantheon_void_web_source_native_design_matrix_v1.md",
@@ -108,6 +111,7 @@ def test_public_files_exist() -> None:
         "docs/kids1000_cosebis_tomographic_mode_policy_v1.md",
         "docs/kids1000_cosebis_covariance_readiness_policy_v1.md",
         "docs/kids1000_cosebis_mask_modecut_policy_v1.md",
+        "docs/kids1000_cosebis_tomographic_weight_policy_v1.md",
         "scripts/acquire_void_web_source_native_products_v1.py",
         "scripts/validate_void_web_source_native_products_v1.py",
         "scripts/build_void_web_source_native_inventory_v1.py",
@@ -143,6 +147,8 @@ def test_public_files_exist() -> None:
         "scripts/validate_kids1000_cosebis_covariance_readiness_v1.py",
         "scripts/build_kids1000_cosebis_mask_modecut_inventory_v1.py",
         "scripts/validate_kids1000_cosebis_mask_modecut_inventory_v1.py",
+        "scripts/build_kids1000_cosebis_tomographic_weight_inventory_v1.py",
+        "scripts/validate_kids1000_cosebis_tomographic_weight_inventory_v1.py",
         "scripts/acquire_pilot_products.py",
         "scripts/validate_pilot_products.py",
         "data/source_manifest/pilot_frozen_product_manifest.csv",
@@ -865,6 +871,45 @@ def test_kids1000_cosebis_mask_modecut_policy_keeps_all_rows_without_leakage() -
     assert {row["dropped_rows_for_pair"] for row in rows} == {"0"}
     assert {row["dropped_modes"] for row in rows} == {""}
     assert {row["uses_residuals"] for row in rows} == {"false"}
+
+
+def test_kids1000_cosebis_tomographic_weight_policy_is_unit_retention_only() -> None:
+    with (
+        ROOT / "data/source_manifest/kids1000_cosebis_tomographic_weight_policy_v1.csv"
+    ).open(newline="") as f:
+        policy = list(csv.DictReader(f))[0]
+    assert policy["status"] == "KIDS1000_COSEBIS_TOMOGRAPHIC_WEIGHT_POLICY_FROZEN_NOT_SCORED"
+    assert policy["endpoint_scoring_allowed"] == "false"
+    assert policy["statistical_likelihood_weighting_allowed"] == "false"
+    assert policy["weight_policy"] == "unit_retention_weight_all_pairs"
+    assert "posthoc_pair_weighting" in policy["forbidden_inputs"]
+    with (
+        ROOT / "data/derived/kids1000_cosebis_tomographic_weight_inventory_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["status"] == "KIDS1000_COSEBIS_TOMOGRAPHIC_WEIGHT_INVENTORY_BUILT_NOT_SCORED"
+    assert summary["endpoint_scoring_allowed"] == "false"
+    assert summary["statistical_likelihood_weighting_allowed"] == "false"
+    assert summary["contains_predictions"] == "false"
+    assert summary["contains_residuals"] == "false"
+    assert summary["contains_fit_statistics"] == "false"
+    assert summary["uses_residuals"] == "false"
+    assert summary["uses_fit_statistics"] == "false"
+    assert summary["uses_posterior_chains"] == "false"
+    assert summary["n_tomographic_pairs"] == "15"
+    assert summary["rows_per_pair"] == "20"
+    assert summary["all_pairs_unit_weight"] == "true"
+    assert summary["min_retention_weight"] == "1.000000"
+    assert summary["max_retention_weight"] == "1.000000"
+    with (
+        ROOT / "data/derived/kids1000_cosebis_tomographic_weight_inventory_v1.csv"
+    ).open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    assert len(rows) == 15
+    assert {row["retention_weight"] for row in rows} == {"1.000000"}
+    assert {row["statistical_likelihood_weighting_allowed"] for row in rows} == {"false"}
+    assert {row["uses_residuals"] for row in rows} == {"false"}
+    assert {row["uses_posterior_chains"] for row in rows} == {"false"}
 
 
 def test_pilot_products_are_frozen_but_not_endpoint_enabled() -> None:

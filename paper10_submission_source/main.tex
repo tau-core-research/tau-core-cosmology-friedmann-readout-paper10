@@ -405,6 +405,13 @@ information. This makes the later lensing route more restrictive rather than
 more flexible: any future physically motivated cut must be declared in a new
 source-side policy before scoring.
 
+The tomographic-pair retention weights are likewise frozen to a neutral
+pre-score rule: every retained pair receives unit source-retention weight. These
+are not likelihood weights and not fitted amplitudes. They only record that no
+tomographic pair is upweighted or downweighted using endpoint residuals,
+posterior chains, or fit-improvement information. Statistical coupling remains
+reserved for a future predeclared covariance-inversion policy.
+
 Finally, the repository includes a tiny pilot product-freeze manifest in the
 source-manifest data folder. It hash-locks three public distance-side files: a
 cosmic-chronometer \(H(z)\) table, a Pantheon+ distance table, and a Pantheon+

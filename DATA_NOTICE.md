@@ -121,6 +121,11 @@ The COSEBIs mask/mode-cut inventory retains all 300 source rows and all modes
 tomographic pair, or mode is removed using endpoint residuals, fit statistics,
 posterior chains, or model-performance information.
 
+The COSEBIs tomographic-weight inventory assigns unit source-retention weights
+to every tomographic pair. These are not likelihood weights and not fitted
+amplitudes; they only document that no pair is preferred using residuals,
+posterior chains, fit statistics, or endpoint behavior.
+
 The pilot frozen-product manifest includes three public distance-side files
 under `data/raw/` only to test acquisition, hashing, covariance-shape checks,
 and local provenance. These files are not sufficient for endpoint scoring
