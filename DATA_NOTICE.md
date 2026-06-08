@@ -54,3 +54,7 @@ under `data/raw/` only to test acquisition, hashing, covariance-shape checks,
 and local provenance. These files are not sufficient for endpoint scoring
 because the endpoint mask, calibration, nuisance-parameter, or systematics
 policies are not frozen.
+
+The Pantheon+ scope artifacts under `data/derived/` are row masks and summaries
+derived only from source-side fields. They do not contain model residuals,
+fitted Tau parameters, or endpoint scores.

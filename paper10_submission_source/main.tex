@@ -291,6 +291,14 @@ during reproduction. All pilot rows keep the endpoint permission flag set to
 false, because the associated mask, calibration, nuisance-parameter, and
 systematics policies are not yet frozen.
 
+The first endpoint-eligible distance scope is also frozen without scoring. For
+Pantheon+, the residual-blind row rule is to exclude Cepheid calibrators and
+retain rows with \(z_{\rm HD}\ge 0.023\). This yields 1371 retained rows out of
+1701 source rows, with the full STAT+SYS covariance dimension checked against
+the source table. The resulting row mask is a source-derived artifact only:
+no \(\Lambda\)CDM residuals, Tau residual parameters, fit-improvement flags, or
+late-time activation fits are used.
+
 \section{CMB role}
 
 CMB maps are relevant, but not as the first standalone discovery target. The

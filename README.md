@@ -113,6 +113,17 @@ testing only: one Cosmic Chronometers table, one Pantheon+ distance table, and
 one Pantheon+ STAT+SYS covariance matrix. All rows remain
 `endpoint_allowed=false`.
 
+The first Pantheon+ endpoint-eligible scope declaration is recorded in:
+
+```text
+data/source_manifest/pantheon_endpoint_scope_v1.csv
+data/derived/pantheon_scope_v1_summary.csv
+docs/pantheon_endpoint_scope_v1.md
+```
+
+It freezes a residual-blind row rule and covariance-submatrix policy, but it is
+still `SCOPE_FROZEN_NOT_SCORED`.
+
 ## Scope
 
 This is a protocol scaffold and branch-opening paper package. The next

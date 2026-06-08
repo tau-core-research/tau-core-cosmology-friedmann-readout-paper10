@@ -33,6 +33,12 @@ def test_public_files_exist() -> None:
         "scripts/validate_pilot_products.py",
         "data/source_manifest/pilot_frozen_product_manifest.csv",
         "docs/pilot_product_freeze_001.md",
+        "data/source_manifest/pantheon_endpoint_scope_v1.csv",
+        "data/derived/pantheon_scope_v1_row_mask.csv",
+        "data/derived/pantheon_scope_v1_summary.csv",
+        "docs/pantheon_endpoint_scope_v1.md",
+        "scripts/build_pantheon_scope_v1.py",
+        "scripts/validate_pantheon_scope_v1.py",
     ]
     for rel in required:
         assert (ROOT / rel).exists(), rel
@@ -136,3 +142,18 @@ def test_pilot_products_are_frozen_but_not_endpoint_enabled() -> None:
         assert row["endpoint_blocker"]
     ids = {row["pilot_product_id"] for row in rows}
     assert "PANTHEON_PLUS_SH0ES_STAT_SYS_COV" in ids
+
+
+def test_pantheon_scope_v1_is_frozen_not_scored() -> None:
+    with (ROOT / "data/derived/pantheon_scope_v1_summary.csv").open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    assert len(rows) == 1
+    row = rows[0]
+    assert row["status"] == "SCOPE_FROZEN_NOT_SCORED"
+    assert row["endpoint_scoring_allowed"] == "false"
+    assert int(row["total_rows"]) == 1701
+    assert int(row["included_rows"]) == 1371
+    assert int(row["covariance_dimension"]) == 1701
+    forbidden = row["forbidden_inputs_checked"]
+    assert "Tau_residual_parameters" in forbidden
+    assert "late_time_activation_fit" in forbidden
