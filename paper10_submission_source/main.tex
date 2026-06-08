@@ -439,6 +439,11 @@ can be constructed. The mapping policy explicitly forbids KiDS data-vector
 values, posterior chains, residuals, fit-improvement flags, and post-hoc sky
 direction choices.
 
+The null-control gate is declared in parallel. It predeclares sky rotation,
+tomographic-pair shuffle, wrong-channel activation, and web/path sign-flip
+control families, but does not run them. A future endpoint must freeze the
+control seed and multiplicity policies before any null score is interpreted.
+
 Finally, the repository includes a tiny pilot product-freeze manifest in the
 source-manifest data folder. It hash-locks three public distance-side files: a
 cosmic-chronometer \(H(z)\) table, a Pantheon+ distance table, and a Pantheon+

@@ -424,6 +424,22 @@ a mapping, does not compute a theory vector, and forbids KiDS data-vector values
 posterior chains, residuals, fit-improvement flags, and post-hoc sky-direction
 selection.
 
+The first COSEBIs null-control readiness policy is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_null_control_policy_v1.csv
+data/derived/kids1000_cosebis_null_control_readiness_v1.csv
+data/derived/kids1000_cosebis_null_control_readiness_v1_summary.csv
+docs/kids1000_cosebis_null_control_policy_v1.md
+scripts/build_kids1000_cosebis_null_control_readiness_v1.py
+scripts/validate_kids1000_cosebis_null_control_readiness_v1.py
+```
+
+It declares four future null-control families: sky rotation, tomographic-pair
+shuffle, wrong-channel activation, and web/path sign flip. These controls are
+not run yet; seed and multiplicity policies must be frozen before any null
+scores can be interpreted.
+
 The first tiny pilot product freeze is recorded in:
 
 ```text

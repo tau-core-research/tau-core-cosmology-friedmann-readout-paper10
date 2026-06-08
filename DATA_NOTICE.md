@@ -147,6 +147,10 @@ compute a mapping vector or theory vector and does not use KiDS data-vector
 values, posterior chains, residuals, fit-improvement information, or post-hoc
 sky-direction choices.
 
+The COSEBIs null-control readiness inventory declares four future control
+families but does not execute them. It contains no control scores, predictions,
+residuals, fit statistics, posterior-chain use, or data-vector-value use.
+
 The pilot frozen-product manifest includes three public distance-side files
 under `data/raw/` only to test acquisition, hashing, covariance-shape checks,
 and local provenance. These files are not sufficient for endpoint scoring
