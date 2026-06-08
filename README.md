@@ -185,6 +185,29 @@ but `Delta AIC = +5.808`. This preserves the same conclusion as the diagonal
 smoke test: the scoring ladder works, but this is not evidence for a new
 cosmological model.
 
+## TPG-Bridge Continuation
+
+The weak full-covariance Pantheon+ pilot should be read primarily as a
+limitation of the homogeneous late-activation shell, not as a true negative
+against the broader Tau Core morphology/projection-readout framework. The
+current pilot tests only one smooth proxy:
+
+```text
+W_tau(a)
+```
+
+The TPG-parallel cosmology programme needs source-frozen channel families:
+
+```text
+W_void(a)          void maturity / distance activation
+W_web(a,k,env)     cosmic-web anisotropy for growth and lensing
+W_path(z,n_hat)    observer/path projection along the null-geodesic bundle
+W_time(a)          time/readout projection for observed a(t), H(t)
+```
+
+These channels must be frozen from independent source-side observables before
+distance, growth, lensing, or CMB-safety residuals are scored.
+
 ## Scope
 
 This is a protocol scaffold and branch-opening paper package. The next
