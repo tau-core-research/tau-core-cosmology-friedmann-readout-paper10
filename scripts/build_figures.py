@@ -160,7 +160,21 @@ def build_pantheon_pilot_branch_diagnostics() -> None:
     )
     fig.subplots_adjust(left=0.08, right=0.985, bottom=0.24, top=0.82, wspace=0.24)
     out = FIGURES / FIGURE_NAME
-    fig.savefig(out, bbox_inches="tight", pad_inches=0.05)
+    fig.savefig(
+        out,
+        bbox_inches="tight",
+        pad_inches=0.05,
+        metadata={
+            "Title": "Paper10 Pantheon full-covariance pilot diagnostics",
+            "Author": "tau-core-paper10-reproducibility-package",
+            "Subject": "Frozen-grid diagnostic figure; not validation",
+            "Keywords": "Tau Core, Pantheon, reproducibility, pilot",
+            "Creator": "scripts/build_figures.py",
+            "Producer": "matplotlib",
+            "CreationDate": None,
+            "ModDate": None,
+        },
+    )
     copy_figure(out)
     plt.close(fig)
 

@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import csv
+import os
 import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
@@ -11,6 +12,11 @@ ROOT = Path(__file__).resolve().parents[1]
 ROUTE = ROOT / "data" / "source_manifest" / "kids1000_lensing_route_v1.csv"
 OUT = ROOT / "data" / "derived" / "kids1000_lensing_route_v1_head.csv"
 SUMMARY = ROOT / "data" / "derived" / "kids1000_lensing_route_v1_summary.csv"
+
+
+def deterministic_timestamp() -> str:
+    epoch = int(os.environ.get("SOURCE_DATE_EPOCH", "1780876800"))
+    return datetime.fromtimestamp(epoch, timezone.utc).replace(microsecond=0).isoformat()
 
 
 def main() -> None:
@@ -29,7 +35,7 @@ def main() -> None:
         method="HEAD",
         headers={"User-Agent": "tau-core-paper10-kids-lensing-route-check/0.1"},
     )
-    checked_at = datetime.now(timezone.utc).replace(microsecond=0).isoformat()
+    checked_at = deterministic_timestamp()
     with urllib.request.urlopen(request, timeout=30) as response:
         status_code = int(getattr(response, "status", 200))
         headers = response.headers
