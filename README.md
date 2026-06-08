@@ -257,6 +257,27 @@ data vector, covariance matrix, posterior chain, lensing residual, or fit
 statistic. Lensing scoring remains forbidden until tomographic-bin policy,
 statistic choice, covariance block, mask policy, and readout policy are frozen.
 
+The first fetched KiDS lensing source product and COSEBIs route inventory are
+recorded in:
+
+```text
+data/source_manifest/kids1000_lensing_products_v1.csv
+data/source_manifest/kids1000_cosebis_lensing_route_v1.csv
+data/raw/weak_lensing/kids1000/KiDS1000_cosmic_shear_data_release.tgz
+data/derived/kids1000_lensing_inventory_v1.csv
+data/derived/kids1000_lensing_inventory_v1_summary.csv
+docs/kids1000_lensing_products_v1.md
+docs/kids1000_cosebis_lensing_route_v1.md
+scripts/acquire_kids1000_lensing_products_v1.py
+scripts/validate_kids1000_lensing_products_v1.py
+scripts/build_kids1000_lensing_inventory_v1.py
+scripts/validate_kids1000_lensing_inventory_v1.py
+```
+
+The inventory finds `28` non-directory tarball members, `3` FITS products, and
+exactly one selected COSEBIs FITS product for the future narrow lensing route.
+This remains endpoint disabled and contains no lensing score.
+
 The first tiny pilot product freeze is recorded in:
 
 ```text

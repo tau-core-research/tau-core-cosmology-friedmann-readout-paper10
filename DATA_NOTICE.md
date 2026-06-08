@@ -92,6 +92,12 @@ cosmic-shear tarball. It does not fetch, store, or redistribute KiDS lensing
 catalogues, data vectors, covariance matrices, posterior chains, or likelihood
 files. It is a source-route/provenance gate only.
 
+The KiDS-1000 lensing product manifest does include the public cosmic-shear
+tarball under `data/raw/weak_lensing/kids1000/`. The derived inventory records
+tarball member names, sizes, and the predeclared COSEBIs member route. It does
+not extract a lensing likelihood, does not score a model, and does not contain
+residuals or fitted Tau parameters.
+
 The pilot frozen-product manifest includes three public distance-side files
 under `data/raw/` only to test acquisition, hashing, covariance-shape checks,
 and local provenance. These files are not sufficient for endpoint scoring

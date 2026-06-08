@@ -72,6 +72,11 @@ def test_public_files_exist() -> None:
         "data/source_manifest/kids1000_lensing_route_v1.csv",
         "data/derived/kids1000_lensing_route_v1_head.csv",
         "data/derived/kids1000_lensing_route_v1_summary.csv",
+        "data/source_manifest/kids1000_lensing_products_v1.csv",
+        "data/source_manifest/kids1000_cosebis_lensing_route_v1.csv",
+        "data/raw/weak_lensing/kids1000/KiDS1000_cosmic_shear_data_release.tgz",
+        "data/derived/kids1000_lensing_inventory_v1.csv",
+        "data/derived/kids1000_lensing_inventory_v1_summary.csv",
         "docs/void_web_source_native_products_v1.md",
         "docs/void_web_source_native_transform_rule_v1.md",
         "docs/pantheon_void_web_source_native_design_matrix_v1.md",
@@ -85,6 +90,8 @@ def test_public_files_exist() -> None:
         "docs/sdss_multitracer_bao_rsd_full_cov_pilot_v1.md",
         "docs/cmb_safety_lowz_support_v1.md",
         "docs/kids1000_lensing_route_v1.md",
+        "docs/kids1000_lensing_products_v1.md",
+        "docs/kids1000_cosebis_lensing_route_v1.md",
         "scripts/acquire_void_web_source_native_products_v1.py",
         "scripts/validate_void_web_source_native_products_v1.py",
         "scripts/build_void_web_source_native_inventory_v1.py",
@@ -108,6 +115,10 @@ def test_public_files_exist() -> None:
         "scripts/validate_cmb_safety_lowz_support_v1.py",
         "scripts/check_kids1000_lensing_route_v1.py",
         "scripts/validate_kids1000_lensing_route_v1.py",
+        "scripts/acquire_kids1000_lensing_products_v1.py",
+        "scripts/validate_kids1000_lensing_products_v1.py",
+        "scripts/build_kids1000_lensing_inventory_v1.py",
+        "scripts/validate_kids1000_lensing_inventory_v1.py",
         "scripts/acquire_pilot_products.py",
         "scripts/validate_pilot_products.py",
         "data/source_manifest/pilot_frozen_product_manifest.csv",
@@ -633,6 +644,41 @@ def test_kids1000_lensing_route_is_provenance_only() -> None:
         "covariance_block_policy",
     ]:
         assert marker in summary["future_freeze_items"]
+
+
+def test_kids1000_lensing_tarball_inventory_and_cosebis_route_are_not_scored() -> None:
+    with (ROOT / "data/source_manifest/kids1000_lensing_products_v1.csv").open(newline="") as f:
+        product = list(csv.DictReader(f))[0]
+    assert product["status"] == "SOURCE_NATIVE_PRODUCT_FETCHED_FROZEN"
+    assert product["endpoint_allowed"] == "false"
+    tarball = ROOT / product["local_path"]
+    assert tarball.exists()
+    assert int(product["byte_count"]) > 0
+    assert product["sha256"]
+    with (ROOT / "data/source_manifest/kids1000_cosebis_lensing_route_v1.csv").open(
+        newline=""
+    ) as f:
+        route = list(csv.DictReader(f))[0]
+    assert route["selected_statistic"] == "COSEBIs"
+    assert route["endpoint_scoring_allowed"] == "false"
+    assert "lensing_residuals" in route["forbidden_inputs"]
+    assert "kids_chain_posterior_reweighting" in route["forbidden_inputs"]
+    with (ROOT / "data/derived/kids1000_lensing_inventory_v1_summary.csv").open(
+        newline=""
+    ) as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["status"] == "KIDS1000_LENSING_INVENTORY_BUILT_NOT_SCORED"
+    assert summary["endpoint_scoring_allowed"] == "false"
+    assert summary["contains_residuals"] == "false"
+    assert summary["contains_fit_statistics"] == "false"
+    assert int(summary["n_fits_products"]) == 3
+    assert int(summary["n_selected_cosebis_members"]) == 1
+    with (ROOT / "data/derived/kids1000_lensing_inventory_v1.csv").open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    selected = [row for row in rows if row["selected_for_cosebis_route"] == "true"]
+    assert len(selected) == 1
+    assert selected[0]["member_kind"] == "fits_product"
+    assert "cosebis_" in selected[0]["member_name"]
 
 
 def test_pilot_products_are_frozen_but_not_endpoint_enabled() -> None:

@@ -362,6 +362,15 @@ pilot must first freeze the tomographic-bin policy, statistic choice
 policy, and readout policy before any \(W_{\rm web}\) or \(W_{\rm path}\)
 lensing score can be interpreted.
 
+The next lensing preflight step then checksum-locks the KiDS-1000 cosmic-shear
+tarball and builds a non-scoring inventory. The tarball contains three FITS
+summary-statistic products, and the route selects exactly one source-side
+COSEBIs FITS member as the first narrow future lensing statistic route. This is
+motivated by the KiDS release documentation, which identifies COSEBIs as the
+fiducial analysis statistic for the cosmic-shear products. The artifact remains
+endpoint disabled: it records file membership and the future COSEBIs route, not
+a lensing likelihood or a Tau Core lensing score.
+
 Finally, the repository includes a tiny pilot product-freeze manifest in the
 source-manifest data folder. It hash-locks three public distance-side files: a
 cosmic-chronometer \(H(z)\) table, a Pantheon+ distance table, and a Pantheon+
