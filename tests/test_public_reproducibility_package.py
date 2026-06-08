@@ -19,6 +19,9 @@ def test_public_files_exist() -> None:
         "paper10_submission_source/main.pdf",
         "arxiv_submission_source.zip",
         "data/derived/audit_gate_inventory.csv",
+        "data/source_manifest/paper10_source_freeze_manifest.csv",
+        "docs/source_freeze_protocol.md",
+        "scripts/validate_source_freeze.py",
     ]
     for rel in required:
         assert (ROOT / rel).exists(), rel
@@ -60,3 +63,22 @@ def test_gate_inventory_is_protocol_only() -> None:
     forbidden_blob = " ".join(row["forbidden_inputs"] for row in rows)
     assert "target_residuals" in forbidden_blob
     assert "endpoint_tuned_labels" in forbidden_blob
+
+
+def test_source_freeze_manifest_blocks_endpoint_leakage() -> None:
+    with (ROOT / "data/source_manifest/paper10_source_freeze_manifest.csv").open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    blocks = {row["block"] for row in rows}
+    assert {"distance", "void_maturity", "web_anisotropy", "growth", "lensing", "cmb_safety"} <= blocks
+    statuses = {row["freeze_status"] for row in rows}
+    assert "BLOCKED_SOURCE_SELECTION" in statuses
+    assert statuses <= {"SOURCE_SELECTED_NOT_FETCHED", "BLOCKED_SOURCE_SELECTION", "FETCHED_FROZEN"}
+    forbidden = ";".join(row["forbidden_endpoint_fields"] for row in rows)
+    for marker in [
+        "distance_residuals",
+        "growth_residuals",
+        "lensing_residuals",
+        "fit_improvement_flags",
+        "posthoc_environment_labels",
+    ]:
+        assert marker in forbidden

@@ -8,6 +8,17 @@ The first release contains only compact protocol artifacts and smoke-test
 tables. Future empirical versions should keep raw data acquisition separate and
 document any online data dependencies explicitly.
 
+The current source registry is a manifest, not a data release:
+
+```text
+data/source_manifest/paper10_source_freeze_manifest.csv
+```
+
+Rows marked `SOURCE_SELECTED_NOT_FETCHED` identify candidate public source
+families that still need acquisition, checksums, and frozen transformation
+rules. Rows marked `BLOCKED_SOURCE_SELECTION` identify scientifically required
+blocks for which no accepted public source product has yet been frozen.
+
 Planned public data families include:
 
 - DESI BAO / cosmology products for distance constraints.
@@ -24,3 +35,5 @@ No result in this repository should be read as a measurement claim until those
 source blocks are acquired, frozen, and audited under the protocol in the
 manuscript.
 
+Endpoint scoring is not allowed until the required source blocks are either
+`FETCHED_FROZEN` or explicitly excluded by a predeclared pilot-scope rule.

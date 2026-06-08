@@ -226,6 +226,17 @@ products~\cite{DESIDR2BAO2025,DESIDR2Products2025}, Planck products
 \label{tab:data-blocks}
 \end{table}
 
+The repository also contains a source-freeze manifest:
+\[
+\texttt{data/source\_manifest/paper10\_source\_freeze\_manifest.csv}.
+\]
+It records candidate public source families, whether the source has merely been
+selected or remains blocked, the planned local artifact path, and the endpoint
+fields forbidden during source selection. Several blocks are intentionally left
+as \texttt{BLOCKED\_SOURCE\_SELECTION}. This is a feature of the first
+scaffold: those blocks cannot be used for endpoint scoring until the public
+source product, version, transformation rule, and checksum policy are frozen.
+
 \section{Leakage prevention}
 
 The audit follows a source-freeze discipline:
@@ -240,6 +251,13 @@ The audit follows a source-freeze discipline:
 
 This is the cosmological analogue of the matched-vs-wrong and non-overlap
 ledger discipline used in Papers 8 and 9.
+
+In the current scaffold, the validation script
+\(\texttt{scripts/validate\_source\_freeze.py}\) checks that the manifest covers
+the required blocks and explicitly forbids endpoint leakage fields such as
+distance residuals, growth residuals, lensing residuals, fit-improvement flags,
+and post-hoc environment labels. Passing this script is not a data result; it is
+a precondition for a later real-data pilot.
 
 \section{CMB role}
 

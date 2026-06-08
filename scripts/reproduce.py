@@ -20,6 +20,7 @@ def main() -> None:
     env.setdefault("SOURCE_DATE_EPOCH", "1780876800")
     print("+ tectonic paper10_submission_source/main.tex")
     subprocess.run(["tectonic", PAPER.name], cwd=PAPER.parent, env=env, check=True)
+    run(["python", "scripts/validate_source_freeze.py"])
     run(["python", "scripts/build_arxiv_source.py"])
     run(["python", "-m", "pytest", "-q"])
     print("PAPER10_REPRODUCTION_COMPLETE")
@@ -27,4 +28,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

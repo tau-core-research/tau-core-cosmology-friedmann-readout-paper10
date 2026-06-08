@@ -36,14 +36,24 @@ source-frozen void maturity and cosmic-web anisotropy proxies
 This first scaffold contains only compact protocol artifacts in `data/derived/`.
 No raw survey products are included.
 
+The source-freeze manifest is:
+
+```text
+data/source_manifest/paper10_source_freeze_manifest.csv
+```
+
+It records candidate public source families, their current freeze status,
+planned local artifact paths, and endpoint fields that are forbidden during
+source selection.
+
 ## Reproduce
 
 ```bash
 python scripts/reproduce.py
 ```
 
-The reproduction script compiles the manuscript with `tectonic`, builds the
-arXiv source package, and runs smoke tests.
+The reproduction script compiles the manuscript with `tectonic`, validates the
+source-freeze manifest, builds the arXiv source package, and runs smoke tests.
 
 ## arXiv Source Package
 
@@ -56,9 +66,14 @@ The one-command reproduction path does not perform live online data acquisition.
 Future source-acquisition scripts should document exact URLs, versions, hashes
 where possible, and redistribution boundaries.
 
+Current source manifest status:
+
+- some source families are selected but not fetched,
+- several required blocks remain `BLOCKED_SOURCE_SELECTION`,
+- no endpoint scoring is allowed from this scaffold.
+
 ## Scope
 
 This is a protocol scaffold and branch-opening paper package. The next
 scientific milestone is a real-data pilot using public distance, void,
 cosmic-web, growth, lensing, and CMB products under the frozen audit ladder.
-
