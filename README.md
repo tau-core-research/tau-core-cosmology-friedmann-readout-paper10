@@ -658,6 +658,22 @@ only source-frozen official footprint geometry or source-native full-mask
 overlap derivations. It computes no overlap values and still forbids mapping
 and scoring.
 
+The `F_overlap` source-availability audit is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_f_overlap_source_availability_policy_v1.csv
+data/derived/kids1000_cosebis_f_overlap_source_availability_v1.csv
+data/derived/kids1000_cosebis_f_overlap_source_availability_v1_summary.csv
+docs/kids1000_cosebis_f_overlap_source_availability_policy_v1.md
+scripts/build_kids1000_cosebis_f_overlap_source_availability_v1.py
+scripts/validate_kids1000_cosebis_f_overlap_source_availability_v1.py
+```
+
+It records that the route script and three-mask subset are not sufficient for a
+full overlap rule. No official footprint geometry product or full 196-mask
+source-native product set is currently accepted, so `F_overlap` remains
+unresolved and mapping remains disabled.
+
 The COSEBIs path-mapping source-preflight ledger is recorded in:
 
 ```text

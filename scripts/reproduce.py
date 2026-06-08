@@ -105,6 +105,8 @@ def main() -> None:
     run(["python", "scripts/validate_kids1000_cosebis_path_blocker_resolution_order_v1.py"])
     run(["python", "scripts/build_kids1000_cosebis_f_overlap_rule_shell_v1.py"])
     run(["python", "scripts/validate_kids1000_cosebis_f_overlap_rule_shell_v1.py"])
+    run(["python", "scripts/build_kids1000_cosebis_f_overlap_source_availability_v1.py"])
+    run(["python", "scripts/validate_kids1000_cosebis_f_overlap_source_availability_v1.py"])
     run(["python", "scripts/build_kids1000_cosebis_path_mapping_source_preflight_v1.py"])
     run(["python", "scripts/validate_kids1000_cosebis_path_mapping_source_preflight_v1.py"])
     run(["python", "scripts/build_kids1000_cosebis_null_control_readiness_v1.py"])

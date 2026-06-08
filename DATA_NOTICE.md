@@ -236,6 +236,12 @@ or fractions. It accepts only source-frozen official footprint geometry or
 source-native full-mask overlap derivations, and it keeps mapping and endpoint
 scoring disabled.
 
+The `F_overlap` source-availability audit records the current negative/partial
+state: the route script lists 196 preferred tiles and the three-mask subset is
+present, but neither an official footprint geometry product nor a full 196-mask
+source-native product set is accepted. Thus the overlap rule is not ready and
+mapping remains disabled.
+
 The COSEBIs path-mapping source-preflight ledger combines only source-side
 availability flags. It records that COSEBIs target rows, redshift kernels, and
 the 196-tile route coordinate index, the 300-row design skeleton, and the
