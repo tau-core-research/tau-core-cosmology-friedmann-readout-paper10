@@ -325,6 +325,21 @@ not establish a preferred web direction. Its value is narrower: it shows how
 the web channel enters a growth-side observable and why the next real gate must
 use the official compressed-parameter covariance or a fuller RSD likelihood.
 
+That next covariance gate is included as a separate SDSS multi-tracer
+BAO/RSD pilot. The repository fetches and hash-locks the official DR16
+LRG+ELG compressed BAO/RSD products and uses the Fourier-space six-component
+vector
+\[
+\{D_M/r_d,D_H/r_d,f\sigma_8\}_{z=0.70,0.845}
+\]
+with its published \(6\times6\) covariance. In this pilot \(W_{\rm web}\)
+acts only on the two growth entries, while the BAO entries remain in the
+shared covariance block. The result is essentially neutral: the web branch
+improves \(\chi^2\) by only \(0.010\), loses under AIC by \(1.99\), and the
+wrong-sign control reaches the same best \(\chi^2\). This is therefore a useful
+multi-probe covariance check and seminegative control, not evidence for a
+preferred web-growth direction.
+
 Finally, the repository includes a tiny pilot product-freeze manifest in the
 source-manifest data folder. It hash-locks three public distance-side files: a
 cosmic-chronometer \(H(z)\) table, a Pantheon+ distance table, and a Pantheon+

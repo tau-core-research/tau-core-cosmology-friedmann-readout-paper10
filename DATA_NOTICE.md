@@ -73,6 +73,14 @@ with diagonal published errors only. It does not include the full official
 compressed-parameter covariance and is therefore not an endpoint growth
 likelihood.
 
+The SDSS multi-tracer BAO/RSD pilot freezes the official public DR16 LRG+ELG
+compressed BAO/RSD products and their covariance matrix under `data/raw/`.
+The derived six-component design matrix and pilot summary use the official
+6x6 compressed-parameter covariance, but the run remains
+`SDSS_MULTITRACER_BAO_RSD_FULL_COV_PILOT_NOT_VALIDATION`. It is a covariance
+grammar test and seminegative control, not endpoint validation and not evidence
+for a new cosmological model.
+
 The pilot frozen-product manifest includes three public distance-side files
 under `data/raw/` only to test acquisition, hashing, covariance-shape checks,
 and local provenance. These files are not sufficient for endpoint scoring

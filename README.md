@@ -200,6 +200,29 @@ improves chi-square by `0.306`, but loses under AIC by `1.694`, and the
 wrong-sign control is equally good on the symmetric pilot grid. This is a first
 growth-side stress test, not a growth endpoint validation.
 
+The first official-covariance BAO/RSD growth block is recorded in:
+
+```text
+data/source_manifest/sdss_multitracer_bao_rsd_products_v1.csv
+data/source_manifest/sdss_multitracer_bao_rsd_transform_rule_v1.csv
+data/derived/sdss_multitracer_bao_rsd_design_matrix_v1.csv
+data/source_manifest/sdss_multitracer_bao_rsd_full_cov_pilot_v1.csv
+data/derived/sdss_multitracer_bao_rsd_full_cov_pilot_v1_summary.csv
+docs/sdss_multitracer_bao_rsd_products_v1.md
+docs/sdss_multitracer_bao_rsd_transform_rule_v1.md
+docs/sdss_multitracer_bao_rsd_design_matrix_v1.md
+docs/sdss_multitracer_bao_rsd_full_cov_pilot_v1.md
+```
+
+This freezes the official SDSS DR16 LRG+ELG multi-tracer BAO/RSD compressed
+products and uses the Fourier-space six-component vector with its official
+6x6 covariance. In this pilot the web channel modifies only the `f sigma8`
+entries while the BAO distance entries remain in the shared covariance block.
+The result is effectively neutral: chi-square improves by only `0.010`, AIC
+loses by `1.990`, and the wrong-sign control is equally good. This is a useful
+multi-probe covariance gate and a seminegative control, not evidence for a
+preferred web-growth direction.
+
 The first tiny pilot product freeze is recorded in:
 
 ```text

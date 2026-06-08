@@ -59,6 +59,13 @@ def test_public_files_exist() -> None:
         "data/derived/growth_web_source_native_design_matrix_v1_summary.csv",
         "data/derived/growth_web_source_native_pilot_v1_summary.csv",
         "data/derived/growth_web_source_native_pilot_v1_grid.csv",
+        "data/source_manifest/sdss_multitracer_bao_rsd_products_v1.csv",
+        "data/source_manifest/sdss_multitracer_bao_rsd_transform_rule_v1.csv",
+        "data/source_manifest/sdss_multitracer_bao_rsd_full_cov_pilot_v1.csv",
+        "data/derived/sdss_multitracer_bao_rsd_design_matrix_v1.csv",
+        "data/derived/sdss_multitracer_bao_rsd_design_matrix_v1_summary.csv",
+        "data/derived/sdss_multitracer_bao_rsd_full_cov_pilot_v1_summary.csv",
+        "data/derived/sdss_multitracer_bao_rsd_full_cov_pilot_v1_grid.csv",
         "docs/void_web_source_native_products_v1.md",
         "docs/void_web_source_native_transform_rule_v1.md",
         "docs/pantheon_void_web_source_native_design_matrix_v1.md",
@@ -66,6 +73,10 @@ def test_public_files_exist() -> None:
         "docs/sdss_final_bao_rsd_growth_summary_v1.md",
         "docs/growth_web_source_native_design_matrix_v1.md",
         "docs/growth_web_source_native_pilot_v1.md",
+        "docs/sdss_multitracer_bao_rsd_products_v1.md",
+        "docs/sdss_multitracer_bao_rsd_transform_rule_v1.md",
+        "docs/sdss_multitracer_bao_rsd_design_matrix_v1.md",
+        "docs/sdss_multitracer_bao_rsd_full_cov_pilot_v1.md",
         "scripts/acquire_void_web_source_native_products_v1.py",
         "scripts/validate_void_web_source_native_products_v1.py",
         "scripts/build_void_web_source_native_inventory_v1.py",
@@ -79,6 +90,12 @@ def test_public_files_exist() -> None:
         "scripts/validate_growth_web_source_native_design_matrix_v1.py",
         "scripts/run_growth_web_source_native_pilot_v1.py",
         "scripts/validate_growth_web_source_native_pilot_v1.py",
+        "scripts/acquire_sdss_multitracer_bao_rsd_products_v1.py",
+        "scripts/validate_sdss_multitracer_bao_rsd_products_v1.py",
+        "scripts/build_sdss_multitracer_bao_rsd_design_matrix_v1.py",
+        "scripts/validate_sdss_multitracer_bao_rsd_design_matrix_v1.py",
+        "scripts/run_sdss_multitracer_bao_rsd_full_cov_pilot_v1.py",
+        "scripts/validate_sdss_multitracer_bao_rsd_full_cov_pilot_v1.py",
         "scripts/acquire_pilot_products.py",
         "scripts/validate_pilot_products.py",
         "data/source_manifest/pilot_frozen_product_manifest.csv",
@@ -479,6 +496,72 @@ def test_growth_web_source_native_design_and_pilot_are_nonvalidation() -> None:
     assert pilot_summary["status"] == "GROWTH_WEB_SOURCE_NATIVE_PILOT_NOT_VALIDATION"
     assert pilot_summary["claim_boundary"] == "growth_web_source_native_pilot_not_validation"
     assert pilot_summary["covariance_policy"] == "diagonal_summary_errors_only"
+    assert "W_VOID_MATURITY" in pilot_summary["disabled_channels"]
+    for key in [
+        "baseline_best_chi2",
+        "web_best_chi2",
+        "wrong_web_sign_best_chi2",
+        "shuffled_web_best_chi2",
+        "delta_aic_web_minus_baseline",
+    ]:
+        float(pilot_summary[key])
+
+
+def test_sdss_multitracer_bao_rsd_full_cov_pilot_is_nonvalidation() -> None:
+    with (ROOT / "data/source_manifest/sdss_multitracer_bao_rsd_products_v1.csv").open(
+        newline=""
+    ) as f:
+        product_rows = list(csv.DictReader(f))
+    assert len(product_rows) == 2
+    assert {row["status"] for row in product_rows} == {"SOURCE_NATIVE_PRODUCT_FETCHED_FROZEN"}
+    assert {row["endpoint_allowed"] for row in product_rows} == {"false"}
+    assert {row["measurement_space"] for row in product_rows} == {
+        "configuration_space",
+        "fourier_space",
+    }
+    for row in product_rows:
+        assert (ROOT / row["zip_path"]).exists()
+        assert (ROOT / row["data_path"]).exists()
+        assert (ROOT / row["covariance_path"]).exists()
+        assert row["sha256"]
+
+    with (ROOT / "data/derived/sdss_multitracer_bao_rsd_design_matrix_v1.csv").open(
+        newline=""
+    ) as f:
+        design_rows = list(csv.DictReader(f))
+    assert len(design_rows) == 6
+    assert [row["observable"] for row in design_rows] == [
+        "DM_over_rd",
+        "DH_over_rd",
+        "fsigma8",
+        "DM_over_rd",
+        "DH_over_rd",
+        "fsigma8",
+    ]
+    assert all(
+        row["W_web_applies_to_observable"] == "false"
+        for row in design_rows
+        if row["observable"] != "fsigma8"
+    )
+    with (ROOT / "data/derived/sdss_multitracer_bao_rsd_design_matrix_v1_summary.csv").open(
+        newline=""
+    ) as f:
+        design_summary = list(csv.DictReader(f))[0]
+    assert design_summary["endpoint_scoring_allowed"] == "false"
+    assert design_summary["contains_residuals"] == "false"
+    assert design_summary["contains_fit_statistics"] == "false"
+    assert design_summary["covariance_shape"] == "6x6"
+
+    with (ROOT / "data/derived/sdss_multitracer_bao_rsd_full_cov_pilot_v1_summary.csv").open(
+        newline=""
+    ) as f:
+        pilot_summary = list(csv.DictReader(f))[0]
+    assert pilot_summary["status"] == "SDSS_MULTITRACER_BAO_RSD_FULL_COV_PILOT_NOT_VALIDATION"
+    assert (
+        pilot_summary["claim_boundary"]
+        == "sdss_multitracer_bao_rsd_full_cov_pilot_not_validation"
+    )
+    assert pilot_summary["covariance_policy"] == "official_6x6_compressed_parameter_covariance"
     assert "W_VOID_MATURITY" in pilot_summary["disabled_channels"]
     for key in [
         "baseline_best_chi2",
