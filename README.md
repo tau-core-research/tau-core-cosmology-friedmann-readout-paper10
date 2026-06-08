@@ -440,6 +440,24 @@ areas, mean redshifts, and support intervals for the five KiDS source bins. This
 is a source-side kernel inventory, not a COSEBIs theory vector, lensing
 prediction, residual, or likelihood score.
 
+The first COSEBIs path mask/depth gap audit is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_path_mask_depth_gap_policy_v1.csv
+data/derived/kids1000_cosebis_path_mask_depth_gap_inventory_v1.csv
+data/derived/kids1000_cosebis_path_mask_depth_gap_inventory_v1_summary.csv
+docs/kids1000_cosebis_path_mask_depth_gap_policy_v1.md
+scripts/build_kids1000_cosebis_path_mask_depth_gap_inventory_v1.py
+scripts/validate_kids1000_cosebis_path_mask_depth_gap_inventory_v1.py
+```
+
+It scans the selected KiDS-1000 cosmic-shear release tarball and records that no
+standalone source-frozen footprint, path mask, depth map, random catalogue, or
+equivalent path-load product is accepted from that tarball. Filename `mask`
+tokens in the statistic FITS products are classified as statistic-product
+metadata, not as survey path maps. The future `W_PATH_PROJECTION` route
+therefore remains blocked on an external source-frozen path/mask/depth product.
+
 The first COSEBIs null-control readiness policy is recorded in:
 
 ```text

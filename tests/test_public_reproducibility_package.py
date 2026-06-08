@@ -107,6 +107,9 @@ def test_public_files_exist() -> None:
         "data/source_manifest/kids1000_cosebis_redshift_kernel_policy_v1.csv",
         "data/derived/kids1000_cosebis_redshift_kernel_inventory_v1.csv",
         "data/derived/kids1000_cosebis_redshift_kernel_inventory_v1_summary.csv",
+        "data/source_manifest/kids1000_cosebis_path_mask_depth_gap_policy_v1.csv",
+        "data/derived/kids1000_cosebis_path_mask_depth_gap_inventory_v1.csv",
+        "data/derived/kids1000_cosebis_path_mask_depth_gap_inventory_v1_summary.csv",
         "data/source_manifest/kids1000_cosebis_null_control_policy_v1.csv",
         "data/derived/kids1000_cosebis_null_control_readiness_v1.csv",
         "data/derived/kids1000_cosebis_null_control_readiness_v1_summary.csv",
@@ -138,6 +141,7 @@ def test_public_files_exist() -> None:
         "docs/kids1000_cosebis_theory_vector_policy_v1.md",
         "docs/kids1000_cosebis_web_path_mapping_policy_v1.md",
         "docs/kids1000_cosebis_redshift_kernel_policy_v1.md",
+        "docs/kids1000_cosebis_path_mask_depth_gap_policy_v1.md",
         "docs/kids1000_cosebis_null_control_policy_v1.md",
         "docs/kids1000_cosebis_null_control_seed_policy_v1.md",
         "scripts/acquire_void_web_source_native_products_v1.py",
@@ -187,6 +191,8 @@ def test_public_files_exist() -> None:
         "scripts/validate_kids1000_cosebis_web_path_mapping_readiness_v1.py",
         "scripts/build_kids1000_cosebis_redshift_kernel_inventory_v1.py",
         "scripts/validate_kids1000_cosebis_redshift_kernel_inventory_v1.py",
+        "scripts/build_kids1000_cosebis_path_mask_depth_gap_inventory_v1.py",
+        "scripts/validate_kids1000_cosebis_path_mask_depth_gap_inventory_v1.py",
         "scripts/build_kids1000_cosebis_null_control_readiness_v1.py",
         "scripts/validate_kids1000_cosebis_null_control_readiness_v1.py",
         "scripts/build_kids1000_cosebis_null_control_seed_inventory_v1.py",
@@ -1179,6 +1185,57 @@ def test_kids1000_cosebis_redshift_kernel_inventory_is_source_side_only() -> Non
         assert row["contains_predictions"] == "false"
         assert row["contains_residuals"] == "false"
         assert row["contains_fit_statistics"] == "false"
+
+
+def test_kids1000_cosebis_path_mask_depth_gap_keeps_path_route_blocked() -> None:
+    with (
+        ROOT / "data/source_manifest/kids1000_cosebis_path_mask_depth_gap_policy_v1.csv"
+    ).open(newline="") as f:
+        policy = list(csv.DictReader(f))[0]
+    assert policy["status"] == "KIDS1000_COSEBIS_PATH_MASK_DEPTH_GAP_DECLARED_EXTERNAL_PRODUCT_REQUIRED"
+    assert policy["endpoint_scoring_allowed"] == "false"
+    assert policy["current_path_mapping_computed"] == "false"
+    assert policy["path_mask_depth_product_available"] == "false"
+    assert policy["required_future_source_product"] == "source_frozen_lensing_path_mask_or_depth_map"
+    for marker in [
+        "posthoc_path_projection_labels",
+        "posthoc_sky_direction_selection",
+        "kids_data_vector_values",
+    ]:
+        assert marker in policy["forbidden_inputs"]
+    with (
+        ROOT / "data/derived/kids1000_cosebis_path_mask_depth_gap_inventory_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["status"] == "KIDS1000_COSEBIS_PATH_MASK_DEPTH_GAP_BUILT_EXTERNAL_PRODUCT_REQUIRED"
+    assert summary["endpoint_scoring_allowed"] == "false"
+    assert summary["path_mask_depth_product_available"] == "false"
+    assert summary["accepted_path_mask_depth_products"] == "0"
+    assert summary["blocker"] == "external_source_frozen_lensing_path_mask_or_depth_map_required"
+    assert summary["current_path_mapping_computed"] == "false"
+    assert summary["contains_mapping_vector"] == "false"
+    assert summary["contains_theory_vector"] == "false"
+    assert summary["contains_predictions"] == "false"
+    assert summary["contains_residuals"] == "false"
+    assert summary["uses_kids_data_vector_values"] == "false"
+    assert summary["uses_posthoc_path_selection"] == "false"
+    with (
+        ROOT / "data/derived/kids1000_cosebis_path_mask_depth_gap_inventory_v1.csv"
+    ).open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    assert rows
+    assert {row["accepted_as_path_mask_depth_product"] for row in rows} == {"false"}
+    assert any(row["member_name"].endswith("Read.me") for row in rows)
+    assert any(
+        row["classification_reason"] == "statistic_fits_filename_token_not_survey_path_map"
+        for row in rows
+    )
+    for row in rows:
+        assert row["endpoint_scoring_allowed"] == "false"
+        assert row["contains_mapping_vector"] == "false"
+        assert row["contains_predictions"] == "false"
+        assert row["contains_residuals"] == "false"
+        assert row["uses_kids_data_vector_values"] == "false"
 
 
 def test_kids1000_cosebis_null_control_policy_is_declared_not_run() -> None:

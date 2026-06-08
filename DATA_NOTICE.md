@@ -153,6 +153,13 @@ area, mean redshift, and support intervals. It contains no COSEBIs predictions,
 residuals, likelihood values, posterior-chain use, fit statistics, or data-vector
 value use.
 
+The COSEBIs path mask/depth gap inventory scans only the selected KiDS tarball
+membership and release note. It records that the present package does not
+contain an accepted standalone footprint, path mask, depth map, random catalogue,
+or equivalent path-load product. The inventory contains no path mapping vector,
+theory vector, predictions, residuals, likelihood values, posterior-chain use,
+fit statistics, or data-vector-value use.
+
 The COSEBIs null-control readiness inventory declares four future control
 families but does not execute them. It contains no control scores, predictions,
 residuals, fit statistics, posterior-chain use, or data-vector-value use.
