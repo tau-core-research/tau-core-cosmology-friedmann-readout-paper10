@@ -223,6 +223,23 @@ loses by `1.990`, and the wrong-sign control is equally good. This is a useful
 multi-probe covariance gate and a seminegative control, not evidence for a
 preferred web-growth direction.
 
+The first CMB-safety support check is recorded in:
+
+```text
+data/source_manifest/cmb_safety_lowz_support_v1.csv
+data/derived/cmb_safety_lowz_support_v1.csv
+data/derived/cmb_safety_lowz_support_v1_summary.csv
+docs/cmb_safety_lowz_support_v1.md
+scripts/build_cmb_safety_lowz_support_v1.py
+scripts/validate_cmb_safety_lowz_support_v1.py
+```
+
+This is not a CMB likelihood and contains no CMB map data. It checks only that
+the currently active late-time source-native void/web bases vanish above a
+conservative safety floor (`z=10`) and at a recombination proxy (`z=1089.92`).
+The check passes, so the current late-time pilots do not directly modify the
+early-universe safety regime.
+
 The first tiny pilot product freeze is recorded in:
 
 ```text

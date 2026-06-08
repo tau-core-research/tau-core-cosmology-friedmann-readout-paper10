@@ -66,6 +66,9 @@ def test_public_files_exist() -> None:
         "data/derived/sdss_multitracer_bao_rsd_design_matrix_v1_summary.csv",
         "data/derived/sdss_multitracer_bao_rsd_full_cov_pilot_v1_summary.csv",
         "data/derived/sdss_multitracer_bao_rsd_full_cov_pilot_v1_grid.csv",
+        "data/source_manifest/cmb_safety_lowz_support_v1.csv",
+        "data/derived/cmb_safety_lowz_support_v1.csv",
+        "data/derived/cmb_safety_lowz_support_v1_summary.csv",
         "docs/void_web_source_native_products_v1.md",
         "docs/void_web_source_native_transform_rule_v1.md",
         "docs/pantheon_void_web_source_native_design_matrix_v1.md",
@@ -77,6 +80,7 @@ def test_public_files_exist() -> None:
         "docs/sdss_multitracer_bao_rsd_transform_rule_v1.md",
         "docs/sdss_multitracer_bao_rsd_design_matrix_v1.md",
         "docs/sdss_multitracer_bao_rsd_full_cov_pilot_v1.md",
+        "docs/cmb_safety_lowz_support_v1.md",
         "scripts/acquire_void_web_source_native_products_v1.py",
         "scripts/validate_void_web_source_native_products_v1.py",
         "scripts/build_void_web_source_native_inventory_v1.py",
@@ -96,6 +100,8 @@ def test_public_files_exist() -> None:
         "scripts/validate_sdss_multitracer_bao_rsd_design_matrix_v1.py",
         "scripts/run_sdss_multitracer_bao_rsd_full_cov_pilot_v1.py",
         "scripts/validate_sdss_multitracer_bao_rsd_full_cov_pilot_v1.py",
+        "scripts/build_cmb_safety_lowz_support_v1.py",
+        "scripts/validate_cmb_safety_lowz_support_v1.py",
         "scripts/acquire_pilot_products.py",
         "scripts/validate_pilot_products.py",
         "data/source_manifest/pilot_frozen_product_manifest.csv",
@@ -571,6 +577,28 @@ def test_sdss_multitracer_bao_rsd_full_cov_pilot_is_nonvalidation() -> None:
         "delta_aic_web_minus_baseline",
     ]:
         float(pilot_summary[key])
+
+
+def test_cmb_safety_lowz_support_check_is_known_limit_only() -> None:
+    with (ROOT / "data/source_manifest/cmb_safety_lowz_support_v1.csv").open(newline="") as f:
+        run = list(csv.DictReader(f))[0]
+    assert run["status"] == "CMB_SAFETY_SUPPORT_CHECK_NOT_VALIDATION"
+    assert run["endpoint_scoring_allowed"] == "false"
+    assert "posthoc_cmb_map_selection" in run["forbidden_inputs"]
+    with (ROOT / "data/derived/cmb_safety_lowz_support_v1.csv").open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    assert len(rows) == 2
+    assert {row["probe_id"] for row in rows} == {"z_safety_floor", "z_recombination_proxy"}
+    for row in rows:
+        assert row["passes_zero_support"] == "true"
+        assert float(row["W_void_source_native_basis"]) == 0.0
+        assert float(row["W_web_source_native_basis"]) == 0.0
+    with (ROOT / "data/derived/cmb_safety_lowz_support_v1_summary.csv").open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["passes_cmb_lowz_support_check"] == "true"
+    assert summary["contains_cmb_map_data"] == "false"
+    assert summary["contains_cmb_likelihood"] == "false"
+    assert summary["contains_fit_statistics"] == "false"
 
 
 def test_pilot_products_are_frozen_but_not_endpoint_enabled() -> None:

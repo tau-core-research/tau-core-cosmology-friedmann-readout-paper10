@@ -1,0 +1,2 @@
+run_id,status,n_probe_rows,z_recombination_proxy,z_safety_floor,void_max_r,web_bins,web_rows_usable,passes_cmb_lowz_support_check,endpoint_scoring_allowed,contains_cmb_map_data,contains_cmb_likelihood,contains_fit_statistics,claim_boundary
+CMB_SAFETY_LOWZ_SUPPORT_V1,CMB_SAFETY_SUPPORT_CHECK_NOT_VALIDATION,2,1089.92,10.0,326.62528844,150,160351,true,false,false,false,false,cmb_safety_lowz_support_check_not_validation

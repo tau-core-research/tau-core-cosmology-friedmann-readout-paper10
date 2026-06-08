@@ -81,6 +81,12 @@ The derived six-component design matrix and pilot summary use the official
 grammar test and seminegative control, not endpoint validation and not evidence
 for a new cosmological model.
 
+The CMB-safety low-redshift support check contains no CMB maps, no Planck
+likelihood, and no CMB residuals. It only verifies that the currently active
+late-time void/web basis functions are zero at a conservative high-redshift
+safety floor and at a recombination-scale proxy. Passing this check is a
+known-limit sanity condition, not CMB evidence.
+
 The pilot frozen-product manifest includes three public distance-side files
 under `data/raw/` only to test acquisition, hashing, covariance-shape checks,
 and local provenance. These files are not sufficient for endpoint scoring

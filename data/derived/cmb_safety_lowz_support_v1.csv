@@ -1,0 +1,3 @@
+run_id,probe_id,z_probe,r_proxy_mpc_over_h,W_void_source_native_basis,W_web_source_native_basis,passes_zero_support,claim_boundary
+CMB_SAFETY_LOWZ_SUPPORT_V1,z_safety_floor,10,29979.2458,0,0,true,cmb_safety_lowz_support_check_not_validation
+CMB_SAFETY_LOWZ_SUPPORT_V1,z_recombination_proxy,1089.92,3267497.95823,0,0,true,cmb_safety_lowz_support_check_not_validation
