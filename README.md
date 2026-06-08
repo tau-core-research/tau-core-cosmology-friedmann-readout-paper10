@@ -46,6 +46,19 @@ It records candidate public source families, their current freeze status,
 planned local artifact paths, and endpoint fields that are forbidden during
 source selection.
 
+The first explicit multi-channel readout manifest is:
+
+```text
+data/source_manifest/cosmology_channel_manifest_v1.csv
+docs/cosmology_channel_manifest_v1.md
+scripts/validate_cosmology_channel_manifest_v1.py
+```
+
+It declares the four source-frozen channel families `W_void`, `W_web`,
+`W_path`, and `W_time`, plus their allowed source families, forbidden endpoint
+fields, activation-rule IDs, null controls, and projection-induction roles.
+Every row remains `endpoint_scoring_allowed=false`.
+
 ## Reproduce
 
 ```bash
@@ -53,7 +66,8 @@ python scripts/reproduce.py
 ```
 
 The reproduction script compiles the manuscript with `tectonic`, validates the
-source-freeze manifest, builds the arXiv source package, and runs smoke tests.
+source-freeze and channel manifests, builds the arXiv source package, and runs
+smoke tests.
 
 ## arXiv Source Package
 

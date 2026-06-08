@@ -440,6 +440,17 @@ requirement becomes stronger: each channel must be selected from independent
 source-side observables before the corresponding distance, growth, lensing, or
 CMB-safety residuals are scored.
 
+This release therefore adds a channel-level manifest,
+\(\texttt{cosmology\_channel\_manifest\_v1.csv}\), which declares the four
+families \(W_{\rm void}\), \(W_{\rm web}\), \(W_{\rm path}\), and
+\(W_{\rm time}\). For each family it records allowed source IDs, allowed
+source-side observables, forbidden endpoint fields, activation-rule IDs,
+null controls, target observable blocks, and the current projection-induction
+role. All rows are marked
+\(\texttt{CHANNEL\_DECLARED\_NOT\_ENDPOINT}\) and
+\(\texttt{endpoint\_scoring\_allowed=false}\). Thus the manifest is a
+leakage-prevention and future-pilot artifact, not an endpoint dataset.
+
 The corresponding theory-side source-grounding gate is a projection-induction
 condition. In its minimal form, a Tau-side mode can be promoted to a
 four-dimensional observable or closure source only if it is activated, survives

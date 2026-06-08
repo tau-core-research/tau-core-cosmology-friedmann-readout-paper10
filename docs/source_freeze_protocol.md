@@ -9,6 +9,20 @@ The source manifest is:
 data/source_manifest/paper10_source_freeze_manifest.csv
 ```
 
+The first channel-level companion manifest is:
+
+```text
+data/source_manifest/cosmology_channel_manifest_v1.csv
+docs/cosmology_channel_manifest_v1.md
+```
+
+It freezes the allowed source families and forbidden endpoint fields for the
+four cosmology readout channels:
+
+```text
+W_void, W_web, W_path, W_time.
+```
+
 Each row declares:
 
 - the source block,

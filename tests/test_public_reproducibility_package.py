@@ -20,9 +20,12 @@ def test_public_files_exist() -> None:
         "arxiv_submission_source.zip",
         "data/derived/audit_gate_inventory.csv",
         "data/source_manifest/paper10_source_freeze_manifest.csv",
+        "data/source_manifest/cosmology_channel_manifest_v1.csv",
+        "docs/cosmology_channel_manifest_v1.md",
         "docs/source_freeze_protocol.md",
         "docs/source_selection_audit_001.md",
         "scripts/validate_source_freeze.py",
+        "scripts/validate_cosmology_channel_manifest_v1.py",
         "scripts/acquire_source_pages.py",
         "scripts/validate_cached_source_pages.py",
         "data/source_manifest/source_page_cache_manifest.csv",
@@ -125,6 +128,36 @@ def test_source_freeze_manifest_blocks_endpoint_leakage() -> None:
         "posthoc_environment_labels",
     ]:
         assert marker in forbidden
+
+
+def test_cosmology_channel_manifest_v1_blocks_endpoint_leakage() -> None:
+    with (ROOT / "data/source_manifest/cosmology_channel_manifest_v1.csv").open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    channels = {row["channel_id"] for row in rows}
+    assert {
+        "W_VOID_MATURITY",
+        "W_WEB_ANISOTROPY",
+        "W_PATH_PROJECTION",
+        "W_TIME_READOUT",
+    } <= channels
+    assert {row["endpoint_scoring_allowed"] for row in rows} == {"false"}
+    assert {row["freeze_status"] for row in rows} == {"CHANNEL_DECLARED_NOT_ENDPOINT"}
+    forbidden = ";".join(row["forbidden_endpoint_fields"] for row in rows)
+    for marker in [
+        "distance_residuals",
+        "growth_residuals",
+        "lensing_residuals",
+        "fit_improvement_flags",
+        "posthoc_environment_labels",
+        "posthoc_sky_direction_selection",
+        "posthoc_clock_anomaly_labels",
+    ]:
+        assert marker in forbidden
+    for row in rows:
+        assert row["activation_rule_id"].startswith("ACT_")
+        assert row["activation_rule_status"] == "RULE_DECLARED_NOT_NUMERIC"
+        assert row["null_control"]
+        assert row["projection_induction_role"]
 
 
 def test_source_page_cache_is_hash_locked() -> None:
