@@ -39,6 +39,9 @@ def test_public_files_exist() -> None:
         "docs/pantheon_endpoint_scope_v1.md",
         "scripts/build_pantheon_scope_v1.py",
         "scripts/validate_pantheon_scope_v1.py",
+        "data/source_manifest/pantheon_scoring_protocol_v1.csv",
+        "docs/pantheon_scoring_protocol_v1.md",
+        "scripts/validate_pantheon_scoring_protocol_v1.py",
     ]
     for rel in required:
         assert (ROOT / rel).exists(), rel
@@ -157,3 +160,19 @@ def test_pantheon_scope_v1_is_frozen_not_scored() -> None:
     forbidden = row["forbidden_inputs_checked"]
     assert "Tau_residual_parameters" in forbidden
     assert "late_time_activation_fit" in forbidden
+
+
+def test_pantheon_scoring_protocol_is_frozen_not_run() -> None:
+    with (ROOT / "data/source_manifest/pantheon_scoring_protocol_v1.csv").open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    assert len(rows) == 1
+    row = rows[0]
+    assert row["status"] == "SCORING_PROTOCOL_FROZEN_NOT_RUN"
+    assert row["scoring_allowed"] == "false"
+    assert row["parent_scope_id"] == "PANTHEON_DISTANCE_SCOPE_V1"
+    assert "flat_LCDM" in row["baseline_family"]
+    assert "W_tau" in row["tau_activation_family"]
+    forbidden = row["forbidden_inputs"]
+    assert "distance_residuals" in forbidden
+    assert "posthoc_row_masks" in forbidden
+    assert not (ROOT / "data/derived/pantheon_scoring_v1_results.csv").exists()

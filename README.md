@@ -124,6 +124,16 @@ docs/pantheon_endpoint_scope_v1.md
 It freezes a residual-blind row rule and covariance-submatrix policy, but it is
 still `SCOPE_FROZEN_NOT_SCORED`.
 
+The first scoring grammar is frozen, but not run:
+
+```text
+data/source_manifest/pantheon_scoring_protocol_v1.csv
+docs/pantheon_scoring_protocol_v1.md
+```
+
+It declares the baseline family, nuisance policy, Tau activation family, and
+required future controls. It also keeps `scoring_allowed=false`.
+
 ## Scope
 
 This is a protocol scaffold and branch-opening paper package. The next

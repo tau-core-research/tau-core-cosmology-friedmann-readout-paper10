@@ -299,6 +299,16 @@ the source table. The resulting row mask is a source-derived artifact only:
 no \(\Lambda\)CDM residuals, Tau residual parameters, fit-improvement flags, or
 late-time activation fits are used.
 
+The first scoring grammar is then frozen as a protocol artifact, still without
+running scores. The declared baseline family is a flat-\(\Lambda\)CDM distance
+modulus branch with analytic marginalization of the absolute magnitude/Hubble
+offset in a future run. The declared Tau comparison family is only the
+late-activation shell \(W_\tau(a)=a^q/(a^q+a_\tau^q)\); no values of
+\(q\), \(a_\tau\), or \(\Omega_\tau\) are fitted in this protocol freeze. The
+required future controls include baseline-only, Tau-shell, shuffled-activation,
+and wrong-activation branches. The validation script fails if score artifacts
+are present in the current scaffold.
+
 \section{CMB role}
 
 CMB maps are relevant, but not as the first standalone discovery target. The

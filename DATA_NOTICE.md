@@ -58,3 +58,6 @@ policies are not frozen.
 The Pantheon+ scope artifacts under `data/derived/` are row masks and summaries
 derived only from source-side fields. They do not contain model residuals,
 fitted Tau parameters, or endpoint scores.
+
+The Pantheon+ scoring protocol manifest is also non-data. It freezes the future
+scoring grammar and explicitly forbids score artifacts in the current scaffold.
