@@ -86,6 +86,7 @@ def main() -> None:
     run(["python", "scripts/validate_kids1000_cosebis_path_mask_depth_gap_inventory_v1.py"])
     run(["python", "scripts/validate_kids1000_dr4_path_mask_route_scripts_v1.py"])
     run(["python", "scripts/validate_kids1000_dr4_path_mask_head_sample_v1.py"])
+    run(["python", "scripts/validate_kids1000_dr4_path_mask_subset_v1.py"])
     run(["python", "scripts/build_kids1000_cosebis_null_control_readiness_v1.py"])
     run(["python", "scripts/validate_kids1000_cosebis_null_control_readiness_v1.py"])
     run(["python", "scripts/build_kids1000_cosebis_null_control_seed_inventory_v1.py"])

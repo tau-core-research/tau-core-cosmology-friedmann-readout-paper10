@@ -173,6 +173,13 @@ content type, and content length. It does not download mask FITS products,
 redistribute mask maps, parse pixels, compute a path mapping vector, or use
 endpoint residuals.
 
+The KiDS DR4 path-mask subset inventory downloads only the three predeclared
+first/middle/last mask FITS products from that HEAD sample. It records hashes,
+FITS image shapes, and basic finite/nonzero pixel summaries. It does not compute
+a path mapping vector, does not connect mask pixels to COSEBIs rows, does not
+build a theory vector, and does not use KiDS data-vector values or endpoint
+residuals.
+
 The COSEBIs null-control readiness inventory declares four future control
 families but does not execute them. It contains no control scores, predictions,
 residuals, fit statistics, posterior-chain use, or data-vector-value use.

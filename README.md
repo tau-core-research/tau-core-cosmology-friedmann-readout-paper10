@@ -493,6 +493,24 @@ DR4.1 9-band route. All three return HTTP `200` with FITS content and positive
 content length. This is an availability sanity check only: the mask FITS files
 are not downloaded and no path mapping is computed.
 
+The first source-frozen KiDS DR4 path-mask subset inventory is recorded in:
+
+```text
+data/source_manifest/kids1000_dr4_path_mask_subset_policy_v1.csv
+data/raw/weak_lensing/kids1000_path_masks/mask_subset_v1/
+data/derived/kids1000_dr4_path_mask_subset_inventory_v1.csv
+data/derived/kids1000_dr4_path_mask_subset_inventory_v1_summary.csv
+docs/kids1000_dr4_path_mask_subset_policy_v1.md
+scripts/acquire_kids1000_dr4_path_mask_subset_v1.py
+scripts/validate_kids1000_dr4_path_mask_subset_v1.py
+```
+
+It downloads and hash-freezes the first/middle/last DR4.1 9-band mask FITS
+products from the predeclared HEAD sample, then records FITS image shape and
+basic finite/nonzero pixel summaries. The three masks total `15,091,583` bytes
+and `1,323,000,000` image pixels. This still does not compute a path map, does
+not connect masks to COSEBIs rows, and does not score a lensing model.
+
 The first COSEBIs null-control readiness policy is recorded in:
 
 ```text

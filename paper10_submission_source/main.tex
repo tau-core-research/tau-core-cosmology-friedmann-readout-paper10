@@ -465,6 +465,12 @@ A first route-health check then performs HEAD requests for the first, middle,
 and last mask products in the preferred route. All three return HTTP 200 with
 FITS content and positive content length. This is still only metadata: no mask
 FITS file is downloaded and no path-aware lensing theory vector is constructed.
+The same predeclared first/middle/last sample is then materialized as a tiny
+source-side mask subset. The three downloaded mask FITS products are hash-frozen
+and parsed only to record image shapes and finite/nonzero pixel summaries. This
+establishes that the route can supply actual mask images, but it still does not
+construct a \(W_{\rm path}\) mapping, connect mask pixels to the 300 COSEBIs
+rows, or evaluate any lensing score.
 
 The null-control gate is declared in parallel. It predeclares sky rotation,
 tomographic-pair shuffle, wrong-channel activation, and web/path sign-flip
