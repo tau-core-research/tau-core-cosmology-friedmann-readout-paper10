@@ -54,6 +54,9 @@ def test_public_files_exist() -> None:
         "docs/pantheon_pilot_scoring_v1.md",
         "scripts/run_pantheon_pilot_scoring_v1.py",
         "scripts/validate_pantheon_pilot_scoring_v1.py",
+        "scripts/build_figures.py",
+        "figures/fig_pantheon_pilot_branch_diagnostics.pdf",
+        "paper10_submission_source/figures/fig_pantheon_pilot_branch_diagnostics.pdf",
     ]
     for rel in required:
         assert (ROOT / rel).exists(), rel
@@ -83,6 +86,7 @@ def test_arxiv_zip_is_source_only() -> None:
         names = set(zf.namelist())
     assert "main.tex" in names
     assert "refs.bib" in names
+    assert "figures/fig_pantheon_pilot_branch_diagnostics.pdf" in names
     assert "main.pdf" not in names
     assert not any(name.endswith(".aux") for name in names)
 

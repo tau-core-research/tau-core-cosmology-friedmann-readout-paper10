@@ -162,6 +162,14 @@ AIC is worse by `5.916` because the Tau shell carries more effective
 parameters. This is therefore a reproducible scoring-pipeline smoke test, not
 evidence for dark energy or for Tau Core cosmology.
 
+The pilot diagnostic figure is generated reproducibly from the frozen grid:
+
+```text
+scripts/build_figures.py
+figures/fig_pantheon_pilot_branch_diagnostics.pdf
+paper10_submission_source/figures/fig_pantheon_pilot_branch_diagnostics.pdf
+```
+
 ## Scope
 
 This is a protocol scaffold and branch-opening paper package. The next

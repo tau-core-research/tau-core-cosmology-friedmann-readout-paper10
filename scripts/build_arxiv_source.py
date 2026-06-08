@@ -11,7 +11,6 @@ SOURCE = ROOT / "paper10_submission_source"
 OUT = ROOT / "arxiv_submission_source.zip"
 
 EXCLUDE_SUFFIXES = {
-    ".pdf",
     ".aux",
     ".bbl",
     ".blg",
@@ -33,6 +32,8 @@ def main() -> None:
     for path in sorted(SOURCE.rglob("*")):
         if not path.is_file():
             continue
+        if path.name == "main.pdf":
+            continue
         if path.suffix in EXCLUDE_SUFFIXES:
             continue
         files.append(path)
@@ -47,4 +48,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-
