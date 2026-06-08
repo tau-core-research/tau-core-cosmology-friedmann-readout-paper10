@@ -102,6 +102,37 @@ C_tau,cosmo
 `C_cross` must remain controlled and source-frozen. It cannot be introduced
 post hoc to rescue an endpoint score.
 
+## Projection-Induction Gate
+
+The theory-side source-grounding gate below this operational shell is the
+projection-induction principle:
+
+```text
+Tau-side mode
+    -> activation
+    -> quotient survival
+    -> closure stability
+    -> 4D readout survival
+    -> induced observable / closure source
+```
+
+In formula language:
+
+```text
+O_i^4D = R_i^4D(Pi_stab([A_tau(u)]))
+```
+
+or, in a stronger variational form:
+
+```text
+u_i* = argmin A_i[u]
+O_i^4D = R_i^4D(u_i*)
+```
+
+Paper 10 does not prove this gate. It uses the gate to state what would be
+needed for `W_void`, `W_web`, `W_path`, or `W_time` to become Tau-side induced
+cosmological closure sources rather than source-frozen proxies.
+
 ## Audit Rule
 
 Each channel must be selected from independent source-side observables before
