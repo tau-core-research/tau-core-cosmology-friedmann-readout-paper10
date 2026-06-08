@@ -1,0 +1,64 @@
+# Tau Core Cosmology Friedmann-Readout Paper 10
+
+This repository is the initial private reproducibility scaffold for Paper 10:
+
+**A source-frozen Friedmann-readout audit protocol for late-time cosmology**
+
+The paper is a protocol and pilot-analysis design. It connects the
+Koushiappas uncertainty-Friedmann external comparison to a Tau Core
+Friedmann-readout residual audit, then defines the data blocks needed to test
+whether late-time acceleration is better read as a structured projection/readout
+residual than as a homogeneous fluid.
+
+## Main Claim
+
+The repository defines a reproducible audit protocol:
+
+```text
+source-frozen void maturity and cosmic-web anisotropy proxies
+    -> late-time activation shells
+    -> distance, growth, lensing, and CMB safety tests
+    -> shuffled and wrong-proxy null controls.
+```
+
+## Does Not Claim
+
+- It does not claim that Tau Core explains dark energy.
+- It does not claim a detection of a Friedmann-readout residual.
+- It does not replace Lambda-CDM.
+- It does not validate the Koushiappas uncertainty-Friedmann model.
+- It does not use CMB maps as direct evidence for a Tau Core effect.
+- It does not contain a completed perturbation-level or covariant Tau Core
+  cosmology derivation.
+
+## Included Data
+
+This first scaffold contains only compact protocol artifacts in `data/derived/`.
+No raw survey products are included.
+
+## Reproduce
+
+```bash
+python scripts/reproduce.py
+```
+
+The reproduction script compiles the manuscript with `tectonic`, builds the
+arXiv source package, and runs smoke tests.
+
+## arXiv Source Package
+
+`arxiv_submission_source.zip` is generated from `paper10_submission_source/`
+and excludes `main.pdf` plus TeX build byproducts.
+
+## Online Data Dependencies
+
+The one-command reproduction path does not perform live online data acquisition.
+Future source-acquisition scripts should document exact URLs, versions, hashes
+where possible, and redistribution boundaries.
+
+## Scope
+
+This is a protocol scaffold and branch-opening paper package. The next
+scientific milestone is a real-data pilot using public distance, void,
+cosmic-web, growth, lensing, and CMB products under the frozen audit ladder.
+

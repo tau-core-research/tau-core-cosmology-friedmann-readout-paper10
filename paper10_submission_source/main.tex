@@ -1,0 +1,299 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{xcolor}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue,
+  citecolor=blue,
+  urlcolor=blue
+}
+
+\title{A source-frozen Friedmann-readout audit protocol for late-time cosmology}
+\author{Jozsef Olcsak}
+\date{Draft protocol scaffold, 2026-06-08}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We define a reproducible audit protocol for a Tau-Core-inspired
+Friedmann-readout residual hypothesis. The external motivation is the
+Koushiappas cosmological uncertainty proposal, in which non-sharp
+scale-factor and expansion-rate variables modify Friedmann closure and can
+produce late-time acceleration without adding new particles or fields. The
+present paper does not validate that model and does not claim that Tau Core
+explains dark energy. Instead, it translates the idea into a source-frozen
+cosmological audit: independent void-maturity and cosmic-web-anisotropy
+source blocks define activation functions before distance, growth, lensing,
+and CMB-safety observables are scored. The target signature is not merely
+\(w(z)\ne -1\), but a Lambda-like distance readout paired with
+web/environment-dependent growth or lensing residuals. The first release is a
+protocol scaffold with claim boundaries, source blocks, null controls, and
+reproducibility checks; no measurement result is claimed.
+\end{abstract}
+
+\section{Scope and non-claims}
+
+This manuscript opens a cosmology-facing audit lane for Tau Core. It should be
+read as a protocol scaffold, not as a discovery paper. It is downstream of the
+finite-memory cosmology diagnostic in Paper 5~\cite{Paper5FiniteMemory} and
+inherits leakage-prevention discipline from Papers 8 and 9
+~\cite{Paper8ForwardReadout,Paper9ProjectionReadout}.
+
+The allowed claim is:
+
+\begin{quote}
+A source-frozen cosmological readout audit can be formulated in which void and
+web source proxies are frozen before testing distance, growth, lensing, and CMB
+safety observables.
+\end{quote}
+
+The disallowed claims are:
+
+\begin{itemize}[leftmargin=1.2em]
+\item that Tau Core explains cosmic acceleration;
+\item that the Koushiappas uncertainty-Friedmann model has been validated;
+\item that \(\Lambda\)CDM is replaced;
+\item that CMB maps directly show a Tau Core effect;
+\item that a perturbation-level covariant Tau Core cosmology has been derived.
+\end{itemize}
+
+\section{External motivation}
+
+Koushiappas~\cite{Koushiappas2026} proposes that the size of the universe and
+its expansion rate cannot be simultaneously specified with arbitrary precision.
+In that model a deformed commutation relation for the scale factor modifies the
+Friedmann equation through a geometric correction. For a positive exponent the
+model can produce late-time dark-energy-like behavior, while a sufficiently
+negative exponent can produce a nonsingular bounce.
+
+Tau Core does not import this as proof. It uses the paper as a comparison route:
+
+\[
+\begin{aligned}
+&\hbox{non-sharp scale/expansion readout}\\
+&\quad\longrightarrow\hbox{ modified Friedmann closure}\\
+&\quad\longrightarrow\hbox{ late-time acceleration-like reconstruction}.
+\end{aligned}
+\]
+
+\section{Friedmann-readout residual shell}
+
+For a flat FLRW model without an explicit cosmological constant, define the
+standard closure
+\begin{equation}
+C_F[a,H,\rho] = H^2 - \frac{8\pi G}{3}\rho.
+\end{equation}
+
+Tau Core introduces a bridge-level residual
+\begin{equation}
+C_{\tau,\mathrm{cosmo}}[a,H,\mathcal M_\tau],
+\end{equation}
+where \(a(t)\) and \(H(t)\) are four-dimensional cosmological readouts and
+\(\mathcal M_\tau\) denotes a deeper cosmic morphology/projection/readout
+structure. The claim-safe shell is
+\begin{equation}
+C_F[a,H,\rho]+C_{\tau,\mathrm{cosmo}}[a,H,\mathcal M_\tau]=0.
+\end{equation}
+
+Equivalently,
+\begin{equation}
+H^2=\frac{8\pi G}{3}\rho-C_{\tau,\mathrm{cosmo}}.
+\end{equation}
+
+If
+\begin{equation}
+-C_{\tau,\mathrm{cosmo}}\simeq \frac{\Lambda_{\mathrm{eff}}}{3},
+\end{equation}
+then an observer reconstructs a Lambda-like term. This is not a statement that
+\(\Lambda_{\mathrm{eff}}\) is fundamental vacuum energy.
+
+\section{Late-time activation}
+
+A minimal late-activation shell is
+\begin{equation}
+C_{\tau,\mathrm{cosmo}}(z)
+=
+-\frac{\Lambda_{\tau,0}}{3}W_\tau(z),
+\end{equation}
+so that
+\begin{equation}
+H^2(z)
+=
+\frac{8\pi G}{3}\rho(z)
++\frac{\Lambda_{\tau,0}}{3}W_\tau(z).
+\end{equation}
+
+The safety behavior is
+\[
+W_\tau(z)\to 0 \quad (z\gg 1), \qquad
+W_\tau(z)\to 1 \quad (z\to 0).
+\]
+
+One source-side activation shell is
+\begin{equation}
+W_\tau(a)=\frac{a^q}{a^q+a_\tau^q}.
+\end{equation}
+
+If a four-dimensional observer reconstructs the residual as an effective dark
+energy component, then
+\begin{equation}
+w_{\mathrm{eff}}(z)
+=
+-1+\frac{1+z}{3}\frac{d\ln W_\tau}{dz}.
+\end{equation}
+This reconstructed equation of state is an observer-side diagnostic, not a
+literal fluid claim.
+
+\section{Void/web split target}
+
+The audit should not stop at fitting \(H(z)\). The Tau-specific target is
+\begin{equation}
+\hbox{Lambda-like distance readout}
++
+\hbox{environment-dependent growth/lensing residual}.
+\end{equation}
+
+The minimal distance shell is
+\begin{equation}
+E_D^2(a)
+=
+\Omega_m a^{-3}
++\Omega_r a^{-4}
++\Omega_k a^{-2}
++\Omega_\tau W_V(a),
+\end{equation}
+where \(W_V\) must be frozen from a void-maturity source block before distance
+scoring.
+
+The minimal growth shell is
+\begin{equation}
+D''
++
+\left(2+\frac{d\ln H_D}{d\ln a}\right)D'
+-
+\frac{3}{2}\Omega_m(a)
+\left[1+\mu_\tau(a,k,\mathrm{env})\right]D
+=0,
+\end{equation}
+with
+\begin{equation}
+\mu_\tau(a,k,\mathrm{env})
+=
+\mu_0 W_W(a)Q_k(k)Q_{\mathrm{env}}(\mathrm{env}).
+\end{equation}
+
+The corresponding lensing shell is
+\begin{equation}
+\Sigma_{\mathrm{lens}}(a,k,\mathrm{env})
+=
+1+\Sigma_0 W_W(a)Q_k(k)Q_{\mathrm{env}}(\mathrm{env}).
+\end{equation}
+
+Here \(W_W\) must be frozen from a cosmic-web-anisotropy source block before
+growth or lensing residuals are scored.
+
+\section{Data blocks}
+
+The intended public data blocks are summarized in
+Table~\ref{tab:data-blocks}. The table is a work order, not a completed
+measurement.
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{lll}
+\toprule
+Block & Candidate public sources & Role \\
+\midrule
+Distance & DESI BAO, SNe, \(H(z)\), CMB priors & test \(E_D(z)\) \\
+Void maturity & void catalogues & freeze \(W_V(a)\) \\
+Web anisotropy & cosmic-web classifiers & freeze \(W_W(a)\), \(Q_{\rm env}\) \\
+Growth & RSD \(f\sigma_8\), clustering & test \(\mu_\tau\) \\
+Lensing & weak lensing, CMB lensing, cluster lensing & test \(\Sigma_{\rm lens}\) \\
+CMB safety & Planck/LAMBDA products & early safety and lensing controls \\
+\bottomrule
+\end{tabular}
+\caption{Planned source blocks for the Friedmann-readout audit. DESI data
+products~\cite{DESIDR2BAO2025,DESIDR2Products2025}, Planck products
+~\cite{Planck2018Cosmology,PlanckLegacyArchive}, and NASA LAMBDA
+~\cite{NASALAMBDA} are examples of public sources.}
+\label{tab:data-blocks}
+\end{table}
+
+\section{Leakage prevention}
+
+The audit follows a source-freeze discipline:
+
+\begin{enumerate}[leftmargin=1.5em]
+\item Freeze void maturity \(W_V\) before distance residual scoring.
+\item Freeze web anisotropy \(W_W\) and \(Q_{\rm env}\) before growth/lensing scoring.
+\item Keep CMB primary maps as early-safety and consistency controls.
+\item Run shuffled environment labels and wrong-proxy nulls.
+\item Do not use target residuals to choose activation functions.
+\end{enumerate}
+
+This is the cosmological analogue of the matched-vs-wrong and non-overlap
+ledger discipline used in Papers 8 and 9.
+
+\section{CMB role}
+
+CMB maps are relevant, but not as the first standalone discovery target. The
+primary CMB mostly constrains early-universe safety. More direct late-time
+tests can come from CMB lensing, ISW-style cross-correlations, and
+foreground-safe large-scale controls. Therefore the CMB role in this protocol is
+\[
+\hbox{early safety + lensing/growth cross-check},
+\]
+not direct proof of a Tau Core residual.
+
+\section{Pass and fail gates}
+
+A pass candidate requires:
+
+\begin{itemize}[leftmargin=1.2em]
+\item independent void maturity predicting distance activation;
+\item independent web anisotropy predicting growth/lensing residuals;
+\item degradation under shuffled environment labels;
+\item survival under survey mask and covariance controls;
+\item early-universe safety;
+\item comparison against smooth dark energy and generic modified-gravity controls.
+\end{itemize}
+
+A fail result occurs if:
+
+\begin{itemize}[leftmargin=1.2em]
+\item \(W_V\) or \(W_W\) is reverse-engineered from target residuals;
+\item no environment dependence appears;
+\item smooth dark energy explains the data equally well;
+\item the signal disappears under realistic mocks;
+\item early-universe constraints fail.
+\end{itemize}
+
+\section{Conclusion}
+
+The present repository defines a source-frozen Friedmann-readout audit protocol.
+It does not report a measurement result. Its value is to make the next
+cosmology test precise: a Tau Core-inspired late-time residual should be judged
+not by \(w(z)\ne -1\) alone, but by the joint pattern
+\[
+\begin{aligned}
+&\hbox{Lambda-like distance behavior}\\
+&\quad+\hbox{ web/environment-dependent growth or lensing residual}\\
+&\quad+\hbox{ CMB early-safety}.
+\end{aligned}
+\]
+
+The next paper-grade step is a public-data pilot analysis with DESI/SNe/\(H(z)\)
+distance data, void and web source proxies, growth/lensing blocks, CMB safety
+checks, and predeclared null controls.
+
+\bibliographystyle{plain}
+\bibliography{refs}
+
+\end{document}

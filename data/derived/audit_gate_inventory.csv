@@ -1,0 +1,8 @@
+gate,source_block,target_observable,status,forbidden_inputs,notes
+G1_distance_block,DESI_BAO_SNe_Hz_CMB_priors,E_D_z,planned,Vobs_or_target_residuals,distance data test W_V after source freeze
+G2_void_maturity,void_catalogues,W_V_a,planned,distance_residuals,void maturity must be frozen before distance scoring
+G3_web_anisotropy,cosmic_web_classifier,W_W_a_Qenv,planned,growth_or_lensing_residuals,web anisotropy must be frozen before growth/lensing scoring
+G4_growth_lensing,RSD_weak_lensing_CMB_lensing,mu_tau_Sigma_tau,planned,posthoc_environment_labels,test environment dependence after W_W freeze
+G5_cmb_safety,Planck_LAMBDA_CMB,early_safety,planned,late_time_fit_parameters_without_prior_check,CMB is safety/lensing control not primary discovery target
+G6_nulls,shuffle_wrong_proxy_masks,null_suite,planned,endpoint_tuned_labels,wrong proxy and shuffled environment labels are mandatory
+
