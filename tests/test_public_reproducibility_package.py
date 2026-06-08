@@ -58,7 +58,7 @@ def test_public_files_exist() -> None:
         "data/derived/pantheon_full_cov_pilot_scoring_v1_summary.csv",
         "data/derived/pantheon_full_cov_pilot_scoring_v1_grid.csv",
         "docs/pantheon_full_cov_pilot_scoring_v1.md",
-        "docs/tpg_bridge_common_basis.md",
+        "docs/general_tau_readout_basis_from_tpg_bridge.md",
         "scripts/run_pantheon_full_cov_pilot_scoring_v1.py",
         "scripts/validate_pantheon_full_cov_pilot_scoring_v1.py",
         "scripts/build_figures.py",

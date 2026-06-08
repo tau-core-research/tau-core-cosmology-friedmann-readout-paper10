@@ -185,7 +185,7 @@ but `Delta AIC = +5.808`. This preserves the same conclusion as the diagonal
 smoke test: the scoring ladder works, but this is not evidence for a new
 cosmological model.
 
-## TPG-Bridge Continuation
+## General Tau Core Readout Continuation
 
 The weak full-covariance Pantheon+ pilot should be read primarily as a
 limitation of the homogeneous late-activation shell, not as a true negative
@@ -196,7 +196,10 @@ current pilot tests only one smooth proxy:
 W_tau(a)
 ```
 
-The TPG-parallel cosmology programme needs source-frozen channel families:
+The next step is not to import the galaxy TPG bridge itself. Rather, it is to
+generalize the Tau Core readout principle that the TPG bridge made explicit:
+four-dimensional residuals may be readouts of deeper morphology/projection
+channels. In cosmology this requires source-frozen channel families:
 
 ```text
 W_void(a)          void maturity / distance activation

@@ -1,7 +1,10 @@
-# TPG Bridge Common Basis for Paper 10
+# General Tau Core Readout Basis Abstracted from the TPG Bridge
 
-This note records the bridge-level reason why the first Pantheon+ pilot should
-not be overread.
+This note records why the first Pantheon+ pilot should not be overread.
+
+The point is not that Paper 10 is based on the TPG bridge. The point is that
+the galaxy-scale TPG bridge made explicit a more general Tau Core readout
+principle that can also be used in cosmology.
 
 ## Current Pilot
 
@@ -29,9 +32,9 @@ single-shell evidence is weak;
 not a Tau Core true negative.
 ```
 
-## Common Principle with the TPG Bridge
+## General Readout Principle
 
-The galaxy-scale TPG bridge uses the pattern:
+The TPG bridge is a worked example of the more general Tau Core pattern:
 
 ```text
 Tau-side morphology/projection state
@@ -39,18 +42,27 @@ Tau-side morphology/projection state
     -> observable closure test
 ```
 
-Paper 10 should use the same pattern cosmologically:
+At galaxy scale, the closure test is a rotation/readout residual.
+
+At cosmological scale, the closure test becomes:
 
 ```text
-cosmic Tau-side morphology/projection state
-    -> Friedmann-readout residual
+Friedmann-readout residual
     -> distance + growth + lensing + CMB-safety audit
+```
+
+So the common object is not TPG itself. The common object is the Tau Core
+readout principle:
+
+```text
+four-dimensional observables may be channel-dependent readouts
+of a deeper Tau-side configuration.
 ```
 
 ## Missing Channel Families
 
-The TPG-parallel cosmological bridge should not rely on a single smooth
-activation shell. It needs independently frozen channel families:
+A cosmological implementation of this general principle should not rely on one
+smooth activation shell. It needs independently frozen channel families:
 
 ```text
 W_void(a)
@@ -96,4 +108,5 @@ Each channel must be selected from independent source-side observables before
 the corresponding target residual is scored.
 
 This is why the present full-covariance Pantheon+ result is a limitation of the
-homogeneous shell, not a decisive test of the broader TPG-like Tau Core bridge.
+homogeneous shell, not a decisive test of the broader Tau Core readout
+framework.
