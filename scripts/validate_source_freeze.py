@@ -67,9 +67,15 @@ def main() -> None:
         )
 
     blocked = [row["source_id"] for row in rows if row["freeze_status"] == "BLOCKED_SOURCE_SELECTION"]
-    print(f"PAPER10_SOURCE_FREEZE_VALIDATED rows={len(rows)} blocked={len(blocked)}")
+    fetched = [row["source_id"] for row in rows if row["freeze_status"] == "FETCHED_FROZEN"]
+    print(
+        "PAPER10_SOURCE_FREEZE_VALIDATED "
+        f"rows={len(rows)} blocked={len(blocked)} fetched_frozen={len(fetched)}"
+    )
     if blocked:
         print("blocked_source_selection=" + ",".join(blocked))
+    if not fetched:
+        print("endpoint_scoring_allowed=false")
 
 
 if __name__ == "__main__":

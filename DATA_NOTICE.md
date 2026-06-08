@@ -16,8 +16,11 @@ data/source_manifest/paper10_source_freeze_manifest.csv
 
 Rows marked `SOURCE_SELECTED_NOT_FETCHED` identify candidate public source
 families that still need acquisition, checksums, and frozen transformation
-rules. Rows marked `BLOCKED_SOURCE_SELECTION` identify scientifically required
-blocks for which no accepted public source product has yet been frozen.
+rules. Rows marked `BLOCKED_SOURCE_SELECTION` would identify scientifically
+required blocks for which no accepted public source product has yet been
+selected. In the current manifest, the first source-selection audit has selected
+candidate public source families for all required blocks, but none of them are
+yet `FETCHED_FROZEN`.
 
 Planned public data families include:
 

@@ -21,6 +21,7 @@ def test_public_files_exist() -> None:
         "data/derived/audit_gate_inventory.csv",
         "data/source_manifest/paper10_source_freeze_manifest.csv",
         "docs/source_freeze_protocol.md",
+        "docs/source_selection_audit_001.md",
         "scripts/validate_source_freeze.py",
     ]
     for rel in required:
@@ -71,8 +72,8 @@ def test_source_freeze_manifest_blocks_endpoint_leakage() -> None:
     blocks = {row["block"] for row in rows}
     assert {"distance", "void_maturity", "web_anisotropy", "growth", "lensing", "cmb_safety"} <= blocks
     statuses = {row["freeze_status"] for row in rows}
-    assert "BLOCKED_SOURCE_SELECTION" in statuses
     assert statuses <= {"SOURCE_SELECTED_NOT_FETCHED", "BLOCKED_SOURCE_SELECTION", "FETCHED_FROZEN"}
+    assert "FETCHED_FROZEN" not in statuses
     forbidden = ";".join(row["forbidden_endpoint_fields"] for row in rows)
     for marker in [
         "distance_residuals",

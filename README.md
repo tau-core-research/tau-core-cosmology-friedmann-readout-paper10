@@ -68,9 +68,15 @@ where possible, and redistribution boundaries.
 
 Current source manifest status:
 
-- some source families are selected but not fetched,
-- several required blocks remain `BLOCKED_SOURCE_SELECTION`,
+- all required source families now have a candidate public source route,
+- no source row is `FETCHED_FROZEN`,
 - no endpoint scoring is allowed from this scaffold.
+
+The first source-selection audit is recorded in:
+
+```text
+docs/source_selection_audit_001.md
+```
 
 ## Scope
 

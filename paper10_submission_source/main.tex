@@ -222,7 +222,10 @@ CMB safety & Planck/LAMBDA products & early safety and lensing controls \\
 \caption{Planned source blocks for the Friedmann-readout audit. DESI data
 products~\cite{DESIDR2BAO2025,DESIDR2Products2025}, Planck products
 ~\cite{Planck2018Cosmology,PlanckLegacyArchive}, and NASA LAMBDA
-~\cite{NASALAMBDA} are examples of public sources.}
+~\cite{NASALAMBDA}, the public Cosmic Chronometers data page
+~\cite{CosmicChronometersData}, SDSS cosmic-web and eBOSS/LSS products
+~\cite{SDSSCosmicWebVAC,SDSSDR16LSS}, and KiDS-1000 lensing products
+~\cite{KiDS1000Lensing} are examples of public source routes.}
 \label{tab:data-blocks}
 \end{table}
 
@@ -232,10 +235,12 @@ The repository also contains a source-freeze manifest:
 \]
 It records candidate public source families, whether the source has merely been
 selected or remains blocked, the planned local artifact path, and the endpoint
-fields forbidden during source selection. Several blocks are intentionally left
-as \texttt{BLOCKED\_SOURCE\_SELECTION}. This is a feature of the first
-scaffold: those blocks cannot be used for endpoint scoring until the public
-source product, version, transformation rule, and checksum policy are frozen.
+fields forbidden during source selection. In the current manifest, the first
+source-selection audit has identified candidate public source routes for all
+required blocks, but no source row is yet \texttt{FETCHED\_FROZEN}. This is the
+key distinction: source-family selection is not endpoint readiness. These
+blocks cannot be used for endpoint scoring until the public source product,
+version, transformation rule, and checksum policy are frozen.
 
 \section{Leakage prevention}
 
