@@ -67,6 +67,16 @@ This cache records official source landing pages with byte counts and SHA-256
 hashes. It does not contain raw survey products and does not authorize endpoint
 scoring.
 
+The next layer is the product-freeze plan:
+
+```text
+data/source_manifest/paper10_product_freeze_plan.csv
+docs/product_freeze_plan.md
+```
+
+This plan declares which product role must be acquired from each selected source
+family, but every row remains below endpoint status.
+
 Therefore the allowed claim remains:
 
 ```text

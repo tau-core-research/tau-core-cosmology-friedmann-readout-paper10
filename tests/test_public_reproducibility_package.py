@@ -26,6 +26,9 @@ def test_public_files_exist() -> None:
         "scripts/acquire_source_pages.py",
         "scripts/validate_cached_source_pages.py",
         "data/source_manifest/source_page_cache_manifest.csv",
+        "data/source_manifest/paper10_product_freeze_plan.csv",
+        "docs/product_freeze_plan.md",
+        "scripts/validate_product_freeze_plan.py",
     ]
     for rel in required:
         assert (ROOT / rel).exists(), rel
@@ -98,3 +101,18 @@ def test_source_page_cache_is_hash_locked() -> None:
         assert cache_path.exists(), row["source_id"]
         assert row["sha256"]
         assert int(row["byte_count"]) > 0
+
+
+def test_product_freeze_plan_covers_sources_without_endpoint_permission() -> None:
+    with (ROOT / "data/source_manifest/paper10_source_freeze_manifest.csv").open(newline="") as f:
+        source_rows = list(csv.DictReader(f))
+    with (ROOT / "data/source_manifest/paper10_product_freeze_plan.csv").open(newline="") as f:
+        product_rows = list(csv.DictReader(f))
+    source_ids = {row["source_id"] for row in source_rows}
+    product_source_ids = {row["source_id"] for row in product_rows}
+    assert source_ids <= product_source_ids
+    assert {row["endpoint_allowed"] for row in product_rows} == {"false"}
+    assert "PRODUCT_FETCHED_FROZEN" not in {row["freeze_status"] for row in product_rows}
+    for row in product_rows:
+        assert row["transform_rule_id"].startswith("TR_")
+        assert row["endpoint_forbidden_inputs"]

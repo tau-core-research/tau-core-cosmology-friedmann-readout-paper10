@@ -273,6 +273,15 @@ cache during reproduction. These cached pages are not raw survey products and
 are not used to compute cosmological observables; they only make the source
 routes auditable without requiring live network access during reproduction.
 
+A second preflight artifact,
+\(\texttt{data/source\_manifest/paper10\_product\_freeze\_plan.csv}\),
+declares the product role, planned local path, transformation-rule identifier,
+covariance policy, mask or selection policy, and forbidden endpoint fields for
+each source family. In this scaffold every product row has
+\(\texttt{endpoint\_allowed=false}\). Thus the protocol now specifies the next
+data-acquisition step, but still does not contain endpoint data or a
+measurement result.
+
 \section{CMB role}
 
 CMB maps are relevant, but not as the first standalone discovery target. The

@@ -91,6 +91,16 @@ The first source-selection audit is recorded in:
 docs/source_selection_audit_001.md
 ```
 
+The product-freeze preflight plan is recorded in:
+
+```text
+data/source_manifest/paper10_product_freeze_plan.csv
+docs/product_freeze_plan.md
+```
+
+It declares the product roles, transformation-rule IDs, covariance/mask policy
+requirements, and `endpoint_allowed=false` status for every planned product.
+
 ## Scope
 
 This is a protocol scaffold and branch-opening paper package. The next

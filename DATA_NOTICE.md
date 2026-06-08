@@ -44,3 +44,7 @@ Endpoint scoring is not allowed until the required source blocks are either
 The committed provenance cache contains only official landing/source pages,
 not raw survey products. It is used to verify source routes and URLs, not to
 compute cosmological observables.
+
+The product-freeze plan also contains no raw survey products. It records product
+roles and unresolved acquisition policies. Every current product row has
+`endpoint_allowed=false`.
