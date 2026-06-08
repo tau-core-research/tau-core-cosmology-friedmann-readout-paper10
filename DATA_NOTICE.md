@@ -192,13 +192,19 @@ as a physical path weight in this gate. The shell contains no COSEBIs-row
 mapping vector, no theory vector, no predictions, no residuals, no likelihood
 values, and no endpoint score.
 
+The COSEBIs path-mapping design skeleton combines the COSEBIs row structure,
+tomographic redshift-kernel summaries, and preferred-route tile span into a
+300-row source-side layout. It does not compute tile weights, path weights,
+mapping-vector elements, theory-vector elements, predictions, residuals,
+likelihood values, or endpoint scores.
+
 The COSEBIs path-mapping source-preflight ledger combines only source-side
 availability flags. It records that COSEBIs target rows, redshift kernels, and
-the 196-tile route coordinate index are available; that the three-mask
-observable shell is partial; and that a full source-frozen path/depth footprint
-mapping and web-environment catalogue remain missing. It does not compute a
-mapping vector, theory vector, predictions, residuals, likelihood values, or
-endpoint score.
+the 196-tile route coordinate index, and the 300-row design skeleton are
+available; that the three-mask observable shell is partial; and that a full
+source-frozen path/depth footprint mapping and web-environment catalogue remain
+missing. It does not compute a mapping vector, theory vector, predictions,
+residuals, likelihood values, or endpoint score.
 
 The COSEBIs null-control readiness inventory declares four future control
 families but does not execute them. It contains no control scores, predictions,

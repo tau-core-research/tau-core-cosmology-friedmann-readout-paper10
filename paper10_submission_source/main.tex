@@ -480,14 +480,18 @@ coordinates plus a centered zero-fraction shell across the three frozen masks.
 The mask-value semantics are not interpreted as physical lensing path weights in
 this gate. The shell is therefore a pre-mapping observable, not a COSEBIs
 mapping vector, theory vector, or endpoint likelihood input.
+We then assemble a 300-row design skeleton: each COSEBIs target row carries its
+tomographic pair, mode index, the relevant source-bin redshift summaries, and
+the preferred-route sky span. This is still only a layout. No tile/path weight,
+mapping-vector element, or theory-vector element is evaluated.
 The resulting source-preflight ledger is correspondingly mixed: the 300 COSEBIs
-target rows, five-bin redshift-kernel inventory, and 196-tile route-coordinate
-index are available; the mask shell is only a partial three-tile source
-observable; the full path/depth footprint mapping and a KiDS-footprint
-web-environment catalogue remain missing; and null controls are declared but not
-executed. Thus the lensing branch is now narrowed to specific source-side
-blockers rather than an unspecified missing-input state, but it remains
-non-scored.
+target rows, five-bin redshift-kernel inventory, 196-tile route-coordinate
+index, and 300-row design skeleton are available; the mask shell is only a
+partial three-tile source observable; the full path/depth footprint mapping and
+a KiDS-footprint web-environment catalogue remain missing; and null controls are
+declared but not executed. Thus the lensing branch is now narrowed to specific
+source-side blockers rather than an unspecified missing-input state, but it
+remains non-scored.
 
 The null-control gate is declared in parallel. It predeclares sky rotation,
 tomographic-pair shuffle, wrong-channel activation, and web/path sign-flip

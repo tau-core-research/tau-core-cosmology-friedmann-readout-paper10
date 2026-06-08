@@ -12,6 +12,7 @@ TOMO = ROOT / "data" / "derived" / "kids1000_cosebis_tomographic_mode_inventory_
 REDSHIFT = ROOT / "data" / "derived" / "kids1000_cosebis_redshift_kernel_inventory_v1_summary.csv"
 MASK_SHELL = ROOT / "data" / "derived" / "kids1000_dr4_path_mask_observable_shell_v1_summary.csv"
 ROUTE_TILES = ROOT / "data" / "derived" / "kids1000_dr4_path_mask_route_tile_inventory_v1_summary.csv"
+DESIGN_SKELETON = ROOT / "data" / "derived" / "kids1000_cosebis_path_mapping_design_skeleton_v1_summary.csv"
 NULL_SEEDS = ROOT / "data" / "derived" / "kids1000_cosebis_null_control_seed_inventory_v1_summary.csv"
 OUT = ROOT / "data" / "derived" / "kids1000_cosebis_path_mapping_source_preflight_v1.csv"
 SUMMARY = ROOT / "data" / "derived" / "kids1000_cosebis_path_mapping_source_preflight_v1_summary.csv"
@@ -32,6 +33,7 @@ def main() -> None:
     redshift = read_one(REDSHIFT)
     mask_shell = read_one(MASK_SHELL)
     route_tiles = read_one(ROUTE_TILES)
+    design_skeleton = read_one(DESIGN_SKELETON)
     null_seeds = read_one(NULL_SEEDS)
 
     if policy["endpoint_scoring_allowed"].lower() != "false":
@@ -79,6 +81,15 @@ def main() -> None:
             "preflight_role": "preferred_route_tile_coordinate_index",
             "blocking_status": "not_blocking",
             "limitation": "filename_tile_coordinates_only_no_footprint_polygon_no_pixel_weight_no_cosebis_row_mapping",
+        },
+        {
+            "component_id": "cosebis_path_mapping_design_skeleton",
+            "source_state": "available",
+            "evidence_artifact": "data/derived/kids1000_cosebis_path_mapping_design_skeleton_v1_summary.csv",
+            "source_count": design_skeleton["target_rows"],
+            "preflight_role": "target_row_redshift_route_span_design_skeleton",
+            "blocking_status": "not_blocking",
+            "limitation": "design_layout_only_no_tile_weights_no_path_mapping_no_theory_vector",
         },
         {
             "component_id": "full_path_depth_footprint_mapping",

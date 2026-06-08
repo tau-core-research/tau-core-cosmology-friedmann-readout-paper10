@@ -23,11 +23,11 @@ def main() -> None:
         raise SystemExit("unexpected path-mapping source preflight policy status")
     if policy["endpoint_scoring_allowed"] != "false":
         raise SystemExit("path-mapping source preflight policy must remain endpoint disabled")
-    if len(rows) != 7:
-        raise SystemExit("path-mapping source preflight must contain seven components")
+    if len(rows) != 8:
+        raise SystemExit("path-mapping source preflight must contain eight components")
     if summary["status"] != "KIDS1000_COSEBIS_PATH_MAPPING_SOURCE_PREFLIGHT_BUILT_NOT_MAPPED":
         raise SystemExit("unexpected path-mapping source preflight summary status")
-    if summary["component_count"] != "7":
+    if summary["component_count"] != "8":
         raise SystemExit("unexpected component count")
     if summary["target_rows"] != "300":
         raise SystemExit("path-mapping source preflight must target 300 COSEBIs rows")
@@ -38,6 +38,7 @@ def main() -> None:
         "redshift_kernel_inventory": "available",
         "mask_observable_shell": "partial_available",
         "preferred_route_tile_inventory": "available",
+        "cosebis_path_mapping_design_skeleton": "available",
         "full_path_depth_footprint_mapping": "missing",
         "web_environment_catalog": "missing",
         "null_control_seed_policy": "declared_not_executed",
@@ -52,6 +53,8 @@ def main() -> None:
         raise SystemExit("mask observable shell should carry only the three-mask subset")
     if by_component["preferred_route_tile_inventory"]["source_count"] != "196":
         raise SystemExit("preferred route tile inventory should carry all 196 route tiles")
+    if by_component["cosebis_path_mapping_design_skeleton"]["source_count"] != "300":
+        raise SystemExit("design skeleton should carry all 300 COSEBIs target rows")
     if by_component["redshift_kernel_inventory"]["source_count"] != "5":
         raise SystemExit("redshift kernel inventory should carry five source bins")
     if by_component["full_path_depth_footprint_mapping"]["blocking_status"] != "blocking":

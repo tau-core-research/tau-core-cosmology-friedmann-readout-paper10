@@ -91,6 +91,8 @@ def main() -> None:
     run(["python", "scripts/validate_kids1000_dr4_path_mask_subset_v1.py"])
     run(["python", "scripts/build_kids1000_dr4_path_mask_observable_shell_v1.py"])
     run(["python", "scripts/validate_kids1000_dr4_path_mask_observable_shell_v1.py"])
+    run(["python", "scripts/build_kids1000_cosebis_path_mapping_design_skeleton_v1.py"])
+    run(["python", "scripts/validate_kids1000_cosebis_path_mapping_design_skeleton_v1.py"])
     run(["python", "scripts/build_kids1000_cosebis_path_mapping_source_preflight_v1.py"])
     run(["python", "scripts/validate_kids1000_cosebis_path_mapping_source_preflight_v1.py"])
     run(["python", "scripts/build_kids1000_cosebis_null_control_readiness_v1.py"])

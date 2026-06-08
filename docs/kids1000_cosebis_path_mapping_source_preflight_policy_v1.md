@@ -15,6 +15,8 @@ The current preflight status is:
 - The redshift-kernel inventory is available for the five KiDS source bins.
 - The preferred KiDS DR4.1 9-band route tile inventory is available for 196
   filename-derived tile coordinates.
+- A 300-row COSEBIs path-mapping design skeleton is available as a target
+  layout.
 - A tiny three-mask source observable shell exists, but it is partial and not a
   survey geometry mapping.
 - A full source-frozen survey footprint/path/depth mapping is still missing.
