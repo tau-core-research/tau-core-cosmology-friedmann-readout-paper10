@@ -1,10 +1,10 @@
-# General Tau Core Readout Basis Abstracted from the TPG Bridge
+# General Tau Core Readout Basis
 
 This note records why the first Pantheon+ pilot should not be overread.
 
 The point is not that Paper 10 is based on the TPG bridge. The point is that
-the galaxy-scale TPG bridge made explicit a more general Tau Core readout
-principle that can also be used in cosmology.
+the galaxy-scale bridge discipline made explicit a more general Tau Core
+readout principle that can also be specialized to cosmology.
 
 ## Current Pilot
 
@@ -34,7 +34,7 @@ not a Tau Core true negative.
 
 ## General Readout Principle
 
-The TPG bridge is a worked example of the more general Tau Core pattern:
+The galactic bridge is a worked example of the more general Tau Core pattern:
 
 ```text
 Tau-side morphology/projection state

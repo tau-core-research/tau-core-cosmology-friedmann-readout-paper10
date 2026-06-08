@@ -197,7 +197,8 @@ W_tau(a)
 ```
 
 The next step is not to import the galaxy TPG bridge itself. Rather, it is to
-generalize the Tau Core readout principle that the TPG bridge made explicit:
+use the general Tau Core readout principle made explicit by the galactic bridge
+discipline:
 four-dimensional residuals may be readouts of deeper morphology/projection
 channels. In cosmology this requires source-frozen channel families:
 
