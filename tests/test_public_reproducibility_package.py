@@ -86,6 +86,9 @@ def test_public_files_exist() -> None:
         "data/source_manifest/kids1000_cosebis_covariance_readiness_policy_v1.csv",
         "data/derived/kids1000_cosebis_covariance_readiness_v1.csv",
         "data/derived/kids1000_cosebis_covariance_readiness_v1_summary.csv",
+        "data/source_manifest/kids1000_cosebis_mask_modecut_policy_v1.csv",
+        "data/derived/kids1000_cosebis_mask_modecut_inventory_v1.csv",
+        "data/derived/kids1000_cosebis_mask_modecut_inventory_v1_summary.csv",
         "docs/void_web_source_native_products_v1.md",
         "docs/void_web_source_native_transform_rule_v1.md",
         "docs/pantheon_void_web_source_native_design_matrix_v1.md",
@@ -104,6 +107,7 @@ def test_public_files_exist() -> None:
         "docs/kids1000_cosebis_hdu_policy_v1.md",
         "docs/kids1000_cosebis_tomographic_mode_policy_v1.md",
         "docs/kids1000_cosebis_covariance_readiness_policy_v1.md",
+        "docs/kids1000_cosebis_mask_modecut_policy_v1.md",
         "scripts/acquire_void_web_source_native_products_v1.py",
         "scripts/validate_void_web_source_native_products_v1.py",
         "scripts/build_void_web_source_native_inventory_v1.py",
@@ -137,6 +141,8 @@ def test_public_files_exist() -> None:
         "scripts/validate_kids1000_cosebis_tomographic_mode_inventory_v1.py",
         "scripts/build_kids1000_cosebis_covariance_readiness_v1.py",
         "scripts/validate_kids1000_cosebis_covariance_readiness_v1.py",
+        "scripts/build_kids1000_cosebis_mask_modecut_inventory_v1.py",
+        "scripts/validate_kids1000_cosebis_mask_modecut_inventory_v1.py",
         "scripts/acquire_pilot_products.py",
         "scripts/validate_pilot_products.py",
         "data/source_manifest/pilot_frozen_product_manifest.csv",
@@ -820,6 +826,45 @@ def test_kids1000_cosebis_covariance_readiness_is_not_an_inverse_likelihood() ->
         rows = list(csv.DictReader(f))
     assert len(rows) == 1
     assert rows[0]["inverse_saved"] == "false"
+
+
+def test_kids1000_cosebis_mask_modecut_policy_keeps_all_rows_without_leakage() -> None:
+    with (
+        ROOT / "data/source_manifest/kids1000_cosebis_mask_modecut_policy_v1.csv"
+    ).open(newline="") as f:
+        policy = list(csv.DictReader(f))[0]
+    assert policy["status"] == "KIDS1000_COSEBIS_MASK_MODECUT_POLICY_FROZEN_NOT_SCORED"
+    assert policy["endpoint_scoring_allowed"] == "false"
+    assert policy["mask_policy"] == "retain_all_source_rows"
+    assert policy["mode_cut_policy"] == "retain_modes_1_through_20"
+    assert policy["expected_input_rows"] == "300"
+    assert policy["expected_retained_rows"] == "300"
+    assert "lensing_residuals" in policy["forbidden_inputs"]
+    assert "kids_data_vector_outlier_removal" in policy["forbidden_inputs"]
+    with (
+        ROOT / "data/derived/kids1000_cosebis_mask_modecut_inventory_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["status"] == "KIDS1000_COSEBIS_MASK_MODECUT_INVENTORY_BUILT_NOT_SCORED"
+    assert summary["endpoint_scoring_allowed"] == "false"
+    assert summary["contains_predictions"] == "false"
+    assert summary["contains_residuals"] == "false"
+    assert summary["contains_fit_statistics"] == "false"
+    assert summary["uses_residuals"] == "false"
+    assert summary["uses_fit_statistics"] == "false"
+    assert summary["input_rows"] == "300"
+    assert summary["retained_rows"] == "300"
+    assert summary["dropped_rows"] == "0"
+    assert summary["n_retained_tomographic_pairs"] == "15"
+    with (
+        ROOT / "data/derived/kids1000_cosebis_mask_modecut_inventory_v1.csv"
+    ).open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    assert len(rows) == 15
+    assert {row["retained_rows_for_pair"] for row in rows} == {"20"}
+    assert {row["dropped_rows_for_pair"] for row in rows} == {"0"}
+    assert {row["dropped_modes"] for row in rows} == {""}
+    assert {row["uses_residuals"] for row in rows} == {"false"}
 
 
 def test_pilot_products_are_frozen_but_not_endpoint_enabled() -> None:

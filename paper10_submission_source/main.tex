@@ -397,6 +397,14 @@ record, but it remains below the endpoint threshold until the theory-vector,
 mode-cut, mask, tomographic-weight, and covariance-inversion policies are
 predeclared.
 
+The first mask/mode-cut policy is intentionally conservative: all 300
+source-side COSEBIs rows are retained, covering all 15 tomographic pairs and
+modes \(1,\ldots,20\). No row, tomographic pair, or mode is removed using
+endpoint residuals, fit statistics, posterior chains, or model-performance
+information. This makes the later lensing route more restrictive rather than
+more flexible: any future physically motivated cut must be declared in a new
+source-side policy before scoring.
+
 Finally, the repository includes a tiny pilot product-freeze manifest in the
 source-manifest data folder. It hash-locks three public distance-side files: a
 cosmic-chronometer \(H(z)\) table, a Pantheon+ distance table, and a Pantheon+

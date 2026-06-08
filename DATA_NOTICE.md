@@ -116,6 +116,11 @@ range, condition number, and Cholesky readiness. It does not store an inverse
 covariance and does not compute lensing predictions, residuals, likelihood
 values, posterior weights, or fitted Tau parameters.
 
+The COSEBIs mask/mode-cut inventory retains all 300 source rows and all modes
+1..20 for all 15 tomographic pairs. It is a leakage-prevention artifact: no row,
+tomographic pair, or mode is removed using endpoint residuals, fit statistics,
+posterior chains, or model-performance information.
+
 The pilot frozen-product manifest includes three public distance-side files
 under `data/raw/` only to test acquisition, hashing, covariance-shape checks,
 and local provenance. These files are not sufficient for endpoint scoring

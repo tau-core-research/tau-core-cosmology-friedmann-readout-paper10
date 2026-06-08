@@ -327,6 +327,22 @@ block: shape, symmetry error, diagonal positivity, eigenvalue range, condition
 number, and Cholesky readiness. It does not save an inverse covariance, select a
 data-vector mask, choose a theory vector, or compute lensing scores.
 
+The first COSEBIs mask/mode-cut policy is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_mask_modecut_policy_v1.csv
+data/derived/kids1000_cosebis_mask_modecut_inventory_v1.csv
+data/derived/kids1000_cosebis_mask_modecut_inventory_v1_summary.csv
+docs/kids1000_cosebis_mask_modecut_policy_v1.md
+scripts/build_kids1000_cosebis_mask_modecut_inventory_v1.py
+scripts/validate_kids1000_cosebis_mask_modecut_inventory_v1.py
+```
+
+It retains all `300` source rows: all `15` tomographic pairs and modes `1..20`.
+This deliberately avoids residual-based row or mode removal. It is not an
+endpoint and does not define a theory vector, inverse covariance, likelihood, or
+Tau Core lensing amplitude.
+
 The first tiny pilot product freeze is recorded in:
 
 ```text
