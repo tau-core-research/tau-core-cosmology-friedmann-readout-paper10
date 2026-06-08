@@ -229,6 +229,13 @@ normalization, mapping-vector construction, and null controls. This order gate
 also fetches no products and computes no factor values, mapping vector, theory
 vector, prediction, residual, likelihood value, or endpoint score.
 
+The `F_overlap` rule shell declares the accepted future source-side schema for
+the first unresolved KiDS path blocker. It uses the existing 58,800-row
+COSEBIs target-row by route-tile domain, but computes no overlap support flags
+or fractions. It accepts only source-frozen official footprint geometry or
+source-native full-mask overlap derivations, and it keeps mapping and endpoint
+scoring disabled.
+
 The COSEBIs path-mapping source-preflight ledger combines only source-side
 availability flags. It records that COSEBIs target rows, redshift kernels, and
 the 196-tile route coordinate index, the 300-row design skeleton, and the

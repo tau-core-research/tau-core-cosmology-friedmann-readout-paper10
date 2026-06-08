@@ -149,6 +149,9 @@ def test_public_files_exist() -> None:
         "data/source_manifest/kids1000_cosebis_path_blocker_resolution_order_policy_v1.csv",
         "data/derived/kids1000_cosebis_path_blocker_resolution_order_v1.csv",
         "data/derived/kids1000_cosebis_path_blocker_resolution_order_v1_summary.csv",
+        "data/source_manifest/kids1000_cosebis_f_overlap_rule_shell_policy_v1.csv",
+        "data/derived/kids1000_cosebis_f_overlap_rule_shell_v1.csv",
+        "data/derived/kids1000_cosebis_f_overlap_rule_shell_v1_summary.csv",
         "data/source_manifest/kids1000_cosebis_path_mapping_source_preflight_policy_v1.csv",
         "data/derived/kids1000_cosebis_path_mapping_source_preflight_v1.csv",
         "data/derived/kids1000_cosebis_path_mapping_source_preflight_v1_summary.csv",
@@ -195,6 +198,7 @@ def test_public_files_exist() -> None:
         "docs/kids1000_cosebis_path_factor_acquisition_plan_v1.md",
         "docs/kids1000_cosebis_path_source_product_route_policy_v1.md",
         "docs/kids1000_cosebis_path_blocker_resolution_order_policy_v1.md",
+        "docs/kids1000_cosebis_f_overlap_rule_shell_policy_v1.md",
         "docs/kids1000_cosebis_path_mapping_source_preflight_policy_v1.md",
         "docs/kids1000_cosebis_null_control_policy_v1.md",
         "docs/kids1000_cosebis_null_control_seed_policy_v1.md",
@@ -269,6 +273,8 @@ def test_public_files_exist() -> None:
         "scripts/validate_kids1000_cosebis_path_source_product_route_manifest_v1.py",
         "scripts/build_kids1000_cosebis_path_blocker_resolution_order_v1.py",
         "scripts/validate_kids1000_cosebis_path_blocker_resolution_order_v1.py",
+        "scripts/build_kids1000_cosebis_f_overlap_rule_shell_v1.py",
+        "scripts/validate_kids1000_cosebis_f_overlap_rule_shell_v1.py",
         "scripts/build_kids1000_cosebis_path_mapping_source_preflight_v1.py",
         "scripts/validate_kids1000_cosebis_path_mapping_source_preflight_v1.py",
         "scripts/build_kids1000_cosebis_null_control_readiness_v1.py",
@@ -1969,6 +1975,61 @@ def test_kids1000_cosebis_path_blocker_resolution_order_is_frozen_not_mapping() 
         assert row["contains_mapping_vector"] == "false"
         assert row["contains_theory_vector"] == "false"
         assert row["uses_kids_data_vector_values"] == "false"
+        assert row["endpoint_scoring_allowed"] == "false"
+
+
+def test_kids1000_cosebis_f_overlap_rule_shell_is_not_computed_or_mapping() -> None:
+    with (
+        ROOT / "data/source_manifest/kids1000_cosebis_f_overlap_rule_shell_policy_v1.csv"
+    ).open(newline="") as f:
+        policy = list(csv.DictReader(f))[0]
+    assert policy["status"] == "KIDS1000_COSEBIS_F_OVERLAP_RULE_SHELL_DECLARED_NOT_COMPUTED"
+    assert policy["first_blocker"] == "F_overlap"
+    assert policy["factor_id"] == "F_overlap"
+    assert policy["endpoint_scoring_allowed"] == "false"
+    assert policy["current_shell_declared"] == "true"
+    assert policy["current_overlap_rule_computed"] == "false"
+    assert policy["current_external_products_fetched"] == "false"
+    assert policy["current_path_mapping_computed"] == "false"
+    with (
+        ROOT / "data/derived/kids1000_cosebis_f_overlap_rule_shell_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["status"] == "KIDS1000_COSEBIS_F_OVERLAP_RULE_SHELL_BUILT_NOT_COMPUTED"
+    assert summary["shell_item_count"] == "6"
+    assert summary["candidate_route_count"] == "2"
+    assert summary["target_rows"] == "300"
+    assert summary["route_tiles"] == "196"
+    assert summary["domain_rows"] == "58800"
+    assert summary["first_blocker"] == "F_overlap"
+    assert summary["overlap_rule_ready"] == "false"
+    assert summary["mapping_allowed"] == "false"
+    assert summary["external_products_fetched"] == "false"
+    assert summary["overlap_rule_computed"] == "false"
+    assert summary["path_mapping_computed"] == "false"
+    assert summary["contains_mapping_vector"] == "false"
+    assert summary["contains_theory_vector"] == "false"
+    assert summary["contains_predictions"] == "false"
+    assert summary["contains_residuals"] == "false"
+    with (
+        ROOT / "data/derived/kids1000_cosebis_f_overlap_rule_shell_v1.csv"
+    ).open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    by_item = {row["shell_item_id"]: row for row in rows}
+    assert by_item["F_OVERLAP_INPUT_DOMAIN"]["blocks_overlap_computation"] == "false"
+    assert by_item["F_OVERLAP_ROUTE_OFFICIAL_GEOMETRY"]["blocks_overlap_computation"] == "true"
+    assert by_item["F_OVERLAP_ROUTE_PIXEL_MASK_DERIVED"]["blocks_overlap_computation"] == "true"
+    assert by_item["F_OVERLAP_OUTPUT_SCHEMA"]["blocks_overlap_computation"] == "true"
+    assert "one_row_per_target_row_tile_domain_entry" in by_item["F_OVERLAP_OUTPUT_SCHEMA"]["minimum_acceptance"]
+    for row in rows:
+        assert row["external_products_fetched"] == "false"
+        assert row["overlap_rule_computed"] == "false"
+        assert row["numeric_factor_computed"] == "false"
+        assert row["path_mapping_computed"] == "false"
+        assert row["contains_mapping_vector"] == "false"
+        assert row["contains_theory_vector"] == "false"
+        assert row["uses_kids_data_vector_values"] == "false"
+        assert row["uses_posthoc_tile_selection"] == "false"
         assert row["endpoint_scoring_allowed"] == "false"
 
 

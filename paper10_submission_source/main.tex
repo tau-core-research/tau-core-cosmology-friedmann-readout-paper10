@@ -509,6 +509,11 @@ footprint overlap first, then path/depth support, web/environment support,
 normalization, mapping-vector construction, and null controls. Thus later
 normalization or null-control steps cannot bypass the missing footprint
 support.
+For the first blocker, a \texttt{F\_overlap} shell declares the future accepted schema:
+one source-frozen support row per COSEBIs target-row by route-tile domain entry
+over the full $300\times196=58{,}800$ domain. The shell accepts official
+footprint geometry or source-native full-mask overlap derivations, but computes
+no overlap values in this paper.
 The resulting source-preflight ledger is correspondingly mixed: the 300 COSEBIs
 target rows, five-bin redshift-kernel inventory, 196-tile route-coordinate
 index, 300-row design skeleton, and 58{,}800-row domain skeleton are available;

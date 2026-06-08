@@ -641,6 +641,23 @@ It freezes the future source-side order: `F_overlap` first, then `D_path`,
 then `E_web`, then `C_norm`, then a mapping vector, then null controls. It
 fetches no products and keeps mapping and endpoint scoring disabled.
 
+The first-blocker `F_overlap` rule shell is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_f_overlap_rule_shell_policy_v1.csv
+data/derived/kids1000_cosebis_f_overlap_rule_shell_v1.csv
+data/derived/kids1000_cosebis_f_overlap_rule_shell_v1_summary.csv
+docs/kids1000_cosebis_f_overlap_rule_shell_policy_v1.md
+scripts/build_kids1000_cosebis_f_overlap_rule_shell_v1.py
+scripts/validate_kids1000_cosebis_f_overlap_rule_shell_v1.py
+```
+
+It declares the accepted future output schema for the row-tile overlap factor
+over the full `300 x 196 = 58,800` target-row by route-tile domain. It accepts
+only source-frozen official footprint geometry or source-native full-mask
+overlap derivations. It computes no overlap values and still forbids mapping
+and scoring.
+
 The COSEBIs path-mapping source-preflight ledger is recorded in:
 
 ```text
