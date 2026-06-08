@@ -704,6 +704,25 @@ It splits the 193 missing mask products into ten future acquisition batches of
 at most 20 files each. Future large FITS products are assigned to an ignored
 cache directory; only manifests and derived summaries should be committed.
 
+The first `F_overlap` batch dry run is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_f_overlap_full_mask_batch_dry_run_policy_v1.csv
+data/derived/kids1000_cosebis_f_overlap_full_mask_batch_dry_run_v1.csv
+data/derived/kids1000_cosebis_f_overlap_full_mask_batch_dry_run_v1_summary.csv
+docs/kids1000_cosebis_f_overlap_full_mask_batch_dry_run_policy_v1.md
+scripts/acquire_kids1000_cosebis_f_overlap_full_mask_batch_v1.py
+scripts/validate_kids1000_cosebis_f_overlap_full_mask_batch_dry_run_v1.py
+```
+
+The public reproduction path runs this script only in dry-run mode on batch 0.
+It inspects the 20 planned product URLs and cache paths without fetching any
+large FITS product, without computing overlap fractions, without constructing a
+path-mapping vector, and without enabling endpoint scoring. Manual acquisition
+is available only through the explicit `--execute` option; outputs from that
+mode are source-acquisition products and remain outside the public reproduce
+path until separately reviewed and frozen.
+
 The COSEBIs path-mapping source-preflight ledger is recorded in:
 
 ```text

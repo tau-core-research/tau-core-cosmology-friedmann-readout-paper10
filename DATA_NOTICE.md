@@ -252,6 +252,15 @@ future acquisition batches and assigns future large FITS files to an ignored
 cache directory. No products are fetched by this gate; it only records the
 source-side acquisition plan.
 
+The `F_overlap` batch dry-run gate inspects the first planned acquisition batch
+without downloading any FITS products. It records the 20 intended product URLs
+and cache paths for batch 0, but keeps `external_products_fetched=false`,
+`overlap_rule_computed=false`, `path_mapping_computed=false`, and
+`endpoint_scoring_allowed=false`. The same script has a manual `--execute`
+mode for future source acquisition, but that mode is not called by
+`scripts/reproduce.py` and does not by itself create an accepted overlap rule,
+mapping vector, theory vector, or endpoint score.
+
 The COSEBIs path-mapping source-preflight ledger combines only source-side
 availability flags. It records that COSEBIs target rows, redshift kernels, and
 the 196-tile route coordinate index, the 300-row design skeleton, and the
