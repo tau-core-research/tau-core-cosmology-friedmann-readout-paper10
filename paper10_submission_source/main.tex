@@ -493,6 +493,12 @@ redshift-pair, route-tile, footprint-overlap, path/depth, web-environment, and
 normalization factors. This rule is not yet computable: the footprint-overlap
 and web-environment factors are missing, the path/depth factor is only a
 three-mask partial shell, and no numeric weight is produced.
+The corresponding acquisition plan turns this into concrete source-side
+requirements: obtain or derive a footprint/row-tile overlap rule, promote the
+path/depth factor beyond the three-mask shell, attach a source-frozen
+web-environment catalogue or predeclared null-web control, and define the
+normalization only after nonzero source factors exist. No products are fetched
+and no factors are evaluated in this gate.
 The resulting source-preflight ledger is correspondingly mixed: the 300 COSEBIs
 target rows, five-bin redshift-kernel inventory, 196-tile route-coordinate
 index, 300-row design skeleton, and 58{,}800-row domain skeleton are available;

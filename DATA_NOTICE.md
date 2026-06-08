@@ -210,6 +210,12 @@ missing, declared-not-computed, and declared-not-executed factors. It does not
 compute any numeric factor value, tile weight, path mapping, theory vector,
 prediction, residual, likelihood value, or endpoint score.
 
+The COSEBIs path-factor acquisition plan records only source-side requirements
+for making that weight rule computable. It fetches no new products and computes
+no factor values. It identifies footprint overlap, full path/depth support,
+web/environment support, and later normalization as the current direct blockers
+for numeric path weights.
+
 The COSEBIs path-mapping source-preflight ledger combines only source-side
 availability flags. It records that COSEBIs target rows, redshift kernels, and
 the 196-tile route coordinate index, the 300-row design skeleton, and the

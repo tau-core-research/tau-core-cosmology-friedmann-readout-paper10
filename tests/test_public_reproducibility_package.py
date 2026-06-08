@@ -140,6 +140,9 @@ def test_public_files_exist() -> None:
         "data/source_manifest/kids1000_cosebis_path_weight_construction_rule_v1.csv",
         "data/derived/kids1000_cosebis_path_weight_construction_rule_v1.csv",
         "data/derived/kids1000_cosebis_path_weight_construction_rule_v1_summary.csv",
+        "data/source_manifest/kids1000_cosebis_path_factor_acquisition_plan_v1.csv",
+        "data/derived/kids1000_cosebis_path_factor_acquisition_plan_v1.csv",
+        "data/derived/kids1000_cosebis_path_factor_acquisition_plan_v1_summary.csv",
         "data/source_manifest/kids1000_cosebis_path_mapping_source_preflight_policy_v1.csv",
         "data/derived/kids1000_cosebis_path_mapping_source_preflight_v1.csv",
         "data/derived/kids1000_cosebis_path_mapping_source_preflight_v1_summary.csv",
@@ -183,6 +186,7 @@ def test_public_files_exist() -> None:
         "docs/kids1000_cosebis_path_mapping_design_skeleton_policy_v1.md",
         "docs/kids1000_cosebis_path_mapping_domain_skeleton_policy_v1.md",
         "docs/kids1000_cosebis_path_weight_construction_rule_v1.md",
+        "docs/kids1000_cosebis_path_factor_acquisition_plan_v1.md",
         "docs/kids1000_cosebis_path_mapping_source_preflight_policy_v1.md",
         "docs/kids1000_cosebis_null_control_policy_v1.md",
         "docs/kids1000_cosebis_null_control_seed_policy_v1.md",
@@ -251,6 +255,8 @@ def test_public_files_exist() -> None:
         "scripts/validate_kids1000_cosebis_path_mapping_domain_skeleton_v1.py",
         "scripts/build_kids1000_cosebis_path_weight_construction_rule_v1.py",
         "scripts/validate_kids1000_cosebis_path_weight_construction_rule_v1.py",
+        "scripts/build_kids1000_cosebis_path_factor_acquisition_plan_v1.py",
+        "scripts/validate_kids1000_cosebis_path_factor_acquisition_plan_v1.py",
         "scripts/build_kids1000_cosebis_path_mapping_source_preflight_v1.py",
         "scripts/validate_kids1000_cosebis_path_mapping_source_preflight_v1.py",
         "scripts/build_kids1000_cosebis_null_control_readiness_v1.py",
@@ -1772,6 +1778,65 @@ def test_kids1000_cosebis_path_weight_construction_rule_is_not_computable() -> N
     assert by_factor["null_controls"]["source_state"] == "declared_not_executed"
     for row in rows:
         assert row["tile_weights_computed"] == "false"
+        assert row["path_mapping_computed"] == "false"
+        assert row["contains_mapping_vector"] == "false"
+        assert row["contains_theory_vector"] == "false"
+        assert row["uses_kids_data_vector_values"] == "false"
+        assert row["endpoint_scoring_allowed"] == "false"
+
+
+def test_kids1000_cosebis_path_factor_acquisition_plan_is_not_fetching_or_scoring() -> None:
+    with (
+        ROOT / "data/source_manifest/kids1000_cosebis_path_factor_acquisition_plan_v1.csv"
+    ).open(newline="") as f:
+        policy = list(csv.DictReader(f))[0]
+    assert policy["status"] == "KIDS1000_COSEBIS_PATH_FACTOR_ACQUISITION_PLAN_DECLARED_NOT_FETCHED"
+    assert policy["endpoint_scoring_allowed"] == "false"
+    assert policy["current_plan_declared"] == "true"
+    assert policy["current_external_products_fetched"] == "false"
+    assert policy["current_path_mapping_computed"] == "false"
+    assert policy["current_theory_vector_computed"] == "false"
+    for marker in [
+        "kids_data_vector_values",
+        "posterior_chains",
+        "lensing_residuals",
+        "fit_improvement_flags",
+        "posthoc_path_projection_labels",
+        "posthoc_sky_direction_selection",
+        "posthoc_tile_selection",
+        "posthoc_weight_selection",
+    ]:
+        assert marker in policy["forbidden_inputs"]
+    with (
+        ROOT / "data/derived/kids1000_cosebis_path_factor_acquisition_plan_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["status"] == "KIDS1000_COSEBIS_PATH_FACTOR_ACQUISITION_PLAN_BUILT_NOT_FETCHED"
+    assert summary["requirement_count"] == "7"
+    assert summary["blocking_requirement_count"] == "4"
+    assert summary["nonblocking_requirement_count"] == "3"
+    assert summary["external_products_fetched"] == "false"
+    assert summary["numeric_factors_computed"] == "false"
+    assert summary["path_mapping_computed"] == "false"
+    assert summary["contains_mapping_vector"] == "false"
+    assert summary["contains_theory_vector"] == "false"
+    assert summary["contains_predictions"] == "false"
+    assert summary["contains_residuals"] == "false"
+    with (
+        ROOT / "data/derived/kids1000_cosebis_path_factor_acquisition_plan_v1.csv"
+    ).open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    by_req = {row["requirement_id"]: row for row in rows}
+    assert by_req["REQ_F_OVERLAP_SOURCE"]["blocks_weight_computation"] == "true"
+    assert by_req["REQ_D_PATH_SOURCE"]["blocks_weight_computation"] == "true"
+    assert by_req["REQ_E_WEB_SOURCE"]["blocks_weight_computation"] == "true"
+    assert by_req["REQ_C_NORM_RULE"]["blocks_weight_computation"] == "true"
+    assert by_req["REQ_N_PAIR_LOCK"]["blocks_weight_computation"] == "false"
+    assert by_req["REQ_T_TILE_LOCK"]["blocks_weight_computation"] == "false"
+    assert by_req["REQ_NULL_CONTROLS_EXECUTION"]["blocks_weight_computation"] == "false"
+    for row in rows:
+        assert row["external_products_fetched"] == "false"
+        assert row["numeric_factor_computed"] == "false"
         assert row["path_mapping_computed"] == "false"
         assert row["contains_mapping_vector"] == "false"
         assert row["contains_theory_vector"] == "false"

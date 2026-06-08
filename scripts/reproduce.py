@@ -97,6 +97,8 @@ def main() -> None:
     run(["python", "scripts/validate_kids1000_cosebis_path_mapping_domain_skeleton_v1.py"])
     run(["python", "scripts/build_kids1000_cosebis_path_weight_construction_rule_v1.py"])
     run(["python", "scripts/validate_kids1000_cosebis_path_weight_construction_rule_v1.py"])
+    run(["python", "scripts/build_kids1000_cosebis_path_factor_acquisition_plan_v1.py"])
+    run(["python", "scripts/validate_kids1000_cosebis_path_factor_acquisition_plan_v1.py"])
     run(["python", "scripts/build_kids1000_cosebis_path_mapping_source_preflight_v1.py"])
     run(["python", "scripts/validate_kids1000_cosebis_path_mapping_source_preflight_v1.py"])
     run(["python", "scripts/build_kids1000_cosebis_null_control_readiness_v1.py"])

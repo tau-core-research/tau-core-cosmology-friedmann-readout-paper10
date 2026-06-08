@@ -593,6 +593,23 @@ factors are source-supported. The rule is not computable yet: footprint overlap
 and web-environment factors are missing, the path/mask factor is only partial,
 and no numeric weight or mapping vector is produced.
 
+The source-factor acquisition plan is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_path_factor_acquisition_plan_v1.csv
+data/derived/kids1000_cosebis_path_factor_acquisition_plan_v1.csv
+data/derived/kids1000_cosebis_path_factor_acquisition_plan_v1_summary.csv
+docs/kids1000_cosebis_path_factor_acquisition_plan_v1.md
+scripts/build_kids1000_cosebis_path_factor_acquisition_plan_v1.py
+scripts/validate_kids1000_cosebis_path_factor_acquisition_plan_v1.py
+```
+
+It converts the missing-factor status into seven source-side acquisition
+requirements. Four requirements block numeric path-weight computation:
+footprint/row-tile overlap, full path/depth support, web/environment support,
+and normalization after nonzero factors exist. It fetches no products and
+computes no weights.
+
 The COSEBIs path-mapping source-preflight ledger is recorded in:
 
 ```text
