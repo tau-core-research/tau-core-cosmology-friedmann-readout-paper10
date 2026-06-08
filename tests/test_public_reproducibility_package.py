@@ -21,11 +21,14 @@ def test_public_files_exist() -> None:
         "data/derived/audit_gate_inventory.csv",
         "data/source_manifest/paper10_source_freeze_manifest.csv",
         "data/source_manifest/cosmology_channel_manifest_v1.csv",
+        "data/source_manifest/cosmology_activation_rule_manifest_v1.csv",
         "docs/cosmology_channel_manifest_v1.md",
+        "docs/cosmology_activation_rule_manifest_v1.md",
         "docs/source_freeze_protocol.md",
         "docs/source_selection_audit_001.md",
         "scripts/validate_source_freeze.py",
         "scripts/validate_cosmology_channel_manifest_v1.py",
+        "scripts/validate_cosmology_activation_rule_manifest_v1.py",
         "scripts/acquire_source_pages.py",
         "scripts/validate_cached_source_pages.py",
         "data/source_manifest/source_page_cache_manifest.csv",
@@ -158,6 +161,35 @@ def test_cosmology_channel_manifest_v1_blocks_endpoint_leakage() -> None:
         assert row["activation_rule_status"] == "RULE_DECLARED_NOT_NUMERIC"
         assert row["null_control"]
         assert row["projection_induction_role"]
+
+
+def test_cosmology_activation_rule_manifest_v1_is_protocol_only() -> None:
+    with (ROOT / "data/source_manifest/cosmology_activation_rule_manifest_v1.csv").open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    rules = {row["activation_rule_id"] for row in rows}
+    assert {
+        "ACT_VOID_MATURITY_V1",
+        "ACT_WEB_ANISOTROPY_V1",
+        "ACT_PATH_PROJECTION_V1",
+        "ACT_TIME_READOUT_V1",
+    } <= rules
+    assert {row["endpoint_scoring_allowed"] for row in rows} == {"false"}
+    assert {row["rule_status"] for row in rows} == {"RULE_SHELL_DECLARED_NOT_NUMERIC"}
+    forbidden = ";".join(row["forbidden_inputs"] for row in rows)
+    for marker in [
+        "distance_residuals",
+        "growth_residuals",
+        "lensing_residuals",
+        "fit_improvement_flags",
+        "posthoc_environment_labels",
+        "posthoc_sky_direction_selection",
+        "posthoc_clock_anomaly_labels",
+    ]:
+        assert marker in forbidden
+    for row in rows:
+        assert "=" in row["formula_shell"]
+        assert row["parameter_freeze_policy"].startswith("freeze_from_")
+        assert row["output_range"] in {"[0_1]", "[-1_1]"}
 
 
 def test_source_page_cache_is_hash_locked() -> None:

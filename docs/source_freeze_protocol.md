@@ -13,7 +13,9 @@ The first channel-level companion manifest is:
 
 ```text
 data/source_manifest/cosmology_channel_manifest_v1.csv
+data/source_manifest/cosmology_activation_rule_manifest_v1.csv
 docs/cosmology_channel_manifest_v1.md
+docs/cosmology_activation_rule_manifest_v1.md
 ```
 
 It freezes the allowed source families and forbidden endpoint fields for the
@@ -22,6 +24,9 @@ four cosmology readout channels:
 ```text
 W_void, W_web, W_path, W_time.
 ```
+
+The activation-rule companion declares non-numeric formula shells, source-only
+normalization policies, and null controls for those channels.
 
 Each row declares:
 

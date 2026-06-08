@@ -20,6 +20,7 @@ def main() -> None:
     env.setdefault("SOURCE_DATE_EPOCH", "1780876800")
     run(["python", "scripts/validate_source_freeze.py"])
     run(["python", "scripts/validate_cosmology_channel_manifest_v1.py"])
+    run(["python", "scripts/validate_cosmology_activation_rule_manifest_v1.py"])
     run(["python", "scripts/validate_cached_source_pages.py"])
     run(["python", "scripts/validate_product_freeze_plan.py"])
     run(["python", "scripts/validate_pilot_products.py"])

@@ -68,3 +68,10 @@ used as an endpoint validation dataset.
 
 The next allowed step is to acquire exact public products and freeze numerical
 activation rules without using target residuals.
+
+The companion non-numeric activation-rule layer is:
+
+```text
+data/source_manifest/cosmology_activation_rule_manifest_v1.csv
+docs/cosmology_activation_rule_manifest_v1.md
+```
