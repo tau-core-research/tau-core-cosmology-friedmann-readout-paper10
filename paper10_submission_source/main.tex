@@ -461,6 +461,10 @@ external mask FITS products. Those FITS products are not downloaded in the
 present package, and no mask map or path-mapping vector is parsed. This narrows
 the blocker from an unknown missing product to a source-frozen external mask
 route.
+The preferred route is then parsed into a 196-tile filename-coordinate
+inventory. This gives a source-frozen route geometry index, but still not a
+survey footprint polygon, pixel-level path weight, COSEBIs row assignment, or
+theory vector.
 A first route-health check then performs HEAD requests for the first, middle,
 and last mask products in the preferred route. All three return HTTP 200 with
 FITS content and positive content length. This is still only metadata: no mask
@@ -477,12 +481,13 @@ The mask-value semantics are not interpreted as physical lensing path weights in
 this gate. The shell is therefore a pre-mapping observable, not a COSEBIs
 mapping vector, theory vector, or endpoint likelihood input.
 The resulting source-preflight ledger is correspondingly mixed: the 300 COSEBIs
-target rows and five-bin redshift-kernel inventory are available; the mask shell
-is only a partial three-tile source observable; the full path/depth footprint
-mapping and a KiDS-footprint web-environment catalogue remain missing; and null
-controls are declared but not executed. Thus the lensing branch is now narrowed
-to specific source-side blockers rather than an unspecified missing-input
-state, but it remains non-scored.
+target rows, five-bin redshift-kernel inventory, and 196-tile route-coordinate
+index are available; the mask shell is only a partial three-tile source
+observable; the full path/depth footprint mapping and a KiDS-footprint
+web-environment catalogue remain missing; and null controls are declared but not
+executed. Thus the lensing branch is now narrowed to specific source-side
+blockers rather than an unspecified missing-input state, but it remains
+non-scored.
 
 The null-control gate is declared in parallel. It predeclares sky rotation,
 tomographic-pair shuffle, wrong-channel activation, and web/path sign-flip

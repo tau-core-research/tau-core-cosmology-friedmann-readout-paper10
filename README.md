@@ -477,6 +477,22 @@ mask FITS products. The preferred DR4.1 9-band route script lists `196` mask
 products. Those mask FITS files are not downloaded in this package, and no
 path-mapping vector or COSEBIs theory vector is computed.
 
+The preferred-route tile inventory is recorded in:
+
+```text
+data/source_manifest/kids1000_dr4_path_mask_route_tile_inventory_policy_v1.csv
+data/derived/kids1000_dr4_path_mask_route_tile_inventory_v1.csv
+data/derived/kids1000_dr4_path_mask_route_tile_inventory_v1_summary.csv
+docs/kids1000_dr4_path_mask_route_tile_inventory_policy_v1.md
+scripts/build_kids1000_dr4_path_mask_route_tile_inventory_v1.py
+scripts/validate_kids1000_dr4_path_mask_route_tile_inventory_v1.py
+```
+
+It parses all `196` preferred DR4.1 9-band mask-product URLs into
+filename-derived tile coordinates. This gives a source-frozen route geometry
+index, but still does not download the 196 mask products, compute a footprint
+polygon, build a path map, or connect anything to COSEBIs rows.
+
 The first preferred-route HEAD sample is recorded in:
 
 ```text
@@ -540,11 +556,11 @@ scripts/validate_kids1000_cosebis_path_mapping_source_preflight_v1.py
 ```
 
 It summarizes the current source-side state for a future path-aware COSEBIs
-endpoint: target row structure and redshift kernels are available, the
-three-mask observable shell is only partial, the full path/depth footprint
-mapping and web-environment catalogue remain missing, and null controls are
-declared but not executed. It contains no mapping vector, theory vector,
-predictions, residuals, or scores.
+endpoint: target row structure, redshift kernels, and the 196-tile route
+coordinate index are available; the three-mask observable shell is only partial;
+the full path/depth footprint mapping and web-environment catalogue remain
+missing; and null controls are declared but not executed. It contains no mapping
+vector, theory vector, predictions, residuals, or scores.
 
 The first COSEBIs null-control readiness policy is recorded in:
 

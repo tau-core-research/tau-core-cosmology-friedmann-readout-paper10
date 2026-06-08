@@ -167,6 +167,11 @@ or redistributed here. The inventory contains no parsed mask map, no path
 mapping vector, no theory vector, no predictions, no residuals, no likelihood
 values, and no data-vector-value use.
 
+The KiDS DR4 path-mask route-tile inventory parses the preferred DR4.1 9-band
+route URLs into 196 filename-derived tile coordinates. It does not download the
+196 mask FITS products, parse pixels, infer a footprint polygon, build a path
+mapping vector, or use endpoint residuals.
+
 The KiDS DR4 path-mask HEAD sample checks only HTTP metadata for the first,
 middle, and last products in the preferred route script. It records HTTP status,
 content type, and content length. It does not download mask FITS products,
@@ -188,11 +193,12 @@ mapping vector, no theory vector, no predictions, no residuals, no likelihood
 values, and no endpoint score.
 
 The COSEBIs path-mapping source-preflight ledger combines only source-side
-availability flags. It records that COSEBIs target rows and redshift kernels are
-available, that the three-mask observable shell is partial, and that a full
-source-frozen path/depth footprint mapping and web-environment catalogue remain
-missing. It does not compute a mapping vector, theory vector, predictions,
-residuals, likelihood values, or endpoint score.
+availability flags. It records that COSEBIs target rows, redshift kernels, and
+the 196-tile route coordinate index are available; that the three-mask
+observable shell is partial; and that a full source-frozen path/depth footprint
+mapping and web-environment catalogue remain missing. It does not compute a
+mapping vector, theory vector, predictions, residuals, likelihood values, or
+endpoint score.
 
 The COSEBIs null-control readiness inventory declares four future control
 families but does not execute them. It contains no control scores, predictions,

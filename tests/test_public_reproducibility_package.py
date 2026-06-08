@@ -116,6 +116,9 @@ def test_public_files_exist() -> None:
         "data/raw/weak_lensing/kids1000_path_masks/kids_dr4.0_msk_wget.sh",
         "data/derived/kids1000_dr4_path_mask_route_scripts_inventory_v1.csv",
         "data/derived/kids1000_dr4_path_mask_route_scripts_inventory_v1_summary.csv",
+        "data/source_manifest/kids1000_dr4_path_mask_route_tile_inventory_policy_v1.csv",
+        "data/derived/kids1000_dr4_path_mask_route_tile_inventory_v1.csv",
+        "data/derived/kids1000_dr4_path_mask_route_tile_inventory_v1_summary.csv",
         "data/source_manifest/kids1000_dr4_path_mask_head_sample_policy_v1.csv",
         "data/derived/kids1000_dr4_path_mask_head_sample_v1.csv",
         "data/derived/kids1000_dr4_path_mask_head_sample_v1_summary.csv",
@@ -164,6 +167,7 @@ def test_public_files_exist() -> None:
         "docs/kids1000_cosebis_redshift_kernel_policy_v1.md",
         "docs/kids1000_cosebis_path_mask_depth_gap_policy_v1.md",
         "docs/kids1000_dr4_path_mask_route_scripts_v1.md",
+        "docs/kids1000_dr4_path_mask_route_tile_inventory_policy_v1.md",
         "docs/kids1000_dr4_path_mask_head_sample_policy_v1.md",
         "docs/kids1000_dr4_path_mask_subset_policy_v1.md",
         "docs/kids1000_dr4_path_mask_observable_shell_policy_v1.md",
@@ -221,6 +225,8 @@ def test_public_files_exist() -> None:
         "scripts/validate_kids1000_cosebis_path_mask_depth_gap_inventory_v1.py",
         "scripts/acquire_kids1000_dr4_path_mask_route_scripts_v1.py",
         "scripts/validate_kids1000_dr4_path_mask_route_scripts_v1.py",
+        "scripts/build_kids1000_dr4_path_mask_route_tile_inventory_v1.py",
+        "scripts/validate_kids1000_dr4_path_mask_route_tile_inventory_v1.py",
         "scripts/check_kids1000_dr4_path_mask_head_sample_v1.py",
         "scripts/validate_kids1000_dr4_path_mask_head_sample_v1.py",
         "scripts/acquire_kids1000_dr4_path_mask_subset_v1.py",
@@ -1323,6 +1329,68 @@ def test_kids1000_dr4_path_mask_route_scripts_are_frozen_not_scored() -> None:
         assert (ROOT / row["local_path"]).exists()
 
 
+def test_kids1000_dr4_path_mask_route_tile_inventory_is_not_mapping() -> None:
+    with (
+        ROOT / "data/source_manifest/kids1000_dr4_path_mask_route_tile_inventory_policy_v1.csv"
+    ).open(newline="") as f:
+        policy = list(csv.DictReader(f))[0]
+    assert policy["status"] == "KIDS_DR4_PATH_MASK_ROUTE_TILE_INVENTORY_POLICY_FROZEN_NOT_SCORED"
+    assert policy["endpoint_scoring_allowed"] == "false"
+    assert policy["preferred_route_id"] == "KIDS_DR41_9BAND_MASK_WGET_SCRIPT"
+    assert policy["expected_tile_count"] == "196"
+    assert policy["current_tile_inventory_computed"] == "true"
+    assert policy["current_mask_products_fetched"] == "false"
+    assert policy["current_path_mapping_computed"] == "false"
+    assert policy["current_theory_vector_computed"] == "false"
+    for marker in [
+        "kids_data_vector_values",
+        "posterior_chains",
+        "lensing_residuals",
+        "fit_improvement_flags",
+        "posthoc_path_projection_labels",
+        "posthoc_sky_direction_selection",
+        "posthoc_tile_selection",
+    ]:
+        assert marker in policy["forbidden_inputs"]
+    with (
+        ROOT / "data/derived/kids1000_dr4_path_mask_route_tile_inventory_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["status"] == "KIDS_DR4_PATH_MASK_ROUTE_TILE_INVENTORY_BUILT_NOT_MAPPED"
+    assert summary["tile_count"] == "196"
+    assert summary["unique_tile_coordinate_count"] == "196"
+    assert summary["duplicate_tile_coordinate_count"] == "0"
+    assert summary["mask_products_fetched"] == "false"
+    assert summary["mask_pixels_parsed"] == "false"
+    assert summary["footprint_polygon_computed"] == "false"
+    assert summary["path_mapping_computed"] == "false"
+    assert summary["contains_mapping_vector"] == "false"
+    assert summary["contains_theory_vector"] == "false"
+    assert summary["contains_predictions"] == "false"
+    assert summary["contains_residuals"] == "false"
+    assert summary["uses_kids_data_vector_values"] == "false"
+    with (
+        ROOT / "data/derived/kids1000_dr4_path_mask_route_tile_inventory_v1.csv"
+    ).open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    assert len(rows) == 196
+    assert rows[0]["tile_ra_deg_filename_proxy"] == "0.0"
+    assert rows[0]["tile_dec_deg_filename_proxy"] == "-28.2"
+    assert rows[-1]["tile_ra_deg_filename_proxy"] == "5.6"
+    assert rows[-1]["tile_dec_deg_filename_proxy"] == "-28.2"
+    for row in rows:
+        float(row["tile_ra_deg_filename_proxy"])
+        float(row["tile_dec_deg_filename_proxy"])
+        assert row["tile_coordinate_source"] == "KiDS_mask_filename_token"
+        assert row["mask_product_fetched"] == "false"
+        assert row["mask_pixels_parsed"] == "false"
+        assert row["footprint_polygon_computed"] == "false"
+        assert row["path_mapping_computed"] == "false"
+        assert row["contains_mapping_vector"] == "false"
+        assert row["contains_theory_vector"] == "false"
+        assert row["uses_kids_data_vector_values"] == "false"
+
+
 def test_kids1000_dr4_path_mask_head_sample_is_metadata_only() -> None:
     with (
         ROOT / "data/source_manifest/kids1000_dr4_path_mask_head_sample_policy_v1.csv"
@@ -1525,8 +1593,8 @@ def test_kids1000_cosebis_path_mapping_source_preflight_is_not_mapping() -> None
     ).open(newline="") as f:
         summary = list(csv.DictReader(f))[0]
     assert summary["status"] == "KIDS1000_COSEBIS_PATH_MAPPING_SOURCE_PREFLIGHT_BUILT_NOT_MAPPED"
-    assert summary["component_count"] == "6"
-    assert summary["available_component_count"] == "2"
+    assert summary["component_count"] == "7"
+    assert summary["available_component_count"] == "3"
     assert summary["partial_available_component_count"] == "1"
     assert summary["missing_component_count"] == "2"
     assert summary["declared_not_executed_component_count"] == "1"
@@ -1548,6 +1616,7 @@ def test_kids1000_cosebis_path_mapping_source_preflight_is_not_mapping() -> None
         "cosebis_target_rows",
         "redshift_kernel_inventory",
         "mask_observable_shell",
+        "preferred_route_tile_inventory",
         "full_path_depth_footprint_mapping",
         "web_environment_catalog",
         "null_control_seed_policy",
@@ -1556,6 +1625,8 @@ def test_kids1000_cosebis_path_mapping_source_preflight_is_not_mapping() -> None
     assert by_component["redshift_kernel_inventory"]["source_state"] == "available"
     assert by_component["mask_observable_shell"]["source_state"] == "partial_available"
     assert by_component["mask_observable_shell"]["source_count"] == "3"
+    assert by_component["preferred_route_tile_inventory"]["source_state"] == "available"
+    assert by_component["preferred_route_tile_inventory"]["source_count"] == "196"
     assert by_component["full_path_depth_footprint_mapping"]["source_state"] == "missing"
     assert by_component["full_path_depth_footprint_mapping"]["blocking_status"] == "blocking"
     assert by_component["web_environment_catalog"]["source_state"] == "missing"
