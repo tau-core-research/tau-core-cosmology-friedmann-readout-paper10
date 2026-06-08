@@ -104,6 +104,9 @@ def test_public_files_exist() -> None:
         "data/source_manifest/kids1000_cosebis_web_path_mapping_policy_v1.csv",
         "data/derived/kids1000_cosebis_web_path_mapping_readiness_v1.csv",
         "data/derived/kids1000_cosebis_web_path_mapping_readiness_v1_summary.csv",
+        "data/source_manifest/kids1000_cosebis_redshift_kernel_policy_v1.csv",
+        "data/derived/kids1000_cosebis_redshift_kernel_inventory_v1.csv",
+        "data/derived/kids1000_cosebis_redshift_kernel_inventory_v1_summary.csv",
         "data/source_manifest/kids1000_cosebis_null_control_policy_v1.csv",
         "data/derived/kids1000_cosebis_null_control_readiness_v1.csv",
         "data/derived/kids1000_cosebis_null_control_readiness_v1_summary.csv",
@@ -131,6 +134,7 @@ def test_public_files_exist() -> None:
         "docs/kids1000_cosebis_covariance_inversion_policy_v1.md",
         "docs/kids1000_cosebis_theory_vector_policy_v1.md",
         "docs/kids1000_cosebis_web_path_mapping_policy_v1.md",
+        "docs/kids1000_cosebis_redshift_kernel_policy_v1.md",
         "docs/kids1000_cosebis_null_control_policy_v1.md",
         "scripts/acquire_void_web_source_native_products_v1.py",
         "scripts/validate_void_web_source_native_products_v1.py",
@@ -177,6 +181,8 @@ def test_public_files_exist() -> None:
         "scripts/validate_kids1000_cosebis_theory_vector_readiness_v1.py",
         "scripts/build_kids1000_cosebis_web_path_mapping_readiness_v1.py",
         "scripts/validate_kids1000_cosebis_web_path_mapping_readiness_v1.py",
+        "scripts/build_kids1000_cosebis_redshift_kernel_inventory_v1.py",
+        "scripts/validate_kids1000_cosebis_redshift_kernel_inventory_v1.py",
         "scripts/build_kids1000_cosebis_null_control_readiness_v1.py",
         "scripts/validate_kids1000_cosebis_null_control_readiness_v1.py",
         "scripts/acquire_pilot_products.py",
@@ -1114,6 +1120,59 @@ def test_kids1000_cosebis_web_path_mapping_policy_is_declared_not_computed() -> 
     assert len(rows) == 1
     assert rows[0]["contains_mapping_vector"] == "false"
     assert rows[0]["uses_posthoc_sky_direction_selection"] == "false"
+
+
+def test_kids1000_cosebis_redshift_kernel_inventory_is_source_side_only() -> None:
+    with (
+        ROOT / "data/source_manifest/kids1000_cosebis_redshift_kernel_policy_v1.csv"
+    ).open(newline="") as f:
+        policy = list(csv.DictReader(f))[0]
+    assert policy["status"] == "KIDS1000_COSEBIS_REDSHIFT_KERNEL_POLICY_FROZEN_NOT_SCORED"
+    assert policy["endpoint_scoring_allowed"] == "false"
+    assert policy["selected_hdu_redshift_distribution"] == "NZ_SOURCE"
+    assert policy["expected_nz_rows"] == "119"
+    assert policy["expected_source_bins"] == "5"
+    assert policy["current_kernel_mapping_computed"] == "true"
+    for marker in [
+        "kids_data_vector_values",
+        "lensing_residuals",
+        "posthoc_kernel_reweighting",
+        "kids_posterior_parameter_selection",
+    ]:
+        assert marker in policy["forbidden_inputs"]
+    with (
+        ROOT / "data/derived/kids1000_cosebis_redshift_kernel_inventory_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["status"] == "KIDS1000_COSEBIS_REDSHIFT_KERNEL_INVENTORY_BUILT_NOT_SCORED"
+    assert summary["endpoint_scoring_allowed"] == "false"
+    assert summary["kernel_mapping_computed"] == "true"
+    assert summary["uses_kids_data_vector_values"] == "false"
+    assert summary["uses_residuals"] == "false"
+    assert summary["uses_fit_statistics"] == "false"
+    assert summary["uses_posterior_chains"] == "false"
+    assert summary["contains_predictions"] == "false"
+    assert summary["contains_residuals"] == "false"
+    assert summary["contains_fit_statistics"] == "false"
+    assert summary["n_source_bins"] == "5"
+    assert summary["nz_rows"] == "119"
+    with (
+        ROOT / "data/derived/kids1000_cosebis_redshift_kernel_inventory_v1.csv"
+    ).open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    assert len(rows) == 5
+    assert [row["source_bin"] for row in rows] == ["1", "2", "3", "4", "5"]
+    mean_z = [float(row["mean_z"]) for row in rows]
+    assert mean_z == sorted(mean_z)
+    for row in rows:
+        assert float(row["area_sum_nz_dz"]) > 0.0
+        assert float(row["support_z_min_nonzero"]) >= 0.0
+        assert float(row["support_z_max_nonzero"]) > float(row["support_z_min_nonzero"])
+        assert row["endpoint_scoring_allowed"] == "false"
+        assert row["uses_kids_data_vector_values"] == "false"
+        assert row["contains_predictions"] == "false"
+        assert row["contains_residuals"] == "false"
+        assert row["contains_fit_statistics"] == "false"
 
 
 def test_kids1000_cosebis_null_control_policy_is_declared_not_run() -> None:

@@ -147,6 +147,12 @@ compute a mapping vector or theory vector and does not use KiDS data-vector
 values, posterior chains, residuals, fit-improvement information, or post-hoc
 sky-direction choices.
 
+The COSEBIs redshift-kernel inventory reads only the selected `NZ_SOURCE` table
+from the KiDS FITS product. It records per-source-bin redshift-distribution
+area, mean redshift, and support intervals. It contains no COSEBIs predictions,
+residuals, likelihood values, posterior-chain use, fit statistics, or data-vector
+value use.
+
 The COSEBIs null-control readiness inventory declares four future control
 families but does not execute them. It contains no control scores, predictions,
 residuals, fit statistics, posterior-chain use, or data-vector-value use.

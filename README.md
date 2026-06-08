@@ -424,6 +424,22 @@ a mapping, does not compute a theory vector, and forbids KiDS data-vector values
 posterior chains, residuals, fit-improvement flags, and post-hoc sky-direction
 selection.
 
+The first COSEBIs redshift-kernel inventory is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_redshift_kernel_policy_v1.csv
+data/derived/kids1000_cosebis_redshift_kernel_inventory_v1.csv
+data/derived/kids1000_cosebis_redshift_kernel_inventory_v1_summary.csv
+docs/kids1000_cosebis_redshift_kernel_policy_v1.md
+scripts/build_kids1000_cosebis_redshift_kernel_inventory_v1.py
+scripts/validate_kids1000_cosebis_redshift_kernel_inventory_v1.py
+```
+
+It reads only the selected `NZ_SOURCE` table and records source-bin redshift
+areas, mean redshifts, and support intervals for the five KiDS source bins. This
+is a source-side kernel inventory, not a COSEBIs theory vector, lensing
+prediction, residual, or likelihood score.
+
 The first COSEBIs null-control readiness policy is recorded in:
 
 ```text

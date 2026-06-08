@@ -439,6 +439,14 @@ can be constructed. The mapping policy explicitly forbids KiDS data-vector
 values, posterior chains, residuals, fit-improvement flags, and post-hoc sky
 direction choices.
 
+One of those required source products is then advanced from a declaration to a
+source-side inventory: the selected \(\mathrm{NZ\_SOURCE}\) table is read to
+record the redshift-distribution area, mean redshift, and support interval of
+each of the five KiDS source bins. This redshift-kernel inventory is not a
+lensing prediction. It does not evaluate a COSEBIs theory vector, does not
+reweight bins using endpoint behavior, and does not use the KiDS data-vector
+values, residuals, posterior chains, or fit statistics.
+
 The null-control gate is declared in parallel. It predeclares sky rotation,
 tomographic-pair shuffle, wrong-channel activation, and web/path sign-flip
 control families, but does not run them. A future endpoint must freeze the
