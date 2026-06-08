@@ -17,6 +17,8 @@ The current preflight status is:
   filename-derived tile coordinates.
 - A 300-row COSEBIs path-mapping design skeleton is available as a target
   layout.
+- A 58,800-row target-row by route-tile domain skeleton is available as a
+  mapping-domain layout.
 - A tiny three-mask source observable shell exists, but it is partial and not a
   survey geometry mapping.
 - A full source-frozen survey footprint/path/depth mapping is still missing.

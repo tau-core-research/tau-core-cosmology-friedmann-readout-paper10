@@ -134,6 +134,9 @@ def test_public_files_exist() -> None:
         "data/source_manifest/kids1000_cosebis_path_mapping_design_skeleton_policy_v1.csv",
         "data/derived/kids1000_cosebis_path_mapping_design_skeleton_v1.csv",
         "data/derived/kids1000_cosebis_path_mapping_design_skeleton_v1_summary.csv",
+        "data/source_manifest/kids1000_cosebis_path_mapping_domain_skeleton_policy_v1.csv",
+        "data/derived/kids1000_cosebis_path_mapping_domain_skeleton_v1.csv",
+        "data/derived/kids1000_cosebis_path_mapping_domain_skeleton_v1_summary.csv",
         "data/source_manifest/kids1000_cosebis_path_mapping_source_preflight_policy_v1.csv",
         "data/derived/kids1000_cosebis_path_mapping_source_preflight_v1.csv",
         "data/derived/kids1000_cosebis_path_mapping_source_preflight_v1_summary.csv",
@@ -175,6 +178,7 @@ def test_public_files_exist() -> None:
         "docs/kids1000_dr4_path_mask_subset_policy_v1.md",
         "docs/kids1000_dr4_path_mask_observable_shell_policy_v1.md",
         "docs/kids1000_cosebis_path_mapping_design_skeleton_policy_v1.md",
+        "docs/kids1000_cosebis_path_mapping_domain_skeleton_policy_v1.md",
         "docs/kids1000_cosebis_path_mapping_source_preflight_policy_v1.md",
         "docs/kids1000_cosebis_null_control_policy_v1.md",
         "docs/kids1000_cosebis_null_control_seed_policy_v1.md",
@@ -239,6 +243,8 @@ def test_public_files_exist() -> None:
         "scripts/validate_kids1000_dr4_path_mask_observable_shell_v1.py",
         "scripts/build_kids1000_cosebis_path_mapping_design_skeleton_v1.py",
         "scripts/validate_kids1000_cosebis_path_mapping_design_skeleton_v1.py",
+        "scripts/build_kids1000_cosebis_path_mapping_domain_skeleton_v1.py",
+        "scripts/validate_kids1000_cosebis_path_mapping_domain_skeleton_v1.py",
         "scripts/build_kids1000_cosebis_path_mapping_source_preflight_v1.py",
         "scripts/validate_kids1000_cosebis_path_mapping_source_preflight_v1.py",
         "scripts/build_kids1000_cosebis_null_control_readiness_v1.py",
@@ -1636,6 +1642,72 @@ def test_kids1000_cosebis_path_mapping_design_skeleton_is_not_mapping() -> None:
         float(row["bin2_mean_z"])
 
 
+def test_kids1000_cosebis_path_mapping_domain_skeleton_is_not_mapping() -> None:
+    with (
+        ROOT / "data/source_manifest/kids1000_cosebis_path_mapping_domain_skeleton_policy_v1.csv"
+    ).open(newline="") as f:
+        policy = list(csv.DictReader(f))[0]
+    assert policy["status"] == "KIDS1000_COSEBIS_PATH_MAPPING_DOMAIN_SKELETON_POLICY_FROZEN_NOT_SCORED"
+    assert policy["endpoint_scoring_allowed"] == "false"
+    assert policy["expected_target_rows"] == "300"
+    assert policy["expected_tile_count"] == "196"
+    assert policy["expected_domain_rows"] == "58800"
+    assert policy["current_domain_skeleton_computed"] == "true"
+    assert policy["current_tile_weights_computed"] == "false"
+    assert policy["current_path_mapping_computed"] == "false"
+    assert policy["current_theory_vector_computed"] == "false"
+    for marker in [
+        "kids_data_vector_values",
+        "posterior_chains",
+        "lensing_residuals",
+        "fit_improvement_flags",
+        "posthoc_path_projection_labels",
+        "posthoc_sky_direction_selection",
+        "posthoc_tile_selection",
+    ]:
+        assert marker in policy["forbidden_inputs"]
+    with (
+        ROOT / "data/derived/kids1000_cosebis_path_mapping_domain_skeleton_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["status"] == "KIDS1000_COSEBIS_PATH_MAPPING_DOMAIN_SKELETON_BUILT_NOT_MAPPED"
+    assert summary["target_rows"] == "300"
+    assert summary["tile_count"] == "196"
+    assert summary["domain_rows"] == "58800"
+    assert summary["endpoint_scoring_allowed"] == "false"
+    assert summary["tile_weights_computed"] == "false"
+    assert summary["footprint_overlap_computed"] == "false"
+    assert summary["path_mapping_computed"] == "false"
+    assert summary["contains_mapping_vector"] == "false"
+    assert summary["contains_theory_vector"] == "false"
+    assert summary["contains_predictions"] == "false"
+    assert summary["contains_residuals"] == "false"
+    assert summary["uses_kids_data_vector_values"] == "false"
+    with (
+        ROOT / "data/derived/kids1000_cosebis_path_mapping_domain_skeleton_v1.csv"
+    ).open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    assert len(rows) == 58800
+    assert rows[0]["target_row_index_zero_based"] == "0"
+    assert rows[0]["tile_index_zero_based"] == "0"
+    assert rows[-1]["target_row_index_zero_based"] == "299"
+    assert rows[-1]["tile_index_zero_based"] == "195"
+    assert len({row["target_row_index_zero_based"] for row in rows}) == 300
+    assert len({row["tile_index_zero_based"] for row in rows}) == 196
+    for row in (rows[0], rows[195], rows[196], rows[-1]):
+        assert row["domain_skeleton_computed"] == "true"
+        assert row["tile_weight_computed"] == "false"
+        assert row["footprint_overlap_computed"] == "false"
+        assert row["path_weight_computed"] == "false"
+        assert row["web_environment_label_computed"] == "false"
+        assert row["path_mapping_computed"] == "false"
+        assert row["contains_mapping_vector"] == "false"
+        assert row["contains_theory_vector"] == "false"
+        assert row["uses_kids_data_vector_values"] == "false"
+        float(row["tile_ra_deg_filename_proxy"])
+        float(row["tile_dec_deg_filename_proxy"])
+
+
 def test_kids1000_cosebis_path_mapping_source_preflight_is_not_mapping() -> None:
     with (
         ROOT / "data/source_manifest/kids1000_cosebis_path_mapping_source_preflight_policy_v1.csv"
@@ -1661,8 +1733,8 @@ def test_kids1000_cosebis_path_mapping_source_preflight_is_not_mapping() -> None
     ).open(newline="") as f:
         summary = list(csv.DictReader(f))[0]
     assert summary["status"] == "KIDS1000_COSEBIS_PATH_MAPPING_SOURCE_PREFLIGHT_BUILT_NOT_MAPPED"
-    assert summary["component_count"] == "8"
-    assert summary["available_component_count"] == "4"
+    assert summary["component_count"] == "9"
+    assert summary["available_component_count"] == "5"
     assert summary["partial_available_component_count"] == "1"
     assert summary["missing_component_count"] == "2"
     assert summary["declared_not_executed_component_count"] == "1"
@@ -1686,6 +1758,7 @@ def test_kids1000_cosebis_path_mapping_source_preflight_is_not_mapping() -> None
         "mask_observable_shell",
         "preferred_route_tile_inventory",
         "cosebis_path_mapping_design_skeleton",
+        "cosebis_path_mapping_domain_skeleton",
         "full_path_depth_footprint_mapping",
         "web_environment_catalog",
         "null_control_seed_policy",
@@ -1698,6 +1771,8 @@ def test_kids1000_cosebis_path_mapping_source_preflight_is_not_mapping() -> None
     assert by_component["preferred_route_tile_inventory"]["source_count"] == "196"
     assert by_component["cosebis_path_mapping_design_skeleton"]["source_state"] == "available"
     assert by_component["cosebis_path_mapping_design_skeleton"]["source_count"] == "300"
+    assert by_component["cosebis_path_mapping_domain_skeleton"]["source_state"] == "available"
+    assert by_component["cosebis_path_mapping_domain_skeleton"]["source_count"] == "58800"
     assert by_component["full_path_depth_footprint_mapping"]["source_state"] == "missing"
     assert by_component["full_path_depth_footprint_mapping"]["blocking_status"] == "blocking"
     assert by_component["web_environment_catalog"]["source_state"] == "missing"

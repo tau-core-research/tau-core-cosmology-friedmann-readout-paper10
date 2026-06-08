@@ -484,14 +484,18 @@ We then assemble a 300-row design skeleton: each COSEBIs target row carries its
 tomographic pair, mode index, the relevant source-bin redshift summaries, and
 the preferred-route sky span. This is still only a layout. No tile/path weight,
 mapping-vector element, or theory-vector element is evaluated.
+Finally, the design layout is expanded to the full target-row by route-tile
+domain of \(300\times 196=58{,}800\) rows. This freezes the future mapping
+domain without assigning footprint overlap, depth/path weight, web-environment
+label, mapping-vector element, or likelihood contribution.
 The resulting source-preflight ledger is correspondingly mixed: the 300 COSEBIs
 target rows, five-bin redshift-kernel inventory, 196-tile route-coordinate
-index, and 300-row design skeleton are available; the mask shell is only a
-partial three-tile source observable; the full path/depth footprint mapping and
-a KiDS-footprint web-environment catalogue remain missing; and null controls are
-declared but not executed. Thus the lensing branch is now narrowed to specific
-source-side blockers rather than an unspecified missing-input state, but it
-remains non-scored.
+index, 300-row design skeleton, and 58{,}800-row domain skeleton are available;
+the mask shell is only a partial three-tile source observable; the full
+path/depth footprint mapping and a KiDS-footprint web-environment catalogue
+remain missing; and null controls are declared but not executed. Thus the
+lensing branch is now narrowed to specific source-side blockers rather than an
+unspecified missing-input state, but it remains non-scored.
 
 The null-control gate is declared in parallel. It predeclares sky rotation,
 tomographic-pair shuffle, wrong-channel activation, and web/path sign-flip

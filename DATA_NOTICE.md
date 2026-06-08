@@ -198,13 +198,20 @@ tomographic redshift-kernel summaries, and preferred-route tile span into a
 mapping-vector elements, theory-vector elements, predictions, residuals,
 likelihood values, or endpoint scores.
 
+The COSEBIs path-mapping domain skeleton expands that layout to the full
+300-by-196 target-row by preferred-route-tile domain. It records no footprint
+overlap, tile weight, path weight, web-environment label, mapping-vector element,
+theory-vector element, prediction, residual, likelihood value, or endpoint
+score.
+
 The COSEBIs path-mapping source-preflight ledger combines only source-side
 availability flags. It records that COSEBIs target rows, redshift kernels, and
-the 196-tile route coordinate index, and the 300-row design skeleton are
-available; that the three-mask observable shell is partial; and that a full
-source-frozen path/depth footprint mapping and web-environment catalogue remain
-missing. It does not compute a mapping vector, theory vector, predictions,
-residuals, likelihood values, or endpoint score.
+the 196-tile route coordinate index, the 300-row design skeleton, and the
+58,800-row target-tile domain skeleton are available; that the three-mask
+observable shell is partial; and that a full source-frozen path/depth footprint
+mapping and web-environment catalogue remain missing. It does not compute a
+mapping vector, theory vector, predictions, residuals, likelihood values, or
+endpoint score.
 
 The COSEBIs null-control readiness inventory declares four future control
 families but does not execute them. It contains no control scores, predictions,

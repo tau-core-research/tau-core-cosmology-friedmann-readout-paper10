@@ -560,6 +560,22 @@ tomographic-pair redshift summaries, and the preferred 196-tile route span. It
 does not compute tile/path weights, a path mapping vector, a theory vector,
 predictions, residuals, or endpoint scores.
 
+The full target-row by route-tile domain skeleton is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_path_mapping_domain_skeleton_policy_v1.csv
+data/derived/kids1000_cosebis_path_mapping_domain_skeleton_v1.csv
+data/derived/kids1000_cosebis_path_mapping_domain_skeleton_v1_summary.csv
+docs/kids1000_cosebis_path_mapping_domain_skeleton_policy_v1.md
+scripts/build_kids1000_cosebis_path_mapping_domain_skeleton_v1.py
+scripts/validate_kids1000_cosebis_path_mapping_domain_skeleton_v1.py
+```
+
+It forms the complete `300 x 196 = 58,800` source-side mapping domain from
+COSEBIs target rows and preferred-route tiles. It still does not compute
+footprint overlap, tile weights, path weights, web-environment labels, a mapping
+vector, a theory vector, predictions, residuals, or scores.
+
 The COSEBIs path-mapping source-preflight ledger is recorded in:
 
 ```text
@@ -573,10 +589,11 @@ scripts/validate_kids1000_cosebis_path_mapping_source_preflight_v1.py
 
 It summarizes the current source-side state for a future path-aware COSEBIs
 endpoint: target row structure, redshift kernels, the 196-tile route coordinate
-index, and the 300-row design skeleton are available; the three-mask observable
-shell is only partial; the full path/depth footprint mapping and web-environment
-catalogue remain missing; and null controls are declared but not executed. It
-contains no mapping vector, theory vector, predictions, residuals, or scores.
+index, the 300-row design skeleton, and the 58,800-row target-tile domain
+skeleton are available; the three-mask observable shell is only partial; the
+full path/depth footprint mapping and web-environment catalogue remain missing;
+and null controls are declared but not executed. It contains no mapping vector,
+theory vector, predictions, residuals, or scores.
 
 The first COSEBIs null-control readiness policy is recorded in:
 
