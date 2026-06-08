@@ -59,12 +59,14 @@ def main() -> None:
                 "baseline_intercept_column": "1.0",
                 "W_tau_basis_a_over_1pa": f"{a_scale / (1.0 + a_scale):.12g}",
                 "W_tau_basis_a2_over_1pa2": f"{a_scale * a_scale / (1.0 + a_scale * a_scale):.12g}",
+                "W_void_proxy_basis": f"{(a_scale * a_scale) / (a_scale * a_scale + 0.55 * 0.55):.12g}",
+                "W_web_proxy_basis": f"{math.tanh((math.log1p(z_hd) - 0.45) / 0.35):.12g}",
             }
         )
 
     OUT.parent.mkdir(parents=True, exist_ok=True)
     with OUT.open("w", newline="") as f:
-        writer = csv.DictWriter(f, fieldnames=list(output_rows[0].keys()))
+        writer = csv.DictWriter(f, fieldnames=list(output_rows[0].keys()), lineterminator="\n")
         writer.writeheader()
         writer.writerows(output_rows)
 
@@ -84,7 +86,7 @@ def main() -> None:
         "contains_fit_statistics": "false",
     }
     with SUMMARY.open("w", newline="") as f:
-        writer = csv.DictWriter(f, fieldnames=list(summary.keys()))
+        writer = csv.DictWriter(f, fieldnames=list(summary.keys()), lineterminator="\n")
         writer.writeheader()
         writer.writerow(summary)
 

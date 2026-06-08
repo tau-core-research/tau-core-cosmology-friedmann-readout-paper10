@@ -70,9 +70,16 @@ def test_public_files_exist() -> None:
         "data/derived/pantheon_full_cov_pilot_scoring_v1_summary.csv",
         "data/derived/pantheon_full_cov_pilot_scoring_v1_grid.csv",
         "docs/pantheon_full_cov_pilot_scoring_v1.md",
+        "data/source_manifest/pantheon_void_web_proxy_full_cov_pilot_v1.csv",
+        "data/derived/pantheon_void_web_proxy_full_cov_pilot_v1_summary.csv",
+        "data/derived/pantheon_void_web_proxy_full_cov_pilot_v1_grid.csv",
+        "docs/pantheon_void_web_proxy_full_cov_pilot_v1.md",
+        "docs/multi_probe_full_cov_scoring_plan_v1.md",
         "docs/general_tau_core_readout_basis.md",
         "scripts/run_pantheon_full_cov_pilot_scoring_v1.py",
         "scripts/validate_pantheon_full_cov_pilot_scoring_v1.py",
+        "scripts/run_pantheon_void_web_proxy_full_cov_pilot_v1.py",
+        "scripts/validate_pantheon_void_web_proxy_full_cov_pilot_v1.py",
         "scripts/build_figures.py",
         "figures/fig_pantheon_full_cov_pilot_branch_diagnostics.pdf",
         "paper10_submission_source/figures/fig_pantheon_full_cov_pilot_branch_diagnostics.pdf",
@@ -357,6 +364,8 @@ def test_pantheon_design_matrix_is_not_a_score_artifact() -> None:
     assert "model_mu" not in columns
     assert "distance_residuals" not in columns
     assert "chi2" not in columns
+    assert "W_void_proxy_basis" in columns
+    assert "W_web_proxy_basis" in columns
 
 
 def test_pantheon_pilot_scoring_is_a_nonvalidation_smoke_test() -> None:
@@ -374,21 +383,54 @@ def test_pantheon_pilot_scoring_is_a_nonvalidation_smoke_test() -> None:
     assert summary["status"] == "PILOT_SCORING_NOT_VALIDATION"
     assert summary["claim_boundary"] == "pilot_scoring_not_validation"
     assert int(summary["n_rows"]) == 1371
-    assert "diagonal" in manifest["covariance_policy"]
-    assert "diagonal_variance" in summary["covariance_regularization"]
+
+
+def test_void_web_proxy_full_cov_pilot_is_nonvalidation() -> None:
+    with (ROOT / "data/source_manifest/pantheon_void_web_proxy_full_cov_pilot_v1.csv").open(
+        newline=""
+    ) as f:
+        manifest_rows = list(csv.DictReader(f))
+    with (ROOT / "data/derived/pantheon_void_web_proxy_full_cov_pilot_v1_summary.csv").open(
+        newline=""
+    ) as f:
+        summary_rows = list(csv.DictReader(f))
+    with (ROOT / "data/derived/pantheon_void_web_proxy_full_cov_pilot_v1_grid.csv").open(
+        newline=""
+    ) as f:
+        grid_rows = list(csv.DictReader(f))
+    assert len(manifest_rows) == 1
+    assert len(summary_rows) == 1
+    manifest = manifest_rows[0]
+    summary = summary_rows[0]
+    assert manifest["status"] == "VOID_WEB_PROXY_FULL_COV_PILOT_NOT_VALIDATION"
+    assert summary["status"] == "VOID_WEB_PROXY_FULL_COV_PILOT_NOT_VALIDATION"
+    assert summary["claim_boundary"] == "void_web_proxy_full_cov_pilot_not_validation"
+    assert "W_VOID_MATURITY" in summary["active_channels"]
+    assert "W_WEB_ANISOTROPY" in summary["active_channels"]
+    assert "W_PATH_PROJECTION" in summary["disabled_channels"]
+    assert "W_TIME_READOUT" in summary["disabled_channels"]
     branches = {row["branch"] for row in grid_rows}
     assert {
         "baseline_only",
-        "tau_shell",
-        "wrong_activation",
-        "deterministic_shuffled_activation",
+        "void_web_proxy_shell",
+        "void_only",
+        "web_only",
+        "wrong_web_sign",
+        "deterministic_shuffled_void_web",
     } <= branches
+    forbidden = manifest["forbidden_inputs"]
+    assert "distance_residuals" in forbidden
+    assert "posthoc_environment_labels" in forbidden
+    assert "cholesky" in manifest["covariance_policy"]
+    assert summary["covariance_regularization"] == "none_positive_definite_cholesky"
     for key in [
         "baseline_best_chi2",
-        "tau_best_chi2",
-        "wrong_best_chi2",
+        "void_web_best_chi2",
+        "void_only_best_chi2",
+        "web_only_best_chi2",
+        "wrong_web_sign_best_chi2",
         "shuffled_best_chi2",
-        "delta_aic_tau_minus_baseline",
+        "delta_aic_void_web_minus_baseline",
     ]:
         assert float(summary[key]) == float(summary[key])
 

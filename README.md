@@ -214,6 +214,32 @@ but `Delta AIC = +5.808`. This preserves the same conclusion as the diagonal
 smoke test: the scoring ladder works, but this is not evidence for a new
 cosmological model.
 
+The first two-channel full-covariance proxy pilot is:
+
+```text
+data/source_manifest/pantheon_void_web_proxy_full_cov_pilot_v1.csv
+data/derived/pantheon_void_web_proxy_full_cov_pilot_v1_summary.csv
+data/derived/pantheon_void_web_proxy_full_cov_pilot_v1_grid.csv
+docs/pantheon_void_web_proxy_full_cov_pilot_v1.md
+```
+
+It activates only `W_VOID_MATURITY` and `W_WEB_ANISOTROPY`; `W_PATH_PROJECTION`
+and `W_TIME_READOUT` remain disabled. Because no source-native void/web product
+values are frozen yet, the current bases are leakage-safe redshift/scale-factor
+proxies. This is a two-channel scoring-grammar stress test, not a void/web
+detection. The current full-covariance distance-only proxy result is
+`Delta chi2 = -0.05994162` and `Delta AIC = +3.94005838`, so it is
+model-selection negative despite a tiny chi-square improvement.
+
+The multi-probe full-covariance endpoint plan is recorded in:
+
+```text
+docs/multi_probe_full_cov_scoring_plan_v1.md
+```
+
+That future gate must combine distance, growth, lensing, and CMB-safety blocks.
+It is not implemented in this scaffold.
+
 ## General Tau Core Readout Continuation
 
 The weak full-covariance Pantheon+ pilot should be read primarily as a

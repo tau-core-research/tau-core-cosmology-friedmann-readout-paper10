@@ -519,6 +519,18 @@ the Pantheon+ residuals, but to predeclare void, web, path, and time/readout
 channels from independent source-side information and then repeat the scoring
 under the same full-covariance discipline.
 
+As a first pipeline step in that direction, the repository includes a
+two-channel full-covariance proxy pilot with \(W_{\rm void}\) and \(W_{\rm web}\)
+active and \(W_{\rm path}\), \(W_{\rm time}\) disabled.  The pilot uses only
+leakage-safe redshift/scale-factor proxy bases because no source-native void or
+cosmic-web product values have yet been frozen.  It is therefore a scoring
+grammar stress test, not evidence for void or web physics.  In the current
+full-covariance distance-only run the proxy branch improves \(\chi^2\) by only
+\(0.060\) and loses under AIC by \(3.94\); wrong/shuffled controls can still
+match or beat it.  The required next upgrade is to replace these proxy bases
+with public void and cosmic-web catalogue products before making any endpoint
+claim.
+
 \section{CMB role}
 
 CMB maps are relevant, but not as the first standalone discovery target. The
@@ -573,7 +585,9 @@ judged not by \(w(z)\ne -1\) alone, but by the joint pattern
 The next paper-grade step is a public-data pilot analysis with DESI/SNe/\(H(z)\)
 distance data, void and web source proxies, growth/lensing blocks, CMB safety
 checks, predeclared null controls, and an explicit source-grounding gate ledger
-for any channel promoted beyond proxy status.
+for any channel promoted beyond proxy status.  The final target is not another
+Pantheon-only distance run but a multi-probe full-covariance score across
+distance, growth, lensing, and CMB-safety blocks.
 
 \bibliographystyle{plain}
 \bibliography{refs}
