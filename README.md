@@ -51,17 +51,23 @@ The first explicit multi-channel readout manifest is:
 ```text
 data/source_manifest/cosmology_channel_manifest_v1.csv
 data/source_manifest/cosmology_activation_rule_manifest_v1.csv
+data/source_manifest/cosmology_activation_parameter_freeze_plan_v1.csv
 docs/cosmology_channel_manifest_v1.md
 docs/cosmology_activation_rule_manifest_v1.md
+docs/cosmology_activation_parameter_freeze_plan_v1.md
 scripts/validate_cosmology_channel_manifest_v1.py
 scripts/validate_cosmology_activation_rule_manifest_v1.py
+scripts/validate_cosmology_activation_parameter_freeze_plan_v1.py
 ```
 
 It declares the four source-frozen channel families `W_void`, `W_web`,
 `W_path`, and `W_time`, plus their allowed source families, forbidden endpoint
 fields, activation-rule IDs, null controls, and projection-induction roles.
 The activation-rule manifest adds non-numeric formula shells and source-only
-parameter-freeze policies. Every row remains `endpoint_scoring_allowed=false`.
+parameter-freeze policies. The parameter-freeze plan declares how scales such
+as `S_void_star`, `Q_env_star`, `P_lens_star`, and `Delta_clock_star` may later
+be frozen from source-native data. Every row remains
+`endpoint_scoring_allowed=false`.
 
 ## Reproduce
 

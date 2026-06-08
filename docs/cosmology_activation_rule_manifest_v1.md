@@ -50,6 +50,13 @@ RULE_SHELL_DECLARED_NOT_NUMERIC
 endpoint_scoring_allowed=false
 ```
 
+The companion parameter-freeze plan is:
+
+```text
+data/source_manifest/cosmology_activation_parameter_freeze_plan_v1.csv
+docs/cosmology_activation_parameter_freeze_plan_v1.md
+```
+
 ## Projection-Induction Role
 
 These shells are compatible with the projection-induction gate only as first

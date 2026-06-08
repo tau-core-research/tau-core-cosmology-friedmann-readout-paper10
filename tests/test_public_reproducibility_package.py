@@ -22,13 +22,16 @@ def test_public_files_exist() -> None:
         "data/source_manifest/paper10_source_freeze_manifest.csv",
         "data/source_manifest/cosmology_channel_manifest_v1.csv",
         "data/source_manifest/cosmology_activation_rule_manifest_v1.csv",
+        "data/source_manifest/cosmology_activation_parameter_freeze_plan_v1.csv",
         "docs/cosmology_channel_manifest_v1.md",
         "docs/cosmology_activation_rule_manifest_v1.md",
+        "docs/cosmology_activation_parameter_freeze_plan_v1.md",
         "docs/source_freeze_protocol.md",
         "docs/source_selection_audit_001.md",
         "scripts/validate_source_freeze.py",
         "scripts/validate_cosmology_channel_manifest_v1.py",
         "scripts/validate_cosmology_activation_rule_manifest_v1.py",
+        "scripts/validate_cosmology_activation_parameter_freeze_plan_v1.py",
         "scripts/acquire_source_pages.py",
         "scripts/validate_cached_source_pages.py",
         "data/source_manifest/source_page_cache_manifest.csv",
@@ -190,6 +193,42 @@ def test_cosmology_activation_rule_manifest_v1_is_protocol_only() -> None:
         assert "=" in row["formula_shell"]
         assert row["parameter_freeze_policy"].startswith("freeze_from_")
         assert row["output_range"] in {"[0_1]", "[-1_1]"}
+
+
+def test_cosmology_activation_parameter_freeze_plan_v1_is_not_numeric() -> None:
+    with (
+        ROOT / "data/source_manifest/cosmology_activation_parameter_freeze_plan_v1.csv"
+    ).open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    parameters = {row["parameter_id"] for row in rows}
+    assert {
+        "P_VOID_S_STAR",
+        "P_VOID_Q_OPTIONAL",
+        "P_WEB_Q_STAR",
+        "P_WEB_CLASS_WEIGHTS",
+        "P_PATH_LENS_STAR",
+        "P_PATH_MASK_POLICY",
+        "P_TIME_CLOCK_STAR",
+        "P_TIME_ZBIN_POLICY",
+    } <= parameters
+    assert {row["endpoint_scoring_allowed"] for row in rows} == {"false"}
+    assert {row["freeze_status"] for row in rows} == {
+        "PARAMETER_FREEZE_ROUTE_DECLARED_NOT_NUMERIC"
+    }
+    forbidden = ";".join(row["forbidden_inputs"] for row in rows)
+    for marker in [
+        "distance_residuals",
+        "growth_residuals",
+        "lensing_residuals",
+        "fit_improvement_flags",
+        "late_time_fit_parameters",
+        "posthoc_environment_labels",
+    ]:
+        assert marker in forbidden
+    for row in rows:
+        assert row["required_future_artifact"].endswith(".csv")
+        assert row["null_control"]
+        assert "residual" not in row["freeze_rule_shell"].lower()
 
 
 def test_source_page_cache_is_hash_locked() -> None:
