@@ -35,8 +35,8 @@ and CMB-safety observables are scored. The target signature is not merely
 \(w(z)\ne -1\), but a Lambda-like distance readout paired with
 web/environment-dependent growth or lensing residuals. The first release is a
 protocol scaffold with claim boundaries, source blocks, null controls,
-reproducibility checks, and a diagonal-covariance numerical smoke test; no
-measurement result is claimed.
+reproducibility checks, a diagonal-covariance numerical smoke test, and a
+full-covariance single-probe pilot; no measurement result is claimed.
 \end{abstract}
 
 \section{Scope and non-claims}
@@ -334,17 +334,34 @@ because the shell carries more effective parameters. This is therefore a
 pipeline and claim-boundary test, not evidence for dark energy, not validation
 of Tau Core cosmology, and not a replacement for a full-covariance analysis.
 
+The next pilot layer repeats the same frozen branch grammar with the retained
+Pantheon+ STAT+SYS covariance submatrix, using Cholesky solves and no
+eigenvalue-floor regularization. This full-covariance run is marked as
+\(\texttt{FULL\_COV\_PILOT\_SCORING\_NOT\_VALIDATION}\). On the same 1371-row
+scope, the Tau late-activation shell again has a slightly lower
+\(\chi^2\) than the flat-\(\Lambda\)CDM branch,
+\[
+\Delta\chi^2_{\tau-\Lambda{\rm CDM}}=-0.192,
+\]
+but again loses under AIC,
+\[
+\Delta{\rm AIC}_{\tau-\Lambda{\rm CDM}}=+5.808.
+\]
+Thus the full-covariance pilot preserves the same interpretation as the
+diagonal smoke test: the scoring pipeline is operational, but the present
+single-probe evidence is weak and model-selection negative for the Tau shell.
+
 \begin{figure}[t]
 \centering
-\includegraphics[width=\linewidth]{figures/fig_pantheon_pilot_branch_diagnostics.pdf}
-\caption{Pantheon+ pilot scoring diagnostics under the frozen Paper 10 grammar.
+\includegraphics[width=\linewidth]{figures/fig_pantheon_full_cov_pilot_branch_diagnostics.pdf}
+\caption{Pantheon+ full-covariance pilot scoring diagnostics under the frozen
+Paper 10 grammar.
 Each panel shows all finite grid scores relative to the best
 flat-\(\Lambda\)CDM branch. The x-axis labels denote flat-\(\Lambda\)CDM,
 Tau-shell, wrong-activation, and deterministic shuffled-activation branches;
 filled markers denote branch minima. The Tau shell obtains a tiny
-diagonal-covariance \(\chi^2\) improvement but loses under AIC, so the figure
-should be read as a scoring-pipeline diagnostic, not as cosmological
-validation.}
+full-covariance \(\chi^2\) improvement but loses under AIC, so the figure should
+be read as a scoring-pipeline diagnostic, not as cosmological validation.}
 \label{fig:pantheon-pilot-diagnostics}
 \end{figure}
 
@@ -385,12 +402,12 @@ A fail result occurs if:
 \section{Conclusion}
 
 The present repository defines a source-frozen Friedmann-readout audit protocol.
-It does not report a measurement result. Its first numerical Pantheon+ smoke
-test is deliberately neutral: the Tau shell slightly improves
-diagonal-covariance \(\chi^2\), but loses under AIC. The value of the scaffold
-is therefore to make the next cosmology test precise: a Tau Core-inspired
-late-time residual should be judged not by \(w(z)\ne -1\) alone, but by the
-joint pattern
+It does not report a measurement result. Its first numerical Pantheon+ pilots
+are deliberately neutral: the Tau shell slightly improves \(\chi^2\) in both
+the diagonal-covariance smoke test and the full-covariance pilot, but loses
+under AIC in both cases. The value of the scaffold is therefore to make the
+next cosmology test precise: a Tau Core-inspired late-time residual should be
+judged not by \(w(z)\ne -1\) alone, but by the joint pattern
 \[
 \begin{aligned}
 &\hbox{Lambda-like distance behavior}\\

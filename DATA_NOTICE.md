@@ -71,3 +71,9 @@ smoke test of the frozen scoring grammar. They use the diagonal of the retained
 STAT+SYS covariance submatrix and are explicitly marked
 `PILOT_SCORING_NOT_VALIDATION`. They are not a covariance-complete likelihood,
 not empirical validation, and not evidence for a new dark-energy model.
+
+The Pantheon+ full-covariance pilot scoring artifacts use the retained
+STAT+SYS covariance submatrix with Cholesky solves and are explicitly marked
+`FULL_COV_PILOT_SCORING_NOT_VALIDATION`. They are a stronger single-probe
+pilot than the diagonal smoke test, but still not multi-probe validation and
+not evidence for a new dark-energy model.

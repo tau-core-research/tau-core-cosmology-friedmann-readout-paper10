@@ -166,9 +166,24 @@ The pilot diagnostic figure is generated reproducibly from the frozen grid:
 
 ```text
 scripts/build_figures.py
-figures/fig_pantheon_pilot_branch_diagnostics.pdf
-paper10_submission_source/figures/fig_pantheon_pilot_branch_diagnostics.pdf
+figures/fig_pantheon_full_cov_pilot_branch_diagnostics.pdf
+paper10_submission_source/figures/fig_pantheon_full_cov_pilot_branch_diagnostics.pdf
 ```
+
+The first full-covariance pilot repeats the same frozen branch grammar using
+the retained Pantheon+ STAT+SYS covariance submatrix with Cholesky solves:
+
+```text
+data/source_manifest/pantheon_full_cov_pilot_scoring_v1.csv
+data/derived/pantheon_full_cov_pilot_scoring_v1_summary.csv
+data/derived/pantheon_full_cov_pilot_scoring_v1_grid.csv
+docs/pantheon_full_cov_pilot_scoring_v1.md
+```
+
+It gives `Delta chi2 = -0.192` for the Tau shell relative to flat-Lambda-CDM,
+but `Delta AIC = +5.808`. This preserves the same conclusion as the diagonal
+smoke test: the scoring ladder works, but this is not evidence for a new
+cosmological model.
 
 ## Scope
 

@@ -13,15 +13,16 @@ import numpy as np
 ROOT = Path(__file__).resolve().parents[1]
 FIGURES = ROOT / "figures"
 SUBMISSION_FIGURES = ROOT / "paper10_submission_source" / "figures"
-SUMMARY = ROOT / "data" / "derived" / "pantheon_pilot_scoring_v1_summary.csv"
-GRID = ROOT / "data" / "derived" / "pantheon_pilot_scoring_v1_grid.csv"
+SUMMARY = ROOT / "data" / "derived" / "pantheon_full_cov_pilot_scoring_v1_summary.csv"
+GRID = ROOT / "data" / "derived" / "pantheon_full_cov_pilot_scoring_v1_grid.csv"
 
-FIGURE_NAME = "fig_pantheon_pilot_branch_diagnostics.pdf"
+FIGURE_NAME = "fig_pantheon_full_cov_pilot_branch_diagnostics.pdf"
 STALE_FIGURES = [
     "fig_bridge_map.pdf",
     "fig_leakage_ladder.pdf",
     "fig_pilot_score_panel.pdf",
     "fig_pantheon_pilot_diagnostics.pdf",
+    "fig_pantheon_pilot_branch_diagnostics.pdf",
 ]
 
 
@@ -139,7 +140,7 @@ def build_pantheon_pilot_branch_diagnostics() -> None:
     summary = read_one(SUMMARY)
 
     fig, (ax_chi2, ax_aic) = plt.subplots(1, 2, figsize=(7.4, 3.55), sharex=False)
-    fig.suptitle("Pantheon+ pilot scoring diagnostics under the frozen Paper 10 grammar", fontsize=11.2, fontweight="bold", y=0.98)
+    fig.suptitle("Pantheon+ full-covariance pilot diagnostics under the frozen Paper 10 grammar", fontsize=11.2, fontweight="bold", y=0.98)
     panel_branch_scatter(ax_chi2, rows, best, "chi2")
     ax_chi2.set_title("All frozen-grid scores: chi2")
     panel_branch_scatter(ax_aic, rows, best, "aic")
@@ -148,7 +149,7 @@ def build_pantheon_pilot_branch_diagnostics() -> None:
         0.5,
         0.018,
         (
-            f"n={summary['n_rows']}; diagonal STAT+SYS smoke test; "
+            f"n={summary['n_rows']}; full STAT+SYS covariance pilot; "
             f"Tau: Delta chi2={float(summary['delta_chi2_tau_minus_baseline']):+.3f}, "
             f"Delta AIC={float(summary['delta_aic_tau_minus_baseline']):+.3f}.\n"
             "Filled markers denote branch minima. This is not validation."

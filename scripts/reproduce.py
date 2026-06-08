@@ -29,6 +29,8 @@ def main() -> None:
     run(["python", "scripts/validate_pantheon_design_matrix_v1.py"])
     run(["python", "scripts/run_pantheon_pilot_scoring_v1.py"])
     run(["python", "scripts/validate_pantheon_pilot_scoring_v1.py"])
+    run(["python", "scripts/run_pantheon_full_cov_pilot_scoring_v1.py"])
+    run(["python", "scripts/validate_pantheon_full_cov_pilot_scoring_v1.py"])
     run(["python", "scripts/build_figures.py"])
     print("+ tectonic paper10_submission_source/main.tex")
     subprocess.run(["tectonic", PAPER.name], cwd=PAPER.parent, env=env, check=True)

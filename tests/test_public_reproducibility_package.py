@@ -54,9 +54,15 @@ def test_public_files_exist() -> None:
         "docs/pantheon_pilot_scoring_v1.md",
         "scripts/run_pantheon_pilot_scoring_v1.py",
         "scripts/validate_pantheon_pilot_scoring_v1.py",
+        "data/source_manifest/pantheon_full_cov_pilot_scoring_v1.csv",
+        "data/derived/pantheon_full_cov_pilot_scoring_v1_summary.csv",
+        "data/derived/pantheon_full_cov_pilot_scoring_v1_grid.csv",
+        "docs/pantheon_full_cov_pilot_scoring_v1.md",
+        "scripts/run_pantheon_full_cov_pilot_scoring_v1.py",
+        "scripts/validate_pantheon_full_cov_pilot_scoring_v1.py",
         "scripts/build_figures.py",
-        "figures/fig_pantheon_pilot_branch_diagnostics.pdf",
-        "paper10_submission_source/figures/fig_pantheon_pilot_branch_diagnostics.pdf",
+        "figures/fig_pantheon_full_cov_pilot_branch_diagnostics.pdf",
+        "paper10_submission_source/figures/fig_pantheon_full_cov_pilot_branch_diagnostics.pdf",
     ]
     for rel in required:
         assert (ROOT / rel).exists(), rel
@@ -86,7 +92,7 @@ def test_arxiv_zip_is_source_only() -> None:
         names = set(zf.namelist())
     assert "main.tex" in names
     assert "refs.bib" in names
-    assert "figures/fig_pantheon_pilot_branch_diagnostics.pdf" in names
+    assert "figures/fig_pantheon_full_cov_pilot_branch_diagnostics.pdf" in names
     assert "main.pdf" not in names
     assert not any(name.endswith(".aux") for name in names)
 
@@ -229,6 +235,42 @@ def test_pantheon_pilot_scoring_is_a_nonvalidation_smoke_test() -> None:
     assert int(summary["n_rows"]) == 1371
     assert "diagonal" in manifest["covariance_policy"]
     assert "diagonal_variance" in summary["covariance_regularization"]
+    branches = {row["branch"] for row in grid_rows}
+    assert {
+        "baseline_only",
+        "tau_shell",
+        "wrong_activation",
+        "deterministic_shuffled_activation",
+    } <= branches
+    for key in [
+        "baseline_best_chi2",
+        "tau_best_chi2",
+        "wrong_best_chi2",
+        "shuffled_best_chi2",
+        "delta_aic_tau_minus_baseline",
+    ]:
+        assert float(summary[key]) == float(summary[key])
+
+
+def test_pantheon_full_cov_pilot_scoring_is_not_validation() -> None:
+    with (ROOT / "data/source_manifest/pantheon_full_cov_pilot_scoring_v1.csv").open(newline="") as f:
+        manifest_rows = list(csv.DictReader(f))
+    with (ROOT / "data/derived/pantheon_full_cov_pilot_scoring_v1_summary.csv").open(newline="") as f:
+        summary_rows = list(csv.DictReader(f))
+    with (ROOT / "data/derived/pantheon_full_cov_pilot_scoring_v1_grid.csv").open(newline="") as f:
+        grid_rows = list(csv.DictReader(f))
+    assert len(manifest_rows) == 1
+    assert len(summary_rows) == 1
+    manifest = manifest_rows[0]
+    summary = summary_rows[0]
+    assert manifest["status"] == "FULL_COV_PILOT_SCORING_NOT_VALIDATION"
+    assert summary["status"] == "FULL_COV_PILOT_SCORING_NOT_VALIDATION"
+    assert summary["claim_boundary"] == "full_cov_pilot_scoring_not_validation"
+    assert int(summary["n_rows"]) == 1371
+    assert "cholesky" in manifest["covariance_policy"]
+    assert summary["covariance_regularization"] == "none_positive_definite_cholesky"
+    assert float(summary["covariance_min_eigenvalue"]) > 0
+    assert float(summary["covariance_condition_number"]) > 0
     branches = {row["branch"] for row in grid_rows}
     assert {
         "baseline_only",
