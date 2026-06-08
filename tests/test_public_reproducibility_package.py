@@ -92,6 +92,9 @@ def test_public_files_exist() -> None:
         "data/source_manifest/kids1000_cosebis_tomographic_weight_policy_v1.csv",
         "data/derived/kids1000_cosebis_tomographic_weight_inventory_v1.csv",
         "data/derived/kids1000_cosebis_tomographic_weight_inventory_v1_summary.csv",
+        "data/source_manifest/kids1000_cosebis_covariance_subselection_policy_v1.csv",
+        "data/derived/kids1000_cosebis_covariance_subselection_inventory_v1.csv",
+        "data/derived/kids1000_cosebis_covariance_subselection_inventory_v1_summary.csv",
         "docs/void_web_source_native_products_v1.md",
         "docs/void_web_source_native_transform_rule_v1.md",
         "docs/pantheon_void_web_source_native_design_matrix_v1.md",
@@ -112,6 +115,7 @@ def test_public_files_exist() -> None:
         "docs/kids1000_cosebis_covariance_readiness_policy_v1.md",
         "docs/kids1000_cosebis_mask_modecut_policy_v1.md",
         "docs/kids1000_cosebis_tomographic_weight_policy_v1.md",
+        "docs/kids1000_cosebis_covariance_subselection_policy_v1.md",
         "scripts/acquire_void_web_source_native_products_v1.py",
         "scripts/validate_void_web_source_native_products_v1.py",
         "scripts/build_void_web_source_native_inventory_v1.py",
@@ -149,6 +153,8 @@ def test_public_files_exist() -> None:
         "scripts/validate_kids1000_cosebis_mask_modecut_inventory_v1.py",
         "scripts/build_kids1000_cosebis_tomographic_weight_inventory_v1.py",
         "scripts/validate_kids1000_cosebis_tomographic_weight_inventory_v1.py",
+        "scripts/build_kids1000_cosebis_covariance_subselection_inventory_v1.py",
+        "scripts/validate_kids1000_cosebis_covariance_subselection_inventory_v1.py",
         "scripts/acquire_pilot_products.py",
         "scripts/validate_pilot_products.py",
         "data/source_manifest/pilot_frozen_product_manifest.csv",
@@ -910,6 +916,49 @@ def test_kids1000_cosebis_tomographic_weight_policy_is_unit_retention_only() -> 
     assert {row["statistical_likelihood_weighting_allowed"] for row in rows} == {"false"}
     assert {row["uses_residuals"] for row in rows} == {"false"}
     assert {row["uses_posterior_chains"] for row in rows} == {"false"}
+
+
+def test_kids1000_cosebis_covariance_subselection_keeps_full_covariance() -> None:
+    with (
+        ROOT / "data/source_manifest/kids1000_cosebis_covariance_subselection_policy_v1.csv"
+    ).open(newline="") as f:
+        policy = list(csv.DictReader(f))[0]
+    assert policy["status"] == "KIDS1000_COSEBIS_COVARIANCE_SUBSELECTION_POLICY_FROZEN_NOT_SCORED"
+    assert policy["endpoint_scoring_allowed"] == "false"
+    assert policy["current_inversion_allowed"] == "false"
+    assert policy["expected_full_covariance_shape"] == "300x300"
+    assert policy["expected_retained_covariance_shape"] == "300x300"
+    assert "posthoc_covariance_subselection" in policy["forbidden_inputs"]
+    with (
+        ROOT / "data/derived/kids1000_cosebis_covariance_subselection_inventory_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["status"] == "KIDS1000_COSEBIS_COVARIANCE_SUBSELECTION_INVENTORY_BUILT_NOT_SCORED"
+    assert summary["endpoint_scoring_allowed"] == "false"
+    assert summary["current_inversion_allowed"] == "false"
+    assert summary["inverse_saved"] == "false"
+    assert summary["contains_predictions"] == "false"
+    assert summary["contains_residuals"] == "false"
+    assert summary["contains_fit_statistics"] == "false"
+    assert summary["uses_residuals"] == "false"
+    assert summary["uses_fit_statistics"] == "false"
+    assert summary["uses_posterior_chains"] == "false"
+    assert summary["full_covariance_shape"] == "300x300"
+    assert summary["retained_covariance_shape"] == "300x300"
+    assert summary["retained_rows"] == "300"
+    assert summary["full_covariance_retained"] == "true"
+    assert summary["dropped_covariance_rows"] == "0"
+    assert summary["dropped_covariance_cols"] == "0"
+    with (
+        ROOT / "data/derived/kids1000_cosebis_covariance_subselection_inventory_v1.csv"
+    ).open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    assert len(rows) == 15
+    assert {row["retained_rows_for_pair"] for row in rows} == {"20"}
+    assert {row["dropped_covariance_rows"] for row in rows} == {"0"}
+    assert {row["dropped_covariance_cols"] for row in rows} == {"0"}
+    assert [int(row["covariance_row_start_zero_based"]) for row in rows] == list(range(0, 300, 20))
+    assert [int(row["covariance_row_end_zero_based"]) for row in rows] == list(range(19, 300, 20))
 
 
 def test_pilot_products_are_frozen_but_not_endpoint_enabled() -> None:

@@ -412,6 +412,12 @@ tomographic pair is upweighted or downweighted using endpoint residuals,
 posterior chains, or fit-improvement information. Statistical coupling remains
 reserved for a future predeclared covariance-inversion policy.
 
+The covariance-subselection policy then retains the full \(300\times300\)
+covariance block. It records the contiguous 20-row covariance intervals
+corresponding to each retained tomographic pair, but removes no covariance rows
+or columns. No inverse covariance is saved at this stage. This keeps the lensing
+route source-complete while still below the likelihood endpoint.
+
 Finally, the repository includes a tiny pilot product-freeze manifest in the
 source-manifest data folder. It hash-locks three public distance-side files: a
 cosmic-chronometer \(H(z)\) table, a Pantheon+ distance table, and a Pantheon+

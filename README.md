@@ -359,6 +359,22 @@ are not likelihood weights, fitted amplitudes, or covariance weights; they only
 state that no pair is upweighted or downweighted using residuals, fit
 statistics, posterior chains, or endpoint behavior.
 
+The first COSEBIs covariance-subselection policy is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_covariance_subselection_policy_v1.csv
+data/derived/kids1000_cosebis_covariance_subselection_inventory_v1.csv
+data/derived/kids1000_cosebis_covariance_subselection_inventory_v1_summary.csv
+docs/kids1000_cosebis_covariance_subselection_policy_v1.md
+scripts/build_kids1000_cosebis_covariance_subselection_inventory_v1.py
+scripts/validate_kids1000_cosebis_covariance_subselection_inventory_v1.py
+```
+
+It retains the full `300x300` covariance block because all `300` data-vector
+rows are retained. It records the contiguous 20-row covariance intervals for
+each of the `15` tomographic pairs, but it does not save an inverse covariance,
+select a likelihood, or compute a lensing score.
+
 The first tiny pilot product freeze is recorded in:
 
 ```text

@@ -126,6 +126,11 @@ to every tomographic pair. These are not likelihood weights and not fitted
 amplitudes; they only document that no pair is preferred using residuals,
 posterior chains, fit statistics, or endpoint behavior.
 
+The COSEBIs covariance-subselection inventory retains the full 300 x 300
+covariance block and records the 20-row pair blocks. It does not save an inverse
+covariance, does not select a likelihood, and does not remove covariance rows or
+columns using endpoint behavior.
+
 The pilot frozen-product manifest includes three public distance-side files
 under `data/raw/` only to test acquisition, hashing, covariance-shape checks,
 and local provenance. These files are not sufficient for endpoint scoring
