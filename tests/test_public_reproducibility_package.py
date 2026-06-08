@@ -110,6 +110,9 @@ def test_public_files_exist() -> None:
         "data/source_manifest/kids1000_cosebis_null_control_policy_v1.csv",
         "data/derived/kids1000_cosebis_null_control_readiness_v1.csv",
         "data/derived/kids1000_cosebis_null_control_readiness_v1_summary.csv",
+        "data/source_manifest/kids1000_cosebis_null_control_seed_policy_v1.csv",
+        "data/derived/kids1000_cosebis_null_control_seed_inventory_v1.csv",
+        "data/derived/kids1000_cosebis_null_control_seed_inventory_v1_summary.csv",
         "docs/void_web_source_native_products_v1.md",
         "docs/void_web_source_native_transform_rule_v1.md",
         "docs/pantheon_void_web_source_native_design_matrix_v1.md",
@@ -136,6 +139,7 @@ def test_public_files_exist() -> None:
         "docs/kids1000_cosebis_web_path_mapping_policy_v1.md",
         "docs/kids1000_cosebis_redshift_kernel_policy_v1.md",
         "docs/kids1000_cosebis_null_control_policy_v1.md",
+        "docs/kids1000_cosebis_null_control_seed_policy_v1.md",
         "scripts/acquire_void_web_source_native_products_v1.py",
         "scripts/validate_void_web_source_native_products_v1.py",
         "scripts/build_void_web_source_native_inventory_v1.py",
@@ -185,6 +189,8 @@ def test_public_files_exist() -> None:
         "scripts/validate_kids1000_cosebis_redshift_kernel_inventory_v1.py",
         "scripts/build_kids1000_cosebis_null_control_readiness_v1.py",
         "scripts/validate_kids1000_cosebis_null_control_readiness_v1.py",
+        "scripts/build_kids1000_cosebis_null_control_seed_inventory_v1.py",
+        "scripts/validate_kids1000_cosebis_null_control_seed_inventory_v1.py",
         "scripts/acquire_pilot_products.py",
         "scripts/validate_pilot_products.py",
         "data/source_manifest/pilot_frozen_product_manifest.csv",
@@ -1226,6 +1232,62 @@ def test_kids1000_cosebis_null_control_policy_is_declared_not_run() -> None:
     assert {row["control_status"] for row in rows} == {"DECLARED_NOT_RUN"}
     assert {row["requires_seed_policy"] for row in rows} == {"true"}
     assert {row["contains_control_scores"] for row in rows} == {"false"}
+
+
+def test_kids1000_cosebis_null_control_seed_policy_is_frozen_not_run() -> None:
+    with (
+        ROOT / "data/source_manifest/kids1000_cosebis_null_control_seed_policy_v1.csv"
+    ).open(newline="") as f:
+        policy = list(csv.DictReader(f))[0]
+    assert policy["status"] == "KIDS1000_COSEBIS_NULL_CONTROL_SEED_POLICY_FROZEN_NOT_RUN"
+    assert policy["endpoint_scoring_allowed"] == "false"
+    assert policy["current_seed_policy_frozen"] == "true"
+    assert policy["current_controls_executed"] == "false"
+    assert policy["seed_policy"] == "deterministic_family_seed_table"
+    assert policy["multiplicity_policy"] == "fixed_family_multiplicity_table"
+    for marker in [
+        "posthoc_seed_selection",
+        "posthoc_control_multiplicity",
+        "kids_data_vector_values",
+    ]:
+        assert marker in policy["forbidden_inputs"]
+    with (
+        ROOT / "data/derived/kids1000_cosebis_null_control_seed_inventory_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["status"] == "KIDS1000_COSEBIS_NULL_CONTROL_SEED_INVENTORY_BUILT_NOT_RUN"
+    assert summary["endpoint_scoring_allowed"] == "false"
+    assert summary["current_seed_policy_frozen"] == "true"
+    assert summary["current_controls_executed"] == "false"
+    assert summary["contains_control_scores"] == "false"
+    assert summary["contains_predictions"] == "false"
+    assert summary["contains_residuals"] == "false"
+    assert summary["contains_fit_statistics"] == "false"
+    assert summary["uses_kids_data_vector_values"] == "false"
+    assert summary["uses_posthoc_seed_selection"] == "false"
+    assert summary["uses_posthoc_control_multiplicity"] == "false"
+    assert summary["control_family_count"] == "4"
+    assert summary["total_declared_control_draws"] == "1008"
+    with (
+        ROOT / "data/derived/kids1000_cosebis_null_control_seed_inventory_v1.csv"
+    ).open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    expected = {
+        "sky_rotation": ("601001", "4"),
+        "tomographic_pair_shuffle": ("601002", "1000"),
+        "wrong_channel_activation": ("601003", "2"),
+        "web_path_sign_flip": ("601004", "2"),
+    }
+    assert {row["control_family"] for row in rows} == set(expected)
+    for row in rows:
+        assert (row["seed"], row["multiplicity"]) == expected[row["control_family"]]
+        assert row["current_control_executed"] == "false"
+        assert row["contains_control_scores"] == "false"
+        assert row["contains_predictions"] == "false"
+        assert row["contains_residuals"] == "false"
+        assert row["uses_kids_data_vector_values"] == "false"
+        assert row["uses_posthoc_seed_selection"] == "false"
+        assert row["uses_posthoc_control_multiplicity"] == "false"
 
 
 def test_pilot_products_are_frozen_but_not_endpoint_enabled() -> None:

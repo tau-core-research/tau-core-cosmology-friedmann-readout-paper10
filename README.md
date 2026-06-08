@@ -456,6 +456,22 @@ shuffle, wrong-channel activation, and web/path sign flip. These controls are
 not run yet; seed and multiplicity policies must be frozen before any null
 scores can be interpreted.
 
+The first COSEBIs null-control seed and multiplicity policy is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_null_control_seed_policy_v1.csv
+data/derived/kids1000_cosebis_null_control_seed_inventory_v1.csv
+data/derived/kids1000_cosebis_null_control_seed_inventory_v1_summary.csv
+docs/kids1000_cosebis_null_control_seed_policy_v1.md
+scripts/build_kids1000_cosebis_null_control_seed_inventory_v1.py
+scripts/validate_kids1000_cosebis_null_control_seed_inventory_v1.py
+```
+
+It freezes deterministic family seeds and planned multiplicities for the four
+future null-control families, totaling `1008` declared future control draws. It
+does not execute controls and contains no control scores, predictions,
+residuals, or fit statistics.
+
 The first tiny pilot product freeze is recorded in:
 
 ```text

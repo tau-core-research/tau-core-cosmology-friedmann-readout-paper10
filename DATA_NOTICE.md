@@ -157,6 +157,12 @@ The COSEBIs null-control readiness inventory declares four future control
 families but does not execute them. It contains no control scores, predictions,
 residuals, fit statistics, posterior-chain use, or data-vector-value use.
 
+The COSEBIs null-control seed inventory freezes deterministic family seeds and
+planned multiplicities for those future control families. It does not execute
+sky rotations, pair shuffles, wrong-channel activations, or sign flips, and it
+contains no control scores, predictions, residuals, fit statistics, posterior
+chain use, or data-vector-value use.
+
 The pilot frozen-product manifest includes three public distance-side files
 under `data/raw/` only to test acquisition, hashing, covariance-shape checks,
 and local provenance. These files are not sufficient for endpoint scoring
