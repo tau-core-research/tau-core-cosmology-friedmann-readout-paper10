@@ -424,6 +424,14 @@ storing an inverse covariance matrix. The solve is not executed in the present
 artifact because no source-frozen theory vector or lensing scoring protocol has
 yet been declared.
 
+The theory-vector gate is declared next, still without computing a prediction.
+It fixes the future target length to the 300 retained COSEBIs rows and keeps the
+lensing route restricted to \(W_{\rm web}\) and \(W_{\rm path}\), while
+forbidding use of KiDS data-vector values, posterior chains, residuals, or
+fit-improvement flags to choose the vector. A future endpoint must therefore
+freeze the web/path mapping and null controls before any lensing likelihood is
+allowed.
+
 Finally, the repository includes a tiny pilot product-freeze manifest in the
 source-manifest data folder. It hash-locks three public distance-side files: a
 cosmic-chronometer \(H(z)\) table, a Pantheon+ distance table, and a Pantheon+

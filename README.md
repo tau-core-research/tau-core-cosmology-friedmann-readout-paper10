@@ -391,6 +391,22 @@ It freezes the future numerical solve policy as Cholesky solve on the full
 store an inverse covariance. A frozen theory vector and scoring protocol are
 still required before any lensing likelihood can be evaluated.
 
+The first COSEBIs theory-vector readiness policy is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_theory_vector_policy_v1.csv
+data/derived/kids1000_cosebis_theory_vector_readiness_v1.csv
+data/derived/kids1000_cosebis_theory_vector_readiness_v1_summary.csv
+docs/kids1000_cosebis_theory_vector_policy_v1.md
+scripts/build_kids1000_cosebis_theory_vector_readiness_v1.py
+scripts/validate_kids1000_cosebis_theory_vector_readiness_v1.py
+```
+
+It declares a future `300`-row COSEBIs theory vector for the active
+`W_WEB_ANISOTROPY` and `W_PATH_PROJECTION` lensing route, but does not compute
+the vector. It also forbids using KiDS data-vector values, posterior chains,
+residuals, or fit-improvement flags to choose the theory vector.
+
 The first tiny pilot product freeze is recorded in:
 
 ```text

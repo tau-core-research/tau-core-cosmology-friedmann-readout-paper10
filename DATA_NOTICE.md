@@ -136,6 +136,11 @@ numerical solve policy: Cholesky solve against the full covariance after a
 theory vector is frozen. It does not execute the solve, does not store an
 inverse covariance, and does not compute predictions, residuals, or likelihoods.
 
+The COSEBIs theory-vector readiness inventory declares only the future
+requirement for a 300-row theory vector. It does not compute that vector and
+does not use KiDS data-vector values, posterior chains, residuals, or
+fit-improvement information to choose a lensing formula.
+
 The pilot frozen-product manifest includes three public distance-side files
 under `data/raw/` only to test acquisition, hashing, covariance-shape checks,
 and local provenance. These files are not sufficient for endpoint scoring
