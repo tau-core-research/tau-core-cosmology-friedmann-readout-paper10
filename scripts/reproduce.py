@@ -64,6 +64,8 @@ def main() -> None:
     run(["python", "scripts/validate_kids1000_lensing_inventory_v1.py"])
     run(["python", "scripts/build_kids1000_cosebis_hdu_inventory_v1.py"])
     run(["python", "scripts/validate_kids1000_cosebis_hdu_inventory_v1.py"])
+    run(["python", "scripts/build_kids1000_cosebis_tomographic_mode_inventory_v1.py"])
+    run(["python", "scripts/validate_kids1000_cosebis_tomographic_mode_inventory_v1.py"])
     run(["python", "scripts/build_figures.py"])
     print("+ tectonic paper10_submission_source/main.tex")
     subprocess.run(["tectonic", PAPER.name], cwd=PAPER.parent, env=env, check=True)

@@ -294,6 +294,23 @@ COSEBIs data-vector table, and `NZ_SOURCE` as a 119-row redshift-distribution
 table. The covariance is positive definite. This is still not a lensing
 likelihood and contains no model residuals or fit statistics.
 
+The COSEBIs tomographic/mode policy is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_tomographic_mode_policy_v1.csv
+data/derived/kids1000_cosebis_tomographic_mode_inventory_v1.csv
+data/derived/kids1000_cosebis_tomographic_mode_inventory_v1_summary.csv
+docs/kids1000_cosebis_tomographic_mode_policy_v1.md
+scripts/build_kids1000_cosebis_tomographic_mode_inventory_v1.py
+scripts/validate_kids1000_cosebis_tomographic_mode_inventory_v1.py
+```
+
+It freezes the selected `En` data-vector structure as `5` source bins, `15`
+upper-triangular tomographic pairs, and `20` COSEBIs modes per pair, for `300`
+rows. This is a source-side structure freeze only: it does not set a mode cut,
+does not invert the covariance, and does not compute lensing predictions,
+residuals, likelihood values, or Tau Core amplitudes.
+
 The first tiny pilot product freeze is recorded in:
 
 ```text

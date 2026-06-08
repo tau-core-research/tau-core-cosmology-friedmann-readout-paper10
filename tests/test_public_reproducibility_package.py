@@ -80,6 +80,9 @@ def test_public_files_exist() -> None:
         "data/source_manifest/kids1000_cosebis_hdu_policy_v1.csv",
         "data/derived/kids1000_cosebis_hdu_inventory_v1.csv",
         "data/derived/kids1000_cosebis_hdu_inventory_v1_summary.csv",
+        "data/source_manifest/kids1000_cosebis_tomographic_mode_policy_v1.csv",
+        "data/derived/kids1000_cosebis_tomographic_mode_inventory_v1.csv",
+        "data/derived/kids1000_cosebis_tomographic_mode_inventory_v1_summary.csv",
         "docs/void_web_source_native_products_v1.md",
         "docs/void_web_source_native_transform_rule_v1.md",
         "docs/pantheon_void_web_source_native_design_matrix_v1.md",
@@ -96,6 +99,7 @@ def test_public_files_exist() -> None:
         "docs/kids1000_lensing_products_v1.md",
         "docs/kids1000_cosebis_lensing_route_v1.md",
         "docs/kids1000_cosebis_hdu_policy_v1.md",
+        "docs/kids1000_cosebis_tomographic_mode_policy_v1.md",
         "scripts/acquire_void_web_source_native_products_v1.py",
         "scripts/validate_void_web_source_native_products_v1.py",
         "scripts/build_void_web_source_native_inventory_v1.py",
@@ -125,6 +129,8 @@ def test_public_files_exist() -> None:
         "scripts/validate_kids1000_lensing_inventory_v1.py",
         "scripts/build_kids1000_cosebis_hdu_inventory_v1.py",
         "scripts/validate_kids1000_cosebis_hdu_inventory_v1.py",
+        "scripts/build_kids1000_cosebis_tomographic_mode_inventory_v1.py",
+        "scripts/validate_kids1000_cosebis_tomographic_mode_inventory_v1.py",
         "scripts/acquire_pilot_products.py",
         "scripts/validate_pilot_products.py",
         "data/source_manifest/pilot_frozen_product_manifest.csv",
@@ -718,6 +724,60 @@ def test_kids1000_cosebis_hdu_policy_freezes_roles_without_scoring() -> None:
         rows = list(csv.DictReader(f))
     roles = {row["role"] for row in rows}
     assert {"data_vector", "covariance", "redshift_distribution"} <= roles
+
+
+def test_kids1000_cosebis_tomographic_mode_policy_freezes_structure_without_scoring() -> None:
+    with (
+        ROOT / "data/source_manifest/kids1000_cosebis_tomographic_mode_policy_v1.csv"
+    ).open(newline="") as f:
+        policy = list(csv.DictReader(f))[0]
+    assert policy["status"] == "KIDS1000_COSEBIS_TOMOGRAPHIC_MODE_POLICY_FROZEN_NOT_SCORED"
+    assert policy["endpoint_scoring_allowed"] == "false"
+    assert policy["expected_tomographic_bins"] == "5"
+    assert policy["expected_tomographic_pairs"] == "15"
+    assert policy["expected_modes_per_pair"] == "20"
+    assert "lensing_residuals" in policy["forbidden_inputs"]
+    assert "posthoc_mode_cuts" in policy["forbidden_inputs"]
+    with (
+        ROOT / "data/derived/kids1000_cosebis_tomographic_mode_inventory_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["status"] == "KIDS1000_COSEBIS_TOMOGRAPHIC_MODE_INVENTORY_BUILT_NOT_SCORED"
+    assert summary["endpoint_scoring_allowed"] == "false"
+    assert summary["contains_predictions"] == "false"
+    assert summary["contains_residuals"] == "false"
+    assert summary["contains_fit_statistics"] == "false"
+    assert summary["n_tomographic_bins"] == "5"
+    assert summary["n_tomographic_pairs"] == "15"
+    assert summary["n_modes_per_pair"] == "20"
+    assert summary["data_vector_rows"] == "300"
+    assert summary["all_pairs_upper_triangular"] == "true"
+    assert summary["all_pairs_complete"] == "true"
+    with (
+        ROOT / "data/derived/kids1000_cosebis_tomographic_mode_inventory_v1.csv"
+    ).open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    assert len(rows) == 15
+    assert {(row["bin1"], row["bin2"]) for row in rows} == {
+        ("1", "1"),
+        ("1", "2"),
+        ("1", "3"),
+        ("1", "4"),
+        ("1", "5"),
+        ("2", "2"),
+        ("2", "3"),
+        ("2", "4"),
+        ("2", "5"),
+        ("3", "3"),
+        ("3", "4"),
+        ("3", "5"),
+        ("4", "4"),
+        ("4", "5"),
+        ("5", "5"),
+    }
+    assert {row["rows_for_pair"] for row in rows} == {"20"}
+    assert {row["modes"] for row in rows} == {";".join(str(value) for value in range(1, 21))}
+    assert {row["endpoint_scoring_allowed"] for row in rows} == {"false"}
 
 
 def test_pilot_products_are_frozen_but_not_endpoint_enabled() -> None:
