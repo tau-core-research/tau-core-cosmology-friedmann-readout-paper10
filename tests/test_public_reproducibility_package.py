@@ -52,10 +52,20 @@ def test_public_files_exist() -> None:
         "data/source_manifest/pantheon_void_web_source_native_full_cov_pilot_v1.csv",
         "data/derived/pantheon_void_web_source_native_full_cov_pilot_v1_summary.csv",
         "data/derived/pantheon_void_web_source_native_full_cov_pilot_v1_grid.csv",
+        "data/source_manifest/sdss_final_bao_rsd_growth_summary_v1.csv",
+        "data/source_manifest/growth_web_source_native_transform_rule_v1.csv",
+        "data/source_manifest/growth_web_source_native_pilot_v1.csv",
+        "data/derived/growth_web_source_native_design_matrix_v1.csv",
+        "data/derived/growth_web_source_native_design_matrix_v1_summary.csv",
+        "data/derived/growth_web_source_native_pilot_v1_summary.csv",
+        "data/derived/growth_web_source_native_pilot_v1_grid.csv",
         "docs/void_web_source_native_products_v1.md",
         "docs/void_web_source_native_transform_rule_v1.md",
         "docs/pantheon_void_web_source_native_design_matrix_v1.md",
         "docs/pantheon_void_web_source_native_full_cov_pilot_v1.md",
+        "docs/sdss_final_bao_rsd_growth_summary_v1.md",
+        "docs/growth_web_source_native_design_matrix_v1.md",
+        "docs/growth_web_source_native_pilot_v1.md",
         "scripts/acquire_void_web_source_native_products_v1.py",
         "scripts/validate_void_web_source_native_products_v1.py",
         "scripts/build_void_web_source_native_inventory_v1.py",
@@ -64,6 +74,11 @@ def test_public_files_exist() -> None:
         "scripts/validate_pantheon_void_web_source_native_design_matrix_v1.py",
         "scripts/run_pantheon_void_web_source_native_full_cov_pilot_v1.py",
         "scripts/validate_pantheon_void_web_source_native_full_cov_pilot_v1.py",
+        "scripts/validate_sdss_final_bao_rsd_growth_summary_v1.py",
+        "scripts/build_growth_web_source_native_design_matrix_v1.py",
+        "scripts/validate_growth_web_source_native_design_matrix_v1.py",
+        "scripts/run_growth_web_source_native_pilot_v1.py",
+        "scripts/validate_growth_web_source_native_pilot_v1.py",
         "scripts/acquire_pilot_products.py",
         "scripts/validate_pilot_products.py",
         "data/source_manifest/pilot_frozen_product_manifest.csv",
@@ -438,6 +453,41 @@ def test_void_web_source_native_full_cov_pilot_is_nonvalidation() -> None:
         "delta_aic_source_native_void_web_minus_baseline",
     ]:
         float(summary[key])
+
+
+def test_growth_web_source_native_design_and_pilot_are_nonvalidation() -> None:
+    with (ROOT / "data/source_manifest/sdss_final_bao_rsd_growth_summary_v1.csv").open(
+        newline=""
+    ) as f:
+        growth_rows = list(csv.DictReader(f))
+    assert len(growth_rows) == 6
+    assert {row["endpoint_allowed"] for row in growth_rows} == {"false"}
+    assert {row["covariance_status"] for row in growth_rows} == {"DIAGONAL_ERROR_ONLY"}
+    with (ROOT / "data/derived/growth_web_source_native_design_matrix_v1_summary.csv").open(
+        newline=""
+    ) as f:
+        design_summary = list(csv.DictReader(f))[0]
+    assert design_summary["endpoint_scoring_allowed"] == "false"
+    assert int(design_summary["rows"]) == 6
+    assert int(design_summary["web_nonzero_rows"]) == 5
+    assert design_summary["contains_residuals"] == "false"
+    assert design_summary["contains_fit_statistics"] == "false"
+    with (ROOT / "data/derived/growth_web_source_native_pilot_v1_summary.csv").open(
+        newline=""
+    ) as f:
+        pilot_summary = list(csv.DictReader(f))[0]
+    assert pilot_summary["status"] == "GROWTH_WEB_SOURCE_NATIVE_PILOT_NOT_VALIDATION"
+    assert pilot_summary["claim_boundary"] == "growth_web_source_native_pilot_not_validation"
+    assert pilot_summary["covariance_policy"] == "diagonal_summary_errors_only"
+    assert "W_VOID_MATURITY" in pilot_summary["disabled_channels"]
+    for key in [
+        "baseline_best_chi2",
+        "web_best_chi2",
+        "wrong_web_sign_best_chi2",
+        "shuffled_web_best_chi2",
+        "delta_aic_web_minus_baseline",
+    ]:
+        float(pilot_summary[key])
 
 
 def test_pilot_products_are_frozen_but_not_endpoint_enabled() -> None:

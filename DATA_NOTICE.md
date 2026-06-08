@@ -68,6 +68,11 @@ The source-native void/web design matrix maps those products into fixed
 subsequent full-covariance pilot is explicitly labelled non-validation and
 should not be read as empirical evidence for a cosmological signal.
 
+The growth-side pilot uses six SDSS final BAO/RSD `f sigma8(z)` summary values
+with diagonal published errors only. It does not include the full official
+compressed-parameter covariance and is therefore not an endpoint growth
+likelihood.
+
 The pilot frozen-product manifest includes three public distance-side files
 under `data/raw/` only to test acquisition, hashing, covariance-shape checks,
 and local provenance. These files are not sufficient for endpoint scoring

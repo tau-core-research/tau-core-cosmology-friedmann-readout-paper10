@@ -181,6 +181,25 @@ flat-Lambda-CDM branch, but loses under AIC by `3.492`, and the deterministic
 shuffled control can still do better in chi-square. This is therefore a useful
 source-native pipeline step, not a detection or endpoint validation.
 
+The first growth-side multi-probe step is recorded in:
+
+```text
+data/source_manifest/sdss_final_bao_rsd_growth_summary_v1.csv
+data/source_manifest/growth_web_source_native_transform_rule_v1.csv
+data/derived/growth_web_source_native_design_matrix_v1.csv
+data/source_manifest/growth_web_source_native_pilot_v1.csv
+data/derived/growth_web_source_native_pilot_v1_summary.csv
+docs/sdss_final_bao_rsd_growth_summary_v1.md
+docs/growth_web_source_native_design_matrix_v1.md
+docs/growth_web_source_native_pilot_v1.md
+```
+
+This freezes six SDSS final BAO/RSD `f sigma8(z)` summary points and attaches
+the source-native `W_web` basis to them. The pilot is diagonal-summary only. It
+improves chi-square by `0.306`, but loses under AIC by `1.694`, and the
+wrong-sign control is equally good on the symmetric pilot grid. This is a first
+growth-side stress test, not a growth endpoint validation.
+
 The first tiny pilot product freeze is recorded in:
 
 ```text

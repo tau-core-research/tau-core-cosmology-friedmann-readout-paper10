@@ -1,0 +1,2 @@
+transform_id,status,rows,web_nonzero_rows,web_rows_total,web_rows_usable,web_bins,endpoint_scoring_allowed,contains_residuals,contains_fit_statistics
+GROWTH_WEB_SOURCE_NATIVE_TRANSFORM_V1,TRANSFORM_RULE_FROZEN_NOT_SCORED,6,5,638820,160351,150,false,false,false
