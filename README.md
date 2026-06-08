@@ -576,6 +576,23 @@ COSEBIs target rows and preferred-route tiles. It still does not compute
 footprint overlap, tile weights, path weights, web-environment labels, a mapping
 vector, a theory vector, predictions, residuals, or scores.
 
+The path-weight construction-rule ledger is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_path_weight_construction_rule_v1.csv
+data/derived/kids1000_cosebis_path_weight_construction_rule_v1.csv
+data/derived/kids1000_cosebis_path_weight_construction_rule_v1_summary.csv
+docs/kids1000_cosebis_path_weight_construction_rule_v1.md
+scripts/build_kids1000_cosebis_path_weight_construction_rule_v1.py
+scripts/validate_kids1000_cosebis_path_weight_construction_rule_v1.py
+```
+
+It declares the future factorization
+`N_pair * T_tile * F_overlap * D_path * E_web * C_norm` and records which
+factors are source-supported. The rule is not computable yet: footprint overlap
+and web-environment factors are missing, the path/mask factor is only partial,
+and no numeric weight or mapping vector is produced.
+
 The COSEBIs path-mapping source-preflight ledger is recorded in:
 
 ```text
@@ -590,10 +607,11 @@ scripts/validate_kids1000_cosebis_path_mapping_source_preflight_v1.py
 It summarizes the current source-side state for a future path-aware COSEBIs
 endpoint: target row structure, redshift kernels, the 196-tile route coordinate
 index, the 300-row design skeleton, and the 58,800-row target-tile domain
-skeleton are available; the three-mask observable shell is only partial; the
-full path/depth footprint mapping and web-environment catalogue remain missing;
-and null controls are declared but not executed. It contains no mapping vector,
-theory vector, predictions, residuals, or scores.
+skeleton are available; the path-weight construction rule is declared but not
+computable; the three-mask observable shell is only partial; the full path/depth
+footprint mapping and web-environment catalogue remain missing; and null
+controls are declared but not executed. It contains no mapping vector, theory
+vector, predictions, residuals, or scores.
 
 The first COSEBIs null-control readiness policy is recorded in:
 

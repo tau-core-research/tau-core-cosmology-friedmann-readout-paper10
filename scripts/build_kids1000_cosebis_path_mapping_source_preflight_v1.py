@@ -14,6 +14,7 @@ MASK_SHELL = ROOT / "data" / "derived" / "kids1000_dr4_path_mask_observable_shel
 ROUTE_TILES = ROOT / "data" / "derived" / "kids1000_dr4_path_mask_route_tile_inventory_v1_summary.csv"
 DESIGN_SKELETON = ROOT / "data" / "derived" / "kids1000_cosebis_path_mapping_design_skeleton_v1_summary.csv"
 DOMAIN_SKELETON = ROOT / "data" / "derived" / "kids1000_cosebis_path_mapping_domain_skeleton_v1_summary.csv"
+WEIGHT_RULE = ROOT / "data" / "derived" / "kids1000_cosebis_path_weight_construction_rule_v1_summary.csv"
 NULL_SEEDS = ROOT / "data" / "derived" / "kids1000_cosebis_null_control_seed_inventory_v1_summary.csv"
 OUT = ROOT / "data" / "derived" / "kids1000_cosebis_path_mapping_source_preflight_v1.csv"
 SUMMARY = ROOT / "data" / "derived" / "kids1000_cosebis_path_mapping_source_preflight_v1_summary.csv"
@@ -36,6 +37,7 @@ def main() -> None:
     route_tiles = read_one(ROUTE_TILES)
     design_skeleton = read_one(DESIGN_SKELETON)
     domain_skeleton = read_one(DOMAIN_SKELETON)
+    weight_rule = read_one(WEIGHT_RULE)
     null_seeds = read_one(NULL_SEEDS)
 
     if policy["endpoint_scoring_allowed"].lower() != "false":
@@ -103,6 +105,15 @@ def main() -> None:
             "limitation": "domain_layout_only_no_tile_weights_no_footprint_overlap_no_path_mapping_no_theory_vector",
         },
         {
+            "component_id": "path_weight_construction_rule",
+            "source_state": "declared_not_computed",
+            "evidence_artifact": "data/derived/kids1000_cosebis_path_weight_construction_rule_v1_summary.csv",
+            "source_count": weight_rule["factor_count"],
+            "preflight_role": "symbolic_path_weight_factorization_and_factor_status",
+            "blocking_status": "blocking_until_missing_factors_exist",
+            "limitation": "symbolic_factorization_declared_but_numeric_weights_not_computable",
+        },
+        {
             "component_id": "full_path_depth_footprint_mapping",
             "source_state": "missing",
             "evidence_artifact": "data/derived/kids1000_cosebis_path_mask_depth_gap_inventory_v1_summary.csv",
@@ -164,6 +175,7 @@ def main() -> None:
         "partial_available_component_count": str(sum(row["source_state"] == "partial_available" for row in rows)),
         "missing_component_count": str(sum(row["source_state"] == "missing" for row in rows)),
         "declared_not_executed_component_count": str(sum(row["source_state"] == "declared_not_executed" for row in rows)),
+        "declared_not_computed_component_count": str(sum(row["source_state"] == "declared_not_computed" for row in rows)),
         "target_rows": mapping_policy["expected_target_rows"],
         "mapping_ready": "false",
         "path_mapping_computed": "false",

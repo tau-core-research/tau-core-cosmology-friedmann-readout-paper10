@@ -204,14 +204,20 @@ overlap, tile weight, path weight, web-environment label, mapping-vector element
 theory-vector element, prediction, residual, likelihood value, or endpoint
 score.
 
+The COSEBIs path-weight construction-rule ledger declares only a future
+factorization of target-tile path weights. It records available, partial,
+missing, declared-not-computed, and declared-not-executed factors. It does not
+compute any numeric factor value, tile weight, path mapping, theory vector,
+prediction, residual, likelihood value, or endpoint score.
+
 The COSEBIs path-mapping source-preflight ledger combines only source-side
 availability flags. It records that COSEBIs target rows, redshift kernels, and
 the 196-tile route coordinate index, the 300-row design skeleton, and the
-58,800-row target-tile domain skeleton are available; that the three-mask
-observable shell is partial; and that a full source-frozen path/depth footprint
-mapping and web-environment catalogue remain missing. It does not compute a
-mapping vector, theory vector, predictions, residuals, likelihood values, or
-endpoint score.
+58,800-row target-tile domain skeleton are available; that the path-weight rule
+is declared but not computable; that the three-mask observable shell is partial;
+and that a full source-frozen path/depth footprint mapping and web-environment
+catalogue remain missing. It does not compute a mapping vector, theory vector,
+predictions, residuals, likelihood values, or endpoint score.
 
 The COSEBIs null-control readiness inventory declares four future control
 families but does not execute them. It contains no control scores, predictions,

@@ -488,14 +488,20 @@ Finally, the design layout is expanded to the full target-row by route-tile
 domain of \(300\times 196=58{,}800\) rows. This freezes the future mapping
 domain without assigning footprint overlap, depth/path weight, web-environment
 label, mapping-vector element, or likelihood contribution.
+The admissible future weight rule is then declared symbolically as a product of
+redshift-pair, route-tile, footprint-overlap, path/depth, web-environment, and
+normalization factors. This rule is not yet computable: the footprint-overlap
+and web-environment factors are missing, the path/depth factor is only a
+three-mask partial shell, and no numeric weight is produced.
 The resulting source-preflight ledger is correspondingly mixed: the 300 COSEBIs
 target rows, five-bin redshift-kernel inventory, 196-tile route-coordinate
 index, 300-row design skeleton, and 58{,}800-row domain skeleton are available;
-the mask shell is only a partial three-tile source observable; the full
-path/depth footprint mapping and a KiDS-footprint web-environment catalogue
-remain missing; and null controls are declared but not executed. Thus the
-lensing branch is now narrowed to specific source-side blockers rather than an
-unspecified missing-input state, but it remains non-scored.
+the weight-construction rule is declared but not computable; the mask shell is
+only a partial three-tile source observable; the full path/depth footprint
+mapping and a KiDS-footprint web-environment catalogue remain missing; and null
+controls are declared but not executed. Thus the lensing branch is now narrowed
+to specific source-side blockers rather than an unspecified missing-input state,
+but it remains non-scored.
 
 The null-control gate is declared in parallel. It predeclares sky rotation,
 tomographic-pair shuffle, wrong-channel activation, and web/path sign-flip
