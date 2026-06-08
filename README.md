@@ -124,7 +124,7 @@ docs/pantheon_endpoint_scope_v1.md
 It freezes a residual-blind row rule and covariance-submatrix policy, but it is
 still `SCOPE_FROZEN_NOT_SCORED`.
 
-The first scoring grammar is frozen, but not run:
+The first scoring grammar is frozen here:
 
 ```text
 data/source_manifest/pantheon_scoring_protocol_v1.csv
@@ -132,7 +132,7 @@ docs/pantheon_scoring_protocol_v1.md
 ```
 
 It declares the baseline family, nuisance policy, Tau activation family, and
-required future controls. It also keeps `scoring_allowed=false`.
+required future controls. It also keeps endpoint `scoring_allowed=false`.
 
 The dry-run design matrix is frozen here:
 
@@ -145,6 +145,22 @@ docs/pantheon_design_matrix_v1.md
 
 It contains source and activation-basis columns only. It contains no model
 predictions, residuals, likelihoods, or fit statistics.
+
+The first Pantheon+ numerical smoke test is recorded here:
+
+```text
+data/source_manifest/pantheon_pilot_scoring_v1.csv
+data/derived/pantheon_pilot_scoring_v1_summary.csv
+data/derived/pantheon_pilot_scoring_v1_grid.csv
+docs/pantheon_pilot_scoring_v1.md
+```
+
+This is a diagonal-covariance pilot score, not endpoint validation. On the
+current frozen grid, the Tau late-activation shell improves diagonal-covariance
+\(\chi^2\) by only `0.084` relative to the flat-Lambda-CDM branch, while its
+AIC is worse by `5.916` because the Tau shell carries more effective
+parameters. This is therefore a reproducible scoring-pipeline smoke test, not
+evidence for dark energy or for Tau Core cosmology.
 
 ## Scope
 

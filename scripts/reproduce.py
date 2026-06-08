@@ -29,6 +29,8 @@ def main() -> None:
     run(["python", "scripts/validate_pantheon_scoring_protocol_v1.py"])
     run(["python", "scripts/build_pantheon_design_matrix_v1.py"])
     run(["python", "scripts/validate_pantheon_design_matrix_v1.py"])
+    run(["python", "scripts/run_pantheon_pilot_scoring_v1.py"])
+    run(["python", "scripts/validate_pantheon_pilot_scoring_v1.py"])
     run(["python", "scripts/build_arxiv_source.py"])
     run(["python", "-m", "pytest", "-q"])
     print("PAPER10_REPRODUCTION_COMPLETE")

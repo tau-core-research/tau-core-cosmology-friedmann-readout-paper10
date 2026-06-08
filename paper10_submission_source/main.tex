@@ -33,8 +33,9 @@ source blocks define activation functions before distance, growth, lensing,
 and CMB-safety observables are scored. The target signature is not merely
 \(w(z)\ne -1\), but a Lambda-like distance readout paired with
 web/environment-dependent growth or lensing residuals. The first release is a
-protocol scaffold with claim boundaries, source blocks, null controls, and
-reproducibility checks; no measurement result is claimed.
+protocol scaffold with claim boundaries, source blocks, null controls,
+reproducibility checks, and a diagonal-covariance numerical smoke test; no
+measurement result is claimed.
 \end{abstract}
 
 \section{Scope and non-claims}
@@ -299,15 +300,12 @@ the source table. The resulting row mask is a source-derived artifact only:
 no \(\Lambda\)CDM residuals, Tau residual parameters, fit-improvement flags, or
 late-time activation fits are used.
 
-The first scoring grammar is then frozen as a protocol artifact, still without
-running scores. The declared baseline family is a flat-\(\Lambda\)CDM distance
-modulus branch with analytic marginalization of the absolute magnitude/Hubble
-offset in a future run. The declared Tau comparison family is only the
-late-activation shell \(W_\tau(a)=a^q/(a^q+a_\tau^q)\); no values of
-\(q\), \(a_\tau\), or \(\Omega_\tau\) are fitted in this protocol freeze. The
-required future controls include baseline-only, Tau-shell, shuffled-activation,
-and wrong-activation branches. The validation script fails if score artifacts
-are present in the current scaffold.
+The first scoring grammar is then frozen as a protocol artifact. The declared
+baseline family is a flat-\(\Lambda\)CDM distance modulus branch with analytic
+marginalization of the absolute magnitude/Hubble offset. The declared Tau
+comparison family is only the late-activation shell
+\(W_\tau(a)=a^q/(a^q+a_\tau^q)\). The required controls include baseline-only,
+Tau-shell, shuffled-activation, and wrong-activation branches.
 
 As a final dry-run layer, the repository builds a Pantheon+ design matrix with
 1371 rows. It contains source columns, the scale factor \(a=1/(1+z_{\rm HD})\),
@@ -315,6 +313,25 @@ and fixed activation-family basis columns. It deliberately excludes model
 predictions, residuals, likelihoods, \(\chi^2\) values, fit-improvement flags,
 and fitted Tau parameters. This verifies that the frozen scope and scoring
 grammar can produce numerical inputs without crossing into endpoint scoring.
+
+The repository also includes the first numerical Pantheon+ pilot scoring run,
+marked throughout as \(\texttt{PILOT\_SCORING\_NOT\_VALIDATION}\). This run is
+a diagonal-covariance smoke test of the frozen scoring grammar, not a
+covariance-complete cosmological likelihood. It uses the diagonal of the
+retained STAT+SYS covariance submatrix, analytic intercept marginalization, and
+the frozen grid declared in the pilot manifest. On this grid the Tau
+late-activation shell has a slightly lower diagonal-covariance \(\chi^2\) than
+the flat-\(\Lambda\)CDM branch,
+\[
+\Delta\chi^2_{\tau-\Lambda{\rm CDM}}=-0.084,
+\]
+but its AIC is worse,
+\[
+\Delta{\rm AIC}_{\tau-\Lambda{\rm CDM}}=+5.916,
+\]
+because the shell carries more effective parameters. This is therefore a
+pipeline and claim-boundary test, not evidence for dark energy, not validation
+of Tau Core cosmology, and not a replacement for a full-covariance analysis.
 
 \section{CMB role}
 
@@ -353,9 +370,12 @@ A fail result occurs if:
 \section{Conclusion}
 
 The present repository defines a source-frozen Friedmann-readout audit protocol.
-It does not report a measurement result. Its value is to make the next
-cosmology test precise: a Tau Core-inspired late-time residual should be judged
-not by \(w(z)\ne -1\) alone, but by the joint pattern
+It does not report a measurement result. Its first numerical Pantheon+ smoke
+test is deliberately neutral: the Tau shell slightly improves
+diagonal-covariance \(\chi^2\), but loses under AIC. The value of the scaffold
+is therefore to make the next cosmology test precise: a Tau Core-inspired
+late-time residual should be judged not by \(w(z)\ne -1\) alone, but by the
+joint pattern
 \[
 \begin{aligned}
 &\hbox{Lambda-like distance behavior}\\

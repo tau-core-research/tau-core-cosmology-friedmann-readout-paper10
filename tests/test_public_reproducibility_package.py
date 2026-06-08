@@ -48,6 +48,12 @@ def test_public_files_exist() -> None:
         "docs/pantheon_design_matrix_v1.md",
         "scripts/build_pantheon_design_matrix_v1.py",
         "scripts/validate_pantheon_design_matrix_v1.py",
+        "data/source_manifest/pantheon_pilot_scoring_v1.csv",
+        "data/derived/pantheon_pilot_scoring_v1_summary.csv",
+        "data/derived/pantheon_pilot_scoring_v1_grid.csv",
+        "docs/pantheon_pilot_scoring_v1.md",
+        "scripts/run_pantheon_pilot_scoring_v1.py",
+        "scripts/validate_pantheon_pilot_scoring_v1.py",
     ]
     for rel in required:
         assert (ROOT / rel).exists(), rel
@@ -200,3 +206,37 @@ def test_pantheon_design_matrix_is_not_a_score_artifact() -> None:
     assert "model_mu" not in columns
     assert "distance_residuals" not in columns
     assert "chi2" not in columns
+
+
+def test_pantheon_pilot_scoring_is_a_nonvalidation_smoke_test() -> None:
+    with (ROOT / "data/source_manifest/pantheon_pilot_scoring_v1.csv").open(newline="") as f:
+        manifest_rows = list(csv.DictReader(f))
+    with (ROOT / "data/derived/pantheon_pilot_scoring_v1_summary.csv").open(newline="") as f:
+        summary_rows = list(csv.DictReader(f))
+    with (ROOT / "data/derived/pantheon_pilot_scoring_v1_grid.csv").open(newline="") as f:
+        grid_rows = list(csv.DictReader(f))
+    assert len(manifest_rows) == 1
+    assert len(summary_rows) == 1
+    manifest = manifest_rows[0]
+    summary = summary_rows[0]
+    assert manifest["status"] == "PILOT_SCORING_NOT_VALIDATION"
+    assert summary["status"] == "PILOT_SCORING_NOT_VALIDATION"
+    assert summary["claim_boundary"] == "pilot_scoring_not_validation"
+    assert int(summary["n_rows"]) == 1371
+    assert "diagonal" in manifest["covariance_policy"]
+    assert "diagonal_variance" in summary["covariance_regularization"]
+    branches = {row["branch"] for row in grid_rows}
+    assert {
+        "baseline_only",
+        "tau_shell",
+        "wrong_activation",
+        "deterministic_shuffled_activation",
+    } <= branches
+    for key in [
+        "baseline_best_chi2",
+        "tau_best_chi2",
+        "wrong_best_chi2",
+        "shuffled_best_chi2",
+        "delta_aic_tau_minus_baseline",
+    ]:
+        assert float(summary[key]) == float(summary[key])

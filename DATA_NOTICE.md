@@ -65,3 +65,9 @@ scoring grammar and explicitly forbids score artifacts in the current scaffold.
 The Pantheon+ design matrix is a dry-run input matrix. It contains source
 columns and fixed basis columns only; it does not contain predictions,
 residuals, likelihoods, or fitted parameters.
+
+The Pantheon+ pilot scoring artifacts under `data/derived/` are a numerical
+smoke test of the frozen scoring grammar. They use the diagonal of the retained
+STAT+SYS covariance submatrix and are explicitly marked
+`PILOT_SCORING_NOT_VALIDATION`. They are not a covariance-complete likelihood,
+not empirical validation, and not evidence for a new dark-energy model.
