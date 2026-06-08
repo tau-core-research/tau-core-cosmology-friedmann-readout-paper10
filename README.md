@@ -720,8 +720,10 @@ It inspects the 20 planned product URLs and cache paths without fetching any
 large FITS product, without computing overlap fractions, without constructing a
 path-mapping vector, and without enabling endpoint scoring. Manual acquisition
 is available only through the explicit `--execute` option; outputs from that
-mode are source-acquisition products and remain outside the public reproduce
-path until separately reviewed and frozen.
+mode are written under ignored `data/local/` execution logs plus the ignored
+full-route FITS cache. They remain outside the public reproduce path until
+separately reviewed, checksum-frozen, and promoted through a source-freeze
+artifact.
 
 The COSEBIs path-mapping source-preflight ledger is recorded in:
 

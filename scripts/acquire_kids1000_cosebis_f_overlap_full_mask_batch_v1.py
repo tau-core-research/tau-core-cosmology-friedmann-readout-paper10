@@ -13,8 +13,9 @@ import requests
 ROOT = Path(__file__).resolve().parents[1]
 POLICY = ROOT / "data" / "source_manifest" / "kids1000_cosebis_f_overlap_full_mask_batch_dry_run_policy_v1.csv"
 BATCH_PLAN = ROOT / "data" / "derived" / "kids1000_cosebis_f_overlap_full_mask_batch_plan_v1.csv"
-OUT = ROOT / "data" / "derived" / "kids1000_cosebis_f_overlap_full_mask_batch_dry_run_v1.csv"
-SUMMARY = ROOT / "data" / "derived" / "kids1000_cosebis_f_overlap_full_mask_batch_dry_run_v1_summary.csv"
+DRY_OUT = ROOT / "data" / "derived" / "kids1000_cosebis_f_overlap_full_mask_batch_dry_run_v1.csv"
+DRY_SUMMARY = ROOT / "data" / "derived" / "kids1000_cosebis_f_overlap_full_mask_batch_dry_run_v1_summary.csv"
+EXECUTION_LOG_DIR = ROOT / "data" / "local" / "weak_lensing" / "kids1000_cosebis_f_overlap_batch_execute_logs_v1"
 
 
 def read_one(path: Path) -> dict[str, str]:
@@ -123,8 +124,18 @@ def main() -> None:
             }
         )
 
-    OUT.parent.mkdir(parents=True, exist_ok=True)
-    with OUT.open("w", newline="") as f:
+    if args.execute:
+        output_path = EXECUTION_LOG_DIR / f"kids1000_cosebis_f_overlap_full_mask_batch_execute_{batch_index:02d}_v1.csv"
+        summary_path = (
+            EXECUTION_LOG_DIR
+            / f"kids1000_cosebis_f_overlap_full_mask_batch_execute_{batch_index:02d}_v1_summary.csv"
+        )
+    else:
+        output_path = DRY_OUT
+        summary_path = DRY_SUMMARY
+
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    with output_path.open("w", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=list(rows[0].keys()), lineterminator="\n")
         writer.writeheader()
         writer.writerows(rows)
@@ -156,13 +167,14 @@ def main() -> None:
         if not args.execute
         else "kids1000_cosebis_f_overlap_full_mask_batch_fetch_not_mapping_not_validation",
     }
-    with SUMMARY.open("w", newline="") as f:
+    with summary_path.open("w", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=list(summary.keys()), lineterminator="\n")
         writer.writeheader()
         writer.writerow(summary)
     print(
         "PAPER10_KIDS1000_COSEBIS_F_OVERLAP_FULL_MASK_BATCH_V1 "
-        f"batch={batch_index} mode={summary['fetch_mode']} size={len(rows)} endpoint_allowed=false"
+        f"batch={batch_index} mode={summary['fetch_mode']} size={len(rows)} "
+        f"output={output_path.relative_to(ROOT)} endpoint_allowed=false"
     )
 
 

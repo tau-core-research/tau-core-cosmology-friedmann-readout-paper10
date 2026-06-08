@@ -2180,6 +2180,7 @@ def test_kids1000_cosebis_f_overlap_full_mask_batch_plan_is_unfetched_and_git_sa
     assert summary["contains_mapping_vector"] == "false"
     assert summary["contains_theory_vector"] == "false"
     assert "full_route_cache_v1/*.fits.gz" in (ROOT / ".gitignore").read_text()
+    assert "data/local/" in (ROOT / ".gitignore").read_text()
     with (
         ROOT / "data/derived/kids1000_cosebis_f_overlap_full_mask_batch_plan_v1.csv"
     ).open(newline="") as f:

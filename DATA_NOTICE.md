@@ -259,7 +259,9 @@ and cache paths for batch 0, but keeps `external_products_fetched=false`,
 `endpoint_scoring_allowed=false`. The same script has a manual `--execute`
 mode for future source acquisition, but that mode is not called by
 `scripts/reproduce.py` and does not by itself create an accepted overlap rule,
-mapping vector, theory vector, or endpoint score.
+mapping vector, theory vector, or endpoint score. Manual execution logs are
+written under ignored `data/local/` paths so that a fetch cannot overwrite the
+committed dry-run artifacts.
 
 The COSEBIs path-mapping source-preflight ledger combines only source-side
 availability flags. It records that COSEBIs target rows, redshift kernels, and

@@ -526,9 +526,10 @@ paper repository.
 A first batch dry run then inspects batch 0, containing 20 planned product URLs
 and cache paths, without downloading any FITS file. The dry run is included in
 the public reproduction script, while the manual \texttt{--execute} acquisition
-mode is kept outside the public reproduce path. This gate computes no overlap
-fraction, path-mapping vector, theory vector, prediction, residual, or endpoint
-score; it is only a leakage-safe acquisition-readiness check.
+mode is kept outside the public reproduce path and writes only to ignored local
+execution logs. This gate computes no overlap fraction, path-mapping vector,
+theory vector, prediction, residual, or endpoint score; it is only a
+leakage-safe acquisition-readiness check.
 The resulting source-preflight ledger is correspondingly mixed: the 300 COSEBIs
 target rows, five-bin redshift-kernel inventory, 196-tile route-coordinate
 index, 300-row design skeleton, and 58{,}800-row domain skeleton are available;

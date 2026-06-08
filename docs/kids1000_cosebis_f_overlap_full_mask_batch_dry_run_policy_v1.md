@@ -17,3 +17,9 @@ python scripts/acquire_kids1000_cosebis_f_overlap_full_mask_batch_v1.py --batch-
 Large downloaded FITS files are written to the ignored full-route cache. Even
 after a manual fetch, overlap derivation, path mapping, theory vectors, and
 endpoint scoring remain separate later gates.
+
+Manual execution logs are written under `data/local/`, which is ignored by git.
+This prevents an executed fetch from overwriting the committed dry-run CSVs.
+Any future promotion of a fetched batch must create a separate source-freeze
+review artifact with checksums and claim boundaries before it can contribute to
+an accepted `F_overlap` rule.
