@@ -461,6 +461,10 @@ external mask FITS products. Those FITS products are not downloaded in the
 present package, and no mask map or path-mapping vector is parsed. This narrows
 the blocker from an unknown missing product to a source-frozen external mask
 route.
+A first route-health check then performs HEAD requests for the first, middle,
+and last mask products in the preferred route. All three return HTTP 200 with
+FITS content and positive content length. This is still only metadata: no mask
+FITS file is downloaded and no path-aware lensing theory vector is constructed.
 
 The null-control gate is declared in parallel. It predeclares sky rotation,
 tomographic-pair shuffle, wrong-channel activation, and web/path sign-flip

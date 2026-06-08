@@ -477,6 +477,22 @@ mask FITS products. The preferred DR4.1 9-band route script lists `196` mask
 products. Those mask FITS files are not downloaded in this package, and no
 path-mapping vector or COSEBIs theory vector is computed.
 
+The first preferred-route HEAD sample is recorded in:
+
+```text
+data/source_manifest/kids1000_dr4_path_mask_head_sample_policy_v1.csv
+data/derived/kids1000_dr4_path_mask_head_sample_v1.csv
+data/derived/kids1000_dr4_path_mask_head_sample_v1_summary.csv
+docs/kids1000_dr4_path_mask_head_sample_policy_v1.md
+scripts/check_kids1000_dr4_path_mask_head_sample_v1.py
+scripts/validate_kids1000_dr4_path_mask_head_sample_v1.py
+```
+
+It checks only the first, middle, and last mask-product URLs from the preferred
+DR4.1 9-band route. All three return HTTP `200` with FITS content and positive
+content length. This is an availability sanity check only: the mask FITS files
+are not downloaded and no path mapping is computed.
+
 The first COSEBIs null-control readiness policy is recorded in:
 
 ```text

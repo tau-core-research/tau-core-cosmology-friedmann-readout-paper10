@@ -116,6 +116,9 @@ def test_public_files_exist() -> None:
         "data/raw/weak_lensing/kids1000_path_masks/kids_dr4.0_msk_wget.sh",
         "data/derived/kids1000_dr4_path_mask_route_scripts_inventory_v1.csv",
         "data/derived/kids1000_dr4_path_mask_route_scripts_inventory_v1_summary.csv",
+        "data/source_manifest/kids1000_dr4_path_mask_head_sample_policy_v1.csv",
+        "data/derived/kids1000_dr4_path_mask_head_sample_v1.csv",
+        "data/derived/kids1000_dr4_path_mask_head_sample_v1_summary.csv",
         "data/source_manifest/kids1000_cosebis_null_control_policy_v1.csv",
         "data/derived/kids1000_cosebis_null_control_readiness_v1.csv",
         "data/derived/kids1000_cosebis_null_control_readiness_v1_summary.csv",
@@ -149,6 +152,7 @@ def test_public_files_exist() -> None:
         "docs/kids1000_cosebis_redshift_kernel_policy_v1.md",
         "docs/kids1000_cosebis_path_mask_depth_gap_policy_v1.md",
         "docs/kids1000_dr4_path_mask_route_scripts_v1.md",
+        "docs/kids1000_dr4_path_mask_head_sample_policy_v1.md",
         "docs/kids1000_cosebis_null_control_policy_v1.md",
         "docs/kids1000_cosebis_null_control_seed_policy_v1.md",
         "scripts/acquire_void_web_source_native_products_v1.py",
@@ -202,6 +206,8 @@ def test_public_files_exist() -> None:
         "scripts/validate_kids1000_cosebis_path_mask_depth_gap_inventory_v1.py",
         "scripts/acquire_kids1000_dr4_path_mask_route_scripts_v1.py",
         "scripts/validate_kids1000_dr4_path_mask_route_scripts_v1.py",
+        "scripts/check_kids1000_dr4_path_mask_head_sample_v1.py",
+        "scripts/validate_kids1000_dr4_path_mask_head_sample_v1.py",
         "scripts/build_kids1000_cosebis_null_control_readiness_v1.py",
         "scripts/validate_kids1000_cosebis_null_control_readiness_v1.py",
         "scripts/build_kids1000_cosebis_null_control_seed_inventory_v1.py",
@@ -1294,6 +1300,56 @@ def test_kids1000_dr4_path_mask_route_scripts_are_frozen_not_scored() -> None:
         assert row["contains_residuals"] == "false"
         assert row["uses_kids_data_vector_values"] == "false"
         assert (ROOT / row["local_path"]).exists()
+
+
+def test_kids1000_dr4_path_mask_head_sample_is_metadata_only() -> None:
+    with (
+        ROOT / "data/source_manifest/kids1000_dr4_path_mask_head_sample_policy_v1.csv"
+    ).open(newline="") as f:
+        policy = list(csv.DictReader(f))[0]
+    assert policy["status"] == "KIDS_DR4_PATH_MASK_HEAD_SAMPLE_POLICY_FROZEN_NOT_SCORED"
+    assert policy["endpoint_scoring_allowed"] == "false"
+    assert policy["preferred_route_id"] == "KIDS_DR41_9BAND_MASK_WGET_SCRIPT"
+    assert policy["sample_rule"] == "first_middle_last_from_preferred_route"
+    assert policy["sample_indices_zero_based"] == "0;98;195"
+    assert policy["current_mask_products_fetched"] == "false"
+    for marker in [
+        "posthoc_mask_subset_selection",
+        "posthoc_path_projection_labels",
+        "kids_data_vector_values",
+    ]:
+        assert marker in policy["forbidden_inputs"]
+    with (
+        ROOT / "data/derived/kids1000_dr4_path_mask_head_sample_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["status"] == "KIDS_DR4_PATH_MASK_HEAD_SAMPLE_CHECKED_NOT_FETCHED"
+    assert summary["endpoint_scoring_allowed"] == "false"
+    assert summary["sample_count"] == "3"
+    assert summary["http_200_count"] == "3"
+    assert int(summary["min_content_length"]) > 0
+    assert summary["mask_products_fetched"] == "false"
+    assert summary["path_mapping_computed"] == "false"
+    assert summary["contains_mapping_vector"] == "false"
+    assert summary["contains_theory_vector"] == "false"
+    assert summary["contains_predictions"] == "false"
+    assert summary["contains_residuals"] == "false"
+    assert summary["uses_kids_data_vector_values"] == "false"
+    with (
+        ROOT / "data/derived/kids1000_dr4_path_mask_head_sample_v1.csv"
+    ).open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    assert [row["sample_index_zero_based"] for row in rows] == ["0", "98", "195"]
+    for row in rows:
+        assert row["head_status"] == "HEAD_CHECKED_MASK_NOT_FETCHED"
+        assert row["http_status"] == "200"
+        assert int(row["content_length"]) > 0
+        assert "fits" in row["content_type"].lower()
+        assert row["mask_product_fetched"] == "false"
+        assert row["path_mapping_computed"] == "false"
+        assert row["contains_predictions"] == "false"
+        assert row["contains_residuals"] == "false"
+        assert row["uses_kids_data_vector_values"] == "false"
 
 
 def test_kids1000_cosebis_null_control_policy_is_declared_not_run() -> None:

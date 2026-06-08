@@ -167,6 +167,12 @@ or redistributed here. The inventory contains no parsed mask map, no path
 mapping vector, no theory vector, no predictions, no residuals, no likelihood
 values, and no data-vector-value use.
 
+The KiDS DR4 path-mask HEAD sample checks only HTTP metadata for the first,
+middle, and last products in the preferred route script. It records HTTP status,
+content type, and content length. It does not download mask FITS products,
+redistribute mask maps, parse pixels, compute a path mapping vector, or use
+endpoint residuals.
+
 The COSEBIs null-control readiness inventory declares four future control
 families but does not execute them. It contains no control scores, predictions,
 residuals, fit statistics, posterior-chain use, or data-vector-value use.
