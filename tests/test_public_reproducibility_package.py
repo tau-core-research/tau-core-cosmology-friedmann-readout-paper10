@@ -146,6 +146,9 @@ def test_public_files_exist() -> None:
         "data/source_manifest/kids1000_cosebis_path_source_product_route_policy_v1.csv",
         "data/derived/kids1000_cosebis_path_source_product_route_manifest_v1.csv",
         "data/derived/kids1000_cosebis_path_source_product_route_manifest_v1_summary.csv",
+        "data/source_manifest/kids1000_cosebis_path_blocker_resolution_order_policy_v1.csv",
+        "data/derived/kids1000_cosebis_path_blocker_resolution_order_v1.csv",
+        "data/derived/kids1000_cosebis_path_blocker_resolution_order_v1_summary.csv",
         "data/source_manifest/kids1000_cosebis_path_mapping_source_preflight_policy_v1.csv",
         "data/derived/kids1000_cosebis_path_mapping_source_preflight_v1.csv",
         "data/derived/kids1000_cosebis_path_mapping_source_preflight_v1_summary.csv",
@@ -191,6 +194,7 @@ def test_public_files_exist() -> None:
         "docs/kids1000_cosebis_path_weight_construction_rule_v1.md",
         "docs/kids1000_cosebis_path_factor_acquisition_plan_v1.md",
         "docs/kids1000_cosebis_path_source_product_route_policy_v1.md",
+        "docs/kids1000_cosebis_path_blocker_resolution_order_policy_v1.md",
         "docs/kids1000_cosebis_path_mapping_source_preflight_policy_v1.md",
         "docs/kids1000_cosebis_null_control_policy_v1.md",
         "docs/kids1000_cosebis_null_control_seed_policy_v1.md",
@@ -263,6 +267,8 @@ def test_public_files_exist() -> None:
         "scripts/validate_kids1000_cosebis_path_factor_acquisition_plan_v1.py",
         "scripts/build_kids1000_cosebis_path_source_product_route_manifest_v1.py",
         "scripts/validate_kids1000_cosebis_path_source_product_route_manifest_v1.py",
+        "scripts/build_kids1000_cosebis_path_blocker_resolution_order_v1.py",
+        "scripts/validate_kids1000_cosebis_path_blocker_resolution_order_v1.py",
         "scripts/build_kids1000_cosebis_path_mapping_source_preflight_v1.py",
         "scripts/validate_kids1000_cosebis_path_mapping_source_preflight_v1.py",
         "scripts/build_kids1000_cosebis_null_control_readiness_v1.py",
@@ -1904,6 +1910,58 @@ def test_kids1000_cosebis_path_source_product_route_manifest_is_not_fetching_or_
     assert by_route["ROUTE_D_PATH_DOCUMENTED_SUBSET_CONTROL"]["may_resolve_blocker"] == "false"
     assert by_route["ROUTE_E_WEB_NULL_ABSENT_CONTROL"]["may_resolve_blocker"] == "false"
     assert by_route["ROUTE_NULL_CONTROLS_AFTER_MAPPING"]["may_resolve_blocker"] == "false"
+    for row in rows:
+        assert row["external_products_fetched"] == "false"
+        assert row["numeric_factor_computed"] == "false"
+        assert row["path_mapping_computed"] == "false"
+        assert row["contains_mapping_vector"] == "false"
+        assert row["contains_theory_vector"] == "false"
+        assert row["uses_kids_data_vector_values"] == "false"
+        assert row["endpoint_scoring_allowed"] == "false"
+
+
+def test_kids1000_cosebis_path_blocker_resolution_order_is_frozen_not_mapping() -> None:
+    with (
+        ROOT / "data/source_manifest/kids1000_cosebis_path_blocker_resolution_order_policy_v1.csv"
+    ).open(newline="") as f:
+        policy = list(csv.DictReader(f))[0]
+    assert policy["status"] == "KIDS1000_COSEBIS_PATH_BLOCKER_RESOLUTION_ORDER_POLICY_FROZEN_NOT_FETCHED"
+    assert policy["endpoint_scoring_allowed"] == "false"
+    assert policy["current_order_declared"] == "true"
+    assert policy["current_external_products_fetched"] == "false"
+    assert policy["current_path_mapping_computed"] == "false"
+    assert policy["current_theory_vector_computed"] == "false"
+    with (
+        ROOT / "data/derived/kids1000_cosebis_path_blocker_resolution_order_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["status"] == "KIDS1000_COSEBIS_PATH_BLOCKER_RESOLUTION_ORDER_BUILT_NOT_FETCHED"
+    assert summary["stage_count"] == "6"
+    assert summary["blocking_unresolved_stage_count"] == "3"
+    assert summary["not_allowed_stage_count"] == "1"
+    assert summary["declared_not_computed_stage_count"] == "1"
+    assert summary["declared_not_executed_stage_count"] == "1"
+    assert summary["first_blocker"] == "F_overlap"
+    assert summary["external_products_fetched"] == "false"
+    assert summary["numeric_factors_computed"] == "false"
+    assert summary["path_mapping_computed"] == "false"
+    assert summary["contains_mapping_vector"] == "false"
+    assert summary["contains_theory_vector"] == "false"
+    assert summary["contains_predictions"] == "false"
+    assert summary["contains_residuals"] == "false"
+    with (
+        ROOT / "data/derived/kids1000_cosebis_path_blocker_resolution_order_v1.csv"
+    ).open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    observed = [(row["order_rank"], row["factor_id"], row["stage_status"]) for row in rows]
+    assert observed == [
+        ("1", "F_overlap", "blocking_not_resolved"),
+        ("2", "D_path", "blocking_not_resolved"),
+        ("3", "E_web", "blocking_not_resolved"),
+        ("4", "C_norm", "declared_not_computed"),
+        ("5", "mapping_vector", "not_allowed_yet"),
+        ("6", "null_controls", "declared_not_executed"),
+    ]
     for row in rows:
         assert row["external_products_fetched"] == "false"
         assert row["numeric_factor_computed"] == "false"

@@ -626,6 +626,21 @@ two already-supported locks, five blocker-resolving candidates, and three
 control/deferred routes. It still fetches no external products, computes no
 factor values, and creates no path mapping or score.
 
+The blocker-resolution order policy is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_path_blocker_resolution_order_policy_v1.csv
+data/derived/kids1000_cosebis_path_blocker_resolution_order_v1.csv
+data/derived/kids1000_cosebis_path_blocker_resolution_order_v1_summary.csv
+docs/kids1000_cosebis_path_blocker_resolution_order_policy_v1.md
+scripts/build_kids1000_cosebis_path_blocker_resolution_order_v1.py
+scripts/validate_kids1000_cosebis_path_blocker_resolution_order_v1.py
+```
+
+It freezes the future source-side order: `F_overlap` first, then `D_path`,
+then `E_web`, then `C_norm`, then a mapping vector, then null controls. It
+fetches no products and keeps mapping and endpoint scoring disabled.
+
 The COSEBIs path-mapping source-preflight ledger is recorded in:
 
 ```text

@@ -222,6 +222,13 @@ ingredients, blocker-resolution candidates, and controls/deferred routes, but
 fetches no products and computes no factor values, path mapping, theory vector,
 prediction, residual, likelihood value, or endpoint score.
 
+The COSEBIs blocker-resolution order policy freezes the source-side order in
+which blockers may be resolved. Footprint overlap must be resolved first,
+followed by path/depth support, web/environment support, source-side
+normalization, mapping-vector construction, and null controls. This order gate
+also fetches no products and computes no factor values, mapping vector, theory
+vector, prediction, residual, likelihood value, or endpoint score.
+
 The COSEBIs path-mapping source-preflight ledger combines only source-side
 availability flags. It records that COSEBIs target rows, redshift kernels, and
 the 196-tile route coordinate index, the 300-row design skeleton, and the

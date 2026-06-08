@@ -504,6 +504,11 @@ candidate routes: two already-supported locks, five blocker-resolution
 candidates, and three control/deferred routes. This manifest is still
 source-side only: it fetches no products, computes no factor values, and does
 not construct a path mapping or score.
+Finally, a blocker-resolution order policy fixes the future source-side order:
+footprint overlap first, then path/depth support, web/environment support,
+normalization, mapping-vector construction, and null controls. Thus later
+normalization or null-control steps cannot bypass the missing footprint
+support.
 The resulting source-preflight ledger is correspondingly mixed: the 300 COSEBIs
 target rows, five-bin redshift-kernel inventory, 196-tile route-coordinate
 index, 300-row design skeleton, and 58{,}800-row domain skeleton are available;
