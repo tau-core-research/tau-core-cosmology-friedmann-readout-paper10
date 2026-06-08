@@ -55,6 +55,14 @@ the proxy `W_void` and `W_web` bases with a future VAST/SDSS DR7 void product
 and an SDSS DR17 MCPM cosmic-web product. Both rows remain selected-not-fetched
 and endpoint disabled.
 
+The source-native void/web frozen-products manifest does include four compact
+public products under `data/raw/`: a VAST/SDSS DR7 Planck2018 maximal void
+table, its NSA mask, the SDSS DR17 MCPM SlimeMold galaxy catalogue, and the
+provider sha1sum file. These files are checksum-locked source products, not
+endpoint scoring inputs. The derived inventory records only source-side row
+counts and hashes; it contains no residuals, no fitted parameters, and no
+endpoint scores.
+
 The pilot frozen-product manifest includes three public distance-side files
 under `data/raw/` only to test acquisition, hashing, covariance-shape checks,
 and local provenance. These files are not sufficient for endpoint scoring

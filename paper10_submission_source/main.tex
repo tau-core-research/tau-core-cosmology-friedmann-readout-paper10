@@ -294,6 +294,16 @@ proxy bases. The rows in this new plan are selected but not fetched, and
 endpoint scoring remains disabled; they freeze candidate routes, not numerical
 endpoint inputs.
 
+After that route-selection gate, the current repository also freezes the first
+source-native void/web products. The void side contains a VAST/SDSS DR7
+Planck2018 maximal void table with 1163 rows and its NSA mask. The web side
+contains the SDSS DR17 MCPM SlimeMold galaxy catalogue. Its first FITS table
+extension contains 638820 rows, and the provider sha1sum file is frozen as an
+additional provenance check. These files are checksum-locked and source-native,
+but still not endpoint inputs: the transform from catalogue quantities to
+\(W_{\rm void}\) and \(W_{\rm web}\) scoring columns remains a future frozen
+gate.
+
 Finally, the repository includes a tiny pilot product-freeze manifest in the
 source-manifest data folder. It hash-locks three public distance-side files: a
 cosmic-chronometer \(H(z)\) table, a Pantheon+ distance table, and a Pantheon+

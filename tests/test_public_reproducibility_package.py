@@ -44,6 +44,13 @@ def test_public_files_exist() -> None:
         "data/source_manifest/void_web_source_native_freeze_plan_v1.csv",
         "docs/void_web_source_native_freeze_plan_v1.md",
         "scripts/validate_void_web_source_native_freeze_plan_v1.py",
+        "data/source_manifest/void_web_source_native_frozen_products_v1.csv",
+        "data/derived/void_web_source_native_inventory_v1.csv",
+        "docs/void_web_source_native_products_v1.md",
+        "scripts/acquire_void_web_source_native_products_v1.py",
+        "scripts/validate_void_web_source_native_products_v1.py",
+        "scripts/build_void_web_source_native_inventory_v1.py",
+        "scripts/validate_void_web_source_native_inventory_v1.py",
         "scripts/acquire_pilot_products.py",
         "scripts/validate_pilot_products.py",
         "data/source_manifest/pilot_frozen_product_manifest.csv",
@@ -332,6 +339,40 @@ def test_void_web_source_native_freeze_plan_blocks_endpoint_leakage() -> None:
         assert row["required_transform_rule"].startswith("TR_")
         assert row["required_hash"] == "sha256"
         assert row["null_control"]
+
+
+def test_void_web_source_native_products_are_frozen_not_endpoint_enabled() -> None:
+    with (
+        ROOT / "data/source_manifest/void_web_source_native_frozen_products_v1.csv"
+    ).open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    ids = {row["frozen_product_id"] for row in rows}
+    assert {
+        "VOIDFINDER_PLANCK2018_MAXIMAL_VOID_TABLE",
+        "VOIDFINDER_PLANCK2018_MASK",
+        "SDSS_DR17_MCPM_SLIMEMOLD_GALAXY_CATALOG",
+        "SDSS_DR17_MCPM_SHA1SUM",
+    } <= ids
+    assert {row["status"] for row in rows} == {"SOURCE_NATIVE_PRODUCT_FETCHED_FROZEN"}
+    assert {row["endpoint_allowed"] for row in rows} == {"false"}
+    for row in rows:
+        path = ROOT / row["local_path"]
+        assert path.exists(), row["frozen_product_id"]
+        assert int(row["byte_count"]) > 0
+        assert row["sha256"]
+        assert row["endpoint_blocker"]
+
+
+def test_void_web_source_native_inventory_is_not_endpoint_scoring() -> None:
+    with (ROOT / "data/derived/void_web_source_native_inventory_v1.csv").open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    assert len(rows) == 4
+    blob = " ".join(row["observable_summary"] for row in rows)
+    assert "void_rows=1163" in blob
+    assert "fits_bintable_rows=638820" in blob
+    assert {row["endpoint_allowed"] for row in rows} == {"false"}
+    assert {row["contains_endpoint_scores"] for row in rows} == {"false"}
+    assert {row["contains_residuals"] for row in rows} == {"false"}
 
 
 def test_pilot_products_are_frozen_but_not_endpoint_enabled() -> None:

@@ -143,6 +143,24 @@ MCPM cosmic-web route for replacing the proxy `W_void` and `W_web` bases. Both
 rows are `SOURCE_NATIVE_CANDIDATE_SELECTED_NOT_FETCHED`, and both keep
 `endpoint_scoring_allowed=false`.
 
+The first fetched source-native void/web products are recorded in:
+
+```text
+data/source_manifest/void_web_source_native_frozen_products_v1.csv
+data/derived/void_web_source_native_inventory_v1.csv
+docs/void_web_source_native_products_v1.md
+scripts/acquire_void_web_source_native_products_v1.py
+scripts/validate_void_web_source_native_products_v1.py
+scripts/build_void_web_source_native_inventory_v1.py
+scripts/validate_void_web_source_native_inventory_v1.py
+```
+
+This freezes a VAST/SDSS DR7 Planck2018 maximal void table, the associated NSA
+mask, the SDSS DR17 MCPM SlimeMold galaxy catalogue, and the provider sha1sum
+file. The inventory records `void_rows=1163` and
+`fits_bintable_rows=638820`. These products remain endpoint-disabled because
+the catalogue-to-scoring transform is not yet frozen.
+
 The first tiny pilot product freeze is recorded in:
 
 ```text
