@@ -1,0 +1,910 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://data.desi.lbl.gov/doc/access/">
+      
+      
+        <link rel="prev" href="../releases/dr1/">
+      
+      
+        <link rel="next" href="../organization/">
+      
+      
+      <link rel="icon" href="../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.3.1">
+    
+    
+      
+        <title>Data Access - DESI Data</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.046329b4.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function n(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],n("js",new Date),n("config","G-QB3Q7RX1ZB"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&n("event","search",{search_term:this.value})}),document$.subscribe(function(){var a=document.forms.feedback;if(void 0!==a)for(var e of a.querySelectorAll("[type=submit]"))e.addEventListener("click",function(e){e.preventDefault();var t=document.location.pathname,e=this.getAttribute("data-md-value");n("event","feedback",{page:t,data:e}),a.firstElementChild.disabled=!0;e=a.querySelector(".md-feedback__note [data-md-value='"+e+"']");e&&(e.hidden=!1)}),a.hidden=!1}),location$.subscribe(function(e){n("config","G-QB3Q7RX1ZB",{page_path:e.pathname})})});var e=document.createElement("script");e.async=!0,e.src="https://www.googletagmanager.com/gtag/js?id=G-QB3Q7RX1ZB",document.getElementById("__analytics").insertAdjacentElement("afterEnd",e)}</script>
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#data-access" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="DESI Data" class="md-header__button md-logo" aria-label="DESI Data" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            DESI Data
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Data Access
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="DESI Data" class="md-nav__button md-logo" aria-label="DESI Data" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    DESI Data
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Data Releases
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Data Releases
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../releases/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../releases/edr/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    EDR
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../releases/dr1/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    DR1 (latest)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Data Access
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Data Access
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#web-access" class="md-nav__link">
+    Web access
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#file-download" class="md-nav__link">
+    File download
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#database-access" class="md-nav__link">
+    Database access
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#spectroscopic-data-as-a-service" class="md-nav__link">
+    Spectroscopic Data as a Service
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#interactive-sky-viewer" class="md-nav__link">
+    Interactive Sky Viewer
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bulk-download-with-globus" class="md-nav__link">
+    Bulk download with Globus
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#amazon-web-services" class="md-nav__link">
+    Amazon Web Services
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#if-you-have-a-nersc-account" class="md-nav__link">
+    If you have a NERSC account&hellip;
+  </a>
+  
+    <nav class="md-nav" aria-label="If you have a NERSC account…">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#desi-software-at-nersc" class="md-nav__link">
+    DESI Software at NERSC
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../organization/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Data Organization
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://desidatamodel.readthedocs.io" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Data Model [external]
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../software/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Software
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tutorials/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tutorials
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../glossary/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Glossary
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../vac/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Value-added Catalogs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../papers/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Papers
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../acknowledgments/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Data License and Acknowledgments
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../other_resources/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Other Resources
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../contacts/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Contact Us
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#web-access" class="md-nav__link">
+    Web access
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#file-download" class="md-nav__link">
+    File download
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#database-access" class="md-nav__link">
+    Database access
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#spectroscopic-data-as-a-service" class="md-nav__link">
+    Spectroscopic Data as a Service
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#interactive-sky-viewer" class="md-nav__link">
+    Interactive Sky Viewer
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bulk-download-with-globus" class="md-nav__link">
+    Bulk download with Globus
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#amazon-web-services" class="md-nav__link">
+    Amazon Web Services
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#if-you-have-a-nersc-account" class="md-nav__link">
+    If you have a NERSC account&hellip;
+  </a>
+  
+    <nav class="md-nav" aria-label="If you have a NERSC account…">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#desi-software-at-nersc" class="md-nav__link">
+    DESI Software at NERSC
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="data-access">Data Access<a class="headerlink" href="#data-access" title="Permanent link">&para;</a></h1>
+<h2 id="web-access">Web access<a class="headerlink" href="#web-access" title="Permanent link">&para;</a></h2>
+<p><strong>Public DESI data releases</strong>: <a href="https://data.desi.lbl.gov/public" target="_blank">https://data.desi.lbl.gov/public</a></p>
+<p><strong>Latest data release (DR1)</strong>: <a href="https://data.desi.lbl.gov/public/dr1/" target="_blank">https://data.desi.lbl.gov/public/dr1/</a></p>
+<p><strong>European mirror (DR1-only)</strong>: <a href="https://webdav-hdfs.pic.es/data/public/DESI/DR1" target="_blank">https://webdav-hdfs.pic.es/data/public/DESI/DR1</a></p>
+<p>This is best suited for browsing the directory structure and downloading individual files, including both spectra and catalog files. To download large amounts of data, please use <a href="#bulk-download-with-globus">Globus</a> described below.</p>
+<p>See <a href="../releases/">Data Releases</a> for information about individual data releases and their directory structure.</p>
+<p>See <a href="../organization/">Data Organization</a> for details on how the data is organized across directories.</p>
+<h2 id="file-download">File download<a class="headerlink" href="#file-download" title="Permanent link">&para;</a></h2>
+<p>For users who want to download a small sample of DESI data for testing or exploration, we provide the <code>desi_get_dr_subset</code> script. This tool allows you to download a focused subset of DESI data by:</p>
+<ul>
+<li>Searching for targets near a specific sky position (RA/Dec)</li>
+<li>Finding the healpix with the most targets in that region</li>
+<li>Downloading all data files associated with that healpix</li>
+<li>Optionally downloading the corresponding tile data</li>
+</ul>
+<p>The script handles different data releases appropriately, automatically adjusting paths and defaults based on the data release. For example, it uses different default coordinates depending on the data release - for EDR it targets the Rosette 1 field (RA=179.6, Dec=0.0), while for DR1 it uses coordinates that retrieve healpix 23040 (RA=56.0, Dec=-9.0).</p>
+<p>You can find this script in the DESI data repository:
+<a href="https://github.com/desihub/desida/blob/main/bin/desi_get_dr_subset" target="_blank">https://github.com/desihub/desida/blob/main/bin/desi_get_dr_subset</a></p>
+<p>Basic usage:
+<div class="highlight"><pre><span></span><code>desi_get_dr_subset --dr dr1 --ra 56.0 --dec -9.0 --radius 0.1 --base-dir ./tiny_dr1
+</code></pre></div></p>
+<p>Key options:</p>
+<ul>
+<li><code>--dr</code>: Data release to use (edr, dr1)</li>
+<li><code>--ra</code>, <code>--dec</code>: Sky coordinates to search around</li>
+<li><code>--radius</code>: Search radius in degrees</li>
+<li><code>--base-dir</code>: Directory where files will be downloaded</li>
+<li><code>--no-tiles</code>: Download only healpix data, skip tile data</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Even a &ldquo;small&rdquo; sample of DESI data is pretty big &ndash; the default options
+will download 40 GB of data.</p>
+</div>
+<h2 id="database-access">Database access<a class="headerlink" href="#database-access" title="Permanent link">&para;</a></h2>
+<p>DESI catalogs also exist in a database format.
+People with NERSC accounts (e.g. through DESI, DES, LSST-DESC, CMB-S4&hellip;) can access the public portion of the databases at NERSC without requiring DESI membership.
+For convenience, a copy of the public databases is also hosted by the
+<a href="https://datalab.noirlab.edu/desi/" target="_blank">NOIRLab Astro Data Lab science platform</a>,
+including both EDR and DR1.
+Please see <a href="database/">Databases</a> for connection information and further details about databases containing DESI data.</p>
+<p>Catalogs optimized for clustering measurements (tables originated from files with <code>clustering</code> in their names) can also be accessed through <a href="https://cosmohub.pic.es" target="_blank">CosmoHub</a>. CosmoHub is a science platform that, powered by Apache Hive, enables the interactive exploration, plotting and distribution of massive cosmological datasets. CosmoHub already hosts a wide range of public datasets — Gaia (all public data releases), Quaia, DESI Legacy Surveys (DR10 and DR8), Euclid Q1, DES DR2 &amp; DR1, KIDS and more, making it a great platform for validation and cross-survey studies.</p>
+<h2 id="spectroscopic-data-as-a-service">Spectroscopic Data as a Service<a class="headerlink" href="#spectroscopic-data-as-a-service" title="Permanent link">&para;</a></h2>
+<p>The <a href="https://astrosparcl.datalab.noirlab.edu" target="_blank">SPectra Analysis and Retrievable Catalog Lab (SPARCL)</a>
+service is provided by NOIRLab. This API provides functions for search and retrieval of multiple
+DESI spectra with the full flux versus wavelength. Although only the HEALPixel coadds are
+served at present, this provides a convenient way to retrieve spectra that
+could otherwise be spread among many separate files.</p>
+<h2 id="interactive-sky-viewer">Interactive Sky Viewer<a class="headerlink" href="#interactive-sky-viewer" title="Permanent link">&para;</a></h2>
+<p>An <a href="https://www.legacysurvey.org/viewer/desi-dr1" target="_blank">interactive sky viewer</a> shows the <a href="https://www.legacysurvey.org" target="_blank">DESI Legacy Surveys</a> DR9 imaging overlaid with locations of DESI tiles and spectra.  Users can interactively pan and zoom, or pre-select specific RA,dec locations and zoom levels with URLs of the form</p>
+<blockquote>
+<p><a href="https://www.legacysurvey.org/viewer/desi-dr1/?ra=218.1973&amp;dec=2.5435&amp;zoom=15" target="_blank">https://www.legacysurvey.org/viewer/desi-dr1/<strong>?ra=218.1973&amp;dec=2.5435&amp;zoom=15</strong></a></p>
+</blockquote>
+<p>Clicking through on an individual target brings up an <a href="https://www.legacysurvey.org/viewer/desi-spectrum/dr1/targetid39627848784286649" target="_blank">interactive spectrum browser</a>.
+Users can view any DESI science TARGETID from an DR1 catalog using URLs of the form</p>
+<blockquote>
+<p><a href="https://www.legacysurvey.org/viewer/desi-spectrum/dr1/targetid39627848784286649" target="_blank">https://www.legacysurvey.org/viewer/desi-spectrum/dr1/<strong>targetid39627848784286649</strong></a>
+  <a href="https://www.legacysurvey.org/viewer/desi-spectrum/dr1/targetid39627848784285507" target="_blank">https://www.legacysurvey.org/viewer/desi-spectrum/dr1/<strong>targetid39627848784285507</strong></a></p>
+</blockquote>
+<h2 id="bulk-download-with-globus">Bulk download with Globus<a class="headerlink" href="#bulk-download-with-globus" title="Permanent link">&para;</a></h2>
+<p><a href="https://globus.org" target="_blank">Globus</a> provides an interface suited for bulk downloads of data.
+You specify what to download and the destination, and then Globus coordinates a parallel transfer including error checking and retries. It emails you an alert when the transfer has successfully completed. If your home institution does not provide a Globus Server, you can use <a href="https://www.globus.org/globus-connect" target="_blank">Globus Connect Personal</a> to setup an endpoint on your personal device.</p>
+<p>All public DESI data are available from the <a href="https://app.globus.org/file-manager?origin_id=6b4e1f6a-e600-11ed-9b9b-c9bb788c490e" target="_blank">DESI Public Data</a> Globus collection. Each DESI Data Release is a separate subdirectory under that endpoint. This method requires a free Globus account but does not require a NERSC account or DESI membership.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Searching Globus collections for &ldquo;DESI&rdquo; returns a large number of collections unrelated to the DESI Survey, e.g. from people with &ldquo;desi&rdquo; in their name. Search for &ldquo;DESI Public Data&rdquo; or use the <a href="https://app.globus.org/file-manager?origin_id=6b4e1f6a-e600-11ed-9b9b-c9bb788c490e" target="_blank">direct link</a> to find the correct DESI Public Data collection.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Globus usually does not follow or copy symbolic links (&ldquo;symlinks&rdquo;), which
+occur in the DR1 <code>target/</code> and <code>spectro/redux/iron/exposures/</code>
+subdirectories.  If you need to do bulk transfers of these directories,
+see the separate <a href="globus-symlinks/">instructions for handling symlinks</a>.</p>
+</div>
+<h2 id="amazon-web-services">Amazon Web Services<a class="headerlink" href="#amazon-web-services" title="Permanent link">&para;</a></h2>
+<p>As part of their <a href="https://aws.amazon.com/opendata/" target="_blank">Open Data program</a>,
+Amazon Web Services (AWS) hosts both the DESI Early Data Release (under <code>/edr</code>) and Data Release 1 (under <code>/dr1</code>) in the <strong>desidata</strong> S3 bucket for on-demand querying.
+The web endpoint is located at <a href="https://desidata.s3.amazonaws.com/index.html" target="_blank">desidata.s3.amazonaws.com/index.html</a>.
+Amazon supports multiple ways to programmatically access the data for free, <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/UsingAWSSDK.html" target="_blank">documented here</a>.</p>
+<p>If you are specifically interested in scientific data analysis, we recommend <a href="https://github.com/desihub/desidocker" target="_blank">running our pre-built Docker image</a>,
+which bundles a cloud-synced filesystem for DESI data access with a Jupyter server and DESI Python packages,
+making it compatible with existing code at NERSC with minimal modifications.</p>
+<p>Public data releases at NERSC will be exactly mirrored by <code>/&lt;release&gt;</code> directories in the bucket, with the following exceptions:
+* All individual <code>/&lt;release&gt;/target</code> directories have been merged into the <code>/target</code> top-level directory.
+* All individual <code>/&lt;release&gt;/spectro/data</code> directories have been merged into the <code>/raw_spectro_data</code> top-level directory.</p>
+<p>All other symlinked files/directories have been converted into real files/directories.</p>
+<h2 id="if-you-have-a-nersc-account">If you have a NERSC account&hellip;<a class="headerlink" href="#if-you-have-a-nersc-account" title="Permanent link">&para;</a></h2>
+<p>If you have a <a href="https://nersc.gov" target="_blank">NERSC</a> account, e.g. through DESI, DES, LSST-DESC, or other DOE-sponsored projects, all of the public DESI data are available on disk at
+<div class="highlight"><pre><span></span><code>/global/cfs/cdirs/desi/public/
+</code></pre></div></p>
+<p>These are exactly the same files visible at <a href="https://data.desi.lbl.gov/public" target="_blank">https://data.desi.lbl.gov/public</a>.</p>
+<p>This directory is also visible from <a href="https://jupyter.nersc.gov" target="_blank">https://jupyter.nersc.gov</a> for Jupyter notebook access to the DESI data.</p>
+<h3 id="desi-software-at-nersc">DESI Software at NERSC<a class="headerlink" href="#desi-software-at-nersc" title="Permanent link">&para;</a></h3>
+<p>DESI provides access to its software environment at NERSC.  To enable the
+DESI environment, <em>and</em> access Data Release 1, you can run
+these two commands:
+<div class="highlight"><pre><span></span><code>source /global/common/software/desi/desi_environment.sh 24.11
+module swap desitree/dr1
+</code></pre></div>
+<code>24.11</code> is one of the DESI software releases. Other releases are described below.
+We also support <code>tcsh</code>: just replace <code>desi_environment.sh</code> with <code>desi_environment.csh</code>.</p>
+<p>There are currently three software releases available for general use:</p>
+<ul>
+<li><code>24.11</code>: recent, stable release; recommended.</li>
+<li><code>22.5</code>: older release used to generate EDR/fuji.</li>
+<li><code>23.1</code>: older release used to generate DR1/iron.</li>
+<li><code>main</code>: based on git checkouts of DESI software packages; most up-to-date, but not guaranteed to be stable.</li>
+</ul>
+<p>DESI Collaborators with NERSC accounts can also use the <a href="https://app.globus.org/file-manager?origin_id=9d6d994a-6d04-11e5-ba46-22000b92c6ec" target="_blank">NERSC DTN</a> endpoint to access DESI Data.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>DESI data are released under the <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">Creative Commons Attribution 4.0 International License</a> (CC BY 4.0).
+Use of DESI data requires including the citation and acknowledgment text given on the <a href="../acknowledgments/">Data License and Acknowledgments</a> page.</p>
+</div>
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.dfff1995.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.dff1b7c8.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg-full.js"></script>
+      
+    
+  </body>
+</html>

@@ -66,9 +66,22 @@ The one-command reproduction path does not perform live online data acquisition.
 Future source-acquisition scripts should document exact URLs, versions, hashes
 where possible, and redistribution boundaries.
 
+For provenance, the repository includes a compact cache of the official source
+landing pages listed in the manifest:
+
+```bash
+python scripts/acquire_source_pages.py
+python scripts/validate_cached_source_pages.py
+```
+
+The acquisition script is intentionally separate from `scripts/reproduce.py`;
+reproduction validates the committed cache hashes instead of depending on live
+network access.
+
 Current source manifest status:
 
 - all required source families now have a candidate public source route,
+- official source landing pages are cached with SHA-256 hashes,
 - no source row is `FETCHED_FROZEN`,
 - no endpoint scoring is allowed from this scaffold.
 

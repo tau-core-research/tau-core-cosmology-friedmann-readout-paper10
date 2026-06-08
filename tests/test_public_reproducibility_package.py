@@ -23,6 +23,9 @@ def test_public_files_exist() -> None:
         "docs/source_freeze_protocol.md",
         "docs/source_selection_audit_001.md",
         "scripts/validate_source_freeze.py",
+        "scripts/acquire_source_pages.py",
+        "scripts/validate_cached_source_pages.py",
+        "data/source_manifest/source_page_cache_manifest.csv",
     ]
     for rel in required:
         assert (ROOT / rel).exists(), rel
@@ -83,3 +86,15 @@ def test_source_freeze_manifest_blocks_endpoint_leakage() -> None:
         "posthoc_environment_labels",
     ]:
         assert marker in forbidden
+
+
+def test_source_page_cache_is_hash_locked() -> None:
+    with (ROOT / "data/source_manifest/source_page_cache_manifest.csv").open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    assert len(rows) >= 10
+    assert {row["status"] for row in rows} == {"CACHED"}
+    for row in rows:
+        cache_path = ROOT / row["cache_path"]
+        assert cache_path.exists(), row["source_id"]
+        assert row["sha256"]
+        assert int(row["byte_count"]) > 0

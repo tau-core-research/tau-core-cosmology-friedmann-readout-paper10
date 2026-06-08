@@ -40,3 +40,7 @@ manuscript.
 
 Endpoint scoring is not allowed until the required source blocks are either
 `FETCHED_FROZEN` or explicitly excluded by a predeclared pilot-scope rule.
+
+The committed provenance cache contains only official landing/source pages,
+not raw survey products. It is used to verify source routes and URLs, not to
+compute cosmological observables.

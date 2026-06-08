@@ -264,6 +264,15 @@ distance residuals, growth residuals, lensing residuals, fit-improvement flags,
 and post-hoc environment labels. Passing this script is not a data result; it is
 a precondition for a later real-data pilot.
 
+The repository further includes a compact provenance cache of the official
+source landing pages. The acquisition script
+\(\texttt{scripts/acquire\_source\_pages.py}\) records the landing-page payloads,
+byte counts, and SHA-256 hashes, while
+\(\texttt{scripts/validate\_cached\_source\_pages.py}\) verifies the committed
+cache during reproduction. These cached pages are not raw survey products and
+are not used to compute cosmological observables; they only make the source
+routes auditable without requiring live network access during reproduction.
+
 \section{CMB role}
 
 CMB maps are relevant, but not as the first standalone discovery target. The

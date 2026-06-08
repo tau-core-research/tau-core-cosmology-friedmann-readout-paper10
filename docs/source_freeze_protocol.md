@@ -54,7 +54,18 @@ late-time fit parameters without prior source freeze
 
 The current repository is still below real-data pilot status. It has a source
 manifest and validation script, but several required blocks remain
-`BLOCKED_SOURCE_SELECTION`.
+selected-only rather than `FETCHED_FROZEN`.
+
+The repository also includes a compact source-page provenance cache:
+
+```text
+data/source_manifest/source_page_cache_manifest.csv
+data/source_manifest/source_page_cache/
+```
+
+This cache records official source landing pages with byte counts and SHA-256
+hashes. It does not contain raw survey products and does not authorize endpoint
+scoring.
 
 Therefore the allowed claim remains:
 
