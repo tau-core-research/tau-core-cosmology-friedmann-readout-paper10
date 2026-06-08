@@ -29,6 +29,10 @@ def test_public_files_exist() -> None:
         "data/source_manifest/paper10_product_freeze_plan.csv",
         "docs/product_freeze_plan.md",
         "scripts/validate_product_freeze_plan.py",
+        "scripts/acquire_pilot_products.py",
+        "scripts/validate_pilot_products.py",
+        "data/source_manifest/pilot_frozen_product_manifest.csv",
+        "docs/pilot_product_freeze_001.md",
     ]
     for rel in required:
         assert (ROOT / rel).exists(), rel
@@ -116,3 +120,17 @@ def test_product_freeze_plan_covers_sources_without_endpoint_permission() -> Non
     for row in product_rows:
         assert row["transform_rule_id"].startswith("TR_")
         assert row["endpoint_forbidden_inputs"]
+
+
+def test_pilot_products_are_frozen_but_not_endpoint_enabled() -> None:
+    with (ROOT / "data/source_manifest/pilot_frozen_product_manifest.csv").open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    assert len(rows) == 2
+    assert {row["status"] for row in rows} == {"PILOT_PRODUCT_FETCHED_FROZEN"}
+    assert {row["endpoint_allowed"] for row in rows} == {"false"}
+    for row in rows:
+        path = ROOT / row["local_path"]
+        assert path.exists(), row["pilot_product_id"]
+        assert int(row["byte_count"]) > 0
+        assert row["sha256"]
+        assert row["endpoint_blocker"]

@@ -101,6 +101,16 @@ docs/product_freeze_plan.md
 It declares the product roles, transformation-rule IDs, covariance/mask policy
 requirements, and `endpoint_allowed=false` status for every planned product.
 
+The first tiny pilot product freeze is recorded in:
+
+```text
+data/source_manifest/pilot_frozen_product_manifest.csv
+docs/pilot_product_freeze_001.md
+```
+
+It freezes two small public distance-side files for provenance testing only.
+Both remain `endpoint_allowed=false`.
+
 ## Scope
 
 This is a protocol scaffold and branch-opening paper package. The next

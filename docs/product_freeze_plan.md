@@ -60,3 +60,15 @@ specific rows to `PRODUCT_FETCHED_FROZEN` and records:
 - covariance policy,
 - mask/selection policy,
 - and forbidden endpoint fields.
+
+## Pilot Freeze 001
+
+The first deliberately narrow pilot freeze is recorded separately:
+
+```text
+data/source_manifest/pilot_frozen_product_manifest.csv
+docs/pilot_product_freeze_001.md
+```
+
+It freezes two small public distance-side files only to test the provenance
+workflow. It does not promote the full product plan to endpoint status.

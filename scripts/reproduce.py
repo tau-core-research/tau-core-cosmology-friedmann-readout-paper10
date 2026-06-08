@@ -23,6 +23,7 @@ def main() -> None:
     run(["python", "scripts/validate_source_freeze.py"])
     run(["python", "scripts/validate_cached_source_pages.py"])
     run(["python", "scripts/validate_product_freeze_plan.py"])
+    run(["python", "scripts/validate_pilot_products.py"])
     run(["python", "scripts/build_arxiv_source.py"])
     run(["python", "-m", "pytest", "-q"])
     print("PAPER10_REPRODUCTION_COMPLETE")
