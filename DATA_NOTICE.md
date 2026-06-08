@@ -242,6 +242,11 @@ present, but neither an official footprint geometry product nor a full 196-mask
 source-native product set is accepted. Thus the overlap rule is not ready and
 mapping remains disabled.
 
+The `F_overlap` full-mask acquisition manifest expands the preferred route into
+196 expected mask products without fetching them. It records that three are
+locally present and 193 are missing, so the full source-native overlap route is
+still not accepted.
+
 The COSEBIs path-mapping source-preflight ledger combines only source-side
 availability flags. It records that COSEBIs target rows, redshift kernels, and
 the 196-tile route coordinate index, the 300-row design skeleton, and the

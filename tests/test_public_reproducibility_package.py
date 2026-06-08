@@ -155,6 +155,9 @@ def test_public_files_exist() -> None:
         "data/source_manifest/kids1000_cosebis_f_overlap_source_availability_policy_v1.csv",
         "data/derived/kids1000_cosebis_f_overlap_source_availability_v1.csv",
         "data/derived/kids1000_cosebis_f_overlap_source_availability_v1_summary.csv",
+        "data/source_manifest/kids1000_cosebis_f_overlap_full_mask_acquisition_policy_v1.csv",
+        "data/derived/kids1000_cosebis_f_overlap_full_mask_acquisition_manifest_v1.csv",
+        "data/derived/kids1000_cosebis_f_overlap_full_mask_acquisition_manifest_v1_summary.csv",
         "data/source_manifest/kids1000_cosebis_path_mapping_source_preflight_policy_v1.csv",
         "data/derived/kids1000_cosebis_path_mapping_source_preflight_v1.csv",
         "data/derived/kids1000_cosebis_path_mapping_source_preflight_v1_summary.csv",
@@ -203,6 +206,7 @@ def test_public_files_exist() -> None:
         "docs/kids1000_cosebis_path_blocker_resolution_order_policy_v1.md",
         "docs/kids1000_cosebis_f_overlap_rule_shell_policy_v1.md",
         "docs/kids1000_cosebis_f_overlap_source_availability_policy_v1.md",
+        "docs/kids1000_cosebis_f_overlap_full_mask_acquisition_policy_v1.md",
         "docs/kids1000_cosebis_path_mapping_source_preflight_policy_v1.md",
         "docs/kids1000_cosebis_null_control_policy_v1.md",
         "docs/kids1000_cosebis_null_control_seed_policy_v1.md",
@@ -281,6 +285,8 @@ def test_public_files_exist() -> None:
         "scripts/validate_kids1000_cosebis_f_overlap_rule_shell_v1.py",
         "scripts/build_kids1000_cosebis_f_overlap_source_availability_v1.py",
         "scripts/validate_kids1000_cosebis_f_overlap_source_availability_v1.py",
+        "scripts/build_kids1000_cosebis_f_overlap_full_mask_acquisition_manifest_v1.py",
+        "scripts/validate_kids1000_cosebis_f_overlap_full_mask_acquisition_manifest_v1.py",
         "scripts/build_kids1000_cosebis_path_mapping_source_preflight_v1.py",
         "scripts/validate_kids1000_cosebis_path_mapping_source_preflight_v1.py",
         "scripts/build_kids1000_cosebis_null_control_readiness_v1.py",
@@ -2089,6 +2095,49 @@ def test_kids1000_cosebis_f_overlap_source_availability_preserves_gap() -> None:
         assert row["contains_theory_vector"] == "false"
         assert row["uses_kids_data_vector_values"] == "false"
         assert row["endpoint_scoring_allowed"] == "false"
+
+
+def test_kids1000_cosebis_f_overlap_full_mask_acquisition_manifest_preserves_missing_set() -> None:
+    with (
+        ROOT / "data/source_manifest/kids1000_cosebis_f_overlap_full_mask_acquisition_policy_v1.csv"
+    ).open(newline="") as f:
+        policy = list(csv.DictReader(f))[0]
+    assert policy["status"] == "KIDS1000_COSEBIS_F_OVERLAP_FULL_MASK_ACQUISITION_POLICY_DECLARED_NOT_FETCHED"
+    assert policy["endpoint_scoring_allowed"] == "false"
+    assert policy["current_manifest_declared"] == "true"
+    assert policy["current_external_products_fetched"] == "false"
+    assert policy["current_overlap_rule_computed"] == "false"
+    assert policy["current_path_mapping_computed"] == "false"
+    with (
+        ROOT / "data/derived/kids1000_cosebis_f_overlap_full_mask_acquisition_manifest_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["status"] == "KIDS1000_COSEBIS_F_OVERLAP_FULL_MASK_ACQUISITION_MANIFEST_BUILT_NOT_FETCHED"
+    assert summary["expected_mask_count"] == "196"
+    assert summary["local_present_count"] == "3"
+    assert summary["missing_mask_count"] == "193"
+    assert summary["full_mask_set_present"] == "false"
+    assert summary["accepted_for_full_overlap_count"] == "0"
+    assert summary["overlap_rule_ready"] == "false"
+    assert summary["external_products_fetched"] == "false"
+    assert summary["overlap_rule_computed"] == "false"
+    assert summary["path_mapping_computed"] == "false"
+    assert summary["contains_mapping_vector"] == "false"
+    assert summary["contains_theory_vector"] == "false"
+    assert summary["contains_predictions"] == "false"
+    assert summary["contains_residuals"] == "false"
+    with (
+        ROOT / "data/derived/kids1000_cosebis_f_overlap_full_mask_acquisition_manifest_v1.csv"
+    ).open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    assert len(rows) == 196
+    assert sum(row["local_mask_present"] == "true" for row in rows) == 3
+    assert sum(row["local_mask_present"] == "false" for row in rows) == 193
+    assert all(row["accepted_for_full_overlap"] == "false" for row in rows)
+    assert all(row["overlap_rule_computed"] == "false" for row in rows)
+    assert all(row["path_mapping_computed"] == "false" for row in rows)
+    assert all(row["uses_kids_data_vector_values"] == "false" for row in rows)
+    assert all(row["endpoint_scoring_allowed"] == "false" for row in rows)
 
 
 def test_kids1000_cosebis_path_mapping_source_preflight_is_not_mapping() -> None:
