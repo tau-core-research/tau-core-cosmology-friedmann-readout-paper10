@@ -758,6 +758,22 @@ artifact: product identity, URL, cache path, HTTP status, byte count, SHA-256,
 review status, reviewer role, forbidden-input flags, and claim-boundary flags.
 It does not fetch products or promote a batch.
 
+The default batch-0 execution-review template is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_f_overlap_execution_review_template_policy_v1.csv
+data/derived/kids1000_cosebis_f_overlap_execution_review_template_v1.csv
+data/derived/kids1000_cosebis_f_overlap_execution_review_template_v1_summary.csv
+docs/kids1000_cosebis_f_overlap_execution_review_template_policy_v1.md
+scripts/build_kids1000_cosebis_f_overlap_execution_review_template_v1.py
+scripts/validate_kids1000_cosebis_f_overlap_execution_review_template_v1.py
+```
+
+It materializes the 20 planned batch-0 product rows using the frozen
+execution-review schema, but keeps all network, checksum, timestamp, and
+reviewer fields empty or pending. It is a reviewer template, not an execution
+log or source-freeze artifact.
+
 The COSEBIs path-mapping source-preflight ledger is recorded in:
 
 ```text

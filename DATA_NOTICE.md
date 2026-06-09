@@ -275,6 +275,11 @@ fetched-batch review artifact must contain. It is a schema declaration only:
 there is still no fetched-batch review artifact in this release, and the schema
 does not fetch products, compute overlap, or enable scoring.
 
+The execution-review template gate materializes the default batch-0 rows in
+that schema, but it is still not an execution log. Network fields, checksums,
+timestamps, and reviewer fields are empty or pending, and all endpoint and
+forbidden-input flags remain false.
+
 The COSEBIs path-mapping source-preflight ledger combines only source-side
 availability flags. It records that COSEBIs target rows, redshift kernels, and
 the 196-tile route coordinate index, the 300-row design skeleton, and the

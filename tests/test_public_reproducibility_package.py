@@ -170,6 +170,9 @@ def test_public_files_exist() -> None:
         "data/source_manifest/kids1000_cosebis_f_overlap_execution_review_schema_policy_v1.csv",
         "data/derived/kids1000_cosebis_f_overlap_execution_review_schema_v1.csv",
         "data/derived/kids1000_cosebis_f_overlap_execution_review_schema_v1_summary.csv",
+        "data/source_manifest/kids1000_cosebis_f_overlap_execution_review_template_policy_v1.csv",
+        "data/derived/kids1000_cosebis_f_overlap_execution_review_template_v1.csv",
+        "data/derived/kids1000_cosebis_f_overlap_execution_review_template_v1_summary.csv",
         "data/source_manifest/kids1000_cosebis_path_mapping_source_preflight_policy_v1.csv",
         "data/derived/kids1000_cosebis_path_mapping_source_preflight_v1.csv",
         "data/derived/kids1000_cosebis_path_mapping_source_preflight_v1_summary.csv",
@@ -223,6 +226,7 @@ def test_public_files_exist() -> None:
         "docs/kids1000_cosebis_f_overlap_full_mask_batch_dry_run_policy_v1.md",
         "docs/kids1000_cosebis_f_overlap_batch_promotion_review_policy_v1.md",
         "docs/kids1000_cosebis_f_overlap_execution_review_schema_policy_v1.md",
+        "docs/kids1000_cosebis_f_overlap_execution_review_template_policy_v1.md",
         "docs/kids1000_cosebis_path_mapping_source_preflight_policy_v1.md",
         "docs/kids1000_cosebis_null_control_policy_v1.md",
         "docs/kids1000_cosebis_null_control_seed_policy_v1.md",
@@ -311,6 +315,8 @@ def test_public_files_exist() -> None:
         "scripts/validate_kids1000_cosebis_f_overlap_batch_promotion_review_v1.py",
         "scripts/build_kids1000_cosebis_f_overlap_execution_review_schema_v1.py",
         "scripts/validate_kids1000_cosebis_f_overlap_execution_review_schema_v1.py",
+        "scripts/build_kids1000_cosebis_f_overlap_execution_review_template_v1.py",
+        "scripts/validate_kids1000_cosebis_f_overlap_execution_review_template_v1.py",
         "scripts/build_kids1000_cosebis_path_mapping_source_preflight_v1.py",
         "scripts/validate_kids1000_cosebis_path_mapping_source_preflight_v1.py",
         "scripts/build_kids1000_cosebis_null_control_readiness_v1.py",
@@ -2401,6 +2407,72 @@ def test_kids1000_cosebis_f_overlap_execution_review_schema_is_not_execution() -
     assert all(row["contains_residuals"] == "false" for row in rows)
     assert all(row["contains_fit_statistics"] == "false" for row in rows)
     assert all(row["endpoint_scoring_allowed"] == "false" for row in rows)
+
+
+def test_kids1000_cosebis_f_overlap_execution_review_template_is_empty() -> None:
+    with (
+        ROOT / "data/source_manifest/kids1000_cosebis_f_overlap_execution_review_template_policy_v1.csv"
+    ).open(newline="") as f:
+        policy = list(csv.DictReader(f))[0]
+    assert policy["status"] == "KIDS1000_COSEBIS_F_OVERLAP_EXECUTION_REVIEW_TEMPLATE_DECLARED_NOT_EXECUTED"
+    assert policy["endpoint_scoring_allowed"] == "false"
+    assert policy["current_execution_review_artifact_present"] == "false"
+    assert policy["current_external_products_fetched"] == "false"
+    with (
+        ROOT / "data/derived/kids1000_cosebis_f_overlap_execution_review_schema_v1.csv"
+    ).open(newline="") as f:
+        schema_rows = list(csv.DictReader(f))
+    expected_columns = [row["column_name"] for row in sorted(schema_rows, key=lambda row: int(row["column_order"]))]
+    with (
+        ROOT / "data/derived/kids1000_cosebis_f_overlap_execution_review_template_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["status"] == "KIDS1000_COSEBIS_F_OVERLAP_EXECUTION_REVIEW_TEMPLATE_BUILT_NOT_EXECUTED"
+    assert summary["batch_id"] == "F_OVERLAP_FULL_MASK_BATCH_00"
+    assert summary["template_row_count"] == "20"
+    assert summary["schema_column_count"] == "29"
+    assert summary["template_fetch_mode"] == "template_not_executed"
+    assert summary["template_fetch_status"] == "template_not_fetched"
+    assert summary["current_execution_review_artifact_present"] == "false"
+    assert summary["external_products_fetched"] == "false"
+    assert summary["overlap_rule_computed"] == "false"
+    assert summary["path_mapping_computed"] == "false"
+    assert summary["contains_mapping_vector"] == "false"
+    assert summary["contains_theory_vector"] == "false"
+    assert summary["endpoint_scoring_allowed"] == "false"
+    with (
+        ROOT / "data/derived/kids1000_cosebis_f_overlap_execution_review_template_v1.csv"
+    ).open(newline="") as f:
+        reader = csv.DictReader(f)
+        rows = list(reader)
+        assert reader.fieldnames == expected_columns
+    assert len(rows) == 20
+    assert all(row["batch_id"] == "F_OVERLAP_FULL_MASK_BATCH_00" for row in rows)
+    assert all(row["fetch_mode"] == "template_not_executed" for row in rows)
+    assert all(row["fetch_status"] == "template_not_fetched" for row in rows)
+    assert all(row["http_status"] == "" for row in rows)
+    assert all(row["byte_count"] == "" for row in rows)
+    assert all(row["sha256"] == "" for row in rows)
+    assert all(row["fetched_at_utc"] == "" for row in rows)
+    assert all(row["review_artifact_status"] == "template_pending_manual_execution_review" for row in rows)
+    assert all(row["reviewer_id_or_role"] == "" for row in rows)
+    for key in [
+        "forbidden_inputs_used",
+        "uses_kids_data_vector_values",
+        "uses_posterior_chains",
+        "uses_lensing_residuals",
+        "uses_fit_improvement_flags",
+        "uses_posthoc_tile_selection",
+        "overlap_rule_computed",
+        "path_mapping_computed",
+        "contains_mapping_vector",
+        "contains_theory_vector",
+        "contains_predictions",
+        "contains_residuals",
+        "contains_fit_statistics",
+        "endpoint_scoring_allowed",
+    ]:
+        assert all(row[key] == "false" for row in rows)
 
 
 def test_kids1000_cosebis_path_mapping_source_preflight_is_not_mapping() -> None:

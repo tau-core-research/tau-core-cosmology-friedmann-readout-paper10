@@ -541,6 +541,10 @@ schema for a fetched-batch execution-review artifact: product identity, URL,
 cache path, HTTP status, byte count, SHA-256, review status, reviewer role,
 forbidden-input flags, and claim-boundary flags. This is a schema declaration
 only; no fetched-batch review artifact is present in the current release.
+An empty batch-0 template is also materialized in that schema. It contains the
+20 planned product rows, but no network status, checksum, timestamp, reviewer
+entry, or source-freeze decision. It is therefore a review template, not an
+execution log.
 The resulting source-preflight ledger is correspondingly mixed: the 300 COSEBIs
 target rows, five-bin redshift-kernel inventory, 196-tile route-coordinate
 index, 300-row design skeleton, and 58{,}800-row domain skeleton are available;
