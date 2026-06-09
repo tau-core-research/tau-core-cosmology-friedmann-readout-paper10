@@ -1413,6 +1413,25 @@ derivation of the log-band prior from that response spectrum, and a covariant or
 survey-native lensing/path limit. The verdict is
 `survey_native_path_route_available_but_mode_response_and_covariant_kernel_derivation_blocked`.
 
+The COSEBIs mode-response operator specification is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_mode_response_operator_spec_policy_v1.csv
+data/derived/kids1000_cosebis_mode_response_operator_spec_v1.csv
+data/derived/kids1000_cosebis_mode_response_operator_spec_v1_summary.csv
+docs/kids1000_cosebis_mode_response_operator_spec_v1.md
+scripts/build_kids1000_cosebis_mode_response_operator_spec_v1.py
+scripts/validate_kids1000_cosebis_mode_response_operator_spec_v1.py
+```
+
+This artifact freezes what a future survey-native mode-response operator must
+satisfy before the low-mode envelope can be promoted beyond a conditional
+protocol carrier. It defines the path-observable domain, retained COSEBIs-row
+codomain, linearity-before-amplitude rule, pair/redshift/path separation,
+no-feedback constraint, gauge/mask null-safety requirement, and standard-lensing
+null limit. It does not derive the operator. The verdict is
+`operator_requirements_frozen_but_survey_native_mode_response_not_derived`.
+
 The COSEBIs path-mapping source-preflight ledger is recorded in:
 
 ```text

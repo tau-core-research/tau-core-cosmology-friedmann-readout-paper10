@@ -761,6 +761,14 @@ but they do not close the kernel derivation. Three blockers remain explicit: a
 survey-native operator from path observables to COSEBIs mode response, a
 derivation of the log-band prior from that response spectrum, and a covariant
 or survey-native lensing/path limit with units and gauge descent audited.
+We therefore freeze a narrower mode-response operator specification before any
+further scoring: its domain must be a source-side path observable or caveated
+path proxy, its codomain is the retained 300-row COSEBIs domain, it must be
+linear before endpoint amplitude, it must separate pair/redshift/path support
+from mode response, it must use no KiDS data-vector or fit feedback, and it must
+have both gauge/mask null safety and a standard-lensing null limit. This is a
+specification, not a derivation; the source-native mode-response spectrum and
+operator-level null-safety theorem remain open.
 
 The resulting source-preflight ledger is correspondingly mixed: the 300 COSEBIs
 target rows, five-bin redshift-kernel inventory, 196-tile route-coordinate
@@ -1098,7 +1106,9 @@ recover their matching templates, rather than all collapsing into the low-mode
 candidate; this is a guardrail only, not physical mock validation. A
 survey-native path-kernel derivation gate then records that the route support is
 concrete but the mode-response operator, log-band-from-kernel derivation, and
-covariant or survey-native lensing limit remain open. The value of
+covariant or survey-native lensing limit remain open. A subsequent operator
+specification freezes the requirements for that missing mode-response map
+without claiming it has been derived. The value of
 the scaffold is
 therefore to make the next cosmology test
 precise: a Tau Core-inspired late-time residual should be judged not by
