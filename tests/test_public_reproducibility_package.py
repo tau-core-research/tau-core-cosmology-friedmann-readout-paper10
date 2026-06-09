@@ -332,6 +332,12 @@ def test_public_files_exist() -> None:
         "docs/kids1000_cosebis_mode_response_spectrum_attempt_v1.md",
         "scripts/build_kids1000_cosebis_mode_response_spectrum_attempt_v1.py",
         "scripts/validate_kids1000_cosebis_mode_response_spectrum_attempt_v1.py",
+        "data/source_manifest/kids1000_cosebis_operator_null_safety_gate_policy_v1.csv",
+        "data/derived/kids1000_cosebis_operator_null_safety_gate_v1.csv",
+        "data/derived/kids1000_cosebis_operator_null_safety_gate_v1_summary.csv",
+        "docs/kids1000_cosebis_operator_null_safety_gate_v1.md",
+        "scripts/build_kids1000_cosebis_operator_null_safety_gate_v1.py",
+        "scripts/validate_kids1000_cosebis_operator_null_safety_gate_v1.py",
         "data/source_manifest/kids1000_cosebis_path_mapping_source_preflight_policy_v1.csv",
         "data/derived/kids1000_cosebis_path_mapping_source_preflight_v1.csv",
         "data/derived/kids1000_cosebis_path_mapping_source_preflight_v1_summary.csv",
@@ -562,6 +568,8 @@ def test_public_files_exist() -> None:
         "scripts/validate_kids1000_cosebis_mode_response_operator_spec_v1.py",
         "scripts/build_kids1000_cosebis_mode_response_spectrum_attempt_v1.py",
         "scripts/validate_kids1000_cosebis_mode_response_spectrum_attempt_v1.py",
+        "scripts/build_kids1000_cosebis_operator_null_safety_gate_v1.py",
+        "scripts/validate_kids1000_cosebis_operator_null_safety_gate_v1.py",
         "scripts/build_kids1000_cosebis_path_mapping_source_preflight_v1.py",
         "scripts/validate_kids1000_cosebis_path_mapping_source_preflight_v1.py",
         "scripts/build_kids1000_cosebis_null_control_readiness_v1.py",
@@ -4959,6 +4967,46 @@ def test_kids1000_cosebis_mode_response_spectrum_attempt_is_conditional() -> Non
     assert {row["uses_fit_statistics"] for row in spectra} == {"false"}
     assert {row["endpoint_scoring_allowed"] for row in spectra} == {"false"}
     assert {row["endpoint_validation_claimed"] for row in spectra} == {"false"}
+
+
+def test_kids1000_cosebis_operator_null_safety_gate_is_blocked_not_derived() -> None:
+    with (
+        ROOT / "data/source_manifest/kids1000_cosebis_operator_null_safety_gate_policy_v1.csv"
+    ).open(newline="") as f:
+        policy = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/kids1000_cosebis_operator_null_safety_gate_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/kids1000_cosebis_operator_null_safety_gate_v1.csv"
+    ).open(newline="") as f:
+        rows = list(csv.DictReader(f))
+
+    assert policy["status"] == "OPERATOR_NULL_SAFETY_GATE_POLICY_FROZEN"
+    assert policy["uses_kids_data_vector_values"] == "false"
+    assert policy["uses_fit_statistics"] == "false"
+    assert policy["uses_random_noise"] == "false"
+    assert policy["endpoint_scoring_allowed"] == "false"
+    assert summary["status"] == "OPERATOR_NULL_SAFETY_GATE_BLOCKED_NOT_DERIVED"
+    assert summary["verdict"] == "null_controls_exist_but_operator_level_null_safety_remains_blocked"
+    assert summary["operator_null_safety_proven"] == "false"
+    assert summary["mask_null_operator_proven"] == "false"
+    assert summary["gauge_quotient_descent_proven"] == "false"
+    assert summary["spectrum_null_coupling_proven"] == "false"
+    assert summary["mode_response_operator_derived"] == "false"
+    assert summary["open_blocker_count"] == "3"
+    assert summary["endpoint_validation_claimed"] == "false"
+    by_gate = {row["gate_id"]: row for row in rows}
+    assert by_gate["N1_source_frozen_null_family_inventory"]["status"] == "SATISFIED"
+    assert by_gate["N2_no_endpoint_feedback_in_null_replay"]["status"] == "SATISFIED"
+    assert by_gate["N4_uniform_web_null_control"]["status"] == "SATISFIED_AS_NULL_CONTROL_ONLY"
+    assert by_gate["N5_mask_null_operator_response"]["status"] == "OPEN_BLOCKER"
+    assert by_gate["N6_gauge_quotient_descent"]["status"] == "OPEN_BLOCKER"
+    assert by_gate["N7_spectrum_null_coupling"]["status"] == "OPEN_BLOCKER"
+    assert {row["claim_boundary"] for row in rows} == {policy["claim_boundary"]}
+    assert all(row["dimension_check"] for row in rows)
+    assert all(row["limit_check"] for row in rows)
 
 
 def test_kids1000_cosebis_null_control_policy_is_declared_not_run() -> None:

@@ -1452,6 +1452,26 @@ rejected only under that smooth-path prior. The mode-response operator and
 operator-level gauge/null safety remain open blockers. The verdict is
 `conditional_source_spectrum_attempt_preserves_operator_and_null_safety_blockers`.
 
+The COSEBIs operator null-safety gate is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_operator_null_safety_gate_policy_v1.csv
+data/derived/kids1000_cosebis_operator_null_safety_gate_v1.csv
+data/derived/kids1000_cosebis_operator_null_safety_gate_v1_summary.csv
+docs/kids1000_cosebis_operator_null_safety_gate_v1.md
+scripts/build_kids1000_cosebis_operator_null_safety_gate_v1.py
+scripts/validate_kids1000_cosebis_operator_null_safety_gate_v1.py
+```
+
+This artifact audits the remaining null-safety blocker at operator level. It
+records that source-frozen null controls exist and have been replayed without
+endpoint scores, that the domain/codomain route exists with a caveated
+path/mask-load proxy, and that a uniform web route is accepted only as a null
+control. It does not prove operator-level null safety. Three blockers remain:
+pure-mask response, gauge/quotient descent, and coupling the conditional mode
+spectrum to null transforms through one source-native operator. The verdict is
+`null_controls_exist_but_operator_level_null_safety_remains_blocked`.
+
 The COSEBIs path-mapping source-preflight ledger is recorded in:
 
 ```text
