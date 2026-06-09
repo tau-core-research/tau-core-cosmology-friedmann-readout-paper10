@@ -559,6 +559,11 @@ policy are source-side ready, while the theory vector, web/path mapping,
 source-preflight state, blocker-resolution order, and null controls still block
 scoring. The first blocker remains \texttt{F\_overlap}; no prediction,
 residual, fit statistic, or endpoint score is computed.
+A corresponding scoring-protocol shell freezes only the future grammar
+\(\chi^2=(d-t)^T C^{-1}(d-t)\), with a Cholesky covariance solve and required
+baseline, candidate, wrong-channel, shuffled/rotated null, AIC, and control-rank
+outputs. This is not a likelihood run: no theory vector, residual, control
+score, AIC value, or validation result is produced in the present release.
 The resulting source-preflight ledger is correspondingly mixed: the 300 COSEBIs
 target rows, five-bin redshift-kernel inventory, 196-tile route-coordinate
 index, 300-row design skeleton, and 58{,}800-row domain skeleton are available;

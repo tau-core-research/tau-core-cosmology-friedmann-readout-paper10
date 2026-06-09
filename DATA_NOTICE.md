@@ -297,6 +297,12 @@ web/path mapping, source preflight, blocker-resolution order, and null controls
 still block scoring. It contains no predictions, residuals, fit statistics, or
 endpoint scores.
 
+The endpoint scoring protocol shell freezes only the future scoring grammar:
+the chi-square form, Cholesky solve policy, required candidate/control
+comparisons, AIC/control-rank outputs, and pass-condition shell. It is not a
+score artifact and contains no theory vector, residuals, likelihood values,
+control scores, or validation result.
+
 The COSEBIs path-mapping source-preflight ledger combines only source-side
 availability flags. It records that COSEBIs target rows, redshift kernels, and
 the 196-tile route coordinate index, the 300-row design skeleton, and the

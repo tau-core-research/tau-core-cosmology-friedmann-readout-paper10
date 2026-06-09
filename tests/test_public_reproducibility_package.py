@@ -182,6 +182,9 @@ def test_public_files_exist() -> None:
         "docs/kids1000_cosebis_endpoint_scoring_readiness_v1.md",
         "scripts/build_kids1000_cosebis_endpoint_scoring_readiness_v1.py",
         "scripts/validate_kids1000_cosebis_endpoint_scoring_readiness_v1.py",
+        "data/source_manifest/kids1000_cosebis_endpoint_scoring_protocol_v1.csv",
+        "docs/kids1000_cosebis_endpoint_scoring_protocol_v1.md",
+        "scripts/validate_kids1000_cosebis_endpoint_scoring_protocol_v1.py",
         "data/source_manifest/kids1000_cosebis_path_mapping_source_preflight_policy_v1.csv",
         "data/derived/kids1000_cosebis_path_mapping_source_preflight_v1.csv",
         "data/derived/kids1000_cosebis_path_mapping_source_preflight_v1_summary.csv",
@@ -2637,6 +2640,56 @@ def test_kids1000_cosebis_endpoint_scoring_readiness_is_not_scoring() -> None:
         assert row["contains_fit_statistics"] == "false"
         assert row["uses_posterior_chains"] == "false"
         assert row["uses_posthoc_selection"] == "false"
+
+
+def test_kids1000_cosebis_endpoint_scoring_protocol_is_frozen_not_run() -> None:
+    with (ROOT / "data/source_manifest/kids1000_cosebis_endpoint_scoring_protocol_v1.csv").open(
+        newline=""
+    ) as f:
+        protocol = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/kids1000_cosebis_endpoint_scoring_readiness_v1_summary.csv"
+    ).open(newline="") as f:
+        readiness = list(csv.DictReader(f))[0]
+    assert protocol["status"] == "SCORING_PROTOCOL_FROZEN_NOT_RUN"
+    assert protocol["scoring_allowed"] == "false"
+    assert protocol["parent_readiness_policy"] == readiness["policy_id"]
+    assert readiness["endpoint_scoring_allowed"] == "false"
+    assert readiness["first_blocker"] == "F_overlap"
+    assert "chi2=" in protocol["primary_score"]
+    for marker in [
+        "baseline_only",
+        "web_path_candidate",
+        "wrong_channel_controls",
+        "shuffled_or_rotated_nulls",
+        "AIC_delta",
+        "control_rank",
+    ]:
+        assert marker in protocol["comparison_outputs"]
+    for marker in [
+        "source-ready",
+        "controls executed",
+        "predeclared null controls",
+        "endpoint leakage flags",
+    ]:
+        assert marker in protocol["pass_condition_shell"]
+    for marker in [
+        "kids_data_vector_values_for_source_selection",
+        "posterior_chains",
+        "fit_improvement_flags",
+        "lensing_residuals",
+        "posthoc_channel_activation",
+        "posthoc_weight_selection",
+    ]:
+        assert marker in protocol["forbidden_inputs"]
+    for forbidden_path in [
+        "data/derived/kids1000_cosebis_endpoint_scoring_v1_results.csv",
+        "data/derived/kids1000_cosebis_endpoint_scoring_v1_residuals.csv",
+        "data/derived/kids1000_cosebis_endpoint_scoring_v1_grid.csv",
+        "data/derived/kids1000_cosebis_endpoint_scoring_v1_null_controls.csv",
+        "data/derived/kids1000_cosebis_endpoint_scoring_v1_summary.csv",
+    ]:
+        assert not (ROOT / forbidden_path).exists()
 
 
 def test_kids1000_cosebis_null_control_policy_is_declared_not_run() -> None:

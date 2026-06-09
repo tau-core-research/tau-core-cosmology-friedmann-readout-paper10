@@ -803,6 +803,20 @@ ready; the theory vector, web/path mapping, source preflight, blocker
 resolution, and null controls still block scoring. The first blocker remains
 `F_overlap`, and endpoint scoring remains disabled.
 
+The frozen endpoint scoring protocol shell is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_endpoint_scoring_protocol_v1.csv
+docs/kids1000_cosebis_endpoint_scoring_protocol_v1.md
+scripts/validate_kids1000_cosebis_endpoint_scoring_protocol_v1.py
+```
+
+It declares the future COSEBIs scoring grammar
+`chi2 = (d - t)^T C^{-1} (d - t)`, the Cholesky solve policy, required
+baseline/candidate/null-control comparisons, AIC/control-rank reporting, and
+pass-condition shell. It does not compute a theory vector, residual,
+likelihood, AIC value, control score, or validation result.
+
 The COSEBIs path-mapping source-preflight ledger is recorded in:
 
 ```text
