@@ -8,6 +8,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 PROTOCOL = ROOT / "data" / "source_manifest" / "kids1000_cosebis_endpoint_scoring_protocol_v1.csv"
 READINESS = ROOT / "data" / "derived" / "kids1000_cosebis_endpoint_scoring_readiness_v1_summary.csv"
+APPROVED_RUN = ROOT / "data" / "source_manifest" / "kids1000_cosebis_endpoint_scoring_run_v1.csv"
 
 FORBIDDEN_SCORE_ARTIFACTS = [
     ROOT / "data" / "derived" / "kids1000_cosebis_endpoint_scoring_v1_results.csv",
@@ -24,6 +25,18 @@ def read_one(path: Path) -> dict[str, str]:
     if len(rows) != 1:
         raise SystemExit(f"{path} must contain exactly one row")
     return rows[0]
+
+
+def has_approved_run() -> bool:
+    if not APPROVED_RUN.exists():
+        return False
+    run = read_one(APPROVED_RUN)
+    return (
+        run.get("status") == "ENDPOINT_SCORING_APPROVED_RUN_V1"
+        and run.get("endpoint_scoring_allowed") == "true"
+        and run.get("explicit_user_approval_recorded") == "true"
+        and run.get("parent_scoring_protocol") == "KIDS1000_COSEBIS_ENDPOINT_SCORING_PROTOCOL_V1"
+    )
 
 
 def main() -> None:
@@ -79,12 +92,13 @@ def main() -> None:
         if marker not in protocol["forbidden_inputs"]:
             raise SystemExit(f"forbidden input marker missing: {marker}")
     existing_forbidden = [str(path.relative_to(ROOT)) for path in FORBIDDEN_SCORE_ARTIFACTS if path.exists()]
-    if existing_forbidden:
+    if existing_forbidden and not has_approved_run():
         raise SystemExit(
             "KiDS endpoint scoring protocol freeze cannot coexist with score artifacts: "
             + ",".join(existing_forbidden)
         )
-    print("PAPER10_KIDS1000_COSEBIS_ENDPOINT_SCORING_PROTOCOL_V1_VALIDATED scoring_allowed=false")
+    suffix = " approved_run=true" if has_approved_run() else " approved_run=false"
+    print("PAPER10_KIDS1000_COSEBIS_ENDPOINT_SCORING_PROTOCOL_V1_VALIDATED scoring_allowed=false" + suffix)
 
 
 if __name__ == "__main__":

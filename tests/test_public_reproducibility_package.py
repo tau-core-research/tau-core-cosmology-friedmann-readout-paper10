@@ -247,6 +247,15 @@ def test_public_files_exist() -> None:
         "data/source_manifest/kids1000_cosebis_endpoint_scoring_protocol_v1.csv",
         "docs/kids1000_cosebis_endpoint_scoring_protocol_v1.md",
         "scripts/validate_kids1000_cosebis_endpoint_scoring_protocol_v1.py",
+        "data/source_manifest/kids1000_cosebis_endpoint_scoring_run_v1.csv",
+        "data/derived/kids1000_cosebis_endpoint_scoring_v1_results.csv",
+        "data/derived/kids1000_cosebis_endpoint_scoring_v1_residuals.csv",
+        "data/derived/kids1000_cosebis_endpoint_scoring_v1_grid.csv",
+        "data/derived/kids1000_cosebis_endpoint_scoring_v1_null_controls.csv",
+        "data/derived/kids1000_cosebis_endpoint_scoring_v1_summary.csv",
+        "docs/kids1000_cosebis_endpoint_scoring_v1.md",
+        "scripts/run_kids1000_cosebis_endpoint_scoring_v1.py",
+        "scripts/validate_kids1000_cosebis_endpoint_scoring_v1.py",
         "data/source_manifest/kids1000_cosebis_path_mapping_source_preflight_policy_v1.csv",
         "data/derived/kids1000_cosebis_path_mapping_source_preflight_v1.csv",
         "data/derived/kids1000_cosebis_path_mapping_source_preflight_v1_summary.csv",
@@ -451,6 +460,8 @@ def test_public_files_exist() -> None:
         "scripts/validate_kids1000_cosebis_non_degenerate_mapping_promotion_gate_v1.py",
         "scripts/build_kids1000_cosebis_endpoint_family_geometry_audit_v1.py",
         "scripts/validate_kids1000_cosebis_endpoint_family_geometry_audit_v1.py",
+        "scripts/run_kids1000_cosebis_endpoint_scoring_v1.py",
+        "scripts/validate_kids1000_cosebis_endpoint_scoring_v1.py",
         "scripts/build_kids1000_cosebis_path_mapping_source_preflight_v1.py",
         "scripts/validate_kids1000_cosebis_path_mapping_source_preflight_v1.py",
         "scripts/build_kids1000_cosebis_null_control_readiness_v1.py",
@@ -4224,7 +4235,7 @@ def test_kids1000_cosebis_endpoint_scoring_readiness_is_not_scoring() -> None:
         assert row["uses_posthoc_selection"] == "false"
 
 
-def test_kids1000_cosebis_endpoint_scoring_protocol_is_frozen_not_run() -> None:
+def test_kids1000_cosebis_endpoint_scoring_protocol_is_frozen_with_approved_run() -> None:
     with (ROOT / "data/source_manifest/kids1000_cosebis_endpoint_scoring_protocol_v1.csv").open(
         newline=""
     ) as f:
@@ -4265,14 +4276,75 @@ def test_kids1000_cosebis_endpoint_scoring_protocol_is_frozen_not_run() -> None:
         "posthoc_weight_selection",
     ]:
         assert marker in protocol["forbidden_inputs"]
-    for forbidden_path in [
-        "data/derived/kids1000_cosebis_endpoint_scoring_v1_results.csv",
-        "data/derived/kids1000_cosebis_endpoint_scoring_v1_residuals.csv",
-        "data/derived/kids1000_cosebis_endpoint_scoring_v1_grid.csv",
-        "data/derived/kids1000_cosebis_endpoint_scoring_v1_null_controls.csv",
-        "data/derived/kids1000_cosebis_endpoint_scoring_v1_summary.csv",
-    ]:
-        assert not (ROOT / forbidden_path).exists()
+    with (ROOT / "data/source_manifest/kids1000_cosebis_endpoint_scoring_run_v1.csv").open(
+        newline=""
+    ) as f:
+        run = list(csv.DictReader(f))[0]
+    assert run["parent_scoring_protocol"] == protocol["protocol_id"]
+    assert run["status"] == "ENDPOINT_SCORING_APPROVED_RUN_V1"
+    assert run["endpoint_scoring_allowed"] == "true"
+    assert run["explicit_user_approval_recorded"] == "true"
+    assert "kids_data_vector_values_for_source_selection" in run["forbidden_inputs_for_source_selection"]
+    assert "retained_300_row_En_data_vector_for_scoring_only" in run["allowed_endpoint_inputs"]
+
+
+def test_kids1000_cosebis_endpoint_scoring_run_is_control_ranked_not_validation() -> None:
+    with (ROOT / "data/source_manifest/kids1000_cosebis_endpoint_scoring_run_v1.csv").open(
+        newline=""
+    ) as f:
+        run = list(csv.DictReader(f))[0]
+    with (ROOT / "data/derived/kids1000_cosebis_endpoint_scoring_v1_summary.csv").open(
+        newline=""
+    ) as f:
+        summary = list(csv.DictReader(f))[0]
+    with (ROOT / "data/derived/kids1000_cosebis_endpoint_scoring_v1_results.csv").open(
+        newline=""
+    ) as f:
+        result = list(csv.DictReader(f))[0]
+    with (ROOT / "data/derived/kids1000_cosebis_endpoint_scoring_v1_residuals.csv").open(
+        newline=""
+    ) as f:
+        residuals = list(csv.DictReader(f))
+    with (ROOT / "data/derived/kids1000_cosebis_endpoint_scoring_v1_null_controls.csv").open(
+        newline=""
+    ) as f:
+        nulls = list(csv.DictReader(f))
+    with (ROOT / "data/derived/kids1000_cosebis_endpoint_scoring_v1_grid.csv").open(
+        newline=""
+    ) as f:
+        grid = list(csv.DictReader(f))
+
+    assert run["endpoint_scoring_allowed"] == "true"
+    assert run["explicit_user_approval_recorded"] == "true"
+    assert summary["status"] == "KIDS1000_COSEBIS_ENDPOINT_SCORING_RUN_V1_COMPLETE"
+    assert summary["endpoint_scoring_executed"] == "true"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["uses_kids_data_vector_values_for_scoring"] == "true"
+    assert summary["uses_kids_data_vector_values_for_source_selection"] == "false"
+    assert summary["uses_posterior_chains"] == "false"
+    assert summary["uses_posthoc_selection"] == "false"
+    assert summary["claim_boundary"] == run["claim_boundary"]
+    assert result["claim_boundary"] == run["claim_boundary"]
+    assert result["null_control_count"] == "1008"
+    assert result["candidate_rank_by_chi2"] == "3"
+    assert result["candidate_rank_by_aic"] == "3"
+    assert result["chi2_nulls_better_than_candidate"] == "2"
+    assert result["aic_nulls_better_than_candidate"] == "2"
+    assert abs(float(result["candidate_delta_chi2_vs_baseline"]) + 183.6152665217) < 1e-8
+    assert abs(float(result["candidate_delta_aic_vs_baseline"]) + 181.6152665217) < 1e-8
+    assert abs(float(result["plus_one_tail_fraction_chi2"]) - 0.002973240832507) < 1e-15
+    assert abs(float(result["plus_one_tail_fraction_aic"]) - 0.002973240832507) < 1e-15
+    assert len(residuals) == 300
+    assert len(nulls) == 1008
+    assert len(grid) == 2
+    assert {row["branch_type"] for row in grid} == {"baseline", "candidate"}
+    for row in [result, summary, *residuals, *nulls]:
+        assert row["uses_kids_data_vector_values_for_scoring"] == "true"
+        assert row["uses_kids_data_vector_values_for_source_selection"] == "false"
+    for row in [result, summary]:
+        assert row["uses_posterior_chains"] == "false"
+        assert row["uses_posthoc_selection"] == "false"
+        assert row["endpoint_validation_claimed"] == "false"
 
 
 def test_kids1000_cosebis_null_control_policy_is_declared_not_run() -> None:

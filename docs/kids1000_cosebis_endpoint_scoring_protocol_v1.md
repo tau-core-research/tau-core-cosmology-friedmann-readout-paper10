@@ -40,6 +40,8 @@ basis, a source-frozen unit-amplitude theory-vector shell, source-frozen
 null-control replay digests, and a non-degenerate endpoint-family geometry
 audit are available. The first endpoint blocker is now `none`.
 
-This document still does not execute scoring. The scoring protocol remains
-frozen-not-run: no residual vector, likelihood, AIC value, null-control score,
-endpoint score, or validation result is produced in this release.
+This document still does not execute scoring. It only freezes the scoring
+grammar. The approved endpoint run is stored separately in
+`kids1000_cosebis_endpoint_scoring_run_v1.csv` and its derived artifacts. That
+run computes endpoint residuals, chi-square values, AIC values, and null-control
+scores, but it still does not claim KiDS lensing validation.

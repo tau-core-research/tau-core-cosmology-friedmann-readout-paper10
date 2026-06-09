@@ -1181,10 +1181,37 @@ scripts/validate_kids1000_cosebis_endpoint_scoring_protocol_v1.py
 It declares the future COSEBIs scoring grammar
 `chi2 = (d - t)^T C^{-1} (d - t)`, the Cholesky solve policy, required
 baseline/candidate/null-control comparisons, AIC/control-rank reporting, and
-pass-condition shell. The current release computes only a source-frozen
-unit-amplitude theory-vector shell plus source-frozen null-control theory
-replay digests. It does not compute a residual, likelihood, AIC value, control
-score, endpoint score, or validation result.
+pass-condition shell. The protocol shell itself is not a score. The separate
+approved run below is the first artifact that computes endpoint residuals,
+chi-square values, AIC values, and null-control scores under that frozen
+grammar.
+
+The first approved endpoint scoring run is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_endpoint_scoring_run_v1.csv
+data/derived/kids1000_cosebis_endpoint_scoring_v1_results.csv
+data/derived/kids1000_cosebis_endpoint_scoring_v1_residuals.csv
+data/derived/kids1000_cosebis_endpoint_scoring_v1_grid.csv
+data/derived/kids1000_cosebis_endpoint_scoring_v1_null_controls.csv
+data/derived/kids1000_cosebis_endpoint_scoring_v1_summary.csv
+docs/kids1000_cosebis_endpoint_scoring_v1.md
+scripts/run_kids1000_cosebis_endpoint_scoring_v1.py
+scripts/validate_kids1000_cosebis_endpoint_scoring_v1.py
+```
+
+This run is opened only after the readiness ledger records `12` ready
+components and `0` blockers. It uses the retained 300-row KiDS COSEBIs `En`
+vector only for scoring, not for source selection or post-hoc channel choices.
+The source-frozen candidate improves over the zero baseline by
+`Delta chi2 = -183.6152665217` and `Delta AIC = -181.6152665217` under the
+full covariance Cholesky policy and a nonnegative single-amplitude branch rule.
+Against the `1008` predeclared null-control vectors, the candidate ranks
+`3/1009` by both chi-square and AIC, with a plus-one null tail fraction of
+`0.002973240832507`. This is an endpoint score, not a KiDS validation claim:
+two predeclared null controls score better than the candidate, so the
+claim-safe reading is a low-tail endpoint signal that requires follow-up
+robustness.
 
 The COSEBIs path-mapping source-preflight ledger is recorded in:
 

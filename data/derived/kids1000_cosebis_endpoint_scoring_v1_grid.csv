@@ -1,0 +1,3 @@
+run_id,branch,branch_type,amplitude,chi2,aic,delta_chi2_vs_baseline,delta_aic_vs_baseline,k_eff
+KIDS1000_COSEBIS_ENDPOINT_SCORING_RUN_V1,baseline_zero,baseline,0.000000000000e+00,6.947331543694e+02,6.947331543694e+02,0.000000000000e+00,0.000000000000e+00,0
+KIDS1000_COSEBIS_ENDPOINT_SCORING_RUN_V1,source_frozen_web_path_candidate,candidate,9.951375259676e-11,5.111178878478e+02,5.131178878478e+02,-1.836152665217e+02,-1.816152665217e+02,1

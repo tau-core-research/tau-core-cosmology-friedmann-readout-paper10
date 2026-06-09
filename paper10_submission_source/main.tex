@@ -35,8 +35,9 @@ and CMB-safety observables are scored. The target signature is not merely
 \(w(z)\ne -1\), but a Lambda-like distance readout paired with
 web/environment-dependent growth or lensing residuals. The first release is a
 protocol scaffold with claim boundaries, source blocks, null controls,
-reproducibility checks, a diagonal-covariance numerical smoke test, and a
-full-covariance single-probe pilot; no measurement result is claimed.
+reproducibility checks, diagonal- and full-covariance pilot scores, and a first
+KiDS COSEBIs endpoint score. No cosmological validation or discovery claim is
+made.
 \end{abstract}
 
 \section{Scope and non-claims}
@@ -639,15 +640,26 @@ mapping basis, and source-frozen unit-amplitude theory-vector shell are
 source-side ready. The predeclared null controls have also been replayed against
 the source-frozen theory shell as deterministic control-vector digests, without
 computing null scores. After the endpoint-family geometry audit, the readiness
-ledger records twelve ready components and no remaining readiness blocker. No
-residual, fit statistic, endpoint score, or validation result is computed.
+ledger records twelve ready components and no remaining readiness blocker.
 A corresponding scoring-protocol shell freezes only the future grammar
 \(\chi^2=(d-t)^T C^{-1}(d-t)\), with a Cholesky covariance solve and required
 baseline, candidate, wrong-channel, shuffled/rotated null, AIC, and control-rank
-outputs. This is not a likelihood run: the current source-frozen shell is not
-an endpoint prediction, the null-control replay is not a null-score replay, and
-no residual, control score, AIC value, or validation result is produced in the
-present release.
+outputs. The protocol shell itself is not a likelihood run. After explicit
+approval, the first endpoint scoring run applies this frozen grammar to the
+retained 300-row KiDS COSEBIs \(E_n\) vector. The source-frozen candidate
+improves on the zero baseline by
+\[
+  \Delta\chi^2=-183.6152665217,
+  \qquad
+  \Delta{\rm AIC}=-181.6152665217,
+\]
+using the full covariance Cholesky solve and a nonnegative single-amplitude
+branch rule. Against the 1008 predeclared null-control vectors, the candidate
+ranks \(3/1009\) by both \(\chi^2\) and AIC, giving a plus-one null-tail
+fraction \(0.002973240832507\). This is a KiDS endpoint score, not validation:
+the KiDS data vector enters only after source-side choices, candidate vectors,
+and null controls are frozen, and two predeclared null controls still score
+better than the candidate.
 The resulting source-preflight ledger is correspondingly mixed: the 300 COSEBIs
 target rows, five-bin redshift-kernel inventory, 196-tile route-coordinate
 index, 300-row design skeleton, and 58{,}800-row domain skeleton are available;
@@ -655,10 +667,10 @@ the weight-construction rule is source-side computable; the mask shell is only a
 partial three-tile source observable; the full path/depth footprint mapping is
 represented by a caveated full-route mask-load proxy; the KiDS-footprint
 web-environment catalogue remains absent and is therefore represented only by a
-uniform null-web control; and null controls have been replayed as theory-vector
-digests. Thus the lensing branch is now narrowed to a source-side ready,
-geometry-audited, still non-scored endpoint protocol rather than an unspecified
-missing-input state.
+uniform null-web control; and null controls have been scored under the approved
+endpoint run. Thus the lensing branch is now narrowed to a source-side ready,
+geometry-audited, endpoint-scored but not validated protocol rather than an
+unspecified missing-input state.
 
 The null-control gate is declared in parallel. It predeclares sky rotation,
 tomographic-pair shuffle, wrong-channel activation, and web/path sign-flip
@@ -955,13 +967,17 @@ A fail result occurs if:
 
 \section{Conclusion}
 
-The present repository defines a source-frozen Friedmann-readout audit protocol.
-It does not report a measurement result. Its first numerical Pantheon+ pilots
-are deliberately neutral: the Tau shell slightly improves \(\chi^2\) in both
-the diagonal-covariance smoke test and the full-covariance pilot, but loses
-under AIC in both cases. The value of the scaffold is therefore to make the
-next cosmology test precise: a Tau Core-inspired late-time residual should be
-judged not by \(w(z)\ne -1\) alone, but by the joint pattern
+The present repository defines a source-frozen Friedmann-readout audit protocol
+and now includes one explicitly approved KiDS COSEBIs endpoint score. It does
+not report cosmological validation. Its first numerical Pantheon+ pilots are
+deliberately neutral: the Tau shell slightly improves \(\chi^2\) in both the
+diagonal-covariance smoke test and the full-covariance pilot, but loses under
+AIC in both cases. The KiDS endpoint score is more structured: the
+source-frozen candidate improves over the zero baseline and lies in the low
+tail of predeclared null controls, but it is not an absolute null-control
+winner. The value of the scaffold is therefore to make the next cosmology test
+precise: a Tau Core-inspired late-time residual should be judged not by
+\(w(z)\ne -1\) alone, but by the joint pattern
 \[
 \begin{aligned}
 &\hbox{Lambda-like distance behavior}\\
