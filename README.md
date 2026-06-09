@@ -1232,6 +1232,26 @@ or `web_path_sign_flip` control beats the candidate. This narrows the next
 robustness question to tomographic-pair structure rather than to a generic
 wrong-channel or sign-flip failure.
 
+The tomographic-structure robustness run is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_tomographic_structure_robustness_policy_v1.csv
+data/derived/kids1000_cosebis_tomographic_structure_robustness_v1_controls.csv
+data/derived/kids1000_cosebis_tomographic_structure_robustness_v1_family_summary.csv
+data/derived/kids1000_cosebis_tomographic_structure_robustness_v1_top_controls.csv
+data/derived/kids1000_cosebis_tomographic_structure_robustness_v1_summary.csv
+docs/kids1000_cosebis_tomographic_structure_robustness_v1.md
+scripts/run_kids1000_cosebis_tomographic_structure_robustness_v1.py
+scripts/validate_kids1000_cosebis_tomographic_structure_robustness_v1.py
+```
+
+This run compares the same endpoint candidate against stricter tomographic
+controls: all `119` non-identity five-bin label permutations and `1000`
+auto/cross-preserving pair shuffles. The candidate remains low-tail with rank
+`4/1120` and plus-one tail fraction `0.003571428571429`. Three structured
+controls beat it, so this is robustness evidence rather than validation. The
+remaining caveat is specifically tomographic-structure robustness.
+
 The COSEBIs path-mapping source-preflight ledger is recorded in:
 
 ```text

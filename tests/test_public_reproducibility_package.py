@@ -262,6 +262,14 @@ def test_public_files_exist() -> None:
         "data/derived/kids1000_cosebis_endpoint_scoring_diagnostics_v1_summary.csv",
         "scripts/build_kids1000_cosebis_endpoint_scoring_diagnostics_v1.py",
         "scripts/validate_kids1000_cosebis_endpoint_scoring_diagnostics_v1.py",
+        "data/source_manifest/kids1000_cosebis_tomographic_structure_robustness_policy_v1.csv",
+        "data/derived/kids1000_cosebis_tomographic_structure_robustness_v1_controls.csv",
+        "data/derived/kids1000_cosebis_tomographic_structure_robustness_v1_family_summary.csv",
+        "data/derived/kids1000_cosebis_tomographic_structure_robustness_v1_top_controls.csv",
+        "data/derived/kids1000_cosebis_tomographic_structure_robustness_v1_summary.csv",
+        "docs/kids1000_cosebis_tomographic_structure_robustness_v1.md",
+        "scripts/run_kids1000_cosebis_tomographic_structure_robustness_v1.py",
+        "scripts/validate_kids1000_cosebis_tomographic_structure_robustness_v1.py",
         "data/source_manifest/kids1000_cosebis_path_mapping_source_preflight_policy_v1.csv",
         "data/derived/kids1000_cosebis_path_mapping_source_preflight_v1.csv",
         "data/derived/kids1000_cosebis_path_mapping_source_preflight_v1_summary.csv",
@@ -470,6 +478,8 @@ def test_public_files_exist() -> None:
         "scripts/validate_kids1000_cosebis_endpoint_scoring_v1.py",
         "scripts/build_kids1000_cosebis_endpoint_scoring_diagnostics_v1.py",
         "scripts/validate_kids1000_cosebis_endpoint_scoring_diagnostics_v1.py",
+        "scripts/run_kids1000_cosebis_tomographic_structure_robustness_v1.py",
+        "scripts/validate_kids1000_cosebis_tomographic_structure_robustness_v1.py",
         "scripts/build_kids1000_cosebis_path_mapping_source_preflight_v1.py",
         "scripts/validate_kids1000_cosebis_path_mapping_source_preflight_v1.py",
         "scripts/build_kids1000_cosebis_null_control_readiness_v1.py",
@@ -4401,6 +4411,55 @@ def test_kids1000_cosebis_endpoint_scoring_diagnostics_localize_null_caveat() ->
     assert top_rows[0]["control_family"] == "tomographic_pair_shuffle"
     assert top_rows[0]["beats_candidate_chi2"] == "true"
     assert top_rows[0]["endpoint_validation_claimed"] == "false"
+
+
+def test_kids1000_cosebis_tomographic_structure_robustness_preserves_low_tail() -> None:
+    with (
+        ROOT / "data/source_manifest/kids1000_cosebis_tomographic_structure_robustness_policy_v1.csv"
+    ).open(newline="") as f:
+        policy = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/kids1000_cosebis_tomographic_structure_robustness_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/kids1000_cosebis_tomographic_structure_robustness_v1_family_summary.csv"
+    ).open(newline="") as f:
+        family_rows = list(csv.DictReader(f))
+    with (
+        ROOT / "data/derived/kids1000_cosebis_tomographic_structure_robustness_v1_controls.csv"
+    ).open(newline="") as f:
+        controls = list(csv.DictReader(f))
+    with (
+        ROOT / "data/derived/kids1000_cosebis_tomographic_structure_robustness_v1_top_controls.csv"
+    ).open(newline="") as f:
+        top_rows = list(csv.DictReader(f))
+
+    assert policy["status"] == "TOMOGRAPHIC_STRUCTURE_ROBUSTNESS_POLICY_FROZEN"
+    assert policy["endpoint_validation_claimed"] == "false"
+    assert "bin_label_permutation" in policy["control_families"]
+    assert "auto_cross_preserving_shuffle" in policy["control_families"]
+    assert summary["status"] == "KIDS1000_COSEBIS_TOMOGRAPHIC_STRUCTURE_ROBUSTNESS_COMPLETE"
+    assert summary["control_count"] == "1119"
+    assert summary["candidate_rank_by_chi2"] == "4"
+    assert summary["candidate_rank_by_aic"] == "4"
+    assert summary["controls_better_than_candidate_chi2"] == "3"
+    assert summary["controls_better_than_candidate_aic"] == "3"
+    assert abs(float(summary["plus_one_tail_fraction_chi2"]) - 0.003571428571429) < 1e-15
+    assert summary["families_with_better_than_candidate"] == "auto_cross_preserving_shuffle;bin_label_permutation"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["uses_kids_data_vector_values_for_scoring"] == "true"
+    assert summary["uses_kids_data_vector_values_for_source_selection"] == "false"
+    assert len(controls) == 1119
+    assert len(top_rows) == 25
+    by_family = {row["control_family"]: row for row in family_rows}
+    assert by_family["bin_label_permutation"]["control_count"] == "119"
+    assert by_family["bin_label_permutation"]["controls_better_than_candidate_chi2"] == "1"
+    assert by_family["auto_cross_preserving_shuffle"]["control_count"] == "1000"
+    assert by_family["auto_cross_preserving_shuffle"]["controls_better_than_candidate_chi2"] == "2"
+    for row in [summary, *family_rows, *top_rows, *controls]:
+        assert row["endpoint_validation_claimed"] == "false"
+        assert row["claim_boundary"] == policy["claim_boundary"]
 
 
 def test_kids1000_cosebis_null_control_policy_is_declared_not_run() -> None:
