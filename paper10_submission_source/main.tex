@@ -786,6 +786,15 @@ be quotient-trivial or controlled as a null direction, gauge/coordinate
 representation changes must descend to the physical quotient, and the
 conditional mode spectrum must be coupled to the null transforms by the same
 source-native operator.
+The first sub-gate under pure-mask response constructs a source-only mask
+perturbation basis rather than a physical response. The full-route
+\(F_{\rm overlap}\) and \(D_{\rm path}\) mask observables are centered and
+unit-RMS normalized over the 196 route tiles; their centered directions are
+non-degenerate, so the resulting pure-mask basis has rank two and can be lifted
+to the \(58{,}800\)-row target-by-tile domain. This makes future pure-mask null
+replay concrete. It does not prove that those directions are quotient-trivial,
+and it does not show that mask-only directions cannot leak into the low-mode
+COSEBIs envelope under a future survey-native response operator.
 
 The resulting source-preflight ledger is correspondingly mixed: the 300 COSEBIs
 target rows, five-bin redshift-kernel inventory, 196-tile route-coordinate
@@ -1130,7 +1139,10 @@ the \(n^{-1/2}\) envelope as a conditional smooth-path consequence, while
 leaving the operator and null-safety blockers open. Finally, an operator
 null-safety gate records that null controls exist and are leakage-safe at the
 replay level, but pure-mask response, gauge quotient descent, and
-spectrum-null coupling remain open at operator level. The value of
+spectrum-null coupling remain open at operator level. The pure-mask sub-gate
+then constructs a rank-two centered mask-only perturbation basis from
+\(F_{\rm overlap}\) and \(D_{\rm path}\), while preserving quotient triviality
+and mode-response leakage as open blockers. The value of
 the scaffold is
 therefore to make the next cosmology test
 precise: a Tau Core-inspired late-time residual should be judged not by

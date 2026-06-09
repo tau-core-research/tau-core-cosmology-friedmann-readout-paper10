@@ -338,6 +338,14 @@ def test_public_files_exist() -> None:
         "docs/kids1000_cosebis_operator_null_safety_gate_v1.md",
         "scripts/build_kids1000_cosebis_operator_null_safety_gate_v1.py",
         "scripts/validate_kids1000_cosebis_operator_null_safety_gate_v1.py",
+        "data/source_manifest/kids1000_cosebis_pure_mask_response_gate_policy_v1.csv",
+        "data/derived/kids1000_cosebis_pure_mask_response_gate_v1.csv",
+        "data/derived/kids1000_cosebis_pure_mask_response_gate_v1_summary.csv",
+        "data/derived/kids1000_cosebis_pure_mask_response_tile_basis_v1.csv",
+        "data/derived/kids1000_cosebis_pure_mask_response_domain_basis_v1.csv",
+        "docs/kids1000_cosebis_pure_mask_response_gate_v1.md",
+        "scripts/build_kids1000_cosebis_pure_mask_response_gate_v1.py",
+        "scripts/validate_kids1000_cosebis_pure_mask_response_gate_v1.py",
         "data/source_manifest/kids1000_cosebis_path_mapping_source_preflight_policy_v1.csv",
         "data/derived/kids1000_cosebis_path_mapping_source_preflight_v1.csv",
         "data/derived/kids1000_cosebis_path_mapping_source_preflight_v1_summary.csv",
@@ -570,6 +578,8 @@ def test_public_files_exist() -> None:
         "scripts/validate_kids1000_cosebis_mode_response_spectrum_attempt_v1.py",
         "scripts/build_kids1000_cosebis_operator_null_safety_gate_v1.py",
         "scripts/validate_kids1000_cosebis_operator_null_safety_gate_v1.py",
+        "scripts/build_kids1000_cosebis_pure_mask_response_gate_v1.py",
+        "scripts/validate_kids1000_cosebis_pure_mask_response_gate_v1.py",
         "scripts/build_kids1000_cosebis_path_mapping_source_preflight_v1.py",
         "scripts/validate_kids1000_cosebis_path_mapping_source_preflight_v1.py",
         "scripts/build_kids1000_cosebis_null_control_readiness_v1.py",
@@ -5007,6 +5017,65 @@ def test_kids1000_cosebis_operator_null_safety_gate_is_blocked_not_derived() -> 
     assert {row["claim_boundary"] for row in rows} == {policy["claim_boundary"]}
     assert all(row["dimension_check"] for row in rows)
     assert all(row["limit_check"] for row in rows)
+
+
+def test_kids1000_cosebis_pure_mask_response_gate_builds_basis_but_not_operator_proof() -> None:
+    with (
+        ROOT / "data/source_manifest/kids1000_cosebis_pure_mask_response_gate_policy_v1.csv"
+    ).open(newline="") as f:
+        policy = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/kids1000_cosebis_pure_mask_response_gate_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/kids1000_cosebis_pure_mask_response_gate_v1.csv"
+    ).open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    with (
+        ROOT / "data/derived/kids1000_cosebis_pure_mask_response_tile_basis_v1.csv"
+    ).open(newline="") as f:
+        tile_rows = list(csv.DictReader(f))
+    with (
+        ROOT / "data/derived/kids1000_cosebis_pure_mask_response_domain_basis_v1.csv"
+    ).open(newline="") as f:
+        domain_rows = list(csv.DictReader(f))
+
+    assert policy["status"] == "PURE_MASK_RESPONSE_GATE_POLICY_FROZEN"
+    assert policy["uses_kids_data_vector_values"] == "false"
+    assert policy["uses_fit_statistics"] == "false"
+    assert policy["uses_random_noise"] == "false"
+    assert policy["endpoint_scoring_allowed"] == "false"
+    assert summary["status"] == "PURE_MASK_RESPONSE_GATE_BASIS_BUILT_OPERATOR_PROOF_BLOCKED"
+    assert summary["verdict"] == (
+        "pure_mask_basis_exists_but_quotient_triviality_and_mode_coupling_remain_blocked"
+    )
+    assert summary["tile_rows"] == "196"
+    assert summary["domain_rows"] == "58800"
+    assert summary["effective_centered_mask_basis_rank"] == "2"
+    assert summary["pure_mask_basis_constructed"] == "true"
+    assert summary["pure_mask_domain_lift_constructed"] == "true"
+    assert summary["pure_mask_quotient_triviality_proven"] == "false"
+    assert summary["pure_mask_mode_response_coupling_proven"] == "false"
+    assert summary["mask_null_operator_response_proven"] == "false"
+    assert summary["open_blocker_count"] == "2"
+    assert len(tile_rows) == 196
+    assert len(domain_rows) == 58800
+    by_gate = {row["gate_id"]: row for row in rows}
+    assert by_gate["P1_full_route_mask_sources_available"]["status"] == "SATISFIED"
+    assert by_gate["P2_centered_pure_mask_basis_constructed"]["status"] == "SATISFIED"
+    assert by_gate["P3_two_direction_mask_basis_non_degenerate"]["status"] == "SATISFIED_CAVEATED"
+    assert by_gate["P6_quotient_triviality_not_proven"]["status"] == "OPEN_BLOCKER"
+    assert by_gate["P7_mode_response_coupling_not_proven"]["status"] == "OPEN_BLOCKER"
+    assert {row["claim_boundary"] for row in rows} == {policy["claim_boundary"]}
+    assert all(row["dimension_check"] for row in rows)
+    assert all(row["limit_check"] for row in rows)
+    for row in tile_rows[:5] + domain_rows[:5]:
+        assert row["contains_theory_vector"] == "false"
+        assert row["contains_residuals"] == "false"
+        assert row["contains_fit_statistics"] == "false"
+        assert row["uses_kids_data_vector_values"] == "false"
+        assert row["endpoint_scoring_allowed"] == "false"
 
 
 def test_kids1000_cosebis_null_control_policy_is_declared_not_run() -> None:

@@ -1472,6 +1472,28 @@ pure-mask response, gauge/quotient descent, and coupling the conditional mode
 spectrum to null transforms through one source-native operator. The verdict is
 `null_controls_exist_but_operator_level_null_safety_remains_blocked`.
 
+The COSEBIs pure-mask response gate is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_pure_mask_response_gate_policy_v1.csv
+data/derived/kids1000_cosebis_pure_mask_response_gate_v1.csv
+data/derived/kids1000_cosebis_pure_mask_response_gate_v1_summary.csv
+data/derived/kids1000_cosebis_pure_mask_response_tile_basis_v1.csv
+data/derived/kids1000_cosebis_pure_mask_response_domain_basis_v1.csv
+docs/kids1000_cosebis_pure_mask_response_gate_v1.md
+scripts/build_kids1000_cosebis_pure_mask_response_gate_v1.py
+scripts/validate_kids1000_cosebis_pure_mask_response_gate_v1.py
+```
+
+This artifact narrows the pure-mask branch of the null-safety blocker. It
+constructs a centered, unit-RMS, source-only pure-mask perturbation basis from
+the full-route `F_overlap` and `D_path` mask observables, and lifts that basis
+to the `58,800` target-by-route-tile domain. The centered basis has rank `2`.
+It still does not construct a mapping vector, theory vector, prediction,
+residual, fit statistic, or endpoint score. Quotient triviality and coupling to
+the COSEBIs mode response remain open blockers. The verdict is
+`pure_mask_basis_exists_but_quotient_triviality_and_mode_coupling_remain_blocked`.
+
 The COSEBIs path-mapping source-preflight ledger is recorded in:
 
 ```text
