@@ -705,6 +705,20 @@ improvement. This is a localization diagnostic, not validation.}
 \label{fig:kids-mode-localization}
 \end{figure}
 
+Because the source-frozen theory shell already contains a deliberately simple,
+source-independent mode carrier \(M(n)\propto n^{-1/2}\), we also run a
+mode-shape stress audit. The same source-frozen \(W_{\rm path}\) mapping and
+the same endpoint scoring rule are kept fixed, but the mode carrier is replaced
+by a small predeclared family: flat, \(n^{-0.25}\), the candidate \(n^{-0.5}\),
+\(n^{-0.75}\), \(n^{-1}\), \(\sqrt n\), and \(n\). The candidate \(n^{-0.5}\)
+carrier remains best in this stress family with
+\(\Delta\chi^2=-183.6152665217\). A flat carrier still improves over the zero
+baseline, with \(\Delta\chi^2=-136.5504934506\), while the high-\(n\) carrier
+gives \(\Delta\chi^2=0\). Thus the low-mode result is carrier-sensitive, but
+not reducible in this stress family to the exact \(n^{-1/2}\) choice alone:
+low-weighted carriers are preferred, while high-mode weighting removes the
+signal. This remains a diagnostic sensitivity result, not validation.
+
 The resulting source-preflight ledger is correspondingly mixed: the 300 COSEBIs
 target rows, five-bin redshift-kernel inventory, 196-tile route-coordinate
 index, 300-row design skeleton, and 58{,}800-row domain skeleton are available;
@@ -1026,8 +1040,10 @@ tomographic-structure robustness run preserves the low-tail behavior with rank
 leave-one source-bin/pair subsets retain negative \(\Delta\chi^2\), although
 the signal remains mode-band dependent. The mode-localization audit makes this
 specific: modes \(1\ldots5\) dominate the candidate score, and removing them
-removes the improvement. The value of the scaffold is therefore to make the
-next cosmology test
+removes the improvement. A mode-shape stress audit further shows that the
+source-independent low-mode carrier is important but not uniquely responsible:
+a flat carrier still improves, while high-mode weighting fails. The value of
+the scaffold is therefore to make the next cosmology test
 precise: a Tau Core-inspired late-time residual should be judged not by
 \(w(z)\ne -1\) alone, but by the joint pattern
 \[

@@ -1293,6 +1293,26 @@ cumulative low-mode subset is `cumulative_low_modes_1_to_3` with
 strongly low-mode localized: this is a useful diagnostic and a sharpened
 follow-up target, not validation.
 
+The endpoint mode-shape stress audit is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_endpoint_mode_shape_stress_policy_v1.csv
+data/derived/kids1000_cosebis_endpoint_mode_shape_stress_v1_grid.csv
+data/derived/kids1000_cosebis_endpoint_mode_shape_stress_v1_summary.csv
+docs/kids1000_cosebis_endpoint_mode_shape_stress_v1.md
+scripts/run_kids1000_cosebis_endpoint_mode_shape_stress_v1.py
+scripts/validate_kids1000_cosebis_endpoint_mode_shape_stress_v1.py
+```
+
+This stress test keeps the same source-frozen `W_path` mapping and endpoint
+scoring rule, but replaces the source-independent mode carrier. The predeclared
+candidate `n^-0.5` carrier remains best in this small stress family with
+`Delta chi2 = -183.6152665217`; a flat carrier still improves with
+`Delta chi2 = -136.5504934506`; and high-`n` weighting removes the signal
+with `Delta chi2 = 0`. Thus the low-mode result is carrier-sensitive, but the
+signal is not produced solely by the exact `n^-0.5` carrier choice. This is a
+mode-shape sensitivity diagnostic, not validation.
+
 The COSEBIs path-mapping source-preflight ledger is recorded in:
 
 ```text
