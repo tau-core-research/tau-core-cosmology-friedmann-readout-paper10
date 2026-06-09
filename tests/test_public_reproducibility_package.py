@@ -288,6 +288,12 @@ def test_public_files_exist() -> None:
         "docs/kids1000_cosebis_endpoint_mode_shape_stress_v1.md",
         "scripts/run_kids1000_cosebis_endpoint_mode_shape_stress_v1.py",
         "scripts/validate_kids1000_cosebis_endpoint_mode_shape_stress_v1.py",
+        "data/source_manifest/kids1000_cosebis_endpoint_scoring_synthesis_ledger_policy_v1.csv",
+        "data/derived/kids1000_cosebis_endpoint_scoring_synthesis_ledger_v1.csv",
+        "data/derived/kids1000_cosebis_endpoint_scoring_synthesis_ledger_v1_summary.csv",
+        "docs/kids1000_cosebis_endpoint_scoring_synthesis_ledger_v1.md",
+        "scripts/build_kids1000_cosebis_endpoint_scoring_synthesis_ledger_v1.py",
+        "scripts/validate_kids1000_cosebis_endpoint_scoring_synthesis_ledger_v1.py",
         "data/source_manifest/kids1000_cosebis_low_mode_carrier_source_grounding_policy_v1.csv",
         "data/derived/kids1000_cosebis_low_mode_carrier_source_grounding_v1.csv",
         "data/derived/kids1000_cosebis_low_mode_carrier_source_grounding_v1_summary.csv",
@@ -625,6 +631,8 @@ def test_public_files_exist() -> None:
         "scripts/validate_kids1000_cosebis_endpoint_mode_localization_v1.py",
         "scripts/run_kids1000_cosebis_endpoint_mode_shape_stress_v1.py",
         "scripts/validate_kids1000_cosebis_endpoint_mode_shape_stress_v1.py",
+        "scripts/build_kids1000_cosebis_endpoint_scoring_synthesis_ledger_v1.py",
+        "scripts/validate_kids1000_cosebis_endpoint_scoring_synthesis_ledger_v1.py",
         "scripts/build_kids1000_cosebis_low_mode_carrier_source_grounding_v1.py",
         "scripts/validate_kids1000_cosebis_low_mode_carrier_source_grounding_v1.py",
         "scripts/build_kids1000_cosebis_low_mode_kernel_envelope_derivation_v1.py",
@@ -4778,6 +4786,49 @@ def test_kids1000_cosebis_endpoint_mode_shape_stress_preserves_claim_boundary() 
         assert row["uses_kids_data_vector_values_for_scoring"] == "true"
         assert row["uses_kids_data_vector_values_for_source_selection"] == "false"
         assert row["claim_boundary"] == policy["claim_boundary"]
+
+
+def test_kids1000_cosebis_endpoint_scoring_synthesis_ledger_keeps_endpoint_claim_caveated() -> None:
+    with (
+        ROOT / "data/source_manifest/kids1000_cosebis_endpoint_scoring_synthesis_ledger_policy_v1.csv"
+    ).open(newline="") as f:
+        policy = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/kids1000_cosebis_endpoint_scoring_synthesis_ledger_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/kids1000_cosebis_endpoint_scoring_synthesis_ledger_v1.csv"
+    ).open(newline="") as f:
+        rows = list(csv.DictReader(f))
+
+    assert policy["status"] == "ENDPOINT_SCORING_SYNTHESIS_LEDGER_POLICY_FROZEN"
+    assert policy["computes_new_scores"] == "false"
+    assert policy["endpoint_validation_claimed"] == "false"
+    assert summary["status"] == "ENDPOINT_SCORING_SYNTHESIS_LEDGER_BUILT"
+    assert summary["ledger_rows"] == "7"
+    assert summary["diagnostic_endpoint_signal_present"] == "true"
+    assert summary["candidate_low_tail"] == "true"
+    assert summary["candidate_absolute_winner"] == "false"
+    assert summary["tomographic_caveat_active"] == "true"
+    assert summary["jackknife_supports_not_single_bin_or_pair"] == "true"
+    assert summary["low_mode_localized"] == "true"
+    assert summary["mode_shape_candidate_preferred"] == "true"
+    assert summary["physical_promotion_ready"] == "false"
+    assert summary["computes_new_scores"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["physical_validation_claimed"] == "false"
+    assert (
+        summary["verdict"]
+        == "endpoint_signal_low_tail_caveated_by_tomographic_controls_and_physical_promotion_blockers"
+    )
+    by_component = {row["component_id"]: row for row in rows}
+    assert by_component["S0_endpoint_score"]["component_status"] == "DIAGNOSTIC_ENDPOINT_SIGNAL_PRESENT"
+    assert by_component["S2_tomographic_structure_robustness"]["component_status"] == "TOMOGRAPHIC_CAVEAT_ACTIVE"
+    assert by_component["S6_physical_promotion"]["component_status"] == "PHYSICAL_PROMOTION_BLOCKED"
+    assert by_component["S6_physical_promotion"]["supports_endpoint_signal"] == "false"
+    assert {row["claim_boundary"] for row in rows} == {policy["claim_boundary"]}
+    assert summary["claim_boundary"] == policy["claim_boundary"]
 
 
 def test_kids1000_cosebis_low_mode_carrier_source_grounding_keeps_open_blocker() -> None:

@@ -1143,8 +1143,8 @@ guards. In the current repository the `F_overlap` endpoint-route gate,
 source-preflight mapping state, source-frozen theory-vector gate, null-control
 theory replay, endpoint-family geometry audit, and leakage guard pass. The
 promotion gate now records `6` passed gates and `0` blockers. Endpoint scoring
-is still disabled because the scoring protocol remains frozen-not-run and no
-explicit endpoint scoring run has been executed.
+remained disabled at this gate until a separate explicitly approved scoring run
+was opened under the frozen protocol below.
 
 The endpoint scoring-readiness ledger is recorded in:
 
@@ -1167,8 +1167,8 @@ unit-amplitude theory-vector shell are supported. The predeclared null controls
 have also been replayed against the source-frozen theory shell as deterministic
 control-vector digests, but no null score has been computed. The
 endpoint-family geometry audit now passes, so the readiness ledger records `12`
-ready components and `0` blockers. Endpoint scoring remains disabled until an
-explicit scoring run is opened under the frozen protocol.
+ready components and `0` blockers. This readiness ledger does not itself score;
+the separate approved run below is the first endpoint scoring artifact.
 
 The frozen endpoint scoring protocol shell is recorded in:
 
@@ -1312,6 +1312,27 @@ candidate `n^-0.5` carrier remains best in this small stress family with
 with `Delta chi2 = 0`. Thus the low-mode result is carrier-sensitive, but the
 signal is not produced solely by the exact `n^-0.5` carrier choice. This is a
 mode-shape sensitivity diagnostic, not validation.
+
+The endpoint scoring synthesis ledger is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_endpoint_scoring_synthesis_ledger_policy_v1.csv
+data/derived/kids1000_cosebis_endpoint_scoring_synthesis_ledger_v1.csv
+data/derived/kids1000_cosebis_endpoint_scoring_synthesis_ledger_v1_summary.csv
+docs/kids1000_cosebis_endpoint_scoring_synthesis_ledger_v1.md
+scripts/build_kids1000_cosebis_endpoint_scoring_synthesis_ledger_v1.py
+scripts/validate_kids1000_cosebis_endpoint_scoring_synthesis_ledger_v1.py
+```
+
+This ledger does not compute a new score. It aggregates the approved endpoint
+score, null-control diagnostics, tomographic-structure robustness, jackknife,
+mode-localization, mode-shape stress, and physical-promotion blocker ledger into
+one claim-safe synthesis. The current verdict is
+`endpoint_signal_low_tail_caveated_by_tomographic_controls_and_physical_promotion_blockers`.
+In plain terms, the KiDS COSEBIs branch has a low-tail diagnostic endpoint
+signal, but it is not an absolute control winner, the tomographic-structure
+caveat remains active, and physical promotion is still blocked by the five
+requirements listed below.
 
 The low-mode carrier source-grounding ledger is recorded in:
 

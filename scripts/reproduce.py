@@ -189,6 +189,8 @@ def main() -> None:
     run(["python", "scripts/validate_kids1000_cosebis_endpoint_mode_localization_v1.py"])
     run(["python", "scripts/run_kids1000_cosebis_endpoint_mode_shape_stress_v1.py"])
     run(["python", "scripts/validate_kids1000_cosebis_endpoint_mode_shape_stress_v1.py"])
+    run(["python", "scripts/build_kids1000_cosebis_endpoint_scoring_synthesis_ledger_v1.py"])
+    run(["python", "scripts/validate_kids1000_cosebis_endpoint_scoring_synthesis_ledger_v1.py"])
     run(["python", "scripts/build_kids1000_cosebis_low_mode_carrier_source_grounding_v1.py"])
     run(["python", "scripts/validate_kids1000_cosebis_low_mode_carrier_source_grounding_v1.py"])
     run(["python", "scripts/build_kids1000_cosebis_low_mode_kernel_envelope_derivation_v1.py"])
