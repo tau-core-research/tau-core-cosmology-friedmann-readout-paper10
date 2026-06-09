@@ -276,6 +276,12 @@ def test_public_files_exist() -> None:
         "docs/kids1000_cosebis_tomographic_control_plausibility_audit_v1.md",
         "scripts/build_kids1000_cosebis_tomographic_control_plausibility_audit_v1.py",
         "scripts/validate_kids1000_cosebis_tomographic_control_plausibility_audit_v1.py",
+        "data/source_manifest/kids1000_cosebis_tomographic_holdout_calibration_gate_policy_v1.csv",
+        "data/derived/kids1000_cosebis_tomographic_holdout_calibration_gate_v1.csv",
+        "data/derived/kids1000_cosebis_tomographic_holdout_calibration_gate_v1_summary.csv",
+        "docs/kids1000_cosebis_tomographic_holdout_calibration_gate_v1.md",
+        "scripts/build_kids1000_cosebis_tomographic_holdout_calibration_gate_v1.py",
+        "scripts/validate_kids1000_cosebis_tomographic_holdout_calibration_gate_v1.py",
         "data/source_manifest/kids1000_cosebis_endpoint_jackknife_robustness_policy_v1.csv",
         "data/derived/kids1000_cosebis_endpoint_jackknife_robustness_v1_grid.csv",
         "data/derived/kids1000_cosebis_endpoint_jackknife_robustness_v1_summary.csv",
@@ -633,6 +639,8 @@ def test_public_files_exist() -> None:
         "scripts/validate_kids1000_cosebis_tomographic_structure_robustness_v1.py",
         "scripts/build_kids1000_cosebis_tomographic_control_plausibility_audit_v1.py",
         "scripts/validate_kids1000_cosebis_tomographic_control_plausibility_audit_v1.py",
+        "scripts/build_kids1000_cosebis_tomographic_holdout_calibration_gate_v1.py",
+        "scripts/validate_kids1000_cosebis_tomographic_holdout_calibration_gate_v1.py",
         "scripts/run_kids1000_cosebis_endpoint_jackknife_robustness_v1.py",
         "scripts/validate_kids1000_cosebis_endpoint_jackknife_robustness_v1.py",
         "scripts/run_kids1000_cosebis_endpoint_mode_localization_v1.py",
@@ -4707,6 +4715,51 @@ def test_kids1000_cosebis_tomographic_control_plausibility_audit_blocks_physical
         assert row["uses_kids_data_vector_values_for_source_selection"] == "false"
         assert row["endpoint_validation_claimed"] == "false"
         assert row["claim_boundary"] == policy["claim_boundary"]
+
+
+def test_kids1000_cosebis_tomographic_holdout_calibration_gate_blocks_replay_until_source_freeze() -> None:
+    with (
+        ROOT / "data/source_manifest/kids1000_cosebis_tomographic_holdout_calibration_gate_policy_v1.csv"
+    ).open(newline="") as f:
+        policy = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/kids1000_cosebis_tomographic_holdout_calibration_gate_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/kids1000_cosebis_tomographic_holdout_calibration_gate_v1.csv"
+    ).open(newline="") as f:
+        rows = list(csv.DictReader(f))
+
+    assert policy["status"] == "TOMOGRAPHIC_HOLDOUT_CALIBRATION_GATE_POLICY_FROZEN"
+    assert policy["computes_new_scores"] == "false"
+    assert policy["endpoint_replay_allowed"] == "false"
+    assert policy["endpoint_validation_claimed"] == "false"
+    assert "endpoint_residuals" in policy["forbidden_endpoint_fields"]
+    assert "delta_chi2" in policy["forbidden_endpoint_fields"]
+    assert summary["status"] == "TOMOGRAPHIC_HOLDOUT_CALIBRATION_GATE_BUILT"
+    assert summary["required_steps"] == "6"
+    assert summary["completed_steps"] == "0"
+    assert summary["requires_independent_photoz_or_tomographic_calibration"] == "true"
+    assert summary["requires_holdout_partition_freeze"] == "true"
+    assert summary["requires_leakage_validator_before_replay"] == "true"
+    assert summary["tomographic_controls_block_validation"] == "true"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["verdict"] == "tomographic_holdout_required_before_endpoint_replay_or_validation"
+    assert {row["step_id"] for row in rows} == {
+        "H0_context",
+        "H1_independent_tomographic_evidence",
+        "H2_holdout_partition_freeze",
+        "H3_tomographic_alternative_promotion_rule",
+        "H4_replay_protocol_freeze",
+        "H5_authorization_gate",
+    }
+    for row in rows:
+        assert row["endpoint_replay_allowed_after_step"] == "false"
+        assert "endpoint_residuals" in row["forbidden_inputs"]
+        assert row["claim_boundary"] == policy["claim_boundary"]
+    assert summary["claim_boundary"] == policy["claim_boundary"]
 
 
 def test_kids1000_cosebis_endpoint_jackknife_robustness_is_not_single_pair_localized() -> None:

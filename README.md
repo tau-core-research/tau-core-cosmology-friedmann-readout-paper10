@@ -1273,6 +1273,27 @@ tomographic calibration support. No better control is accepted as a physical
 alternative in the current source state. Therefore the controls do not refute
 the endpoint signal, but they still block validation.
 
+The tomographic holdout/calibration gate is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_tomographic_holdout_calibration_gate_policy_v1.csv
+data/derived/kids1000_cosebis_tomographic_holdout_calibration_gate_v1.csv
+data/derived/kids1000_cosebis_tomographic_holdout_calibration_gate_v1_summary.csv
+docs/kids1000_cosebis_tomographic_holdout_calibration_gate_v1.md
+scripts/build_kids1000_cosebis_tomographic_holdout_calibration_gate_v1.py
+scripts/validate_kids1000_cosebis_tomographic_holdout_calibration_gate_v1.py
+```
+
+This gate is the next validation-facing work order, not a new score. It freezes
+the conditions required before any tomographic endpoint replay can be treated as
+validation-facing: independent photo-z or tomographic-calibration evidence, a
+source-bin or tomographic-pair holdout partition, a rule for promoting a
+tomographic control to a source-systematic candidate, a frozen replay protocol,
+and a leakage validator. It explicitly forbids observed COSEBIs values,
+endpoint residuals, `Delta chi2`, null-control ranks, best-control identity, and
+post-score residual shape from source-side selection. Its verdict is
+`tomographic_holdout_required_before_endpoint_replay_or_validation`.
+
 The endpoint jackknife/localization robustness audit is recorded in:
 
 ```text

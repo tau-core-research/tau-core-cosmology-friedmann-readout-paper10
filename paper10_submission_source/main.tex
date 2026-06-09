@@ -679,6 +679,17 @@ one conditional source-systematic candidate that would require independent
 photometric-redshift or tomographic-calibration support. Thus the controls do
 not refute the endpoint signal in the present source state, but they do block a
 validation claim.
+We therefore freeze a tomographic holdout/calibration gate before any further
+endpoint replay. This gate computes no new score and authorizes no replay. It
+requires, first, independent photometric-redshift or tomographic-calibration
+evidence; second, a source-bin or tomographic-pair holdout partition fixed
+before scoring; third, a source-side rule for when a tomographic control may be
+promoted to a calibration-systematic candidate; fourth, a frozen replay
+protocol; and fifth, a leakage validator. Observed COSEBIs values, endpoint
+residuals, \(\Delta\chi^2\), null-control ranks, best-control identity, and
+post-score residual shape are forbidden source-selection inputs. The resulting
+gate verdict is that a tomographic holdout is required before endpoint replay
+or validation.
 A second post-score localization audit keeps the same source-frozen theory
 vector and same nonnegative single-amplitude scoring rule, but evaluates
 predeclared jackknife masks. All \(20/20\) leave-one source-bin and
