@@ -1572,6 +1572,25 @@ an endpoint prediction. Mask-leakage theorem, gauge/quotient descent, and
 physical operator-unit derivation remain open. The verdict is
 `factorized_source_side_operator_skeleton_exists_but_operator_theorem_remains_open`.
 
+The COSEBIs physical operator-units gate is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_physical_operator_units_gate_policy_v1.csv
+data/derived/kids1000_cosebis_physical_operator_units_gate_v1.csv
+data/derived/kids1000_cosebis_physical_operator_units_gate_v1_summary.csv
+docs/kids1000_cosebis_physical_operator_units_gate_v1.md
+scripts/build_kids1000_cosebis_physical_operator_units_gate_v1.py
+scripts/validate_kids1000_cosebis_physical_operator_units_gate_v1.py
+```
+
+This artifact records the unit and normalization blockers left by the
+operator-skeleton attempt. The current \(K_i=M_iS_n\) kernel is identified as a
+dimensionless unit-amplitude source-side object. The gate freezes the need for
+physical response units, a source-side amplitude map, and a standard-lensing
+null normalization before any physical COSEBIs prediction can be claimed. The
+verdict is
+`dimensionless_operator_kernel_identified_but_physical_units_and_amplitude_remain_open`.
+
 The COSEBIs path-mapping source-preflight ledger is recorded in:
 
 ```text

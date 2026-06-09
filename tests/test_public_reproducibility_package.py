@@ -372,6 +372,12 @@ def test_public_files_exist() -> None:
         "docs/kids1000_cosebis_survey_native_operator_construction_attempt_v1.md",
         "scripts/build_kids1000_cosebis_survey_native_operator_construction_attempt_v1.py",
         "scripts/validate_kids1000_cosebis_survey_native_operator_construction_attempt_v1.py",
+        "data/source_manifest/kids1000_cosebis_physical_operator_units_gate_policy_v1.csv",
+        "data/derived/kids1000_cosebis_physical_operator_units_gate_v1.csv",
+        "data/derived/kids1000_cosebis_physical_operator_units_gate_v1_summary.csv",
+        "docs/kids1000_cosebis_physical_operator_units_gate_v1.md",
+        "scripts/build_kids1000_cosebis_physical_operator_units_gate_v1.py",
+        "scripts/validate_kids1000_cosebis_physical_operator_units_gate_v1.py",
         "data/source_manifest/kids1000_cosebis_path_mapping_source_preflight_policy_v1.csv",
         "data/derived/kids1000_cosebis_path_mapping_source_preflight_v1.csv",
         "data/derived/kids1000_cosebis_path_mapping_source_preflight_v1_summary.csv",
@@ -614,6 +620,8 @@ def test_public_files_exist() -> None:
         "scripts/validate_kids1000_cosebis_gauge_quotient_descent_gate_v1.py",
         "scripts/build_kids1000_cosebis_survey_native_operator_construction_attempt_v1.py",
         "scripts/validate_kids1000_cosebis_survey_native_operator_construction_attempt_v1.py",
+        "scripts/build_kids1000_cosebis_physical_operator_units_gate_v1.py",
+        "scripts/validate_kids1000_cosebis_physical_operator_units_gate_v1.py",
         "scripts/build_kids1000_cosebis_path_mapping_source_preflight_v1.py",
         "scripts/validate_kids1000_cosebis_path_mapping_source_preflight_v1.py",
         "scripts/build_kids1000_cosebis_null_control_readiness_v1.py",
@@ -5357,6 +5365,62 @@ def test_kids1000_cosebis_survey_native_operator_construction_attempt_is_skeleto
     assert {row["claim_boundary"] for row in ledger} == {policy["claim_boundary"]}
     assert all(row["dimension_check"] for row in ledger)
     assert all(row["known_limit_check"] for row in ledger)
+
+
+def test_kids1000_cosebis_physical_operator_units_gate_freezes_units_blockers() -> None:
+    with (
+        ROOT / "data/source_manifest/kids1000_cosebis_physical_operator_units_gate_policy_v1.csv"
+    ).open(newline="") as f:
+        policy = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/kids1000_cosebis_physical_operator_units_gate_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/kids1000_cosebis_physical_operator_units_gate_v1.csv"
+    ).open(newline="") as f:
+        rows = list(csv.DictReader(f))
+
+    assert policy["status"] == "PHYSICAL_OPERATOR_UNITS_GATE_POLICY_FROZEN"
+    assert policy["uses_kids_data_vector_values"] == "false"
+    assert policy["uses_fit_statistics"] == "false"
+    assert policy["uses_random_noise"] == "false"
+    assert policy["endpoint_scoring_allowed"] == "false"
+    assert summary["status"] == "PHYSICAL_OPERATOR_UNITS_REQUIREMENTS_FROZEN_NOT_DERIVED"
+    assert summary["verdict"] == "dimensionless_operator_kernel_identified_but_physical_units_and_amplitude_remain_open"
+    assert summary["gate_rows"] == "6"
+    assert summary["satisfied_count"] == "1"
+    assert summary["satisfied_as_source_limit_count"] == "1"
+    assert summary["requirement_frozen_count"] == "2"
+    assert summary["open_blocker_count"] == "2"
+    assert summary["dimensionless_source_kernel_identified"] == "true"
+    assert summary["covariance_metric_available"] == "true"
+    for key in [
+        "physical_operator_units_derived",
+        "source_side_amplitude_map_derived",
+        "standard_lensing_null_normalization_proven",
+        "covariance_metric_used_as_units_derivation",
+        "contains_theory_vector",
+        "contains_predictions",
+        "contains_residuals",
+        "contains_fit_statistics",
+        "uses_kids_data_vector_values",
+        "uses_posterior_chains",
+        "uses_random_noise",
+        "endpoint_scoring_allowed",
+        "endpoint_validation_claimed",
+    ]:
+        assert summary[key] == "false"
+    by_gate = {row["gate_id"]: row for row in rows}
+    assert by_gate["U1_dimensionless_source_kernel_identified"]["status"] == "SATISFIED_AS_SOURCE_LIMIT"
+    assert by_gate["U2_cosebis_response_units_need_derivation"]["status"] == "REQUIREMENT_FROZEN"
+    assert by_gate["U3_amplitude_map_not_derived"]["status"] == "OPEN_BLOCKER"
+    assert by_gate["U4_standard_lensing_null_normalization_open"]["status"] == "OPEN_BLOCKER"
+    assert by_gate["U5_covariance_metric_not_units_derivation"]["status"] == "REQUIREMENT_FROZEN"
+    assert by_gate["U6_no_endpoint_feedback"]["status"] == "SATISFIED"
+    assert {row["claim_boundary"] for row in rows} == {policy["claim_boundary"]}
+    assert all(row["dimension_check"] for row in rows)
+    assert all(row["known_limit_check"] for row in rows)
 
 
 def test_kids1000_cosebis_null_control_policy_is_declared_not_run() -> None:
