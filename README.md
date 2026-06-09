@@ -1432,6 +1432,26 @@ no-feedback constraint, gauge/mask null-safety requirement, and standard-lensing
 null limit. It does not derive the operator. The verdict is
 `operator_requirements_frozen_but_survey_native_mode_response_not_derived`.
 
+The COSEBIs mode-response spectrum attempt is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_mode_response_spectrum_attempt_policy_v1.csv
+data/derived/kids1000_cosebis_mode_response_spectrum_attempt_v1.csv
+data/derived/kids1000_cosebis_mode_response_spectrum_attempt_v1_spectra.csv
+data/derived/kids1000_cosebis_mode_response_spectrum_attempt_v1_summary.csv
+docs/kids1000_cosebis_mode_response_spectrum_attempt_v1.md
+scripts/build_kids1000_cosebis_mode_response_spectrum_attempt_v1.py
+scripts/validate_kids1000_cosebis_mode_response_spectrum_attempt_v1.py
+```
+
+This artifact keeps the spectrum-level argument conditional. Under the explicit
+smooth coherent path/readout prior, constant power per logarithmic COSEBIs mode
+band gives `P_n ~ 1/n` and coherent amplitude `M_n ~ n^-0.5`. The flat spectrum
+is preserved as a boundary control, while high-mode and oscillatory spectra are
+rejected only under that smooth-path prior. The mode-response operator and
+operator-level gauge/null safety remain open blockers. The verdict is
+`conditional_source_spectrum_attempt_preserves_operator_and_null_safety_blockers`.
+
 The COSEBIs path-mapping source-preflight ledger is recorded in:
 
 ```text

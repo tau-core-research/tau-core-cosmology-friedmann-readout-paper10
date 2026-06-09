@@ -325,6 +325,13 @@ def test_public_files_exist() -> None:
         "docs/kids1000_cosebis_mode_response_operator_spec_v1.md",
         "scripts/build_kids1000_cosebis_mode_response_operator_spec_v1.py",
         "scripts/validate_kids1000_cosebis_mode_response_operator_spec_v1.py",
+        "data/source_manifest/kids1000_cosebis_mode_response_spectrum_attempt_policy_v1.csv",
+        "data/derived/kids1000_cosebis_mode_response_spectrum_attempt_v1.csv",
+        "data/derived/kids1000_cosebis_mode_response_spectrum_attempt_v1_spectra.csv",
+        "data/derived/kids1000_cosebis_mode_response_spectrum_attempt_v1_summary.csv",
+        "docs/kids1000_cosebis_mode_response_spectrum_attempt_v1.md",
+        "scripts/build_kids1000_cosebis_mode_response_spectrum_attempt_v1.py",
+        "scripts/validate_kids1000_cosebis_mode_response_spectrum_attempt_v1.py",
         "data/source_manifest/kids1000_cosebis_path_mapping_source_preflight_policy_v1.csv",
         "data/derived/kids1000_cosebis_path_mapping_source_preflight_v1.csv",
         "data/derived/kids1000_cosebis_path_mapping_source_preflight_v1_summary.csv",
@@ -553,6 +560,8 @@ def test_public_files_exist() -> None:
         "scripts/validate_kids1000_cosebis_survey_native_path_kernel_derivation_gate_v1.py",
         "scripts/build_kids1000_cosebis_mode_response_operator_spec_v1.py",
         "scripts/validate_kids1000_cosebis_mode_response_operator_spec_v1.py",
+        "scripts/build_kids1000_cosebis_mode_response_spectrum_attempt_v1.py",
+        "scripts/validate_kids1000_cosebis_mode_response_spectrum_attempt_v1.py",
         "scripts/build_kids1000_cosebis_path_mapping_source_preflight_v1.py",
         "scripts/validate_kids1000_cosebis_path_mapping_source_preflight_v1.py",
         "scripts/build_kids1000_cosebis_null_control_readiness_v1.py",
@@ -4898,6 +4907,58 @@ def test_kids1000_cosebis_mode_response_operator_spec_is_frozen_not_derived() ->
     assert {row["claim_boundary"] for row in rows} == {policy["claim_boundary"]}
     assert all(row["dimension_check"] for row in rows)
     assert all(row["limit_check"] for row in rows)
+
+
+def test_kids1000_cosebis_mode_response_spectrum_attempt_is_conditional() -> None:
+    with (
+        ROOT / "data/source_manifest/kids1000_cosebis_mode_response_spectrum_attempt_policy_v1.csv"
+    ).open(newline="") as f:
+        policy = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/kids1000_cosebis_mode_response_spectrum_attempt_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/kids1000_cosebis_mode_response_spectrum_attempt_v1.csv"
+    ).open(newline="") as f:
+        ledger = list(csv.DictReader(f))
+    with (
+        ROOT / "data/derived/kids1000_cosebis_mode_response_spectrum_attempt_v1_spectra.csv"
+    ).open(newline="") as f:
+        spectra = list(csv.DictReader(f))
+
+    assert policy["status"] == "MODE_RESPONSE_SPECTRUM_ATTEMPT_POLICY_FROZEN"
+    assert policy["uses_kids_data_vector_values"] == "false"
+    assert policy["uses_fit_statistics"] == "false"
+    assert policy["uses_random_noise"] == "false"
+    assert policy["endpoint_scoring_allowed"] == "false"
+    assert summary["status"] == "MODE_RESPONSE_SPECTRUM_ATTEMPT_CONDITIONAL_COMPLETE"
+    assert summary["spectrum_attempt_verdict"] == (
+        "conditional_source_spectrum_attempt_preserves_operator_and_null_safety_blockers"
+    )
+    assert summary["conditional_primary_spectrum"] == "log_band_neutral_candidate"
+    assert summary["mode_response_operator_derived"] == "false"
+    assert summary["open_blocker_count"] == "2"
+    assert summary["high_mode_rejected_under_smooth_path_prior"] == "true"
+    assert summary["oscillatory_rejected_under_smooth_path_prior"] == "true"
+    by_step = {row["step_id"]: row for row in ledger}
+    assert by_step["S2_log_band_power_prior"]["status"] == "ASSUMPTION_NOT_SOURCE_PROVEN"
+    assert by_step["B1_operator_spectrum_blocker"]["status"] == "OPEN_BLOCKER"
+    assert by_step["B2_gauge_null_safety_blocker"]["status"] == "OPEN_BLOCKER"
+    assert len(spectra) == 80
+    by_family = {row["spectrum_family"]: row["source_status"] for row in spectra if row["mode"] == "1"}
+    assert by_family["log_band_neutral_candidate"] == "CONDITIONAL_PRIMARY"
+    assert by_family["flat_boundary_control"] == "BOUNDARY_CONTROL"
+    assert by_family["high_mode_rejected_under_smooth_path_prior"] == "REJECTED_BY_SMOOTH_PATH_PRIOR"
+    assert by_family["oscillatory_rejected_under_smooth_path_prior"] == "REJECTED_BY_SMOOTH_PATH_PRIOR"
+    assert {row["claim_boundary"] for row in ledger} == {policy["claim_boundary"]}
+    assert {row["claim_boundary"] for row in spectra} == {policy["claim_boundary"]}
+    assert all(row["dimension_check"] for row in ledger)
+    assert all(row["limit_check"] for row in ledger)
+    assert {row["uses_kids_data_vector_values"] for row in spectra} == {"false"}
+    assert {row["uses_fit_statistics"] for row in spectra} == {"false"}
+    assert {row["endpoint_scoring_allowed"] for row in spectra} == {"false"}
+    assert {row["endpoint_validation_claimed"] for row in spectra} == {"false"}
 
 
 def test_kids1000_cosebis_null_control_policy_is_declared_not_run() -> None:

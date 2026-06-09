@@ -769,6 +769,13 @@ from mode response, it must use no KiDS data-vector or fit feedback, and it must
 have both gauge/mask null safety and a standard-lensing null limit. This is a
 specification, not a derivation; the source-native mode-response spectrum and
 operator-level null-safety theorem remain open.
+We also isolate the spectrum-level part of this missing operator. Under the
+explicit smooth coherent path/readout prior, constant power per logarithmic
+COSEBIs mode band gives \(P_n\propto 1/n\) and coherent amplitude
+\(M_n\propto n^{-1/2}\). This remains conditional: the flat spectrum is kept as
+a boundary control, while high-mode and oscillatory spectra are rejected only
+under the smooth-path prior. The survey-native response operator and
+operator-level gauge/mask null-safety blockers remain open.
 
 The resulting source-preflight ledger is correspondingly mixed: the 300 COSEBIs
 target rows, five-bin redshift-kernel inventory, 196-tile route-coordinate
@@ -1108,7 +1115,9 @@ survey-native path-kernel derivation gate then records that the route support is
 concrete but the mode-response operator, log-band-from-kernel derivation, and
 covariant or survey-native lensing limit remain open. A subsequent operator
 specification freezes the requirements for that missing mode-response map
-without claiming it has been derived. The value of
+without claiming it has been derived. A spectrum-level attempt then preserves
+the \(n^{-1/2}\) envelope as a conditional smooth-path consequence, while
+leaving the operator and null-safety blockers open. The value of
 the scaffold is
 therefore to make the next cosmology test
 precise: a Tau Core-inspired late-time residual should be judged not by
