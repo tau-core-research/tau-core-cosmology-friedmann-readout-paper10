@@ -11,6 +11,7 @@ SOURCE_AVAILABILITY = ROOT / "data" / "derived" / "kids1000_cosebis_f_overlap_so
 SOURCE_AVAILABILITY_SUMMARY = ROOT / "data" / "derived" / "kids1000_cosebis_f_overlap_source_availability_v1_summary.csv"
 PROMOTION_SUMMARY = ROOT / "data" / "derived" / "kids1000_cosebis_f_overlap_batch_promotion_review_v1_summary.csv"
 ACQUISITION_SUMMARY = ROOT / "data" / "derived" / "kids1000_cosebis_f_overlap_full_mask_acquisition_manifest_v1_summary.csv"
+CACHE_INVENTORY_SUMMARY = ROOT / "data" / "derived" / "kids1000_cosebis_f_overlap_full_route_cache_inventory_v1_summary.csv"
 OUT = ROOT / "data" / "derived" / "kids1000_cosebis_f_overlap_resolution_decision_v1.csv"
 SUMMARY = ROOT / "data" / "derived" / "kids1000_cosebis_f_overlap_resolution_decision_v1_summary.csv"
 
@@ -28,6 +29,7 @@ def main() -> None:
     source_summary = read_one(SOURCE_AVAILABILITY_SUMMARY)
     promotion_summary = read_one(PROMOTION_SUMMARY)
     acquisition_summary = read_one(ACQUISITION_SUMMARY)
+    cache_summary = read_one(CACHE_INVENTORY_SUMMARY)
     with SOURCE_AVAILABILITY.open(newline="") as f:
         source_rows = list(csv.DictReader(f))
 
@@ -41,8 +43,26 @@ def main() -> None:
         raise SystemExit("current decision builder assumes no endpoint-accepted F_overlap route")
     if promotion_summary["promotion_ready"] != "false":
         raise SystemExit("batch promotion must remain not ready")
-    if acquisition_summary["full_mask_set_present"] != "false":
-        raise SystemExit("current decision builder assumes full mask set is not present")
+    if cache_summary["endpoint_scoring_allowed"] != "false":
+        raise SystemExit("cache inventory must remain endpoint disabled")
+
+    cache_complete = cache_summary["source_cache_complete"] == "true"
+    full_mask_decision_class = (
+        "source_cache_complete_overlap_rule_pending" if cache_complete else "rejected_unresolved"
+    )
+    full_mask_decision_reason = (
+        "full_196_mask_route_source_cache_complete_with_checksums_but_overlap_rule_not_computed"
+        if cache_complete
+        else (
+            f"full_196_mask_route_missing_present_{acquisition_summary['local_present_count']}_of_"
+            f"{acquisition_summary['expected_mask_count']}"
+        )
+    )
+    full_mask_exit = (
+        "derive_source_frozen_full_mask_overlap_rule_without_endpoint_inputs"
+        if cache_complete
+        else "all_preferred_route_mask_products_source_frozen_with_checksums"
+    )
 
     by_item = {row["availability_item_id"]: row for row in source_rows}
     rows = [
@@ -58,14 +78,11 @@ def main() -> None:
         {
             "decision_item_id": "F_OVERLAP_FULL_PIXEL_MASK_ROUTE",
             "source_evidence_item": "F_OVERLAP_FULL_PIXEL_MASK_SET",
-            "decision_class": "rejected_unresolved",
+            "decision_class": full_mask_decision_class,
             "endpoint_route_accepted": "false",
             "control_route_accepted": "false",
-            "decision_reason": (
-                f"full_196_mask_route_missing_present_{acquisition_summary['local_present_count']}_of_"
-                f"{acquisition_summary['expected_mask_count']}"
-            ),
-            "minimum_exit_condition": "all_preferred_route_mask_products_source_frozen_with_checksums",
+            "decision_reason": full_mask_decision_reason,
+            "minimum_exit_condition": full_mask_exit,
         },
         {
             "decision_item_id": "F_OVERLAP_THREE_MASK_SUBSET",
@@ -119,7 +136,11 @@ def main() -> None:
 
     endpoint_routes = [row for row in rows if row["endpoint_route_accepted"] == "true"]
     control_routes = [row for row in rows if row["control_route_accepted"] == "true"]
-    unresolved_routes = [row for row in rows if row["decision_class"] == "rejected_unresolved"]
+    unresolved_routes = [
+        row
+        for row in rows
+        if row["decision_class"] in {"rejected_unresolved", "source_cache_complete_overlap_rule_pending"}
+    ]
     summary = {
         "policy_id": policy["policy_id"],
         "status": "KIDS1000_COSEBIS_F_OVERLAP_RESOLUTION_DECISION_BUILT_NOT_RESOLVED",
@@ -130,7 +151,10 @@ def main() -> None:
         "f_overlap_endpoint_ready": "false",
         "f_overlap_control_ready": "true" if control_routes else "false",
         "accepted_control_scope": "three_mask_subset_partial_path_control_only" if control_routes else "none",
-        "first_required_next_action": "source_freeze_full_196_mask_route_or_official_footprint_geometry",
+        "full_route_source_cache_complete": "true" if cache_complete else "false",
+        "first_required_next_action": full_mask_exit
+        if cache_complete
+        else "source_freeze_full_196_mask_route_or_official_footprint_geometry",
         "overlap_rule_computed": "false",
         "numeric_factors_computed": "false",
         "path_mapping_computed": "false",

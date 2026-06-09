@@ -704,9 +704,12 @@ scripts/build_kids1000_cosebis_f_overlap_full_mask_acquisition_manifest_v1.py
 scripts/validate_kids1000_cosebis_f_overlap_full_mask_acquisition_manifest_v1.py
 ```
 
-It expands the preferred route into a 196-row acquisition manifest. Three mask
-products are currently present locally and 193 remain missing; therefore the
-full-mask source-native route is not accepted for `F_overlap` yet.
+It expands the preferred route into a 196-row acquisition manifest. In the
+public reproduce path this manifest remains conservative: the package contains
+the three committed sample masks and records the remaining 193 products as
+fetch-required. A separate author-local full-route cache inventory, described
+below, records a completed source-cache snapshot without making the large raw
+FITS cache part of the public package.
 
 The `F_overlap` full-mask batch plan is recorded in:
 
@@ -743,6 +746,27 @@ mode are written under ignored `data/local/` execution logs plus the ignored
 full-route FITS cache. They remain outside the public reproduce path until
 separately reviewed, checksum-frozen, and promoted through a source-freeze
 artifact.
+
+The author-local full-route cache inventory is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_f_overlap_full_route_cache_inventory_policy_v1.csv
+data/derived/kids1000_cosebis_f_overlap_full_route_cache_inventory_v1.csv
+data/derived/kids1000_cosebis_f_overlap_full_route_cache_inventory_v1_summary.csv
+docs/kids1000_cosebis_f_overlap_full_route_cache_inventory_v1.md
+scripts/build_kids1000_cosebis_f_overlap_full_route_cache_inventory_v1.py
+scripts/validate_kids1000_cosebis_f_overlap_full_route_cache_inventory_v1.py
+```
+
+This local snapshot accounts for all 196 expected mask products: 193 products
+in the ignored `data/raw/weak_lensing/kids1000_path_masks/full_route_cache_v1/`
+cache plus the three committed subset masks. Each product is recorded with a
+relative path, byte size, and SHA-256 hash. Public reproduction does not require
+the ignored raw cache; it uses the committed inventory snapshot only. The
+inventory does not compute overlap fractions, path mapping, a theory vector,
+predictions, residuals, or scores. It moves the first `F_overlap` blocker from
+"source products missing" to "derive a source-frozen full-mask overlap rule
+without endpoint inputs."
 
 The `F_overlap` batch-promotion review checklist is recorded in:
 
@@ -822,7 +846,10 @@ scoring.
 The F-overlap resolution decision gate records the current formal blocker
 decision: no endpoint-grade overlap route is accepted; the three source-frozen
 mask products are accepted only as a caveated partial path-mask control; the
-official-geometry, full-196-mask, and batch-0 dry-run routes remain unresolved.
+official-geometry and batch-0 dry-run routes remain unresolved. The
+full-196-mask route is now source-cache complete in the committed local
+inventory snapshot, but remains endpoint-disabled until a source-frozen overlap
+rule is derived without endpoint inputs.
 The partial-control scoring protocol freezes only a future diagnostic grammar
 for that caveated three-mask control. It keeps both partial-control scoring and
 endpoint scoring disabled and emits no score artifacts.
@@ -933,8 +960,10 @@ It freezes six required promotion gates before any endpoint scoring: endpoint
 grade `F_overlap`, source-preflight readiness, non-degenerate branch geometry,
 a frozen 300-row theory vector, null controls after mapping, and leakage
 guards. In the current repository only the leakage guard passes. The first
-blocking gate is still `F_overlap`, and the rank-one partial-control geometry
-remains an explicit promotion blocker.
+blocking gate is still `F_overlap`, but its immediate next action is now the
+source-frozen full-mask overlap-rule derivation rather than raw-mask
+acquisition. The rank-one partial-control geometry remains an explicit
+promotion blocker.
 
 The endpoint scoring-readiness ledger is recorded in:
 

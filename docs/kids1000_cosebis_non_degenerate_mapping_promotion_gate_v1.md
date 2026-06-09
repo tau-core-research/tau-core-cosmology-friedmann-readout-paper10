@@ -22,7 +22,8 @@ The frozen gates are:
 Current status:
 
 - only the leakage guard passes;
-- `F_overlap` remains the first blocker;
+- `F_overlap` remains the first blocker, but its immediate blocker has shifted
+  from raw full-route mask acquisition to source-frozen overlap-rule derivation;
 - the partial-control rank-one geometry remains an explicit blocker;
 - endpoint scoring remains disabled.
 

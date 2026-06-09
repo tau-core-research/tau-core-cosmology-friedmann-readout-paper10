@@ -2552,6 +2552,8 @@ def test_kids1000_cosebis_f_overlap_resolution_decision_is_control_only() -> Non
     assert summary["f_overlap_endpoint_ready"] == "false"
     assert summary["f_overlap_control_ready"] == "true"
     assert summary["accepted_control_scope"] == "three_mask_subset_partial_path_control_only"
+    assert summary["full_route_source_cache_complete"] == "true"
+    assert summary["first_required_next_action"] == "derive_source_frozen_full_mask_overlap_rule_without_endpoint_inputs"
     assert summary["overlap_rule_computed"] == "false"
     assert summary["path_mapping_computed"] == "false"
     assert summary["contains_mapping_vector"] == "false"
@@ -2574,12 +2576,16 @@ def test_kids1000_cosebis_f_overlap_resolution_decision_is_control_only() -> Non
     assert by_item["F_OVERLAP_THREE_MASK_SUBSET"]["control_route_accepted"] == "true"
     for item_id in [
         "F_OVERLAP_OFFICIAL_GEOMETRY_ROUTE",
-        "F_OVERLAP_FULL_PIXEL_MASK_ROUTE",
         "F_OVERLAP_BATCH0_DRY_RUN",
     ]:
         assert by_item[item_id]["decision_class"] == "rejected_unresolved"
         assert by_item[item_id]["endpoint_route_accepted"] == "false"
         assert by_item[item_id]["control_route_accepted"] == "false"
+    assert by_item["F_OVERLAP_FULL_PIXEL_MASK_ROUTE"]["decision_class"] == (
+        "source_cache_complete_overlap_rule_pending"
+    )
+    assert by_item["F_OVERLAP_FULL_PIXEL_MASK_ROUTE"]["endpoint_route_accepted"] == "false"
+    assert by_item["F_OVERLAP_FULL_PIXEL_MASK_ROUTE"]["control_route_accepted"] == "false"
     assert all(row["overlap_rule_computed"] == "false" for row in rows)
     assert all(row["path_mapping_computed"] == "false" for row in rows)
     assert all(row["contains_mapping_vector"] == "false" for row in rows)
@@ -2596,6 +2602,51 @@ def test_kids1000_cosebis_f_overlap_resolution_decision_is_control_only() -> Non
         "posthoc_path_projection_labels",
     ]:
         assert marker in policy["forbidden_inputs"]
+
+
+def test_kids1000_cosebis_f_overlap_full_route_cache_inventory_is_source_only() -> None:
+    with (
+        ROOT / "data/source_manifest/kids1000_cosebis_f_overlap_full_route_cache_inventory_policy_v1.csv"
+    ).open(newline="") as f:
+        policy = list(csv.DictReader(f))[0]
+    assert policy["status"] == "KIDS1000_COSEBIS_F_OVERLAP_FULL_ROUTE_CACHE_INVENTORY_LOCAL_ONLY_NOT_SCORED"
+    assert policy["endpoint_scoring_allowed"] == "false"
+    with (
+        ROOT / "data/derived/kids1000_cosebis_f_overlap_full_route_cache_inventory_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["status"] == "KIDS1000_COSEBIS_F_OVERLAP_FULL_ROUTE_CACHE_INVENTORY_BUILT_LOCAL_ONLY_NOT_SCORED"
+    assert summary["expected_mask_count"] == "196"
+    assert summary["present_mask_count"] == "196"
+    assert summary["missing_mask_count"] == "0"
+    assert summary["local_full_route_cache_count"] == "193"
+    assert summary["committed_subset_count"] == "3"
+    assert summary["source_cache_complete"] == "true"
+    assert summary["local_cache_required_for_public_reproduce"] == "false"
+    assert summary["public_reproduce_uses_committed_inventory_only"] == "true"
+    for key in [
+        "overlap_rule_computed",
+        "path_mapping_computed",
+        "contains_mapping_vector",
+        "contains_theory_vector",
+        "contains_predictions",
+        "contains_residuals",
+        "contains_fit_statistics",
+        "uses_kids_data_vector_values",
+        "uses_posterior_chains",
+        "uses_posthoc_tile_selection",
+        "endpoint_scoring_allowed",
+    ]:
+        assert summary[key] == "false"
+    with (
+        ROOT / "data/derived/kids1000_cosebis_f_overlap_full_route_cache_inventory_v1.csv"
+    ).open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    assert len(rows) == 196
+    assert all(row["local_or_committed_mask_present"] == "true" for row in rows)
+    assert all(row["accepted_for_source_cache_inventory"] == "true" for row in rows)
+    assert all(row["sha256"] for row in rows)
+    assert all(row["endpoint_scoring_allowed"] == "false" for row in rows)
 
 
 def test_kids1000_cosebis_partial_control_scoring_protocol_is_frozen_not_run() -> None:

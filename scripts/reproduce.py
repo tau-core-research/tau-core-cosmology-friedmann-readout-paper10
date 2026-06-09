@@ -123,6 +123,7 @@ def main() -> None:
     run(["python", "scripts/validate_kids1000_cosebis_f_overlap_execution_review_schema_v1.py"])
     run(["python", "scripts/build_kids1000_cosebis_f_overlap_execution_review_template_v1.py"])
     run(["python", "scripts/validate_kids1000_cosebis_f_overlap_execution_review_template_v1.py"])
+    run(["python", "scripts/validate_kids1000_cosebis_f_overlap_full_route_cache_inventory_v1.py"])
     run(
         [
             "python",

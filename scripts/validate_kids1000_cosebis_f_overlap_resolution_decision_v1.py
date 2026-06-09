@@ -41,6 +41,10 @@ def main() -> None:
         raise SystemExit("F_overlap endpoint must remain not ready")
     if summary["f_overlap_control_ready"] != "true":
         raise SystemExit("partial control route should be marked ready")
+    if summary["full_route_source_cache_complete"] != "true":
+        raise SystemExit("full-route source cache inventory should now be complete")
+    if summary["first_required_next_action"] != "derive_source_frozen_full_mask_overlap_rule_without_endpoint_inputs":
+        raise SystemExit("next F_overlap action should be source-frozen overlap-rule derivation")
     by_item = {row["decision_item_id"]: row for row in rows}
     expected_items = {
         "F_OVERLAP_OFFICIAL_GEOMETRY_ROUTE",
@@ -58,11 +62,14 @@ def main() -> None:
         raise SystemExit("three-mask subset should be accepted only as a control route")
     for item_id in [
         "F_OVERLAP_OFFICIAL_GEOMETRY_ROUTE",
-        "F_OVERLAP_FULL_PIXEL_MASK_ROUTE",
         "F_OVERLAP_BATCH0_DRY_RUN",
     ]:
         if by_item[item_id]["decision_class"] != "rejected_unresolved":
             raise SystemExit(f"{item_id} must remain unresolved")
+    if by_item["F_OVERLAP_FULL_PIXEL_MASK_ROUTE"]["decision_class"] != "source_cache_complete_overlap_rule_pending":
+        raise SystemExit("full mask route should be source-cache complete but overlap-rule pending")
+    if by_item["F_OVERLAP_FULL_PIXEL_MASK_ROUTE"]["endpoint_route_accepted"] != "false":
+        raise SystemExit("full mask route must not be an endpoint route before overlap rule derivation")
     for key in [
         "overlap_rule_computed",
         "numeric_factors_computed",

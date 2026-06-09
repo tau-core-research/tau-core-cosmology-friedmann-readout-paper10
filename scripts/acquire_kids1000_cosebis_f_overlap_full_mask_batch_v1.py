@@ -72,7 +72,7 @@ def main() -> None:
     rows: list[dict[str, str]] = []
     for tile_index, url, local_path in zip(tile_indices, urls, paths):
         local_path.parent.mkdir(parents=True, exist_ok=True)
-        existed_before = local_path.exists()
+        existed_before = local_path.exists() if args.execute else False
         http_status = ""
         byte_count = ""
         sha256 = ""
