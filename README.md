@@ -800,6 +800,12 @@ scripts/validate_kids1000_cosebis_f_overlap_resolution_decision_v1.py
 data/source_manifest/kids1000_cosebis_partial_control_scoring_protocol_v1.csv
 docs/kids1000_cosebis_partial_control_scoring_protocol_v1.md
 scripts/validate_kids1000_cosebis_partial_control_scoring_protocol_v1.py
+data/source_manifest/kids1000_cosebis_partial_control_mapping_shell_policy_v1.csv
+data/derived/kids1000_cosebis_partial_control_mapping_shell_v1.csv
+data/derived/kids1000_cosebis_partial_control_mapping_shell_v1_summary.csv
+docs/kids1000_cosebis_partial_control_mapping_shell_v1.md
+scripts/build_kids1000_cosebis_partial_control_mapping_shell_v1.py
+scripts/validate_kids1000_cosebis_partial_control_mapping_shell_v1.py
 ```
 
 It materializes the 20 planned batch-0 product rows using the frozen
@@ -820,6 +826,10 @@ official-geometry, full-196-mask, and batch-0 dry-run routes remain unresolved.
 The partial-control scoring protocol freezes only a future diagnostic grammar
 for that caveated three-mask control. It keeps both partial-control scoring and
 endpoint scoring disabled and emits no score artifacts.
+The partial-control mapping shell materializes the `300 x 3 = 900` source-side
+support table linking the COSEBIs template rows to the three caveated mask
+controls. It carries mask-shell observables and row identities only; no mapping
+value, theory vector, residual, or score is computed.
 
 The endpoint scoring-readiness ledger is recorded in:
 

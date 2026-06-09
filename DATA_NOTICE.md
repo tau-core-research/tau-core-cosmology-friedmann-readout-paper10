@@ -308,6 +308,11 @@ The partial-control scoring protocol freezes only a future diagnostic grammar
 for this caveated three-mask control. It does not run scoring and it does not
 emit result, residual, grid, null-control, summary, likelihood, AIC, endpoint,
 or validation artifacts.
+The partial-control mapping shell materializes only the `300 x 3 = 900`
+source-side support table between COSEBIs rows and the three caveated mask
+controls. It carries mask-shell observables and row identities, but no mapping
+value, theory vector, prediction, residual, likelihood, fit statistic, endpoint
+score, or validation artifact.
 
 The endpoint scoring-readiness ledger is a no-go summary, not a score. It
 records that the COSEBIs data-vector structure, covariance matrix, covariance
