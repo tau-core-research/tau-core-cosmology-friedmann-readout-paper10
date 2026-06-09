@@ -34,9 +34,11 @@ def main() -> None:
         raise SystemExit("unexpected path-weight factor count")
     if summary["available_factor_count"] != "2":
         raise SystemExit("unexpected available factor count")
+    if summary["available_uniform_not_promotable_factor_count"] != "1":
+        raise SystemExit("unexpected uniform-not-promotable factor count")
     if summary["partial_available_factor_count"] != "1":
         raise SystemExit("unexpected partial factor count")
-    if summary["missing_factor_count"] != "2":
+    if summary["missing_factor_count"] != "1":
         raise SystemExit("unexpected missing factor count")
     if summary["declared_not_computed_factor_count"] != "1":
         raise SystemExit("unexpected declared-not-computed factor count")
@@ -50,7 +52,7 @@ def main() -> None:
     expected = {
         "N_pair": "available_for_future_rule",
         "T_tile": "available_for_future_rule",
-        "F_overlap": "missing",
+        "F_overlap": "available_uniform_not_promotable",
         "D_path": "partial_available",
         "E_web": "missing",
         "C_norm": "declared_not_computed",

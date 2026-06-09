@@ -2010,8 +2010,9 @@ def test_kids1000_cosebis_path_weight_construction_rule_is_not_computable() -> N
     assert summary["status"] == "KIDS1000_COSEBIS_PATH_WEIGHT_CONSTRUCTION_RULE_BUILT_NOT_COMPUTED"
     assert summary["factor_count"] == "7"
     assert summary["available_factor_count"] == "2"
+    assert summary["available_uniform_not_promotable_factor_count"] == "1"
     assert summary["partial_available_factor_count"] == "1"
-    assert summary["missing_factor_count"] == "2"
+    assert summary["missing_factor_count"] == "1"
     assert summary["declared_not_computed_factor_count"] == "1"
     assert summary["declared_not_executed_factor_count"] == "1"
     assert summary["domain_rows"] == "58800"
@@ -2029,7 +2030,8 @@ def test_kids1000_cosebis_path_weight_construction_rule_is_not_computable() -> N
     by_factor = {row["factor_id"]: row for row in rows}
     assert by_factor["N_pair"]["source_state"] == "available_for_future_rule"
     assert by_factor["T_tile"]["source_state"] == "available_for_future_rule"
-    assert by_factor["F_overlap"]["source_state"] == "missing"
+    assert by_factor["F_overlap"]["source_state"] == "available_uniform_not_promotable"
+    assert by_factor["F_overlap"]["source_count"] == "196"
     assert by_factor["D_path"]["source_state"] == "partial_available"
     assert by_factor["D_path"]["source_count"] == "3"
     assert by_factor["E_web"]["source_state"] == "missing"
@@ -2553,7 +2555,10 @@ def test_kids1000_cosebis_f_overlap_resolution_decision_is_control_only() -> Non
     assert summary["f_overlap_control_ready"] == "true"
     assert summary["accepted_control_scope"] == "three_mask_subset_partial_path_control_only"
     assert summary["full_route_source_cache_complete"] == "true"
-    assert summary["first_required_next_action"] == "derive_source_frozen_full_mask_overlap_rule_without_endpoint_inputs"
+    assert summary["header_footprint_rule_available"] == "true"
+    assert summary["header_footprint_rule_uniform"] == "true"
+    assert summary["header_footprint_non_degenerate_support"] == "false"
+    assert summary["first_required_next_action"] == "derive_pixel_mask_or_subtile_overlap_rule_without_endpoint_inputs"
     assert summary["overlap_rule_computed"] == "false"
     assert summary["path_mapping_computed"] == "false"
     assert summary["contains_mapping_vector"] == "false"
@@ -2582,7 +2587,7 @@ def test_kids1000_cosebis_f_overlap_resolution_decision_is_control_only() -> Non
         assert by_item[item_id]["endpoint_route_accepted"] == "false"
         assert by_item[item_id]["control_route_accepted"] == "false"
     assert by_item["F_OVERLAP_FULL_PIXEL_MASK_ROUTE"]["decision_class"] == (
-        "source_cache_complete_overlap_rule_pending"
+        "source_header_footprint_rule_available_but_uniform_not_promotable"
     )
     assert by_item["F_OVERLAP_FULL_PIXEL_MASK_ROUTE"]["endpoint_route_accepted"] == "false"
     assert by_item["F_OVERLAP_FULL_PIXEL_MASK_ROUTE"]["control_route_accepted"] == "false"
@@ -2647,6 +2652,74 @@ def test_kids1000_cosebis_f_overlap_full_route_cache_inventory_is_source_only() 
     assert all(row["accepted_for_source_cache_inventory"] == "true" for row in rows)
     assert all(row["sha256"] for row in rows)
     assert all(row["endpoint_scoring_allowed"] == "false" for row in rows)
+
+
+def test_kids1000_cosebis_f_overlap_header_footprint_rule_is_source_only_uniform() -> None:
+    with (
+        ROOT / "data/source_manifest/kids1000_cosebis_f_overlap_header_footprint_rule_policy_v1.csv"
+    ).open(newline="") as f:
+        policy = list(csv.DictReader(f))[0]
+    assert policy["status"] == "KIDS1000_COSEBIS_F_OVERLAP_HEADER_FOOTPRINT_RULE_LOCAL_DERIVATION_NOT_SCORED"
+    assert policy["endpoint_scoring_allowed"] == "false"
+    with (
+        ROOT / "data/derived/kids1000_cosebis_f_overlap_header_footprint_rule_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["status"] == "KIDS1000_COSEBIS_F_OVERLAP_HEADER_FOOTPRINT_RULE_BUILT_NOT_MAPPED"
+    assert summary["tile_count"] == "196"
+    assert summary["target_rows"] == "300"
+    assert summary["domain_rows"] == "58800"
+    assert summary["header_footprint_rule_available"] == "true"
+    assert summary["pixel_mask_values_read"] == "false"
+    assert summary["pixel_mask_overlap_computed"] == "false"
+    assert summary["overlap_rule_computed"] == "true"
+    assert summary["path_mapping_computed"] == "false"
+    assert summary["unique_f_overlap_value_count_rounded_1e_minus_12"] == "1"
+    assert summary["min_f_overlap_value"] == "1.000000000000e+00"
+    assert summary["max_f_overlap_value"] == "1.000000000000e+00"
+    for key in [
+        "contains_mapping_vector",
+        "contains_theory_vector",
+        "contains_predictions",
+        "contains_residuals",
+        "contains_fit_statistics",
+        "uses_kids_data_vector_values",
+        "uses_posterior_chains",
+        "uses_posthoc_tile_selection",
+        "endpoint_scoring_allowed",
+    ]:
+        assert summary[key] == "false"
+    with (
+        ROOT / "data/derived/kids1000_cosebis_f_overlap_header_footprint_rule_v1.csv"
+    ).open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    assert len(rows) == 58800
+    assert all(row["f_overlap_value"] == "1.000000000000e+00" for row in rows)
+    assert all(row["pixel_mask_values_read"] == "false" for row in rows)
+    assert all(row["endpoint_scoring_allowed"] == "false" for row in rows)
+
+
+def test_kids1000_cosebis_f_overlap_header_footprint_degeneracy_audit_blocks_promotion() -> None:
+    with (
+        ROOT
+        / "data/source_manifest/kids1000_cosebis_f_overlap_header_footprint_degeneracy_audit_policy_v1.csv"
+    ).open(newline="") as f:
+        policy = list(csv.DictReader(f))[0]
+    assert policy["status"] == "KIDS1000_COSEBIS_F_OVERLAP_HEADER_FOOTPRINT_DEGENERACY_AUDIT_DECLARED_NOT_SCORED"
+    assert policy["endpoint_scoring_allowed"] == "false"
+    with (
+        ROOT / "data/derived/kids1000_cosebis_f_overlap_header_footprint_degeneracy_audit_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["status"] == "KIDS1000_COSEBIS_F_OVERLAP_HEADER_FOOTPRINT_DEGENERACY_AUDIT_BUILT_UNIFORM_NOT_PROMOTABLE"
+    assert summary["tile_count"] == "196"
+    assert summary["blocking_item_count"] == "2"
+    assert summary["unique_f_overlap_value_count_rounded_1e_minus_12"] == "1"
+    assert summary["header_rule_uniform"] == "true"
+    assert summary["non_degenerate_mapping_support"] == "false"
+    assert summary["recommended_next_action"] == "derive_pixel_mask_or_subtile_overlap_rule"
+    assert summary["path_mapping_computed"] == "false"
+    assert summary["endpoint_scoring_allowed"] == "false"
 
 
 def test_kids1000_cosebis_partial_control_scoring_protocol_is_frozen_not_run() -> None:

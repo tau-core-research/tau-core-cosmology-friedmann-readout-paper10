@@ -43,8 +43,14 @@ def main() -> None:
         raise SystemExit("partial control route should be marked ready")
     if summary["full_route_source_cache_complete"] != "true":
         raise SystemExit("full-route source cache inventory should now be complete")
-    if summary["first_required_next_action"] != "derive_source_frozen_full_mask_overlap_rule_without_endpoint_inputs":
-        raise SystemExit("next F_overlap action should be source-frozen overlap-rule derivation")
+    if summary["header_footprint_rule_available"] != "true":
+        raise SystemExit("header-footprint rule should now be available")
+    if summary["header_footprint_rule_uniform"] != "true":
+        raise SystemExit("header-footprint rule should be recorded as uniform")
+    if summary["header_footprint_non_degenerate_support"] != "false":
+        raise SystemExit("uniform header-footprint rule must not be non-degenerate support")
+    if summary["first_required_next_action"] != "derive_pixel_mask_or_subtile_overlap_rule_without_endpoint_inputs":
+        raise SystemExit("next F_overlap action should be pixel/subtile overlap derivation")
     by_item = {row["decision_item_id"]: row for row in rows}
     expected_items = {
         "F_OVERLAP_OFFICIAL_GEOMETRY_ROUTE",
@@ -66,8 +72,10 @@ def main() -> None:
     ]:
         if by_item[item_id]["decision_class"] != "rejected_unresolved":
             raise SystemExit(f"{item_id} must remain unresolved")
-    if by_item["F_OVERLAP_FULL_PIXEL_MASK_ROUTE"]["decision_class"] != "source_cache_complete_overlap_rule_pending":
-        raise SystemExit("full mask route should be source-cache complete but overlap-rule pending")
+    if by_item["F_OVERLAP_FULL_PIXEL_MASK_ROUTE"]["decision_class"] != (
+        "source_header_footprint_rule_available_but_uniform_not_promotable"
+    ):
+        raise SystemExit("full mask route should have a uniform header rule but remain not promotable")
     if by_item["F_OVERLAP_FULL_PIXEL_MASK_ROUTE"]["endpoint_route_accepted"] != "false":
         raise SystemExit("full mask route must not be an endpoint route before overlap rule derivation")
     for key in [

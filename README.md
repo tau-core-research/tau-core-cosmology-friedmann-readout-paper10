@@ -608,9 +608,11 @@ scripts/validate_kids1000_cosebis_path_weight_construction_rule_v1.py
 
 It declares the future factorization
 `N_pair * T_tile * F_overlap * D_path * E_web * C_norm` and records which
-factors are source-supported. The rule is not computable yet: footprint overlap
-and web-environment factors are missing, the path/mask factor is only partial,
-and no numeric weight or mapping vector is produced.
+factors are source-supported. The rule is not computable yet: `F_overlap` has
+a source-frozen header-footprint rule but the degeneracy audit shows it is
+uniform and not promotable, the web-environment factor remains missing, the
+path/mask factor is only partial, and no numeric weight or mapping vector is
+produced.
 
 The source-factor acquisition plan is recorded in:
 
@@ -768,6 +770,40 @@ predictions, residuals, or scores. It moves the first `F_overlap` blocker from
 "source products missing" to "derive a source-frozen full-mask overlap rule
 without endpoint inputs."
 
+The first source-frozen full-route overlap rule candidate is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_f_overlap_header_footprint_rule_policy_v1.csv
+data/derived/kids1000_cosebis_f_overlap_header_footprint_tile_rule_v1.csv
+data/derived/kids1000_cosebis_f_overlap_header_footprint_rule_v1.csv
+data/derived/kids1000_cosebis_f_overlap_header_footprint_rule_v1_summary.csv
+docs/kids1000_cosebis_f_overlap_header_footprint_rule_v1.md
+scripts/build_kids1000_cosebis_f_overlap_header_footprint_rule_v1.py
+scripts/validate_kids1000_cosebis_f_overlap_header_footprint_rule_v1.py
+```
+
+It derives a header-WCS area proxy from the 196 mask products and attaches it
+to the full `300 x 196 = 58,800` target-row by route-tile domain. This is a
+source-only `F_overlap` rule candidate, but it does not read pixel-mask values
+and does not construct a path mapping or score.
+
+The corresponding degeneracy audit is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_f_overlap_header_footprint_degeneracy_audit_policy_v1.csv
+data/derived/kids1000_cosebis_f_overlap_header_footprint_degeneracy_audit_v1.csv
+data/derived/kids1000_cosebis_f_overlap_header_footprint_degeneracy_audit_v1_summary.csv
+docs/kids1000_cosebis_f_overlap_header_footprint_degeneracy_audit_v1.md
+scripts/build_kids1000_cosebis_f_overlap_header_footprint_degeneracy_audit_v1.py
+scripts/validate_kids1000_cosebis_f_overlap_header_footprint_degeneracy_audit_v1.py
+```
+
+The audit preserves an important negative result: all route tiles have the
+same header-footprint area at this precision, so `F_overlap=1` for every tile.
+This rule is source-frozen and leakage-safe, but it is too uniform to support a
+non-degenerate endpoint mapping. The next scoring-facing `F_overlap` step is a
+pixel-mask or sub-tile overlap rule derived without endpoint inputs.
+
 The `F_overlap` batch-promotion review checklist is recorded in:
 
 ```text
@@ -848,8 +884,10 @@ decision: no endpoint-grade overlap route is accepted; the three source-frozen
 mask products are accepted only as a caveated partial path-mask control; the
 official-geometry and batch-0 dry-run routes remain unresolved. The
 full-196-mask route is now source-cache complete in the committed local
-inventory snapshot, but remains endpoint-disabled until a source-frozen overlap
-rule is derived without endpoint inputs.
+inventory snapshot. A source-frozen header-footprint rule has also been
+derived, but the degeneracy audit shows it is uniform and not promotable as a
+non-degenerate endpoint mapping support. The route remains endpoint-disabled
+until a pixel-mask or sub-tile overlap rule is derived without endpoint inputs.
 The partial-control scoring protocol freezes only a future diagnostic grammar
 for that caveated three-mask control. It keeps both partial-control scoring and
 endpoint scoring disabled and emits no score artifacts.
@@ -961,9 +999,9 @@ grade `F_overlap`, source-preflight readiness, non-degenerate branch geometry,
 a frozen 300-row theory vector, null controls after mapping, and leakage
 guards. In the current repository only the leakage guard passes. The first
 blocking gate is still `F_overlap`, but its immediate next action is now the
-source-frozen full-mask overlap-rule derivation rather than raw-mask
-acquisition. The rank-one partial-control geometry remains an explicit
-promotion blocker.
+source-frozen pixel-mask/sub-tile overlap derivation rather than raw-mask
+acquisition or header-only area support. The rank-one partial-control geometry
+remains an explicit promotion blocker.
 
 The endpoint scoring-readiness ledger is recorded in:
 

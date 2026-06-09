@@ -124,6 +124,8 @@ def main() -> None:
     run(["python", "scripts/build_kids1000_cosebis_f_overlap_execution_review_template_v1.py"])
     run(["python", "scripts/validate_kids1000_cosebis_f_overlap_execution_review_template_v1.py"])
     run(["python", "scripts/validate_kids1000_cosebis_f_overlap_full_route_cache_inventory_v1.py"])
+    run(["python", "scripts/validate_kids1000_cosebis_f_overlap_header_footprint_rule_v1.py"])
+    run(["python", "scripts/validate_kids1000_cosebis_f_overlap_header_footprint_degeneracy_audit_v1.py"])
     run(
         [
             "python",

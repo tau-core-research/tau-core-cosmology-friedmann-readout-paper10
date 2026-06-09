@@ -23,7 +23,8 @@ Current status:
 
 - only the leakage guard passes;
 - `F_overlap` remains the first blocker, but its immediate blocker has shifted
-  from raw full-route mask acquisition to source-frozen overlap-rule derivation;
+  from raw full-route mask acquisition to pixel-mask/sub-tile overlap-rule
+  derivation, because the first header-footprint rule is uniform;
 - the partial-control rank-one geometry remains an explicit blocker;
 - endpoint scoring remains disabled.
 
