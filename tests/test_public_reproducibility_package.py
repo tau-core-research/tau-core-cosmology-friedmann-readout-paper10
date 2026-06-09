@@ -301,6 +301,12 @@ def test_public_files_exist() -> None:
         "docs/kids1000_cosebis_low_mode_kernel_envelope_derivation_v1.md",
         "scripts/build_kids1000_cosebis_low_mode_kernel_envelope_derivation_v1.py",
         "scripts/validate_kids1000_cosebis_low_mode_kernel_envelope_derivation_v1.py",
+        "data/source_manifest/kids1000_cosebis_log_band_prior_eligibility_gate_policy_v1.csv",
+        "data/derived/kids1000_cosebis_log_band_prior_eligibility_gate_v1.csv",
+        "data/derived/kids1000_cosebis_log_band_prior_eligibility_gate_v1_summary.csv",
+        "docs/kids1000_cosebis_log_band_prior_eligibility_gate_v1.md",
+        "scripts/build_kids1000_cosebis_log_band_prior_eligibility_gate_v1.py",
+        "scripts/validate_kids1000_cosebis_log_band_prior_eligibility_gate_v1.py",
         "data/source_manifest/kids1000_cosebis_path_mapping_source_preflight_policy_v1.csv",
         "data/derived/kids1000_cosebis_path_mapping_source_preflight_v1.csv",
         "data/derived/kids1000_cosebis_path_mapping_source_preflight_v1_summary.csv",
@@ -521,6 +527,8 @@ def test_public_files_exist() -> None:
         "scripts/validate_kids1000_cosebis_low_mode_carrier_source_grounding_v1.py",
         "scripts/build_kids1000_cosebis_low_mode_kernel_envelope_derivation_v1.py",
         "scripts/validate_kids1000_cosebis_low_mode_kernel_envelope_derivation_v1.py",
+        "scripts/build_kids1000_cosebis_log_band_prior_eligibility_gate_v1.py",
+        "scripts/validate_kids1000_cosebis_log_band_prior_eligibility_gate_v1.py",
         "scripts/build_kids1000_cosebis_path_mapping_source_preflight_v1.py",
         "scripts/validate_kids1000_cosebis_path_mapping_source_preflight_v1.py",
         "scripts/build_kids1000_cosebis_null_control_readiness_v1.py",
@@ -4718,6 +4726,43 @@ def test_kids1000_cosebis_low_mode_kernel_envelope_derivation_is_conditional() -
         "OPEN_BLOCKER",
     }
     assert {row["claim_boundary"] for row in [*ledger, *weights]} == {policy["claim_boundary"]}
+
+
+def test_kids1000_cosebis_log_band_prior_eligibility_gate_is_partial() -> None:
+    with (
+        ROOT / "data/source_manifest/kids1000_cosebis_log_band_prior_eligibility_gate_policy_v1.csv"
+    ).open(newline="") as f:
+        policy = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/kids1000_cosebis_log_band_prior_eligibility_gate_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/kids1000_cosebis_log_band_prior_eligibility_gate_v1.csv"
+    ).open(newline="") as f:
+        rows = list(csv.DictReader(f))
+
+    assert policy["status"] == "LOG_BAND_PRIOR_ELIGIBILITY_GATE_FROZEN"
+    assert policy["uses_kids_data_vector_values"] == "false"
+    assert policy["endpoint_scoring_allowed"] == "false"
+    assert summary["status"] == "LOG_BAND_PRIOR_ELIGIBILITY_GATE_PARTIAL_PASS"
+    assert summary["eligibility_verdict"] == "protocol_eligible_for_conditional_envelope_but_not_full_kernel_validated"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["pass_count"] == "4"
+    assert summary["assumption_not_source_proven_count"] == "1"
+    assert summary["open_blocker_count"] == "1"
+    by_condition = {row["condition_id"]: row for row in rows}
+    assert set(by_condition) == {
+        "C1_ordered_dimensionless_mode_domain",
+        "C2_no_posthoc_mode_cut",
+        "C3_source_side_path_mapping_exists",
+        "C4_smooth_coherent_path_residual",
+        "C5_no_high_frequency_only_source_claim",
+        "C6_covariant_or_survey_native_kernel",
+    }
+    assert by_condition["C4_smooth_coherent_path_residual"]["status"] == "ASSUMPTION_NOT_SOURCE_PROVEN"
+    assert by_condition["C6_covariant_or_survey_native_kernel"]["status"] == "OPEN_BLOCKER"
+    assert {row["claim_boundary"] for row in rows} == {policy["claim_boundary"]}
 
 
 def test_kids1000_cosebis_null_control_policy_is_declared_not_run() -> None:

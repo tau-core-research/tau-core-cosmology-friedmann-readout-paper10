@@ -1353,6 +1353,23 @@ finite retained mode domain then fixes the unit-mean normalization over
 lensing/path kernel theorem; the remaining blocker is the survey-native or
 covariant derivation of when the log-band-neutral prior applies.
 
+The log-band prior eligibility gate is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_log_band_prior_eligibility_gate_policy_v1.csv
+data/derived/kids1000_cosebis_log_band_prior_eligibility_gate_v1.csv
+data/derived/kids1000_cosebis_log_band_prior_eligibility_gate_v1_summary.csv
+docs/kids1000_cosebis_log_band_prior_eligibility_gate_v1.md
+scripts/build_kids1000_cosebis_log_band_prior_eligibility_gate_v1.py
+scripts/validate_kids1000_cosebis_log_band_prior_eligibility_gate_v1.py
+```
+
+This gate states when the conditional log-band prior is allowed as a protocol
+object. The current COSEBIs route passes ordered-mode, no-posthoc-mode-cut,
+source-side path-mapping, and no-high-frequency-only guardrails. It still leaves
+one unproven smoothness assumption and one open full-kernel blocker. The verdict
+is `protocol_eligible_for_conditional_envelope_but_not_full_kernel_validated`.
+
 The COSEBIs path-mapping source-preflight ledger is recorded in:
 
 ```text

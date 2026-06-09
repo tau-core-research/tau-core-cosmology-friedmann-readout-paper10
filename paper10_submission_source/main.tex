@@ -735,6 +735,13 @@ amplitude envelope satisfies \(M(n)\propto \sqrt{P_n}\propto n^{-1/2}\). The
 finite retained mode domain \(n=1\ldots20\) then only fixes the dimensionless
 unit-mean normalization. This is a conditional envelope derivation; a covariant
 or survey-native lensing path-kernel derivation remains open.
+We also add an eligibility gate for using this log-band prior as a protocol
+object. The current COSEBIs route passes the ordered-mode-domain,
+no-posthoc-mode-cut, source-side path-mapping, and no-high-frequency-only
+guardrails. It does not source-prove the smooth coherent path residual
+assumption, and it does not close the covariant/survey-native kernel blocker.
+Thus the envelope is protocol-eligible for this preflight, but not full-kernel
+validated.
 
 The resulting source-preflight ledger is correspondingly mixed: the 300 COSEBIs
 target rows, five-bin redshift-kernel inventory, 196-tile route-coordinate
@@ -1064,8 +1071,10 @@ ledger then classifies the \(n^{-1/2}\) carrier as a partial protocol carrier
 with an open first-principles mode-kernel derivation blocker. A follow-up
 envelope derivation shows that \(n^{-1/2}\) follows conditionally from a
 log-band-neutral path/readout power prior, but the covariant/survey-native
-kernel derivation remains open. The value of the scaffold is therefore to make
-the next cosmology test
+kernel derivation remains open. A separate eligibility gate records that this
+prior is protocol-eligible under the current COSEBIs route while preserving the
+smoothness assumption and full-kernel blocker. The value of the scaffold is
+therefore to make the next cosmology test
 precise: a Tau Core-inspired late-time residual should be judged not by
 \(w(z)\ne -1\) alone, but by the joint pattern
 \[
