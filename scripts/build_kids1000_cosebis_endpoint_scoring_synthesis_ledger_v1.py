@@ -10,6 +10,7 @@ POLICY = ROOT / "data" / "source_manifest" / "kids1000_cosebis_endpoint_scoring_
 ENDPOINT = ROOT / "data" / "derived" / "kids1000_cosebis_endpoint_scoring_v1_summary.csv"
 DIAGNOSTICS = ROOT / "data" / "derived" / "kids1000_cosebis_endpoint_scoring_diagnostics_v1_summary.csv"
 TOMO = ROOT / "data" / "derived" / "kids1000_cosebis_tomographic_structure_robustness_v1_summary.csv"
+TOMO_PLAUSIBILITY = ROOT / "data" / "derived" / "kids1000_cosebis_tomographic_control_plausibility_audit_v1_summary.csv"
 JACKKNIFE = ROOT / "data" / "derived" / "kids1000_cosebis_endpoint_jackknife_robustness_v1_summary.csv"
 MODE_LOCAL = ROOT / "data" / "derived" / "kids1000_cosebis_endpoint_mode_localization_v1_summary.csv"
 MODE_SHAPE = ROOT / "data" / "derived" / "kids1000_cosebis_endpoint_mode_shape_stress_v1_summary.csv"
@@ -40,6 +41,7 @@ def main() -> None:
     endpoint = read_one(ENDPOINT)
     diagnostics = read_one(DIAGNOSTICS)
     tomo = read_one(TOMO)
+    tomo_plausibility = read_one(TOMO_PLAUSIBILITY)
     jackknife = read_one(JACKKNIFE)
     mode_local = read_one(MODE_LOCAL)
     mode_shape = read_one(MODE_SHAPE)
@@ -101,6 +103,21 @@ def main() -> None:
             "supports_endpoint_signal": "true",
             "caveat": "structured_tomographic_controls_still_outperform_candidate",
             "recommended_next_action": "use_independent_tomographic_holdout_or_external_lensing_probe",
+            "claim_boundary": policy["claim_boundary"],
+        },
+        {
+            "ledger_id": policy["policy_id"],
+            "component_id": "S2b_tomographic_control_plausibility",
+            "component_status": "BETTER_CONTROLS_NOT_ACCEPTED_AS_PHYSICAL_ALTERNATIVES",
+            "evidence_summary": (
+                f"better_audited={tomo_plausibility['better_than_candidate_audited_count']};"
+                f"control_only={tomo_plausibility['better_control_only_count']};"
+                f"conditional_source_systematic={tomo_plausibility['better_conditional_source_systematic_count']};"
+                f"accepted_physical_alternatives={tomo_plausibility['accepted_physical_alternative_count']}"
+            ),
+            "supports_endpoint_signal": "true",
+            "caveat": "better_controls_block_validation_but_do_not_refute_endpoint_signal",
+            "recommended_next_action": "freeze_independent_photoz_or_tomographic_calibration_holdout",
             "claim_boundary": policy["claim_boundary"],
         },
         {
@@ -170,6 +187,7 @@ def main() -> None:
             "candidate_low_tail": "true",
             "candidate_absolute_winner": "false",
             "tomographic_caveat_active": "true",
+            "better_tomographic_controls_accepted_as_physical_alternatives": "false",
             "jackknife_supports_not_single_bin_or_pair": "true",
             "low_mode_localized": "true",
             "mode_shape_candidate_preferred": "true",

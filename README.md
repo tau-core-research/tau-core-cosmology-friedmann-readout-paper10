@@ -1252,6 +1252,27 @@ auto/cross-preserving pair shuffles. The candidate remains low-tail with rank
 controls beat it, so this is robustness evidence rather than validation. The
 remaining caveat is specifically tomographic-structure robustness.
 
+The tomographic-control plausibility audit is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_tomographic_control_plausibility_audit_policy_v1.csv
+data/derived/kids1000_cosebis_tomographic_control_plausibility_audit_v1.csv
+data/derived/kids1000_cosebis_tomographic_control_plausibility_audit_v1_summary.csv
+docs/kids1000_cosebis_tomographic_control_plausibility_audit_v1.md
+scripts/build_kids1000_cosebis_tomographic_control_plausibility_audit_v1.py
+scripts/validate_kids1000_cosebis_tomographic_control_plausibility_audit_v1.py
+```
+
+This audit checks whether the better tomographic controls should be interpreted
+as physical alternatives. It reads the top `25` tomographic controls and the
+source-side redshift kernel inventory, computes mapping-geometry diagnostics,
+and computes no new scores. Among the three audited controls that beat the
+candidate, two are control-only non-global pair shuffles and one is only a
+conditional source-systematic candidate requiring independent photo-z or
+tomographic calibration support. No better control is accepted as a physical
+alternative in the current source state. Therefore the controls do not refute
+the endpoint signal, but they still block validation.
+
 The endpoint jackknife/localization robustness audit is recorded in:
 
 ```text
@@ -1331,8 +1352,10 @@ one claim-safe synthesis. The current verdict is
 `endpoint_signal_low_tail_caveated_by_tomographic_controls_and_physical_promotion_blockers`.
 In plain terms, the KiDS COSEBIs branch has a low-tail diagnostic endpoint
 signal, but it is not an absolute control winner, the tomographic-structure
-caveat remains active, and physical promotion is still blocked by the five
-requirements listed below.
+caveat remains active. The better tomographic controls are not accepted as
+physical alternatives without independent photo-z/tomographic calibration
+support, and physical promotion is still blocked by the five requirements listed
+below.
 
 The low-mode carrier source-grounding ledger is recorded in:
 

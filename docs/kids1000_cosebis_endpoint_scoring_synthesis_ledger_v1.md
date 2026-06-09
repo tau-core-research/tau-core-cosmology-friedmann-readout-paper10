@@ -19,6 +19,7 @@ The ledger reads only existing committed summaries:
 - `kids1000_cosebis_endpoint_scoring_v1_summary.csv`
 - `kids1000_cosebis_endpoint_scoring_diagnostics_v1_summary.csv`
 - `kids1000_cosebis_tomographic_structure_robustness_v1_summary.csv`
+- `kids1000_cosebis_tomographic_control_plausibility_audit_v1_summary.csv`
 - `kids1000_cosebis_endpoint_jackknife_robustness_v1_summary.csv`
 - `kids1000_cosebis_endpoint_mode_localization_v1_summary.csv`
 - `kids1000_cosebis_endpoint_mode_shape_stress_v1_summary.csv`
@@ -29,7 +30,9 @@ The ledger reads only existing committed summaries:
 The current endpoint result is a low-tail diagnostic signal: the source-frozen
 candidate improves the zero baseline and ranks in the low tail against
 predeclared controls. It is not an absolute winner because tomographic
-shuffle/control variants still outperform it.
+shuffle/control variants still outperform it. The plausibility audit classifies
+the better controls as control-only or conditional source-systematic candidates,
+not accepted physical alternatives in the current source state.
 
 The jackknife/localization audits support that the signal is not carried by one
 source bin or one tomographic pair. The mode audits sharpen the caveat: the

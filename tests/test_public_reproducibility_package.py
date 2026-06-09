@@ -270,6 +270,12 @@ def test_public_files_exist() -> None:
         "docs/kids1000_cosebis_tomographic_structure_robustness_v1.md",
         "scripts/run_kids1000_cosebis_tomographic_structure_robustness_v1.py",
         "scripts/validate_kids1000_cosebis_tomographic_structure_robustness_v1.py",
+        "data/source_manifest/kids1000_cosebis_tomographic_control_plausibility_audit_policy_v1.csv",
+        "data/derived/kids1000_cosebis_tomographic_control_plausibility_audit_v1.csv",
+        "data/derived/kids1000_cosebis_tomographic_control_plausibility_audit_v1_summary.csv",
+        "docs/kids1000_cosebis_tomographic_control_plausibility_audit_v1.md",
+        "scripts/build_kids1000_cosebis_tomographic_control_plausibility_audit_v1.py",
+        "scripts/validate_kids1000_cosebis_tomographic_control_plausibility_audit_v1.py",
         "data/source_manifest/kids1000_cosebis_endpoint_jackknife_robustness_policy_v1.csv",
         "data/derived/kids1000_cosebis_endpoint_jackknife_robustness_v1_grid.csv",
         "data/derived/kids1000_cosebis_endpoint_jackknife_robustness_v1_summary.csv",
@@ -625,6 +631,8 @@ def test_public_files_exist() -> None:
         "scripts/validate_kids1000_cosebis_endpoint_scoring_diagnostics_v1.py",
         "scripts/run_kids1000_cosebis_tomographic_structure_robustness_v1.py",
         "scripts/validate_kids1000_cosebis_tomographic_structure_robustness_v1.py",
+        "scripts/build_kids1000_cosebis_tomographic_control_plausibility_audit_v1.py",
+        "scripts/validate_kids1000_cosebis_tomographic_control_plausibility_audit_v1.py",
         "scripts/run_kids1000_cosebis_endpoint_jackknife_robustness_v1.py",
         "scripts/validate_kids1000_cosebis_endpoint_jackknife_robustness_v1.py",
         "scripts/run_kids1000_cosebis_endpoint_mode_localization_v1.py",
@@ -4656,6 +4664,51 @@ def test_kids1000_cosebis_tomographic_structure_robustness_preserves_low_tail() 
         assert row["claim_boundary"] == policy["claim_boundary"]
 
 
+def test_kids1000_cosebis_tomographic_control_plausibility_audit_blocks_physical_alternative_promotion() -> None:
+    with (
+        ROOT / "data/source_manifest/kids1000_cosebis_tomographic_control_plausibility_audit_policy_v1.csv"
+    ).open(newline="") as f:
+        policy = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/kids1000_cosebis_tomographic_control_plausibility_audit_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/kids1000_cosebis_tomographic_control_plausibility_audit_v1.csv"
+    ).open(newline="") as f:
+        rows = list(csv.DictReader(f))
+
+    assert policy["status"] == "TOMOGRAPHIC_CONTROL_PLAUSIBILITY_AUDIT_POLICY_FROZEN"
+    assert policy["computes_new_scores"] == "false"
+    assert policy["endpoint_validation_claimed"] == "false"
+    assert summary["status"] == "TOMOGRAPHIC_CONTROL_PLAUSIBILITY_AUDIT_BUILT"
+    assert summary["audited_top_control_count"] == "25"
+    assert summary["better_than_candidate_audited_count"] == "3"
+    assert summary["better_control_only_count"] == "2"
+    assert summary["better_conditional_source_systematic_count"] == "1"
+    assert summary["accepted_physical_alternative_count"] == "0"
+    assert summary["candidate_tomographic_caveat_active"] == "true"
+    assert summary["tomographic_controls_refute_endpoint_signal"] == "false"
+    assert summary["tomographic_controls_block_validation"] == "true"
+    assert (
+        summary["verdict"]
+        == "better_tomographic_controls_are_control_only_or_source_systematic_candidates_not_physical_alternatives"
+    )
+    better = [row for row in rows if row["beats_candidate_chi2"] == "true"]
+    assert len(better) == 3
+    assert {row["physical_alternative_status"] for row in better} == {
+        "CONTROL_ONLY",
+        "CONDITIONAL_SOURCE_SYSTEMATIC",
+    }
+    assert any(row["is_global_bin_permutation"] == "true" for row in better)
+    assert any(row["is_global_bin_permutation"] == "false" for row in better)
+    for row in rows:
+        assert row["computes_new_scores"] == "false"
+        assert row["uses_kids_data_vector_values_for_source_selection"] == "false"
+        assert row["endpoint_validation_claimed"] == "false"
+        assert row["claim_boundary"] == policy["claim_boundary"]
+
+
 def test_kids1000_cosebis_endpoint_jackknife_robustness_is_not_single_pair_localized() -> None:
     with (
         ROOT / "data/source_manifest/kids1000_cosebis_endpoint_jackknife_robustness_policy_v1.csv"
@@ -4806,11 +4859,12 @@ def test_kids1000_cosebis_endpoint_scoring_synthesis_ledger_keeps_endpoint_claim
     assert policy["computes_new_scores"] == "false"
     assert policy["endpoint_validation_claimed"] == "false"
     assert summary["status"] == "ENDPOINT_SCORING_SYNTHESIS_LEDGER_BUILT"
-    assert summary["ledger_rows"] == "7"
+    assert summary["ledger_rows"] == "8"
     assert summary["diagnostic_endpoint_signal_present"] == "true"
     assert summary["candidate_low_tail"] == "true"
     assert summary["candidate_absolute_winner"] == "false"
     assert summary["tomographic_caveat_active"] == "true"
+    assert summary["better_tomographic_controls_accepted_as_physical_alternatives"] == "false"
     assert summary["jackknife_supports_not_single_bin_or_pair"] == "true"
     assert summary["low_mode_localized"] == "true"
     assert summary["mode_shape_candidate_preferred"] == "true"
@@ -4825,6 +4879,10 @@ def test_kids1000_cosebis_endpoint_scoring_synthesis_ledger_keeps_endpoint_claim
     by_component = {row["component_id"]: row for row in rows}
     assert by_component["S0_endpoint_score"]["component_status"] == "DIAGNOSTIC_ENDPOINT_SIGNAL_PRESENT"
     assert by_component["S2_tomographic_structure_robustness"]["component_status"] == "TOMOGRAPHIC_CAVEAT_ACTIVE"
+    assert (
+        by_component["S2b_tomographic_control_plausibility"]["component_status"]
+        == "BETTER_CONTROLS_NOT_ACCEPTED_AS_PHYSICAL_ALTERNATIVES"
+    )
     assert by_component["S6_physical_promotion"]["component_status"] == "PHYSICAL_PROMOTION_BLOCKED"
     assert by_component["S6_physical_promotion"]["supports_endpoint_signal"] == "false"
     assert {row["claim_boundary"] for row in rows} == {policy["claim_boundary"]}

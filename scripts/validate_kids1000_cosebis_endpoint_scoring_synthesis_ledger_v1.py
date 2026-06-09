@@ -37,14 +37,16 @@ def main() -> None:
         raise SystemExit("synthesis policy must not claim endpoint validation")
     if summary["status"] != "ENDPOINT_SCORING_SYNTHESIS_LEDGER_BUILT":
         raise SystemExit("unexpected synthesis summary status")
-    if summary["ledger_rows"] != "7" or len(rows) != 7:
-        raise SystemExit("synthesis ledger must contain seven rows")
+    if summary["ledger_rows"] != "8" or len(rows) != 8:
+        raise SystemExit("synthesis ledger must contain eight rows")
     if summary["diagnostic_endpoint_signal_present"] != "true":
         raise SystemExit("diagnostic endpoint signal should be recorded")
     if summary["candidate_absolute_winner"] != "false":
         raise SystemExit("candidate must not be recorded as absolute winner")
     if summary["tomographic_caveat_active"] != "true":
         raise SystemExit("tomographic caveat must remain active")
+    if summary["better_tomographic_controls_accepted_as_physical_alternatives"] != "false":
+        raise SystemExit("better tomographic controls must not be accepted as physical alternatives")
     if summary["physical_promotion_ready"] != "false":
         raise SystemExit("physical promotion must remain blocked")
     if summary["computes_new_scores"] != "false":
@@ -61,6 +63,7 @@ def main() -> None:
         "S0_endpoint_score",
         "S1_null_control_diagnostics",
         "S2_tomographic_structure_robustness",
+        "S2b_tomographic_control_plausibility",
         "S3_jackknife_localization",
         "S4_mode_localization",
         "S5_mode_shape_stress",
@@ -72,6 +75,11 @@ def main() -> None:
         raise SystemExit("endpoint score row status mismatch")
     if by_component["S2_tomographic_structure_robustness"]["component_status"] != "TOMOGRAPHIC_CAVEAT_ACTIVE":
         raise SystemExit("tomographic row status mismatch")
+    if (
+        by_component["S2b_tomographic_control_plausibility"]["component_status"]
+        != "BETTER_CONTROLS_NOT_ACCEPTED_AS_PHYSICAL_ALTERNATIVES"
+    ):
+        raise SystemExit("tomographic plausibility row status mismatch")
     if by_component["S6_physical_promotion"]["component_status"] != "PHYSICAL_PROMOTION_BLOCKED":
         raise SystemExit("physical promotion row status mismatch")
     if by_component["S6_physical_promotion"]["supports_endpoint_signal"] != "false":
