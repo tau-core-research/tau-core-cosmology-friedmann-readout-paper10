@@ -615,6 +615,13 @@ result. It explains why the diagnostic score can be interesting while still
 being insufficient for endpoint evidence: the three-mask branch family must be
 replaced by a non-degenerate, source-frozen full-route or official-geometry
 mapping before endpoint scoring.
+We therefore add a non-degenerate mapping promotion gate. It freezes six
+conditions before any endpoint promotion is allowed: endpoint-grade
+\texttt{F\_overlap}, source-preflight readiness, non-degenerate branch
+geometry, a frozen 300-row theory vector, null controls after mapping, and
+leakage guards. In the current repository only the leakage guard passes. The
+first blocking gate remains \texttt{F\_overlap}, while the rank-one
+partial-control geometry remains an explicit promotion blocker.
 The scoring-facing view is then summarized by an endpoint-readiness ledger:
 the COSEBIs data-vector structure, covariance matrix, covariance solve policy,
 theory-vector row-interface template, and mapping-to-template join contract are

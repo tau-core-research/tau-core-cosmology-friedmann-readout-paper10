@@ -918,6 +918,24 @@ current scoring-facing blocker for the partial-control route. Before endpoint
 scoring, the three-mask branch family must be replaced by a non-degenerate,
 source-frozen full-route or official-geometry mapping.
 
+The non-degenerate mapping promotion gate is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_non_degenerate_mapping_promotion_gate_policy_v1.csv
+data/derived/kids1000_cosebis_non_degenerate_mapping_promotion_gate_v1.csv
+data/derived/kids1000_cosebis_non_degenerate_mapping_promotion_gate_v1_summary.csv
+docs/kids1000_cosebis_non_degenerate_mapping_promotion_gate_v1.md
+scripts/build_kids1000_cosebis_non_degenerate_mapping_promotion_gate_v1.py
+scripts/validate_kids1000_cosebis_non_degenerate_mapping_promotion_gate_v1.py
+```
+
+It freezes six required promotion gates before any endpoint scoring: endpoint
+grade `F_overlap`, source-preflight readiness, non-degenerate branch geometry,
+a frozen 300-row theory vector, null controls after mapping, and leakage
+guards. In the current repository only the leakage guard passes. The first
+blocking gate is still `F_overlap`, and the rank-one partial-control geometry
+remains an explicit promotion blocker.
+
 The endpoint scoring-readiness ledger is recorded in:
 
 ```text

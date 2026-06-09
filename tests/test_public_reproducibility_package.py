@@ -202,6 +202,9 @@ def test_public_files_exist() -> None:
         "data/source_manifest/kids1000_cosebis_partial_control_degeneracy_audit_policy_v1.csv",
         "data/derived/kids1000_cosebis_partial_control_degeneracy_audit_v1_pair_grid.csv",
         "data/derived/kids1000_cosebis_partial_control_degeneracy_audit_v1_summary.csv",
+        "data/source_manifest/kids1000_cosebis_non_degenerate_mapping_promotion_gate_policy_v1.csv",
+        "data/derived/kids1000_cosebis_non_degenerate_mapping_promotion_gate_v1.csv",
+        "data/derived/kids1000_cosebis_non_degenerate_mapping_promotion_gate_v1_summary.csv",
         "docs/kids1000_cosebis_f_overlap_filled_execution_review_validator_v1.md",
         "scripts/validate_kids1000_cosebis_f_overlap_filled_execution_review_artifact_v1.py",
         "data/source_manifest/kids1000_cosebis_endpoint_scoring_readiness_policy_v1.csv",
@@ -277,6 +280,7 @@ def test_public_files_exist() -> None:
         "docs/kids1000_cosebis_partial_control_diagnostic_scoring_v1.md",
         "docs/kids1000_cosebis_partial_control_null_replay_v1.md",
         "docs/kids1000_cosebis_partial_control_degeneracy_audit_v1.md",
+        "docs/kids1000_cosebis_non_degenerate_mapping_promotion_gate_v1.md",
         "docs/kids1000_cosebis_path_mapping_source_preflight_policy_v1.md",
         "docs/kids1000_cosebis_null_control_policy_v1.md",
         "docs/kids1000_cosebis_null_control_seed_policy_v1.md",
@@ -386,6 +390,8 @@ def test_public_files_exist() -> None:
         "scripts/validate_kids1000_cosebis_partial_control_null_replay_v1.py",
         "scripts/build_kids1000_cosebis_partial_control_degeneracy_audit_v1.py",
         "scripts/validate_kids1000_cosebis_partial_control_degeneracy_audit_v1.py",
+        "scripts/build_kids1000_cosebis_non_degenerate_mapping_promotion_gate_v1.py",
+        "scripts/validate_kids1000_cosebis_non_degenerate_mapping_promotion_gate_v1.py",
         "scripts/build_kids1000_cosebis_path_mapping_source_preflight_v1.py",
         "scripts/validate_kids1000_cosebis_path_mapping_source_preflight_v1.py",
         "scripts/build_kids1000_cosebis_null_control_readiness_v1.py",
@@ -3045,6 +3051,74 @@ def test_kids1000_cosebis_partial_control_degeneracy_audit_blocks_endpoint() -> 
     for row in positive_pairs:
         assert abs(float(row["covariance_inverse_cosine"])) >= 0.999999999
         assert float(row["relative_shape_residual_left_on_right"]) <= 1e-9
+
+
+def test_kids1000_cosebis_non_degenerate_mapping_promotion_gate_is_not_ready() -> None:
+    with (
+        ROOT / "data/source_manifest/kids1000_cosebis_non_degenerate_mapping_promotion_gate_policy_v1.csv"
+    ).open(newline="") as f:
+        policy = list(csv.DictReader(f))[0]
+    assert policy["status"] == "NON_DEGENERATE_MAPPING_PROMOTION_GATE_FROZEN_NOT_PASSED"
+    assert policy["endpoint_scoring_allowed"] == "false"
+    assert "endpoint_candidate_family_must_not_be_effectively_rank_one" in policy["rank_threshold_policy"]
+    for marker in [
+        "kids_data_vector_values",
+        "posterior_chains",
+        "lensing_residuals",
+        "posthoc_weight_selection",
+        "posthoc_mask_subset_selection",
+    ]:
+        assert marker in policy["forbidden_inputs"]
+    with (
+        ROOT / "data/derived/kids1000_cosebis_non_degenerate_mapping_promotion_gate_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["status"] == "NON_DEGENERATE_MAPPING_PROMOTION_GATE_BUILT_NOT_READY"
+    assert summary["gate_count"] == "6"
+    assert summary["passed_gate_count"] == "1"
+    assert summary["blocking_gate_count"] == "5"
+    assert summary["first_blocking_gate"] == "PROMOTE_01_F_OVERLAP_ENDPOINT_ROUTE"
+    assert summary["non_degenerate_mapping_promotion_allowed"] == "false"
+    assert summary["endpoint_scoring_allowed"] == "false"
+    assert summary["scoring_executed"] == "false"
+    assert summary["contains_theory_vector"] == "false"
+    assert summary["contains_predictions"] == "false"
+    assert summary["contains_residuals"] == "false"
+    assert summary["contains_fit_statistics"] == "false"
+    assert summary["uses_kids_data_vector_values"] == "false"
+    assert summary["uses_posterior_chains"] == "false"
+    assert summary["uses_posthoc_selection"] == "false"
+    assert summary["claim_boundary"] == policy["claim_boundary"]
+    with (
+        ROOT / "data/derived/kids1000_cosebis_non_degenerate_mapping_promotion_gate_v1.csv"
+    ).open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    by_gate = {row["gate_id"]: row for row in rows}
+    assert set(by_gate) == {
+        "PROMOTE_01_F_OVERLAP_ENDPOINT_ROUTE",
+        "PROMOTE_02_SOURCE_PREFLIGHT_MAPPING_READY",
+        "PROMOTE_03_NON_DEGENERATE_BRANCH_GEOMETRY",
+        "PROMOTE_04_THEORY_VECTOR_COMPUTED",
+        "PROMOTE_05_NULL_CONTROLS_EXECUTED_AFTER_MAPPING",
+        "PROMOTE_06_LEAKAGE_GUARDS",
+    }
+    assert by_gate["PROMOTE_01_F_OVERLAP_ENDPOINT_ROUTE"]["blocking_status"] == "blocking_source_overlap"
+    assert by_gate["PROMOTE_03_NON_DEGENERATE_BRANCH_GEOMETRY"]["blocking_status"] == "blocking_rank_one_partial_control"
+    assert "positive_rank_1" in by_gate["PROMOTE_03_NON_DEGENERATE_BRANCH_GEOMETRY"]["current_state"]
+    assert by_gate["PROMOTE_06_LEAKAGE_GUARDS"]["gate_passed"] == "true"
+    for gate_id, row in by_gate.items():
+        if gate_id != "PROMOTE_06_LEAKAGE_GUARDS":
+            assert row["gate_passed"] == "false"
+        assert row["endpoint_scoring_allowed"] == "false"
+        assert row["scoring_executed"] == "false"
+        assert row["uses_kids_data_vector_values"] == "false"
+        assert row["uses_posterior_chains"] == "false"
+        assert row["uses_posthoc_selection"] == "false"
+        assert row["contains_theory_vector"] == "false"
+        assert row["contains_predictions"] == "false"
+        assert row["contains_residuals"] == "false"
+        assert row["contains_fit_statistics"] == "false"
+        assert row["claim_boundary"] == policy["claim_boundary"]
 
 
 def test_kids1000_cosebis_f_overlap_execution_review_schema_is_not_execution() -> None:

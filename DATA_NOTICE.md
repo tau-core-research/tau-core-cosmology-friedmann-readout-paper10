@@ -347,6 +347,12 @@ numerically equal to unity and maximum positive-branch relative shape residual
 about `2.2e-12`. This blocks the partial-control route from being read as an
 endpoint theory-vector test until a non-degenerate source-frozen full-route or
 official-geometry mapping replaces the three-mask branch family.
+The non-degenerate mapping promotion gate then freezes the six conditions that
+must pass before any endpoint promotion: endpoint-grade `F_overlap`,
+source-preflight readiness, non-degenerate branch geometry, a frozen 300-row
+theory vector, null controls after mapping, and leakage guards. Currently only
+the leakage guard passes. The gate contains no theory vector, prediction,
+residual, fit statistic, or endpoint score.
 
 The endpoint scoring-readiness ledger is a no-go summary, not a score. It
 records that the COSEBIs data-vector structure, covariance matrix, covariance
