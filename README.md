@@ -1629,6 +1629,25 @@ The covariance metric is preserved as a future scoring metric but is explicitly
 not used as an amplitude derivation. The verdict is
 `dimensionless_source_amplitude_available_but_physical_response_amplitude_remains_open`.
 
+The COSEBIs standard-lensing null-amplitude theorem-requirements gate is
+recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_standard_lensing_null_amplitude_theorem_requirements_policy_v1.csv
+data/derived/kids1000_cosebis_standard_lensing_null_amplitude_theorem_requirements_v1.csv
+data/derived/kids1000_cosebis_standard_lensing_null_amplitude_theorem_requirements_v1_summary.csv
+docs/kids1000_cosebis_standard_lensing_null_amplitude_theorem_requirements_v1.md
+scripts/build_kids1000_cosebis_standard_lensing_null_amplitude_theorem_requirements_v1.py
+scripts/validate_kids1000_cosebis_standard_lensing_null_amplitude_theorem_requirements_v1.py
+```
+
+This gate freezes the theorem requirements for the no-\(\tau\)-source limit:
+source-replayed null controls are available only as controls, the zero-Tau
+amplitude statement is specified but not derived, and operator null safety,
+gauge/quotient descent, and non-uniform leakage control remain open blockers.
+The verdict is
+`standard_lensing_null_amplitude_requirements_frozen_but_theorem_remains_open`.
+
 The COSEBIs path-mapping source-preflight ledger is recorded in:
 
 ```text
