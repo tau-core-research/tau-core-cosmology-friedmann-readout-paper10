@@ -435,13 +435,23 @@ data/derived/kids1000_cosebis_web_path_mapping_readiness_v1_summary.csv
 docs/kids1000_cosebis_web_path_mapping_policy_v1.md
 scripts/build_kids1000_cosebis_web_path_mapping_readiness_v1.py
 scripts/validate_kids1000_cosebis_web_path_mapping_readiness_v1.py
+data/source_manifest/kids1000_cosebis_source_frozen_mapping_vector_policy_v1.csv
+data/derived/kids1000_cosebis_source_frozen_mapping_domain_weights_v1.csv
+data/derived/kids1000_cosebis_source_frozen_mapping_vector_v1.csv
+data/derived/kids1000_cosebis_source_frozen_mapping_vector_v1_summary.csv
+docs/kids1000_cosebis_source_frozen_mapping_vector_v1.md
+scripts/build_kids1000_cosebis_source_frozen_mapping_vector_v1.py
+scripts/validate_kids1000_cosebis_source_frozen_mapping_vector_v1.py
 ```
 
 It declares the source-side inputs required before a future `W_WEB_ANISOTROPY`
-and `W_PATH_PROJECTION` COSEBIs theory vector can be built. It does not compute
-a mapping, does not compute a theory vector, and forbids KiDS data-vector values,
-posterior chains, residuals, fit-improvement flags, and post-hoc sky-direction
-selection.
+and `W_PATH_PROJECTION` COSEBIs theory vector can be built. The current release
+now includes a source-frozen 300-row mapping basis with 15 tomographic-pair
+values. This basis has pair/redshift/path variation, but no COSEBIs mode-shape
+and no theory value; `W_web` remains a zero null-control channel. It therefore
+does not compute a theory vector, prediction, residual, fit statistic, or score,
+and forbids KiDS data-vector values, posterior chains, residuals,
+fit-improvement flags, and post-hoc sky-direction selection.
 
 The first COSEBIs redshift-kernel inventory is recorded in:
 
@@ -1115,14 +1125,16 @@ scripts/validate_kids1000_cosebis_endpoint_scoring_readiness_v1.py
 
 It collects the current pre-scoring state in one place. The data-vector
 structure, covariance matrix, covariance solve policy, theory-vector
-row-interface template, mapping-to-template join contract, and F-overlap
-resolution/control decision are source-side ready. `F_overlap`, caveated
-`D_path`, null-control `E_web`, and source-side `C_norm` are supported, but
-the mapping vector/source preflight, theory vector, web/path mapping, null
+row-interface template, mapping-to-template join contract, F-overlap
+resolution/control decision, web/path mapping ledger, and source preflight are
+source-side ready. `F_overlap`, caveated `D_path`, null-control `E_web`,
+source-side `C_norm`, and the source-frozen mapping basis are supported, but
+the theory vector, null controls, blocker-resolution finalization through those
 controls, and the partial-control degeneracy audit still block scoring. The
-first blocker is now `mapping_vector`. The partial-control diagnostic route is also explicitly blocked as
-endpoint evidence until a non-degenerate source-frozen mapping exists. Endpoint
-scoring remains disabled.
+first endpoint blocker is now `theory_vector`. The partial-control diagnostic
+route is also explicitly blocked as endpoint evidence until a non-degenerate
+source-frozen theory vector and null-control replay exist. Endpoint scoring
+remains disabled.
 
 The frozen endpoint scoring protocol shell is recorded in:
 

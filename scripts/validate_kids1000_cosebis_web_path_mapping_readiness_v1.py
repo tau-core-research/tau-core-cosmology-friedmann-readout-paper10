@@ -23,14 +23,15 @@ def main() -> None:
     row = rows[0]
     if policy["endpoint_scoring_allowed"] != "false":
         raise SystemExit("web/path mapping policy must remain endpoint disabled")
-    if policy["current_mapping_computed"] != "false":
-        raise SystemExit("web/path mapping must not be computed in the policy")
+    if policy["current_mapping_computed"] != "true":
+        raise SystemExit("web/path mapping policy should record the source-frozen mapping vector")
     if summary["endpoint_scoring_allowed"] != "false" or row["endpoint_scoring_allowed"] != "false":
         raise SystemExit("web/path mapping readiness must remain endpoint disabled")
-    if summary["current_mapping_computed"] != "false" or row["current_mapping_computed"] != "false":
-        raise SystemExit("web/path mapping must not be computed")
+    if summary["current_mapping_computed"] != "true" or row["current_mapping_computed"] != "true":
+        raise SystemExit("web/path mapping should expose the source-frozen mapping vector")
+    if summary["contains_mapping_vector"] != "true" or row["contains_mapping_vector"] != "true":
+        raise SystemExit("web/path mapping readiness must contain the source-frozen mapping vector")
     for key in [
-        "contains_mapping_vector",
         "contains_theory_vector",
         "contains_predictions",
         "contains_residuals",
@@ -45,16 +46,10 @@ def main() -> None:
         raise SystemExit("unexpected web/path mapping row target")
     if row["target_rows"] != "300":
         raise SystemExit("web/path mapping must target the full 300-row COSEBIs vector")
+    if int(row["mapping_unique_value_count"]) <= 1:
+        raise SystemExit("mapping vector should not be a single constant value")
     if "W_WEB_ANISOTROPY" not in row["active_channels"] or "W_PATH_PROJECTION" not in row["active_channels"]:
         raise SystemExit("web/path mapping policy must keep web/path channels active")
-    for marker in [
-        "source_frozen_web_environment_catalog",
-        "source_frozen_lensing_path_mask_or_depth_map",
-        "source_frozen_redshift_kernel_mapping",
-        "source_frozen_null_sky_rotation_or_pair_shuffle",
-    ]:
-        if marker not in row["required_future_source_products"]:
-            raise SystemExit(f"missing future source product requirement: {marker}")
     for marker in [
         "kids_data_vector_values",
         "posthoc_sky_direction_selection",

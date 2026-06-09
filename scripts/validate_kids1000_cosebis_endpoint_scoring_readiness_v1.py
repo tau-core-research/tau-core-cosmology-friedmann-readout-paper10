@@ -29,15 +29,16 @@ def main() -> None:
         raise SystemExit("unexpected endpoint scoring readiness summary status")
     if summary["component_count"] != "12":
         raise SystemExit("endpoint scoring readiness must contain twelve components")
-    if summary["ready_component_count"] != "6":
+    if summary["ready_component_count"] != "8":
         raise SystemExit(
-            "only data vector, covariance, covariance solve policy, theory template, "
-            "mapping-template join contract, and F_overlap decision should be ready"
+            "data vector, covariance, covariance solve policy, theory template, "
+            "mapping-template join contract, web/path mapping, source preflight, "
+            "and F_overlap decision should be ready"
         )
-    if summary["blocking_component_count"] != "6":
-        raise SystemExit("six components should block endpoint scoring")
-    if summary["first_blocker"] != "mapping_vector":
-        raise SystemExit("mapping_vector must be the first scoring blocker after C_norm is source-supported")
+    if summary["blocking_component_count"] != "4":
+        raise SystemExit("four components should block endpoint scoring")
+    if summary["first_blocker"] != "theory_vector":
+        raise SystemExit("theory_vector must be the first scoring blocker after mapping vector is source-supported")
 
     expected = {
         "data_vector_structure": ("true", "not_blocking"),
@@ -46,11 +47,11 @@ def main() -> None:
         "theory_vector_template": ("true", "not_blocking"),
         "mapping_template_join_contract": ("true", "not_blocking"),
         "theory_vector": ("false", "blocking"),
-        "web_path_mapping": ("false", "blocking"),
-        "source_preflight": ("false", "blocking"),
+        "web_path_mapping": ("true", "not_blocking"),
+        "source_preflight": ("true", "not_blocking"),
         "blocker_resolution_order": ("false", "blocking"),
         "f_overlap_resolution_decision": ("true", "not_blocking"),
-        "null_controls": ("false", "blocking_until_mapping_exists"),
+        "null_controls": ("false", "blocking_until_null_controls_execute"),
         "partial_control_degeneracy_audit": ("false", "blocking_partial_control_endpoint"),
     }
     by_component = {row["component_id"]: row for row in rows}

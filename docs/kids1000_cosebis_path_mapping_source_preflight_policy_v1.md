@@ -1,7 +1,8 @@
 # KiDS-1000 COSEBIs Path-Mapping Source Preflight v1
 
-This ledger summarizes source-side readiness for a future path-aware COSEBIs
-mapping. It is not a mapping vector and not endpoint validation.
+This ledger summarizes source-side readiness for a path-aware COSEBIs mapping.
+It now records the available source-frozen mapping vector, but it is not a
+theory vector and not endpoint validation.
 
 Current status:
 
@@ -13,9 +14,13 @@ Current status:
 - `E_web` is available only as a uniform null-web control; no positive
   web/environment catalogue is used;
 - the path-weight construction rule is source-side available after `C_norm`,
-  but no mapping vector has been built;
+  and a 300-row source-frozen mapping basis has been built;
 - null controls are declared but not executed;
-- no mapping vector, theory vector, prediction, residual, fit statistic, or
-  endpoint score is computed.
+- no theory vector, prediction, residual, fit statistic, or endpoint score is
+  computed.
+
+Only the `source_frozen_mapping_vector` component row is allowed to carry
+`path_mapping_computed=true` and `contains_mapping_vector=true`; all earlier
+source-ledger component rows remain non-mapping evidence rows.
 
 Endpoint leakage remains forbidden.

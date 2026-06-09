@@ -118,8 +118,8 @@ def main() -> None:
             "evidence_artifact": "data/derived/kids1000_cosebis_null_control_seed_inventory_v1_summary.csv",
             "source_count": null_seeds["total_declared_control_draws"],
             "numeric_factor_computed": "false",
-            "blocking_status": "blocking_until_mapping_exists",
-            "limitation": "controls_declared_but_not_run_and_no_mapping_vector_exists",
+            "blocking_status": "blocking_until_source_mapping_basis_stage",
+            "limitation": "controls_declared_but_not_run_before_source_mapping_basis_stage",
         },
     ]
     for row in rows:

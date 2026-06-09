@@ -104,16 +104,18 @@ def main() -> None:
             "component_id": "web_path_mapping",
             "component_status": mapping["mapping_status"],
             "evidence_artifact": "data/derived/kids1000_cosebis_web_path_mapping_readiness_v1_summary.csv",
-            "ready_for_scoring": "false",
-            "blocking_status": "blocking",
-            "readiness_note": "mapping_vector_required_not_computed",
+            "ready_for_scoring": "true" if mapping["contains_mapping_vector"] == "true" else "false",
+            "blocking_status": "not_blocking" if mapping["contains_mapping_vector"] == "true" else "blocking",
+            "readiness_note": (
+                f"mapping_vector_available_unique_{mapping.get('mapping_unique_value_count', 'unknown')}_no_theory"
+            ),
         },
         {
             "component_id": "source_preflight",
             "component_status": preflight["status"],
             "evidence_artifact": "data/derived/kids1000_cosebis_path_mapping_source_preflight_v1_summary.csv",
-            "ready_for_scoring": "false",
-            "blocking_status": "blocking",
+            "ready_for_scoring": "true" if preflight["mapping_ready"] == "true" else "false",
+            "blocking_status": "not_blocking" if preflight["mapping_ready"] == "true" else "blocking",
             "readiness_note": (
                 f"available_{preflight['available_component_count']}_missing_{preflight['missing_component_count']}"
             ),
@@ -124,7 +126,7 @@ def main() -> None:
             "evidence_artifact": "data/derived/kids1000_cosebis_path_blocker_resolution_order_v1_summary.csv",
             "ready_for_scoring": "false",
             "blocking_status": "blocking",
-            "readiness_note": f"first_blocker_{blockers['first_blocker']}",
+            "readiness_note": f"path_first_blocker_{blockers['first_blocker']}",
         },
         {
             "component_id": "f_overlap_resolution_decision",
@@ -142,7 +144,7 @@ def main() -> None:
             "component_status": null_seeds["status"],
             "evidence_artifact": "data/derived/kids1000_cosebis_null_control_seed_inventory_v1_summary.csv",
             "ready_for_scoring": "false",
-            "blocking_status": "blocking_until_mapping_exists",
+            "blocking_status": "blocking_until_null_controls_execute",
             "readiness_note": f"declared_draws_{null_seeds['total_declared_control_draws']}_not_executed",
         },
         {
@@ -189,8 +191,8 @@ def main() -> None:
         "component_count": str(len(rows)),
         "ready_component_count": str(len(ready_rows)),
         "blocking_component_count": str(len(blocking_rows)),
-        "first_blocker": blockers["first_blocker"],
-        "next_action": "build_source_frozen_mapping_vector_before_theory_vector_and_scoring",
+        "first_blocker": "theory_vector",
+        "next_action": "build_source_frozen_theory_vector_and_execute_null_controls_before_scoring",
         "endpoint_scoring_allowed": "false",
         "scoring_executed": "false",
         "contains_predictions": "false",

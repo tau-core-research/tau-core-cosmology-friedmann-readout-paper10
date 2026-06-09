@@ -111,6 +111,10 @@ def test_public_files_exist() -> None:
         "data/source_manifest/kids1000_cosebis_web_path_mapping_policy_v1.csv",
         "data/derived/kids1000_cosebis_web_path_mapping_readiness_v1.csv",
         "data/derived/kids1000_cosebis_web_path_mapping_readiness_v1_summary.csv",
+        "data/source_manifest/kids1000_cosebis_source_frozen_mapping_vector_policy_v1.csv",
+        "data/derived/kids1000_cosebis_source_frozen_mapping_domain_weights_v1.csv",
+        "data/derived/kids1000_cosebis_source_frozen_mapping_vector_v1.csv",
+        "data/derived/kids1000_cosebis_source_frozen_mapping_vector_v1_summary.csv",
         "data/source_manifest/kids1000_cosebis_redshift_kernel_policy_v1.csv",
         "data/derived/kids1000_cosebis_redshift_kernel_inventory_v1.csv",
         "data/derived/kids1000_cosebis_redshift_kernel_inventory_v1_summary.csv",
@@ -272,6 +276,7 @@ def test_public_files_exist() -> None:
         "docs/kids1000_cosebis_theory_vector_template_v1.md",
         "docs/kids1000_cosebis_mapping_template_join_contract_v1.md",
         "docs/kids1000_cosebis_web_path_mapping_policy_v1.md",
+        "docs/kids1000_cosebis_source_frozen_mapping_vector_v1.md",
         "docs/kids1000_cosebis_redshift_kernel_policy_v1.md",
         "docs/kids1000_cosebis_path_mask_depth_gap_policy_v1.md",
         "docs/kids1000_dr4_path_mask_route_scripts_v1.md",
@@ -359,6 +364,8 @@ def test_public_files_exist() -> None:
         "scripts/validate_kids1000_cosebis_mapping_template_join_contract_v1.py",
         "scripts/build_kids1000_cosebis_web_path_mapping_readiness_v1.py",
         "scripts/validate_kids1000_cosebis_web_path_mapping_readiness_v1.py",
+        "scripts/build_kids1000_cosebis_source_frozen_mapping_vector_v1.py",
+        "scripts/validate_kids1000_cosebis_source_frozen_mapping_vector_v1.py",
         "scripts/build_kids1000_cosebis_redshift_kernel_inventory_v1.py",
         "scripts/validate_kids1000_cosebis_redshift_kernel_inventory_v1.py",
         "scripts/build_kids1000_cosebis_path_mask_depth_gap_inventory_v1.py",
@@ -1443,14 +1450,103 @@ def test_kids1000_cosebis_mapping_template_join_contract_is_schema_only() -> Non
     assert all(row["endpoint_scoring_allowed"] == "false" for row in rows)
 
 
-def test_kids1000_cosebis_web_path_mapping_policy_is_declared_not_computed() -> None:
+def test_kids1000_cosebis_source_frozen_mapping_vector_is_source_side_only() -> None:
+    with (
+        ROOT / "data/source_manifest/kids1000_cosebis_source_frozen_mapping_vector_policy_v1.csv"
+    ).open(newline="") as f:
+        policy = list(csv.DictReader(f))[0]
+    assert policy["status"] == "KIDS1000_COSEBIS_SOURCE_FROZEN_MAPPING_VECTOR_POLICY_FROZEN_NOT_SCORED"
+    assert policy["current_mapping_vector_computed"] == "true"
+    assert policy["current_theory_vector_computed"] == "false"
+    assert policy["endpoint_scoring_allowed"] == "false"
+    assert policy["expected_target_rows"] == "300"
+    assert policy["expected_domain_rows"] == "58800"
+    assert (
+        policy["mapping_rule"]
+        == "source_frozen_row_tile_average_of_unit_mean_fde_times_unit_mean_redshift_pair_factor"
+    )
+    for marker in [
+        "kids_data_vector_values",
+        "posterior_chains",
+        "lensing_residuals",
+        "fit_improvement_flags",
+        "posthoc_mapping_rule_choice",
+    ]:
+        assert marker in policy["forbidden_inputs"]
+
+    with (
+        ROOT / "data/derived/kids1000_cosebis_source_frozen_mapping_vector_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["status"] == "KIDS1000_COSEBIS_SOURCE_FROZEN_MAPPING_VECTOR_BUILT_NOT_THEORY_NOT_SCORED"
+    assert summary["target_rows"] == "300"
+    assert summary["domain_rows"] == "58800"
+    assert summary["mapping_vector_computed"] == "true"
+    assert summary["path_mapping_computed"] == "true"
+    assert summary["contains_mapping_vector"] == "true"
+    assert summary["contains_theory_vector"] == "false"
+    assert summary["contains_predictions"] == "false"
+    assert summary["contains_residuals"] == "false"
+    assert summary["contains_fit_statistics"] == "false"
+    assert summary["uses_kids_data_vector_values"] == "false"
+    assert summary["uses_posterior_chains"] == "false"
+    assert summary["uses_posthoc_weight_selection"] == "false"
+    assert summary["uses_posthoc_tile_selection"] == "false"
+    assert summary["uses_posthoc_sky_direction_selection"] == "false"
+    assert summary["uses_posthoc_web_environment_labels"] == "false"
+    assert summary["uses_posthoc_path_projection_labels"] == "false"
+    assert summary["endpoint_scoring_allowed"] == "false"
+    assert summary["unique_mapping_value_count_rounded_1e_minus_12"] == "15"
+    assert summary["positive_mapping_support"] == "true"
+    assert summary["positive_web_claim_allowed"] == "false"
+    assert summary["mode_shape_generated"] == "false"
+    assert summary["limitation"] == (
+        "source_frozen_mapping_vector_has_pair_redshift_and_path_variation_but_no_mode_shape_or_theory_vector"
+    )
+
+    with (
+        ROOT / "data/derived/kids1000_cosebis_source_frozen_mapping_vector_v1.csv"
+    ).open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    assert len(rows) == 300
+    assert len({row["source_frozen_mapping_value"] for row in rows}) == 15
+    assert all(float(row["source_frozen_mapping_value"]) > 0 for row in rows)
+    assert all(row["w_web_basis"] == "0.000000000000e+00" for row in rows)
+    assert all(row["contains_mapping_vector"] == "true" for row in rows)
+    assert all(row["contains_theory_vector"] == "false" for row in rows)
+    assert all(row["contains_predictions"] == "false" for row in rows)
+    assert all(row["contains_residuals"] == "false" for row in rows)
+    assert all(row["contains_fit_statistics"] == "false" for row in rows)
+    assert all(row["uses_kids_data_vector_values"] == "false" for row in rows)
+    assert all(row["uses_posthoc_weight_selection"] == "false" for row in rows)
+    assert all(row["uses_posthoc_tile_selection"] == "false" for row in rows)
+    assert all(row["uses_posthoc_sky_direction_selection"] == "false" for row in rows)
+    assert all(row["uses_posthoc_web_environment_labels"] == "false" for row in rows)
+    assert all(row["uses_posthoc_path_projection_labels"] == "false" for row in rows)
+    assert all(row["endpoint_scoring_allowed"] == "false" for row in rows)
+
+    with (
+        ROOT / "data/derived/kids1000_cosebis_source_frozen_mapping_domain_weights_v1.csv"
+    ).open(newline="") as f:
+        domain = list(csv.DictReader(f))
+    assert len(domain) == 58800
+    assert len({row["tile_index_zero_based"] for row in domain}) == 196
+    assert all(row["contains_mapping_vector"] == "true" for row in domain)
+    assert all(row["contains_theory_vector"] == "false" for row in domain)
+    assert all(row["contains_predictions"] == "false" for row in domain)
+    assert all(row["contains_residuals"] == "false" for row in domain)
+    assert all(row["uses_kids_data_vector_values"] == "false" for row in domain)
+    assert all(row["endpoint_scoring_allowed"] == "false" for row in domain)
+
+
+def test_kids1000_cosebis_web_path_mapping_policy_is_source_mapping_available_not_scoring() -> None:
     with (
         ROOT / "data/source_manifest/kids1000_cosebis_web_path_mapping_policy_v1.csv"
     ).open(newline="") as f:
         policy = list(csv.DictReader(f))[0]
-    assert policy["status"] == "KIDS1000_COSEBIS_WEB_PATH_MAPPING_POLICY_DECLARED_NOT_COMPUTED"
+    assert policy["status"] == "KIDS1000_COSEBIS_WEB_PATH_MAPPING_POLICY_SOURCE_MAPPING_AVAILABLE_NOT_SCORED"
     assert policy["endpoint_scoring_allowed"] == "false"
-    assert policy["current_mapping_computed"] == "false"
+    assert policy["current_mapping_computed"] == "true"
     assert policy["expected_target_rows"] == "300"
     assert "W_WEB_ANISOTROPY" in policy["active_channels"]
     assert "W_PATH_PROJECTION" in policy["active_channels"]
@@ -1473,8 +1569,8 @@ def test_kids1000_cosebis_web_path_mapping_policy_is_declared_not_computed() -> 
         summary = list(csv.DictReader(f))[0]
     assert summary["status"] == "KIDS1000_COSEBIS_WEB_PATH_MAPPING_READINESS_BUILT_NOT_COMPUTED"
     assert summary["endpoint_scoring_allowed"] == "false"
-    assert summary["current_mapping_computed"] == "false"
-    assert summary["contains_mapping_vector"] == "false"
+    assert summary["current_mapping_computed"] == "true"
+    assert summary["contains_mapping_vector"] == "true"
     assert summary["contains_theory_vector"] == "false"
     assert summary["contains_predictions"] == "false"
     assert summary["contains_residuals"] == "false"
@@ -1486,12 +1582,16 @@ def test_kids1000_cosebis_web_path_mapping_policy_is_declared_not_computed() -> 
     assert summary["n_tomographic_pairs"] == "15"
     assert summary["n_modes_per_pair"] == "20"
     assert summary["required_future_source_product_count"] == "4"
+    assert summary["mapping_vector_artifact"] == (
+        "data/derived/kids1000_cosebis_source_frozen_mapping_vector_v1_summary.csv"
+    )
+    assert summary["mapping_unique_value_count"] == "15"
     with (
         ROOT / "data/derived/kids1000_cosebis_web_path_mapping_readiness_v1.csv"
     ).open(newline="") as f:
         rows = list(csv.DictReader(f))
     assert len(rows) == 1
-    assert rows[0]["contains_mapping_vector"] == "false"
+    assert rows[0]["contains_mapping_vector"] == "true"
     assert rows[0]["uses_posthoc_sky_direction_selection"] == "false"
 
 
@@ -2220,7 +2320,7 @@ def test_kids1000_cosebis_path_source_product_route_manifest_is_not_fetching_or_
         assert row["endpoint_scoring_allowed"] == "false"
 
 
-def test_kids1000_cosebis_path_blocker_resolution_order_is_frozen_not_mapping() -> None:
+def test_kids1000_cosebis_path_blocker_resolution_order_is_mapping_available_not_scoring() -> None:
     with (
         ROOT / "data/source_manifest/kids1000_cosebis_path_blocker_resolution_order_policy_v1.csv"
     ).open(newline="") as f:
@@ -2237,17 +2337,18 @@ def test_kids1000_cosebis_path_blocker_resolution_order_is_frozen_not_mapping() 
         summary = list(csv.DictReader(f))[0]
     assert summary["status"] == "KIDS1000_COSEBIS_PATH_BLOCKER_RESOLUTION_ORDER_BUILT_NOT_FETCHED"
     assert summary["stage_count"] == "6"
-    assert summary["resolved_source_supported_stage_count"] == "3"
+    assert summary["resolved_source_supported_stage_count"] == "4"
     assert summary["resolved_control_supported_stage_count"] == "1"
     assert summary["blocking_unresolved_stage_count"] == "1"
     assert summary["not_allowed_stage_count"] == "0"
     assert summary["declared_not_computed_stage_count"] == "0"
-    assert summary["declared_not_executed_stage_count"] == "1"
-    assert summary["first_blocker"] == "mapping_vector"
+    assert summary["declared_not_executed_stage_count"] == "0"
+    assert summary["first_blocker"] == "null_controls"
+    assert summary["next_action"] == "execute_null_controls_and_build_theory_vector_before_scoring"
     assert summary["external_products_fetched"] == "false"
     assert summary["numeric_factors_computed"] == "false"
-    assert summary["path_mapping_computed"] == "false"
-    assert summary["contains_mapping_vector"] == "false"
+    assert summary["path_mapping_computed"] == "true"
+    assert summary["contains_mapping_vector"] == "true"
     assert summary["contains_theory_vector"] == "false"
     assert summary["contains_predictions"] == "false"
     assert summary["contains_residuals"] == "false"
@@ -2261,14 +2362,14 @@ def test_kids1000_cosebis_path_blocker_resolution_order_is_frozen_not_mapping() 
         ("2", "D_path", "resolved_source_supported"),
         ("3", "E_web", "resolved_control_supported"),
         ("4", "C_norm", "resolved_source_supported"),
-        ("5", "mapping_vector", "blocking_not_built"),
-        ("6", "null_controls", "declared_not_executed"),
+        ("5", "mapping_vector", "resolved_source_supported"),
+        ("6", "null_controls", "blocking_not_executed"),
     ]
     for row in rows:
         assert row["external_products_fetched"] == "false"
         assert row["numeric_factor_computed"] == "false"
-        assert row["path_mapping_computed"] == "false"
-        assert row["contains_mapping_vector"] == "false"
+        assert row["path_mapping_computed"] == "true"
+        assert row["contains_mapping_vector"] == "true"
         assert row["contains_theory_vector"] == "false"
         assert row["uses_kids_data_vector_values"] == "false"
         assert row["endpoint_scoring_allowed"] == "false"
@@ -3797,7 +3898,7 @@ def test_kids1000_cosebis_f_overlap_execution_review_template_is_empty() -> None
         assert all(row[key] == "false" for row in rows)
 
 
-def test_kids1000_cosebis_path_mapping_source_preflight_is_not_mapping() -> None:
+def test_kids1000_cosebis_path_mapping_source_preflight_has_source_mapping_only() -> None:
     with (
         ROOT / "data/source_manifest/kids1000_cosebis_path_mapping_source_preflight_policy_v1.csv"
     ).open(newline="") as f:
@@ -3821,18 +3922,18 @@ def test_kids1000_cosebis_path_mapping_source_preflight_is_not_mapping() -> None
         ROOT / "data/derived/kids1000_cosebis_path_mapping_source_preflight_v1_summary.csv"
     ).open(newline="") as f:
         summary = list(csv.DictReader(f))[0]
-    assert summary["status"] == "KIDS1000_COSEBIS_PATH_MAPPING_SOURCE_PREFLIGHT_BUILT_NOT_MAPPED"
-    assert summary["component_count"] == "10"
-    assert summary["available_component_count"] == "5"
+    assert summary["status"] == "KIDS1000_COSEBIS_PATH_MAPPING_SOURCE_PREFLIGHT_BUILT_MAPPING_AVAILABLE_NOT_THEORY"
+    assert summary["component_count"] == "11"
+    assert summary["available_component_count"] == "6"
     assert summary["partial_available_component_count"] == "1"
     assert summary["missing_component_count"] == "0"
     assert summary["declared_not_executed_component_count"] == "1"
     assert summary["declared_not_computed_component_count"] == "0"
     assert summary["target_rows"] == "300"
-    assert summary["mapping_ready"] == "false"
+    assert summary["mapping_ready"] == "true"
     assert summary["endpoint_scoring_allowed"] == "false"
-    assert summary["path_mapping_computed"] == "false"
-    assert summary["contains_mapping_vector"] == "false"
+    assert summary["path_mapping_computed"] == "true"
+    assert summary["contains_mapping_vector"] == "true"
     assert summary["contains_theory_vector"] == "false"
     assert summary["contains_predictions"] == "false"
     assert summary["contains_residuals"] == "false"
@@ -3850,6 +3951,7 @@ def test_kids1000_cosebis_path_mapping_source_preflight_is_not_mapping() -> None
         "cosebis_path_mapping_design_skeleton",
         "cosebis_path_mapping_domain_skeleton",
         "path_weight_construction_rule",
+        "source_frozen_mapping_vector",
         "full_path_depth_footprint_mapping",
         "web_environment_catalog",
         "null_control_seed_policy",
@@ -3866,6 +3968,9 @@ def test_kids1000_cosebis_path_mapping_source_preflight_is_not_mapping() -> None
     assert by_component["cosebis_path_mapping_domain_skeleton"]["source_count"] == "58800"
     assert by_component["path_weight_construction_rule"]["source_state"] == "available_source_side_normalized_factor_rule"
     assert by_component["path_weight_construction_rule"]["source_count"] == "7"
+    assert by_component["source_frozen_mapping_vector"]["source_state"] == "available"
+    assert by_component["source_frozen_mapping_vector"]["source_count"] == "300"
+    assert by_component["source_frozen_mapping_vector"]["blocking_status"] == "not_blocking"
     assert (
         by_component["full_path_depth_footprint_mapping"]["source_state"]
         == "available_caveated_mask_load_proxy"
@@ -3879,8 +3984,12 @@ def test_kids1000_cosebis_path_mapping_source_preflight_is_not_mapping() -> None
     assert by_component["null_control_seed_policy"]["source_count"] == "1008"
     for row in rows:
         assert row["target_rows"] == "300"
-        assert row["path_mapping_computed"] == "false"
-        assert row["contains_mapping_vector"] == "false"
+        if row["component_id"] == "source_frozen_mapping_vector":
+            assert row["path_mapping_computed"] == "true"
+            assert row["contains_mapping_vector"] == "true"
+        else:
+            assert row["path_mapping_computed"] == "false"
+            assert row["contains_mapping_vector"] == "false"
         assert row["contains_theory_vector"] == "false"
         assert row["contains_predictions"] == "false"
         assert row["contains_residuals"] == "false"
@@ -3912,9 +4021,10 @@ def test_kids1000_cosebis_endpoint_scoring_readiness_is_not_scoring() -> None:
         summary = list(csv.DictReader(f))[0]
     assert summary["status"] == "KIDS1000_COSEBIS_ENDPOINT_SCORING_READINESS_BUILT_NOT_SCORED"
     assert summary["component_count"] == "12"
-    assert summary["ready_component_count"] == "6"
-    assert summary["blocking_component_count"] == "6"
-    assert summary["first_blocker"] == "mapping_vector"
+    assert summary["ready_component_count"] == "8"
+    assert summary["blocking_component_count"] == "4"
+    assert summary["first_blocker"] == "theory_vector"
+    assert summary["next_action"] == "build_source_frozen_theory_vector_and_execute_null_controls_before_scoring"
     assert summary["endpoint_scoring_allowed"] == "false"
     assert summary["scoring_executed"] == "false"
     assert summary["contains_predictions"] == "false"
@@ -3949,14 +4059,16 @@ def test_kids1000_cosebis_endpoint_scoring_readiness_is_not_scoring() -> None:
         == "300_row_join_contract_no_mapping_values"
     )
     assert by_component["theory_vector"]["blocking_status"] == "blocking"
-    assert by_component["web_path_mapping"]["blocking_status"] == "blocking"
-    assert by_component["source_preflight"]["blocking_status"] == "blocking"
-    assert by_component["blocker_resolution_order"]["readiness_note"] == "first_blocker_mapping_vector"
+    assert by_component["web_path_mapping"]["blocking_status"] == "not_blocking"
+    assert by_component["web_path_mapping"]["ready_for_scoring"] == "true"
+    assert by_component["source_preflight"]["blocking_status"] == "not_blocking"
+    assert by_component["source_preflight"]["ready_for_scoring"] == "true"
+    assert by_component["blocker_resolution_order"]["readiness_note"] == "path_first_blocker_null_controls"
     assert (
         by_component["f_overlap_resolution_decision"]["readiness_note"]
         == "endpoint_true_control_true"
     )
-    assert by_component["null_controls"]["blocking_status"] == "blocking_until_mapping_exists"
+    assert by_component["null_controls"]["blocking_status"] == "blocking_until_null_controls_execute"
     assert (
         by_component["partial_control_degeneracy_audit"]["blocking_status"]
         == "blocking_partial_control_endpoint"
@@ -3985,7 +4097,7 @@ def test_kids1000_cosebis_endpoint_scoring_protocol_is_frozen_not_run() -> None:
     assert protocol["scoring_allowed"] == "false"
     assert protocol["parent_readiness_policy"] == readiness["policy_id"]
     assert readiness["endpoint_scoring_allowed"] == "false"
-    assert readiness["first_blocker"] == "mapping_vector"
+    assert readiness["first_blocker"] == "theory_vector"
     assert "chi2=" in protocol["primary_score"]
     for marker in [
         "baseline_only",

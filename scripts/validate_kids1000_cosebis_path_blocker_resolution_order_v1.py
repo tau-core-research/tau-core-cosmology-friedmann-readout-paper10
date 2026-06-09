@@ -28,21 +28,21 @@ def main() -> None:
         raise SystemExit("unexpected blocker-resolution summary status")
     if summary["stage_count"] != "6":
         raise SystemExit("unexpected stage count")
-    if summary["first_blocker"] != "mapping_vector":
-        raise SystemExit("mapping_vector must be the first blocker after C_norm is source-supported")
-    if summary["resolved_source_supported_stage_count"] != "3":
-        raise SystemExit("F_overlap, D_path, and C_norm should be source-supported")
+    if summary["first_blocker"] != "null_controls":
+        raise SystemExit("null_controls must be the first path-side blocker after mapping vector is source-supported")
+    if summary["resolved_source_supported_stage_count"] != "4":
+        raise SystemExit("F_overlap, D_path, C_norm, and mapping_vector should be source-supported")
     if summary["resolved_control_supported_stage_count"] != "1":
         raise SystemExit("E_web should be resolved only as a null-control stage")
     if summary["blocking_unresolved_stage_count"] != "1":
-        raise SystemExit("mapping_vector should be the only explicit unresolved blocker")
+        raise SystemExit("null_controls should be the only explicit unresolved path-side blocker")
     expected = [
         ("1", "freeze_footprint_overlap", "F_overlap", "resolved_source_supported"),
         ("2", "promote_path_depth_support", "D_path", "resolved_source_supported"),
         ("3", "freeze_web_environment_support", "E_web", "resolved_control_supported"),
         ("4", "define_source_side_normalization", "C_norm", "resolved_source_supported"),
-        ("5", "build_mapping_vector", "mapping_vector", "blocking_not_built"),
-        ("6", "execute_null_controls", "null_controls", "declared_not_executed"),
+        ("5", "build_mapping_vector", "mapping_vector", "resolved_source_supported"),
+        ("6", "execute_null_controls", "null_controls", "blocking_not_executed"),
     ]
     observed = [(row["order_rank"], row["resolution_stage"], row["factor_id"], row["stage_status"]) for row in rows]
     if observed != expected:
@@ -56,8 +56,8 @@ def main() -> None:
         raise SystemExit("E_web stage must record the null-web control route")
     if "no_positive_web_claim" not in by_rank["3"]["next_allowed_stage_if_unresolved"]:
         raise SystemExit("E_web control stage must forbid positive web claims")
-    if by_rank["5"]["stage_status"] != "blocking_not_built":
-        raise SystemExit("mapping vector must be the next unresolved blocker")
+    if by_rank["5"]["stage_status"] != "resolved_source_supported":
+        raise SystemExit("mapping vector should be source-supported")
     for key in [
         "external_products_fetched",
         "path_mapping_computed",
@@ -71,10 +71,16 @@ def main() -> None:
         "uses_posthoc_weight_selection",
         "endpoint_scoring_allowed",
     ]:
-        if summary[key] != "false":
-            raise SystemExit(f"summary must keep {key}=false")
-        if any(row[key] != "false" for row in rows):
-            raise SystemExit(f"rows must keep {key}=false")
+        if key in {"path_mapping_computed", "contains_mapping_vector"}:
+            if summary[key] != "true":
+                raise SystemExit(f"summary must keep {key}=true")
+            if any(row[key] != "true" for row in rows):
+                raise SystemExit(f"rows must keep {key}=true")
+        else:
+            if summary[key] != "false":
+                raise SystemExit(f"summary must keep {key}=false")
+            if any(row[key] != "false" for row in rows):
+                raise SystemExit(f"rows must keep {key}=false")
     for marker in [
         "kids_data_vector_values",
         "posterior_chains",

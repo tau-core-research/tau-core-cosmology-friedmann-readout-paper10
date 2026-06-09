@@ -9,6 +9,7 @@ ROOT = Path(__file__).resolve().parents[1]
 POLICY = ROOT / "data" / "source_manifest" / "kids1000_cosebis_web_path_mapping_policy_v1.csv"
 THEORY = ROOT / "data" / "derived" / "kids1000_cosebis_theory_vector_readiness_v1_summary.csv"
 TOMO = ROOT / "data" / "derived" / "kids1000_cosebis_tomographic_mode_inventory_v1_summary.csv"
+MAPPING_VECTOR = ROOT / "data" / "derived" / "kids1000_cosebis_source_frozen_mapping_vector_v1_summary.csv"
 OUT = ROOT / "data" / "derived" / "kids1000_cosebis_web_path_mapping_readiness_v1.csv"
 SUMMARY = ROOT / "data" / "derived" / "kids1000_cosebis_web_path_mapping_readiness_v1_summary.csv"
 
@@ -25,10 +26,13 @@ def main() -> None:
     policy = read_one(POLICY)
     theory = read_one(THEORY)
     tomo = read_one(TOMO)
+    mapping_vector = read_one(MAPPING_VECTOR)
     if policy["endpoint_scoring_allowed"].lower() != "false":
         raise SystemExit("COSEBIs web/path mapping policy must remain endpoint disabled")
-    if policy["current_mapping_computed"].lower() != "false":
-        raise SystemExit("COSEBIs web/path mapping must not be computed in this gate")
+    if policy["current_mapping_computed"].lower() != "true":
+        raise SystemExit("COSEBIs web/path mapping policy should point to the source-frozen mapping vector")
+    if mapping_vector["mapping_vector_computed"] != "true":
+        raise SystemExit("source-frozen mapping vector must be available")
     if theory["contains_theory_vector"].lower() != "false":
         raise SystemExit("theory-vector readiness must not contain a theory vector")
     if policy["expected_target_rows"] != theory["expected_theory_vector_rows"]:
@@ -46,8 +50,8 @@ def main() -> None:
         "n_modes_per_pair": tomo["n_modes_per_pair"],
         "active_channels": policy["active_channels"],
         "mapping_status": policy["mapping_status"],
-        "current_mapping_computed": "false",
-        "contains_mapping_vector": "false",
+        "current_mapping_computed": "true",
+        "contains_mapping_vector": "true",
         "contains_theory_vector": "false",
         "contains_predictions": "false",
         "contains_residuals": "false",
@@ -58,7 +62,9 @@ def main() -> None:
         "required_future_source_product_count": str(len(required_products)),
         "required_future_source_products": policy["required_future_source_products"],
         "endpoint_scoring_allowed": "false",
-        "claim_boundary": "kids1000_cosebis_web_path_mapping_readiness_not_validation",
+        "mapping_vector_artifact": "data/derived/kids1000_cosebis_source_frozen_mapping_vector_v1_summary.csv",
+        "mapping_unique_value_count": mapping_vector["unique_mapping_value_count_rounded_1e_minus_12"],
+        "claim_boundary": "kids1000_cosebis_web_path_mapping_readiness_not_theory_not_validation",
     }
     OUT.parent.mkdir(parents=True, exist_ok=True)
     with OUT.open("w", newline="") as f:
@@ -73,7 +79,7 @@ def main() -> None:
         writer.writerow(summary)
     print(
         "PAPER10_KIDS1000_COSEBIS_WEB_PATH_MAPPING_READINESS_V1_BUILT "
-        f"rows={row['target_rows']} mapping_computed=false endpoint_allowed=false"
+        f"rows={row['target_rows']} mapping_computed=true endpoint_allowed=false"
     )
 
 

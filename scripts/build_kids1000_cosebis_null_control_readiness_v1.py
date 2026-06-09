@@ -27,8 +27,10 @@ def main() -> None:
         raise SystemExit("COSEBIs null-control policy must remain endpoint disabled")
     if policy["current_controls_executed"].lower() != "false":
         raise SystemExit("COSEBIs null controls must not be executed in this gate")
-    if mapping["current_mapping_computed"].lower() != "false":
-        raise SystemExit("web/path mapping must not be computed before null controls are frozen")
+    if mapping["current_mapping_computed"].lower() != "true":
+        raise SystemExit("source-frozen web/path mapping basis must exist before null controls are declared ready")
+    if mapping["contains_theory_vector"].lower() != "false":
+        raise SystemExit("null-control readiness must precede theory-vector construction")
 
     families = policy["control_families"].split(";")
     rows: list[dict[str, str]] = []

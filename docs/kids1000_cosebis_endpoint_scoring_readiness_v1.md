@@ -18,9 +18,12 @@ Current result:
   control;
 - `C_norm` is source-side resolved by unit-mean normalization of the frozen
   source factors;
-- blocking components: source preflight/mapping vector, theory vector, web/path
-  mapping, null controls, and the partial-control degeneracy audit;
-- first blocker: `mapping_vector`;
+- the web/path mapping and source-preflight ledgers now expose a source-frozen
+  300-row mapping basis;
+- blocking components: theory vector, blocker-resolution finalization through
+  null controls, null-control execution, and the partial-control degeneracy
+  audit;
+- first endpoint blocker: `theory_vector`;
 - endpoint scoring remains disabled.
 
 The ledger forbids KiDS data-vector values for source selection, posterior

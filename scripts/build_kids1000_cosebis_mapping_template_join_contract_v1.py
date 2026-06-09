@@ -43,8 +43,8 @@ def main() -> None:
         raise SystemExit("unexpected theory-template parent policy")
     if mapping_policy["policy_id"] != policy["parent_mapping_policy"]:
         raise SystemExit("unexpected mapping parent policy")
-    if mapping_policy["current_mapping_computed"] != "false":
-        raise SystemExit("parent mapping policy must remain uncomputed")
+    if mapping_policy["current_mapping_computed"] != "true":
+        raise SystemExit("parent mapping policy must expose the source-frozen mapping vector")
     if policy["expected_rows"] != template_summary["template_rows"]:
         raise SystemExit("join contract expected rows must match theory-template rows")
     if len(template_rows) != int(policy["expected_rows"]):

@@ -89,18 +89,18 @@ def main() -> None:
             "order_rank": "5",
             "resolution_stage": "build_mapping_vector",
             "factor_id": "mapping_vector",
-            "accepted_route_ids": "none_yet",
-            "stage_status": "blocking_not_built",
+            "accepted_route_ids": "KIDS1000_COSEBIS_SOURCE_FROZEN_MAPPING_VECTOR_POLICY_V1",
+            "stage_status": "resolved_source_supported",
             "why_first": "mapping_vector_requires_resolved_or_control_declared_factor_state",
             "minimum_exit_condition": "path_mapping_vector_built_from_frozen_factors_without_predictions_or_residuals",
-            "next_allowed_stage_if_unresolved": "none",
+            "next_allowed_stage_if_unresolved": "proceed_to_null_controls",
         },
         {
             "order_rank": "6",
             "resolution_stage": "execute_null_controls",
             "factor_id": "null_controls",
             "accepted_route_ids": "ROUTE_NULL_CONTROLS_AFTER_MAPPING",
-            "stage_status": "declared_not_executed",
+            "stage_status": "blocking_not_executed",
             "why_first": "null_controls_need_a_mapping_vector_to_act_on",
             "minimum_exit_condition": "frozen_seed_and_multiplicity_controls_executed_without_posthoc_selection",
             "next_allowed_stage_if_unresolved": "none",
@@ -112,8 +112,8 @@ def main() -> None:
                 "policy_id": policy["policy_id"],
                 "external_products_fetched": "false",
                 "numeric_factor_computed": "false",
-                "path_mapping_computed": "false",
-                "contains_mapping_vector": "false",
+                "path_mapping_computed": "true",
+                "contains_mapping_vector": "true",
                 "contains_theory_vector": "false",
                 "contains_predictions": "false",
                 "contains_residuals": "false",
@@ -122,7 +122,7 @@ def main() -> None:
                 "uses_posterior_chains": "false",
                 "uses_posthoc_weight_selection": "false",
                 "endpoint_scoring_allowed": "false",
-                "claim_boundary": "kids1000_cosebis_path_blocker_resolution_order_not_mapping_not_validation",
+                "claim_boundary": "kids1000_cosebis_path_blocker_resolution_order_not_theory_not_validation",
             }
         )
 
@@ -139,17 +139,17 @@ def main() -> None:
         "resolved_source_supported_stage_count": str(sum(row["stage_status"] == "resolved_source_supported" for row in rows)),
         "resolved_control_supported_stage_count": str(sum(row["stage_status"] == "resolved_control_supported" for row in rows)),
         "blocking_unresolved_stage_count": str(
-            sum(row["stage_status"] in {"blocking_not_resolved", "blocking_not_built"} for row in rows)
+            sum(row["stage_status"] in {"blocking_not_resolved", "blocking_not_built", "blocking_not_executed"} for row in rows)
         ),
         "not_allowed_stage_count": str(sum(row["stage_status"] == "not_allowed_yet" for row in rows)),
         "declared_not_computed_stage_count": str(sum(row["stage_status"] == "declared_not_computed" for row in rows)),
         "declared_not_executed_stage_count": str(sum(row["stage_status"] == "declared_not_executed" for row in rows)),
-        "first_blocker": "mapping_vector",
-        "next_action": "build_source_frozen_mapping_vector_before_theory_vector_or_scoring",
+        "first_blocker": "null_controls",
+        "next_action": "execute_null_controls_and_build_theory_vector_before_scoring",
         "external_products_fetched": "false",
         "numeric_factors_computed": "false",
-        "path_mapping_computed": "false",
-        "contains_mapping_vector": "false",
+        "path_mapping_computed": "true",
+        "contains_mapping_vector": "true",
         "contains_theory_vector": "false",
         "contains_predictions": "false",
         "contains_residuals": "false",
@@ -158,7 +158,7 @@ def main() -> None:
         "uses_posterior_chains": "false",
         "uses_posthoc_weight_selection": "false",
         "endpoint_scoring_allowed": "false",
-        "claim_boundary": "kids1000_cosebis_path_blocker_resolution_order_not_mapping_not_validation",
+        "claim_boundary": "kids1000_cosebis_path_blocker_resolution_order_not_theory_not_validation",
     }
     with SUMMARY.open("w", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=list(summary.keys()), lineterminator="\n")
@@ -166,7 +166,7 @@ def main() -> None:
         writer.writerow(summary)
     print(
         "PAPER10_KIDS1000_COSEBIS_PATH_BLOCKER_RESOLUTION_ORDER_V1_BUILT "
-        f"stages={len(rows)} first_blocker=mapping_vector endpoint_allowed=false"
+        f"stages={len(rows)} first_blocker=null_controls endpoint_allowed=false"
     )
 
 

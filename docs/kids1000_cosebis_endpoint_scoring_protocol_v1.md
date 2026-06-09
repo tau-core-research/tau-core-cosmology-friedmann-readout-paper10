@@ -32,5 +32,7 @@ The future comparison must report:
 The protocol can be interpreted only after the source-readiness ledger is green,
 null controls are executed under frozen seeds, and no endpoint-leakage flag is
 true. The current release fails that precondition: `F_overlap`, a caveated
-`D_path` mask-load proxy, and a uniform null-web `E_web` control are
-source-supported, and `C_norm` is source-side resolved by unit-mean normalization. The first blocker is now the mapping vector.
+`D_path` mask-load proxy, a uniform null-web `E_web` control, `C_norm`, and a
+source-frozen mapping basis are source-supported, but no source-frozen theory
+vector or null-control replay has been built. The first endpoint blocker is now
+the theory vector.

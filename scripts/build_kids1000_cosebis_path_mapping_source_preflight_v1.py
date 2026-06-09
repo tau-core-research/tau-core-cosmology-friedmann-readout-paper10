@@ -16,6 +16,7 @@ DESIGN_SKELETON = ROOT / "data" / "derived" / "kids1000_cosebis_path_mapping_des
 DOMAIN_SKELETON = ROOT / "data" / "derived" / "kids1000_cosebis_path_mapping_domain_skeleton_v1_summary.csv"
 WEIGHT_RULE = ROOT / "data" / "derived" / "kids1000_cosebis_path_weight_construction_rule_v1_summary.csv"
 E_WEB_NULL = ROOT / "data" / "derived" / "kids1000_cosebis_e_web_null_control_rule_v1_summary.csv"
+MAPPING_VECTOR = ROOT / "data" / "derived" / "kids1000_cosebis_source_frozen_mapping_vector_v1_summary.csv"
 NULL_SEEDS = ROOT / "data" / "derived" / "kids1000_cosebis_null_control_seed_inventory_v1_summary.csv"
 OUT = ROOT / "data" / "derived" / "kids1000_cosebis_path_mapping_source_preflight_v1.csv"
 SUMMARY = ROOT / "data" / "derived" / "kids1000_cosebis_path_mapping_source_preflight_v1_summary.csv"
@@ -40,14 +41,17 @@ def main() -> None:
     domain_skeleton = read_one(DOMAIN_SKELETON)
     weight_rule = read_one(WEIGHT_RULE)
     e_web_null = read_one(E_WEB_NULL)
+    mapping_vector = read_one(MAPPING_VECTOR)
     null_seeds = read_one(NULL_SEEDS)
 
     if policy["endpoint_scoring_allowed"].lower() != "false":
         raise SystemExit("path-mapping source preflight must remain endpoint disabled")
     if policy["current_path_mapping_computed"].lower() != "false":
         raise SystemExit("path mapping must not be computed in source preflight")
-    if mapping_policy["current_mapping_computed"].lower() != "false":
-        raise SystemExit("parent mapping policy must remain not computed")
+    if mapping_policy["current_mapping_computed"].lower() != "true":
+        raise SystemExit("parent mapping policy should record the source-frozen mapping vector")
+    if mapping_vector["mapping_vector_computed"] != "true":
+        raise SystemExit("mapping vector must be computed before source preflight is ready")
     if mask_shell["path_mapping_computed"].lower() != "false":
         raise SystemExit("mask shell must not contain a path mapping")
 
@@ -134,13 +138,22 @@ def main() -> None:
             "limitation": "predeclared_null_web_control_available_no_positive_web_claim",
         },
         {
+            "component_id": "source_frozen_mapping_vector",
+            "source_state": "available",
+            "evidence_artifact": "data/derived/kids1000_cosebis_source_frozen_mapping_vector_v1_summary.csv",
+            "source_count": mapping_vector["target_rows"],
+            "preflight_role": "source_frozen_300_row_mapping_basis",
+            "blocking_status": "not_blocking",
+            "limitation": mapping_vector["limitation"],
+        },
+        {
             "component_id": "null_control_seed_policy",
             "source_state": "declared_not_executed",
             "evidence_artifact": "data/derived/kids1000_cosebis_null_control_seed_inventory_v1_summary.csv",
             "source_count": null_seeds["total_declared_control_draws"],
             "preflight_role": "future_null_controls",
-            "blocking_status": "blocking_until_mapping_exists",
-            "limitation": "controls_declared_but_not_run_and_no_mapping_vector_exists",
+            "blocking_status": "blocking_until_null_controls_execute",
+            "limitation": "controls_declared_but_not_run_after_source_mapping_basis",
         },
     ]
     for row in rows:
@@ -149,8 +162,8 @@ def main() -> None:
                 "policy_id": policy["policy_id"],
                 "selected_statistic": mapping_policy["selected_statistic"],
                 "target_rows": mapping_policy["expected_target_rows"],
-                "path_mapping_computed": "false",
-                "contains_mapping_vector": "false",
+                "path_mapping_computed": "true" if row["component_id"] == "source_frozen_mapping_vector" else "false",
+                "contains_mapping_vector": "true" if row["component_id"] == "source_frozen_mapping_vector" else "false",
                 "contains_theory_vector": "false",
                 "contains_predictions": "false",
                 "contains_residuals": "false",
@@ -159,7 +172,7 @@ def main() -> None:
                 "uses_posterior_chains": "false",
                 "uses_posthoc_sky_direction_selection": "false",
                 "endpoint_scoring_allowed": "false",
-                "claim_boundary": "kids1000_cosebis_path_mapping_source_preflight_not_mapping_not_validation",
+                "claim_boundary": "kids1000_cosebis_path_mapping_source_preflight_mapping_available_not_theory_not_validation",
             }
         )
 
@@ -171,7 +184,7 @@ def main() -> None:
 
     summary = {
         "policy_id": policy["policy_id"],
-        "status": "KIDS1000_COSEBIS_PATH_MAPPING_SOURCE_PREFLIGHT_BUILT_NOT_MAPPED",
+        "status": "KIDS1000_COSEBIS_PATH_MAPPING_SOURCE_PREFLIGHT_BUILT_MAPPING_AVAILABLE_NOT_THEORY",
         "component_count": str(len(rows)),
         "available_component_count": str(sum(row["source_state"] == "available" for row in rows)),
         "partial_available_component_count": str(sum(row["source_state"].startswith("partial_available") for row in rows)),
@@ -179,9 +192,9 @@ def main() -> None:
         "declared_not_executed_component_count": str(sum(row["source_state"] == "declared_not_executed" for row in rows)),
         "declared_not_computed_component_count": str(sum(row["source_state"] == "declared_not_computed" for row in rows)),
         "target_rows": mapping_policy["expected_target_rows"],
-        "mapping_ready": "false",
-        "path_mapping_computed": "false",
-        "contains_mapping_vector": "false",
+        "mapping_ready": "true",
+        "path_mapping_computed": "true",
+        "contains_mapping_vector": "true",
         "contains_theory_vector": "false",
         "contains_predictions": "false",
         "contains_residuals": "false",
@@ -190,7 +203,7 @@ def main() -> None:
         "uses_posterior_chains": "false",
         "uses_posthoc_sky_direction_selection": "false",
         "endpoint_scoring_allowed": "false",
-        "claim_boundary": "kids1000_cosebis_path_mapping_source_preflight_not_mapping_not_validation",
+        "claim_boundary": "kids1000_cosebis_path_mapping_source_preflight_mapping_available_not_theory_not_validation",
     }
     with SUMMARY.open("w", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=list(summary.keys()), lineterminator="\n")
@@ -198,7 +211,7 @@ def main() -> None:
         writer.writerow(summary)
     print(
         "PAPER10_KIDS1000_COSEBIS_PATH_MAPPING_SOURCE_PREFLIGHT_V1_BUILT "
-        f"components={len(rows)} mapping_ready=false endpoint_allowed=false"
+        f"components={len(rows)} mapping_ready=true endpoint_allowed=false"
     )
 
 

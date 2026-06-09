@@ -23,16 +23,16 @@ def main() -> None:
         raise SystemExit("unexpected path-mapping source preflight policy status")
     if policy["endpoint_scoring_allowed"] != "false":
         raise SystemExit("path-mapping source preflight policy must remain endpoint disabled")
-    if len(rows) != 10:
-        raise SystemExit("path-mapping source preflight must contain ten components")
-    if summary["status"] != "KIDS1000_COSEBIS_PATH_MAPPING_SOURCE_PREFLIGHT_BUILT_NOT_MAPPED":
+    if len(rows) != 11:
+        raise SystemExit("path-mapping source preflight must contain eleven components")
+    if summary["status"] != "KIDS1000_COSEBIS_PATH_MAPPING_SOURCE_PREFLIGHT_BUILT_MAPPING_AVAILABLE_NOT_THEORY":
         raise SystemExit("unexpected path-mapping source preflight summary status")
-    if summary["component_count"] != "10":
+    if summary["component_count"] != "11":
         raise SystemExit("unexpected component count")
     if summary["target_rows"] != "300":
         raise SystemExit("path-mapping source preflight must target 300 COSEBIs rows")
-    if summary["mapping_ready"] != "false":
-        raise SystemExit("mapping must not be marked ready")
+    if summary["mapping_ready"] != "true":
+        raise SystemExit("mapping should be source-side ready after source-frozen mapping vector")
     expected_states = {
         "cosebis_target_rows": "available",
         "redshift_kernel_inventory": "available",
@@ -43,6 +43,7 @@ def main() -> None:
         "path_weight_construction_rule": "available_source_side_normalized_factor_rule",
         "full_path_depth_footprint_mapping": "available_caveated_mask_load_proxy",
         "web_environment_catalog": "available_uniform_null_web_control",
+        "source_frozen_mapping_vector": "available",
         "null_control_seed_policy": "declared_not_executed",
     }
     by_component = {row["component_id"]: row for row in rows}
@@ -61,6 +62,8 @@ def main() -> None:
         raise SystemExit("domain skeleton should carry all 300x196 target-tile rows")
     if by_component["path_weight_construction_rule"]["source_count"] != "7":
         raise SystemExit("path-weight construction rule should carry seven factors")
+    if by_component["source_frozen_mapping_vector"]["source_count"] != "300":
+        raise SystemExit("source-frozen mapping vector should carry 300 rows")
     if by_component["redshift_kernel_inventory"]["source_count"] != "5":
         raise SystemExit("redshift kernel inventory should carry five source bins")
     if by_component["full_path_depth_footprint_mapping"]["blocking_status"] != "not_blocking":
@@ -85,10 +88,18 @@ def main() -> None:
         "uses_posthoc_sky_direction_selection",
         "endpoint_scoring_allowed",
     ]:
-        if summary[key] != "false":
-            raise SystemExit(f"summary must keep {key}=false")
-        if any(row[key] != "false" for row in rows):
-            raise SystemExit(f"rows must keep {key}=false")
+        if key in {"path_mapping_computed", "contains_mapping_vector"}:
+            if summary[key] != "true":
+                raise SystemExit(f"summary must keep {key}=true")
+            for row in rows:
+                expected = "true" if row["component_id"] == "source_frozen_mapping_vector" else "false"
+                if row[key] != expected:
+                    raise SystemExit(f"unexpected row {key} for {row['component_id']}")
+        else:
+            if summary[key] != "false":
+                raise SystemExit(f"summary must keep {key}=false")
+            if any(row[key] != "false" for row in rows):
+                raise SystemExit(f"rows must keep {key}=false")
     for marker in [
         "kids_data_vector_values",
         "posterior_chains",
