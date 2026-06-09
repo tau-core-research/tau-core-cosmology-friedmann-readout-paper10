@@ -187,6 +187,9 @@ def test_public_files_exist() -> None:
         "data/source_manifest/kids1000_cosebis_partial_control_mapping_shell_policy_v1.csv",
         "data/derived/kids1000_cosebis_partial_control_mapping_shell_v1.csv",
         "data/derived/kids1000_cosebis_partial_control_mapping_shell_v1_summary.csv",
+        "data/source_manifest/kids1000_cosebis_partial_control_mapping_values_policy_v1.csv",
+        "data/derived/kids1000_cosebis_partial_control_mapping_values_v1.csv",
+        "data/derived/kids1000_cosebis_partial_control_mapping_values_v1_summary.csv",
         "docs/kids1000_cosebis_f_overlap_filled_execution_review_validator_v1.md",
         "scripts/validate_kids1000_cosebis_f_overlap_filled_execution_review_artifact_v1.py",
         "data/source_manifest/kids1000_cosebis_endpoint_scoring_readiness_policy_v1.csv",
@@ -257,6 +260,7 @@ def test_public_files_exist() -> None:
         "docs/kids1000_cosebis_f_overlap_resolution_decision_v1.md",
         "docs/kids1000_cosebis_partial_control_scoring_protocol_v1.md",
         "docs/kids1000_cosebis_partial_control_mapping_shell_v1.md",
+        "docs/kids1000_cosebis_partial_control_mapping_values_v1.md",
         "docs/kids1000_cosebis_path_mapping_source_preflight_policy_v1.md",
         "docs/kids1000_cosebis_null_control_policy_v1.md",
         "docs/kids1000_cosebis_null_control_seed_policy_v1.md",
@@ -356,6 +360,8 @@ def test_public_files_exist() -> None:
         "scripts/validate_kids1000_cosebis_partial_control_scoring_protocol_v1.py",
         "scripts/build_kids1000_cosebis_partial_control_mapping_shell_v1.py",
         "scripts/validate_kids1000_cosebis_partial_control_mapping_shell_v1.py",
+        "scripts/build_kids1000_cosebis_partial_control_mapping_values_v1.py",
+        "scripts/validate_kids1000_cosebis_partial_control_mapping_values_v1.py",
         "scripts/build_kids1000_cosebis_path_mapping_source_preflight_v1.py",
         "scripts/validate_kids1000_cosebis_path_mapping_source_preflight_v1.py",
         "scripts/build_kids1000_cosebis_null_control_readiness_v1.py",
@@ -2682,6 +2688,85 @@ def test_kids1000_cosebis_partial_control_mapping_shell_is_not_mapping() -> None
     assert all(row["endpoint_scoring_allowed"] == "false" for row in rows)
     assert {row["source_shell_scope"] for row in rows} == {"three_mask_subset_only"}
     assert all(abs(float(row["source_mask_shell_value"])) <= 1.000000000001 for row in rows)
+
+
+def test_kids1000_cosebis_partial_control_mapping_values_are_not_scores() -> None:
+    with (
+        ROOT / "data/source_manifest/kids1000_cosebis_partial_control_mapping_values_policy_v1.csv"
+    ).open(newline="") as f:
+        policy = list(csv.DictReader(f))[0]
+    assert policy["status"] == "KIDS1000_COSEBIS_PARTIAL_CONTROL_MAPPING_VALUES_POLICY_FROZEN_SOURCE_ONLY"
+    assert policy["formula_id"] == "PARTIAL_CONTROL_MASK_Z_MODE_DECAY_V1"
+    assert policy["expected_shell_rows"] == "900"
+    assert policy["current_contains_endpoint_mapping_vector"] == "false"
+    assert policy["current_contains_theory_vector"] == "false"
+    assert policy["current_contains_predictions"] == "false"
+    assert policy["current_contains_residuals"] == "false"
+    assert policy["current_contains_fit_statistics"] == "false"
+    assert policy["current_uses_kids_data_vector_values"] == "false"
+    assert policy["current_uses_posterior_chains"] == "false"
+    assert policy["current_uses_posthoc_selection"] == "false"
+    assert policy["current_partial_control_scoring_allowed"] == "false"
+    assert policy["current_endpoint_scoring_allowed"] == "false"
+    for marker in [
+        "kids_data_vector_values_for_source_selection",
+        "KiDS_En_data_vector_values",
+        "posterior_chains",
+        "lensing_residuals",
+        "fit_improvement_flags",
+        "posthoc_mask_subset_selection",
+        "posthoc_weight_selection",
+    ]:
+        assert marker in policy["forbidden_inputs"]
+    with (
+        ROOT / "data/derived/kids1000_cosebis_partial_control_mapping_values_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["status"] == "KIDS1000_COSEBIS_PARTIAL_CONTROL_MAPPING_VALUES_BUILT_SOURCE_ONLY_NOT_SCORED"
+    assert summary["shell_rows"] == "900"
+    assert summary["target_rows"] == "300"
+    assert summary["mask_control_rows"] == "3"
+    assert summary["partial_mapping_values_computed"] == "true"
+    assert summary["contains_partial_mapping_values"] == "true"
+    assert summary["contains_endpoint_mapping_vector"] == "false"
+    assert summary["contains_theory_vector"] == "false"
+    assert summary["contains_predictions"] == "false"
+    assert summary["contains_residuals"] == "false"
+    assert summary["contains_fit_statistics"] == "false"
+    assert summary["uses_kids_data_vector_values"] == "false"
+    assert summary["uses_posterior_chains"] == "false"
+    assert summary["uses_posthoc_selection"] == "false"
+    assert summary["partial_control_scoring_allowed"] == "false"
+    assert summary["endpoint_scoring_allowed"] == "false"
+    with (
+        ROOT / "data/derived/kids1000_cosebis_partial_control_mapping_values_v1.csv"
+    ).open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    assert len(rows) == 900
+    assert [row["shell_row_index_zero_based"] for row in rows] == [str(i) for i in range(900)]
+    assert len({row["target_row_index_zero_based"] for row in rows}) == 300
+    assert len({row["mask_sample_index_zero_based"] for row in rows}) == 3
+    for row in rows:
+        assert row["mapping_values_policy_id"] == policy["policy_id"]
+        assert row["formula_id"] == policy["formula_id"]
+        assert row["partial_mapping_values_computed"] == "true"
+        assert row["contains_partial_mapping_values"] == "true"
+        assert row["contains_endpoint_mapping_vector"] == "false"
+        assert row["contains_theory_vector"] == "false"
+        assert row["contains_prediction"] == "false"
+        assert row["contains_residual"] == "false"
+        assert row["contains_fit_statistic"] == "false"
+        assert row["uses_kids_data_vector_values"] == "false"
+        assert row["uses_posterior_chains"] == "false"
+        assert row["uses_posthoc_selection"] == "false"
+        assert row["partial_control_scoring_allowed"] == "false"
+        assert row["endpoint_scoring_allowed"] == "false"
+        expected = (
+            float(row["source_mask_shell_value"])
+            * float(row["normalized_pair_mean_z_weight"])
+            * float(row["mode_decay_weight"])
+        )
+        assert abs(float(row["partial_mapping_value"]) - expected) < 5e-11
 
 
 def test_kids1000_cosebis_f_overlap_execution_review_schema_is_not_execution() -> None:

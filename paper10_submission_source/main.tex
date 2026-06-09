@@ -567,6 +567,20 @@ The accompanying partial-control mapping shell materializes only the
 \(300\times3=900\) source-side support table connecting COSEBIs rows to the
 three caveated mask controls; it computes no mapping value, theory vector,
 residual, or score.
+A further source-only diagnostic artifact freezes partial-control mapping
+values on this same support table using
+\[
+  m_{\rm pc} =
+  s_{\rm mask}\,
+  w_{\bar z}(i,j)\,
+  n^{-1/2},
+\]
+where \(s_{\rm mask}\) is the three-mask shell value, \(w_{\bar z}(i,j)\) is a
+normalized mean-redshift pair weight from the KiDS \(NZ\_SOURCE\) inventory,
+and \(n\) is the COSEBIs mode index. This is a caveated partial-control
+mapping-value artifact only: it is not an endpoint mapping vector, not a
+COSEBIs theory vector, and it computes no residual, likelihood, score, or
+validation statistic.
 The scoring-facing view is then summarized by an endpoint-readiness ledger:
 the COSEBIs data-vector structure, covariance matrix, covariance solve policy,
 theory-vector row-interface template, and mapping-to-template join contract are

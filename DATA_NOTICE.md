@@ -313,6 +313,14 @@ source-side support table between COSEBIs rows and the three caveated mask
 controls. It carries mask-shell observables and row identities, but no mapping
 value, theory vector, prediction, residual, likelihood, fit statistic, endpoint
 score, or validation artifact.
+The partial-control mapping-values artifact then applies only a frozen,
+source-side diagnostic rule to that shell:
+`source_mask_shell_value * normalized_pair_mean_z_weight * mode^{-1/2}`.
+The redshift factor comes from the KiDS `NZ_SOURCE` mean-redshift inventory and
+the mode factor from the COSEBIs row index. This artifact is not an endpoint
+mapping vector, not a theory vector, and not a score; it contains no KiDS
+data-vector values, posterior chains, residuals, likelihood values, fit
+statistics, AIC values, endpoint scores, or validation claims.
 
 The endpoint scoring-readiness ledger is a no-go summary, not a score. It
 records that the COSEBIs data-vector structure, covariance matrix, covariance

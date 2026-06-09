@@ -830,6 +830,23 @@ The partial-control mapping shell materializes the `300 x 3 = 900` source-side
 support table linking the COSEBIs template rows to the three caveated mask
 controls. It carries mask-shell observables and row identities only; no mapping
 value, theory vector, residual, or score is computed.
+The subsequent partial-control mapping-values artifact applies a frozen
+source-only diagnostic rule to that same `900`-row support table:
+`source_mask_shell_value * normalized_pair_mean_z_weight * mode^{-1/2}`.
+The mean-redshift weight comes from the source-frozen KiDS `NZ_SOURCE`
+inventory and the mode weight comes from COSEBIs row structure. This is a
+caveated partial-control mapping-value vector only; it is not an endpoint
+mapping vector, not a COSEBIs theory vector, and still emits no residual,
+likelihood, score, AIC value, or validation result.
+
+```text
+data/source_manifest/kids1000_cosebis_partial_control_mapping_values_policy_v1.csv
+data/derived/kids1000_cosebis_partial_control_mapping_values_v1.csv
+data/derived/kids1000_cosebis_partial_control_mapping_values_v1_summary.csv
+docs/kids1000_cosebis_partial_control_mapping_values_v1.md
+scripts/build_kids1000_cosebis_partial_control_mapping_values_v1.py
+scripts/validate_kids1000_cosebis_partial_control_mapping_values_v1.py
+```
 
 The endpoint scoring-readiness ledger is recorded in:
 
