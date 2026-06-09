@@ -164,6 +164,9 @@ def test_public_files_exist() -> None:
         "data/source_manifest/kids1000_cosebis_f_overlap_full_mask_batch_dry_run_policy_v1.csv",
         "data/derived/kids1000_cosebis_f_overlap_full_mask_batch_dry_run_v1.csv",
         "data/derived/kids1000_cosebis_f_overlap_full_mask_batch_dry_run_v1_summary.csv",
+        "data/source_manifest/kids1000_cosebis_f_overlap_batch_promotion_review_policy_v1.csv",
+        "data/derived/kids1000_cosebis_f_overlap_batch_promotion_review_v1.csv",
+        "data/derived/kids1000_cosebis_f_overlap_batch_promotion_review_v1_summary.csv",
         "data/source_manifest/kids1000_cosebis_path_mapping_source_preflight_policy_v1.csv",
         "data/derived/kids1000_cosebis_path_mapping_source_preflight_v1.csv",
         "data/derived/kids1000_cosebis_path_mapping_source_preflight_v1_summary.csv",
@@ -215,6 +218,7 @@ def test_public_files_exist() -> None:
         "docs/kids1000_cosebis_f_overlap_full_mask_acquisition_policy_v1.md",
         "docs/kids1000_cosebis_f_overlap_full_mask_batch_plan_policy_v1.md",
         "docs/kids1000_cosebis_f_overlap_full_mask_batch_dry_run_policy_v1.md",
+        "docs/kids1000_cosebis_f_overlap_batch_promotion_review_policy_v1.md",
         "docs/kids1000_cosebis_path_mapping_source_preflight_policy_v1.md",
         "docs/kids1000_cosebis_null_control_policy_v1.md",
         "docs/kids1000_cosebis_null_control_seed_policy_v1.md",
@@ -299,6 +303,8 @@ def test_public_files_exist() -> None:
         "scripts/validate_kids1000_cosebis_f_overlap_full_mask_batch_plan_v1.py",
         "scripts/acquire_kids1000_cosebis_f_overlap_full_mask_batch_v1.py",
         "scripts/validate_kids1000_cosebis_f_overlap_full_mask_batch_dry_run_v1.py",
+        "scripts/build_kids1000_cosebis_f_overlap_batch_promotion_review_v1.py",
+        "scripts/validate_kids1000_cosebis_f_overlap_batch_promotion_review_v1.py",
         "scripts/build_kids1000_cosebis_path_mapping_source_preflight_v1.py",
         "scripts/validate_kids1000_cosebis_path_mapping_source_preflight_v1.py",
         "scripts/build_kids1000_cosebis_null_control_readiness_v1.py",
@@ -2239,6 +2245,66 @@ def test_kids1000_cosebis_f_overlap_full_mask_batch_dry_run_is_unfetched() -> No
     assert all(row["external_products_fetched"] == "false" for row in rows)
     assert all(row["overlap_rule_computed"] == "false" for row in rows)
     assert all(row["numeric_factor_computed"] == "false" for row in rows)
+    assert all(row["path_mapping_computed"] == "false" for row in rows)
+    assert all(row["contains_mapping_vector"] == "false" for row in rows)
+    assert all(row["contains_theory_vector"] == "false" for row in rows)
+    assert all(row["contains_predictions"] == "false" for row in rows)
+    assert all(row["contains_residuals"] == "false" for row in rows)
+    assert all(row["contains_fit_statistics"] == "false" for row in rows)
+    assert all(row["uses_kids_data_vector_values"] == "false" for row in rows)
+    assert all(row["uses_posterior_chains"] == "false" for row in rows)
+    assert all(row["uses_posthoc_tile_selection"] == "false" for row in rows)
+    assert all(row["endpoint_scoring_allowed"] == "false" for row in rows)
+
+
+def test_kids1000_cosebis_f_overlap_batch_promotion_review_is_not_ready() -> None:
+    with (
+        ROOT / "data/source_manifest/kids1000_cosebis_f_overlap_batch_promotion_review_policy_v1.csv"
+    ).open(newline="") as f:
+        policy = list(csv.DictReader(f))[0]
+    assert policy["status"] == "KIDS1000_COSEBIS_F_OVERLAP_BATCH_PROMOTION_REVIEW_DECLARED_NOT_READY"
+    assert policy["endpoint_scoring_allowed"] == "false"
+    assert policy["current_execution_review_artifact_present"] == "false"
+    assert policy["current_checksum_manifest_present"] == "false"
+    assert policy["current_overlap_rule_computed"] == "false"
+    with (
+        ROOT / "data/derived/kids1000_cosebis_f_overlap_batch_promotion_review_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["status"] == "KIDS1000_COSEBIS_F_OVERLAP_BATCH_PROMOTION_REVIEW_BUILT_NOT_READY"
+    assert summary["dry_run_batch_id"] == "F_OVERLAP_FULL_MASK_BATCH_00"
+    assert summary["dry_run_batch_size"] == "20"
+    assert summary["planned_total_batch_count"] == "10"
+    assert summary["planned_missing_mask_count"] == "193"
+    assert summary["requirement_count"] == "5"
+    assert summary["blocking_requirement_count"] == "4"
+    assert summary["promotion_ready"] == "false"
+    assert summary["first_blocker"] == "PROMOTE_01_EXECUTION_REVIEW_ARTIFACT"
+    assert summary["execution_review_artifact_present"] == "false"
+    assert summary["checksum_manifest_present"] == "false"
+    assert summary["external_products_fetched"] == "false"
+    assert summary["overlap_rule_computed"] == "false"
+    assert summary["path_mapping_computed"] == "false"
+    assert summary["contains_mapping_vector"] == "false"
+    assert summary["contains_theory_vector"] == "false"
+    assert summary["endpoint_scoring_allowed"] == "false"
+    with (
+        ROOT / "data/derived/kids1000_cosebis_f_overlap_batch_promotion_review_v1.csv"
+    ).open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    assert len(rows) == 5
+    by_id = {row["requirement_id"]: row for row in rows}
+    assert set(by_id) == {
+        "PROMOTE_01_EXECUTION_REVIEW_ARTIFACT",
+        "PROMOTE_02_CHECKSUM_MANIFEST",
+        "PROMOTE_03_BATCH_PRODUCT_COUNT",
+        "PROMOTE_04_FORBIDDEN_INPUT_AUDIT",
+        "PROMOTE_05_OVERLAP_DERIVATION_STILL_SEPARATE",
+    }
+    assert by_id["PROMOTE_05_OVERLAP_DERIVATION_STILL_SEPARATE"]["blocks_promotion"] == "false"
+    assert all(row["promotion_ready"] == "false" for row in rows)
+    assert all(row["external_products_fetched"] == "false" for row in rows)
+    assert all(row["overlap_rule_computed"] == "false" for row in rows)
     assert all(row["path_mapping_computed"] == "false" for row in rows)
     assert all(row["contains_mapping_vector"] == "false" for row in rows)
     assert all(row["contains_theory_vector"] == "false" for row in rows)

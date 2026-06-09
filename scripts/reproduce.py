@@ -113,6 +113,8 @@ def main() -> None:
     run(["python", "scripts/validate_kids1000_cosebis_f_overlap_full_mask_batch_plan_v1.py"])
     run(["python", "scripts/acquire_kids1000_cosebis_f_overlap_full_mask_batch_v1.py"])
     run(["python", "scripts/validate_kids1000_cosebis_f_overlap_full_mask_batch_dry_run_v1.py"])
+    run(["python", "scripts/build_kids1000_cosebis_f_overlap_batch_promotion_review_v1.py"])
+    run(["python", "scripts/validate_kids1000_cosebis_f_overlap_batch_promotion_review_v1.py"])
     run(["python", "scripts/build_kids1000_cosebis_path_mapping_source_preflight_v1.py"])
     run(["python", "scripts/validate_kids1000_cosebis_path_mapping_source_preflight_v1.py"])
     run(["python", "scripts/build_kids1000_cosebis_null_control_readiness_v1.py"])

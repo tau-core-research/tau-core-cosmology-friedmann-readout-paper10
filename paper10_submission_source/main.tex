@@ -530,6 +530,12 @@ mode is kept outside the public reproduce path and writes only to ignored local
 execution logs. This gate computes no overlap fraction, path-mapping vector,
 theory vector, prediction, residual, or endpoint score; it is only a
 leakage-safe acquisition-readiness check.
+The following batch-promotion checklist is deliberately negative in the current
+release: no fetched-batch review artifact, checksum manifest, complete batch
+accounting, or forbidden-input audit has been committed. The checklist therefore
+keeps promotion disabled and does not read ignored local execution logs. Passing
+such a checklist in the future would still not be an overlap rule; it would only
+make a fetched batch eligible for a separate source-native overlap derivation.
 The resulting source-preflight ledger is correspondingly mixed: the 300 COSEBIs
 target rows, five-bin redshift-kernel inventory, 196-tile route-coordinate
 index, 300-row design skeleton, and 58{,}800-row domain skeleton are available;

@@ -263,6 +263,13 @@ mapping vector, theory vector, or endpoint score. Manual execution logs are
 written under ignored `data/local/` paths so that a fetch cannot overwrite the
 committed dry-run artifacts.
 
+The batch-promotion review checklist is also committed, but it is a negative
+source-side gate in this release. It records that no fetched-batch review
+artifact or checksum manifest has been promoted from `data/local/`, so
+`promotion_ready=false`. It does not inspect machine-local execution logs and
+does not compute overlap, mapping, theory-vector, prediction, residual, or
+endpoint-score quantities.
+
 The COSEBIs path-mapping source-preflight ledger combines only source-side
 availability flags. It records that COSEBIs target rows, redshift kernels, and
 the 196-tile route coordinate index, the 300-row design skeleton, and the

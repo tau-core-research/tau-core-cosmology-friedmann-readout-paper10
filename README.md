@@ -725,6 +725,23 @@ full-route FITS cache. They remain outside the public reproduce path until
 separately reviewed, checksum-frozen, and promoted through a source-freeze
 artifact.
 
+The `F_overlap` batch-promotion review checklist is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_f_overlap_batch_promotion_review_policy_v1.csv
+data/derived/kids1000_cosebis_f_overlap_batch_promotion_review_v1.csv
+data/derived/kids1000_cosebis_f_overlap_batch_promotion_review_v1_summary.csv
+docs/kids1000_cosebis_f_overlap_batch_promotion_review_policy_v1.md
+scripts/build_kids1000_cosebis_f_overlap_batch_promotion_review_v1.py
+scripts/validate_kids1000_cosebis_f_overlap_batch_promotion_review_v1.py
+```
+
+It is currently expected to remain `promotion_ready=false`: there is no
+committed fetched-batch review artifact, no checksum manifest for fetched
+products, and no forbidden-input audit for a fetched batch. This checklist
+does not read ignored `data/local/` execution logs and computes no overlap
+rule, mapping vector, theory vector, prediction, residual, or score.
+
 The COSEBIs path-mapping source-preflight ledger is recorded in:
 
 ```text
