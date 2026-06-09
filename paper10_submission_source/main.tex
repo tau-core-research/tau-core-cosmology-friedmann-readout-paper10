@@ -545,6 +545,11 @@ An empty batch-0 template is also materialized in that schema. It contains the
 20 planned product rows, but no network status, checksum, timestamp, reviewer
 entry, or source-freeze decision. It is therefore a review template, not an
 execution log.
+A separate filled-review validator is provided to check this template, or a
+future manually completed execution-review artifact, against the frozen schema
+and dry-run batch identities. This validator is not a promotion gate and does
+not compute an overlap rule, mapping vector, theory vector, prediction,
+residual, or score.
 The resulting source-preflight ledger is correspondingly mixed: the 300 COSEBIs
 target rows, five-bin redshift-kernel inventory, 196-tile route-coordinate
 index, 300-row design skeleton, and 58{,}800-row domain skeleton are available;

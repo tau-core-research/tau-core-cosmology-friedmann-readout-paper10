@@ -767,12 +767,21 @@ data/derived/kids1000_cosebis_f_overlap_execution_review_template_v1_summary.csv
 docs/kids1000_cosebis_f_overlap_execution_review_template_policy_v1.md
 scripts/build_kids1000_cosebis_f_overlap_execution_review_template_v1.py
 scripts/validate_kids1000_cosebis_f_overlap_execution_review_template_v1.py
+docs/kids1000_cosebis_f_overlap_filled_execution_review_validator_v1.md
+scripts/validate_kids1000_cosebis_f_overlap_filled_execution_review_artifact_v1.py
 ```
 
 It materializes the 20 planned batch-0 product rows using the frozen
 execution-review schema, but keeps all network, checksum, timestamp, and
 reviewer fields empty or pending. It is a reviewer template, not an execution
 log or source-freeze artifact.
+
+The filled execution-review validator is a utility for checking either this
+committed empty template (`--mode template`) or a future manually filled
+execution-review artifact (`--mode filled`) against the frozen schema and
+batch-0 dry-run identities. It does not fetch products, promote a batch,
+derive an overlap rule, construct a path-mapping vector, or enable endpoint
+scoring.
 
 The COSEBIs path-mapping source-preflight ledger is recorded in:
 

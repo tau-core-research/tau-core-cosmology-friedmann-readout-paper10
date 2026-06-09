@@ -280,6 +280,13 @@ that schema, but it is still not an execution log. Network fields, checksums,
 timestamps, and reviewer fields are empty or pending, and all endpoint and
 forbidden-input flags remain false.
 
+The filled execution-review validator is a schema and leakage-boundary utility
+only. In template mode it checks the committed empty batch-0 template; in
+filled mode it can later check a manually completed review artifact against the
+frozen schema and dry-run batch identities. It does not acquire data, promote a
+batch, compute overlap, construct a mapping or theory vector, or enable
+endpoint scoring.
+
 The COSEBIs path-mapping source-preflight ledger combines only source-side
 availability flags. It records that COSEBIs target rows, redshift kernels, and
 the 196-tile route coordinate index, the 300-row design skeleton, and the

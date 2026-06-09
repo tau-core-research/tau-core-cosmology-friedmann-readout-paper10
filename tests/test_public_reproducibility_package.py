@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import csv
+import subprocess
 import zipfile
 from pathlib import Path
 
@@ -173,6 +174,8 @@ def test_public_files_exist() -> None:
         "data/source_manifest/kids1000_cosebis_f_overlap_execution_review_template_policy_v1.csv",
         "data/derived/kids1000_cosebis_f_overlap_execution_review_template_v1.csv",
         "data/derived/kids1000_cosebis_f_overlap_execution_review_template_v1_summary.csv",
+        "docs/kids1000_cosebis_f_overlap_filled_execution_review_validator_v1.md",
+        "scripts/validate_kids1000_cosebis_f_overlap_filled_execution_review_artifact_v1.py",
         "data/source_manifest/kids1000_cosebis_path_mapping_source_preflight_policy_v1.csv",
         "data/derived/kids1000_cosebis_path_mapping_source_preflight_v1.csv",
         "data/derived/kids1000_cosebis_path_mapping_source_preflight_v1_summary.csv",
@@ -2838,3 +2841,22 @@ def test_pantheon_full_cov_pilot_scoring_is_not_validation() -> None:
         "delta_aic_tau_minus_baseline",
     ]:
         assert float(summary[key]) == float(summary[key])
+
+
+def test_kids1000_cosebis_f_overlap_filled_review_validator_accepts_template_mode() -> None:
+    result = subprocess.run(
+        [
+            "python",
+            "scripts/validate_kids1000_cosebis_f_overlap_filled_execution_review_artifact_v1.py",
+            "--input",
+            "data/derived/kids1000_cosebis_f_overlap_execution_review_template_v1.csv",
+            "--mode",
+            "template",
+        ],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    assert "mode=template" in result.stdout
+    assert "endpoint_allowed=false" in result.stdout
