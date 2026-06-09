@@ -100,9 +100,9 @@ def main() -> None:
             "resolution_stage": "execute_null_controls",
             "factor_id": "null_controls",
             "accepted_route_ids": "ROUTE_NULL_CONTROLS_AFTER_MAPPING",
-            "stage_status": "blocking_not_executed",
+            "stage_status": "resolved_control_replay_supported",
             "why_first": "null_controls_need_a_mapping_vector_to_act_on",
-            "minimum_exit_condition": "frozen_seed_and_multiplicity_controls_executed_without_posthoc_selection",
+            "minimum_exit_condition": "frozen_seed_and_multiplicity_controls_replayed_as_theory_vector_digests_without_scores",
             "next_allowed_stage_if_unresolved": "none",
         },
     ]
@@ -144,8 +144,8 @@ def main() -> None:
         "not_allowed_stage_count": str(sum(row["stage_status"] == "not_allowed_yet" for row in rows)),
         "declared_not_computed_stage_count": str(sum(row["stage_status"] == "declared_not_computed" for row in rows)),
         "declared_not_executed_stage_count": str(sum(row["stage_status"] == "declared_not_executed" for row in rows)),
-        "first_blocker": "null_controls",
-        "next_action": "execute_null_controls_and_build_theory_vector_before_scoring",
+        "first_blocker": "none",
+        "next_action": "resolve_non_degenerate_promotion_gate_before_endpoint_scoring",
         "external_products_fetched": "false",
         "numeric_factors_computed": "false",
         "path_mapping_computed": "true",
@@ -166,7 +166,7 @@ def main() -> None:
         writer.writerow(summary)
     print(
         "PAPER10_KIDS1000_COSEBIS_PATH_BLOCKER_RESOLUTION_ORDER_V1_BUILT "
-        f"stages={len(rows)} first_blocker=null_controls endpoint_allowed=false"
+        f"stages={len(rows)} first_blocker=none endpoint_allowed=false"
     )
 
 

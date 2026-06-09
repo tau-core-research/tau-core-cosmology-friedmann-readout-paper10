@@ -32,12 +32,12 @@ def main() -> None:
         raise SystemExit("promotion gate should be built but not ready")
     if summary["gate_count"] != "6":
         raise SystemExit("promotion gate must contain six gates")
-    if summary["passed_gate_count"] != "3":
-        raise SystemExit("F_overlap, source-frozen theory vector, and leakage guard should currently pass")
-    if summary["blocking_gate_count"] != "3":
-        raise SystemExit("three promotion gates should currently block")
-    if summary["first_blocking_gate"] != "PROMOTE_02_SOURCE_PREFLIGHT_MAPPING_READY":
-        raise SystemExit("source preflight must be the first remaining promotion blocker")
+    if summary["passed_gate_count"] != "5":
+        raise SystemExit("all gates except non-degenerate branch geometry should currently pass")
+    if summary["blocking_gate_count"] != "1":
+        raise SystemExit("only the rank-one branch geometry gate should currently block")
+    if summary["first_blocking_gate"] != "PROMOTE_03_NON_DEGENERATE_BRANCH_GEOMETRY":
+        raise SystemExit("non-degenerate branch geometry must be the first remaining promotion blocker")
     if summary["non_degenerate_mapping_promotion_allowed"] != "false":
         raise SystemExit("non-degenerate mapping promotion must remain disabled")
     for key in [
@@ -58,10 +58,10 @@ def main() -> None:
         raise SystemExit("promotion gate summary should record the source-frozen theory vector")
     expected = {
         "PROMOTE_01_F_OVERLAP_ENDPOINT_ROUTE": ("true", "not_blocking"),
-        "PROMOTE_02_SOURCE_PREFLIGHT_MAPPING_READY": ("false", "blocking_source_preflight"),
+        "PROMOTE_02_SOURCE_PREFLIGHT_MAPPING_READY": ("true", "not_blocking"),
         "PROMOTE_03_NON_DEGENERATE_BRANCH_GEOMETRY": ("false", "blocking_rank_one_partial_control"),
         "PROMOTE_04_THEORY_VECTOR_COMPUTED": ("true", "not_blocking"),
-        "PROMOTE_05_NULL_CONTROLS_EXECUTED_AFTER_MAPPING": ("false", "blocking_null_controls"),
+        "PROMOTE_05_NULL_CONTROLS_EXECUTED_AFTER_MAPPING": ("true", "not_blocking"),
         "PROMOTE_06_LEAKAGE_GUARDS": ("true", "not_blocking"),
     }
     by_gate = {row["gate_id"]: row for row in rows}

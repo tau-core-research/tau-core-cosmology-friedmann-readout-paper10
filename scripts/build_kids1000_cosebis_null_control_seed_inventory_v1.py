@@ -7,7 +7,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 POLICY = ROOT / "data" / "source_manifest" / "kids1000_cosebis_null_control_seed_policy_v1.csv"
-NULL_READINESS = ROOT / "data" / "derived" / "kids1000_cosebis_null_control_readiness_v1.csv"
+NULL_POLICY = ROOT / "data" / "source_manifest" / "kids1000_cosebis_null_control_policy_v1.csv"
 OUT = ROOT / "data" / "derived" / "kids1000_cosebis_null_control_seed_inventory_v1.csv"
 SUMMARY = ROOT / "data" / "derived" / "kids1000_cosebis_null_control_seed_inventory_v1_summary.csv"
 
@@ -50,14 +50,14 @@ def read_one(path: Path) -> dict[str, str]:
 
 def main() -> None:
     policy = read_one(POLICY)
+    null_policy = read_one(NULL_POLICY)
     if policy["endpoint_scoring_allowed"].lower() != "false":
         raise SystemExit("null-control seed policy must remain endpoint disabled")
     if policy["current_controls_executed"].lower() != "false":
         raise SystemExit("null controls must not be executed in this gate")
-
-    with NULL_READINESS.open(newline="") as f:
-        readiness = list(csv.DictReader(f))
-    families = [row["control_family"] for row in readiness]
+    if null_policy["endpoint_scoring_allowed"].lower() != "false":
+        raise SystemExit("null-control parent policy must remain endpoint disabled")
+    families = null_policy["control_families"].split(";")
     if set(families) != set(FAMILY_RULES):
         raise SystemExit("null-control seed rules must cover readiness families exactly")
 

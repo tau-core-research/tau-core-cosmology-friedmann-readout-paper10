@@ -17,7 +17,7 @@ MAPPING = ROOT / "data" / "derived" / "kids1000_cosebis_web_path_mapping_readine
 PREFLIGHT = ROOT / "data" / "derived" / "kids1000_cosebis_path_mapping_source_preflight_v1_summary.csv"
 BLOCKERS = ROOT / "data" / "derived" / "kids1000_cosebis_path_blocker_resolution_order_v1_summary.csv"
 F_OVERLAP_DECISION = ROOT / "data" / "derived" / "kids1000_cosebis_f_overlap_resolution_decision_v1_summary.csv"
-NULL_SEEDS = ROOT / "data" / "derived" / "kids1000_cosebis_null_control_seed_inventory_v1_summary.csv"
+NULL_READINESS = ROOT / "data" / "derived" / "kids1000_cosebis_null_control_readiness_v1_summary.csv"
 DEGENERACY = ROOT / "data" / "derived" / "kids1000_cosebis_partial_control_degeneracy_audit_v1_summary.csv"
 OUT = ROOT / "data" / "derived" / "kids1000_cosebis_endpoint_scoring_readiness_v1.csv"
 SUMMARY = ROOT / "data" / "derived" / "kids1000_cosebis_endpoint_scoring_readiness_v1_summary.csv"
@@ -43,7 +43,7 @@ def main() -> None:
     preflight = read_one(PREFLIGHT)
     blockers = read_one(BLOCKERS)
     f_overlap_decision = read_one(F_OVERLAP_DECISION)
-    null_seeds = read_one(NULL_SEEDS)
+    null_readiness = read_one(NULL_READINESS)
     degeneracy = read_one(DEGENERACY)
 
     if policy["current_endpoint_scoring_allowed"] != "false":
@@ -128,8 +128,8 @@ def main() -> None:
             "component_id": "blocker_resolution_order",
             "component_status": blockers["status"],
             "evidence_artifact": "data/derived/kids1000_cosebis_path_blocker_resolution_order_v1_summary.csv",
-            "ready_for_scoring": "false",
-            "blocking_status": "blocking",
+            "ready_for_scoring": "true" if blockers["first_blocker"] == "none" else "false",
+            "blocking_status": "not_blocking" if blockers["first_blocker"] == "none" else "blocking",
             "readiness_note": f"path_first_blocker_{blockers['first_blocker']}",
         },
         {
@@ -145,11 +145,17 @@ def main() -> None:
         },
         {
             "component_id": "null_controls",
-            "component_status": null_seeds["status"],
-            "evidence_artifact": "data/derived/kids1000_cosebis_null_control_seed_inventory_v1_summary.csv",
-            "ready_for_scoring": "false",
-            "blocking_status": "blocking_until_null_controls_execute",
-            "readiness_note": f"declared_draws_{null_seeds['total_declared_control_draws']}_not_executed",
+            "component_status": null_readiness["status"],
+            "evidence_artifact": "data/derived/kids1000_cosebis_null_control_readiness_v1_summary.csv",
+            "ready_for_scoring": "true" if null_readiness["current_controls_executed"] == "true" else "false",
+            "blocking_status": (
+                "not_blocking"
+                if null_readiness["current_controls_executed"] == "true"
+                else "blocking_until_null_controls_execute"
+            ),
+            "readiness_note": (
+                f"control_theory_replay_draws_{null_readiness.get('control_draw_count', 'unknown')}_not_scored"
+            ),
         },
         {
             "component_id": "partial_control_degeneracy_audit",
@@ -195,8 +201,8 @@ def main() -> None:
         "component_count": str(len(rows)),
         "ready_component_count": str(len(ready_rows)),
         "blocking_component_count": str(len(blocking_rows)),
-        "first_blocker": "blocker_resolution_order",
-        "next_action": "execute_null_controls_and_resolve_non_degenerate_promotion_before_scoring",
+        "first_blocker": blocking_rows[0]["component_id"] if blocking_rows else "none",
+        "next_action": "resolve_non_degenerate_promotion_before_endpoint_scoring",
         "endpoint_scoring_allowed": "false",
         "scoring_executed": "false",
         "contains_predictions": "false",

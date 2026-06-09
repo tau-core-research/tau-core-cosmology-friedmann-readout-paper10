@@ -11,7 +11,7 @@ The ordering is:
 4. define source-side normalization only after nonzero source factors exist
    (`C_norm`);
 5. build the source-frozen mapping vector;
-6. execute null controls and construct the source-frozen theory vector before
+6. replay null controls against the source-frozen theory-vector shell before
    scoring.
 
 In the current source ledger, `F_overlap` is source-supported by the full-route
@@ -19,14 +19,14 @@ pixel-fraction rule, `D_path` is source-supported only as a caveated full-route
 mask-load proxy, and `E_web` is source-supported only as a uniform null-web
 control. This means the current route is path-only/projection-only with no
 positive web/environment claim. `C_norm` is source-side resolved by unit-mean
-normalization of the frozen nonzero source factors, and the source-frozen
-mapping vector is available as a 300-row mapping basis. The path-side first
-remaining unresolved blocker is therefore null-control execution. Endpoint
-scoring still remains blocked by null-control replay and partial-control
-degeneracy.
+normalization of the frozen nonzero source factors, the source-frozen mapping
+vector is available as a 300-row mapping basis, and the null-control theory
+replay is available as deterministic control-vector digests. No path-side
+blocker remains in this ledger. Endpoint scoring still remains blocked by the
+separate partial-control degeneracy audit.
 
 This policy fetches no external products, computes no endpoint factor from
 KiDS data values, and performs no scoring. The separate source-frozen
-theory-vector shell only becomes endpoint-eligible after the null-control and
-degeneracy blockers are resolved. This policy fixes the source-side order and
+theory-vector shell and null-control replay are not endpoint evidence until the
+degeneracy blocker is resolved. This policy fixes the source-side order and
 leakage boundaries.

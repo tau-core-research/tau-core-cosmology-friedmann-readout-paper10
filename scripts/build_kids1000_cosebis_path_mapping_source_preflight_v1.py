@@ -18,6 +18,7 @@ WEIGHT_RULE = ROOT / "data" / "derived" / "kids1000_cosebis_path_weight_construc
 E_WEB_NULL = ROOT / "data" / "derived" / "kids1000_cosebis_e_web_null_control_rule_v1_summary.csv"
 MAPPING_VECTOR = ROOT / "data" / "derived" / "kids1000_cosebis_source_frozen_mapping_vector_v1_summary.csv"
 NULL_SEEDS = ROOT / "data" / "derived" / "kids1000_cosebis_null_control_seed_inventory_v1_summary.csv"
+NULL_REPLAY = ROOT / "data" / "derived" / "kids1000_cosebis_null_control_theory_replay_v1_summary.csv"
 OUT = ROOT / "data" / "derived" / "kids1000_cosebis_path_mapping_source_preflight_v1.csv"
 SUMMARY = ROOT / "data" / "derived" / "kids1000_cosebis_path_mapping_source_preflight_v1_summary.csv"
 
@@ -43,6 +44,7 @@ def main() -> None:
     e_web_null = read_one(E_WEB_NULL)
     mapping_vector = read_one(MAPPING_VECTOR)
     null_seeds = read_one(NULL_SEEDS)
+    null_replay = read_one(NULL_REPLAY)
 
     if policy["endpoint_scoring_allowed"].lower() != "false":
         raise SystemExit("path-mapping source preflight must remain endpoint disabled")
@@ -147,13 +149,16 @@ def main() -> None:
             "limitation": mapping_vector["limitation"],
         },
         {
-            "component_id": "null_control_seed_policy",
-            "source_state": "declared_not_executed",
-            "evidence_artifact": "data/derived/kids1000_cosebis_null_control_seed_inventory_v1_summary.csv",
-            "source_count": null_seeds["total_declared_control_draws"],
-            "preflight_role": "future_null_controls",
-            "blocking_status": "blocking_until_null_controls_execute",
-            "limitation": "controls_declared_but_not_run_after_source_mapping_basis",
+            "component_id": "null_control_theory_replay",
+            "source_state": "available_control_theory_replay_not_scored",
+            "evidence_artifact": "data/derived/kids1000_cosebis_null_control_theory_replay_v1_summary.csv",
+            "source_count": null_replay["control_draw_count"],
+            "preflight_role": "source_frozen_null_control_theory_replay",
+            "blocking_status": "not_blocking",
+            "limitation": (
+                "controls_replayed_as_theory_vector_digests_not_scores_"
+                f"declared_seed_draws_{null_seeds['total_declared_control_draws']}"
+            ),
         },
     ]
     for row in rows:
@@ -184,7 +189,7 @@ def main() -> None:
 
     summary = {
         "policy_id": policy["policy_id"],
-        "status": "KIDS1000_COSEBIS_PATH_MAPPING_SOURCE_PREFLIGHT_BUILT_MAPPING_AVAILABLE_NOT_THEORY",
+        "status": "KIDS1000_COSEBIS_PATH_MAPPING_SOURCE_PREFLIGHT_BUILT_MAPPING_AND_NULL_REPLAY_AVAILABLE_NOT_SCORED",
         "component_count": str(len(rows)),
         "available_component_count": str(sum(row["source_state"] == "available" for row in rows)),
         "partial_available_component_count": str(sum(row["source_state"].startswith("partial_available") for row in rows)),

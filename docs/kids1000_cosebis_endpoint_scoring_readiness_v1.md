@@ -22,9 +22,10 @@ Current result:
   300-row mapping basis;
 - a source-frozen unit-amplitude theory-vector shell is now built from the
   frozen mapping basis and a predeclared unit-mean mode-shape rule;
-- blocking components: blocker-resolution finalization through null controls,
-  null-control execution, and the partial-control degeneracy audit;
-- first endpoint blocker: `blocker_resolution_order`;
+- predeclared null controls have been replayed as source-frozen control
+  theory-vector digests, without scores;
+- blocking component: the partial-control degeneracy audit;
+- first endpoint blocker: `partial_control_degeneracy_audit`;
 - endpoint scoring remains disabled.
 
 The ledger forbids KiDS data-vector values for source selection, posterior

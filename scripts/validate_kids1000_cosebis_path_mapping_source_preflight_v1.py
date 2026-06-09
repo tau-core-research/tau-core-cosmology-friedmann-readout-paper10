@@ -25,7 +25,7 @@ def main() -> None:
         raise SystemExit("path-mapping source preflight policy must remain endpoint disabled")
     if len(rows) != 11:
         raise SystemExit("path-mapping source preflight must contain eleven components")
-    if summary["status"] != "KIDS1000_COSEBIS_PATH_MAPPING_SOURCE_PREFLIGHT_BUILT_MAPPING_AVAILABLE_NOT_THEORY":
+    if summary["status"] != "KIDS1000_COSEBIS_PATH_MAPPING_SOURCE_PREFLIGHT_BUILT_MAPPING_AND_NULL_REPLAY_AVAILABLE_NOT_SCORED":
         raise SystemExit("unexpected path-mapping source preflight summary status")
     if summary["component_count"] != "11":
         raise SystemExit("unexpected component count")
@@ -44,7 +44,7 @@ def main() -> None:
         "full_path_depth_footprint_mapping": "available_caveated_mask_load_proxy",
         "web_environment_catalog": "available_uniform_null_web_control",
         "source_frozen_mapping_vector": "available",
-        "null_control_seed_policy": "declared_not_executed",
+        "null_control_theory_replay": "available_control_theory_replay_not_scored",
     }
     by_component = {row["component_id"]: row for row in rows}
     if set(by_component) != set(expected_states):
@@ -64,6 +64,8 @@ def main() -> None:
         raise SystemExit("path-weight construction rule should carry seven factors")
     if by_component["source_frozen_mapping_vector"]["source_count"] != "300":
         raise SystemExit("source-frozen mapping vector should carry 300 rows")
+    if by_component["null_control_theory_replay"]["source_count"] != "1008":
+        raise SystemExit("null-control theory replay should carry 1008 controls")
     if by_component["redshift_kernel_inventory"]["source_count"] != "5":
         raise SystemExit("redshift kernel inventory should carry five source bins")
     if by_component["full_path_depth_footprint_mapping"]["blocking_status"] != "not_blocking":

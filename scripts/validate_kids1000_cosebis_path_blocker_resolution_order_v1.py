@@ -28,21 +28,21 @@ def main() -> None:
         raise SystemExit("unexpected blocker-resolution summary status")
     if summary["stage_count"] != "6":
         raise SystemExit("unexpected stage count")
-    if summary["first_blocker"] != "null_controls":
-        raise SystemExit("null_controls must be the first path-side blocker after mapping vector is source-supported")
+    if summary["first_blocker"] != "none":
+        raise SystemExit("path-side blockers should be resolved after null-control theory replay")
     if summary["resolved_source_supported_stage_count"] != "4":
         raise SystemExit("F_overlap, D_path, C_norm, and mapping_vector should be source-supported")
     if summary["resolved_control_supported_stage_count"] != "1":
         raise SystemExit("E_web should be resolved only as a null-control stage")
-    if summary["blocking_unresolved_stage_count"] != "1":
-        raise SystemExit("null_controls should be the only explicit unresolved path-side blocker")
+    if summary["blocking_unresolved_stage_count"] != "0":
+        raise SystemExit("no path-side blocker should remain after null-control theory replay")
     expected = [
         ("1", "freeze_footprint_overlap", "F_overlap", "resolved_source_supported"),
         ("2", "promote_path_depth_support", "D_path", "resolved_source_supported"),
         ("3", "freeze_web_environment_support", "E_web", "resolved_control_supported"),
         ("4", "define_source_side_normalization", "C_norm", "resolved_source_supported"),
         ("5", "build_mapping_vector", "mapping_vector", "resolved_source_supported"),
-        ("6", "execute_null_controls", "null_controls", "blocking_not_executed"),
+        ("6", "execute_null_controls", "null_controls", "resolved_control_replay_supported"),
     ]
     observed = [(row["order_rank"], row["resolution_stage"], row["factor_id"], row["stage_status"]) for row in rows]
     if observed != expected:

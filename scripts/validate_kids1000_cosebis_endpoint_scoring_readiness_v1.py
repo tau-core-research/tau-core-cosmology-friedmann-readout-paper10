@@ -29,16 +29,17 @@ def main() -> None:
         raise SystemExit("unexpected endpoint scoring readiness summary status")
     if summary["component_count"] != "12":
         raise SystemExit("endpoint scoring readiness must contain twelve components")
-    if summary["ready_component_count"] != "9":
+    if summary["ready_component_count"] != "11":
         raise SystemExit(
             "data vector, covariance, covariance solve policy, theory template, "
             "mapping-template join contract, source-frozen theory vector, web/path "
-            "mapping, source preflight, and F_overlap decision should be ready"
+            "mapping, source preflight, blocker-resolution order, F_overlap decision, "
+            "and null controls should be ready"
         )
-    if summary["blocking_component_count"] != "3":
-        raise SystemExit("three components should block endpoint scoring")
-    if summary["first_blocker"] != "blocker_resolution_order":
-        raise SystemExit("blocker resolution order must be the first blocker after source-frozen theory support")
+    if summary["blocking_component_count"] != "1":
+        raise SystemExit("only the partial-control degeneracy audit should block endpoint scoring")
+    if summary["first_blocker"] != "partial_control_degeneracy_audit":
+        raise SystemExit("partial-control degeneracy audit must be the first remaining blocker")
 
     expected = {
         "data_vector_structure": ("true", "not_blocking"),
@@ -49,9 +50,9 @@ def main() -> None:
         "theory_vector": ("true", "not_blocking"),
         "web_path_mapping": ("true", "not_blocking"),
         "source_preflight": ("true", "not_blocking"),
-        "blocker_resolution_order": ("false", "blocking"),
+        "blocker_resolution_order": ("true", "not_blocking"),
         "f_overlap_resolution_decision": ("true", "not_blocking"),
-        "null_controls": ("false", "blocking_until_null_controls_execute"),
+        "null_controls": ("true", "not_blocking"),
         "partial_control_degeneracy_audit": ("false", "blocking_partial_control_endpoint"),
     }
     by_component = {row["component_id"]: row for row in rows}

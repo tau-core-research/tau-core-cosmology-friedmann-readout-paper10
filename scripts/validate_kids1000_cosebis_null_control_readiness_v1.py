@@ -27,17 +27,23 @@ def main() -> None:
     if policy["endpoint_scoring_allowed"] != "false":
         raise SystemExit("null-control policy must remain endpoint disabled")
     if policy["current_controls_executed"] != "false":
-        raise SystemExit("null controls must not be executed in the policy")
+        raise SystemExit("the policy itself must remain declared-not-run")
     if len(rows) != int(policy["control_family_count"]):
         raise SystemExit("unexpected null-control family count")
     if {row["control_family"] for row in rows} != expected:
         raise SystemExit("unexpected null-control families")
     if summary["endpoint_scoring_allowed"] != "false":
         raise SystemExit("null-control readiness must remain endpoint disabled")
-    if summary["current_controls_executed"] != "false":
-        raise SystemExit("null controls must not be executed")
+    if summary["status"] != "KIDS1000_COSEBIS_NULL_CONTROL_READINESS_BUILT_THEORY_REPLAY_NOT_SCORED":
+        raise SystemExit("unexpected null-control readiness status")
+    if summary["current_controls_executed"] != "true":
+        raise SystemExit("null-control theory replay should be executed")
+    if summary["contains_theory_vector"] != "true":
+        raise SystemExit("null-control readiness should expose theory-vector control digests")
     if summary["contains_control_scores"] != "false":
         raise SystemExit("null-control readiness must not contain control scores")
+    if summary["control_draw_count"] != "1008":
+        raise SystemExit("null-control readiness should reference 1008 replay controls")
     for key in [
         "contains_predictions",
         "contains_residuals",
@@ -51,8 +57,12 @@ def main() -> None:
         if any(row[key] != "false" for row in rows):
             raise SystemExit(f"rows must keep {key}=false")
     for row in rows:
-        if row["control_status"] != "DECLARED_NOT_RUN":
-            raise SystemExit("null-control rows must remain declared-not-run")
+        if row["control_status"] != "THEORY_REPLAY_EXECUTED_NOT_SCORED":
+            raise SystemExit("null-control rows must record replay execution")
+        if row["current_control_executed"] != "true":
+            raise SystemExit("null-control rows should mark replay execution")
+        if row["contains_theory_vector"] != "true":
+            raise SystemExit("null-control rows should expose control theory-vector digests")
         if row["requires_seed_policy"] != "true":
             raise SystemExit("each null-control family must require a seed policy")
         if row["requires_multiplicity_policy"] != "true":
@@ -66,8 +76,6 @@ def main() -> None:
     ]:
         if marker not in policy["forbidden_inputs"]:
             raise SystemExit(f"missing forbidden input: {marker}")
-    if summary["status"] != "KIDS1000_COSEBIS_NULL_CONTROL_READINESS_BUILT_NOT_RUN":
-        raise SystemExit("unexpected null-control readiness status")
     print("PAPER10_KIDS1000_COSEBIS_NULL_CONTROL_READINESS_V1_VALIDATED endpoint_allowed=false")
 
 

@@ -1117,10 +1117,12 @@ scripts/validate_kids1000_cosebis_non_degenerate_mapping_promotion_gate_v1.py
 It freezes six required promotion gates before any endpoint scoring: endpoint
 grade `F_overlap`, source-preflight readiness, non-degenerate branch geometry,
 a frozen 300-row theory vector, null controls after mapping, and leakage
-guards. In the current repository the `F_overlap` endpoint-route gate and the
-leakage guard pass. The first blocking promotion gate is now source-preflight
-mapping readiness, and the rank-one partial-control geometry remains an
-explicit promotion blocker. Endpoint scoring is still disabled.
+guards. In the current repository the `F_overlap` endpoint-route gate,
+source-preflight mapping state, source-frozen theory-vector gate, null-control
+theory replay, and leakage guard pass. The only remaining promotion blocker is
+the rank-one partial-control geometry, which must be replaced by a
+non-degenerate endpoint family before scoring. Endpoint scoring is still
+disabled.
 
 The endpoint scoring-readiness ledger is recorded in:
 
@@ -1139,12 +1141,12 @@ row-interface template, mapping-to-template join contract, F-overlap
 resolution/control decision, web/path mapping ledger, and source preflight are
 source-side ready. `F_overlap`, caveated `D_path`, null-control `E_web`,
 source-side `C_norm`, the source-frozen mapping basis, and a source-frozen
-unit-amplitude theory-vector shell are supported, but null controls,
-blocker-resolution finalization through those controls, and the partial-control
-degeneracy audit still block scoring. The first endpoint blocker is now
-`blocker_resolution_order`. The partial-control diagnostic route is also
-explicitly blocked as endpoint evidence until a non-degenerate null-control
-replay exists. Endpoint scoring remains disabled.
+unit-amplitude theory-vector shell are supported. The predeclared null controls
+have also been replayed against the source-frozen theory shell as deterministic
+control-vector digests, but no null score has been computed. The first endpoint
+blocker is now `partial_control_degeneracy_audit`: the existing rank-one
+partial-control geometry cannot stand in for a non-degenerate endpoint family.
+Endpoint scoring remains disabled.
 
 The frozen endpoint scoring protocol shell is recorded in:
 
@@ -1158,8 +1160,9 @@ It declares the future COSEBIs scoring grammar
 `chi2 = (d - t)^T C^{-1} (d - t)`, the Cholesky solve policy, required
 baseline/candidate/null-control comparisons, AIC/control-rank reporting, and
 pass-condition shell. The current release computes only a source-frozen
-unit-amplitude theory-vector shell. It does not compute a residual,
-likelihood, AIC value, control score, or validation result.
+unit-amplitude theory-vector shell plus source-frozen null-control theory
+replay digests. It does not compute a residual, likelihood, AIC value, control
+score, endpoint score, or validation result.
 
 The COSEBIs path-mapping source-preflight ledger is recorded in:
 
@@ -1175,12 +1178,12 @@ scripts/validate_kids1000_cosebis_path_mapping_source_preflight_v1.py
 It summarizes the current source-side state for a future path-aware COSEBIs
 endpoint: target row structure, redshift kernels, the 196-tile route coordinate
 index, the 300-row design skeleton, and the 58,800-row target-tile domain
-skeleton are available; the path-weight construction rule is declared but not
+skeleton are available; the path-weight construction rule is source-side
 computable; the three-mask observable shell is preserved as a control; the
-full-route `D_path` mask-load proxy is available but caveated; the
-web-environment catalogue remains missing; and null controls are declared but
-not executed. It contains no mapping vector, theory vector, predictions,
-residuals, or scores.
+full-route `D_path` mask-load proxy is available but caveated; the positive
+web-environment catalogue remains absent and is represented only by a null-web
+control; and source-frozen null-control theory replay is available. It contains
+no endpoint predictions, residuals, fit statistics, or scores.
 
 The first COSEBIs null-control readiness policy is recorded in:
 
@@ -1193,10 +1196,9 @@ scripts/build_kids1000_cosebis_null_control_readiness_v1.py
 scripts/validate_kids1000_cosebis_null_control_readiness_v1.py
 ```
 
-It declares four future null-control families: sky rotation, tomographic-pair
-shuffle, wrong-channel activation, and web/path sign flip. These controls are
-not run yet; seed and multiplicity policies must be frozen before any null
-scores can be interpreted.
+It declares four null-control families: sky rotation, tomographic-pair shuffle,
+wrong-channel activation, and web/path sign flip. In this release these controls
+are replayed only as source-frozen theory-vector digests, not as null scores.
 
 The first COSEBIs null-control seed and multiplicity policy is recorded in:
 
@@ -1213,6 +1215,22 @@ It freezes deterministic family seeds and planned multiplicities for the four
 future null-control families, totaling `1008` declared future control draws. It
 does not execute controls and contains no control scores, predictions,
 residuals, or fit statistics.
+
+The first COSEBIs null-control theory replay is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_null_control_theory_replay_policy_v1.csv
+data/derived/kids1000_cosebis_null_control_theory_replay_v1.csv
+data/derived/kids1000_cosebis_null_control_theory_replay_v1_summary.csv
+docs/kids1000_cosebis_null_control_theory_replay_v1.md
+scripts/build_kids1000_cosebis_null_control_theory_replay_v1.py
+scripts/validate_kids1000_cosebis_null_control_theory_replay_v1.py
+```
+
+It applies the predeclared control transformations to the source-frozen
+unit-amplitude theory-vector shell and stores compact vector digests and source
+statistics for `1008` controls. It does not compare those controls to the KiDS
+data vector and does not compute scores.
 
 The first tiny pilot product freeze is recorded in:
 

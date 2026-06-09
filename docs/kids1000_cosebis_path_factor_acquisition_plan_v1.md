@@ -11,7 +11,8 @@ Current status:
 - `E_web` is source-supported only as a uniform null-web control, with no
   positive web/environment claim;
 - `C_norm` is source-side resolved by unit-mean normalization of the frozen nonzero source factors;
-- null controls are declared but not executed because no mapping vector exists.
+- the source-frozen mapping vector and null-control theory replay are available
+  in later ledgers, without endpoint scores.
 
 The plan fetches no external products, computes no path mapping, and reads no
-KiDS data-vector values, posterior chains, residuals, or fit-improvement flags. The next blocker is the source-frozen mapping vector.
+KiDS data-vector values, posterior chains, residuals, or fit-improvement flags.
