@@ -197,6 +197,8 @@ def main() -> None:
     run(["python", "scripts/validate_kids1000_cosebis_log_band_prior_eligibility_gate_v1.py"])
     run(["python", "scripts/run_kids1000_cosebis_log_band_prior_mock_sanity_v1.py"])
     run(["python", "scripts/validate_kids1000_cosebis_log_band_prior_mock_sanity_v1.py"])
+    run(["python", "scripts/build_kids1000_cosebis_survey_native_path_kernel_derivation_gate_v1.py"])
+    run(["python", "scripts/validate_kids1000_cosebis_survey_native_path_kernel_derivation_gate_v1.py"])
     run(["python", "scripts/build_figures.py"])
     print("+ tectonic paper10_submission_source/main.tex")
     subprocess.run(["tectonic", PAPER.name], cwd=PAPER.parent, env=env, check=True)

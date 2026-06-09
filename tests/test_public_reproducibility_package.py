@@ -313,6 +313,12 @@ def test_public_files_exist() -> None:
         "docs/kids1000_cosebis_log_band_prior_mock_sanity_v1.md",
         "scripts/run_kids1000_cosebis_log_band_prior_mock_sanity_v1.py",
         "scripts/validate_kids1000_cosebis_log_band_prior_mock_sanity_v1.py",
+        "data/source_manifest/kids1000_cosebis_survey_native_path_kernel_derivation_gate_policy_v1.csv",
+        "data/derived/kids1000_cosebis_survey_native_path_kernel_derivation_gate_v1.csv",
+        "data/derived/kids1000_cosebis_survey_native_path_kernel_derivation_gate_v1_summary.csv",
+        "docs/kids1000_cosebis_survey_native_path_kernel_derivation_gate_v1.md",
+        "scripts/build_kids1000_cosebis_survey_native_path_kernel_derivation_gate_v1.py",
+        "scripts/validate_kids1000_cosebis_survey_native_path_kernel_derivation_gate_v1.py",
         "data/source_manifest/kids1000_cosebis_path_mapping_source_preflight_policy_v1.csv",
         "data/derived/kids1000_cosebis_path_mapping_source_preflight_v1.csv",
         "data/derived/kids1000_cosebis_path_mapping_source_preflight_v1_summary.csv",
@@ -537,6 +543,8 @@ def test_public_files_exist() -> None:
         "scripts/validate_kids1000_cosebis_log_band_prior_eligibility_gate_v1.py",
         "scripts/run_kids1000_cosebis_log_band_prior_mock_sanity_v1.py",
         "scripts/validate_kids1000_cosebis_log_band_prior_mock_sanity_v1.py",
+        "scripts/build_kids1000_cosebis_survey_native_path_kernel_derivation_gate_v1.py",
+        "scripts/validate_kids1000_cosebis_survey_native_path_kernel_derivation_gate_v1.py",
         "scripts/build_kids1000_cosebis_path_mapping_source_preflight_v1.py",
         "scripts/validate_kids1000_cosebis_path_mapping_source_preflight_v1.py",
         "scripts/build_kids1000_cosebis_null_control_readiness_v1.py",
@@ -4808,6 +4816,46 @@ def test_kids1000_cosebis_log_band_prior_mock_sanity_is_deterministic_not_valida
     assert {row["endpoint_scoring_allowed"] for row in rows} == {"false"}
     assert {row["endpoint_validation_claimed"] for row in rows} == {"false"}
     assert {row["claim_boundary"] for row in rows} == {policy["claim_boundary"]}
+
+
+def test_kids1000_cosebis_survey_native_path_kernel_gate_keeps_kernel_blockers_open() -> None:
+    with (
+        ROOT / "data/source_manifest/kids1000_cosebis_survey_native_path_kernel_derivation_gate_policy_v1.csv"
+    ).open(newline="") as f:
+        policy = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/kids1000_cosebis_survey_native_path_kernel_derivation_gate_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/kids1000_cosebis_survey_native_path_kernel_derivation_gate_v1.csv"
+    ).open(newline="") as f:
+        rows = list(csv.DictReader(f))
+
+    assert policy["status"] == "SURVEY_NATIVE_PATH_KERNEL_DERIVATION_GATE_FROZEN"
+    assert policy["uses_kids_data_vector_values"] == "false"
+    assert policy["uses_fit_statistics"] == "false"
+    assert policy["uses_random_noise"] == "false"
+    assert policy["endpoint_scoring_allowed"] == "false"
+    assert summary["status"] == "SURVEY_NATIVE_PATH_KERNEL_DERIVATION_GATE_PARTIAL"
+    assert summary["survey_native_gate_verdict"] == (
+        "survey_native_path_route_available_but_mode_response_and_covariant_kernel_derivation_blocked"
+    )
+    assert summary["route_support_conditions_passed"] == "true"
+    assert summary["full_kernel_derivation_closed"] == "false"
+    assert summary["pass_count"] == "4"
+    assert summary["pass_caveated_count"] == "1"
+    assert summary["open_blocker_count"] == "3"
+    assert summary["fail_count"] == "0"
+    assert summary["endpoint_validation_claimed"] == "false"
+    by_condition = {row["condition_id"]: row for row in rows}
+    assert by_condition["K2_full_route_path_observable"]["status"] == "PASS_CAVEATED"
+    assert by_condition["K6_survey_native_mode_response_operator"]["status"] == "OPEN_BLOCKER"
+    assert by_condition["K7_log_band_prior_from_kernel"]["status"] == "OPEN_BLOCKER"
+    assert by_condition["K8_covariant_lensing_path_limit"]["status"] == "OPEN_BLOCKER"
+    assert {row["claim_boundary"] for row in rows} == {policy["claim_boundary"]}
+    assert all(row["dimension_check"] for row in rows)
+    assert all(row["known_limit_check"] for row in rows)
 
 
 def test_kids1000_cosebis_null_control_policy_is_declared_not_run() -> None:

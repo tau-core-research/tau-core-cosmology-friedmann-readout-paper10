@@ -1391,6 +1391,28 @@ fit statistics, no random noise, and makes no endpoint-validation claim. Its
 verdict is
 `deterministic_template_recovery_pass_not_physical_mock_validation`.
 
+The survey-native path-kernel derivation gate is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_survey_native_path_kernel_derivation_gate_policy_v1.csv
+data/derived/kids1000_cosebis_survey_native_path_kernel_derivation_gate_v1.csv
+data/derived/kids1000_cosebis_survey_native_path_kernel_derivation_gate_v1_summary.csv
+docs/kids1000_cosebis_survey_native_path_kernel_derivation_gate_v1.md
+scripts/build_kids1000_cosebis_survey_native_path_kernel_derivation_gate_v1.py
+scripts/validate_kids1000_cosebis_survey_native_path_kernel_derivation_gate_v1.py
+```
+
+This gate separates route support from full kernel derivation. The current
+source route has a source-frozen mapping basis, a caveated full-route mask-load
+path proxy, a source-side path-weight factorization rule, a source-frozen
+theory-vector shell, and the deterministic template-recovery guardrail. These
+are enough to make the route support concrete, but not enough to claim a
+survey-native Tau Core lensing kernel. Three blockers remain explicit: a
+survey-native operator from path observables to COSEBIs mode response, a
+derivation of the log-band prior from that response spectrum, and a covariant or
+survey-native lensing/path limit. The verdict is
+`survey_native_path_route_available_but_mode_response_and_covariant_kernel_derivation_blocked`.
+
 The COSEBIs path-mapping source-preflight ledger is recorded in:
 
 ```text
