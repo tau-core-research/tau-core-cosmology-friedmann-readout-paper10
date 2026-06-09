@@ -403,6 +403,12 @@ def test_public_files_exist() -> None:
         "docs/kids1000_cosebis_standard_lensing_null_amplitude_theorem_requirements_v1.md",
         "scripts/build_kids1000_cosebis_standard_lensing_null_amplitude_theorem_requirements_v1.py",
         "scripts/validate_kids1000_cosebis_standard_lensing_null_amplitude_theorem_requirements_v1.py",
+        "data/source_manifest/kids1000_cosebis_physical_promotion_blocker_ledger_policy_v1.csv",
+        "data/derived/kids1000_cosebis_physical_promotion_blocker_ledger_v1.csv",
+        "data/derived/kids1000_cosebis_physical_promotion_blocker_ledger_v1_summary.csv",
+        "docs/kids1000_cosebis_physical_promotion_blocker_ledger_v1.md",
+        "scripts/build_kids1000_cosebis_physical_promotion_blocker_ledger_v1.py",
+        "scripts/validate_kids1000_cosebis_physical_promotion_blocker_ledger_v1.py",
         "data/source_manifest/kids1000_cosebis_path_mapping_source_preflight_policy_v1.csv",
         "data/derived/kids1000_cosebis_path_mapping_source_preflight_v1.csv",
         "data/derived/kids1000_cosebis_path_mapping_source_preflight_v1_summary.csv",
@@ -655,6 +661,8 @@ def test_public_files_exist() -> None:
         "scripts/validate_kids1000_cosebis_response_unit_normalization_requirements_gate_v1.py",
         "scripts/build_kids1000_cosebis_standard_lensing_null_amplitude_theorem_requirements_v1.py",
         "scripts/validate_kids1000_cosebis_standard_lensing_null_amplitude_theorem_requirements_v1.py",
+        "scripts/build_kids1000_cosebis_physical_promotion_blocker_ledger_v1.py",
+        "scripts/validate_kids1000_cosebis_physical_promotion_blocker_ledger_v1.py",
         "scripts/build_kids1000_cosebis_path_mapping_source_preflight_v1.py",
         "scripts/validate_kids1000_cosebis_path_mapping_source_preflight_v1.py",
         "scripts/build_kids1000_cosebis_null_control_readiness_v1.py",
@@ -5694,6 +5702,60 @@ def test_kids1000_cosebis_standard_lensing_null_amplitude_requirements_keep_theo
     assert by_req["Z4_gauge_quotient_descent_required"]["status"] == "OPEN_BLOCKER"
     assert by_req["Z5_leakage_theorem_required"]["status"] == "OPEN_BLOCKER"
     assert by_req["Z6_no_endpoint_feedback"]["status"] == "SATISFIED"
+    assert {row["claim_boundary"] for row in rows} == {policy["claim_boundary"]}
+    assert all(row["dimension_check"] for row in rows)
+    assert all(row["known_limit_check"] for row in rows)
+
+
+def test_kids1000_cosebis_physical_promotion_blocker_ledger_separates_diagnostic_from_physical() -> None:
+    with (
+        ROOT / "data/source_manifest/kids1000_cosebis_physical_promotion_blocker_ledger_policy_v1.csv"
+    ).open(newline="") as f:
+        policy = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/kids1000_cosebis_physical_promotion_blocker_ledger_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/kids1000_cosebis_physical_promotion_blocker_ledger_v1.csv"
+    ).open(newline="") as f:
+        rows = list(csv.DictReader(f))
+
+    assert policy["status"] == "PHYSICAL_PROMOTION_BLOCKER_LEDGER_POLICY_FROZEN"
+    assert policy["uses_kids_data_vector_values"] == "false"
+    assert policy["uses_fit_statistics"] == "false"
+    assert policy["uses_random_noise"] == "false"
+    assert policy["endpoint_scoring_allowed"] == "false"
+    assert summary["status"] == "PHYSICAL_PROMOTION_BLOCKER_LEDGER_BUILT_NOT_CLOSED"
+    assert summary["verdict"] == "diagnostic_endpoint_ready_but_physical_promotion_blocked_by_five_open_requirements"
+    assert summary["ledger_rows"] == "6"
+    assert summary["diagnostic_ready_not_physical_count"] == "1"
+    assert summary["open_blocker_count"] == "5"
+    assert summary["diagnostic_endpoint_pipeline_ready"] == "true"
+    for key in [
+        "physical_promotion_ready",
+        "survey_native_operator_theorem_proven",
+        "operator_leakage_theorem_proven",
+        "gauge_quotient_descent_proven",
+        "response_unit_normalization_derived",
+        "standard_lensing_null_amplitude_proven",
+        "contains_predictions",
+        "contains_residuals",
+        "contains_fit_statistics",
+        "uses_kids_data_vector_values",
+        "uses_posterior_chains",
+        "uses_random_noise",
+        "endpoint_scoring_allowed",
+        "endpoint_validation_claimed",
+    ]:
+        assert summary[key] == "false"
+    by_blocker = {row["blocker_id"]: row for row in rows}
+    assert by_blocker["G0_diagnostic_endpoint_pipeline_ready_not_physical_promotion"]["status"] == "DIAGNOSTIC_READY_NOT_PHYSICAL"
+    assert by_blocker["B1_survey_native_operator_theorem_open"]["status"] == "OPEN_BLOCKER"
+    assert by_blocker["B2_operator_leakage_theorem_open"]["status"] == "OPEN_BLOCKER"
+    assert by_blocker["B3_gauge_quotient_descent_open"]["status"] == "OPEN_BLOCKER"
+    assert by_blocker["B4_response_unit_normalization_open"]["status"] == "OPEN_BLOCKER"
+    assert by_blocker["B5_standard_lensing_null_amplitude_theorem_open"]["status"] == "OPEN_BLOCKER"
     assert {row["claim_boundary"] for row in rows} == {policy["claim_boundary"]}
     assert all(row["dimension_check"] for row in rows)
     assert all(row["known_limit_check"] for row in rows)

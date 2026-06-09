@@ -1666,6 +1666,24 @@ gauge/quotient descent, and non-uniform leakage control remain open blockers.
 The verdict is
 `standard_lensing_null_amplitude_requirements_frozen_but_theorem_remains_open`.
 
+The COSEBIs physical-promotion blocker ledger is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_physical_promotion_blocker_ledger_policy_v1.csv
+data/derived/kids1000_cosebis_physical_promotion_blocker_ledger_v1.csv
+data/derived/kids1000_cosebis_physical_promotion_blocker_ledger_v1_summary.csv
+docs/kids1000_cosebis_physical_promotion_blocker_ledger_v1.md
+scripts/build_kids1000_cosebis_physical_promotion_blocker_ledger_v1.py
+scripts/validate_kids1000_cosebis_physical_promotion_blocker_ledger_v1.py
+```
+
+This ledger separates diagnostic endpoint readiness from physical promotion.
+The diagnostic endpoint pipeline is ready, but physical promotion remains
+blocked by five open requirements: survey-native operator theorem, operator
+leakage theorem, gauge/quotient descent, response-unit normalization, and
+standard-lensing/no-\(\tau\)-source null-amplitude theorem. The verdict is
+`diagnostic_endpoint_ready_but_physical_promotion_blocked_by_five_open_requirements`.
+
 The COSEBIs path-mapping source-preflight ledger is recorded in:
 
 ```text
