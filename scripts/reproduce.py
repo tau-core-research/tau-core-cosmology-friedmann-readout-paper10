@@ -133,6 +133,8 @@ def main() -> None:
             "template",
         ]
     )
+    run(["python", "scripts/build_kids1000_cosebis_f_overlap_resolution_decision_v1.py"])
+    run(["python", "scripts/validate_kids1000_cosebis_f_overlap_resolution_decision_v1.py"])
     run(["python", "scripts/build_kids1000_cosebis_path_mapping_source_preflight_v1.py"])
     run(["python", "scripts/validate_kids1000_cosebis_path_mapping_source_preflight_v1.py"])
     run(["python", "scripts/build_kids1000_cosebis_null_control_readiness_v1.py"])

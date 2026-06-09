@@ -791,6 +791,12 @@ scripts/build_kids1000_cosebis_f_overlap_execution_review_template_v1.py
 scripts/validate_kids1000_cosebis_f_overlap_execution_review_template_v1.py
 docs/kids1000_cosebis_f_overlap_filled_execution_review_validator_v1.md
 scripts/validate_kids1000_cosebis_f_overlap_filled_execution_review_artifact_v1.py
+data/source_manifest/kids1000_cosebis_f_overlap_resolution_decision_policy_v1.csv
+data/derived/kids1000_cosebis_f_overlap_resolution_decision_v1.csv
+data/derived/kids1000_cosebis_f_overlap_resolution_decision_v1_summary.csv
+docs/kids1000_cosebis_f_overlap_resolution_decision_v1.md
+scripts/build_kids1000_cosebis_f_overlap_resolution_decision_v1.py
+scripts/validate_kids1000_cosebis_f_overlap_resolution_decision_v1.py
 ```
 
 It materializes the 20 planned batch-0 product rows using the frozen
@@ -804,6 +810,10 @@ execution-review artifact (`--mode filled`) against the frozen schema and
 batch-0 dry-run identities. It does not fetch products, promote a batch,
 derive an overlap rule, construct a path-mapping vector, or enable endpoint
 scoring.
+The F-overlap resolution decision gate records the current formal blocker
+decision: no endpoint-grade overlap route is accepted; the three source-frozen
+mask products are accepted only as a caveated partial path-mask control; the
+official-geometry, full-196-mask, and batch-0 dry-run routes remain unresolved.
 
 The endpoint scoring-readiness ledger is recorded in:
 
@@ -818,8 +828,8 @@ scripts/validate_kids1000_cosebis_endpoint_scoring_readiness_v1.py
 
 It collects the current pre-scoring state in one place. The data-vector
 structure, covariance matrix, covariance solve policy, theory-vector
-row-interface template, and mapping-to-template join contract are source-side
-ready; the theory vector, web/path
+row-interface template, mapping-to-template join contract, and F-overlap
+resolution/control decision are source-side ready; the theory vector, web/path
 mapping, source preflight, blocker resolution, and null controls still block
 scoring. The first blocker remains `F_overlap`, and endpoint scoring remains
 disabled.

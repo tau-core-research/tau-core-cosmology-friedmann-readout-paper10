@@ -298,12 +298,19 @@ filled mode it can later check a manually completed review artifact against the
 frozen schema and dry-run batch identities. It does not acquire data, promote a
 batch, compute overlap, construct a mapping or theory vector, or enable
 endpoint scoring.
+The F-overlap resolution decision gate records that no endpoint-grade overlap
+route is currently accepted. The three source-frozen mask products are accepted
+only as a caveated partial path-mask control; they are not promoted to a
+population endpoint overlap rule. The decision computes no overlap fraction,
+path mapping, theory vector, prediction, residual, likelihood value, fit
+statistic, or endpoint score.
 
 The endpoint scoring-readiness ledger is a no-go summary, not a score. It
 records that the COSEBIs data-vector structure, covariance matrix, covariance
 solve policy, theory-vector row-interface template, and mapping-to-template
-join contract are source-side ready, while the theory vector, web/path mapping,
-source preflight, blocker-resolution order, and null controls still block
+join contract are source-side ready, and the F-overlap resolution/control
+decision is recorded, while the theory vector, web/path mapping, source
+preflight, blocker-resolution order, and null controls still block
 scoring. It contains no predictions,
 residuals, fit statistics, or endpoint scores.
 

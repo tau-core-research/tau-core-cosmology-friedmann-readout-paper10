@@ -27,12 +27,12 @@ def main() -> None:
         raise SystemExit("policy must not execute scoring")
     if summary["status"] != "KIDS1000_COSEBIS_ENDPOINT_SCORING_READINESS_BUILT_NOT_SCORED":
         raise SystemExit("unexpected endpoint scoring readiness summary status")
-    if summary["component_count"] != "10":
-        raise SystemExit("endpoint scoring readiness must contain ten components")
-    if summary["ready_component_count"] != "5":
+    if summary["component_count"] != "11":
+        raise SystemExit("endpoint scoring readiness must contain eleven components")
+    if summary["ready_component_count"] != "6":
         raise SystemExit(
             "only data vector, covariance, covariance solve policy, theory template, "
-            "and mapping-template join contract should be ready"
+            "mapping-template join contract, and F_overlap decision should be ready"
         )
     if summary["blocking_component_count"] != "5":
         raise SystemExit("five components should block endpoint scoring")
@@ -49,6 +49,7 @@ def main() -> None:
         "web_path_mapping": ("false", "blocking"),
         "source_preflight": ("false", "blocking"),
         "blocker_resolution_order": ("false", "blocking"),
+        "f_overlap_resolution_decision": ("true", "not_blocking"),
         "null_controls": ("false", "blocking_until_mapping_exists"),
     }
     by_component = {row["component_id"]: row for row in rows}

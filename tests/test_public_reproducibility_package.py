@@ -180,6 +180,9 @@ def test_public_files_exist() -> None:
         "data/source_manifest/kids1000_cosebis_f_overlap_execution_review_template_policy_v1.csv",
         "data/derived/kids1000_cosebis_f_overlap_execution_review_template_v1.csv",
         "data/derived/kids1000_cosebis_f_overlap_execution_review_template_v1_summary.csv",
+        "data/source_manifest/kids1000_cosebis_f_overlap_resolution_decision_policy_v1.csv",
+        "data/derived/kids1000_cosebis_f_overlap_resolution_decision_v1.csv",
+        "data/derived/kids1000_cosebis_f_overlap_resolution_decision_v1_summary.csv",
         "docs/kids1000_cosebis_f_overlap_filled_execution_review_validator_v1.md",
         "scripts/validate_kids1000_cosebis_f_overlap_filled_execution_review_artifact_v1.py",
         "data/source_manifest/kids1000_cosebis_endpoint_scoring_readiness_policy_v1.csv",
@@ -247,6 +250,7 @@ def test_public_files_exist() -> None:
         "docs/kids1000_cosebis_f_overlap_batch_promotion_review_policy_v1.md",
         "docs/kids1000_cosebis_f_overlap_execution_review_schema_policy_v1.md",
         "docs/kids1000_cosebis_f_overlap_execution_review_template_policy_v1.md",
+        "docs/kids1000_cosebis_f_overlap_resolution_decision_v1.md",
         "docs/kids1000_cosebis_path_mapping_source_preflight_policy_v1.md",
         "docs/kids1000_cosebis_null_control_policy_v1.md",
         "docs/kids1000_cosebis_null_control_seed_policy_v1.md",
@@ -341,6 +345,8 @@ def test_public_files_exist() -> None:
         "scripts/validate_kids1000_cosebis_f_overlap_execution_review_schema_v1.py",
         "scripts/build_kids1000_cosebis_f_overlap_execution_review_template_v1.py",
         "scripts/validate_kids1000_cosebis_f_overlap_execution_review_template_v1.py",
+        "scripts/build_kids1000_cosebis_f_overlap_resolution_decision_v1.py",
+        "scripts/validate_kids1000_cosebis_f_overlap_resolution_decision_v1.py",
         "scripts/build_kids1000_cosebis_path_mapping_source_preflight_v1.py",
         "scripts/validate_kids1000_cosebis_path_mapping_source_preflight_v1.py",
         "scripts/build_kids1000_cosebis_null_control_readiness_v1.py",
@@ -2480,6 +2486,73 @@ def test_kids1000_cosebis_f_overlap_batch_promotion_review_is_not_ready() -> Non
     assert all(row["endpoint_scoring_allowed"] == "false" for row in rows)
 
 
+def test_kids1000_cosebis_f_overlap_resolution_decision_is_control_only() -> None:
+    with (
+        ROOT / "data/source_manifest/kids1000_cosebis_f_overlap_resolution_decision_policy_v1.csv"
+    ).open(newline="") as f:
+        policy = list(csv.DictReader(f))[0]
+    assert policy["status"] == "KIDS1000_COSEBIS_F_OVERLAP_RESOLUTION_DECISION_POLICY_FROZEN_NOT_RESOLVED"
+    assert policy["current_overlap_rule_computed"] == "false"
+    assert policy["current_path_mapping_computed"] == "false"
+    assert policy["current_endpoint_scoring_allowed"] == "false"
+    with (
+        ROOT / "data/derived/kids1000_cosebis_f_overlap_resolution_decision_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["status"] == "KIDS1000_COSEBIS_F_OVERLAP_RESOLUTION_DECISION_BUILT_NOT_RESOLVED"
+    assert summary["decision_item_count"] == "4"
+    assert summary["endpoint_route_accepted_count"] == "0"
+    assert summary["control_route_accepted_count"] == "1"
+    assert summary["unresolved_route_count"] == "3"
+    assert summary["f_overlap_endpoint_ready"] == "false"
+    assert summary["f_overlap_control_ready"] == "true"
+    assert summary["accepted_control_scope"] == "three_mask_subset_partial_path_control_only"
+    assert summary["overlap_rule_computed"] == "false"
+    assert summary["path_mapping_computed"] == "false"
+    assert summary["contains_mapping_vector"] == "false"
+    assert summary["contains_theory_vector"] == "false"
+    assert summary["contains_predictions"] == "false"
+    assert summary["contains_residuals"] == "false"
+    assert summary["contains_fit_statistics"] == "false"
+    assert summary["uses_kids_data_vector_values"] == "false"
+    assert summary["uses_posterior_chains"] == "false"
+    assert summary["uses_posthoc_tile_selection"] == "false"
+    assert summary["endpoint_scoring_allowed"] == "false"
+    with (
+        ROOT / "data/derived/kids1000_cosebis_f_overlap_resolution_decision_v1.csv"
+    ).open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    assert len(rows) == 4
+    by_item = {row["decision_item_id"]: row for row in rows}
+    assert by_item["F_OVERLAP_THREE_MASK_SUBSET"]["decision_class"] == "accepted_caveated_control_only"
+    assert by_item["F_OVERLAP_THREE_MASK_SUBSET"]["endpoint_route_accepted"] == "false"
+    assert by_item["F_OVERLAP_THREE_MASK_SUBSET"]["control_route_accepted"] == "true"
+    for item_id in [
+        "F_OVERLAP_OFFICIAL_GEOMETRY_ROUTE",
+        "F_OVERLAP_FULL_PIXEL_MASK_ROUTE",
+        "F_OVERLAP_BATCH0_DRY_RUN",
+    ]:
+        assert by_item[item_id]["decision_class"] == "rejected_unresolved"
+        assert by_item[item_id]["endpoint_route_accepted"] == "false"
+        assert by_item[item_id]["control_route_accepted"] == "false"
+    assert all(row["overlap_rule_computed"] == "false" for row in rows)
+    assert all(row["path_mapping_computed"] == "false" for row in rows)
+    assert all(row["contains_mapping_vector"] == "false" for row in rows)
+    assert all(row["contains_theory_vector"] == "false" for row in rows)
+    assert all(row["contains_predictions"] == "false" for row in rows)
+    assert all(row["contains_residuals"] == "false" for row in rows)
+    assert all(row["uses_kids_data_vector_values"] == "false" for row in rows)
+    assert all(row["endpoint_scoring_allowed"] == "false" for row in rows)
+    for marker in [
+        "kids_data_vector_values",
+        "posterior_chains",
+        "lensing_residuals",
+        "posthoc_overlap_rule_choice",
+        "posthoc_path_projection_labels",
+    ]:
+        assert marker in policy["forbidden_inputs"]
+
+
 def test_kids1000_cosebis_f_overlap_execution_review_schema_is_not_execution() -> None:
     with (
         ROOT / "data/source_manifest/kids1000_cosebis_f_overlap_execution_review_schema_policy_v1.csv"
@@ -2735,8 +2808,8 @@ def test_kids1000_cosebis_endpoint_scoring_readiness_is_not_scoring() -> None:
     ).open(newline="") as f:
         summary = list(csv.DictReader(f))[0]
     assert summary["status"] == "KIDS1000_COSEBIS_ENDPOINT_SCORING_READINESS_BUILT_NOT_SCORED"
-    assert summary["component_count"] == "10"
-    assert summary["ready_component_count"] == "5"
+    assert summary["component_count"] == "11"
+    assert summary["ready_component_count"] == "6"
     assert summary["blocking_component_count"] == "5"
     assert summary["first_blocker"] == "F_overlap"
     assert summary["endpoint_scoring_allowed"] == "false"
@@ -2760,6 +2833,7 @@ def test_kids1000_cosebis_endpoint_scoring_readiness_is_not_scoring() -> None:
         "web_path_mapping",
         "source_preflight",
         "blocker_resolution_order",
+        "f_overlap_resolution_decision",
         "null_controls",
     }
     assert by_component["data_vector_structure"]["ready_for_scoring"] == "true"
@@ -2774,6 +2848,10 @@ def test_kids1000_cosebis_endpoint_scoring_readiness_is_not_scoring() -> None:
     assert by_component["web_path_mapping"]["blocking_status"] == "blocking"
     assert by_component["source_preflight"]["blocking_status"] == "blocking"
     assert by_component["blocker_resolution_order"]["readiness_note"] == "first_blocker_F_overlap"
+    assert (
+        by_component["f_overlap_resolution_decision"]["readiness_note"]
+        == "endpoint_false_control_true"
+    )
     assert by_component["null_controls"]["blocking_status"] == "blocking_until_mapping_exists"
     for row in rows:
         assert row["endpoint_scoring_allowed"] == "false"

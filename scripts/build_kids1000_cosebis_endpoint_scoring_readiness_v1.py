@@ -16,6 +16,7 @@ JOIN_CONTRACT = ROOT / "data" / "derived" / "kids1000_cosebis_mapping_template_j
 MAPPING = ROOT / "data" / "derived" / "kids1000_cosebis_web_path_mapping_readiness_v1_summary.csv"
 PREFLIGHT = ROOT / "data" / "derived" / "kids1000_cosebis_path_mapping_source_preflight_v1_summary.csv"
 BLOCKERS = ROOT / "data" / "derived" / "kids1000_cosebis_path_blocker_resolution_order_v1_summary.csv"
+F_OVERLAP_DECISION = ROOT / "data" / "derived" / "kids1000_cosebis_f_overlap_resolution_decision_v1_summary.csv"
 NULL_SEEDS = ROOT / "data" / "derived" / "kids1000_cosebis_null_control_seed_inventory_v1_summary.csv"
 OUT = ROOT / "data" / "derived" / "kids1000_cosebis_endpoint_scoring_readiness_v1.csv"
 SUMMARY = ROOT / "data" / "derived" / "kids1000_cosebis_endpoint_scoring_readiness_v1_summary.csv"
@@ -40,6 +41,7 @@ def main() -> None:
     mapping = read_one(MAPPING)
     preflight = read_one(PREFLIGHT)
     blockers = read_one(BLOCKERS)
+    f_overlap_decision = read_one(F_OVERLAP_DECISION)
     null_seeds = read_one(NULL_SEEDS)
 
     if policy["current_endpoint_scoring_allowed"] != "false":
@@ -121,6 +123,17 @@ def main() -> None:
             "ready_for_scoring": "false",
             "blocking_status": "blocking",
             "readiness_note": f"first_blocker_{blockers['first_blocker']}",
+        },
+        {
+            "component_id": "f_overlap_resolution_decision",
+            "component_status": f_overlap_decision["status"],
+            "evidence_artifact": "data/derived/kids1000_cosebis_f_overlap_resolution_decision_v1_summary.csv",
+            "ready_for_scoring": "true",
+            "blocking_status": "not_blocking",
+            "readiness_note": (
+                f"endpoint_{f_overlap_decision['f_overlap_endpoint_ready']}_"
+                f"control_{f_overlap_decision['f_overlap_control_ready']}"
+            ),
         },
         {
             "component_id": "null_controls",
