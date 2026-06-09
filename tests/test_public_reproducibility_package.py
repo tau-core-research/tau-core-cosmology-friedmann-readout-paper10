@@ -307,6 +307,12 @@ def test_public_files_exist() -> None:
         "docs/kids1000_cosebis_log_band_prior_eligibility_gate_v1.md",
         "scripts/build_kids1000_cosebis_log_band_prior_eligibility_gate_v1.py",
         "scripts/validate_kids1000_cosebis_log_band_prior_eligibility_gate_v1.py",
+        "data/source_manifest/kids1000_cosebis_log_band_prior_mock_sanity_policy_v1.csv",
+        "data/derived/kids1000_cosebis_log_band_prior_mock_sanity_v1_grid.csv",
+        "data/derived/kids1000_cosebis_log_band_prior_mock_sanity_v1_summary.csv",
+        "docs/kids1000_cosebis_log_band_prior_mock_sanity_v1.md",
+        "scripts/run_kids1000_cosebis_log_band_prior_mock_sanity_v1.py",
+        "scripts/validate_kids1000_cosebis_log_band_prior_mock_sanity_v1.py",
         "data/source_manifest/kids1000_cosebis_path_mapping_source_preflight_policy_v1.csv",
         "data/derived/kids1000_cosebis_path_mapping_source_preflight_v1.csv",
         "data/derived/kids1000_cosebis_path_mapping_source_preflight_v1_summary.csv",
@@ -529,6 +535,8 @@ def test_public_files_exist() -> None:
         "scripts/validate_kids1000_cosebis_low_mode_kernel_envelope_derivation_v1.py",
         "scripts/build_kids1000_cosebis_log_band_prior_eligibility_gate_v1.py",
         "scripts/validate_kids1000_cosebis_log_band_prior_eligibility_gate_v1.py",
+        "scripts/run_kids1000_cosebis_log_band_prior_mock_sanity_v1.py",
+        "scripts/validate_kids1000_cosebis_log_band_prior_mock_sanity_v1.py",
         "scripts/build_kids1000_cosebis_path_mapping_source_preflight_v1.py",
         "scripts/validate_kids1000_cosebis_path_mapping_source_preflight_v1.py",
         "scripts/build_kids1000_cosebis_null_control_readiness_v1.py",
@@ -4762,6 +4770,43 @@ def test_kids1000_cosebis_log_band_prior_eligibility_gate_is_partial() -> None:
     }
     assert by_condition["C4_smooth_coherent_path_residual"]["status"] == "ASSUMPTION_NOT_SOURCE_PROVEN"
     assert by_condition["C6_covariant_or_survey_native_kernel"]["status"] == "OPEN_BLOCKER"
+    assert {row["claim_boundary"] for row in rows} == {policy["claim_boundary"]}
+
+
+def test_kids1000_cosebis_log_band_prior_mock_sanity_is_deterministic_not_validation() -> None:
+    with (
+        ROOT / "data/source_manifest/kids1000_cosebis_log_band_prior_mock_sanity_policy_v1.csv"
+    ).open(newline="") as f:
+        policy = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/kids1000_cosebis_log_band_prior_mock_sanity_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/kids1000_cosebis_log_band_prior_mock_sanity_v1_grid.csv"
+    ).open(newline="") as f:
+        rows = list(csv.DictReader(f))
+
+    assert policy["status"] == "LOG_BAND_PRIOR_MOCK_SANITY_POLICY_FROZEN"
+    assert policy["uses_kids_data_vector_values"] == "false"
+    assert policy["uses_fit_statistics"] == "false"
+    assert policy["uses_random_noise"] == "false"
+    assert policy["endpoint_scoring_allowed"] == "false"
+    assert summary["status"] == "LOG_BAND_PRIOR_MOCK_SANITY_COMPLETE"
+    assert summary["mock_sanity_verdict"] == "deterministic_template_recovery_pass_not_physical_mock_validation"
+    assert summary["all_expected_templates_recovered"] == "true"
+    assert summary["low_truth_best_template"] == "low_log_band_n^-0.5"
+    assert summary["flat_truth_best_template"] == "flat_coherent"
+    assert summary["high_truth_best_template"] == "high_mode_n"
+    assert summary["oscillatory_truth_best_template"] == "oscillatory_alternating"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert len(rows) == 16
+    assert {row["truth_recovered_expected_template"] for row in rows} == {"true"}
+    assert {row["uses_kids_data_vector_values"] for row in rows} == {"false"}
+    assert {row["uses_fit_statistics"] for row in rows} == {"false"}
+    assert {row["uses_random_noise"] for row in rows} == {"false"}
+    assert {row["endpoint_scoring_allowed"] for row in rows} == {"false"}
+    assert {row["endpoint_validation_claimed"] for row in rows} == {"false"}
     assert {row["claim_boundary"] for row in rows} == {policy["claim_boundary"]}
 
 

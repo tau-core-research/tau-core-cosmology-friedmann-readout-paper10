@@ -1370,6 +1370,27 @@ source-side path-mapping, and no-high-frequency-only guardrails. It still leaves
 one unproven smoothness assumption and one open full-kernel blocker. The verdict
 is `protocol_eligible_for_conditional_envelope_but_not_full_kernel_validated`.
 
+The log-band prior deterministic mock-sanity suite is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_log_band_prior_mock_sanity_policy_v1.csv
+data/derived/kids1000_cosebis_log_band_prior_mock_sanity_v1_grid.csv
+data/derived/kids1000_cosebis_log_band_prior_mock_sanity_v1_summary.csv
+docs/kids1000_cosebis_log_band_prior_mock_sanity_v1.md
+scripts/run_kids1000_cosebis_log_band_prior_mock_sanity_v1.py
+scripts/validate_kids1000_cosebis_log_band_prior_mock_sanity_v1.py
+```
+
+This is a deterministic template-recovery sanity check, not physical mock
+validation. It tests four synthetic truth families over the retained `15 x 20`
+COSEBIs row structure: low log-band `n^-0.5`, flat coherent, high-mode `n`,
+and oscillatory alternating. Each truth recovers its matching template. The
+purpose is only to show that the protocol does not automatically classify every
+deterministic pattern as low-mode. The suite uses no KiDS data-vector values, no
+fit statistics, no random noise, and makes no endpoint-validation claim. Its
+verdict is
+`deterministic_template_recovery_pass_not_physical_mock_validation`.
+
 The COSEBIs path-mapping source-preflight ledger is recorded in:
 
 ```text
