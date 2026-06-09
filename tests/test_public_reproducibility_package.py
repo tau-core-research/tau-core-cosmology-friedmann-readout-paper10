@@ -270,6 +270,12 @@ def test_public_files_exist() -> None:
         "docs/kids1000_cosebis_tomographic_structure_robustness_v1.md",
         "scripts/run_kids1000_cosebis_tomographic_structure_robustness_v1.py",
         "scripts/validate_kids1000_cosebis_tomographic_structure_robustness_v1.py",
+        "data/source_manifest/kids1000_cosebis_endpoint_jackknife_robustness_policy_v1.csv",
+        "data/derived/kids1000_cosebis_endpoint_jackknife_robustness_v1_grid.csv",
+        "data/derived/kids1000_cosebis_endpoint_jackknife_robustness_v1_summary.csv",
+        "docs/kids1000_cosebis_endpoint_jackknife_robustness_v1.md",
+        "scripts/run_kids1000_cosebis_endpoint_jackknife_robustness_v1.py",
+        "scripts/validate_kids1000_cosebis_endpoint_jackknife_robustness_v1.py",
         "data/source_manifest/kids1000_cosebis_path_mapping_source_preflight_policy_v1.csv",
         "data/derived/kids1000_cosebis_path_mapping_source_preflight_v1.csv",
         "data/derived/kids1000_cosebis_path_mapping_source_preflight_v1_summary.csv",
@@ -480,6 +486,8 @@ def test_public_files_exist() -> None:
         "scripts/validate_kids1000_cosebis_endpoint_scoring_diagnostics_v1.py",
         "scripts/run_kids1000_cosebis_tomographic_structure_robustness_v1.py",
         "scripts/validate_kids1000_cosebis_tomographic_structure_robustness_v1.py",
+        "scripts/run_kids1000_cosebis_endpoint_jackknife_robustness_v1.py",
+        "scripts/validate_kids1000_cosebis_endpoint_jackknife_robustness_v1.py",
         "scripts/build_kids1000_cosebis_path_mapping_source_preflight_v1.py",
         "scripts/validate_kids1000_cosebis_path_mapping_source_preflight_v1.py",
         "scripts/build_kids1000_cosebis_null_control_readiness_v1.py",
@@ -4459,6 +4467,48 @@ def test_kids1000_cosebis_tomographic_structure_robustness_preserves_low_tail() 
     assert by_family["auto_cross_preserving_shuffle"]["controls_better_than_candidate_chi2"] == "2"
     for row in [summary, *family_rows, *top_rows, *controls]:
         assert row["endpoint_validation_claimed"] == "false"
+        assert row["claim_boundary"] == policy["claim_boundary"]
+
+
+def test_kids1000_cosebis_endpoint_jackknife_robustness_is_not_single_pair_localized() -> None:
+    with (
+        ROOT / "data/source_manifest/kids1000_cosebis_endpoint_jackknife_robustness_policy_v1.csv"
+    ).open(newline="") as f:
+        policy = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/kids1000_cosebis_endpoint_jackknife_robustness_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/kids1000_cosebis_endpoint_jackknife_robustness_v1_grid.csv"
+    ).open(newline="") as f:
+        grid = list(csv.DictReader(f))
+
+    assert policy["status"] == "ENDPOINT_JACKKNIFE_ROBUSTNESS_POLICY_FROZEN"
+    assert policy["endpoint_validation_claimed"] == "false"
+    assert policy["uses_kids_data_vector_values_for_source_selection"] == "false"
+    assert policy["retunes_source_frozen_theory_vector"] == "false"
+    assert summary["status"] == "KIDS1000_COSEBIS_ENDPOINT_JACKKNIFE_ROBUSTNESS_COMPLETE"
+    assert summary["subset_count"] == "27"
+    assert summary["leave_one_subset_count"] == "20"
+    assert summary["mode_band_subset_count"] == "3"
+    assert summary["leave_one_subsets_with_negative_delta_chi2"] == "20"
+    assert summary["leave_one_subsets_with_negative_delta_aic"] == "20"
+    assert summary["mode_band_subsets_with_negative_delta_chi2"] == "2"
+    assert summary["mode_band_subsets_with_negative_delta_aic"] == "2"
+    assert summary["localization_verdict"] == "not_single_source_bin_or_pair_under_leave_one_chi2"
+    assert summary["worst_subset_id"] == "without_mode_band_low_1_5"
+    assert float(summary["worst_subset_delta_chi2_vs_baseline"]) == 0.0
+    assert abs(float(summary["full_reference_delta_chi2_vs_baseline"]) + 183.6152665217) < 1e-9
+    assert len(grid) == 27
+    assert sum(row["subset_family"] == "leave_one_source_bin" for row in grid) == 5
+    assert sum(row["subset_family"] == "leave_one_tomographic_pair" for row in grid) == 15
+    assert sum(row["subset_family"] == "mode_band" for row in grid) == 3
+    assert sum(row["subset_family"] == "complement_mode_band" for row in grid) == 3
+    for row in [summary, *grid]:
+        assert row["endpoint_validation_claimed"] == "false"
+        assert row["uses_kids_data_vector_values_for_scoring"] == "true"
+        assert row["uses_kids_data_vector_values_for_source_selection"] == "false"
         assert row["claim_boundary"] == policy["claim_boundary"]
 
 

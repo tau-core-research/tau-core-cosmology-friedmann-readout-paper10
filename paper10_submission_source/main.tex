@@ -671,6 +671,16 @@ auto/cross-preserving pair shuffles, the candidate ranks \(4/1120\), with
 plus-one tail fraction \(0.003571428571429\). Three structured controls beat
 the candidate, so this still is not validation, but the low-tail behavior
 survives a stricter tomographic-structure null ensemble.
+A second post-score localization audit keeps the same source-frozen theory
+vector and same nonnegative single-amplitude scoring rule, but evaluates
+predeclared jackknife masks. All \(20/20\) leave-one source-bin and
+leave-one tomographic-pair subsets retain negative \(\Delta\chi^2\) and
+negative \(\Delta{\rm AIC}\). Thus the endpoint score is not carried by one
+single source bin or one single tomographic pair under this first jackknife.
+The mode-band result remains caveated: only \(2/3\) mode-only subsets improve,
+and removing the low \(n=1\ldots5\) COSEBIs modes leaves no improvement over the
+zero baseline. This strengthens localization robustness but does not promote
+the result to KiDS validation.
 The resulting source-preflight ledger is correspondingly mixed: the 300 COSEBIs
 target rows, five-bin redshift-kernel inventory, 196-tile route-coordinate
 index, 300-row design skeleton, and 58{,}800-row domain skeleton are available;
@@ -988,8 +998,10 @@ source-frozen candidate improves over the zero baseline and lies in the low
 tail of predeclared null controls, but it is not an absolute null-control
 winner; the two better controls are tomographic-pair shuffles. A stricter
 tomographic-structure robustness run preserves the low-tail behavior with rank
-\(4/1120\), while leaving tomographic robustness as the main caveat. The value
-of the scaffold is therefore to make the next cosmology test
+\(4/1120\), and a jackknife localization audit finds that all \(20/20\)
+leave-one source-bin/pair subsets retain negative \(\Delta\chi^2\), although
+the signal remains mode-band dependent. The value of the scaffold is therefore
+to make the next cosmology test
 precise: a Tau Core-inspired late-time residual should be judged not by
 \(w(z)\ne -1\) alone, but by the joint pattern
 \[

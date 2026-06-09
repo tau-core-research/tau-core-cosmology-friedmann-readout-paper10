@@ -1252,6 +1252,26 @@ auto/cross-preserving pair shuffles. The candidate remains low-tail with rank
 controls beat it, so this is robustness evidence rather than validation. The
 remaining caveat is specifically tomographic-structure robustness.
 
+The endpoint jackknife/localization robustness audit is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_endpoint_jackknife_robustness_policy_v1.csv
+data/derived/kids1000_cosebis_endpoint_jackknife_robustness_v1_grid.csv
+data/derived/kids1000_cosebis_endpoint_jackknife_robustness_v1_summary.csv
+docs/kids1000_cosebis_endpoint_jackknife_robustness_v1.md
+scripts/run_kids1000_cosebis_endpoint_jackknife_robustness_v1.py
+scripts/validate_kids1000_cosebis_endpoint_jackknife_robustness_v1.py
+```
+
+This post-score audit keeps the source-frozen theory vector fixed and reruns
+the same full-covariance, nonnegative single-amplitude scoring rule on
+predeclared localization masks. All `20/20` leave-one source-bin and
+leave-one tomographic-pair subsets retain negative `Delta chi2` and negative
+`Delta AIC`, so the endpoint signal is not carried by a single source bin or
+single tomographic pair under this first jackknife. The mode-band result is
+more caveated: only `2/3` mode-band subsets improve, and the low-mode-removed
+subset has `Delta chi2 = 0`. This is localization robustness, not validation.
+
 The COSEBIs path-mapping source-preflight ledger is recorded in:
 
 ```text
