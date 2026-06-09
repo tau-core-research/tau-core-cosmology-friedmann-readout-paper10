@@ -681,6 +681,15 @@ The mode-band result remains caveated: only \(2/3\) mode-only subsets improve,
 and removing the low \(n=1\ldots5\) COSEBIs modes leaves no improvement over the
 zero baseline. This strengthens localization robustness but does not promote
 the result to KiDS validation.
+A final mode-localization audit sharpens that caveat. Scoring the predeclared
+single-mode, cumulative-low-mode, and low-mode-removal subsets shows that the
+best single mode is \(n=1\), with
+\(\Delta\chi^2=-101.5735188246\), while the strongest cumulative subset is
+\(n=1\ldots3\), with \(\Delta\chi^2=-237.1074068478\). All cumulative
+low-mode subsets improve, but removing the first five modes gives
+\(\Delta\chi^2=0\). The endpoint signal is therefore not single-bin or
+single-pair localized, but it is strongly low-mode localized. This is a
+diagnostic localization result, not a validation claim.
 The resulting source-preflight ledger is correspondingly mixed: the 300 COSEBIs
 target rows, five-bin redshift-kernel inventory, 196-tile route-coordinate
 index, 300-row design skeleton, and 58{,}800-row domain skeleton are available;
@@ -1000,8 +1009,10 @@ winner; the two better controls are tomographic-pair shuffles. A stricter
 tomographic-structure robustness run preserves the low-tail behavior with rank
 \(4/1120\), and a jackknife localization audit finds that all \(20/20\)
 leave-one source-bin/pair subsets retain negative \(\Delta\chi^2\), although
-the signal remains mode-band dependent. The value of the scaffold is therefore
-to make the next cosmology test
+the signal remains mode-band dependent. The mode-localization audit makes this
+specific: modes \(1\ldots5\) dominate the candidate score, and removing them
+removes the improvement. The value of the scaffold is therefore to make the
+next cosmology test
 precise: a Tau Core-inspired late-time residual should be judged not by
 \(w(z)\ne -1\) alone, but by the joint pattern
 \[

@@ -1272,6 +1272,27 @@ single tomographic pair under this first jackknife. The mode-band result is
 more caveated: only `2/3` mode-band subsets improve, and the low-mode-removed
 subset has `Delta chi2 = 0`. This is localization robustness, not validation.
 
+The endpoint mode-localization audit is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_endpoint_mode_localization_policy_v1.csv
+data/derived/kids1000_cosebis_endpoint_mode_localization_v1_grid.csv
+data/derived/kids1000_cosebis_endpoint_mode_localization_v1_summary.csv
+docs/kids1000_cosebis_endpoint_mode_localization_v1.md
+scripts/run_kids1000_cosebis_endpoint_mode_localization_v1.py
+scripts/validate_kids1000_cosebis_endpoint_mode_localization_v1.py
+```
+
+This follow-up audit localizes the mode-band caveat. It scores predeclared
+single-mode, cumulative-low-mode, and low-mode-removal subsets under the same
+full-covariance submatrix and nonnegative single-amplitude policy. The best
+single mode is `single_mode_1` with `Delta chi2 = -101.5735188246`; the best
+cumulative low-mode subset is `cumulative_low_modes_1_to_3` with
+`Delta chi2 = -237.1074068478`; and removing modes `1-5` gives
+`Delta chi2 = 0`. The claim-safe verdict is that the endpoint signal is
+strongly low-mode localized: this is a useful diagnostic and a sharpened
+follow-up target, not validation.
+
 The COSEBIs path-mapping source-preflight ledger is recorded in:
 
 ```text

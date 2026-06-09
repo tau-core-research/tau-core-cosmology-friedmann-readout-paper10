@@ -276,6 +276,12 @@ def test_public_files_exist() -> None:
         "docs/kids1000_cosebis_endpoint_jackknife_robustness_v1.md",
         "scripts/run_kids1000_cosebis_endpoint_jackknife_robustness_v1.py",
         "scripts/validate_kids1000_cosebis_endpoint_jackknife_robustness_v1.py",
+        "data/source_manifest/kids1000_cosebis_endpoint_mode_localization_policy_v1.csv",
+        "data/derived/kids1000_cosebis_endpoint_mode_localization_v1_grid.csv",
+        "data/derived/kids1000_cosebis_endpoint_mode_localization_v1_summary.csv",
+        "docs/kids1000_cosebis_endpoint_mode_localization_v1.md",
+        "scripts/run_kids1000_cosebis_endpoint_mode_localization_v1.py",
+        "scripts/validate_kids1000_cosebis_endpoint_mode_localization_v1.py",
         "data/source_manifest/kids1000_cosebis_path_mapping_source_preflight_policy_v1.csv",
         "data/derived/kids1000_cosebis_path_mapping_source_preflight_v1.csv",
         "data/derived/kids1000_cosebis_path_mapping_source_preflight_v1_summary.csv",
@@ -488,6 +494,8 @@ def test_public_files_exist() -> None:
         "scripts/validate_kids1000_cosebis_tomographic_structure_robustness_v1.py",
         "scripts/run_kids1000_cosebis_endpoint_jackknife_robustness_v1.py",
         "scripts/validate_kids1000_cosebis_endpoint_jackknife_robustness_v1.py",
+        "scripts/run_kids1000_cosebis_endpoint_mode_localization_v1.py",
+        "scripts/validate_kids1000_cosebis_endpoint_mode_localization_v1.py",
         "scripts/build_kids1000_cosebis_path_mapping_source_preflight_v1.py",
         "scripts/validate_kids1000_cosebis_path_mapping_source_preflight_v1.py",
         "scripts/build_kids1000_cosebis_null_control_readiness_v1.py",
@@ -4505,6 +4513,47 @@ def test_kids1000_cosebis_endpoint_jackknife_robustness_is_not_single_pair_local
     assert sum(row["subset_family"] == "leave_one_tomographic_pair" for row in grid) == 15
     assert sum(row["subset_family"] == "mode_band" for row in grid) == 3
     assert sum(row["subset_family"] == "complement_mode_band" for row in grid) == 3
+    for row in [summary, *grid]:
+        assert row["endpoint_validation_claimed"] == "false"
+        assert row["uses_kids_data_vector_values_for_scoring"] == "true"
+        assert row["uses_kids_data_vector_values_for_source_selection"] == "false"
+        assert row["claim_boundary"] == policy["claim_boundary"]
+
+
+def test_kids1000_cosebis_endpoint_mode_localization_identifies_low_mode_dominance() -> None:
+    with (
+        ROOT / "data/source_manifest/kids1000_cosebis_endpoint_mode_localization_policy_v1.csv"
+    ).open(newline="") as f:
+        policy = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/kids1000_cosebis_endpoint_mode_localization_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/kids1000_cosebis_endpoint_mode_localization_v1_grid.csv"
+    ).open(newline="") as f:
+        grid = list(csv.DictReader(f))
+
+    assert policy["status"] == "ENDPOINT_MODE_LOCALIZATION_POLICY_FROZEN"
+    assert policy["endpoint_validation_claimed"] == "false"
+    assert policy["uses_kids_data_vector_values_for_source_selection"] == "false"
+    assert policy["retunes_source_frozen_theory_vector"] == "false"
+    assert summary["status"] == "KIDS1000_COSEBIS_ENDPOINT_MODE_LOCALIZATION_COMPLETE"
+    assert summary["subset_count"] == "59"
+    assert summary["single_mode_subset_count"] == "20"
+    assert summary["cumulative_low_subset_count"] == "20"
+    assert summary["without_low_subset_count"] == "19"
+    assert summary["best_single_mode_subset_id"] == "single_mode_1"
+    assert summary["best_cumulative_low_subset_id"] == "cumulative_low_modes_1_to_3"
+    assert summary["first_without_low_non_improving_subset_id"] == "without_low_modes_1_to_5"
+    assert summary["mode_localization_verdict"] == "low_modes_1_to_5_dominate_endpoint_signal"
+    assert abs(float(summary["best_single_mode_delta_chi2_vs_baseline"]) + 101.5735188246) < 1e-9
+    assert abs(float(summary["best_cumulative_low_delta_chi2_vs_baseline"]) + 237.1074068478) < 1e-9
+    assert float(summary["first_without_low_non_improving_delta_chi2_vs_baseline"]) == 0.0
+    assert len(grid) == 59
+    by_subset = {row["subset_id"]: row for row in grid}
+    assert by_subset["without_low_modes_1_to_5"]["candidate_amplitude"] == "0.000000000000e+00"
+    assert by_subset["single_mode_20"]["candidate_amplitude"] == "0.000000000000e+00"
     for row in [summary, *grid]:
         assert row["endpoint_validation_claimed"] == "false"
         assert row["uses_kids_data_vector_values_for_scoring"] == "true"
