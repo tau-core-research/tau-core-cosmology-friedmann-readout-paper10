@@ -15,6 +15,7 @@ ROUTE_TILES = ROOT / "data" / "derived" / "kids1000_dr4_path_mask_route_tile_inv
 DESIGN_SKELETON = ROOT / "data" / "derived" / "kids1000_cosebis_path_mapping_design_skeleton_v1_summary.csv"
 DOMAIN_SKELETON = ROOT / "data" / "derived" / "kids1000_cosebis_path_mapping_domain_skeleton_v1_summary.csv"
 WEIGHT_RULE = ROOT / "data" / "derived" / "kids1000_cosebis_path_weight_construction_rule_v1_summary.csv"
+E_WEB_NULL = ROOT / "data" / "derived" / "kids1000_cosebis_e_web_null_control_rule_v1_summary.csv"
 NULL_SEEDS = ROOT / "data" / "derived" / "kids1000_cosebis_null_control_seed_inventory_v1_summary.csv"
 OUT = ROOT / "data" / "derived" / "kids1000_cosebis_path_mapping_source_preflight_v1.csv"
 SUMMARY = ROOT / "data" / "derived" / "kids1000_cosebis_path_mapping_source_preflight_v1_summary.csv"
@@ -38,6 +39,7 @@ def main() -> None:
     design_skeleton = read_one(DESIGN_SKELETON)
     domain_skeleton = read_one(DOMAIN_SKELETON)
     weight_rule = read_one(WEIGHT_RULE)
+    e_web_null = read_one(E_WEB_NULL)
     null_seeds = read_one(NULL_SEEDS)
 
     if policy["endpoint_scoring_allowed"].lower() != "false":
@@ -124,12 +126,12 @@ def main() -> None:
         },
         {
             "component_id": "web_environment_catalog",
-            "source_state": "missing",
-            "evidence_artifact": "data/source_manifest/kids1000_cosebis_web_path_mapping_policy_v1.csv",
-            "source_count": "0",
-            "preflight_role": "cosmic_web_environment_for_w_web",
-            "blocking_status": "blocking",
-            "limitation": "no_source_frozen_web_environment_catalog_for_kids_footprint",
+            "source_state": "available_uniform_null_web_control",
+            "evidence_artifact": "data/derived/kids1000_cosebis_e_web_null_control_rule_v1_summary.csv",
+            "source_count": e_web_null["tile_count"],
+            "preflight_role": "cosmic_web_environment_control_for_w_web",
+            "blocking_status": "not_blocking",
+            "limitation": "predeclared_null_web_control_available_no_positive_web_claim",
         },
         {
             "component_id": "null_control_seed_policy",

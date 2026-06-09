@@ -77,10 +77,10 @@ def main() -> None:
             "requirement_id": "REQ_E_WEB_SOURCE",
             "factor_id": "E_web",
             "current_state": by_factor["E_web"]["source_state"],
-            "required_source_class": "source_frozen_web_environment_catalog_for_kids_footprint",
-            "minimum_acceptance": "assigns_environment_observable_to_route_tiles_or_sky_regions_without_posthoc_residual_labels",
-            "next_action": "select_external_cosmic_web_environment_catalog_or_predeclare_null_web_absent_control",
-            "blocks_weight_computation": "true",
+            "required_source_class": "source_frozen_web_environment_catalog_or_predeclared_null_web_absent_control",
+            "minimum_acceptance": "null_web_control_or_environment_observable_assigned_without_posthoc_residual_labels",
+            "next_action": "none_e_web_control_route_resolved_by_predeclared_null_web_absent_control",
+            "blocks_weight_computation": "false",
         },
         {
             "requirement_id": "REQ_C_NORM_RULE",
@@ -88,7 +88,7 @@ def main() -> None:
             "current_state": by_factor["C_norm"]["source_state"],
             "required_source_class": "normalization_rule_defined_after_nonzero_source_factors_exist",
             "minimum_acceptance": "normalizes_weights_without_using_lensing_residuals_or_fit_improvement",
-            "next_action": "defer_until_F_overlap_D_path_E_web_are_source_frozen",
+            "next_action": "define_source_side_C_norm_after_F_overlap_D_path_and_E_web_control_are_source_frozen",
             "blocks_weight_computation": "true",
         },
         {

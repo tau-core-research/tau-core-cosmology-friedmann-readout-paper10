@@ -37,6 +37,7 @@ def main() -> None:
         "ROUTE_F_OVERLAP_PIXEL_MASK_DERIVED",
         "ROUTE_D_PATH_FULL_MASK_DEPTH_PRODUCTS",
         "ROUTE_E_WEB_EXTERNAL_ENVIRONMENT_CATALOG",
+        "ROUTE_E_WEB_NULL_ABSENT_CONTROL",
         "ROUTE_C_NORM_SOURCE_NORMALIZATION_PROTOCOL",
         "ROUTE_NULL_CONTROLS_AFTER_MAPPING",
     }
@@ -68,11 +69,11 @@ def main() -> None:
             "order_rank": "3",
             "resolution_stage": "freeze_web_environment_support",
             "factor_id": "E_web",
-            "accepted_route_ids": "ROUTE_E_WEB_EXTERNAL_ENVIRONMENT_CATALOG",
-            "stage_status": "blocking_not_resolved",
+            "accepted_route_ids": "ROUTE_E_WEB_EXTERNAL_ENVIRONMENT_CATALOG;ROUTE_E_WEB_NULL_ABSENT_CONTROL",
+            "stage_status": "resolved_control_supported",
             "why_first": "web_factor_needs_route_tile_or_sky_region_assignment_after_domain_support",
             "minimum_exit_condition": "source_frozen_environment_observable_or_predeclared_null_web_control",
-            "next_allowed_stage_if_unresolved": "null_web_absent_control_only_no_positive_web_claim",
+            "next_allowed_stage_if_unresolved": "proceed_to_C_norm_as_path_only_control_no_positive_web_claim",
         },
         {
             "order_rank": "4",
@@ -136,12 +137,13 @@ def main() -> None:
         "status": "KIDS1000_COSEBIS_PATH_BLOCKER_RESOLUTION_ORDER_BUILT_NOT_FETCHED",
         "stage_count": str(len(rows)),
         "resolved_source_supported_stage_count": str(sum(row["stage_status"] == "resolved_source_supported" for row in rows)),
+        "resolved_control_supported_stage_count": str(sum(row["stage_status"] == "resolved_control_supported" for row in rows)),
         "blocking_unresolved_stage_count": str(sum(row["stage_status"] == "blocking_not_resolved" for row in rows)),
         "not_allowed_stage_count": str(sum(row["stage_status"] == "not_allowed_yet" for row in rows)),
         "declared_not_computed_stage_count": str(sum(row["stage_status"] == "declared_not_computed" for row in rows)),
         "declared_not_executed_stage_count": str(sum(row["stage_status"] == "declared_not_executed" for row in rows)),
-        "first_blocker": "E_web",
-        "next_action": "resolve_E_web_or_predeclare_null_web_control_before_C_norm_mapping_or_scoring",
+        "first_blocker": "C_norm",
+        "next_action": "define_C_norm_source_side_rule_before_mapping_or_scoring",
         "external_products_fetched": "false",
         "numeric_factors_computed": "false",
         "path_mapping_computed": "false",
@@ -162,7 +164,7 @@ def main() -> None:
         writer.writerow(summary)
     print(
         "PAPER10_KIDS1000_COSEBIS_PATH_BLOCKER_RESOLUTION_ORDER_V1_BUILT "
-        f"stages={len(rows)} first_blocker=E_web endpoint_allowed=false"
+        f"stages={len(rows)} first_blocker=C_norm endpoint_allowed=false"
     )
 
 

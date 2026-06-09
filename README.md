@@ -609,9 +609,10 @@ scripts/validate_kids1000_cosebis_path_weight_construction_rule_v1.py
 It declares the future factorization
 `N_pair * T_tile * F_overlap * D_path * E_web * C_norm` and records which
 factors are source-supported. The rule is not computable yet: `F_overlap` has
-non-degenerate source support from the full-route pixel-fraction rule, and
+non-degenerate source support from the full-route pixel-fraction rule,
 `D_path` has caveated non-degenerate source support from the full-route
-mask-load proxy. The web-environment factor remains missing, source-side
+mask-load proxy, and `E_web` is source-supported only as a uniform null-web
+control. This does not make a positive web/environment claim. Source-side
 normalization is not yet computed, and no numeric path weight, mapping vector,
 or endpoint score is produced.
 
@@ -627,9 +628,10 @@ scripts/validate_kids1000_cosebis_path_factor_acquisition_plan_v1.py
 ```
 
 It converts the missing-factor status into seven source-side acquisition
-requirements. At the current stage two requirements block numeric path-weight
-computation: web/environment support and normalization after nonzero factors
-exist. It fetches no products and computes no endpoint weights.
+requirements. At the current stage one requirement blocks numeric path-weight
+computation: source-side normalization after the nonzero source factors and
+the null-web control exist. It fetches no products and computes no endpoint
+weights.
 
 The source-product route candidate manifest is recorded in:
 
@@ -643,9 +645,12 @@ scripts/validate_kids1000_cosebis_path_source_product_route_manifest_v1.py
 ```
 
 It declares ten source-product routes for the next source-gathering step:
-four already-supported locks/routes, two blocker-resolving candidates, two
-alternative-not-needed routes, and two deferred routes. It still fetches no
-external products, creates no path mapping, and computes no score.
+five already-supported locks/routes, one blocker-resolving candidate, two
+alternative-not-needed routes, and two deferred routes. The supported
+`E_web` route is a null-web control only; the external web/environment catalogue
+route remains unfetched and does not support a positive web claim. The manifest
+still fetches no external products, creates no path mapping, and computes no
+score.
 
 The blocker-resolution order policy is recorded in:
 
@@ -660,9 +665,10 @@ scripts/validate_kids1000_cosebis_path_blocker_resolution_order_v1.py
 
 It freezes the future source-side order: `F_overlap` first, then `D_path`,
 then `E_web`, then `C_norm`, then a mapping vector, then null controls. It
-records that `F_overlap` and a caveated `D_path` mask-load proxy are now
-source-supported. The first remaining blocker is `E_web`. It fetches no
-products and keeps mapping and endpoint scoring disabled.
+records that `F_overlap`, a caveated `D_path` mask-load proxy, and a uniform
+null-web `E_web` control are now source-supported. The first remaining blocker
+is `C_norm`. It fetches no products and keeps mapping and endpoint scoring
+disabled.
 
 The first-blocker `F_overlap` rule shell is recorded in:
 
@@ -866,6 +872,24 @@ proxy. It is non-degenerate (`D_path` ranges from about `0.508` to `1.000`) and
 is not identical to the `F_overlap` coverage channel. This resolves the
 `D_path` source blocker only as a mask-load proxy; it still computes no mapping
 vector, theory vector, prediction, residual, or endpoint score.
+
+The source-frozen `E_web` null-control rule is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_e_web_null_control_rule_policy_v1.csv
+data/derived/kids1000_cosebis_e_web_null_control_tile_rule_v1.csv
+data/derived/kids1000_cosebis_e_web_null_control_rule_v1.csv
+data/derived/kids1000_cosebis_e_web_null_control_rule_v1_summary.csv
+docs/kids1000_cosebis_e_web_null_control_rule_v1.md
+scripts/build_kids1000_cosebis_e_web_null_control_rule_v1.py
+scripts/validate_kids1000_cosebis_e_web_null_control_rule_v1.py
+```
+
+It freezes `E_web(tile)=1` for all 196 route tiles and all 58,800 domain rows.
+This is intentionally uniform and therefore is not a non-degenerate
+web/environment measurement. It resolves the web gate only as a path-only
+null-control route with no positive web claim, and computes no mapping vector,
+theory vector, prediction, residual, or endpoint score.
 
 The `F_overlap` batch-promotion review checklist is recorded in:
 
@@ -1079,10 +1103,11 @@ scripts/validate_kids1000_cosebis_endpoint_scoring_readiness_v1.py
 It collects the current pre-scoring state in one place. The data-vector
 structure, covariance matrix, covariance solve policy, theory-vector
 row-interface template, mapping-to-template join contract, and F-overlap
-resolution/control decision are source-side ready; `D_path`, `E_web`, `C_norm`
-/ source preflight, the theory vector, web/path mapping, null controls, and the
+resolution/control decision are source-side ready. `F_overlap`, caveated
+`D_path`, and null-control `E_web` are source-side supported, but `C_norm` /
+source preflight, the theory vector, web/path mapping, null controls, and the
 partial-control degeneracy audit still block scoring. The first blocker is now
-`E_web`. The partial-control diagnostic route is also explicitly blocked as
+`C_norm`. The partial-control diagnostic route is also explicitly blocked as
 endpoint evidence until a non-degenerate source-frozen mapping exists. Endpoint
 scoring remains disabled.
 

@@ -22,7 +22,8 @@ where:
 - `F_overlap(row,tile)` is a source-frozen full-route pixel-fraction overlap
   support factor,
 - `D_path(tile)` is a caveated full-route mask-load proxy,
-- `E_web(tile)` is a future web/environment factor,
+- `E_web(tile)` is currently a uniform null-web control, not a positive
+  web/environment measurement,
 - `C_norm` is a future normalization rule.
 
 Current status:
@@ -32,8 +33,10 @@ Current status:
   pixel-fraction rule over all 196 route masks;
 - `D_path` has non-degenerate source-side support from the full-route mask-load
   proxy over all 196 route masks, but it is not a calibrated depth map;
-- `E_web` and `C_norm` are not yet resolved strongly enough to make the full
-  path weight computable;
+- `E_web` is source-supported only as a uniform null-web control with no
+  positive web claim;
+- `C_norm` is not yet resolved strongly enough to make the full path weight
+  computable;
 - no mapping vector, theory-vector element, prediction, residual, likelihood
   value, or endpoint score is computed here.
 

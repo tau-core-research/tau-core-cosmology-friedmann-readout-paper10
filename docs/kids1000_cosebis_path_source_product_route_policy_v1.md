@@ -7,16 +7,13 @@ endpoint scoring.
 
 The route manifest separates three classes:
 
-- locked existing ingredients: redshift-pair support and preferred route-tile
-  support already exist as source-side inventories;
 - locked existing ingredients: redshift-pair support, preferred route-tile
-  support, source-supported footprint overlap, and caveated full-route
-  path/depth mask-load support;
-- blocker-resolution candidates: web/environment support and later source-side
-  normalization;
+  support, source-supported footprint overlap, caveated full-route path/depth
+  mask-load support, and the null-web control route;
+- blocker-resolution candidates: later source-side normalization;
 - controls: documented incomplete path/depth subset, the no-longer-needed
-  alternative path/depth route, null-web absent control, and null-control
-  execution after a mapping vector exists.
+  alternative path/depth route, the unfetched external web-catalogue route,
+  and null-control execution after a mapping vector exists.
 
 The accepted future order is:
 

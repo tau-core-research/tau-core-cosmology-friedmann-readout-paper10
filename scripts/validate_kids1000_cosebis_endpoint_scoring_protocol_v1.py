@@ -38,8 +38,8 @@ def main() -> None:
         raise SystemExit("KiDS endpoint scoring protocol parent readiness policy mismatch")
     if readiness["endpoint_scoring_allowed"] != "false":
         raise SystemExit("parent readiness ledger must keep endpoint scoring disabled")
-    if readiness["first_blocker"] != "E_web":
-        raise SystemExit("E_web must be the first blocker after F_overlap and D_path source support")
+    if readiness["first_blocker"] != "C_norm":
+        raise SystemExit("C_norm must be the first blocker after F_overlap, D_path, and null E_web support")
     if readiness["blocking_component_count"] != "6":
         raise SystemExit("KiDS endpoint scoring protocol should remain blocked by six components")
     if "chi2=" not in protocol["primary_score"]:

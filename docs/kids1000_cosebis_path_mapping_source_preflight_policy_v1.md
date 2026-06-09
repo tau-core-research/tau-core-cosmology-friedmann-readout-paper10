@@ -10,7 +10,8 @@ Current status:
 - the three-mask observable shell is retained as a control layer;
 - the full-route `D_path` mask-load proxy is available, but caveated as a mask
   proxy rather than a calibrated depth map;
-- the web/environment catalogue is still missing;
+- `E_web` is available only as a uniform null-web control; no positive
+  web/environment catalogue is used;
 - null controls are declared but not executed;
 - no mapping vector, theory vector, prediction, residual, fit statistic, or
   endpoint score is computed.

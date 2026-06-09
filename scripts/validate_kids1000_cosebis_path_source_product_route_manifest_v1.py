@@ -31,9 +31,9 @@ def main() -> None:
         raise SystemExit("source-product route manifest must contain ten routes")
     if summary["route_count"] != "10":
         raise SystemExit("unexpected route count")
-    if summary["declared_not_acquired_route_count"] != "2":
+    if summary["declared_not_acquired_route_count"] != "1":
         raise SystemExit("unexpected declared-not-acquired route count")
-    if summary["already_supported_route_count"] != "4":
+    if summary["already_supported_route_count"] != "5":
         raise SystemExit("unexpected already-supported route count")
     if summary["alternative_not_needed_route_count"] != "2":
         raise SystemExit("unexpected alternative-not-needed route count")
@@ -41,9 +41,9 @@ def main() -> None:
         raise SystemExit("unexpected declared-not-computed route count")
     if summary["declared_not_executed_route_count"] != "1":
         raise SystemExit("unexpected declared-not-executed route count")
-    if summary["blocker_resolving_candidate_count"] != "2":
+    if summary["blocker_resolving_candidate_count"] != "1":
         raise SystemExit("unexpected blocker-resolving candidate count")
-    if summary["control_or_lock_candidate_count"] != "8":
+    if summary["control_or_lock_candidate_count"] != "9":
         raise SystemExit("unexpected control-or-lock candidate count")
 
     expected_routes = {
@@ -53,7 +53,7 @@ def main() -> None:
         "ROUTE_F_OVERLAP_PIXEL_MASK_DERIVED": ("REQ_F_OVERLAP_SOURCE", "F_overlap", "false"),
         "ROUTE_D_PATH_FULL_MASK_DEPTH_PRODUCTS": ("REQ_D_PATH_SOURCE", "D_path", "false"),
         "ROUTE_D_PATH_DOCUMENTED_SUBSET_CONTROL": ("REQ_D_PATH_SOURCE", "D_path", "false"),
-        "ROUTE_E_WEB_EXTERNAL_ENVIRONMENT_CATALOG": ("REQ_E_WEB_SOURCE", "E_web", "true"),
+        "ROUTE_E_WEB_EXTERNAL_ENVIRONMENT_CATALOG": ("REQ_E_WEB_SOURCE", "E_web", "false"),
         "ROUTE_E_WEB_NULL_ABSENT_CONTROL": ("REQ_E_WEB_SOURCE", "E_web", "false"),
         "ROUTE_C_NORM_SOURCE_NORMALIZATION_PROTOCOL": ("REQ_C_NORM_RULE", "C_norm", "true"),
         "ROUTE_NULL_CONTROLS_AFTER_MAPPING": ("REQ_NULL_CONTROLS_EXECUTION", "null_controls", "false"),
@@ -69,6 +69,11 @@ def main() -> None:
             raise SystemExit(f"unexpected factor for {route_id}")
         if row["may_resolve_blocker"] != may_resolve_blocker:
             raise SystemExit(f"unexpected blocker-resolution flag for {route_id}")
+        if route_id == "ROUTE_E_WEB_NULL_ABSENT_CONTROL":
+            if row["route_status"] != "already_source_supported_no_fetch":
+                raise SystemExit("null-web route should be source-supported without fetch")
+            if "no_positive_web_claim" not in row["next_action"]:
+                raise SystemExit("null-web route must forbid positive web claims")
         if row["route_status"] in {"declared_not_acquired", "declared_not_computed", "declared_not_executed"}:
             if row["external_products_fetched"] != "false":
                 raise SystemExit(f"{route_id} must not fetch products")

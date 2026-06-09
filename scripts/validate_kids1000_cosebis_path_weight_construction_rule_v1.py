@@ -32,15 +32,15 @@ def main() -> None:
         raise SystemExit("unexpected path-weight summary status")
     if summary["factor_count"] != "7":
         raise SystemExit("unexpected path-weight factor count")
-    if summary["available_factor_count"] != "4":
+    if summary["available_factor_count"] != "5":
         raise SystemExit("unexpected available factor count")
-    if summary["available_uniform_not_promotable_factor_count"] != "0":
+    if summary["available_uniform_not_promotable_factor_count"] != "1":
         raise SystemExit("unexpected uniform-not-promotable factor count")
     if summary["available_non_degenerate_factor_count"] != "2":
         raise SystemExit("unexpected non-degenerate factor count")
     if summary["partial_available_factor_count"] != "0":
         raise SystemExit("unexpected partial factor count")
-    if summary["missing_factor_count"] != "1":
+    if summary["missing_factor_count"] != "0":
         raise SystemExit("unexpected missing factor count")
     if summary["declared_not_computed_factor_count"] != "1":
         raise SystemExit("unexpected declared-not-computed factor count")
@@ -56,7 +56,7 @@ def main() -> None:
         "T_tile": "available_for_future_rule",
         "F_overlap": "available_non_degenerate_full_route_pixel_fraction",
         "D_path": "available_non_degenerate_full_route_mask_load_proxy",
-        "E_web": "missing",
+        "E_web": "available_uniform_null_web_control",
         "C_norm": "declared_not_computed",
         "null_controls": "declared_not_executed",
     }
@@ -69,6 +69,10 @@ def main() -> None:
         raise SystemExit("D_path must reference all 196 route tiles")
     if by_factor["D_path"]["numeric_factor_computed"] != "true":
         raise SystemExit("D_path numeric proxy should be computed from full-route mask load")
+    if by_factor["E_web"]["source_count"] != "196":
+        raise SystemExit("E_web null control must reference all 196 route tiles")
+    if by_factor["E_web"]["numeric_factor_computed"] != "true":
+        raise SystemExit("E_web null control should be computed as a uniform source-side control")
     if by_factor["T_tile"]["source_count"] != "196":
         raise SystemExit("T_tile must reference all 196 route tiles")
     if by_factor["F_overlap"]["source_count"] != "196":

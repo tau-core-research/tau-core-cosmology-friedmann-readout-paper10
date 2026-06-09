@@ -14,6 +14,7 @@ MASK_SHELL = ROOT / "data" / "derived" / "kids1000_dr4_path_mask_observable_shel
 HEADER_DEGENERACY = ROOT / "data" / "derived" / "kids1000_cosebis_f_overlap_header_footprint_degeneracy_audit_v1_summary.csv"
 FULL_PIXEL_FRACTION = ROOT / "data" / "derived" / "kids1000_cosebis_f_overlap_full_route_pixel_fraction_rule_v1_summary.csv"
 D_PATH_MASK_LOAD = ROOT / "data" / "derived" / "kids1000_cosebis_d_path_full_route_mask_load_rule_v1_summary.csv"
+E_WEB_NULL = ROOT / "data" / "derived" / "kids1000_cosebis_e_web_null_control_rule_v1_summary.csv"
 NULL_SEEDS = ROOT / "data" / "derived" / "kids1000_cosebis_null_control_seed_inventory_v1_summary.csv"
 OUT = ROOT / "data" / "derived" / "kids1000_cosebis_path_weight_construction_rule_v1.csv"
 SUMMARY = ROOT / "data" / "derived" / "kids1000_cosebis_path_weight_construction_rule_v1_summary.csv"
@@ -36,6 +37,7 @@ def main() -> None:
     header_degeneracy = read_one(HEADER_DEGENERACY)
     full_pixel_fraction = read_one(FULL_PIXEL_FRACTION)
     d_path_mask_load = read_one(D_PATH_MASK_LOAD)
+    e_web_null = read_one(E_WEB_NULL)
     null_seeds = read_one(NULL_SEEDS)
     if policy["endpoint_scoring_allowed"].lower() != "false":
         raise SystemExit("path-weight construction policy must remain endpoint disabled")
@@ -90,12 +92,12 @@ def main() -> None:
         {
             "factor_id": "E_web",
             "factor_role": "web_environment_factor",
-            "source_state": "missing",
-            "evidence_artifact": "data/source_manifest/kids1000_cosebis_web_path_mapping_policy_v1.csv",
-            "source_count": "0",
-            "numeric_factor_computed": "false",
-            "blocking_status": "blocking",
-            "limitation": "no_source_frozen_web_environment_catalog_for_kids_footprint",
+            "source_state": "available_uniform_null_web_control",
+            "evidence_artifact": "data/derived/kids1000_cosebis_e_web_null_control_rule_v1_summary.csv",
+            "source_count": e_web_null["tile_count"],
+            "numeric_factor_computed": "true",
+            "blocking_status": "not_blocking",
+            "limitation": "predeclared_uniform_null_web_control_available_no_positive_web_claim",
         },
         {
             "factor_id": "C_norm",
@@ -151,7 +153,7 @@ def main() -> None:
         "factor_count": str(len(rows)),
         "available_factor_count": str(sum(row["source_state"].startswith("available") for row in rows)),
         "available_uniform_not_promotable_factor_count": str(
-            sum(row["source_state"] == "available_uniform_not_promotable" for row in rows)
+            sum(row["source_state"].startswith("available_uniform") for row in rows)
         ),
         "available_non_degenerate_factor_count": str(
             sum(row["source_state"].startswith("available_non_degenerate") for row in rows)

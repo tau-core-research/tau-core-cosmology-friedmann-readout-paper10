@@ -42,7 +42,7 @@ def main() -> None:
         "cosebis_path_mapping_domain_skeleton": "available",
         "path_weight_construction_rule": "declared_not_computed",
         "full_path_depth_footprint_mapping": "available_caveated_mask_load_proxy",
-        "web_environment_catalog": "missing",
+        "web_environment_catalog": "available_uniform_null_web_control",
         "null_control_seed_policy": "declared_not_executed",
     }
     by_component = {row["component_id"]: row for row in rows}
@@ -67,8 +67,12 @@ def main() -> None:
         raise SystemExit("full path/depth mask-load proxy should no longer block source preflight")
     if by_component["full_path_depth_footprint_mapping"]["source_count"] != "196":
         raise SystemExit("full path/depth mask-load proxy should carry all 196 route tiles")
-    if by_component["web_environment_catalog"]["blocking_status"] != "blocking":
-        raise SystemExit("web environment catalogue must remain blocking")
+    if by_component["web_environment_catalog"]["blocking_status"] != "not_blocking":
+        raise SystemExit("web environment catalogue must be nonblocking only as a null-web control")
+    if by_component["web_environment_catalog"]["source_count"] != "196":
+        raise SystemExit("web null-control should carry all 196 route tiles")
+    if "no_positive_web_claim" not in by_component["web_environment_catalog"]["limitation"]:
+        raise SystemExit("web null-control must forbid positive web claims")
     for key in [
         "path_mapping_computed",
         "contains_mapping_vector",

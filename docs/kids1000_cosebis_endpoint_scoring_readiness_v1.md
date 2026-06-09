@@ -14,10 +14,11 @@ Current result:
   mapping-to-template join contract, the blocker-resolution ledger, and the
   F-overlap resolution/control decision;
 - `F_overlap` and a caveated full-route `D_path` mask-load proxy are
-  source-supported;
-- blocking components: `E_web`, `C_norm`/source preflight, theory vector,
-  web/path mapping, null controls, and the partial-control degeneracy audit;
-- first blocker: `E_web`;
+  source-supported, and `E_web` is source-supported only as a uniform null-web
+  control;
+- blocking components: `C_norm`/source preflight, theory vector, web/path
+  mapping, null controls, and the partial-control degeneracy audit;
+- first blocker: `C_norm`;
 - endpoint scoring remains disabled.
 
 The ledger forbids KiDS data-vector values for source selection, posterior

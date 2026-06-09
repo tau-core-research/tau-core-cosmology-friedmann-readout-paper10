@@ -14,11 +14,13 @@ The ordering is:
 6. execute null controls.
 
 In the current source ledger, `F_overlap` is source-supported by the full-route
-pixel-fraction rule and `D_path` is source-supported only as a caveated
-full-route mask-load proxy. The first remaining unresolved blocker is therefore
-`E_web`. Later steps are intentionally not allowed to become endpoint-bearing
-shortcuts around missing web/environment support, source normalization, or the
-mapping vector.
+pixel-fraction rule, `D_path` is source-supported only as a caveated full-route
+mask-load proxy, and `E_web` is source-supported only as a uniform null-web
+control. This means the current route is path-only/projection-only with no
+positive web/environment claim. The first remaining unresolved blocker is
+therefore `C_norm`. Later steps are intentionally not allowed to become
+endpoint-bearing shortcuts around missing source normalization or the mapping
+vector.
 
 This policy fetches no external products, computes no factor values, builds no
 mapping vector, and performs no scoring. It only fixes the future source-side
