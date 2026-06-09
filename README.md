@@ -742,6 +742,22 @@ products, and no forbidden-input audit for a fetched batch. This checklist
 does not read ignored `data/local/` execution logs and computes no overlap
 rule, mapping vector, theory vector, prediction, residual, or score.
 
+The future fetched-batch execution-review schema is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_f_overlap_execution_review_schema_policy_v1.csv
+data/derived/kids1000_cosebis_f_overlap_execution_review_schema_v1.csv
+data/derived/kids1000_cosebis_f_overlap_execution_review_schema_v1_summary.csv
+docs/kids1000_cosebis_f_overlap_execution_review_schema_policy_v1.md
+scripts/build_kids1000_cosebis_f_overlap_execution_review_schema_v1.py
+scripts/validate_kids1000_cosebis_f_overlap_execution_review_schema_v1.py
+```
+
+It freezes the required columns for a later committed fetched-batch review
+artifact: product identity, URL, cache path, HTTP status, byte count, SHA-256,
+review status, reviewer role, forbidden-input flags, and claim-boundary flags.
+It does not fetch products or promote a batch.
+
 The COSEBIs path-mapping source-preflight ledger is recorded in:
 
 ```text

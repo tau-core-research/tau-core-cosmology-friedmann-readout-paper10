@@ -167,6 +167,9 @@ def test_public_files_exist() -> None:
         "data/source_manifest/kids1000_cosebis_f_overlap_batch_promotion_review_policy_v1.csv",
         "data/derived/kids1000_cosebis_f_overlap_batch_promotion_review_v1.csv",
         "data/derived/kids1000_cosebis_f_overlap_batch_promotion_review_v1_summary.csv",
+        "data/source_manifest/kids1000_cosebis_f_overlap_execution_review_schema_policy_v1.csv",
+        "data/derived/kids1000_cosebis_f_overlap_execution_review_schema_v1.csv",
+        "data/derived/kids1000_cosebis_f_overlap_execution_review_schema_v1_summary.csv",
         "data/source_manifest/kids1000_cosebis_path_mapping_source_preflight_policy_v1.csv",
         "data/derived/kids1000_cosebis_path_mapping_source_preflight_v1.csv",
         "data/derived/kids1000_cosebis_path_mapping_source_preflight_v1_summary.csv",
@@ -219,6 +222,7 @@ def test_public_files_exist() -> None:
         "docs/kids1000_cosebis_f_overlap_full_mask_batch_plan_policy_v1.md",
         "docs/kids1000_cosebis_f_overlap_full_mask_batch_dry_run_policy_v1.md",
         "docs/kids1000_cosebis_f_overlap_batch_promotion_review_policy_v1.md",
+        "docs/kids1000_cosebis_f_overlap_execution_review_schema_policy_v1.md",
         "docs/kids1000_cosebis_path_mapping_source_preflight_policy_v1.md",
         "docs/kids1000_cosebis_null_control_policy_v1.md",
         "docs/kids1000_cosebis_null_control_seed_policy_v1.md",
@@ -305,6 +309,8 @@ def test_public_files_exist() -> None:
         "scripts/validate_kids1000_cosebis_f_overlap_full_mask_batch_dry_run_v1.py",
         "scripts/build_kids1000_cosebis_f_overlap_batch_promotion_review_v1.py",
         "scripts/validate_kids1000_cosebis_f_overlap_batch_promotion_review_v1.py",
+        "scripts/build_kids1000_cosebis_f_overlap_execution_review_schema_v1.py",
+        "scripts/validate_kids1000_cosebis_f_overlap_execution_review_schema_v1.py",
         "scripts/build_kids1000_cosebis_path_mapping_source_preflight_v1.py",
         "scripts/validate_kids1000_cosebis_path_mapping_source_preflight_v1.py",
         "scripts/build_kids1000_cosebis_null_control_readiness_v1.py",
@@ -2314,6 +2320,86 @@ def test_kids1000_cosebis_f_overlap_batch_promotion_review_is_not_ready() -> Non
     assert all(row["uses_kids_data_vector_values"] == "false" for row in rows)
     assert all(row["uses_posterior_chains"] == "false" for row in rows)
     assert all(row["uses_posthoc_tile_selection"] == "false" for row in rows)
+    assert all(row["endpoint_scoring_allowed"] == "false" for row in rows)
+
+
+def test_kids1000_cosebis_f_overlap_execution_review_schema_is_not_execution() -> None:
+    with (
+        ROOT / "data/source_manifest/kids1000_cosebis_f_overlap_execution_review_schema_policy_v1.csv"
+    ).open(newline="") as f:
+        policy = list(csv.DictReader(f))[0]
+    assert policy["status"] == "KIDS1000_COSEBIS_F_OVERLAP_EXECUTION_REVIEW_SCHEMA_DECLARED_NOT_EXECUTED"
+    assert policy["endpoint_scoring_allowed"] == "false"
+    assert policy["current_execution_review_artifact_present"] == "false"
+    assert policy["current_external_products_fetched"] == "false"
+    assert policy["current_overlap_rule_computed"] == "false"
+    with (
+        ROOT / "data/derived/kids1000_cosebis_f_overlap_execution_review_schema_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["status"] == "KIDS1000_COSEBIS_F_OVERLAP_EXECUTION_REVIEW_SCHEMA_BUILT_NOT_EXECUTED"
+    assert summary["schema_column_count"] == "29"
+    assert summary["forbidden_true_column_count"] == "13"
+    assert summary["promotion_ready"] == "false"
+    assert summary["current_execution_review_artifact_present"] == "false"
+    assert summary["external_products_fetched"] == "false"
+    assert summary["overlap_rule_computed"] == "false"
+    assert summary["path_mapping_computed"] == "false"
+    assert summary["contains_mapping_vector"] == "false"
+    assert summary["contains_theory_vector"] == "false"
+    assert summary["endpoint_scoring_allowed"] == "false"
+    with (
+        ROOT / "data/derived/kids1000_cosebis_f_overlap_execution_review_schema_v1.csv"
+    ).open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    assert len(rows) == 29
+    by_column = {row["column_name"]: row for row in rows}
+    for column in [
+        "batch_id",
+        "tile_index_zero_based",
+        "mask_product_url",
+        "expected_cache_path",
+        "fetch_status",
+        "sha256",
+        "review_artifact_status",
+        "forbidden_inputs_used",
+        "uses_kids_data_vector_values",
+        "uses_posterior_chains",
+        "uses_lensing_residuals",
+        "uses_fit_improvement_flags",
+        "uses_posthoc_tile_selection",
+        "overlap_rule_computed",
+        "path_mapping_computed",
+        "contains_theory_vector",
+        "contains_residuals",
+        "endpoint_scoring_allowed",
+        "claim_boundary",
+    ]:
+        assert column in by_column
+    for column in [
+        "uses_kids_data_vector_values",
+        "uses_posterior_chains",
+        "uses_lensing_residuals",
+        "uses_fit_improvement_flags",
+        "uses_posthoc_tile_selection",
+        "overlap_rule_computed",
+        "path_mapping_computed",
+        "contains_mapping_vector",
+        "contains_theory_vector",
+        "contains_predictions",
+        "contains_residuals",
+        "contains_fit_statistics",
+        "endpoint_scoring_allowed",
+    ]:
+        assert by_column[column]["forbidden_if_true"] == "true"
+    assert all(row["external_products_fetched"] == "false" for row in rows)
+    assert all(row["overlap_rule_computed"] == "false" for row in rows)
+    assert all(row["path_mapping_computed"] == "false" for row in rows)
+    assert all(row["contains_mapping_vector"] == "false" for row in rows)
+    assert all(row["contains_theory_vector"] == "false" for row in rows)
+    assert all(row["contains_predictions"] == "false" for row in rows)
+    assert all(row["contains_residuals"] == "false" for row in rows)
+    assert all(row["contains_fit_statistics"] == "false" for row in rows)
     assert all(row["endpoint_scoring_allowed"] == "false" for row in rows)
 
 

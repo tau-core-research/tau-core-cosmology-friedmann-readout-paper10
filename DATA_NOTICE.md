@@ -270,6 +270,11 @@ artifact or checksum manifest has been promoted from `data/local/`, so
 does not compute overlap, mapping, theory-vector, prediction, residual, or
 endpoint-score quantities.
 
+The execution-review schema gate freezes the columns that a future committed
+fetched-batch review artifact must contain. It is a schema declaration only:
+there is still no fetched-batch review artifact in this release, and the schema
+does not fetch products, compute overlap, or enable scoring.
+
 The COSEBIs path-mapping source-preflight ledger combines only source-side
 availability flags. It records that COSEBIs target rows, redshift kernels, and
 the 196-tile route coordinate index, the 300-row design skeleton, and the
