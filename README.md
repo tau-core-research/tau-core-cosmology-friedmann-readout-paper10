@@ -862,6 +862,24 @@ docs/kids1000_cosebis_partial_control_design_matrix_v1.md
 scripts/build_kids1000_cosebis_partial_control_design_matrix_v1.py
 scripts/validate_kids1000_cosebis_partial_control_design_matrix_v1.py
 ```
+The first caveated partial-control diagnostic score is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_partial_control_diagnostic_scoring_v1.csv
+data/derived/kids1000_cosebis_partial_control_diagnostic_scoring_v1_grid.csv
+data/derived/kids1000_cosebis_partial_control_diagnostic_scoring_v1_summary.csv
+docs/kids1000_cosebis_partial_control_diagnostic_scoring_v1.md
+scripts/run_kids1000_cosebis_partial_control_diagnostic_scoring_v1.py
+scripts/validate_kids1000_cosebis_partial_control_diagnostic_scoring_v1.py
+```
+
+This run compares the frozen 300x6 branch matrix to the retained KiDS COSEBIs
+`En` data vector using the full 300x300 covariance and a nonnegative
+one-amplitude-per-branch rule. It improves the zero-branch diagnostic
+chi-square by about `183.6`, but it is explicitly not endpoint validation. In
+this simplified control, the positive mask branches are effectively
+amplitude-degenerate, so the result should be read only as a successful
+diagnostic scoring smoke test for the partial-control route.
 
 The endpoint scoring-readiness ledger is recorded in:
 

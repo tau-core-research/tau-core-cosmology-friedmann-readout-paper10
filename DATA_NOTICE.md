@@ -327,6 +327,13 @@ individual mask-sample branches, the positive-mask mean, and a sign-flipped
 positive-mask control. It is a scoring-facing support object only. It contains
 no endpoint theory vector, predictions, residuals, likelihood values, fit
 statistics, AIC values, endpoint scores, or validation claims.
+The partial-control diagnostic scoring artifact is the first caveated score
+using this branch matrix. It uses the KiDS COSEBIs `En` data vector and full
+`COVMAT` covariance for scoring only, with one nonnegative amplitude per
+predeclared branch. It does not use the KiDS data vector for source, branch,
+mask, or weight selection. Because the positive mask branches are
+amplitude-degenerate in this simplified control, the score is a diagnostic
+smoke test only, not endpoint validation or a population lensing claim.
 
 The endpoint scoring-readiness ledger is a no-go summary, not a score. It
 records that the COSEBIs data-vector structure, covariance matrix, covariance

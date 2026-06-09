@@ -588,6 +588,16 @@ positive-mask mean, and a sign-flipped positive-mask control. This design
 matrix is not an endpoint theory vector. It is only the branch interface that a
 future diagnostic partial-control score would use after a separate scoring
 protocol is opened.
+We then run that caveated diagnostic score, still outside endpoint validation.
+The retained KiDS COSEBIs \(En\) vector is compared to each predeclared branch
+using the full \(300\times300\) covariance and a nonnegative one-amplitude rule.
+The best positive-mask branch lowers the diagnostic \(\chi^2\) by about
+\(183.6\) relative to the zero branch. This number is not a KiDS endpoint
+claim: in this simplified three-mask control the positive branches are
+amplitude-degenerate, and the run is included only as a scoring-pipeline smoke
+test showing that the partial-control route can be evaluated without changing
+source labels, branch labels, masks, weights, or mode cuts after seeing
+residuals.
 The scoring-facing view is then summarized by an endpoint-readiness ledger:
 the COSEBIs data-vector structure, covariance matrix, covariance solve policy,
 theory-vector row-interface template, and mapping-to-template join contract are
