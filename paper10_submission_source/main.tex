@@ -558,9 +558,10 @@ not compute an overlap rule, mapping vector, theory vector, prediction,
 residual, or score.
 The scoring-facing view is then summarized by an endpoint-readiness ledger:
 the COSEBIs data-vector structure, covariance matrix, covariance solve policy,
-and theory-vector row-interface template are source-side ready, while the
-theory vector, web/path mapping, source-preflight state, blocker-resolution
-order, and null controls still block scoring. The first blocker remains
+theory-vector row-interface template, and mapping-to-template join contract are
+source-side ready, while the theory vector, web/path mapping,
+source-preflight state, blocker-resolution order, and null controls still block
+scoring. The first blocker remains
 \texttt{F\_overlap}; no prediction, residual, fit statistic, or endpoint score
 is computed.
 A corresponding scoring-protocol shell freezes only the future grammar

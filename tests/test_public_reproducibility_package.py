@@ -105,6 +105,9 @@ def test_public_files_exist() -> None:
         "data/source_manifest/kids1000_cosebis_theory_vector_template_policy_v1.csv",
         "data/derived/kids1000_cosebis_theory_vector_template_v1.csv",
         "data/derived/kids1000_cosebis_theory_vector_template_v1_summary.csv",
+        "data/source_manifest/kids1000_cosebis_mapping_template_join_contract_policy_v1.csv",
+        "data/derived/kids1000_cosebis_mapping_template_join_contract_v1.csv",
+        "data/derived/kids1000_cosebis_mapping_template_join_contract_v1_summary.csv",
         "data/source_manifest/kids1000_cosebis_web_path_mapping_policy_v1.csv",
         "data/derived/kids1000_cosebis_web_path_mapping_readiness_v1.csv",
         "data/derived/kids1000_cosebis_web_path_mapping_readiness_v1_summary.csv",
@@ -221,6 +224,7 @@ def test_public_files_exist() -> None:
         "docs/kids1000_cosebis_covariance_inversion_policy_v1.md",
         "docs/kids1000_cosebis_theory_vector_policy_v1.md",
         "docs/kids1000_cosebis_theory_vector_template_v1.md",
+        "docs/kids1000_cosebis_mapping_template_join_contract_v1.md",
         "docs/kids1000_cosebis_web_path_mapping_policy_v1.md",
         "docs/kids1000_cosebis_redshift_kernel_policy_v1.md",
         "docs/kids1000_cosebis_path_mask_depth_gap_policy_v1.md",
@@ -291,6 +295,8 @@ def test_public_files_exist() -> None:
         "scripts/validate_kids1000_cosebis_theory_vector_readiness_v1.py",
         "scripts/build_kids1000_cosebis_theory_vector_template_v1.py",
         "scripts/validate_kids1000_cosebis_theory_vector_template_v1.py",
+        "scripts/build_kids1000_cosebis_mapping_template_join_contract_v1.py",
+        "scripts/validate_kids1000_cosebis_mapping_template_join_contract_v1.py",
         "scripts/build_kids1000_cosebis_web_path_mapping_readiness_v1.py",
         "scripts/validate_kids1000_cosebis_web_path_mapping_readiness_v1.py",
         "scripts/build_kids1000_cosebis_redshift_kernel_inventory_v1.py",
@@ -1277,6 +1283,76 @@ def test_kids1000_cosebis_theory_vector_template_is_row_index_only() -> None:
     assert all(row["contains_prediction"] == "false" for row in rows)
     assert all(row["contains_residual"] == "false" for row in rows)
     assert all(row["uses_kids_data_vector_values"] == "false" for row in rows)
+    assert all(row["endpoint_scoring_allowed"] == "false" for row in rows)
+
+
+def test_kids1000_cosebis_mapping_template_join_contract_is_schema_only() -> None:
+    with (
+        ROOT / "data/source_manifest/kids1000_cosebis_mapping_template_join_contract_policy_v1.csv"
+    ).open(newline="") as f:
+        policy = list(csv.DictReader(f))[0]
+    assert policy["status"] == "KIDS1000_COSEBIS_MAPPING_TEMPLATE_JOIN_CONTRACT_POLICY_FROZEN_NOT_COMPUTED"
+    assert policy["endpoint_scoring_allowed"] == "false"
+    assert policy["current_join_values_computed"] == "false"
+    assert policy["current_theory_values_computed"] == "false"
+    assert policy["current_mapping_vector_computed"] == "false"
+    assert policy["expected_rows"] == "300"
+    assert policy["join_key"] == "row_index_zero_based"
+    for marker in [
+        "kids_data_vector_values",
+        "posterior_chains",
+        "lensing_residuals",
+        "fit_improvement_flags",
+        "posthoc_mapping_row_selection",
+        "posthoc_channel_activation",
+        "posthoc_sky_direction_selection",
+        "posthoc_web_environment_labels",
+        "posthoc_path_projection_labels",
+    ]:
+        assert marker in policy["forbidden_inputs"]
+    with (
+        ROOT / "data/derived/kids1000_cosebis_mapping_template_join_contract_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["status"] == "KIDS1000_COSEBIS_MAPPING_TEMPLATE_JOIN_CONTRACT_BUILT_NOT_COMPUTED"
+    assert summary["join_rows"] == "300"
+    assert summary["join_key"] == "row_index_zero_based"
+    assert summary["join_contract_built"] == "true"
+    assert summary["join_values_computed"] == "false"
+    assert summary["mapping_vector_computed"] == "false"
+    assert summary["theory_values_computed"] == "false"
+    assert summary["contains_theory_vector"] == "false"
+    assert summary["contains_predictions"] == "false"
+    assert summary["contains_residuals"] == "false"
+    assert summary["contains_fit_statistics"] == "false"
+    assert summary["uses_kids_data_vector_values"] == "false"
+    assert summary["uses_posterior_chains"] == "false"
+    assert summary["uses_posthoc_selection"] == "false"
+    assert summary["endpoint_scoring_allowed"] == "false"
+    with (
+        ROOT / "data/derived/kids1000_cosebis_mapping_template_join_contract_v1.csv"
+    ).open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    assert len(rows) == 300
+    assert [row["row_index_zero_based"] for row in rows] == [str(i) for i in range(300)]
+    assert len({row["pair_id"] for row in rows}) == 15
+    assert all(row["join_key"] == "row_index_zero_based" for row in rows)
+    assert all(row["join_contract_row_only"] == "true" for row in rows)
+    for field in [
+        "source_frozen_w_web_basis",
+        "source_frozen_w_path_basis",
+        "source_frozen_baseline_basis",
+        "source_frozen_channel_activation",
+        "source_frozen_mapping_provenance",
+    ]:
+        assert all(row[field] == "" for row in rows)
+    assert all(row["join_values_computed"] == "false" for row in rows)
+    assert all(row["mapping_vector_computed"] == "false" for row in rows)
+    assert all(row["theory_values_computed"] == "false" for row in rows)
+    assert all(row["contains_theory_vector"] == "false" for row in rows)
+    assert all(row["contains_prediction"] == "false" for row in rows)
+    assert all(row["contains_residual"] == "false" for row in rows)
+    assert all(row["uses_posthoc_selection"] == "false" for row in rows)
     assert all(row["endpoint_scoring_allowed"] == "false" for row in rows)
 
 
@@ -2659,8 +2735,8 @@ def test_kids1000_cosebis_endpoint_scoring_readiness_is_not_scoring() -> None:
     ).open(newline="") as f:
         summary = list(csv.DictReader(f))[0]
     assert summary["status"] == "KIDS1000_COSEBIS_ENDPOINT_SCORING_READINESS_BUILT_NOT_SCORED"
-    assert summary["component_count"] == "9"
-    assert summary["ready_component_count"] == "4"
+    assert summary["component_count"] == "10"
+    assert summary["ready_component_count"] == "5"
     assert summary["blocking_component_count"] == "5"
     assert summary["first_blocker"] == "F_overlap"
     assert summary["endpoint_scoring_allowed"] == "false"
@@ -2679,6 +2755,7 @@ def test_kids1000_cosebis_endpoint_scoring_readiness_is_not_scoring() -> None:
         "covariance_matrix",
         "covariance_solve_policy",
         "theory_vector_template",
+        "mapping_template_join_contract",
         "theory_vector",
         "web_path_mapping",
         "source_preflight",
@@ -2689,6 +2766,10 @@ def test_kids1000_cosebis_endpoint_scoring_readiness_is_not_scoring() -> None:
     assert by_component["covariance_matrix"]["ready_for_scoring"] == "true"
     assert by_component["covariance_solve_policy"]["ready_for_scoring"] == "true"
     assert by_component["theory_vector_template"]["readiness_note"] == "300_row_interface_no_theory_values"
+    assert (
+        by_component["mapping_template_join_contract"]["readiness_note"]
+        == "300_row_join_contract_no_mapping_values"
+    )
     assert by_component["theory_vector"]["blocking_status"] == "blocking"
     assert by_component["web_path_mapping"]["blocking_status"] == "blocking"
     assert by_component["source_preflight"]["blocking_status"] == "blocking"
