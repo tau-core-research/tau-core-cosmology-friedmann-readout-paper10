@@ -1332,6 +1332,27 @@ diagnostics, but it is not a first-principles Tau Core lensing kernel derivation
 The verdict is
 `partial_protocol_grounding_with_open_first_principles_derivation_blocker`.
 
+The low-mode kernel-envelope derivation artifact is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_low_mode_kernel_envelope_derivation_policy_v1.csv
+data/derived/kids1000_cosebis_low_mode_kernel_envelope_derivation_v1.csv
+data/derived/kids1000_cosebis_low_mode_kernel_envelope_derivation_v1_mode_weights.csv
+data/derived/kids1000_cosebis_low_mode_kernel_envelope_derivation_v1_summary.csv
+docs/kids1000_cosebis_low_mode_kernel_envelope_derivation_v1.md
+scripts/build_kids1000_cosebis_low_mode_kernel_envelope_derivation_v1.py
+scripts/validate_kids1000_cosebis_low_mode_kernel_envelope_derivation_v1.py
+```
+
+This artifact narrows the open blocker. Under the explicit source-side prior
+that a smooth path/readout residual has approximately constant power per
+logarithmic COSEBIs mode band, the discrete mode power scales as `P_n ~ 1/n`
+and the coherent amplitude envelope scales as `sqrt(P_n) ~ n^-0.5`. The
+finite retained mode domain then fixes the unit-mean normalization over
+`n=1..20`. This is a conditional envelope derivation, not a covariant KiDS
+lensing/path kernel theorem; the remaining blocker is the survey-native or
+covariant derivation of when the log-band-neutral prior applies.
+
 The COSEBIs path-mapping source-preflight ledger is recorded in:
 
 ```text

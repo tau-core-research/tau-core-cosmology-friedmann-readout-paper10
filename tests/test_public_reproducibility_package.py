@@ -294,6 +294,13 @@ def test_public_files_exist() -> None:
         "docs/kids1000_cosebis_low_mode_carrier_source_grounding_v1.md",
         "scripts/build_kids1000_cosebis_low_mode_carrier_source_grounding_v1.py",
         "scripts/validate_kids1000_cosebis_low_mode_carrier_source_grounding_v1.py",
+        "data/source_manifest/kids1000_cosebis_low_mode_kernel_envelope_derivation_policy_v1.csv",
+        "data/derived/kids1000_cosebis_low_mode_kernel_envelope_derivation_v1.csv",
+        "data/derived/kids1000_cosebis_low_mode_kernel_envelope_derivation_v1_mode_weights.csv",
+        "data/derived/kids1000_cosebis_low_mode_kernel_envelope_derivation_v1_summary.csv",
+        "docs/kids1000_cosebis_low_mode_kernel_envelope_derivation_v1.md",
+        "scripts/build_kids1000_cosebis_low_mode_kernel_envelope_derivation_v1.py",
+        "scripts/validate_kids1000_cosebis_low_mode_kernel_envelope_derivation_v1.py",
         "data/source_manifest/kids1000_cosebis_path_mapping_source_preflight_policy_v1.csv",
         "data/derived/kids1000_cosebis_path_mapping_source_preflight_v1.csv",
         "data/derived/kids1000_cosebis_path_mapping_source_preflight_v1_summary.csv",
@@ -512,6 +519,8 @@ def test_public_files_exist() -> None:
         "scripts/validate_kids1000_cosebis_endpoint_mode_shape_stress_v1.py",
         "scripts/build_kids1000_cosebis_low_mode_carrier_source_grounding_v1.py",
         "scripts/validate_kids1000_cosebis_low_mode_carrier_source_grounding_v1.py",
+        "scripts/build_kids1000_cosebis_low_mode_kernel_envelope_derivation_v1.py",
+        "scripts/validate_kids1000_cosebis_low_mode_kernel_envelope_derivation_v1.py",
         "scripts/build_kids1000_cosebis_path_mapping_source_preflight_v1.py",
         "scripts/validate_kids1000_cosebis_path_mapping_source_preflight_v1.py",
         "scripts/build_kids1000_cosebis_null_control_readiness_v1.py",
@@ -4665,6 +4674,50 @@ def test_kids1000_cosebis_low_mode_carrier_source_grounding_keeps_open_blocker()
         "missing_first_principles_mode_kernel_derivation",
     }
     assert {row["claim_boundary"] for row in rows} == {policy["claim_boundary"]}
+
+
+def test_kids1000_cosebis_low_mode_kernel_envelope_derivation_is_conditional() -> None:
+    with (
+        ROOT / "data/source_manifest/kids1000_cosebis_low_mode_kernel_envelope_derivation_policy_v1.csv"
+    ).open(newline="") as f:
+        policy = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/kids1000_cosebis_low_mode_kernel_envelope_derivation_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/kids1000_cosebis_low_mode_kernel_envelope_derivation_v1.csv"
+    ).open(newline="") as f:
+        ledger = list(csv.DictReader(f))
+    with (
+        ROOT / "data/derived/kids1000_cosebis_low_mode_kernel_envelope_derivation_v1_mode_weights.csv"
+    ).open(newline="") as f:
+        weights = list(csv.DictReader(f))
+
+    assert policy["status"] == "LOW_MODE_KERNEL_ENVELOPE_DERIVATION_POLICY_FROZEN"
+    assert policy["uses_kids_data_vector_values"] == "false"
+    assert policy["endpoint_scoring_allowed"] == "false"
+    assert summary["status"] == "LOW_MODE_KERNEL_ENVELOPE_CONDITIONAL_DERIVATION_COMPLETE"
+    assert (
+        summary["derivation_verdict"]
+        == "conditional_log_band_power_envelope_derives_n_minus_half_shape_but_covariant_kernel_blocker_remains"
+    )
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["open_blocker_count"] == "1"
+    assert summary["assumption_count"] == "2"
+    assert summary["derived_conditional_count"] == "2"
+    assert len(weights) == 20
+    assert [row["mode"] for row in weights] == [str(i) for i in range(1, 21)]
+    assert abs(float(summary["mean_unit_mode_weight"]) - 1.0) < 1e-12
+    assert float(weights[0]["unit_mean_mode_weight"]) > float(weights[-1]["unit_mean_mode_weight"])
+    assert {row["status"] for row in ledger} == {
+        "ASSUMPTION",
+        "DERIVED_CONDITIONAL",
+        "DEFINITION",
+        "LIMIT_CHECK",
+        "OPEN_BLOCKER",
+    }
+    assert {row["claim_boundary"] for row in [*ledger, *weights]} == {policy["claim_boundary"]}
 
 
 def test_kids1000_cosebis_null_control_policy_is_declared_not_run() -> None:
