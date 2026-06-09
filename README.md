@@ -1428,6 +1428,8 @@ The pilot diagnostic figure is generated reproducibly from the frozen grid:
 scripts/build_figures.py
 figures/fig_pantheon_full_cov_pilot_branch_diagnostics.pdf
 paper10_submission_source/figures/fig_pantheon_full_cov_pilot_branch_diagnostics.pdf
+figures/fig_kids1000_cosebis_mode_localization.pdf
+paper10_submission_source/figures/fig_kids1000_cosebis_mode_localization.pdf
 ```
 
 The first full-covariance pilot repeats the same frozen branch grammar using

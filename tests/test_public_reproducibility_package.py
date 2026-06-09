@@ -546,6 +546,8 @@ def test_public_files_exist() -> None:
         "scripts/build_figures.py",
         "figures/fig_pantheon_full_cov_pilot_branch_diagnostics.pdf",
         "paper10_submission_source/figures/fig_pantheon_full_cov_pilot_branch_diagnostics.pdf",
+        "figures/fig_kids1000_cosebis_mode_localization.pdf",
+        "paper10_submission_source/figures/fig_kids1000_cosebis_mode_localization.pdf",
     ]
     for rel in required:
         assert (ROOT / rel).exists(), rel
@@ -576,6 +578,7 @@ def test_arxiv_zip_is_source_only() -> None:
     assert "main.tex" in names
     assert "refs.bib" in names
     assert "figures/fig_pantheon_full_cov_pilot_branch_diagnostics.pdf" in names
+    assert "figures/fig_kids1000_cosebis_mode_localization.pdf" in names
     assert "main.pdf" not in names
     assert not any(name.endswith(".aux") for name in names)
 

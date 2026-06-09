@@ -15,8 +15,11 @@ FIGURES = ROOT / "figures"
 SUBMISSION_FIGURES = ROOT / "paper10_submission_source" / "figures"
 SUMMARY = ROOT / "data" / "derived" / "pantheon_full_cov_pilot_scoring_v1_summary.csv"
 GRID = ROOT / "data" / "derived" / "pantheon_full_cov_pilot_scoring_v1_grid.csv"
+KIDS_MODE_GRID = ROOT / "data" / "derived" / "kids1000_cosebis_endpoint_mode_localization_v1_grid.csv"
+KIDS_MODE_SUMMARY = ROOT / "data" / "derived" / "kids1000_cosebis_endpoint_mode_localization_v1_summary.csv"
 
-FIGURE_NAME = "fig_pantheon_full_cov_pilot_branch_diagnostics.pdf"
+PANTHEON_FIGURE_NAME = "fig_pantheon_full_cov_pilot_branch_diagnostics.pdf"
+KIDS_MODE_FIGURE_NAME = "fig_kids1000_cosebis_mode_localization.pdf"
 STALE_FIGURES = [
     "fig_bridge_map.pdf",
     "fig_leakage_ladder.pdf",
@@ -159,7 +162,7 @@ def build_pantheon_pilot_branch_diagnostics() -> None:
         color="#3d4658",
     )
     fig.subplots_adjust(left=0.08, right=0.985, bottom=0.24, top=0.82, wspace=0.24)
-    out = FIGURES / FIGURE_NAME
+    out = FIGURES / PANTHEON_FIGURE_NAME
     fig.savefig(
         out,
         bbox_inches="tight",
@@ -179,9 +182,137 @@ def build_pantheon_pilot_branch_diagnostics() -> None:
     plt.close(fig)
 
 
+def build_kids1000_cosebis_mode_localization() -> None:
+    FIGURES.mkdir(parents=True, exist_ok=True)
+    rows = read_rows(KIDS_MODE_GRID)
+    summary = read_one(KIDS_MODE_SUMMARY)
+
+    single = sorted(
+        [row for row in rows if row["subset_family"] == "single_mode"],
+        key=lambda row: int(row["subset_id"].split("_")[-1]),
+    )
+    cumulative = sorted(
+        [row for row in rows if row["subset_family"] == "cumulative_low_modes"],
+        key=lambda row: int(row["subset_id"].split("_")[-1]),
+    )
+    without_low = sorted(
+        [row for row in rows if row["subset_family"] == "without_low_modes"],
+        key=lambda row: int(row["subset_id"].split("_")[-1]),
+    )
+    single_mode = np.asarray([int(row["subset_id"].split("_")[-1]) for row in single])
+    single_delta = np.asarray([float(row["delta_chi2_vs_baseline"]) for row in single])
+    cumulative_mode = np.asarray([int(row["subset_id"].split("_")[-1]) for row in cumulative])
+    cumulative_delta = np.asarray([float(row["delta_chi2_vs_baseline"]) for row in cumulative])
+    without_mode = np.asarray([int(row["subset_id"].split("_")[-1]) for row in without_low])
+    without_delta = np.asarray([float(row["delta_chi2_vs_baseline"]) for row in without_low])
+
+    fig, (ax_single, ax_cumulative) = plt.subplots(1, 2, figsize=(7.4, 3.65))
+    fig.suptitle("KiDS-1000 COSEBIs endpoint mode localization", fontsize=11.2, fontweight="bold", y=0.98)
+
+    colors = np.where(single_delta < 0.0, "#2c73b9", "#aab3c2")
+    ax_single.bar(single_mode, single_delta, color=colors, width=0.76, edgecolor="#243044", linewidth=0.3)
+    ax_single.axhline(0.0, color="#303846", linewidth=0.8)
+    ax_single.axvspan(0.5, 5.5, color="#e8f1fb", alpha=0.9, zorder=-1)
+    ax_single.set_title("Single-mode subsets")
+    ax_single.set_xlabel("COSEBIs mode n")
+    ax_single.set_ylabel("Delta chi2 vs zero baseline")
+    ax_single.set_xticks([1, 5, 10, 15, 20])
+    ax_single.grid(axis="y", color="#d7dce5", linewidth=0.55, alpha=0.85)
+    ax_single.text(
+        1.15,
+        single_delta.min() * 0.92,
+        f"best: n=1\nDelta chi2={float(summary['best_single_mode_delta_chi2_vs_baseline']):+.1f}",
+        fontsize=7.2,
+        color="#243044",
+        ha="left",
+        va="bottom",
+    )
+
+    ax_cumulative.plot(
+        cumulative_mode,
+        cumulative_delta,
+        color="#2c73b9",
+        linewidth=1.8,
+        marker="o",
+        markersize=3.2,
+        label="modes 1..n",
+    )
+    ax_cumulative.plot(
+        without_mode,
+        without_delta,
+        color="#c57a2c",
+        linewidth=1.55,
+        marker="s",
+        markersize=3.0,
+        label="remove modes 1..n",
+    )
+    ax_cumulative.axhline(0.0, color="#303846", linewidth=0.8)
+    ax_cumulative.axvspan(1.0, 5.0, color="#e8f1fb", alpha=0.9, zorder=-1)
+    ax_cumulative.set_title("Cumulative low-mode localization")
+    ax_cumulative.set_xlabel("upper removed/included mode n")
+    ax_cumulative.set_ylabel("Delta chi2 vs zero baseline")
+    ax_cumulative.set_xticks([1, 3, 5, 10, 15, 20])
+    ax_cumulative.grid(axis="y", color="#d7dce5", linewidth=0.55, alpha=0.85)
+    ax_cumulative.legend(frameon=False, loc="lower right")
+    ax_cumulative.text(
+        3.2,
+        cumulative_delta.min() * 0.96,
+        "best cumulative:\nn=1..3",
+        fontsize=7.2,
+        color="#243044",
+        ha="left",
+        va="bottom",
+    )
+    ax_cumulative.text(
+        5.4,
+        -14.0,
+        "remove 1..5:\nno improvement",
+        fontsize=7.2,
+        color="#8a4d16",
+        ha="left",
+        va="center",
+    )
+    for ax in [ax_single, ax_cumulative]:
+        ax.spines["top"].set_visible(False)
+        ax.spines["right"].set_visible(False)
+
+    fig.text(
+        0.5,
+        0.018,
+        (
+            "Source-frozen KiDS endpoint candidate; full-covariance submatrices; "
+            "nonnegative single-amplitude refit per predeclared subset. "
+            "Diagnostic localization only, not validation."
+        ),
+        ha="center",
+        fontsize=7.6,
+        color="#3d4658",
+    )
+    fig.subplots_adjust(left=0.08, right=0.985, bottom=0.22, top=0.82, wspace=0.27)
+    out = FIGURES / KIDS_MODE_FIGURE_NAME
+    fig.savefig(
+        out,
+        bbox_inches="tight",
+        pad_inches=0.05,
+        metadata={
+            "Title": "Paper10 KiDS-1000 COSEBIs endpoint mode localization",
+            "Author": "tau-core-paper10-reproducibility-package",
+            "Subject": "Mode-localization diagnostic figure; not validation",
+            "Keywords": "Tau Core, KiDS-1000, COSEBIs, mode localization",
+            "Creator": "scripts/build_figures.py",
+            "Producer": "matplotlib",
+            "CreationDate": None,
+            "ModDate": None,
+        },
+    )
+    copy_figure(out)
+    plt.close(fig)
+
+
 def main() -> None:
     build_pantheon_pilot_branch_diagnostics()
-    print(f"PAPER10_FIGURES_BUILT files=1 figure={FIGURE_NAME}")
+    build_kids1000_cosebis_mode_localization()
+    print(f"PAPER10_FIGURES_BUILT files=2 figures={PANTHEON_FIGURE_NAME};{KIDS_MODE_FIGURE_NAME}")
 
 
 if __name__ == "__main__":
