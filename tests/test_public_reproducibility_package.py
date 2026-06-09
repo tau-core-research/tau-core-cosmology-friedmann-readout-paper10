@@ -365,6 +365,13 @@ def test_public_files_exist() -> None:
         "docs/kids1000_cosebis_gauge_quotient_descent_gate_v1.md",
         "scripts/build_kids1000_cosebis_gauge_quotient_descent_gate_v1.py",
         "scripts/validate_kids1000_cosebis_gauge_quotient_descent_gate_v1.py",
+        "data/source_manifest/kids1000_cosebis_survey_native_operator_construction_attempt_policy_v1.csv",
+        "data/derived/kids1000_cosebis_survey_native_operator_construction_attempt_v1.csv",
+        "data/derived/kids1000_cosebis_survey_native_operator_construction_attempt_v1_ledger.csv",
+        "data/derived/kids1000_cosebis_survey_native_operator_construction_attempt_v1_summary.csv",
+        "docs/kids1000_cosebis_survey_native_operator_construction_attempt_v1.md",
+        "scripts/build_kids1000_cosebis_survey_native_operator_construction_attempt_v1.py",
+        "scripts/validate_kids1000_cosebis_survey_native_operator_construction_attempt_v1.py",
         "data/source_manifest/kids1000_cosebis_path_mapping_source_preflight_policy_v1.csv",
         "data/derived/kids1000_cosebis_path_mapping_source_preflight_v1.csv",
         "data/derived/kids1000_cosebis_path_mapping_source_preflight_v1_summary.csv",
@@ -605,6 +612,8 @@ def test_public_files_exist() -> None:
         "scripts/validate_kids1000_cosebis_operator_leakage_theorem_requirements_v1.py",
         "scripts/build_kids1000_cosebis_gauge_quotient_descent_gate_v1.py",
         "scripts/validate_kids1000_cosebis_gauge_quotient_descent_gate_v1.py",
+        "scripts/build_kids1000_cosebis_survey_native_operator_construction_attempt_v1.py",
+        "scripts/validate_kids1000_cosebis_survey_native_operator_construction_attempt_v1.py",
         "scripts/build_kids1000_cosebis_path_mapping_source_preflight_v1.py",
         "scripts/validate_kids1000_cosebis_path_mapping_source_preflight_v1.py",
         "scripts/build_kids1000_cosebis_null_control_readiness_v1.py",
@@ -5271,6 +5280,83 @@ def test_kids1000_cosebis_gauge_quotient_descent_gate_is_frozen_not_proven() -> 
         "endpoint_validation_claimed",
     ]:
         assert summary[key] == "false"
+
+
+def test_kids1000_cosebis_survey_native_operator_construction_attempt_is_skeleton_not_theorem() -> None:
+    with (
+        ROOT / "data/source_manifest/kids1000_cosebis_survey_native_operator_construction_attempt_policy_v1.csv"
+    ).open(newline="") as f:
+        policy = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/kids1000_cosebis_survey_native_operator_construction_attempt_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/kids1000_cosebis_survey_native_operator_construction_attempt_v1_ledger.csv"
+    ).open(newline="") as f:
+        ledger = list(csv.DictReader(f))
+    with (
+        ROOT / "data/derived/kids1000_cosebis_survey_native_operator_construction_attempt_v1.csv"
+    ).open(newline="") as f:
+        operator_rows = list(csv.DictReader(f))
+
+    assert policy["status"] == "SURVEY_NATIVE_OPERATOR_CONSTRUCTION_ATTEMPT_POLICY_FROZEN"
+    assert policy["uses_kids_data_vector_values"] == "false"
+    assert policy["uses_fit_statistics"] == "false"
+    assert policy["uses_random_noise"] == "false"
+    assert policy["endpoint_scoring_allowed"] == "false"
+    assert summary["status"] == "SURVEY_NATIVE_OPERATOR_SKELETON_CONSTRUCTED_THEOREM_OPEN"
+    assert summary["verdict"] == "factorized_source_side_operator_skeleton_exists_but_operator_theorem_remains_open"
+    assert summary["operator_rows"] == "300"
+    assert summary["ledger_rows"] == "6"
+    assert summary["satisfied_count"] == "1"
+    assert summary["satisfied_caveated_count"] == "2"
+    assert summary["open_blocker_count"] == "3"
+    assert summary["operator_skeleton_constructed"] == "true"
+    assert summary["contains_theory_vector"] == "true"
+    for key in [
+        "survey_native_operator_constructed",
+        "operator_theorem_proven",
+        "operator_leakage_theorem_proven",
+        "mask_leakage_theorem_proven",
+        "gauge_quotient_descent_proven",
+        "physical_operator_units_derived",
+        "mode_response_operator_derived",
+        "contains_predictions",
+        "contains_residuals",
+        "contains_fit_statistics",
+        "uses_kids_data_vector_values",
+        "uses_posterior_chains",
+        "uses_random_noise",
+        "endpoint_scoring_allowed",
+        "endpoint_validation_claimed",
+    ]:
+        assert summary[key] == "false"
+    assert len(operator_rows) == 300
+    for row in operator_rows[:10] + operator_rows[-10:]:
+        assert row["operator_skeleton_constructed"] == "true"
+        assert row["operator_theorem_proven"] == "false"
+        assert row["mask_leakage_theorem_proven"] == "false"
+        assert row["gauge_quotient_descent_proven"] == "false"
+        assert row["contains_predictions"] == "false"
+        assert row["contains_residuals"] == "false"
+        assert row["contains_fit_statistics"] == "false"
+        assert row["uses_kids_data_vector_values"] == "false"
+        assert row["endpoint_scoring_allowed"] == "false"
+        assert abs(
+            float(row["operator_kernel_value"])
+            - float(row["source_mapping_component"]) * float(row["mode_response_component"])
+        ) < 1.0e-10
+    by_gate = {row["gate_id"]: row for row in ledger}
+    assert by_gate["O1_domain_codomain_available"]["status"] == "SATISFIED_CAVEATED"
+    assert by_gate["O2_factorized_operator_skeleton_constructed"]["status"] == "SATISFIED_CAVEATED"
+    assert by_gate["O3_mask_leakage_theorem_open"]["status"] == "OPEN_BLOCKER"
+    assert by_gate["O4_gauge_quotient_descent_open"]["status"] == "OPEN_BLOCKER"
+    assert by_gate["O5_no_endpoint_feedback"]["status"] == "SATISFIED"
+    assert by_gate["O6_physical_operator_units_open"]["status"] == "OPEN_BLOCKER"
+    assert {row["claim_boundary"] for row in ledger} == {policy["claim_boundary"]}
+    assert all(row["dimension_check"] for row in ledger)
+    assert all(row["known_limit_check"] for row in ledger)
 
 
 def test_kids1000_cosebis_null_control_policy_is_declared_not_run() -> None:

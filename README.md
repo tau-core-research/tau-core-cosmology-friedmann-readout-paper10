@@ -1552,6 +1552,26 @@ gauge/quotient descent and does not construct the missing survey-native
 operator. The verdict is
 `gauge_quotient_descent_requirements_frozen_but_theorem_remains_open`.
 
+The COSEBIs survey-native operator construction attempt is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_survey_native_operator_construction_attempt_policy_v1.csv
+data/derived/kids1000_cosebis_survey_native_operator_construction_attempt_v1.csv
+data/derived/kids1000_cosebis_survey_native_operator_construction_attempt_v1_ledger.csv
+data/derived/kids1000_cosebis_survey_native_operator_construction_attempt_v1_summary.csv
+docs/kids1000_cosebis_survey_native_operator_construction_attempt_v1.md
+scripts/build_kids1000_cosebis_survey_native_operator_construction_attempt_v1.py
+scripts/validate_kids1000_cosebis_survey_native_operator_construction_attempt_v1.py
+```
+
+This artifact writes the first explicit source-side factorized operator
+skeleton for the KiDS COSEBIs branch, \(K_i=M_iS_n\), using the frozen mapping
+component and the conditional log-band mode-response weight. It is a
+unit-amplitude source-side kernel, not a survey-native operator theorem and not
+an endpoint prediction. Mask-leakage theorem, gauge/quotient descent, and
+physical operator-unit derivation remain open. The verdict is
+`factorized_source_side_operator_skeleton_exists_but_operator_theorem_remains_open`.
+
 The COSEBIs path-mapping source-preflight ledger is recorded in:
 
 ```text
