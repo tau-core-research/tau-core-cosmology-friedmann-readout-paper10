@@ -1533,6 +1533,25 @@ mode-spectrum/null-coupling requirement, and leaves two explicit blockers:
 operator leakage theorem and gauge/quotient descent. The verdict is
 `requirements_frozen_for_operator_leakage_theorem_but_proof_remains_open`.
 
+The COSEBIs gauge/quotient descent gate is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_gauge_quotient_descent_gate_policy_v1.csv
+data/derived/kids1000_cosebis_gauge_quotient_descent_gate_v1.csv
+data/derived/kids1000_cosebis_gauge_quotient_descent_gate_v1_summary.csv
+docs/kids1000_cosebis_gauge_quotient_descent_gate_v1.md
+scripts/build_kids1000_cosebis_gauge_quotient_descent_gate_v1.py
+scripts/validate_kids1000_cosebis_gauge_quotient_descent_gate_v1.py
+```
+
+This artifact freezes the representation-invariance requirements for a future
+survey-native path/readout operator. It records allowed representative changes,
+the uniform mask-offset null limit, normalization and tile-relabeling
+invariance requirements, and pure-mask control compatibility. It does not prove
+gauge/quotient descent and does not construct the missing survey-native
+operator. The verdict is
+`gauge_quotient_descent_requirements_frozen_but_theorem_remains_open`.
+
 The COSEBIs path-mapping source-preflight ledger is recorded in:
 
 ```text

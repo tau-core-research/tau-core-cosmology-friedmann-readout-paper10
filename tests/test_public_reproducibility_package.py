@@ -359,6 +359,12 @@ def test_public_files_exist() -> None:
         "docs/kids1000_cosebis_operator_leakage_theorem_requirements_v1.md",
         "scripts/build_kids1000_cosebis_operator_leakage_theorem_requirements_v1.py",
         "scripts/validate_kids1000_cosebis_operator_leakage_theorem_requirements_v1.py",
+        "data/source_manifest/kids1000_cosebis_gauge_quotient_descent_gate_policy_v1.csv",
+        "data/derived/kids1000_cosebis_gauge_quotient_descent_gate_v1.csv",
+        "data/derived/kids1000_cosebis_gauge_quotient_descent_gate_v1_summary.csv",
+        "docs/kids1000_cosebis_gauge_quotient_descent_gate_v1.md",
+        "scripts/build_kids1000_cosebis_gauge_quotient_descent_gate_v1.py",
+        "scripts/validate_kids1000_cosebis_gauge_quotient_descent_gate_v1.py",
         "data/source_manifest/kids1000_cosebis_path_mapping_source_preflight_policy_v1.csv",
         "data/derived/kids1000_cosebis_path_mapping_source_preflight_v1.csv",
         "data/derived/kids1000_cosebis_path_mapping_source_preflight_v1_summary.csv",
@@ -597,6 +603,8 @@ def test_public_files_exist() -> None:
         "scripts/validate_kids1000_cosebis_mask_mode_leakage_audit_v1.py",
         "scripts/build_kids1000_cosebis_operator_leakage_theorem_requirements_v1.py",
         "scripts/validate_kids1000_cosebis_operator_leakage_theorem_requirements_v1.py",
+        "scripts/build_kids1000_cosebis_gauge_quotient_descent_gate_v1.py",
+        "scripts/validate_kids1000_cosebis_gauge_quotient_descent_gate_v1.py",
         "scripts/build_kids1000_cosebis_path_mapping_source_preflight_v1.py",
         "scripts/validate_kids1000_cosebis_path_mapping_source_preflight_v1.py",
         "scripts/build_kids1000_cosebis_null_control_readiness_v1.py",
@@ -5199,6 +5207,66 @@ def test_kids1000_cosebis_operator_leakage_theorem_requirements_are_frozen_not_p
         "contains_fit_statistics",
         "uses_kids_data_vector_values",
         "uses_posterior_chains",
+        "endpoint_scoring_allowed",
+        "endpoint_validation_claimed",
+    ]:
+        assert summary[key] == "false"
+
+
+def test_kids1000_cosebis_gauge_quotient_descent_gate_is_frozen_not_proven() -> None:
+    with (
+        ROOT / "data/source_manifest/kids1000_cosebis_gauge_quotient_descent_gate_policy_v1.csv"
+    ).open(newline="") as f:
+        policy = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/kids1000_cosebis_gauge_quotient_descent_gate_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/kids1000_cosebis_gauge_quotient_descent_gate_v1.csv"
+    ).open(newline="") as f:
+        rows = list(csv.DictReader(f))
+
+    assert policy["status"] == "GAUGE_QUOTIENT_DESCENT_GATE_POLICY_FROZEN"
+    assert policy["uses_kids_data_vector_values"] == "false"
+    assert policy["uses_fit_statistics"] == "false"
+    assert policy["uses_random_noise"] == "false"
+    assert policy["endpoint_scoring_allowed"] == "false"
+    assert summary["status"] == "GAUGE_QUOTIENT_DESCENT_REQUIREMENTS_FROZEN_NOT_PROVEN"
+    assert summary["verdict"] == "gauge_quotient_descent_requirements_frozen_but_theorem_remains_open"
+    assert summary["gate_rows"] == "8"
+    assert summary["satisfied_count"] == "1"
+    assert summary["satisfied_as_source_limit_count"] == "1"
+    assert summary["requirement_frozen_count"] == "4"
+    assert summary["open_blocker_count"] == "2"
+    assert summary["equivalence_classes_declared"] == "true"
+    assert summary["uniform_mask_offset_limit_available"] == "true"
+    assert summary["normalization_invariance_proven"] == "false"
+    assert summary["tile_relabeling_invariance_proven"] == "false"
+    assert summary["pure_mask_control_compatibility_proven"] == "false"
+    assert summary["gauge_quotient_descent_proven"] == "false"
+    assert summary["survey_native_operator_constructed"] == "false"
+    assert summary["operator_leakage_theorem_proven"] == "false"
+    by_gate = {row["gate_id"]: row for row in rows}
+    assert by_gate["Q1_equivalence_class_declared"]["status"] == "REQUIREMENT_FROZEN"
+    assert by_gate["Q2_uniform_mask_offset_limit"]["status"] == "SATISFIED_AS_SOURCE_LIMIT"
+    assert by_gate["Q3_normalization_representative_independence"]["status"] == "REQUIREMENT_FROZEN"
+    assert by_gate["Q4_tile_relabeling_and_route_coordinate_invariance"]["status"] == "REQUIREMENT_FROZEN"
+    assert by_gate["Q5_mask_pure_mode_control_compatibility"]["status"] == "REQUIREMENT_FROZEN"
+    assert by_gate["Q6_no_endpoint_feedback"]["status"] == "SATISFIED"
+    assert by_gate["Q7_gauge_quotient_descent_theorem_not_proven"]["status"] == "OPEN_BLOCKER"
+    assert by_gate["Q8_survey_native_operator_not_constructed"]["status"] == "OPEN_BLOCKER"
+    assert {row["claim_boundary"] for row in rows} == {policy["claim_boundary"]}
+    assert all(row["dimension_check"] for row in rows)
+    assert all(row["known_limit_check"] for row in rows)
+    for key in [
+        "contains_theory_vector",
+        "contains_predictions",
+        "contains_residuals",
+        "contains_fit_statistics",
+        "uses_kids_data_vector_values",
+        "uses_posterior_chains",
+        "uses_random_noise",
         "endpoint_scoring_allowed",
         "endpoint_validation_claimed",
     ]:
