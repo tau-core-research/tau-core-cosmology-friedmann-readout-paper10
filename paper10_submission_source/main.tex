@@ -801,6 +801,15 @@ uniform tile averaging. This is a useful null limit. It is not an operator
 theorem: a non-uniform survey-native response could still couple mask-only
 tile amplitudes to the same low-mode envelope, so the leakage theorem remains
 open.
+We therefore add one more source-side gate before treating this branch as an
+operator result. The operator-leakage theorem requirements ledger freezes what
+a future survey-native theorem must prove: the uniform tile-average null limit
+must be recovered, non-uniform mask load must be projected to a quotient-null or
+explicit null-control subspace, pure-mask directions must not create a positive
+path signal, and the mode spectrum and null descent must be handled by the same
+operator. This gate is not a proof. It records two remaining blockers, the
+operator leakage theorem itself and gauge/quotient descent, with no use of KiDS
+data-vector values, posterior chains, residuals, or endpoint scores.
 
 The resulting source-preflight ledger is correspondingly mixed: the 300 COSEBIs
 target rows, five-bin redshift-kernel inventory, 196-tile route-coordinate

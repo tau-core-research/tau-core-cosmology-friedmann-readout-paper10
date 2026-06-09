@@ -1514,6 +1514,25 @@ envelope, mask-only leakage into the low-mode carrier is not yet ruled out.
 The verdict is
 `uniform_mask_collapse_is_null_but_nonuniform_operator_leakage_remains_open`.
 
+The COSEBIs operator-leakage theorem requirements gate is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_operator_leakage_theorem_requirements_policy_v1.csv
+data/derived/kids1000_cosebis_operator_leakage_theorem_requirements_v1.csv
+data/derived/kids1000_cosebis_operator_leakage_theorem_requirements_v1_summary.csv
+docs/kids1000_cosebis_operator_leakage_theorem_requirements_v1.md
+scripts/build_kids1000_cosebis_operator_leakage_theorem_requirements_v1.py
+scripts/validate_kids1000_cosebis_operator_leakage_theorem_requirements_v1.py
+```
+
+This artifact converts the mask-mode leakage audit into a frozen requirement
+list for a future survey-native operator theorem. It records the uniform
+tile-average null limit as a source-side limit, keeps the non-uniform leakage
+risk open, freezes the pure-mask rejection/control-subspace requirement and the
+mode-spectrum/null-coupling requirement, and leaves two explicit blockers:
+operator leakage theorem and gauge/quotient descent. The verdict is
+`requirements_frozen_for_operator_leakage_theorem_but_proof_remains_open`.
+
 The COSEBIs path-mapping source-preflight ledger is recorded in:
 
 ```text

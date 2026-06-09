@@ -353,6 +353,12 @@ def test_public_files_exist() -> None:
         "docs/kids1000_cosebis_mask_mode_leakage_audit_v1.md",
         "scripts/build_kids1000_cosebis_mask_mode_leakage_audit_v1.py",
         "scripts/validate_kids1000_cosebis_mask_mode_leakage_audit_v1.py",
+        "data/source_manifest/kids1000_cosebis_operator_leakage_theorem_requirements_policy_v1.csv",
+        "data/derived/kids1000_cosebis_operator_leakage_theorem_requirements_v1.csv",
+        "data/derived/kids1000_cosebis_operator_leakage_theorem_requirements_v1_summary.csv",
+        "docs/kids1000_cosebis_operator_leakage_theorem_requirements_v1.md",
+        "scripts/build_kids1000_cosebis_operator_leakage_theorem_requirements_v1.py",
+        "scripts/validate_kids1000_cosebis_operator_leakage_theorem_requirements_v1.py",
         "data/source_manifest/kids1000_cosebis_path_mapping_source_preflight_policy_v1.csv",
         "data/derived/kids1000_cosebis_path_mapping_source_preflight_v1.csv",
         "data/derived/kids1000_cosebis_path_mapping_source_preflight_v1_summary.csv",
@@ -589,6 +595,8 @@ def test_public_files_exist() -> None:
         "scripts/validate_kids1000_cosebis_pure_mask_response_gate_v1.py",
         "scripts/build_kids1000_cosebis_mask_mode_leakage_audit_v1.py",
         "scripts/validate_kids1000_cosebis_mask_mode_leakage_audit_v1.py",
+        "scripts/build_kids1000_cosebis_operator_leakage_theorem_requirements_v1.py",
+        "scripts/validate_kids1000_cosebis_operator_leakage_theorem_requirements_v1.py",
         "scripts/build_kids1000_cosebis_path_mapping_source_preflight_v1.py",
         "scripts/validate_kids1000_cosebis_path_mapping_source_preflight_v1.py",
         "scripts/build_kids1000_cosebis_null_control_readiness_v1.py",
@@ -5137,6 +5145,64 @@ def test_kids1000_cosebis_mask_mode_leakage_audit_records_risk_not_proof() -> No
         assert row["uses_kids_data_vector_values"] == "false"
         assert row["endpoint_scoring_allowed"] == "false"
         assert row["endpoint_validation_claimed"] == "false"
+
+
+def test_kids1000_cosebis_operator_leakage_theorem_requirements_are_frozen_not_proven() -> None:
+    with (
+        ROOT / "data/source_manifest/kids1000_cosebis_operator_leakage_theorem_requirements_policy_v1.csv"
+    ).open(newline="") as f:
+        policy = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/kids1000_cosebis_operator_leakage_theorem_requirements_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/kids1000_cosebis_operator_leakage_theorem_requirements_v1.csv"
+    ).open(newline="") as f:
+        rows = list(csv.DictReader(f))
+
+    assert policy["status"] == "OPERATOR_LEAKAGE_THEOREM_REQUIREMENTS_POLICY_FROZEN"
+    assert policy["uses_kids_data_vector_values"] == "false"
+    assert policy["uses_fit_statistics"] == "false"
+    assert policy["uses_random_noise"] == "false"
+    assert policy["endpoint_scoring_allowed"] == "false"
+    assert summary["status"] == "OPERATOR_LEAKAGE_THEOREM_REQUIREMENTS_FROZEN_NOT_PROVEN"
+    assert summary["verdict"] == "requirements_frozen_for_operator_leakage_theorem_but_proof_remains_open"
+    assert summary["requirement_rows"] == "7"
+    assert summary["satisfied_count"] == "1"
+    assert summary["satisfied_as_source_limit_count"] == "1"
+    assert summary["risk_recorded_count"] == "1"
+    assert summary["requirement_frozen_count"] == "2"
+    assert summary["open_blocker_count"] == "2"
+    assert summary["uniform_tile_null_limit_available"] == "true"
+    assert summary["nonuniform_leakage_risk_recorded"] == "true"
+    assert summary["pure_mask_rejection_requirement_frozen"] == "true"
+    assert summary["mode_spectrum_coupling_requirement_frozen"] == "true"
+    assert summary["operator_leakage_theorem_proven"] == "false"
+    assert summary["gauge_quotient_descent_proven"] == "false"
+    assert summary["mode_response_operator_derived"] == "false"
+    by_req = {row["requirement_id"]: row for row in rows}
+    assert by_req["T1_uniform_tile_null_limit"]["status"] == "SATISFIED_AS_SOURCE_LIMIT"
+    assert by_req["T2_nonuniform_mask_leakage_risk"]["status"] == "RISK_RECORDED"
+    assert by_req["T3_pure_mask_rejection_or_control_subspace"]["status"] == "REQUIREMENT_FROZEN"
+    assert by_req["T4_mode_spectrum_coupling_requirement"]["status"] == "REQUIREMENT_FROZEN"
+    assert by_req["T5_no_endpoint_feedback"]["status"] == "SATISFIED"
+    assert by_req["T6_operator_leakage_theorem_not_proven"]["status"] == "OPEN_BLOCKER"
+    assert by_req["T7_gauge_quotient_descent_not_proven"]["status"] == "OPEN_BLOCKER"
+    assert {row["claim_boundary"] for row in rows} == {policy["claim_boundary"]}
+    assert all(row["dimension_check"] for row in rows)
+    assert all(row["known_limit_check"] for row in rows)
+    for key in [
+        "contains_theory_vector",
+        "contains_predictions",
+        "contains_residuals",
+        "contains_fit_statistics",
+        "uses_kids_data_vector_values",
+        "uses_posterior_chains",
+        "endpoint_scoring_allowed",
+        "endpoint_validation_claimed",
+    ]:
+        assert summary[key] == "false"
 
 
 def test_kids1000_cosebis_null_control_policy_is_declared_not_run() -> None:
