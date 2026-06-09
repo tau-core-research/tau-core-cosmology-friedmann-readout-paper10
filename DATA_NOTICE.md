@@ -321,6 +321,12 @@ the mode factor from the COSEBIs row index. This artifact is not an endpoint
 mapping vector, not a theory vector, and not a score; it contains no KiDS
 data-vector values, posterior chains, residuals, likelihood values, fit
 statistics, AIC values, endpoint scores, or validation claims.
+The partial-control design matrix reduces the `900` mapping values to six
+deterministic `300`-row diagnostic branches: a zero baseline, the three
+individual mask-sample branches, the positive-mask mean, and a sign-flipped
+positive-mask control. It is a scoring-facing support object only. It contains
+no endpoint theory vector, predictions, residuals, likelihood values, fit
+statistics, AIC values, endpoint scores, or validation claims.
 
 The endpoint scoring-readiness ledger is a no-go summary, not a score. It
 records that the COSEBIs data-vector structure, covariance matrix, covariance

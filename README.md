@@ -847,6 +847,21 @@ docs/kids1000_cosebis_partial_control_mapping_values_v1.md
 scripts/build_kids1000_cosebis_partial_control_mapping_values_v1.py
 scripts/validate_kids1000_cosebis_partial_control_mapping_values_v1.py
 ```
+The partial-control design matrix then reduces those `900` mapping values to
+six deterministic `300`-row diagnostic branches: `baseline_zero`,
+`mask_sample_0`, `mask_sample_98`, `mask_sample_195`, `positive_mask_mean`, and
+`sign_flip_positive_mean`. This is scoring-facing support only; it is not an
+endpoint theory vector and still does not use the KiDS data vector, covariance
+solve, residuals, fit statistics, or post-hoc branch selection.
+
+```text
+data/source_manifest/kids1000_cosebis_partial_control_design_matrix_policy_v1.csv
+data/derived/kids1000_cosebis_partial_control_design_matrix_v1.csv
+data/derived/kids1000_cosebis_partial_control_design_matrix_v1_summary.csv
+docs/kids1000_cosebis_partial_control_design_matrix_v1.md
+scripts/build_kids1000_cosebis_partial_control_design_matrix_v1.py
+scripts/validate_kids1000_cosebis_partial_control_design_matrix_v1.py
+```
 
 The endpoint scoring-readiness ledger is recorded in:
 

@@ -140,6 +140,8 @@ def main() -> None:
     run(["python", "scripts/validate_kids1000_cosebis_partial_control_mapping_shell_v1.py"])
     run(["python", "scripts/build_kids1000_cosebis_partial_control_mapping_values_v1.py"])
     run(["python", "scripts/validate_kids1000_cosebis_partial_control_mapping_values_v1.py"])
+    run(["python", "scripts/build_kids1000_cosebis_partial_control_design_matrix_v1.py"])
+    run(["python", "scripts/validate_kids1000_cosebis_partial_control_design_matrix_v1.py"])
     run(["python", "scripts/build_kids1000_cosebis_path_mapping_source_preflight_v1.py"])
     run(["python", "scripts/validate_kids1000_cosebis_path_mapping_source_preflight_v1.py"])
     run(["python", "scripts/build_kids1000_cosebis_null_control_readiness_v1.py"])

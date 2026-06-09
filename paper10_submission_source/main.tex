@@ -581,6 +581,13 @@ and \(n\) is the COSEBIs mode index. This is a caveated partial-control
 mapping-value artifact only: it is not an endpoint mapping vector, not a
 COSEBIs theory vector, and it computes no residual, likelihood, score, or
 validation statistic.
+The next scoring-facing, still non-scoring object is a partial-control design
+matrix: the \(900\) mapping values are reduced to six deterministic 300-row
+branches, namely a zero baseline, the three individual mask-sample branches, a
+positive-mask mean, and a sign-flipped positive-mask control. This design
+matrix is not an endpoint theory vector. It is only the branch interface that a
+future diagnostic partial-control score would use after a separate scoring
+protocol is opened.
 The scoring-facing view is then summarized by an endpoint-readiness ledger:
 the COSEBIs data-vector structure, covariance matrix, covariance solve policy,
 theory-vector row-interface template, and mapping-to-template join contract are
