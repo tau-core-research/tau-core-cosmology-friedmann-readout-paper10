@@ -9,8 +9,8 @@ endpoint can be attempted.
 
 Current result:
 
-- ready source-side components: data-vector structure, covariance matrix, and
-  covariance solve policy;
+- ready source-side components: data-vector structure, covariance matrix,
+  covariance solve policy, and the theory-vector row-interface template;
 - blocking components: theory vector, web/path mapping, source preflight,
   blocker-resolution order, and null controls;
 - first blocker: `F_overlap`;

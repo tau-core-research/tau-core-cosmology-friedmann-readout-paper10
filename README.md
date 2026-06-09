@@ -400,12 +400,21 @@ data/derived/kids1000_cosebis_theory_vector_readiness_v1_summary.csv
 docs/kids1000_cosebis_theory_vector_policy_v1.md
 scripts/build_kids1000_cosebis_theory_vector_readiness_v1.py
 scripts/validate_kids1000_cosebis_theory_vector_readiness_v1.py
+data/source_manifest/kids1000_cosebis_theory_vector_template_policy_v1.csv
+data/derived/kids1000_cosebis_theory_vector_template_v1.csv
+data/derived/kids1000_cosebis_theory_vector_template_v1_summary.csv
+docs/kids1000_cosebis_theory_vector_template_v1.md
+scripts/build_kids1000_cosebis_theory_vector_template_v1.py
+scripts/validate_kids1000_cosebis_theory_vector_template_v1.py
 ```
 
 It declares a future `300`-row COSEBIs theory vector for the active
 `W_WEB_ANISOTROPY` and `W_PATH_PROJECTION` lensing route, but does not compute
 the vector. It also forbids using KiDS data-vector values, posterior chains,
 residuals, or fit-improvement flags to choose the theory vector.
+The accompanying template freezes the 300-row tomographic-pair/mode interface
+with empty theory-value and channel-contribution fields. It is a row-index
+template only, not a prediction.
 
 The first COSEBIs web/path mapping readiness policy is recorded in:
 
@@ -798,10 +807,11 @@ scripts/validate_kids1000_cosebis_endpoint_scoring_readiness_v1.py
 ```
 
 It collects the current pre-scoring state in one place. The data-vector
-structure, covariance matrix, and covariance solve policy are source-side
-ready; the theory vector, web/path mapping, source preflight, blocker
-resolution, and null controls still block scoring. The first blocker remains
-`F_overlap`, and endpoint scoring remains disabled.
+structure, covariance matrix, covariance solve policy, and theory-vector
+row-interface template are source-side ready; the theory vector, web/path
+mapping, source preflight, blocker resolution, and null controls still block
+scoring. The first blocker remains `F_overlap`, and endpoint scoring remains
+disabled.
 
 The frozen endpoint scoring protocol shell is recorded in:
 

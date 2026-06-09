@@ -140,6 +140,10 @@ The COSEBIs theory-vector readiness inventory declares only the future
 requirement for a 300-row theory vector. It does not compute that vector and
 does not use KiDS data-vector values, posterior chains, residuals, or
 fit-improvement information to choose a lensing formula.
+The associated theory-vector template freezes only the 300-row tomographic
+pair/mode interface and leaves all theory-value and channel-contribution fields
+empty. It contains no prediction, residual, likelihood value, fit statistic, or
+endpoint score.
 
 The COSEBIs web/path mapping readiness inventory declares only the future
 source-side mapping requirements for the active web/path channels. It does not
@@ -291,11 +295,11 @@ batch, compute overlap, construct a mapping or theory vector, or enable
 endpoint scoring.
 
 The endpoint scoring-readiness ledger is a no-go summary, not a score. It
-records that the COSEBIs data-vector structure, covariance matrix, and
-covariance solve policy are source-side ready, while the theory vector,
-web/path mapping, source preflight, blocker-resolution order, and null controls
-still block scoring. It contains no predictions, residuals, fit statistics, or
-endpoint scores.
+records that the COSEBIs data-vector structure, covariance matrix, covariance
+solve policy, and theory-vector row-interface template are source-side ready,
+while the theory vector, web/path mapping, source preflight, blocker-resolution
+order, and null controls still block scoring. It contains no predictions,
+residuals, fit statistics, or endpoint scores.
 
 The endpoint scoring protocol shell freezes only the future scoring grammar:
 the chi-square form, Cholesky solve policy, required candidate/control

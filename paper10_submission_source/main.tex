@@ -421,8 +421,8 @@ route source-complete while still below the likelihood endpoint.
 The covariance-inversion policy is also frozen, but only as a future numerical
 method: a Cholesky solve against the full covariance, without materializing or
 storing an inverse covariance matrix. The solve is not executed in the present
-artifact because no source-frozen theory vector or lensing scoring protocol has
-yet been declared.
+artifact because no source-frozen theory vector exists and the lensing scoring
+protocol remains a frozen-not-run shell.
 
 The theory-vector gate is declared next, still without computing a prediction.
 It fixes the future target length to the 300 retained COSEBIs rows and keeps the
@@ -431,6 +431,9 @@ forbidding use of KiDS data-vector values, posterior chains, residuals, or
 fit-improvement flags to choose the vector. A future endpoint must therefore
 freeze the web/path mapping and null controls before any lensing likelihood is
 allowed.
+The companion template materializes the 300-row tomographic-pair/mode interface
+with empty theory-value and channel-contribution fields. It freezes row order
+only; it is not a prediction and contains no theory vector.
 
 The web/path mapping gate is also declared but not computed. It requires future
 source-frozen web-environment, lensing-path mask or depth-map, redshift-kernel,
@@ -554,11 +557,12 @@ and dry-run batch identities. This validator is not a promotion gate and does
 not compute an overlap rule, mapping vector, theory vector, prediction,
 residual, or score.
 The scoring-facing view is then summarized by an endpoint-readiness ledger:
-the COSEBIs data-vector structure, covariance matrix, and covariance solve
-policy are source-side ready, while the theory vector, web/path mapping,
-source-preflight state, blocker-resolution order, and null controls still block
-scoring. The first blocker remains \texttt{F\_overlap}; no prediction,
-residual, fit statistic, or endpoint score is computed.
+the COSEBIs data-vector structure, covariance matrix, covariance solve policy,
+and theory-vector row-interface template are source-side ready, while the
+theory vector, web/path mapping, source-preflight state, blocker-resolution
+order, and null controls still block scoring. The first blocker remains
+\texttt{F\_overlap}; no prediction, residual, fit statistic, or endpoint score
+is computed.
 A corresponding scoring-protocol shell freezes only the future grammar
 \(\chi^2=(d-t)^T C^{-1}(d-t)\), with a Cholesky covariance solve and required
 baseline, candidate, wrong-channel, shuffled/rotated null, AIC, and control-rank

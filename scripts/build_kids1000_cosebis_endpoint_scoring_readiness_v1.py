@@ -11,6 +11,7 @@ TOMO = ROOT / "data" / "derived" / "kids1000_cosebis_tomographic_mode_inventory_
 COV = ROOT / "data" / "derived" / "kids1000_cosebis_covariance_readiness_v1_summary.csv"
 INV = ROOT / "data" / "derived" / "kids1000_cosebis_covariance_inversion_readiness_v1_summary.csv"
 THEORY = ROOT / "data" / "derived" / "kids1000_cosebis_theory_vector_readiness_v1_summary.csv"
+THEORY_TEMPLATE = ROOT / "data" / "derived" / "kids1000_cosebis_theory_vector_template_v1_summary.csv"
 MAPPING = ROOT / "data" / "derived" / "kids1000_cosebis_web_path_mapping_readiness_v1_summary.csv"
 PREFLIGHT = ROOT / "data" / "derived" / "kids1000_cosebis_path_mapping_source_preflight_v1_summary.csv"
 BLOCKERS = ROOT / "data" / "derived" / "kids1000_cosebis_path_blocker_resolution_order_v1_summary.csv"
@@ -33,6 +34,7 @@ def main() -> None:
     cov = read_one(COV)
     inv = read_one(INV)
     theory = read_one(THEORY)
+    theory_template = read_one(THEORY_TEMPLATE)
     mapping = read_one(MAPPING)
     preflight = read_one(PREFLIGHT)
     blockers = read_one(BLOCKERS)
@@ -67,6 +69,14 @@ def main() -> None:
             "ready_for_scoring": "true" if inv["cholesky_ready"] == "true" else "false",
             "blocking_status": "not_blocking" if inv["cholesky_ready"] == "true" else "blocking",
             "readiness_note": inv["inversion_policy"],
+        },
+        {
+            "component_id": "theory_vector_template",
+            "component_status": theory_template["status"],
+            "evidence_artifact": "data/derived/kids1000_cosebis_theory_vector_template_v1_summary.csv",
+            "ready_for_scoring": "true",
+            "blocking_status": "not_blocking",
+            "readiness_note": f"{theory_template['template_rows']}_row_interface_no_theory_values",
         },
         {
             "component_id": "theory_vector",

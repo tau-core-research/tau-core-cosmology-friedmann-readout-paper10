@@ -27,10 +27,10 @@ def main() -> None:
         raise SystemExit("policy must not execute scoring")
     if summary["status"] != "KIDS1000_COSEBIS_ENDPOINT_SCORING_READINESS_BUILT_NOT_SCORED":
         raise SystemExit("unexpected endpoint scoring readiness summary status")
-    if summary["component_count"] != "8":
-        raise SystemExit("endpoint scoring readiness must contain eight components")
-    if summary["ready_component_count"] != "3":
-        raise SystemExit("only data vector, covariance, and covariance solve policy should be ready")
+    if summary["component_count"] != "9":
+        raise SystemExit("endpoint scoring readiness must contain nine components")
+    if summary["ready_component_count"] != "4":
+        raise SystemExit("only data vector, covariance, covariance solve policy, and theory template should be ready")
     if summary["blocking_component_count"] != "5":
         raise SystemExit("five components should block endpoint scoring")
     if summary["first_blocker"] != "F_overlap":
@@ -40,6 +40,7 @@ def main() -> None:
         "data_vector_structure": ("true", "not_blocking"),
         "covariance_matrix": ("true", "not_blocking"),
         "covariance_solve_policy": ("true", "not_blocking"),
+        "theory_vector_template": ("true", "not_blocking"),
         "theory_vector": ("false", "blocking"),
         "web_path_mapping": ("false", "blocking"),
         "source_preflight": ("false", "blocking"),

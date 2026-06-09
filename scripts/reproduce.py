@@ -78,6 +78,8 @@ def main() -> None:
     run(["python", "scripts/validate_kids1000_cosebis_covariance_inversion_readiness_v1.py"])
     run(["python", "scripts/build_kids1000_cosebis_theory_vector_readiness_v1.py"])
     run(["python", "scripts/validate_kids1000_cosebis_theory_vector_readiness_v1.py"])
+    run(["python", "scripts/build_kids1000_cosebis_theory_vector_template_v1.py"])
+    run(["python", "scripts/validate_kids1000_cosebis_theory_vector_template_v1.py"])
     run(["python", "scripts/build_kids1000_cosebis_web_path_mapping_readiness_v1.py"])
     run(["python", "scripts/validate_kids1000_cosebis_web_path_mapping_readiness_v1.py"])
     run(["python", "scripts/build_kids1000_cosebis_redshift_kernel_inventory_v1.py"])
