@@ -29,17 +29,17 @@ def main() -> None:
         raise SystemExit("unexpected endpoint scoring readiness summary status")
     if summary["component_count"] != "12":
         raise SystemExit("endpoint scoring readiness must contain twelve components")
-    if summary["ready_component_count"] != "11":
+    if summary["ready_component_count"] != "12":
         raise SystemExit(
             "data vector, covariance, covariance solve policy, theory template, "
             "mapping-template join contract, source-frozen theory vector, web/path "
             "mapping, source preflight, blocker-resolution order, F_overlap decision, "
-            "and null controls should be ready"
+            "null controls, and endpoint-family geometry should be ready"
         )
-    if summary["blocking_component_count"] != "1":
-        raise SystemExit("only the partial-control degeneracy audit should block endpoint scoring")
-    if summary["first_blocker"] != "partial_control_degeneracy_audit":
-        raise SystemExit("partial-control degeneracy audit must be the first remaining blocker")
+    if summary["blocking_component_count"] != "0":
+        raise SystemExit("no readiness components should block endpoint scoring")
+    if summary["first_blocker"] != "none":
+        raise SystemExit("there should be no remaining readiness blocker")
 
     expected = {
         "data_vector_structure": ("true", "not_blocking"),
@@ -53,7 +53,7 @@ def main() -> None:
         "blocker_resolution_order": ("true", "not_blocking"),
         "f_overlap_resolution_decision": ("true", "not_blocking"),
         "null_controls": ("true", "not_blocking"),
-        "partial_control_degeneracy_audit": ("false", "blocking_partial_control_endpoint"),
+        "endpoint_family_geometry_audit": ("true", "not_blocking"),
     }
     by_component = {row["component_id"]: row for row in rows}
     if set(by_component) != set(expected):

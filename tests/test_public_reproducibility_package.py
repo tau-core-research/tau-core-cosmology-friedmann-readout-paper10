@@ -231,6 +231,9 @@ def test_public_files_exist() -> None:
         "data/derived/kids1000_cosebis_partial_control_degeneracy_audit_v1_pair_grid.csv",
         "data/derived/kids1000_cosebis_partial_control_degeneracy_audit_v1_summary.csv",
         "data/source_manifest/kids1000_cosebis_non_degenerate_mapping_promotion_gate_policy_v1.csv",
+        "data/source_manifest/kids1000_cosebis_endpoint_family_geometry_audit_policy_v1.csv",
+        "data/derived/kids1000_cosebis_endpoint_family_geometry_audit_v1.csv",
+        "data/derived/kids1000_cosebis_endpoint_family_geometry_audit_v1_summary.csv",
         "data/derived/kids1000_cosebis_non_degenerate_mapping_promotion_gate_v1.csv",
         "data/derived/kids1000_cosebis_non_degenerate_mapping_promotion_gate_v1_summary.csv",
         "docs/kids1000_cosebis_f_overlap_filled_execution_review_validator_v1.md",
@@ -319,6 +322,7 @@ def test_public_files_exist() -> None:
         "docs/kids1000_cosebis_partial_control_null_replay_v1.md",
         "docs/kids1000_cosebis_partial_control_degeneracy_audit_v1.md",
         "docs/kids1000_cosebis_non_degenerate_mapping_promotion_gate_v1.md",
+        "docs/kids1000_cosebis_endpoint_family_geometry_audit_v1.md",
         "docs/kids1000_cosebis_path_mapping_source_preflight_policy_v1.md",
         "docs/kids1000_cosebis_null_control_policy_v1.md",
         "docs/kids1000_cosebis_null_control_seed_policy_v1.md",
@@ -445,6 +449,8 @@ def test_public_files_exist() -> None:
         "scripts/validate_kids1000_cosebis_partial_control_degeneracy_audit_v1.py",
         "scripts/build_kids1000_cosebis_non_degenerate_mapping_promotion_gate_v1.py",
         "scripts/validate_kids1000_cosebis_non_degenerate_mapping_promotion_gate_v1.py",
+        "scripts/build_kids1000_cosebis_endpoint_family_geometry_audit_v1.py",
+        "scripts/validate_kids1000_cosebis_endpoint_family_geometry_audit_v1.py",
         "scripts/build_kids1000_cosebis_path_mapping_source_preflight_v1.py",
         "scripts/validate_kids1000_cosebis_path_mapping_source_preflight_v1.py",
         "scripts/build_kids1000_cosebis_null_control_readiness_v1.py",
@@ -3755,7 +3761,51 @@ def test_kids1000_cosebis_partial_control_degeneracy_audit_blocks_endpoint() -> 
         assert float(row["relative_shape_residual_left_on_right"]) <= 1e-9
 
 
-def test_kids1000_cosebis_non_degenerate_mapping_promotion_gate_is_not_ready() -> None:
+def test_kids1000_cosebis_endpoint_family_geometry_audit_passes_without_scoring() -> None:
+    with (
+        ROOT / "data/source_manifest/kids1000_cosebis_endpoint_family_geometry_audit_policy_v1.csv"
+    ).open(newline="") as f:
+        policy = list(csv.DictReader(f))[0]
+    assert policy["status"] == "KIDS1000_COSEBIS_ENDPOINT_FAMILY_GEOMETRY_AUDIT_POLICY_FROZEN_NOT_SCORED"
+    assert policy["endpoint_scoring_allowed"] == "false"
+    assert policy["minimum_effective_rank"] == "2"
+    for marker in [
+        "kids_data_vector_values",
+        "lensing_residuals",
+        "fit_improvement_flags",
+        "posthoc_weight_selection",
+    ]:
+        assert marker in policy["forbidden_inputs"]
+    with (
+        ROOT / "data/derived/kids1000_cosebis_endpoint_family_geometry_audit_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["status"] == "KIDS1000_COSEBIS_ENDPOINT_FAMILY_GEOMETRY_AUDIT_BUILT_NOT_SCORED"
+    assert summary["family_vector_count"] == "1009"
+    assert summary["target_rows"] == "300"
+    assert int(summary["raw_effective_rank_tol_1e_minus_8"]) >= 2
+    assert int(summary["covariance_metric_effective_rank_tol_1e_minus_8"]) >= 2
+    assert summary["endpoint_family_geometry_passed"] == "true"
+    assert summary["contains_theory_vector"] == "true"
+    assert summary["contains_control_scores"] == "false"
+    assert summary["contains_predictions"] == "false"
+    assert summary["contains_residuals"] == "false"
+    assert summary["contains_fit_statistics"] == "false"
+    assert summary["endpoint_scoring_allowed"] == "false"
+    with (
+        ROOT / "data/derived/kids1000_cosebis_endpoint_family_geometry_audit_v1.csv"
+    ).open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    assert len(rows) == 1009
+    assert sum(row["vector_family"] == "candidate" for row in rows) == 1
+    assert {row["target_rows"] for row in rows} == {"300"}
+    assert all(row["contains_control_scores"] == "false" for row in rows)
+    assert all(row["contains_residuals"] == "false" for row in rows)
+    assert all(row["uses_kids_data_vector_values"] == "false" for row in rows)
+    assert all(row["endpoint_scoring_allowed"] == "false" for row in rows)
+
+
+def test_kids1000_cosebis_non_degenerate_mapping_promotion_gate_passes_not_scored() -> None:
     with (
         ROOT / "data/source_manifest/kids1000_cosebis_non_degenerate_mapping_promotion_gate_policy_v1.csv"
     ).open(newline="") as f:
@@ -3775,12 +3825,12 @@ def test_kids1000_cosebis_non_degenerate_mapping_promotion_gate_is_not_ready() -
         ROOT / "data/derived/kids1000_cosebis_non_degenerate_mapping_promotion_gate_v1_summary.csv"
     ).open(newline="") as f:
         summary = list(csv.DictReader(f))[0]
-    assert summary["status"] == "NON_DEGENERATE_MAPPING_PROMOTION_GATE_BUILT_NOT_READY"
+    assert summary["status"] == "NON_DEGENERATE_MAPPING_PROMOTION_GATE_PASSED_NOT_SCORED"
     assert summary["gate_count"] == "6"
-    assert summary["passed_gate_count"] == "5"
-    assert summary["blocking_gate_count"] == "1"
-    assert summary["first_blocking_gate"] == "PROMOTE_03_NON_DEGENERATE_BRANCH_GEOMETRY"
-    assert summary["non_degenerate_mapping_promotion_allowed"] == "false"
+    assert summary["passed_gate_count"] == "6"
+    assert summary["blocking_gate_count"] == "0"
+    assert summary["first_blocking_gate"] == "none"
+    assert summary["non_degenerate_mapping_promotion_allowed"] == "true"
     assert summary["endpoint_scoring_allowed"] == "false"
     assert summary["scoring_executed"] == "false"
     assert summary["contains_theory_vector"] == "true"
@@ -3810,14 +3860,15 @@ def test_kids1000_cosebis_non_degenerate_mapping_promotion_gate_is_not_ready() -
     assert by_gate["PROMOTE_04_THEORY_VECTOR_COMPUTED"]["gate_passed"] == "true"
     assert by_gate["PROMOTE_02_SOURCE_PREFLIGHT_MAPPING_READY"]["blocking_status"] == "not_blocking"
     assert by_gate["PROMOTE_02_SOURCE_PREFLIGHT_MAPPING_READY"]["gate_passed"] == "true"
-    assert by_gate["PROMOTE_03_NON_DEGENERATE_BRANCH_GEOMETRY"]["blocking_status"] == "blocking_rank_one_partial_control"
-    assert "positive_rank_1" in by_gate["PROMOTE_03_NON_DEGENERATE_BRANCH_GEOMETRY"]["current_state"]
+    assert by_gate["PROMOTE_03_NON_DEGENERATE_BRANCH_GEOMETRY"]["blocking_status"] == "not_blocking"
+    assert by_gate["PROMOTE_03_NON_DEGENERATE_BRANCH_GEOMETRY"]["gate_passed"] == "true"
+    assert "partial_positive_rank_1" in by_gate["PROMOTE_03_NON_DEGENERATE_BRANCH_GEOMETRY"]["current_state"]
+    assert "endpoint_passed_true" in by_gate["PROMOTE_03_NON_DEGENERATE_BRANCH_GEOMETRY"]["current_state"]
     assert by_gate["PROMOTE_05_NULL_CONTROLS_EXECUTED_AFTER_MAPPING"]["blocking_status"] == "not_blocking"
     assert by_gate["PROMOTE_05_NULL_CONTROLS_EXECUTED_AFTER_MAPPING"]["gate_passed"] == "true"
     assert by_gate["PROMOTE_06_LEAKAGE_GUARDS"]["gate_passed"] == "true"
     for gate_id, row in by_gate.items():
-        if gate_id == "PROMOTE_03_NON_DEGENERATE_BRANCH_GEOMETRY":
-            assert row["gate_passed"] == "false"
+        assert row["gate_passed"] == "true"
         assert row["endpoint_scoring_allowed"] == "false"
         assert row["scoring_executed"] == "false"
         assert row["uses_kids_data_vector_values"] == "false"
@@ -4103,10 +4154,10 @@ def test_kids1000_cosebis_endpoint_scoring_readiness_is_not_scoring() -> None:
         summary = list(csv.DictReader(f))[0]
     assert summary["status"] == "KIDS1000_COSEBIS_ENDPOINT_SCORING_READINESS_BUILT_NOT_SCORED"
     assert summary["component_count"] == "12"
-    assert summary["ready_component_count"] == "11"
-    assert summary["blocking_component_count"] == "1"
-    assert summary["first_blocker"] == "partial_control_degeneracy_audit"
-    assert summary["next_action"] == "resolve_non_degenerate_promotion_before_endpoint_scoring"
+    assert summary["ready_component_count"] == "12"
+    assert summary["blocking_component_count"] == "0"
+    assert summary["first_blocker"] == "none"
+    assert summary["next_action"] == "endpoint_scoring_protocol_can_be_run_after_explicit_user_approval"
     assert summary["endpoint_scoring_allowed"] == "false"
     assert summary["scoring_executed"] == "false"
     assert summary["contains_predictions"] == "false"
@@ -4130,7 +4181,7 @@ def test_kids1000_cosebis_endpoint_scoring_readiness_is_not_scoring() -> None:
         "blocker_resolution_order",
         "f_overlap_resolution_decision",
         "null_controls",
-        "partial_control_degeneracy_audit",
+        "endpoint_family_geometry_audit",
     }
     assert by_component["data_vector_structure"]["ready_for_scoring"] == "true"
     assert by_component["covariance_matrix"]["ready_for_scoring"] == "true"
@@ -4159,11 +4210,10 @@ def test_kids1000_cosebis_endpoint_scoring_readiness_is_not_scoring() -> None:
     assert by_component["null_controls"]["blocking_status"] == "not_blocking"
     assert by_component["null_controls"]["ready_for_scoring"] == "true"
     assert "control_theory_replay_draws_1008" in by_component["null_controls"]["readiness_note"]
-    assert (
-        by_component["partial_control_degeneracy_audit"]["blocking_status"]
-        == "blocking_partial_control_endpoint"
-    )
-    assert "positive_rank_1" in by_component["partial_control_degeneracy_audit"]["readiness_note"]
+    assert by_component["endpoint_family_geometry_audit"]["blocking_status"] == "not_blocking"
+    assert by_component["endpoint_family_geometry_audit"]["ready_for_scoring"] == "true"
+    assert "partial_positive_rank_1" in by_component["endpoint_family_geometry_audit"]["readiness_note"]
+    assert "endpoint_raw_rank_" in by_component["endpoint_family_geometry_audit"]["readiness_note"]
     for row in rows:
         assert row["endpoint_scoring_allowed"] == "false"
         assert row["scoring_executed"] == "false"
@@ -4187,7 +4237,8 @@ def test_kids1000_cosebis_endpoint_scoring_protocol_is_frozen_not_run() -> None:
     assert protocol["scoring_allowed"] == "false"
     assert protocol["parent_readiness_policy"] == readiness["policy_id"]
     assert readiness["endpoint_scoring_allowed"] == "false"
-    assert readiness["first_blocker"] == "partial_control_degeneracy_audit"
+    assert readiness["first_blocker"] == "none"
+    assert readiness["blocking_component_count"] == "0"
     assert "chi2=" in protocol["primary_score"]
     for marker in [
         "baseline_only",

@@ -10,6 +10,7 @@ POLICY = ROOT / "data" / "source_manifest" / "kids1000_cosebis_non_degenerate_ma
 F_OVERLAP = ROOT / "data" / "derived" / "kids1000_cosebis_f_overlap_resolution_decision_v1_summary.csv"
 PREFLIGHT = ROOT / "data" / "derived" / "kids1000_cosebis_path_mapping_source_preflight_v1_summary.csv"
 DEGENERACY = ROOT / "data" / "derived" / "kids1000_cosebis_partial_control_degeneracy_audit_v1_summary.csv"
+ENDPOINT_GEOMETRY = ROOT / "data" / "derived" / "kids1000_cosebis_endpoint_family_geometry_audit_v1_summary.csv"
 THEORY = ROOT / "data" / "derived" / "kids1000_cosebis_theory_vector_readiness_v1_summary.csv"
 NULL_READINESS = ROOT / "data" / "derived" / "kids1000_cosebis_null_control_readiness_v1_summary.csv"
 OUT = ROOT / "data" / "derived" / "kids1000_cosebis_non_degenerate_mapping_promotion_gate_v1.csv"
@@ -63,12 +64,15 @@ def main() -> None:
     f_overlap = read_one(F_OVERLAP)
     preflight = read_one(PREFLIGHT)
     degeneracy = read_one(DEGENERACY)
+    endpoint_geometry = read_one(ENDPOINT_GEOMETRY)
     theory = read_one(THEORY)
     null_readiness = read_one(NULL_READINESS)
     if policy["endpoint_scoring_allowed"] != "false":
         raise SystemExit("promotion gate policy must keep endpoint scoring disabled")
     if degeneracy["policy_id"] != policy["parent_partial_control_degeneracy_audit"]:
         raise SystemExit("parent degeneracy audit mismatch")
+    if endpoint_geometry["policy_id"] != policy["parent_endpoint_family_geometry_audit"]:
+        raise SystemExit("parent endpoint-family geometry audit mismatch")
 
     positive_rank = int(degeneracy["positive_effective_rank_tol_1e_minus_8"])
     rows = [
@@ -100,13 +104,18 @@ def main() -> None:
         gate_row(
             policy,
             "PROMOTE_03_NON_DEGENERATE_BRANCH_GEOMETRY",
-            "Reject endpoint promotion if the candidate branch family is effectively rank one.",
-            f"positive_rank_{positive_rank}_degenerate_{degeneracy['branch_degeneracy_detected']}",
-            "effective_rank_at_least_2_and_branch_degeneracy_detected_false",
-            positive_rank >= 2 and degeneracy["branch_degeneracy_detected"] == "false",
-            "data/derived/kids1000_cosebis_partial_control_degeneracy_audit_v1_summary.csv",
+            "Reject endpoint promotion if the source-frozen endpoint family is effectively rank one.",
+            (
+                f"partial_positive_rank_{positive_rank}_"
+                f"endpoint_raw_rank_{endpoint_geometry['raw_effective_rank_tol_1e_minus_8']}_"
+                f"endpoint_cov_rank_{endpoint_geometry['covariance_metric_effective_rank_tol_1e_minus_8']}_"
+                f"endpoint_passed_{endpoint_geometry['endpoint_family_geometry_passed']}"
+            ),
+            "endpoint_family_effective_rank_at_least_2_in_raw_and_covariance_metric_geometry",
+            endpoint_geometry["endpoint_family_geometry_passed"] == "true",
+            "data/derived/kids1000_cosebis_endpoint_family_geometry_audit_v1_summary.csv",
             "blocking_rank_one_partial_control",
-            degeneracy["recommended_next_action"],
+            "endpoint_family_geometry_available_partial_control_rank_one_preserved_as_negative_control",
         ),
         gate_row(
             policy,

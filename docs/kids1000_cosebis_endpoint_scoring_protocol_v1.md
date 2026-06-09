@@ -33,9 +33,13 @@ The future comparison must report:
 
 The protocol can be interpreted only after the source-readiness ledger is green,
 null controls are executed under frozen seeds, and no endpoint-leakage flag is
-true. The current release fails that precondition: `F_overlap`, a caveated
-`D_path` mask-load proxy, a uniform null-web `E_web` control, `C_norm`, a
-source-frozen mapping basis, a source-frozen unit-amplitude theory-vector shell,
-and source-frozen null-control replay digests are available, but the
-partial-control degeneracy audit still blocks endpoint use. The first endpoint
-blocker is now `partial_control_degeneracy_audit`.
+true. The current release satisfies the source-readiness ledger through the
+endpoint-family geometry audit: `F_overlap`, a caveated `D_path` mask-load
+proxy, a uniform null-web `E_web` control, `C_norm`, a source-frozen mapping
+basis, a source-frozen unit-amplitude theory-vector shell, source-frozen
+null-control replay digests, and a non-degenerate endpoint-family geometry
+audit are available. The first endpoint blocker is now `none`.
+
+This document still does not execute scoring. The scoring protocol remains
+frozen-not-run: no residual vector, likelihood, AIC value, null-control score,
+endpoint score, or validation result is produced in this release.

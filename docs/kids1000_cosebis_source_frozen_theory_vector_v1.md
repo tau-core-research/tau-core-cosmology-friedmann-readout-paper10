@@ -34,10 +34,14 @@ no post-hoc amplitude fit
 endpoint scoring disabled
 ```
 
-Remaining blockers before any endpoint interpretation:
+Completed source-side follow-up before endpoint scoring:
 
 ```text
 predeclared null-control replay
-non-degenerate endpoint promotion check
+non-degenerate endpoint-family geometry audit
 endpoint-readiness validation after controls
 ```
+
+These follow-up gates are now built as non-scoring artifacts. The endpoint
+readiness ledger has no remaining blocker, but endpoint scoring is still
+disabled until an explicit scoring run is opened under the frozen protocol.

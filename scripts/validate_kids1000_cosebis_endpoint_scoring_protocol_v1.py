@@ -38,10 +38,10 @@ def main() -> None:
         raise SystemExit("KiDS endpoint scoring protocol parent readiness policy mismatch")
     if readiness["endpoint_scoring_allowed"] != "false":
         raise SystemExit("parent readiness ledger must keep endpoint scoring disabled")
-    if readiness["first_blocker"] != "partial_control_degeneracy_audit":
-        raise SystemExit("partial-control degeneracy audit must remain the first endpoint blocker")
-    if readiness["blocking_component_count"] != "1":
-        raise SystemExit("KiDS endpoint scoring protocol should remain blocked by one component")
+    if readiness["first_blocker"] != "none":
+        raise SystemExit("KiDS endpoint scoring protocol should see no remaining readiness blocker")
+    if readiness["blocking_component_count"] != "0":
+        raise SystemExit("KiDS endpoint scoring readiness should have no blocking components")
     if "chi2=" not in protocol["primary_score"]:
         raise SystemExit("primary score must declare a chi-square shell")
     for marker in [

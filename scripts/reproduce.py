@@ -141,6 +141,8 @@ def main() -> None:
     run(["python", "scripts/validate_kids1000_cosebis_null_control_theory_replay_v1.py"])
     run(["python", "scripts/build_kids1000_cosebis_null_control_readiness_v1.py"])
     run(["python", "scripts/validate_kids1000_cosebis_null_control_readiness_v1.py"])
+    run(["python", "scripts/build_kids1000_cosebis_endpoint_family_geometry_audit_v1.py"])
+    run(["python", "scripts/validate_kids1000_cosebis_endpoint_family_geometry_audit_v1.py"])
     run(["python", "scripts/build_kids1000_cosebis_path_mapping_source_preflight_v1.py"])
     run(["python", "scripts/validate_kids1000_cosebis_path_mapping_source_preflight_v1.py"])
     run(["python", "scripts/build_kids1000_cosebis_path_blocker_resolution_order_v1.py"])

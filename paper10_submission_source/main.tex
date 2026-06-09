@@ -420,9 +420,9 @@ route source-complete while still below the likelihood endpoint.
 
 The covariance-inversion policy is also frozen, but only as a future numerical
 method: a Cholesky solve against the full covariance, without materializing or
-storing an inverse covariance matrix. The solve is not executed in the present
-artifact because the non-degenerate endpoint-family gate remains unresolved and
-the lensing scoring protocol remains a frozen-not-run shell.
+storing an inverse covariance matrix. The endpoint-family geometry gate is now
+resolved below, but the solve is still not executed in the present artifact
+because the lensing scoring protocol remains a frozen-not-run shell.
 
 The theory-vector gate is declared next. Its parent policy remains
 endpoint-disabled and declarative: it fixes the future target length to the 300
@@ -618,15 +618,19 @@ replaced by a non-degenerate, source-frozen full-route or official-geometry
 mapping before endpoint scoring.
 We therefore add a non-degenerate mapping promotion gate. It freezes six
 conditions before any endpoint promotion is allowed: endpoint-grade
-\texttt{F\_overlap}, source-preflight readiness, non-degenerate branch
-geometry, a frozen 300-row theory vector, null controls after mapping, and
-leakage guards. In the current repository the endpoint-grade
-\texttt{F\_overlap} rule, source-frozen theory-vector gate, and leakage guard
-pass. Source-preflight completion through null controls, non-degenerate branch
-geometry, and post-mapping null controls were then audited in sequence. After
-the source-frozen null-control replay, the remaining blocker is the
-non-degenerate branch-geometry gate: the existing positive branch family is
-still rank one, so endpoint scoring is disabled.
+\texttt{F\_overlap}, source-preflight readiness, endpoint-family geometry, a
+frozen 300-row theory vector, null controls after mapping, and leakage guards.
+The earlier positive partial-control branch remains rank one and is preserved
+as a negative diagnostic result. It is not used as the endpoint family. Instead
+we audit the source-frozen candidate theory shell together with the
+predeclared source-frozen null-control theory replay. This endpoint comparison
+family contains \(1009\) vectors over the \(300\) retained COSEBIs rows and has
+effective rank \(15\) in both the raw Euclidean and covariance-metric geometry
+audits. The geometry audit uses the KiDS covariance only as a metric; it does
+not read the KiDS \(E_n\) data-vector values, residuals, posterior chains, fit
+statistics, or endpoint scores. With this replacement, all six promotion gates
+pass. Endpoint scoring remains disabled because no explicit endpoint scoring
+run is executed in this release.
 The scoring-facing view is then summarized by an endpoint-readiness ledger:
 the COSEBIs data-vector structure, covariance matrix, covariance solve policy,
 theory-vector row-interface template, mapping-to-template join contract,
@@ -634,9 +638,9 @@ F-overlap resolution/control decision, web/path source mapping, source-preflight
 mapping basis, and source-frozen unit-amplitude theory-vector shell are
 source-side ready. The predeclared null controls have also been replayed against
 the source-frozen theory shell as deterministic control-vector digests, without
-computing null scores. The first endpoint blocker is now
-\texttt{partial\_control\_degeneracy\_audit}; no residual, fit statistic,
-endpoint score, or validation result is computed.
+computing null scores. After the endpoint-family geometry audit, the readiness
+ledger records twelve ready components and no remaining readiness blocker. No
+residual, fit statistic, endpoint score, or validation result is computed.
 A corresponding scoring-protocol shell freezes only the future grammar
 \(\chi^2=(d-t)^T C^{-1}(d-t)\), with a Cholesky covariance solve and required
 baseline, candidate, wrong-channel, shuffled/rotated null, AIC, and control-rank
@@ -652,9 +656,9 @@ partial three-tile source observable; the full path/depth footprint mapping is
 represented by a caveated full-route mask-load proxy; the KiDS-footprint
 web-environment catalogue remains absent and is therefore represented only by a
 uniform null-web control; and null controls have been replayed as theory-vector
-digests. Thus the lensing branch is now narrowed to a specific source-side
-endpoint-family blocker rather than an unspecified missing-input state, but it
-remains non-scored.
+digests. Thus the lensing branch is now narrowed to a source-side ready,
+geometry-audited, still non-scored endpoint protocol rather than an unspecified
+missing-input state.
 
 The null-control gate is declared in parallel. It predeclares sky rotation,
 tomographic-pair shuffle, wrong-channel activation, and web/path sign-flip

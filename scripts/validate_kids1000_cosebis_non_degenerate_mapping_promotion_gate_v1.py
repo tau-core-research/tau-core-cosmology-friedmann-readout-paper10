@@ -28,18 +28,18 @@ def main() -> None:
         raise SystemExit("unexpected promotion gate policy status")
     if policy["endpoint_scoring_allowed"] != "false":
         raise SystemExit("promotion gate policy must keep endpoint scoring disabled")
-    if summary["status"] != "NON_DEGENERATE_MAPPING_PROMOTION_GATE_BUILT_NOT_READY":
-        raise SystemExit("promotion gate should be built but not ready")
+    if summary["status"] != "NON_DEGENERATE_MAPPING_PROMOTION_GATE_PASSED_NOT_SCORED":
+        raise SystemExit("promotion gate should pass without enabling scoring")
     if summary["gate_count"] != "6":
         raise SystemExit("promotion gate must contain six gates")
-    if summary["passed_gate_count"] != "5":
-        raise SystemExit("all gates except non-degenerate branch geometry should currently pass")
-    if summary["blocking_gate_count"] != "1":
-        raise SystemExit("only the rank-one branch geometry gate should currently block")
-    if summary["first_blocking_gate"] != "PROMOTE_03_NON_DEGENERATE_BRANCH_GEOMETRY":
-        raise SystemExit("non-degenerate branch geometry must be the first remaining promotion blocker")
-    if summary["non_degenerate_mapping_promotion_allowed"] != "false":
-        raise SystemExit("non-degenerate mapping promotion must remain disabled")
+    if summary["passed_gate_count"] != "6":
+        raise SystemExit("all promotion gates should currently pass")
+    if summary["blocking_gate_count"] != "0":
+        raise SystemExit("no promotion gates should currently block")
+    if summary["first_blocking_gate"] != "none":
+        raise SystemExit("there should be no remaining promotion blocker")
+    if summary["non_degenerate_mapping_promotion_allowed"] != "true":
+        raise SystemExit("non-degenerate mapping promotion should be allowed")
     for key in [
         "endpoint_scoring_allowed",
         "scoring_executed",
@@ -59,7 +59,7 @@ def main() -> None:
     expected = {
         "PROMOTE_01_F_OVERLAP_ENDPOINT_ROUTE": ("true", "not_blocking"),
         "PROMOTE_02_SOURCE_PREFLIGHT_MAPPING_READY": ("true", "not_blocking"),
-        "PROMOTE_03_NON_DEGENERATE_BRANCH_GEOMETRY": ("false", "blocking_rank_one_partial_control"),
+        "PROMOTE_03_NON_DEGENERATE_BRANCH_GEOMETRY": ("true", "not_blocking"),
         "PROMOTE_04_THEORY_VECTOR_COMPUTED": ("true", "not_blocking"),
         "PROMOTE_05_NULL_CONTROLS_EXECUTED_AFTER_MAPPING": ("true", "not_blocking"),
         "PROMOTE_06_LEAKAGE_GUARDS": ("true", "not_blocking"),
@@ -72,8 +72,10 @@ def main() -> None:
             raise SystemExit(f"unexpected pass state for {gate_id}")
         if by_gate[gate_id]["blocking_status"] != blocker:
             raise SystemExit(f"unexpected blocker state for {gate_id}")
-    if "positive_rank_1" not in by_gate["PROMOTE_03_NON_DEGENERATE_BRANCH_GEOMETRY"]["current_state"]:
-        raise SystemExit("rank-one degeneracy must remain recorded in promotion gate")
+    if "partial_positive_rank_1" not in by_gate["PROMOTE_03_NON_DEGENERATE_BRANCH_GEOMETRY"]["current_state"]:
+        raise SystemExit("partial-control rank-one negative result must remain recorded")
+    if "endpoint_passed_true" not in by_gate["PROMOTE_03_NON_DEGENERATE_BRANCH_GEOMETRY"]["current_state"]:
+        raise SystemExit("endpoint-family geometry pass must be recorded")
     for marker in [
         "kids_data_vector_values",
         "posterior_chains",

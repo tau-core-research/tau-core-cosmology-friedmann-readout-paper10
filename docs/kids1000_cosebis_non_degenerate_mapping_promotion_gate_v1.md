@@ -14,7 +14,7 @@ The frozen gates are:
 1. accept an endpoint-route `F_overlap` source rule from official geometry or
    full route masks;
 2. make the source-preflight mapping state ready;
-3. pass a non-degenerate branch-geometry audit;
+3. pass a non-degenerate endpoint-family geometry audit;
 4. compute a frozen 300-row theory vector from the source-frozen mapping;
 5. execute predeclared null controls after the mapping vector exists;
 6. keep leakage guards active.
@@ -24,11 +24,17 @@ Current status:
 - the `F_overlap` endpoint-route gate now passes because the full-route
   pixel-fraction rule is source-frozen and non-degenerate;
 - source-preflight mapping, the source-frozen theory-vector gate, null-control
-  theory replay, and the leakage guard also pass;
-- the only remaining blocker is the non-degenerate branch-geometry gate;
-- the first blocking promotion gate is now
-  `PROMOTE_03_NON_DEGENERATE_BRANCH_GEOMETRY`;
-- endpoint scoring remains disabled.
+  theory replay, the endpoint-family geometry audit, and the leakage guard also
+  pass;
+- the earlier three-mask partial-control branch remains a preserved rank-one
+  negative diagnostic result, but it is no longer the endpoint-family geometry
+  test;
+- the source-frozen endpoint family contains the candidate vector plus
+  predeclared null-control vectors and has effective rank 15 in both raw and
+  covariance-metric audits;
+- all six promotion gates pass;
+- endpoint scoring remains disabled because the scoring protocol is still
+  frozen-not-run.
 
 Claim boundary:
 

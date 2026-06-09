@@ -19,6 +19,7 @@ BLOCKERS = ROOT / "data" / "derived" / "kids1000_cosebis_path_blocker_resolution
 F_OVERLAP_DECISION = ROOT / "data" / "derived" / "kids1000_cosebis_f_overlap_resolution_decision_v1_summary.csv"
 NULL_READINESS = ROOT / "data" / "derived" / "kids1000_cosebis_null_control_readiness_v1_summary.csv"
 DEGENERACY = ROOT / "data" / "derived" / "kids1000_cosebis_partial_control_degeneracy_audit_v1_summary.csv"
+ENDPOINT_GEOMETRY = ROOT / "data" / "derived" / "kids1000_cosebis_endpoint_family_geometry_audit_v1_summary.csv"
 OUT = ROOT / "data" / "derived" / "kids1000_cosebis_endpoint_scoring_readiness_v1.csv"
 SUMMARY = ROOT / "data" / "derived" / "kids1000_cosebis_endpoint_scoring_readiness_v1_summary.csv"
 
@@ -45,6 +46,7 @@ def main() -> None:
     f_overlap_decision = read_one(F_OVERLAP_DECISION)
     null_readiness = read_one(NULL_READINESS)
     degeneracy = read_one(DEGENERACY)
+    endpoint_geometry = read_one(ENDPOINT_GEOMETRY)
 
     if policy["current_endpoint_scoring_allowed"] != "false":
         raise SystemExit("endpoint scoring readiness policy must remain scoring-disabled")
@@ -158,14 +160,19 @@ def main() -> None:
             ),
         },
         {
-            "component_id": "partial_control_degeneracy_audit",
-            "component_status": degeneracy["status"],
-            "evidence_artifact": "data/derived/kids1000_cosebis_partial_control_degeneracy_audit_v1_summary.csv",
-            "ready_for_scoring": "false",
-            "blocking_status": "blocking_partial_control_endpoint",
+            "component_id": "endpoint_family_geometry_audit",
+            "component_status": endpoint_geometry["status"],
+            "evidence_artifact": "data/derived/kids1000_cosebis_endpoint_family_geometry_audit_v1_summary.csv",
+            "ready_for_scoring": "true" if endpoint_geometry["endpoint_family_geometry_passed"] == "true" else "false",
+            "blocking_status": (
+                "not_blocking"
+                if endpoint_geometry["endpoint_family_geometry_passed"] == "true"
+                else "blocking_endpoint_family_geometry"
+            ),
             "readiness_note": (
-                f"positive_rank_{degeneracy['positive_effective_rank_tol_1e_minus_8']}_"
-                f"degenerate_{degeneracy['branch_degeneracy_detected']}"
+                f"partial_positive_rank_{degeneracy['positive_effective_rank_tol_1e_minus_8']}_"
+                f"endpoint_raw_rank_{endpoint_geometry['raw_effective_rank_tol_1e_minus_8']}_"
+                f"endpoint_cov_rank_{endpoint_geometry['covariance_metric_effective_rank_tol_1e_minus_8']}"
             ),
         },
     ]
@@ -202,7 +209,11 @@ def main() -> None:
         "ready_component_count": str(len(ready_rows)),
         "blocking_component_count": str(len(blocking_rows)),
         "first_blocker": blocking_rows[0]["component_id"] if blocking_rows else "none",
-        "next_action": "resolve_non_degenerate_promotion_before_endpoint_scoring",
+        "next_action": (
+            "endpoint_scoring_protocol_can_be_run_after_explicit_user_approval"
+            if not blocking_rows
+            else "resolve_non_degenerate_promotion_before_endpoint_scoring"
+        ),
         "endpoint_scoring_allowed": "false",
         "scoring_executed": "false",
         "contains_predictions": "false",

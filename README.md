@@ -1098,10 +1098,32 @@ scripts/validate_kids1000_cosebis_partial_control_degeneracy_audit_v1.py
 
 It shows that the positive partial-control branches are effectively rank one:
 their covariance-metric absolute cosine is numerically unity and the maximum
-positive-branch relative shape residual is about `2.2e-12`. This is the
-current scoring-facing blocker for the partial-control route. Before endpoint
-scoring, the three-mask branch family must be replaced by a non-degenerate,
-source-frozen full-route or official-geometry mapping.
+positive-branch relative shape residual is about `2.2e-12`. This remains a
+preserved negative result for the caveated three-mask partial-control route. It
+is not erased by later gates: the partial-control branch is still unsuitable as
+an endpoint family on its own.
+
+The endpoint-family geometry audit is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_endpoint_family_geometry_audit_policy_v1.csv
+data/derived/kids1000_cosebis_endpoint_family_geometry_audit_v1.csv
+data/derived/kids1000_cosebis_endpoint_family_geometry_audit_v1_summary.csv
+docs/kids1000_cosebis_endpoint_family_geometry_audit_v1.md
+scripts/build_kids1000_cosebis_endpoint_family_geometry_audit_v1.py
+scripts/validate_kids1000_cosebis_endpoint_family_geometry_audit_v1.py
+```
+
+This audit replaces the three-mask partial-control geometry as the
+endpoint-readiness geometry test. It uses the source-frozen candidate theory
+shell plus the predeclared source-frozen null-control theory replay, with the
+KiDS covariance used only as a geometry metric. It does not read the KiDS `En`
+data-vector values, residuals, posterior chains, fit statistics, or endpoint
+scores. The resulting endpoint comparison family has `1009` vectors over the
+`300` retained COSEBIs rows and effective rank `15` in both the raw Euclidean
+and covariance-metric geometry audits. This resolves the geometry readiness
+blocker without converting the earlier partial-control diagnostic into
+endpoint evidence.
 
 The non-degenerate mapping promotion gate is recorded in:
 
@@ -1115,14 +1137,14 @@ scripts/validate_kids1000_cosebis_non_degenerate_mapping_promotion_gate_v1.py
 ```
 
 It freezes six required promotion gates before any endpoint scoring: endpoint
-grade `F_overlap`, source-preflight readiness, non-degenerate branch geometry,
+grade `F_overlap`, source-preflight readiness, endpoint-family geometry,
 a frozen 300-row theory vector, null controls after mapping, and leakage
 guards. In the current repository the `F_overlap` endpoint-route gate,
 source-preflight mapping state, source-frozen theory-vector gate, null-control
-theory replay, and leakage guard pass. The only remaining promotion blocker is
-the rank-one partial-control geometry, which must be replaced by a
-non-degenerate endpoint family before scoring. Endpoint scoring is still
-disabled.
+theory replay, endpoint-family geometry audit, and leakage guard pass. The
+promotion gate now records `6` passed gates and `0` blockers. Endpoint scoring
+is still disabled because the scoring protocol remains frozen-not-run and no
+explicit endpoint scoring run has been executed.
 
 The endpoint scoring-readiness ledger is recorded in:
 
@@ -1143,10 +1165,10 @@ source-side ready. `F_overlap`, caveated `D_path`, null-control `E_web`,
 source-side `C_norm`, the source-frozen mapping basis, and a source-frozen
 unit-amplitude theory-vector shell are supported. The predeclared null controls
 have also been replayed against the source-frozen theory shell as deterministic
-control-vector digests, but no null score has been computed. The first endpoint
-blocker is now `partial_control_degeneracy_audit`: the existing rank-one
-partial-control geometry cannot stand in for a non-degenerate endpoint family.
-Endpoint scoring remains disabled.
+control-vector digests, but no null score has been computed. The
+endpoint-family geometry audit now passes, so the readiness ledger records `12`
+ready components and `0` blockers. Endpoint scoring remains disabled until an
+explicit scoring run is opened under the frozen protocol.
 
 The frozen endpoint scoring protocol shell is recorded in:
 

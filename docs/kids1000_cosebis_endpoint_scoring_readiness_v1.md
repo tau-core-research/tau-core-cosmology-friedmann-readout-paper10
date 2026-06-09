@@ -24,9 +24,13 @@ Current result:
   frozen mapping basis and a predeclared unit-mean mode-shape rule;
 - predeclared null controls have been replayed as source-frozen control
   theory-vector digests, without scores;
-- blocking component: the partial-control degeneracy audit;
-- first endpoint blocker: `partial_control_degeneracy_audit`;
-- endpoint scoring remains disabled.
+- the endpoint-family geometry audit passes on the source-frozen candidate plus
+  predeclared null-control vector family;
+- ready components: 12;
+- blocking components: 0;
+- first endpoint blocker: `none`;
+- endpoint scoring remains disabled until an explicit scoring run is opened
+  under the frozen protocol.
 
 The ledger forbids KiDS data-vector values for source selection, posterior
 chains, fit-improvement flags, lensing residuals, post-hoc channel activation,
