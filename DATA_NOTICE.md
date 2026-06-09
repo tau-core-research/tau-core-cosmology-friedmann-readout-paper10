@@ -290,6 +290,13 @@ frozen schema and dry-run batch identities. It does not acquire data, promote a
 batch, compute overlap, construct a mapping or theory vector, or enable
 endpoint scoring.
 
+The endpoint scoring-readiness ledger is a no-go summary, not a score. It
+records that the COSEBIs data-vector structure, covariance matrix, and
+covariance solve policy are source-side ready, while the theory vector,
+web/path mapping, source preflight, blocker-resolution order, and null controls
+still block scoring. It contains no predictions, residuals, fit statistics, or
+endpoint scores.
+
 The COSEBIs path-mapping source-preflight ledger combines only source-side
 availability flags. It records that COSEBIs target rows, redshift kernels, and
 the 196-tile route coordinate index, the 300-row design skeleton, and the

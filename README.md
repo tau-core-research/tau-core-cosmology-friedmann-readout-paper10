@@ -786,6 +786,23 @@ batch-0 dry-run identities. It does not fetch products, promote a batch,
 derive an overlap rule, construct a path-mapping vector, or enable endpoint
 scoring.
 
+The endpoint scoring-readiness ledger is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_endpoint_scoring_readiness_policy_v1.csv
+data/derived/kids1000_cosebis_endpoint_scoring_readiness_v1.csv
+data/derived/kids1000_cosebis_endpoint_scoring_readiness_v1_summary.csv
+docs/kids1000_cosebis_endpoint_scoring_readiness_v1.md
+scripts/build_kids1000_cosebis_endpoint_scoring_readiness_v1.py
+scripts/validate_kids1000_cosebis_endpoint_scoring_readiness_v1.py
+```
+
+It collects the current pre-scoring state in one place. The data-vector
+structure, covariance matrix, and covariance solve policy are source-side
+ready; the theory vector, web/path mapping, source preflight, blocker
+resolution, and null controls still block scoring. The first blocker remains
+`F_overlap`, and endpoint scoring remains disabled.
+
 The COSEBIs path-mapping source-preflight ledger is recorded in:
 
 ```text

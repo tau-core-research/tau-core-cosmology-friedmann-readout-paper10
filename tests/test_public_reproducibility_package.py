@@ -176,6 +176,12 @@ def test_public_files_exist() -> None:
         "data/derived/kids1000_cosebis_f_overlap_execution_review_template_v1_summary.csv",
         "docs/kids1000_cosebis_f_overlap_filled_execution_review_validator_v1.md",
         "scripts/validate_kids1000_cosebis_f_overlap_filled_execution_review_artifact_v1.py",
+        "data/source_manifest/kids1000_cosebis_endpoint_scoring_readiness_policy_v1.csv",
+        "data/derived/kids1000_cosebis_endpoint_scoring_readiness_v1.csv",
+        "data/derived/kids1000_cosebis_endpoint_scoring_readiness_v1_summary.csv",
+        "docs/kids1000_cosebis_endpoint_scoring_readiness_v1.md",
+        "scripts/build_kids1000_cosebis_endpoint_scoring_readiness_v1.py",
+        "scripts/validate_kids1000_cosebis_endpoint_scoring_readiness_v1.py",
         "data/source_manifest/kids1000_cosebis_path_mapping_source_preflight_policy_v1.csv",
         "data/derived/kids1000_cosebis_path_mapping_source_preflight_v1.csv",
         "data/derived/kids1000_cosebis_path_mapping_source_preflight_v1_summary.csv",
@@ -2565,6 +2571,72 @@ def test_kids1000_cosebis_path_mapping_source_preflight_is_not_mapping() -> None
         assert row["contains_residuals"] == "false"
         assert row["uses_kids_data_vector_values"] == "false"
         assert row["endpoint_scoring_allowed"] == "false"
+
+
+def test_kids1000_cosebis_endpoint_scoring_readiness_is_not_scoring() -> None:
+    with (
+        ROOT / "data/source_manifest/kids1000_cosebis_endpoint_scoring_readiness_policy_v1.csv"
+    ).open(newline="") as f:
+        policy = list(csv.DictReader(f))[0]
+    assert policy["status"] == "KIDS1000_COSEBIS_ENDPOINT_SCORING_READINESS_POLICY_FROZEN_NOT_SCORED"
+    assert policy["current_endpoint_scoring_allowed"] == "false"
+    assert policy["current_scoring_executed"] == "false"
+    assert policy["required_blocker_resolution"] == "F_overlap_before_D_path_E_web_C_norm_mapping_or_scoring"
+    for marker in [
+        "kids_data_vector_values_for_source_selection",
+        "posterior_chains",
+        "lensing_residuals",
+        "posthoc_channel_activation",
+        "posthoc_weight_selection",
+    ]:
+        assert marker in policy["forbidden_inputs"]
+
+    with (
+        ROOT / "data/derived/kids1000_cosebis_endpoint_scoring_readiness_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["status"] == "KIDS1000_COSEBIS_ENDPOINT_SCORING_READINESS_BUILT_NOT_SCORED"
+    assert summary["component_count"] == "8"
+    assert summary["ready_component_count"] == "3"
+    assert summary["blocking_component_count"] == "5"
+    assert summary["first_blocker"] == "F_overlap"
+    assert summary["endpoint_scoring_allowed"] == "false"
+    assert summary["scoring_executed"] == "false"
+    assert summary["contains_predictions"] == "false"
+    assert summary["contains_residuals"] == "false"
+    assert summary["contains_fit_statistics"] == "false"
+
+    with (ROOT / "data/derived/kids1000_cosebis_endpoint_scoring_readiness_v1.csv").open(
+        newline=""
+    ) as f:
+        rows = list(csv.DictReader(f))
+    by_component = {row["component_id"]: row for row in rows}
+    assert set(by_component) == {
+        "data_vector_structure",
+        "covariance_matrix",
+        "covariance_solve_policy",
+        "theory_vector",
+        "web_path_mapping",
+        "source_preflight",
+        "blocker_resolution_order",
+        "null_controls",
+    }
+    assert by_component["data_vector_structure"]["ready_for_scoring"] == "true"
+    assert by_component["covariance_matrix"]["ready_for_scoring"] == "true"
+    assert by_component["covariance_solve_policy"]["ready_for_scoring"] == "true"
+    assert by_component["theory_vector"]["blocking_status"] == "blocking"
+    assert by_component["web_path_mapping"]["blocking_status"] == "blocking"
+    assert by_component["source_preflight"]["blocking_status"] == "blocking"
+    assert by_component["blocker_resolution_order"]["readiness_note"] == "first_blocker_F_overlap"
+    assert by_component["null_controls"]["blocking_status"] == "blocking_until_mapping_exists"
+    for row in rows:
+        assert row["endpoint_scoring_allowed"] == "false"
+        assert row["scoring_executed"] == "false"
+        assert row["contains_predictions"] == "false"
+        assert row["contains_residuals"] == "false"
+        assert row["contains_fit_statistics"] == "false"
+        assert row["uses_posterior_chains"] == "false"
+        assert row["uses_posthoc_selection"] == "false"
 
 
 def test_kids1000_cosebis_null_control_policy_is_declared_not_run() -> None:

@@ -553,6 +553,12 @@ future manually completed execution-review artifact, against the frozen schema
 and dry-run batch identities. This validator is not a promotion gate and does
 not compute an overlap rule, mapping vector, theory vector, prediction,
 residual, or score.
+The scoring-facing view is then summarized by an endpoint-readiness ledger:
+the COSEBIs data-vector structure, covariance matrix, and covariance solve
+policy are source-side ready, while the theory vector, web/path mapping,
+source-preflight state, blocker-resolution order, and null controls still block
+scoring. The first blocker remains \texttt{F\_overlap}; no prediction,
+residual, fit statistic, or endpoint score is computed.
 The resulting source-preflight ledger is correspondingly mixed: the 300 COSEBIs
 target rows, five-bin redshift-kernel inventory, 196-tile route-coordinate
 index, 300-row design skeleton, and 58{,}800-row domain skeleton are available;
