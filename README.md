@@ -741,6 +741,9 @@ committed fetched-batch review artifact, no checksum manifest for fetched
 products, and no forbidden-input audit for a fetched batch. This checklist
 does not read ignored `data/local/` execution logs and computes no overlap
 rule, mapping vector, theory vector, prediction, residual, or score.
+The checklist also records the availability of the filled-review validator as a
+satisfied-but-not-promoting item; this makes the future review path more
+auditable without changing the current negative promotion status.
 
 The future fetched-batch execution-review schema is recorded in:
 

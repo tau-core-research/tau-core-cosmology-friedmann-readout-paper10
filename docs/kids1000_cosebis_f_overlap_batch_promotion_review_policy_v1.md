@@ -14,6 +14,11 @@ The first blockers are:
 - a forbidden-input audit showing no KiDS data-vector, posterior, residual, fit
   statistic, or post-hoc tile selection was used.
 
+The package now also includes a filled-review validator that can check a future
+completed artifact against the frozen schema and dry-run batch identity. Its
+availability is a satisfied checklist item, but it does not by itself promote a
+batch because no completed artifact is present.
+
 Passing this gate would still not compute an overlap rule. It would only allow a
 later, separate source-native overlap derivation gate to consume the frozen
 batch artifact.

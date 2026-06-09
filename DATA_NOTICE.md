@@ -269,6 +269,9 @@ artifact or checksum manifest has been promoted from `data/local/`, so
 `promotion_ready=false`. It does not inspect machine-local execution logs and
 does not compute overlap, mapping, theory-vector, prediction, residual, or
 endpoint-score quantities.
+The checklist records the filled-review validator as available, but that row is
+only a future-review readiness item; it is not a fetched-batch artifact and does
+not change the negative promotion status.
 
 The execution-review schema gate freezes the columns that a future committed
 fetched-batch review artifact must contain. It is a schema declaration only:

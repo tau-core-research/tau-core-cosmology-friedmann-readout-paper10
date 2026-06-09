@@ -536,6 +536,9 @@ accounting, or forbidden-input audit has been committed. The checklist therefore
 keeps promotion disabled and does not read ignored local execution logs. Passing
 such a checklist in the future would still not be an overlap rule; it would only
 make a fetched batch eligible for a separate source-native overlap derivation.
+The checklist now records the filled-review validator as available, but this is
+only a future-review readiness condition and does not change the present
+negative promotion status.
 To make that future step auditable, the repository also freezes the required
 schema for a fetched-batch execution-review artifact: product identity, URL,
 cache path, HTTP status, byte count, SHA-256, review status, reviewer role,

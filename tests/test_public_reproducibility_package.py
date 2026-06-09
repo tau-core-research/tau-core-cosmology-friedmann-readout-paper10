@@ -2291,7 +2291,7 @@ def test_kids1000_cosebis_f_overlap_batch_promotion_review_is_not_ready() -> Non
     assert summary["dry_run_batch_size"] == "20"
     assert summary["planned_total_batch_count"] == "10"
     assert summary["planned_missing_mask_count"] == "193"
-    assert summary["requirement_count"] == "5"
+    assert summary["requirement_count"] == "6"
     assert summary["blocking_requirement_count"] == "4"
     assert summary["promotion_ready"] == "false"
     assert summary["first_blocker"] == "PROMOTE_01_EXECUTION_REVIEW_ARTIFACT"
@@ -2307,7 +2307,7 @@ def test_kids1000_cosebis_f_overlap_batch_promotion_review_is_not_ready() -> Non
         ROOT / "data/derived/kids1000_cosebis_f_overlap_batch_promotion_review_v1.csv"
     ).open(newline="") as f:
         rows = list(csv.DictReader(f))
-    assert len(rows) == 5
+    assert len(rows) == 6
     by_id = {row["requirement_id"]: row for row in rows}
     assert set(by_id) == {
         "PROMOTE_01_EXECUTION_REVIEW_ARTIFACT",
@@ -2315,8 +2315,11 @@ def test_kids1000_cosebis_f_overlap_batch_promotion_review_is_not_ready() -> Non
         "PROMOTE_03_BATCH_PRODUCT_COUNT",
         "PROMOTE_04_FORBIDDEN_INPUT_AUDIT",
         "PROMOTE_05_OVERLAP_DERIVATION_STILL_SEPARATE",
+        "PROMOTE_06_FILLED_REVIEW_VALIDATOR_AVAILABLE",
     }
     assert by_id["PROMOTE_05_OVERLAP_DERIVATION_STILL_SEPARATE"]["blocks_promotion"] == "false"
+    assert by_id["PROMOTE_06_FILLED_REVIEW_VALIDATOR_AVAILABLE"]["blocks_promotion"] == "false"
+    assert by_id["PROMOTE_06_FILLED_REVIEW_VALIDATOR_AVAILABLE"]["status"] == "satisfied_not_executed"
     assert all(row["promotion_ready"] == "false" for row in rows)
     assert all(row["external_products_fetched"] == "false" for row in rows)
     assert all(row["overlap_rule_computed"] == "false" for row in rows)

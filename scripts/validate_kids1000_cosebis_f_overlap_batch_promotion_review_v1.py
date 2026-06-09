@@ -32,8 +32,8 @@ def main() -> None:
         raise SystemExit("promotion review must preserve the ten-batch plan")
     if summary["planned_missing_mask_count"] != "193":
         raise SystemExit("promotion review must preserve the 193 missing-mask plan")
-    if summary["requirement_count"] != "5":
-        raise SystemExit("promotion review must contain five checklist requirements")
+    if summary["requirement_count"] != "6":
+        raise SystemExit("promotion review must contain six checklist requirements")
     if summary["blocking_requirement_count"] != "4":
         raise SystemExit("four requirements should currently block promotion")
     if summary["promotion_ready"] != "false":
@@ -46,6 +46,7 @@ def main() -> None:
         "PROMOTE_03_BATCH_PRODUCT_COUNT",
         "PROMOTE_04_FORBIDDEN_INPUT_AUDIT",
         "PROMOTE_05_OVERLAP_DERIVATION_STILL_SEPARATE",
+        "PROMOTE_06_FILLED_REVIEW_VALIDATOR_AVAILABLE",
     }
     if {row["requirement_id"] for row in rows} != expected_ids:
         raise SystemExit("unexpected promotion checklist requirements")
@@ -54,6 +55,8 @@ def main() -> None:
     by_id = {row["requirement_id"]: row for row in rows}
     if by_id["PROMOTE_05_OVERLAP_DERIVATION_STILL_SEPARATE"]["blocks_promotion"] != "false":
         raise SystemExit("the separate-overlap-derivation reminder should not itself block promotion")
+    if by_id["PROMOTE_06_FILLED_REVIEW_VALIDATOR_AVAILABLE"]["blocks_promotion"] != "false":
+        raise SystemExit("the filled-review validator availability row should not itself block promotion")
     for key in [
         "external_products_fetched",
         "overlap_rule_computed",

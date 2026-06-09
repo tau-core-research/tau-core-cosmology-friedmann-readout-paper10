@@ -82,6 +82,14 @@ def main() -> None:
             "why_required": "batch_fetch_review_is_not_an_overlap_factor",
             "blocks_promotion": "false",
         },
+        {
+            "requirement_id": "PROMOTE_06_FILLED_REVIEW_VALIDATOR_AVAILABLE",
+            "requirement": "filled_execution_review_artifact_validator_available",
+            "status": "satisfied_not_executed",
+            "evidence": "scripts/validate_kids1000_cosebis_f_overlap_filled_execution_review_artifact_v1.py",
+            "why_required": "future_filled_review_artifacts_must_be_checked_against_frozen_schema_and_dry_run_identity",
+            "blocks_promotion": "false",
+        },
     ]
     rows: list[dict[str, str]] = []
     for row in requirements:
