@@ -129,6 +129,7 @@ def main() -> None:
     run(["python", "scripts/build_kids1000_cosebis_f_overlap_pixel_fraction_pilot_v1.py"])
     run(["python", "scripts/validate_kids1000_cosebis_f_overlap_pixel_fraction_pilot_v1.py"])
     run(["python", "scripts/validate_kids1000_cosebis_f_overlap_full_route_pixel_fraction_rule_v1.py"])
+    run(["python", "scripts/validate_kids1000_cosebis_d_path_full_route_mask_load_rule_v1.py"])
     run(
         [
             "python",

@@ -13,6 +13,7 @@ ROUTE_TILES = ROOT / "data" / "derived" / "kids1000_dr4_path_mask_route_tile_inv
 MASK_SHELL = ROOT / "data" / "derived" / "kids1000_dr4_path_mask_observable_shell_v1_summary.csv"
 HEADER_DEGENERACY = ROOT / "data" / "derived" / "kids1000_cosebis_f_overlap_header_footprint_degeneracy_audit_v1_summary.csv"
 FULL_PIXEL_FRACTION = ROOT / "data" / "derived" / "kids1000_cosebis_f_overlap_full_route_pixel_fraction_rule_v1_summary.csv"
+D_PATH_MASK_LOAD = ROOT / "data" / "derived" / "kids1000_cosebis_d_path_full_route_mask_load_rule_v1_summary.csv"
 NULL_SEEDS = ROOT / "data" / "derived" / "kids1000_cosebis_null_control_seed_inventory_v1_summary.csv"
 OUT = ROOT / "data" / "derived" / "kids1000_cosebis_path_weight_construction_rule_v1.csv"
 SUMMARY = ROOT / "data" / "derived" / "kids1000_cosebis_path_weight_construction_rule_v1_summary.csv"
@@ -34,6 +35,7 @@ def main() -> None:
     mask_shell = read_one(MASK_SHELL)
     header_degeneracy = read_one(HEADER_DEGENERACY)
     full_pixel_fraction = read_one(FULL_PIXEL_FRACTION)
+    d_path_mask_load = read_one(D_PATH_MASK_LOAD)
     null_seeds = read_one(NULL_SEEDS)
     if policy["endpoint_scoring_allowed"].lower() != "false":
         raise SystemExit("path-weight construction policy must remain endpoint disabled")
@@ -78,12 +80,12 @@ def main() -> None:
         {
             "factor_id": "D_path",
             "factor_role": "depth_mask_path_load_factor",
-            "source_state": "partial_available",
-            "evidence_artifact": "data/derived/kids1000_dr4_path_mask_observable_shell_v1_summary.csv",
-            "source_count": mask_shell["subset_count"],
-            "numeric_factor_computed": "false",
-            "blocking_status": "partial_blocking",
-            "limitation": "three_mask_shell_only_no_full_depth_path_load_semantics",
+            "source_state": "available_non_degenerate_full_route_mask_load_proxy",
+            "evidence_artifact": "data/derived/kids1000_cosebis_d_path_full_route_mask_load_rule_v1_summary.csv",
+            "source_count": d_path_mask_load["tile_count"],
+            "numeric_factor_computed": "true",
+            "blocking_status": "not_blocking",
+            "limitation": "source_frozen_full_route_mask_load_proxy_available_not_calibrated_depth_map_not_full_path_mapping",
         },
         {
             "factor_id": "E_web",
@@ -152,7 +154,7 @@ def main() -> None:
             sum(row["source_state"] == "available_uniform_not_promotable" for row in rows)
         ),
         "available_non_degenerate_factor_count": str(
-            sum(row["source_state"] == "available_non_degenerate_full_route_pixel_fraction" for row in rows)
+            sum(row["source_state"].startswith("available_non_degenerate") for row in rows)
         ),
         "partial_available_factor_count": str(sum(row["source_state"] == "partial_available" for row in rows)),
         "missing_factor_count": str(sum(row["source_state"] == "missing" for row in rows)),

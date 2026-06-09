@@ -31,19 +31,19 @@ def main() -> None:
         raise SystemExit("source-product route manifest must contain ten routes")
     if summary["route_count"] != "10":
         raise SystemExit("unexpected route count")
-    if summary["declared_not_acquired_route_count"] != "4":
+    if summary["declared_not_acquired_route_count"] != "2":
         raise SystemExit("unexpected declared-not-acquired route count")
-    if summary["already_supported_route_count"] != "3":
+    if summary["already_supported_route_count"] != "4":
         raise SystemExit("unexpected already-supported route count")
-    if summary["alternative_not_needed_route_count"] != "1":
+    if summary["alternative_not_needed_route_count"] != "2":
         raise SystemExit("unexpected alternative-not-needed route count")
     if summary["declared_not_computed_route_count"] != "1":
         raise SystemExit("unexpected declared-not-computed route count")
     if summary["declared_not_executed_route_count"] != "1":
         raise SystemExit("unexpected declared-not-executed route count")
-    if summary["blocker_resolving_candidate_count"] != "3":
+    if summary["blocker_resolving_candidate_count"] != "2":
         raise SystemExit("unexpected blocker-resolving candidate count")
-    if summary["control_or_lock_candidate_count"] != "7":
+    if summary["control_or_lock_candidate_count"] != "8":
         raise SystemExit("unexpected control-or-lock candidate count")
 
     expected_routes = {
@@ -51,7 +51,7 @@ def main() -> None:
         "ROUTE_T_TILE_EXISTING_ROUTE_TILE_LOCK": ("REQ_T_TILE_LOCK", "T_tile", "false"),
         "ROUTE_F_OVERLAP_OFFICIAL_FOOTPRINT_GEOMETRY": ("REQ_F_OVERLAP_SOURCE", "F_overlap", "false"),
         "ROUTE_F_OVERLAP_PIXEL_MASK_DERIVED": ("REQ_F_OVERLAP_SOURCE", "F_overlap", "false"),
-        "ROUTE_D_PATH_FULL_MASK_DEPTH_PRODUCTS": ("REQ_D_PATH_SOURCE", "D_path", "true"),
+        "ROUTE_D_PATH_FULL_MASK_DEPTH_PRODUCTS": ("REQ_D_PATH_SOURCE", "D_path", "false"),
         "ROUTE_D_PATH_DOCUMENTED_SUBSET_CONTROL": ("REQ_D_PATH_SOURCE", "D_path", "false"),
         "ROUTE_E_WEB_EXTERNAL_ENVIRONMENT_CATALOG": ("REQ_E_WEB_SOURCE", "E_web", "true"),
         "ROUTE_E_WEB_NULL_ABSENT_CONTROL": ("REQ_E_WEB_SOURCE", "E_web", "false"),

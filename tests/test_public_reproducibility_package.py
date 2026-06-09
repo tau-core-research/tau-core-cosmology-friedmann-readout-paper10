@@ -190,6 +190,10 @@ def test_public_files_exist() -> None:
         "data/derived/kids1000_cosebis_f_overlap_full_route_pixel_fraction_tile_rule_v1.csv",
         "data/derived/kids1000_cosebis_f_overlap_full_route_pixel_fraction_rule_v1.csv",
         "data/derived/kids1000_cosebis_f_overlap_full_route_pixel_fraction_rule_v1_summary.csv",
+        "data/source_manifest/kids1000_cosebis_d_path_full_route_mask_load_rule_policy_v1.csv",
+        "data/derived/kids1000_cosebis_d_path_full_route_mask_load_tile_rule_v1.csv",
+        "data/derived/kids1000_cosebis_d_path_full_route_mask_load_rule_v1.csv",
+        "data/derived/kids1000_cosebis_d_path_full_route_mask_load_rule_v1_summary.csv",
         "data/source_manifest/kids1000_cosebis_partial_control_scoring_protocol_v1.csv",
         "data/source_manifest/kids1000_cosebis_partial_control_mapping_shell_policy_v1.csv",
         "data/derived/kids1000_cosebis_partial_control_mapping_shell_v1.csv",
@@ -282,6 +286,7 @@ def test_public_files_exist() -> None:
         "docs/kids1000_cosebis_f_overlap_resolution_decision_v1.md",
         "docs/kids1000_cosebis_f_overlap_pixel_fraction_pilot_v1.md",
         "docs/kids1000_cosebis_f_overlap_full_route_pixel_fraction_rule_v1.md",
+        "docs/kids1000_cosebis_d_path_full_route_mask_load_rule_v1.md",
         "docs/kids1000_cosebis_partial_control_scoring_protocol_v1.md",
         "docs/kids1000_cosebis_partial_control_mapping_shell_v1.md",
         "docs/kids1000_cosebis_partial_control_mapping_values_v1.md",
@@ -390,6 +395,8 @@ def test_public_files_exist() -> None:
         "scripts/validate_kids1000_cosebis_f_overlap_pixel_fraction_pilot_v1.py",
         "scripts/build_kids1000_cosebis_f_overlap_full_route_pixel_fraction_rule_v1.py",
         "scripts/validate_kids1000_cosebis_f_overlap_full_route_pixel_fraction_rule_v1.py",
+        "scripts/build_kids1000_cosebis_d_path_full_route_mask_load_rule_v1.py",
+        "scripts/validate_kids1000_cosebis_d_path_full_route_mask_load_rule_v1.py",
         "scripts/validate_kids1000_cosebis_partial_control_scoring_protocol_v1.py",
         "scripts/build_kids1000_cosebis_partial_control_mapping_shell_v1.py",
         "scripts/validate_kids1000_cosebis_partial_control_mapping_shell_v1.py",
@@ -2022,10 +2029,10 @@ def test_kids1000_cosebis_path_weight_construction_rule_is_not_computable() -> N
         summary = list(csv.DictReader(f))[0]
     assert summary["status"] == "KIDS1000_COSEBIS_PATH_WEIGHT_CONSTRUCTION_RULE_BUILT_NOT_COMPUTED"
     assert summary["factor_count"] == "7"
-    assert summary["available_factor_count"] == "3"
+    assert summary["available_factor_count"] == "4"
     assert summary["available_uniform_not_promotable_factor_count"] == "0"
-    assert summary["available_non_degenerate_factor_count"] == "1"
-    assert summary["partial_available_factor_count"] == "1"
+    assert summary["available_non_degenerate_factor_count"] == "2"
+    assert summary["partial_available_factor_count"] == "0"
     assert summary["missing_factor_count"] == "1"
     assert summary["declared_not_computed_factor_count"] == "1"
     assert summary["declared_not_executed_factor_count"] == "1"
@@ -2046,8 +2053,9 @@ def test_kids1000_cosebis_path_weight_construction_rule_is_not_computable() -> N
     assert by_factor["T_tile"]["source_state"] == "available_for_future_rule"
     assert by_factor["F_overlap"]["source_state"] == "available_non_degenerate_full_route_pixel_fraction"
     assert by_factor["F_overlap"]["source_count"] == "196"
-    assert by_factor["D_path"]["source_state"] == "partial_available"
-    assert by_factor["D_path"]["source_count"] == "3"
+    assert by_factor["D_path"]["source_state"] == "available_non_degenerate_full_route_mask_load_proxy"
+    assert by_factor["D_path"]["source_count"] == "196"
+    assert by_factor["D_path"]["numeric_factor_computed"] == "true"
     assert by_factor["E_web"]["source_state"] == "missing"
     assert by_factor["C_norm"]["source_state"] == "declared_not_computed"
     assert by_factor["null_controls"]["source_state"] == "declared_not_executed"
@@ -2088,8 +2096,8 @@ def test_kids1000_cosebis_path_factor_acquisition_plan_is_not_fetching_or_scorin
         summary = list(csv.DictReader(f))[0]
     assert summary["status"] == "KIDS1000_COSEBIS_PATH_FACTOR_ACQUISITION_PLAN_BUILT_NOT_FETCHED"
     assert summary["requirement_count"] == "7"
-    assert summary["blocking_requirement_count"] == "3"
-    assert summary["nonblocking_requirement_count"] == "4"
+    assert summary["blocking_requirement_count"] == "2"
+    assert summary["nonblocking_requirement_count"] == "5"
     assert summary["external_products_fetched"] == "false"
     assert summary["numeric_factors_computed"] == "false"
     assert summary["path_mapping_computed"] == "false"
@@ -2104,7 +2112,11 @@ def test_kids1000_cosebis_path_factor_acquisition_plan_is_not_fetching_or_scorin
     by_req = {row["requirement_id"]: row for row in rows}
     assert by_req["REQ_F_OVERLAP_SOURCE"]["blocks_weight_computation"] == "false"
     assert by_req["REQ_F_OVERLAP_SOURCE"]["current_state"] == "available_non_degenerate_full_route_pixel_fraction"
-    assert by_req["REQ_D_PATH_SOURCE"]["blocks_weight_computation"] == "true"
+    assert by_req["REQ_D_PATH_SOURCE"]["blocks_weight_computation"] == "false"
+    assert (
+        by_req["REQ_D_PATH_SOURCE"]["current_state"]
+        == "available_non_degenerate_full_route_mask_load_proxy"
+    )
     assert by_req["REQ_E_WEB_SOURCE"]["blocks_weight_computation"] == "true"
     assert by_req["REQ_C_NORM_RULE"]["blocks_weight_computation"] == "true"
     assert by_req["REQ_N_PAIR_LOCK"]["blocks_weight_computation"] == "false"
@@ -2148,13 +2160,13 @@ def test_kids1000_cosebis_path_source_product_route_manifest_is_not_fetching_or_
         summary = list(csv.DictReader(f))[0]
     assert summary["status"] == "KIDS1000_COSEBIS_PATH_SOURCE_PRODUCT_ROUTE_MANIFEST_BUILT_NOT_FETCHED"
     assert summary["route_count"] == "10"
-    assert summary["declared_not_acquired_route_count"] == "4"
-    assert summary["already_supported_route_count"] == "3"
-    assert summary["alternative_not_needed_route_count"] == "1"
+    assert summary["declared_not_acquired_route_count"] == "2"
+    assert summary["already_supported_route_count"] == "4"
+    assert summary["alternative_not_needed_route_count"] == "2"
     assert summary["declared_not_computed_route_count"] == "1"
     assert summary["declared_not_executed_route_count"] == "1"
-    assert summary["blocker_resolving_candidate_count"] == "3"
-    assert summary["control_or_lock_candidate_count"] == "7"
+    assert summary["blocker_resolving_candidate_count"] == "2"
+    assert summary["control_or_lock_candidate_count"] == "8"
     assert summary["external_products_fetched"] == "false"
     assert summary["numeric_factors_computed"] == "false"
     assert summary["path_mapping_computed"] == "false"
@@ -2169,7 +2181,7 @@ def test_kids1000_cosebis_path_source_product_route_manifest_is_not_fetching_or_
     by_route = {row["route_id"]: row for row in rows}
     assert by_route["ROUTE_F_OVERLAP_OFFICIAL_FOOTPRINT_GEOMETRY"]["may_resolve_blocker"] == "false"
     assert by_route["ROUTE_F_OVERLAP_PIXEL_MASK_DERIVED"]["may_resolve_blocker"] == "false"
-    assert by_route["ROUTE_D_PATH_FULL_MASK_DEPTH_PRODUCTS"]["may_resolve_blocker"] == "true"
+    assert by_route["ROUTE_D_PATH_FULL_MASK_DEPTH_PRODUCTS"]["may_resolve_blocker"] == "false"
     assert by_route["ROUTE_E_WEB_EXTERNAL_ENVIRONMENT_CATALOG"]["may_resolve_blocker"] == "true"
     assert by_route["ROUTE_C_NORM_SOURCE_NORMALIZATION_PROTOCOL"]["may_resolve_blocker"] == "true"
     assert by_route["ROUTE_D_PATH_DOCUMENTED_SUBSET_CONTROL"]["may_resolve_blocker"] == "false"
@@ -2202,12 +2214,12 @@ def test_kids1000_cosebis_path_blocker_resolution_order_is_frozen_not_mapping() 
         summary = list(csv.DictReader(f))[0]
     assert summary["status"] == "KIDS1000_COSEBIS_PATH_BLOCKER_RESOLUTION_ORDER_BUILT_NOT_FETCHED"
     assert summary["stage_count"] == "6"
-    assert summary["resolved_source_supported_stage_count"] == "1"
-    assert summary["blocking_unresolved_stage_count"] == "2"
+    assert summary["resolved_source_supported_stage_count"] == "2"
+    assert summary["blocking_unresolved_stage_count"] == "1"
     assert summary["not_allowed_stage_count"] == "1"
     assert summary["declared_not_computed_stage_count"] == "1"
     assert summary["declared_not_executed_stage_count"] == "1"
-    assert summary["first_blocker"] == "D_path"
+    assert summary["first_blocker"] == "E_web"
     assert summary["external_products_fetched"] == "false"
     assert summary["numeric_factors_computed"] == "false"
     assert summary["path_mapping_computed"] == "false"
@@ -2222,7 +2234,7 @@ def test_kids1000_cosebis_path_blocker_resolution_order_is_frozen_not_mapping() 
     observed = [(row["order_rank"], row["factor_id"], row["stage_status"]) for row in rows]
     assert observed == [
         ("1", "F_overlap", "resolved_source_supported"),
-        ("2", "D_path", "blocking_not_resolved"),
+        ("2", "D_path", "resolved_source_supported"),
         ("3", "E_web", "blocking_not_resolved"),
         ("4", "C_norm", "declared_not_computed"),
         ("5", "mapping_vector", "not_allowed_yet"),
@@ -2874,6 +2886,80 @@ def test_kids1000_cosebis_f_overlap_full_route_pixel_fraction_rule_is_source_onl
         "posthoc_tile_selection",
         "posthoc_path_projection_labels",
         "posthoc_overlap_rule_choice",
+    ]:
+        assert marker in policy["forbidden_inputs"]
+
+
+def test_kids1000_cosebis_d_path_full_route_mask_load_rule_is_source_only_non_degenerate() -> None:
+    with (
+        ROOT
+        / "data/source_manifest/kids1000_cosebis_d_path_full_route_mask_load_rule_policy_v1.csv"
+    ).open(newline="") as f:
+        policy = list(csv.DictReader(f))[0]
+    assert (
+        policy["status"]
+        == "KIDS1000_COSEBIS_D_PATH_FULL_ROUTE_MASK_LOAD_RULE_SOURCE_ONLY_NOT_SCORED"
+    )
+    assert policy["source_scope"] == "full_196_route_mask_set"
+    assert policy["endpoint_scoring_allowed"] == "false"
+
+    with (
+        ROOT / "data/derived/kids1000_cosebis_d_path_full_route_mask_load_rule_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert (
+        summary["status"]
+        == "KIDS1000_COSEBIS_D_PATH_FULL_ROUTE_MASK_LOAD_RULE_BUILT_SOURCE_ONLY_NOT_MAPPED"
+    )
+    assert summary["tile_count"] == "196"
+    assert summary["target_rows"] == "300"
+    assert summary["domain_rows"] == "58800"
+    assert summary["d_path_full_route_mask_load_non_degenerate"] == "true"
+    assert summary["d_path_source_route_support"] == "true"
+    assert summary["d_path_not_identical_to_f_overlap"] == "true"
+    assert 0.0 < float(summary["min_d_path_value"]) < float(summary["max_d_path_value"]) <= 1.0
+    assert int(summary["unique_d_path_value_count_rounded_1e_minus_12"]) > 1
+    assert float(summary["max_abs_delta_from_f_overlap"]) > 1.0e-6
+
+    with (
+        ROOT / "data/derived/kids1000_cosebis_d_path_full_route_mask_load_tile_rule_v1.csv"
+    ).open(newline="") as f:
+        tile_rows = list(csv.DictReader(f))
+    with (
+        ROOT / "data/derived/kids1000_cosebis_d_path_full_route_mask_load_rule_v1.csv"
+    ).open(newline="") as f:
+        domain_rows = list(csv.DictReader(f))
+    assert len(tile_rows) == 196
+    assert len(domain_rows) == 58800
+    assert len({round(float(row["d_path_full_route_mask_load_value"]), 12) for row in tile_rows}) > 1
+    assert len({round(float(row["d_path_value"]), 12) for row in domain_rows}) > 1
+    assert all(row["sha256"] for row in tile_rows)
+    assert all(row["d_path_mask_load_computed"] == "true" for row in tile_rows)
+    assert all(row["d_path_mask_load_computed"] == "true" for row in domain_rows)
+
+    for key in [
+        "path_mapping_computed",
+        "contains_mapping_vector",
+        "contains_theory_vector",
+        "contains_predictions",
+        "contains_residuals",
+        "contains_fit_statistics",
+        "uses_kids_data_vector_values",
+        "uses_posterior_chains",
+        "uses_posthoc_tile_selection",
+        "uses_posthoc_path_projection_labels",
+        "endpoint_scoring_allowed",
+    ]:
+        assert summary[key] == "false"
+        assert all(row[key] == "false" for row in tile_rows)
+        assert all(row[key] == "false" for row in domain_rows)
+    for marker in [
+        "kids_data_vector_values",
+        "posterior_chains",
+        "lensing_residuals",
+        "posthoc_tile_selection",
+        "posthoc_path_projection_labels",
+        "posthoc_d_path_rule_choice",
     ]:
         assert marker in policy["forbidden_inputs"]
 
@@ -3576,7 +3662,7 @@ def test_kids1000_cosebis_path_mapping_source_preflight_is_not_mapping() -> None
     assert summary["component_count"] == "10"
     assert summary["available_component_count"] == "5"
     assert summary["partial_available_component_count"] == "1"
-    assert summary["missing_component_count"] == "2"
+    assert summary["missing_component_count"] == "1"
     assert summary["declared_not_executed_component_count"] == "1"
     assert summary["declared_not_computed_component_count"] == "1"
     assert summary["target_rows"] == "300"
@@ -3607,7 +3693,7 @@ def test_kids1000_cosebis_path_mapping_source_preflight_is_not_mapping() -> None
     }
     assert by_component["cosebis_target_rows"]["source_state"] == "available"
     assert by_component["redshift_kernel_inventory"]["source_state"] == "available"
-    assert by_component["mask_observable_shell"]["source_state"] == "partial_available"
+    assert by_component["mask_observable_shell"]["source_state"] == "partial_available_control"
     assert by_component["mask_observable_shell"]["source_count"] == "3"
     assert by_component["preferred_route_tile_inventory"]["source_state"] == "available"
     assert by_component["preferred_route_tile_inventory"]["source_count"] == "196"
@@ -3617,8 +3703,12 @@ def test_kids1000_cosebis_path_mapping_source_preflight_is_not_mapping() -> None
     assert by_component["cosebis_path_mapping_domain_skeleton"]["source_count"] == "58800"
     assert by_component["path_weight_construction_rule"]["source_state"] == "declared_not_computed"
     assert by_component["path_weight_construction_rule"]["source_count"] == "7"
-    assert by_component["full_path_depth_footprint_mapping"]["source_state"] == "missing"
-    assert by_component["full_path_depth_footprint_mapping"]["blocking_status"] == "blocking"
+    assert (
+        by_component["full_path_depth_footprint_mapping"]["source_state"]
+        == "available_caveated_mask_load_proxy"
+    )
+    assert by_component["full_path_depth_footprint_mapping"]["source_count"] == "196"
+    assert by_component["full_path_depth_footprint_mapping"]["blocking_status"] == "not_blocking"
     assert by_component["web_environment_catalog"]["source_state"] == "missing"
     assert by_component["web_environment_catalog"]["blocking_status"] == "blocking"
     assert by_component["null_control_seed_policy"]["source_state"] == "declared_not_executed"
@@ -3660,7 +3750,7 @@ def test_kids1000_cosebis_endpoint_scoring_readiness_is_not_scoring() -> None:
     assert summary["component_count"] == "12"
     assert summary["ready_component_count"] == "6"
     assert summary["blocking_component_count"] == "6"
-    assert summary["first_blocker"] == "D_path"
+    assert summary["first_blocker"] == "E_web"
     assert summary["endpoint_scoring_allowed"] == "false"
     assert summary["scoring_executed"] == "false"
     assert summary["contains_predictions"] == "false"
@@ -3697,7 +3787,7 @@ def test_kids1000_cosebis_endpoint_scoring_readiness_is_not_scoring() -> None:
     assert by_component["theory_vector"]["blocking_status"] == "blocking"
     assert by_component["web_path_mapping"]["blocking_status"] == "blocking"
     assert by_component["source_preflight"]["blocking_status"] == "blocking"
-    assert by_component["blocker_resolution_order"]["readiness_note"] == "first_blocker_D_path"
+    assert by_component["blocker_resolution_order"]["readiness_note"] == "first_blocker_E_web"
     assert (
         by_component["f_overlap_resolution_decision"]["readiness_note"]
         == "endpoint_true_control_true"
@@ -3731,7 +3821,7 @@ def test_kids1000_cosebis_endpoint_scoring_protocol_is_frozen_not_run() -> None:
     assert protocol["scoring_allowed"] == "false"
     assert protocol["parent_readiness_policy"] == readiness["policy_id"]
     assert readiness["endpoint_scoring_allowed"] == "false"
-    assert readiness["first_blocker"] == "D_path"
+    assert readiness["first_blocker"] == "E_web"
     assert "chi2=" in protocol["primary_score"]
     for marker in [
         "baseline_only",

@@ -31,5 +31,6 @@ The future comparison must report:
 
 The protocol can be interpreted only after the source-readiness ledger is green,
 null controls are executed under frozen seeds, and no endpoint-leakage flag is
-true. The current release fails that precondition: the first blocker remains
-`F_overlap`.
+true. The current release fails that precondition: `F_overlap` and a caveated
+`D_path` mask-load proxy are source-supported, but the first blocker remains
+`E_web`.

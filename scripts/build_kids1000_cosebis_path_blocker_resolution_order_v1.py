@@ -59,10 +59,10 @@ def main() -> None:
             "resolution_stage": "promote_path_depth_support",
             "factor_id": "D_path",
             "accepted_route_ids": "ROUTE_D_PATH_FULL_MASK_DEPTH_PRODUCTS",
-            "stage_status": "blocking_not_resolved",
+            "stage_status": "resolved_source_supported",
             "why_first": "path_depth_load_is_only_meaningful_after_overlap_domain_exists",
-            "minimum_exit_condition": "full_route_or_source_frozen_subset_path_depth_support_exists",
-            "next_allowed_stage_if_unresolved": "documented_subset_control_only_no_population_endpoint",
+            "minimum_exit_condition": "source_frozen_full_route_mask_load_proxy_exists_without_endpoint_inputs",
+            "next_allowed_stage_if_unresolved": "proceed_to_E_web",
         },
         {
             "order_rank": "3",
@@ -140,8 +140,8 @@ def main() -> None:
         "not_allowed_stage_count": str(sum(row["stage_status"] == "not_allowed_yet" for row in rows)),
         "declared_not_computed_stage_count": str(sum(row["stage_status"] == "declared_not_computed" for row in rows)),
         "declared_not_executed_stage_count": str(sum(row["stage_status"] == "declared_not_executed" for row in rows)),
-        "first_blocker": "D_path",
-        "next_action": "promote_D_path_full_route_or_source_frozen_path_depth_support_before_E_web_C_norm_mapping_or_scoring",
+        "first_blocker": "E_web",
+        "next_action": "resolve_E_web_or_predeclare_null_web_control_before_C_norm_mapping_or_scoring",
         "external_products_fetched": "false",
         "numeric_factors_computed": "false",
         "path_mapping_computed": "false",
@@ -162,7 +162,7 @@ def main() -> None:
         writer.writerow(summary)
     print(
         "PAPER10_KIDS1000_COSEBIS_PATH_BLOCKER_RESOLUTION_ORDER_V1_BUILT "
-        f"stages={len(rows)} first_blocker=D_path endpoint_allowed=false"
+        f"stages={len(rows)} first_blocker=E_web endpoint_allowed=false"
     )
 
 

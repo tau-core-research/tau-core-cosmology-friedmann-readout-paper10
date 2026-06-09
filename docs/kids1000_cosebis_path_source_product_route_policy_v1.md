@@ -9,10 +9,14 @@ The route manifest separates three classes:
 
 - locked existing ingredients: redshift-pair support and preferred route-tile
   support already exist as source-side inventories;
-- blocker-resolution candidates: footprint overlap, full path/depth support,
-  web/environment support, and later source-side normalization;
-- controls: documented incomplete path/depth subset, null-web absent control,
-  and null-control execution after a mapping vector exists.
+- locked existing ingredients: redshift-pair support, preferred route-tile
+  support, source-supported footprint overlap, and caveated full-route
+  path/depth mask-load support;
+- blocker-resolution candidates: web/environment support and later source-side
+  normalization;
+- controls: documented incomplete path/depth subset, the no-longer-needed
+  alternative path/depth route, null-web absent control, and null-control
+  execution after a mapping vector exists.
 
 The accepted future order is:
 

@@ -13,8 +13,12 @@ The ordering is:
 5. build the mapping vector;
 6. execute null controls.
 
-The first unresolved blocker is `F_overlap`. Later steps are intentionally not
-allowed to become endpoint-bearing shortcuts around missing footprint support.
+In the current source ledger, `F_overlap` is source-supported by the full-route
+pixel-fraction rule and `D_path` is source-supported only as a caveated
+full-route mask-load proxy. The first remaining unresolved blocker is therefore
+`E_web`. Later steps are intentionally not allowed to become endpoint-bearing
+shortcuts around missing web/environment support, source normalization, or the
+mapping vector.
 
 This policy fetches no external products, computes no factor values, builds no
 mapping vector, and performs no scoring. It only fixes the future source-side

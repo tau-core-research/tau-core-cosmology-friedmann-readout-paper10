@@ -69,9 +69,9 @@ def main() -> None:
             "factor_id": "D_path",
             "current_state": by_factor["D_path"]["source_state"],
             "required_source_class": "full_preferred_route_mask_depth_or_source_native_path_load_summary",
-            "minimum_acceptance": "covers_preferred_route_tiles_or_defines_documented_subset_rule_before_endpoint_scoring",
-            "next_action": "promote_from_three_mask_shell_to_full_route_or_source_native_depth_mask_summary",
-            "blocks_weight_computation": "true",
+            "minimum_acceptance": "full_route_mask_load_proxy_available_without_endpoint_inputs",
+            "next_action": "none_d_path_source_route_resolved_by_full_route_mask_load_proxy",
+            "blocks_weight_computation": "false",
         },
         {
             "requirement_id": "REQ_E_WEB_SOURCE",

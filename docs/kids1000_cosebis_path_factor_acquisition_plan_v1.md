@@ -1,24 +1,16 @@
-# KiDS-1000 COSEBIs Path-Factor Acquisition Plan v1
+# KiDS-1000 COSEBIs Path Factor Acquisition Plan v1
 
-This gate declares the source-side acquisition requirements that must be met
-before the KiDS-1000 COSEBIs path-weight rule can become computable.
-
-The plan does not fetch new products and does not compute any weights. It only
-records the required source classes, acceptance criteria, and leakage
-boundaries for each factor in the future path-weight rule.
+This plan translates the symbolic path-weight factors into source-side
+requirements. It is not a fetch script and not an endpoint score.
 
 Current status:
 
-- `N_pair` and `T_tile` already have source-side support for a future rule.
-- `F_overlap` requires a source-frozen footprint/overlap product or rule that
-  assigns route tiles to COSEBIs target rows without endpoint input.
-- `D_path` requires the full preferred route mask/depth products or an accepted
-  source-native mask/depth summary. The current three-mask shell is only a
-  partial sanity layer.
-- `E_web` requires a source-frozen web/environment catalogue covering the KiDS
-  footprint.
-- `C_norm` cannot be evaluated until the nonzero source-side factors exist.
-- Null controls cannot run until a mapping vector exists.
+- `N_pair` and `T_tile` are locked from existing source inventories;
+- `F_overlap` is source-supported by the full-route pixel-fraction rule;
+- `D_path` is source-supported by the caveated full-route mask-load proxy;
+- `E_web` remains unresolved and is the first missing source factor;
+- `C_norm` is deferred until nonzero source factors are fixed;
+- null controls are declared but not executed because no mapping vector exists.
 
-The acquisition plan forbids KiDS data-vector values, posterior chains,
-residuals, fit-improvement flags, or post-hoc path labels. It is not validation.
+The plan fetches no external products, computes no path mapping, and reads no
+KiDS data-vector values, posterior chains, residuals, or fit-improvement flags.

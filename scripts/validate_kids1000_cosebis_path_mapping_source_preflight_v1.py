@@ -36,12 +36,12 @@ def main() -> None:
     expected_states = {
         "cosebis_target_rows": "available",
         "redshift_kernel_inventory": "available",
-        "mask_observable_shell": "partial_available",
+        "mask_observable_shell": "partial_available_control",
         "preferred_route_tile_inventory": "available",
         "cosebis_path_mapping_design_skeleton": "available",
         "cosebis_path_mapping_domain_skeleton": "available",
         "path_weight_construction_rule": "declared_not_computed",
-        "full_path_depth_footprint_mapping": "missing",
+        "full_path_depth_footprint_mapping": "available_caveated_mask_load_proxy",
         "web_environment_catalog": "missing",
         "null_control_seed_policy": "declared_not_executed",
     }
@@ -63,8 +63,10 @@ def main() -> None:
         raise SystemExit("path-weight construction rule should carry seven factors")
     if by_component["redshift_kernel_inventory"]["source_count"] != "5":
         raise SystemExit("redshift kernel inventory should carry five source bins")
-    if by_component["full_path_depth_footprint_mapping"]["blocking_status"] != "blocking":
-        raise SystemExit("full path/depth footprint mapping must remain blocking")
+    if by_component["full_path_depth_footprint_mapping"]["blocking_status"] != "not_blocking":
+        raise SystemExit("full path/depth mask-load proxy should no longer block source preflight")
+    if by_component["full_path_depth_footprint_mapping"]["source_count"] != "196":
+        raise SystemExit("full path/depth mask-load proxy should carry all 196 route tiles")
     if by_component["web_environment_catalog"]["blocking_status"] != "blocking":
         raise SystemExit("web environment catalogue must remain blocking")
     for key in [

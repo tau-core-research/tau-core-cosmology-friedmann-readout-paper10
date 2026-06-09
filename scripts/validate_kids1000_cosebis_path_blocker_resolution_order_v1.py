@@ -28,15 +28,15 @@ def main() -> None:
         raise SystemExit("unexpected blocker-resolution summary status")
     if summary["stage_count"] != "6":
         raise SystemExit("unexpected stage count")
-    if summary["first_blocker"] != "D_path":
-        raise SystemExit("D_path must be the first blocker after F_overlap is source-supported")
-    if summary["resolved_source_supported_stage_count"] != "1":
-        raise SystemExit("exactly F_overlap should be source-supported")
-    if summary["blocking_unresolved_stage_count"] != "2":
-        raise SystemExit("D_path and E_web should remain unresolved blockers")
+    if summary["first_blocker"] != "E_web":
+        raise SystemExit("E_web must be the first blocker after F_overlap and D_path are source-supported")
+    if summary["resolved_source_supported_stage_count"] != "2":
+        raise SystemExit("F_overlap and D_path should be source-supported")
+    if summary["blocking_unresolved_stage_count"] != "1":
+        raise SystemExit("E_web should remain the unresolved blocker")
     expected = [
         ("1", "freeze_footprint_overlap", "F_overlap", "resolved_source_supported"),
-        ("2", "promote_path_depth_support", "D_path", "blocking_not_resolved"),
+        ("2", "promote_path_depth_support", "D_path", "resolved_source_supported"),
         ("3", "freeze_web_environment_support", "E_web", "blocking_not_resolved"),
         ("4", "define_source_side_normalization", "C_norm", "declared_not_computed"),
         ("5", "build_mapping_vector", "mapping_vector", "not_allowed_yet"),

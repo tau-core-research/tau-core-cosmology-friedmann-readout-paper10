@@ -21,17 +21,19 @@ where:
 - `T_tile(tile)` is a route-tile availability/coordinate factor,
 - `F_overlap(row,tile)` is a source-frozen full-route pixel-fraction overlap
   support factor,
-- `D_path(tile)` is a future depth/mask/path-load factor,
+- `D_path(tile)` is a caveated full-route mask-load proxy,
 - `E_web(tile)` is a future web/environment factor,
 - `C_norm` is a future normalization rule.
 
 Current status:
 
 - `N_pair` and `T_tile` have source-side support;
-- `F_overlap` now has non-degenerate source-side support from the full-route
+- `F_overlap` has non-degenerate source-side support from the full-route
   pixel-fraction rule over all 196 route masks;
-- `D_path`, `E_web`, and `C_norm` are not yet resolved strongly enough to make
-  the full path weight computable;
+- `D_path` has non-degenerate source-side support from the full-route mask-load
+  proxy over all 196 route masks, but it is not a calibrated depth map;
+- `E_web` and `C_norm` are not yet resolved strongly enough to make the full
+  path weight computable;
 - no mapping vector, theory-vector element, prediction, residual, likelihood
   value, or endpoint score is computed here.
 

@@ -609,10 +609,11 @@ scripts/validate_kids1000_cosebis_path_weight_construction_rule_v1.py
 It declares the future factorization
 `N_pair * T_tile * F_overlap * D_path * E_web * C_norm` and records which
 factors are source-supported. The rule is not computable yet: `F_overlap` has
-a source-frozen header-footprint rule but the degeneracy audit shows it is
-uniform and not promotable, the web-environment factor remains missing, the
-path/mask factor is only partial, and no numeric weight or mapping vector is
-produced.
+non-degenerate source support from the full-route pixel-fraction rule, and
+`D_path` has caveated non-degenerate source support from the full-route
+mask-load proxy. The web-environment factor remains missing, source-side
+normalization is not yet computed, and no numeric path weight, mapping vector,
+or endpoint score is produced.
 
 The source-factor acquisition plan is recorded in:
 
@@ -626,10 +627,9 @@ scripts/validate_kids1000_cosebis_path_factor_acquisition_plan_v1.py
 ```
 
 It converts the missing-factor status into seven source-side acquisition
-requirements. Four requirements block numeric path-weight computation:
-footprint/row-tile overlap, full path/depth support, web/environment support,
-and normalization after nonzero factors exist. It fetches no products and
-computes no weights.
+requirements. At the current stage two requirements block numeric path-weight
+computation: web/environment support and normalization after nonzero factors
+exist. It fetches no products and computes no endpoint weights.
 
 The source-product route candidate manifest is recorded in:
 
@@ -643,9 +643,9 @@ scripts/validate_kids1000_cosebis_path_source_product_route_manifest_v1.py
 ```
 
 It declares ten source-product routes for the next source-gathering step:
-two already-supported locks, five blocker-resolving candidates, and three
-control/deferred routes. It still fetches no external products, computes no
-factor values, and creates no path mapping or score.
+four already-supported locks/routes, two blocker-resolving candidates, two
+alternative-not-needed routes, and two deferred routes. It still fetches no
+external products, creates no path mapping, and computes no score.
 
 The blocker-resolution order policy is recorded in:
 
@@ -660,7 +660,9 @@ scripts/validate_kids1000_cosebis_path_blocker_resolution_order_v1.py
 
 It freezes the future source-side order: `F_overlap` first, then `D_path`,
 then `E_web`, then `C_norm`, then a mapping vector, then null controls. It
-fetches no products and keeps mapping and endpoint scoring disabled.
+records that `F_overlap` and a caveated `D_path` mask-load proxy are now
+source-supported. The first remaining blocker is `E_web`. It fetches no
+products and keeps mapping and endpoint scoring disabled.
 
 The first-blocker `F_overlap` rule shell is recorded in:
 
@@ -844,6 +846,26 @@ it still computes no path mapping, theory vector, prediction, residual, or
 score. Public reproduction validates the committed outputs; rebuilding them
 requires the ignored local raw mask cache documented in the full-route cache
 inventory.
+
+The source-frozen full-route `D_path` mask-load proxy is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_d_path_full_route_mask_load_rule_policy_v1.csv
+data/derived/kids1000_cosebis_d_path_full_route_mask_load_tile_rule_v1.csv
+data/derived/kids1000_cosebis_d_path_full_route_mask_load_rule_v1.csv
+data/derived/kids1000_cosebis_d_path_full_route_mask_load_rule_v1_summary.csv
+docs/kids1000_cosebis_d_path_full_route_mask_load_rule_v1.md
+scripts/build_kids1000_cosebis_d_path_full_route_mask_load_rule_v1.py
+scripts/validate_kids1000_cosebis_d_path_full_route_mask_load_rule_v1.py
+```
+
+It uses the same 196 source mask products, but extracts a different observable:
+the mean nonzero mask value per tile, normalized by the maximum tile mean. This
+is not a calibrated survey-depth map; it is a caveated source-side mask-load
+proxy. It is non-degenerate (`D_path` ranges from about `0.508` to `1.000`) and
+is not identical to the `F_overlap` coverage channel. This resolves the
+`D_path` source blocker only as a mask-load proxy; it still computes no mapping
+vector, theory vector, prediction, residual, or endpoint score.
 
 The `F_overlap` batch-promotion review checklist is recorded in:
 
@@ -1060,7 +1082,7 @@ row-interface template, mapping-to-template join contract, and F-overlap
 resolution/control decision are source-side ready; `D_path`, `E_web`, `C_norm`
 / source preflight, the theory vector, web/path mapping, null controls, and the
 partial-control degeneracy audit still block scoring. The first blocker is now
-`D_path`. The partial-control diagnostic route is also explicitly blocked as
+`E_web`. The partial-control diagnostic route is also explicitly blocked as
 endpoint evidence until a non-degenerate source-frozen mapping exists. Endpoint
 scoring remains disabled.
 
@@ -1093,10 +1115,11 @@ It summarizes the current source-side state for a future path-aware COSEBIs
 endpoint: target row structure, redshift kernels, the 196-tile route coordinate
 index, the 300-row design skeleton, and the 58,800-row target-tile domain
 skeleton are available; the path-weight construction rule is declared but not
-computable; the three-mask observable shell is only partial; the full path/depth
-footprint mapping and web-environment catalogue remain missing; and null
-controls are declared but not executed. It contains no mapping vector, theory
-vector, predictions, residuals, or scores.
+computable; the three-mask observable shell is preserved as a control; the
+full-route `D_path` mask-load proxy is available but caveated; the
+web-environment catalogue remains missing; and null controls are declared but
+not executed. It contains no mapping vector, theory vector, predictions,
+residuals, or scores.
 
 The first COSEBIs null-control readiness policy is recorded in:
 
