@@ -797,6 +797,9 @@ data/derived/kids1000_cosebis_f_overlap_resolution_decision_v1_summary.csv
 docs/kids1000_cosebis_f_overlap_resolution_decision_v1.md
 scripts/build_kids1000_cosebis_f_overlap_resolution_decision_v1.py
 scripts/validate_kids1000_cosebis_f_overlap_resolution_decision_v1.py
+data/source_manifest/kids1000_cosebis_partial_control_scoring_protocol_v1.csv
+docs/kids1000_cosebis_partial_control_scoring_protocol_v1.md
+scripts/validate_kids1000_cosebis_partial_control_scoring_protocol_v1.py
 ```
 
 It materializes the 20 planned batch-0 product rows using the frozen
@@ -814,6 +817,9 @@ The F-overlap resolution decision gate records the current formal blocker
 decision: no endpoint-grade overlap route is accepted; the three source-frozen
 mask products are accepted only as a caveated partial path-mask control; the
 official-geometry, full-196-mask, and batch-0 dry-run routes remain unresolved.
+The partial-control scoring protocol freezes only a future diagnostic grammar
+for that caveated three-mask control. It keeps both partial-control scoring and
+endpoint scoring disabled and emits no score artifacts.
 
 The endpoint scoring-readiness ledger is recorded in:
 

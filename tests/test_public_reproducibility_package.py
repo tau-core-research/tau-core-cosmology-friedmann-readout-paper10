@@ -183,6 +183,7 @@ def test_public_files_exist() -> None:
         "data/source_manifest/kids1000_cosebis_f_overlap_resolution_decision_policy_v1.csv",
         "data/derived/kids1000_cosebis_f_overlap_resolution_decision_v1.csv",
         "data/derived/kids1000_cosebis_f_overlap_resolution_decision_v1_summary.csv",
+        "data/source_manifest/kids1000_cosebis_partial_control_scoring_protocol_v1.csv",
         "docs/kids1000_cosebis_f_overlap_filled_execution_review_validator_v1.md",
         "scripts/validate_kids1000_cosebis_f_overlap_filled_execution_review_artifact_v1.py",
         "data/source_manifest/kids1000_cosebis_endpoint_scoring_readiness_policy_v1.csv",
@@ -251,6 +252,7 @@ def test_public_files_exist() -> None:
         "docs/kids1000_cosebis_f_overlap_execution_review_schema_policy_v1.md",
         "docs/kids1000_cosebis_f_overlap_execution_review_template_policy_v1.md",
         "docs/kids1000_cosebis_f_overlap_resolution_decision_v1.md",
+        "docs/kids1000_cosebis_partial_control_scoring_protocol_v1.md",
         "docs/kids1000_cosebis_path_mapping_source_preflight_policy_v1.md",
         "docs/kids1000_cosebis_null_control_policy_v1.md",
         "docs/kids1000_cosebis_null_control_seed_policy_v1.md",
@@ -347,6 +349,7 @@ def test_public_files_exist() -> None:
         "scripts/validate_kids1000_cosebis_f_overlap_execution_review_template_v1.py",
         "scripts/build_kids1000_cosebis_f_overlap_resolution_decision_v1.py",
         "scripts/validate_kids1000_cosebis_f_overlap_resolution_decision_v1.py",
+        "scripts/validate_kids1000_cosebis_partial_control_scoring_protocol_v1.py",
         "scripts/build_kids1000_cosebis_path_mapping_source_preflight_v1.py",
         "scripts/validate_kids1000_cosebis_path_mapping_source_preflight_v1.py",
         "scripts/build_kids1000_cosebis_null_control_readiness_v1.py",
@@ -2551,6 +2554,65 @@ def test_kids1000_cosebis_f_overlap_resolution_decision_is_control_only() -> Non
         "posthoc_path_projection_labels",
     ]:
         assert marker in policy["forbidden_inputs"]
+
+
+def test_kids1000_cosebis_partial_control_scoring_protocol_is_frozen_not_run() -> None:
+    with (
+        ROOT / "data/source_manifest/kids1000_cosebis_partial_control_scoring_protocol_v1.csv"
+    ).open(newline="") as f:
+        protocol = list(csv.DictReader(f))[0]
+    assert protocol["status"] == "PARTIAL_CONTROL_SCORING_PROTOCOL_FROZEN_NOT_RUN"
+    assert protocol["control_scope"] == "three_mask_subset_partial_path_control_only"
+    assert protocol["partial_control_scoring_allowed"] == "false"
+    assert protocol["endpoint_scoring_allowed"] == "false"
+    assert "diagnostic_chi2_shell_only" in protocol["primary_score_shell"]
+    assert "not_endpoint_scores" in protocol["allowed_outputs"]
+    for marker in [
+        "partial_control_baseline",
+        "partial_control_candidate",
+        "wrong_channel_controls",
+        "fixed_seed_sign_flip_controls",
+        "control_rank_only",
+    ]:
+        assert marker in protocol["allowed_comparison_outputs"]
+    for marker in [
+        "F_overlap endpoint route rejected",
+        "F_overlap partial control accepted",
+        "partial mapping vector source-frozen",
+        "null controls declared",
+        "no endpoint leakage flags",
+    ]:
+        assert marker in protocol["minimum_preconditions"]
+    for marker in [
+        "kids_data_vector_values_for_source_selection",
+        "posterior_chains",
+        "fit_improvement_flags",
+        "lensing_residuals",
+        "posthoc_mask_subset_selection",
+    ]:
+        assert marker in protocol["forbidden_inputs"]
+    with (
+        ROOT / "data/derived/kids1000_cosebis_f_overlap_resolution_decision_v1_summary.csv"
+    ).open(newline="") as f:
+        f_overlap = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/kids1000_cosebis_mapping_template_join_contract_v1_summary.csv"
+    ).open(newline="") as f:
+        join_contract = list(csv.DictReader(f))[0]
+    assert protocol["parent_f_overlap_decision_policy"] == f_overlap["policy_id"]
+    assert protocol["parent_join_contract_policy"] == join_contract["policy_id"]
+    assert f_overlap["f_overlap_endpoint_ready"] == "false"
+    assert f_overlap["f_overlap_control_ready"] == "true"
+    assert join_contract["mapping_vector_computed"] == "false"
+    forbidden_outputs = [
+        "kids1000_cosebis_partial_control_scoring_v1_results.csv",
+        "kids1000_cosebis_partial_control_scoring_v1_residuals.csv",
+        "kids1000_cosebis_partial_control_scoring_v1_grid.csv",
+        "kids1000_cosebis_partial_control_scoring_v1_null_controls.csv",
+        "kids1000_cosebis_partial_control_scoring_v1_summary.csv",
+    ]
+    for filename in forbidden_outputs:
+        assert not (ROOT / "data/derived" / filename).exists()
 
 
 def test_kids1000_cosebis_f_overlap_execution_review_schema_is_not_execution() -> None:

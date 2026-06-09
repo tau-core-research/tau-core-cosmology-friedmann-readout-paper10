@@ -304,6 +304,10 @@ only as a caveated partial path-mask control; they are not promoted to a
 population endpoint overlap rule. The decision computes no overlap fraction,
 path mapping, theory vector, prediction, residual, likelihood value, fit
 statistic, or endpoint score.
+The partial-control scoring protocol freezes only a future diagnostic grammar
+for this caveated three-mask control. It does not run scoring and it does not
+emit result, residual, grid, null-control, summary, likelihood, AIC, endpoint,
+or validation artifacts.
 
 The endpoint scoring-readiness ledger is a no-go summary, not a score. It
 records that the COSEBIs data-vector structure, covariance matrix, covariance
