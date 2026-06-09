@@ -1313,6 +1313,25 @@ with `Delta chi2 = 0`. Thus the low-mode result is carrier-sensitive, but the
 signal is not produced solely by the exact `n^-0.5` carrier choice. This is a
 mode-shape sensitivity diagnostic, not validation.
 
+The low-mode carrier source-grounding ledger is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_low_mode_carrier_source_grounding_policy_v1.csv
+data/derived/kids1000_cosebis_low_mode_carrier_source_grounding_v1.csv
+data/derived/kids1000_cosebis_low_mode_carrier_source_grounding_v1_summary.csv
+docs/kids1000_cosebis_low_mode_carrier_source_grounding_v1.md
+scripts/build_kids1000_cosebis_low_mode_carrier_source_grounding_v1.py
+scripts/validate_kids1000_cosebis_low_mode_carrier_source_grounding_v1.py
+```
+
+This ledger answers the immediate reviewer question raised by the low-mode
+diagnostics. It records that the `n^-0.5` carrier is source independent,
+predeclared, unit-mean normalized, and not selected from KiDS data-vector values.
+It is consistent with a broad coherent path/readout prior and with the post-score
+diagnostics, but it is not a first-principles Tau Core lensing kernel derivation.
+The verdict is
+`partial_protocol_grounding_with_open_first_principles_derivation_blocker`.
+
 The COSEBIs path-mapping source-preflight ledger is recorded in:
 
 ```text

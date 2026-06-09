@@ -288,6 +288,12 @@ def test_public_files_exist() -> None:
         "docs/kids1000_cosebis_endpoint_mode_shape_stress_v1.md",
         "scripts/run_kids1000_cosebis_endpoint_mode_shape_stress_v1.py",
         "scripts/validate_kids1000_cosebis_endpoint_mode_shape_stress_v1.py",
+        "data/source_manifest/kids1000_cosebis_low_mode_carrier_source_grounding_policy_v1.csv",
+        "data/derived/kids1000_cosebis_low_mode_carrier_source_grounding_v1.csv",
+        "data/derived/kids1000_cosebis_low_mode_carrier_source_grounding_v1_summary.csv",
+        "docs/kids1000_cosebis_low_mode_carrier_source_grounding_v1.md",
+        "scripts/build_kids1000_cosebis_low_mode_carrier_source_grounding_v1.py",
+        "scripts/validate_kids1000_cosebis_low_mode_carrier_source_grounding_v1.py",
         "data/source_manifest/kids1000_cosebis_path_mapping_source_preflight_policy_v1.csv",
         "data/derived/kids1000_cosebis_path_mapping_source_preflight_v1.csv",
         "data/derived/kids1000_cosebis_path_mapping_source_preflight_v1_summary.csv",
@@ -504,6 +510,8 @@ def test_public_files_exist() -> None:
         "scripts/validate_kids1000_cosebis_endpoint_mode_localization_v1.py",
         "scripts/run_kids1000_cosebis_endpoint_mode_shape_stress_v1.py",
         "scripts/validate_kids1000_cosebis_endpoint_mode_shape_stress_v1.py",
+        "scripts/build_kids1000_cosebis_low_mode_carrier_source_grounding_v1.py",
+        "scripts/validate_kids1000_cosebis_low_mode_carrier_source_grounding_v1.py",
         "scripts/build_kids1000_cosebis_path_mapping_source_preflight_v1.py",
         "scripts/validate_kids1000_cosebis_path_mapping_source_preflight_v1.py",
         "scripts/build_kids1000_cosebis_null_control_readiness_v1.py",
@@ -4619,6 +4627,44 @@ def test_kids1000_cosebis_endpoint_mode_shape_stress_preserves_claim_boundary() 
         assert row["uses_kids_data_vector_values_for_scoring"] == "true"
         assert row["uses_kids_data_vector_values_for_source_selection"] == "false"
         assert row["claim_boundary"] == policy["claim_boundary"]
+
+
+def test_kids1000_cosebis_low_mode_carrier_source_grounding_keeps_open_blocker() -> None:
+    with (
+        ROOT / "data/source_manifest/kids1000_cosebis_low_mode_carrier_source_grounding_policy_v1.csv"
+    ).open(newline="") as f:
+        policy = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/kids1000_cosebis_low_mode_carrier_source_grounding_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/kids1000_cosebis_low_mode_carrier_source_grounding_v1.csv"
+    ).open(newline="") as f:
+        rows = list(csv.DictReader(f))
+
+    assert policy["status"] == "LOW_MODE_CARRIER_SOURCE_GROUNDING_POLICY_FROZEN"
+    assert policy["uses_kids_data_vector_values_for_grounding"] == "false"
+    assert policy["allows_endpoint_validation_claim"] == "false"
+    assert summary["status"] == "LOW_MODE_CARRIER_SOURCE_GROUNDING_PARTIAL_COMPLETE"
+    assert (
+        summary["source_grounding_verdict"]
+        == "partial_protocol_grounding_with_open_first_principles_derivation_blocker"
+    )
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["uses_kids_data_vector_values_for_grounding"] == "false"
+    assert summary["uses_kids_data_vector_values_for_scoring"] == "false"
+    assert summary["open_blocker_count"] == "1"
+    assert summary["supporting_diagnostic_count"] == "2"
+    assert {row["criterion_id"] for row in rows} == {
+        "source_independence",
+        "coherent_path_readout_prior",
+        "no_posthoc_mode_cut",
+        "diagnostic_consistency_with_mode_localization",
+        "mode_shape_stress_support",
+        "missing_first_principles_mode_kernel_derivation",
+    }
+    assert {row["claim_boundary"] for row in rows} == {policy["claim_boundary"]}
 
 
 def test_kids1000_cosebis_null_control_policy_is_declared_not_run() -> None:
