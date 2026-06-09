@@ -845,6 +845,12 @@ arbitrary source-side scale from the skeleton, but it does not derive physical
 COSEBIs response units, an endpoint amplitude, or the standard-lensing null
 amplitude. The construction uses no KiDS data-vector values, residuals, scores,
 posterior chains, or random noise.
+A physical-amplitude requirements gate then records the remaining distinction:
+\(A_{\rm src}=1\) is an internal dimensionless normalization, whereas a future
+physical response amplitude \(A_{\rm phys}\) would still need the missing
+COSEBIs response-unit normalization and the standard-lensing/no-\(\tau\)-source
+null-amplitude theorem. The covariance metric is kept as a later scoring
+metric, but is not treated as an amplitude derivation.
 
 The resulting source-preflight ledger is correspondingly mixed: the 300 COSEBIs
 target rows, five-bin redshift-kernel inventory, 196-tile route-coordinate

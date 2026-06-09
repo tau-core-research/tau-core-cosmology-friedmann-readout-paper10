@@ -1611,6 +1611,24 @@ not calibrate an endpoint amplitude, and does not prove the standard-lensing
 null amplitude. The verdict is
 `dimensionless_source_amplitude_map_exists_but_physical_amplitude_remains_open`.
 
+The COSEBIs physical-amplitude requirements gate is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_physical_amplitude_requirements_gate_policy_v1.csv
+data/derived/kids1000_cosebis_physical_amplitude_requirements_gate_v1.csv
+data/derived/kids1000_cosebis_physical_amplitude_requirements_gate_v1_summary.csv
+docs/kids1000_cosebis_physical_amplitude_requirements_gate_v1.md
+scripts/build_kids1000_cosebis_physical_amplitude_requirements_gate_v1.py
+scripts/validate_kids1000_cosebis_physical_amplitude_requirements_gate_v1.py
+```
+
+This gate states what remains after \(A_{\rm src}=1\): a physical response
+amplitude \(A_{\rm phys}\) would still need the missing COSEBIs response-unit
+normalization and the standard-lensing/no-Tau-source null amplitude theorem.
+The covariance metric is preserved as a future scoring metric but is explicitly
+not used as an amplitude derivation. The verdict is
+`dimensionless_source_amplitude_available_but_physical_response_amplitude_remains_open`.
+
 The COSEBIs path-mapping source-preflight ledger is recorded in:
 
 ```text

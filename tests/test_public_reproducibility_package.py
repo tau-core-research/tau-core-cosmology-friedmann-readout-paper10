@@ -385,6 +385,12 @@ def test_public_files_exist() -> None:
         "docs/kids1000_cosebis_source_side_amplitude_map_attempt_v1.md",
         "scripts/build_kids1000_cosebis_source_side_amplitude_map_attempt_v1.py",
         "scripts/validate_kids1000_cosebis_source_side_amplitude_map_attempt_v1.py",
+        "data/source_manifest/kids1000_cosebis_physical_amplitude_requirements_gate_policy_v1.csv",
+        "data/derived/kids1000_cosebis_physical_amplitude_requirements_gate_v1.csv",
+        "data/derived/kids1000_cosebis_physical_amplitude_requirements_gate_v1_summary.csv",
+        "docs/kids1000_cosebis_physical_amplitude_requirements_gate_v1.md",
+        "scripts/build_kids1000_cosebis_physical_amplitude_requirements_gate_v1.py",
+        "scripts/validate_kids1000_cosebis_physical_amplitude_requirements_gate_v1.py",
         "data/source_manifest/kids1000_cosebis_path_mapping_source_preflight_policy_v1.csv",
         "data/derived/kids1000_cosebis_path_mapping_source_preflight_v1.csv",
         "data/derived/kids1000_cosebis_path_mapping_source_preflight_v1_summary.csv",
@@ -631,6 +637,8 @@ def test_public_files_exist() -> None:
         "scripts/validate_kids1000_cosebis_physical_operator_units_gate_v1.py",
         "scripts/build_kids1000_cosebis_source_side_amplitude_map_attempt_v1.py",
         "scripts/validate_kids1000_cosebis_source_side_amplitude_map_attempt_v1.py",
+        "scripts/build_kids1000_cosebis_physical_amplitude_requirements_gate_v1.py",
+        "scripts/validate_kids1000_cosebis_physical_amplitude_requirements_gate_v1.py",
         "scripts/build_kids1000_cosebis_path_mapping_source_preflight_v1.py",
         "scripts/validate_kids1000_cosebis_path_mapping_source_preflight_v1.py",
         "scripts/build_kids1000_cosebis_null_control_readiness_v1.py",
@@ -5503,6 +5511,60 @@ def test_kids1000_cosebis_source_side_amplitude_map_attempt_freezes_dimensionles
     assert {row["claim_boundary"] for row in ledger_rows} == {policy["claim_boundary"]}
     assert all(row["dimension_check"] for row in ledger_rows)
     assert all(row["known_limit_check"] for row in ledger_rows)
+
+
+def test_kids1000_cosebis_physical_amplitude_requirements_gate_keeps_physical_amplitude_open() -> None:
+    with (
+        ROOT / "data/source_manifest/kids1000_cosebis_physical_amplitude_requirements_gate_policy_v1.csv"
+    ).open(newline="") as f:
+        policy = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/kids1000_cosebis_physical_amplitude_requirements_gate_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/kids1000_cosebis_physical_amplitude_requirements_gate_v1.csv"
+    ).open(newline="") as f:
+        rows = list(csv.DictReader(f))
+
+    assert policy["status"] == "PHYSICAL_AMPLITUDE_REQUIREMENTS_GATE_POLICY_FROZEN"
+    assert policy["uses_kids_data_vector_values"] == "false"
+    assert policy["uses_fit_statistics"] == "false"
+    assert policy["uses_random_noise"] == "false"
+    assert policy["endpoint_scoring_allowed"] == "false"
+    assert summary["status"] == "PHYSICAL_AMPLITUDE_REQUIREMENTS_FROZEN_NOT_DERIVED"
+    assert summary["verdict"] == "dimensionless_source_amplitude_available_but_physical_response_amplitude_remains_open"
+    assert summary["gate_rows"] == "5"
+    assert summary["satisfied_count"] == "1"
+    assert summary["satisfied_as_source_limit_count"] == "1"
+    assert summary["requirement_frozen_count"] == "1"
+    assert summary["open_blocker_count"] == "2"
+    assert summary["dimensionless_source_amplitude_available"] == "true"
+    assert summary["dimensionless_amplitude_value"] == "1.000000000000e+00"
+    for key in [
+        "physical_amplitude_units_derived",
+        "response_unit_normalization_derived",
+        "standard_lensing_null_amplitude_proven",
+        "covariance_metric_used_as_amplitude_derivation",
+        "contains_predictions",
+        "contains_residuals",
+        "contains_fit_statistics",
+        "uses_kids_data_vector_values",
+        "uses_posterior_chains",
+        "uses_random_noise",
+        "endpoint_scoring_allowed",
+        "endpoint_validation_claimed",
+    ]:
+        assert summary[key] == "false"
+    by_gate = {row["gate_id"]: row for row in rows}
+    assert by_gate["P1_dimensionless_source_amplitude_available"]["status"] == "SATISFIED_AS_SOURCE_LIMIT"
+    assert by_gate["P2_response_unit_normalization_required"]["status"] == "OPEN_BLOCKER"
+    assert by_gate["P3_standard_lensing_null_amplitude_required"]["status"] == "OPEN_BLOCKER"
+    assert by_gate["P4_covariance_metric_not_amplitude_derivation"]["status"] == "REQUIREMENT_FROZEN"
+    assert by_gate["P5_no_endpoint_feedback"]["status"] == "SATISFIED"
+    assert {row["claim_boundary"] for row in rows} == {policy["claim_boundary"]}
+    assert all(row["dimension_check"] for row in rows)
+    assert all(row["known_limit_check"] for row in rows)
 
 
 def test_kids1000_cosebis_null_control_policy_is_declared_not_run() -> None:
