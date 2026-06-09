@@ -183,6 +183,9 @@ def test_public_files_exist() -> None:
         "data/source_manifest/kids1000_cosebis_f_overlap_resolution_decision_policy_v1.csv",
         "data/derived/kids1000_cosebis_f_overlap_resolution_decision_v1.csv",
         "data/derived/kids1000_cosebis_f_overlap_resolution_decision_v1_summary.csv",
+        "data/source_manifest/kids1000_cosebis_f_overlap_pixel_fraction_pilot_policy_v1.csv",
+        "data/derived/kids1000_cosebis_f_overlap_pixel_fraction_pilot_tile_v1.csv",
+        "data/derived/kids1000_cosebis_f_overlap_pixel_fraction_pilot_v1_summary.csv",
         "data/source_manifest/kids1000_cosebis_partial_control_scoring_protocol_v1.csv",
         "data/source_manifest/kids1000_cosebis_partial_control_mapping_shell_policy_v1.csv",
         "data/derived/kids1000_cosebis_partial_control_mapping_shell_v1.csv",
@@ -273,6 +276,7 @@ def test_public_files_exist() -> None:
         "docs/kids1000_cosebis_f_overlap_execution_review_schema_policy_v1.md",
         "docs/kids1000_cosebis_f_overlap_execution_review_template_policy_v1.md",
         "docs/kids1000_cosebis_f_overlap_resolution_decision_v1.md",
+        "docs/kids1000_cosebis_f_overlap_pixel_fraction_pilot_v1.md",
         "docs/kids1000_cosebis_partial_control_scoring_protocol_v1.md",
         "docs/kids1000_cosebis_partial_control_mapping_shell_v1.md",
         "docs/kids1000_cosebis_partial_control_mapping_values_v1.md",
@@ -377,6 +381,8 @@ def test_public_files_exist() -> None:
         "scripts/validate_kids1000_cosebis_f_overlap_execution_review_template_v1.py",
         "scripts/build_kids1000_cosebis_f_overlap_resolution_decision_v1.py",
         "scripts/validate_kids1000_cosebis_f_overlap_resolution_decision_v1.py",
+        "scripts/build_kids1000_cosebis_f_overlap_pixel_fraction_pilot_v1.py",
+        "scripts/validate_kids1000_cosebis_f_overlap_pixel_fraction_pilot_v1.py",
         "scripts/validate_kids1000_cosebis_partial_control_scoring_protocol_v1.py",
         "scripts/build_kids1000_cosebis_partial_control_mapping_shell_v1.py",
         "scripts/validate_kids1000_cosebis_partial_control_mapping_shell_v1.py",
@@ -2558,6 +2564,12 @@ def test_kids1000_cosebis_f_overlap_resolution_decision_is_control_only() -> Non
     assert summary["header_footprint_rule_available"] == "true"
     assert summary["header_footprint_rule_uniform"] == "true"
     assert summary["header_footprint_non_degenerate_support"] == "false"
+    assert summary["pixel_fraction_subset_pilot_non_degenerate"] == "true"
+    assert summary["pixel_fraction_subset_pilot_scope"] == "three_committed_mask_subset_only"
+    assert float(summary["pixel_fraction_subset_min_f_overlap"]) < float(
+        summary["pixel_fraction_subset_max_f_overlap"]
+    )
+    assert int(summary["pixel_fraction_subset_unique_value_count"]) == 3
     assert summary["first_required_next_action"] == "derive_pixel_mask_or_subtile_overlap_rule_without_endpoint_inputs"
     assert summary["overlap_rule_computed"] == "false"
     assert summary["path_mapping_computed"] == "false"
@@ -2720,6 +2732,67 @@ def test_kids1000_cosebis_f_overlap_header_footprint_degeneracy_audit_blocks_pro
     assert summary["recommended_next_action"] == "derive_pixel_mask_or_subtile_overlap_rule"
     assert summary["path_mapping_computed"] == "false"
     assert summary["endpoint_scoring_allowed"] == "false"
+
+
+def test_kids1000_cosebis_f_overlap_pixel_fraction_pilot_is_source_only_non_degenerate() -> None:
+    with (
+        ROOT / "data/source_manifest/kids1000_cosebis_f_overlap_pixel_fraction_pilot_policy_v1.csv"
+    ).open(newline="") as f:
+        policy = list(csv.DictReader(f))[0]
+    assert policy["status"] == "KIDS1000_COSEBIS_F_OVERLAP_PIXEL_FRACTION_PILOT_SOURCE_ONLY_NOT_SCORED"
+    assert policy["source_scope"] == "three_committed_mask_subset_only"
+    assert policy["endpoint_scoring_allowed"] == "false"
+    with (
+        ROOT / "data/derived/kids1000_cosebis_f_overlap_pixel_fraction_pilot_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["status"] == "KIDS1000_COSEBIS_F_OVERLAP_PIXEL_FRACTION_PILOT_BUILT_SOURCE_ONLY_NOT_MAPPED"
+    assert summary["tile_count"] == "3"
+    assert summary["pixel_fraction_pilot_non_degenerate"] == "true"
+    assert summary["header_footprint_rule_uniformity_resolved_for_subset"] == "true"
+    assert summary["full_route_pixel_rule_computed"] == "false"
+    assert 0.0 < float(summary["min_f_overlap_pixel_fraction_value"])
+    assert float(summary["min_f_overlap_pixel_fraction_value"]) < float(
+        summary["max_f_overlap_pixel_fraction_value"]
+    )
+    assert summary["max_f_overlap_pixel_fraction_value"] == "1.000000000000e+00"
+    assert summary["unique_f_overlap_value_count_rounded_1e_minus_12"] == "3"
+    assert (
+        summary["recommended_next_action"]
+        == "promote_to_full_route_pixel_or_subtile_rule_with_streaming_cache_before_endpoint_scoring"
+    )
+    with (
+        ROOT / "data/derived/kids1000_cosebis_f_overlap_pixel_fraction_pilot_tile_v1.csv"
+    ).open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    assert len(rows) == 3
+    values = [float(row["f_overlap_pixel_fraction_value"]) for row in rows]
+    assert min(values) < max(values)
+    assert all(row["mask_pixels_parsed_upstream"] == "true" for row in rows)
+    assert all(row["source_scope"] == "three_committed_mask_subset_only" for row in rows)
+    for key in [
+        "path_mapping_computed",
+        "contains_mapping_vector",
+        "contains_theory_vector",
+        "contains_predictions",
+        "contains_residuals",
+        "contains_fit_statistics",
+        "uses_kids_data_vector_values",
+        "uses_posterior_chains",
+        "uses_posthoc_tile_selection",
+        "uses_posthoc_path_projection_labels",
+        "endpoint_scoring_allowed",
+    ]:
+        assert summary[key] == "false"
+        assert all(row[key] == "false" for row in rows)
+    for marker in [
+        "kids_data_vector_values",
+        "posterior_chains",
+        "lensing_residuals",
+        "posthoc_tile_selection",
+        "posthoc_path_projection_labels",
+    ]:
+        assert marker in policy["forbidden_inputs"]
 
 
 def test_kids1000_cosebis_partial_control_scoring_protocol_is_frozen_not_run() -> None:

@@ -15,8 +15,11 @@ Current decision:
   products;
 - that header-footprint rule is uniform across all 196 route tiles, so it is
   not promotable as non-degenerate endpoint mapping support;
+- a three-mask pixel-fraction pilot is non-uniform on the committed subset,
+  showing that mask pixel content can carry source-side differentiating
+  support even though the header-footprint proxy is uniform;
 - the full pixel-mask route still remains endpoint-disabled because a
-  pixel-mask or sub-tile overlap rule has not yet been derived;
+  full-route pixel-mask or sub-tile overlap rule has not yet been derived;
 - the batch-0 dry-run remains unresolved because no filled execution-review
   artifact and checksum manifest have been committed;
 - the three predeclared masks are accepted only as a caveated partial path-mask
@@ -27,6 +30,7 @@ no prediction, no residual, and no score. It exists to prevent accidental
 promotion of source-cache evidence into endpoint validation.
 
 The next `F_overlap` action is therefore no longer raw acquisition or
-header-WCS footprint support. It is to derive a pixel-mask or sub-tile overlap
-rule without reading endpoint data values, residuals, posterior chains, or
-fit-improvement flags.
+header-WCS footprint support. It is to derive a full-route pixel-mask or
+sub-tile overlap rule without reading endpoint data values, residuals,
+posterior chains, or fit-improvement flags. The three-mask pixel-fraction pilot
+is proof-of-method only; it is not an endpoint mapping route.

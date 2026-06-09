@@ -25,6 +25,9 @@ Current status:
 - `F_overlap` remains the first blocker, but its immediate blocker has shifted
   from raw full-route mask acquisition to pixel-mask/sub-tile overlap-rule
   derivation, because the first header-footprint rule is uniform;
+- the three-mask pixel-fraction pilot is non-uniform, which supports the
+  feasibility of a pixel-content route, but it is still subset-only and cannot
+  satisfy the endpoint-grade `F_overlap` gate;
 - the partial-control rank-one geometry remains an explicit blocker;
 - endpoint scoring remains disabled.
 

@@ -49,6 +49,19 @@ def main() -> None:
         raise SystemExit("header-footprint rule should be recorded as uniform")
     if summary["header_footprint_non_degenerate_support"] != "false":
         raise SystemExit("uniform header-footprint rule must not be non-degenerate support")
+    if summary["pixel_fraction_subset_pilot_non_degenerate"] != "true":
+        raise SystemExit("three-mask pixel-fraction pilot should be recorded as non-degenerate")
+    if summary["pixel_fraction_subset_pilot_scope"] != "three_committed_mask_subset_only":
+        raise SystemExit("pixel-fraction pilot must remain scoped to the committed subset")
+    if not (
+        0.0
+        < float(summary["pixel_fraction_subset_min_f_overlap"])
+        < float(summary["pixel_fraction_subset_max_f_overlap"])
+        <= 1.0
+    ):
+        raise SystemExit("pixel-fraction pilot summary values should be normalized and non-uniform")
+    if int(summary["pixel_fraction_subset_unique_value_count"]) <= 1:
+        raise SystemExit("pixel-fraction pilot should carry more than one value")
     if summary["first_required_next_action"] != "derive_pixel_mask_or_subtile_overlap_rule_without_endpoint_inputs":
         raise SystemExit("next F_overlap action should be pixel/subtile overlap derivation")
     by_item = {row["decision_item_id"]: row for row in rows}

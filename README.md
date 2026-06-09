@@ -804,6 +804,24 @@ This rule is source-frozen and leakage-safe, but it is too uniform to support a
 non-degenerate endpoint mapping. The next scoring-facing `F_overlap` step is a
 pixel-mask or sub-tile overlap rule derived without endpoint inputs.
 
+The first pixel-content `F_overlap` pilot is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_f_overlap_pixel_fraction_pilot_policy_v1.csv
+data/derived/kids1000_cosebis_f_overlap_pixel_fraction_pilot_tile_v1.csv
+data/derived/kids1000_cosebis_f_overlap_pixel_fraction_pilot_v1_summary.csv
+docs/kids1000_cosebis_f_overlap_pixel_fraction_pilot_v1.md
+scripts/build_kids1000_cosebis_f_overlap_pixel_fraction_pilot_v1.py
+scripts/validate_kids1000_cosebis_f_overlap_pixel_fraction_pilot_v1.py
+```
+
+It uses only the three committed, source-frozen mask products and their
+upstream parsed finite/nonzero pixel fractions. Unlike the header footprint
+proxy, this pixel-content pilot is non-uniform (`F_overlap` ranges from about
+`0.866` to `1.000` on the subset). This is a proof-of-method result, not a
+population endpoint: it resolves the header-uniformity concern only for the
+subset and motivates a full-route streaming/cache pixel or sub-tile extractor.
+
 The `F_overlap` batch-promotion review checklist is recorded in:
 
 ```text
