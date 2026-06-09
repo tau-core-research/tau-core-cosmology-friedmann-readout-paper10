@@ -22,9 +22,11 @@ positive web/environment claim. `C_norm` is source-side resolved by unit-mean
 normalization of the frozen nonzero source factors, and the source-frozen
 mapping vector is available as a 300-row mapping basis. The path-side first
 remaining unresolved blocker is therefore null-control execution. Endpoint
-scoring still remains blocked by the missing theory vector/mode-shape and by
-unexecuted null controls.
+scoring still remains blocked by null-control replay and partial-control
+degeneracy.
 
 This policy fetches no external products, computes no endpoint factor from
-KiDS data values, builds no theory vector, and performs no scoring. It fixes
-the source-side order and leakage boundaries.
+KiDS data values, and performs no scoring. The separate source-frozen
+theory-vector shell only becomes endpoint-eligible after the null-control and
+degeneracy blockers are resolved. This policy fixes the source-side order and
+leakage boundaries.

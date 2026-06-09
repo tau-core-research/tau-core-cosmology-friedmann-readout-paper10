@@ -102,6 +102,9 @@ def test_public_files_exist() -> None:
         "data/source_manifest/kids1000_cosebis_theory_vector_policy_v1.csv",
         "data/derived/kids1000_cosebis_theory_vector_readiness_v1.csv",
         "data/derived/kids1000_cosebis_theory_vector_readiness_v1_summary.csv",
+        "data/source_manifest/kids1000_cosebis_source_frozen_theory_vector_policy_v1.csv",
+        "data/derived/kids1000_cosebis_source_frozen_theory_vector_v1.csv",
+        "data/derived/kids1000_cosebis_source_frozen_theory_vector_v1_summary.csv",
         "data/source_manifest/kids1000_cosebis_theory_vector_template_policy_v1.csv",
         "data/derived/kids1000_cosebis_theory_vector_template_v1.csv",
         "data/derived/kids1000_cosebis_theory_vector_template_v1_summary.csv",
@@ -273,6 +276,7 @@ def test_public_files_exist() -> None:
         "docs/kids1000_cosebis_covariance_subselection_policy_v1.md",
         "docs/kids1000_cosebis_covariance_inversion_policy_v1.md",
         "docs/kids1000_cosebis_theory_vector_policy_v1.md",
+        "docs/kids1000_cosebis_source_frozen_theory_vector_v1.md",
         "docs/kids1000_cosebis_theory_vector_template_v1.md",
         "docs/kids1000_cosebis_mapping_template_join_contract_v1.md",
         "docs/kids1000_cosebis_web_path_mapping_policy_v1.md",
@@ -358,6 +362,8 @@ def test_public_files_exist() -> None:
         "scripts/validate_kids1000_cosebis_covariance_inversion_readiness_v1.py",
         "scripts/build_kids1000_cosebis_theory_vector_readiness_v1.py",
         "scripts/validate_kids1000_cosebis_theory_vector_readiness_v1.py",
+        "scripts/build_kids1000_cosebis_source_frozen_theory_vector_v1.py",
+        "scripts/validate_kids1000_cosebis_source_frozen_theory_vector_v1.py",
         "scripts/build_kids1000_cosebis_theory_vector_template_v1.py",
         "scripts/validate_kids1000_cosebis_theory_vector_template_v1.py",
         "scripts/build_kids1000_cosebis_mapping_template_join_contract_v1.py",
@@ -1304,10 +1310,10 @@ def test_kids1000_cosebis_theory_vector_policy_is_declared_not_computed() -> Non
         ROOT / "data/derived/kids1000_cosebis_theory_vector_readiness_v1_summary.csv"
     ).open(newline="") as f:
         summary = list(csv.DictReader(f))[0]
-    assert summary["status"] == "KIDS1000_COSEBIS_THEORY_VECTOR_READINESS_BUILT_NOT_COMPUTED"
+    assert summary["status"] == "KIDS1000_COSEBIS_THEORY_VECTOR_READINESS_BUILT_SOURCE_FROZEN_NOT_SCORED"
     assert summary["endpoint_scoring_allowed"] == "false"
-    assert summary["current_theory_vector_computed"] == "false"
-    assert summary["contains_theory_vector"] == "false"
+    assert summary["current_theory_vector_computed"] == "true"
+    assert summary["contains_theory_vector"] == "true"
     assert summary["contains_predictions"] == "false"
     assert summary["contains_residuals"] == "false"
     assert summary["contains_fit_statistics"] == "false"
@@ -1322,8 +1328,68 @@ def test_kids1000_cosebis_theory_vector_policy_is_declared_not_computed() -> Non
     ).open(newline="") as f:
         rows = list(csv.DictReader(f))
     assert len(rows) == 1
-    assert rows[0]["contains_theory_vector"] == "false"
+    assert rows[0]["contains_theory_vector"] == "true"
+    assert rows[0]["source_frozen_theory_vector_artifact"] == (
+        "data/derived/kids1000_cosebis_source_frozen_theory_vector_v1_summary.csv"
+    )
     assert rows[0]["uses_kids_data_vector_values"] == "false"
+
+
+def test_kids1000_cosebis_source_frozen_theory_vector_is_not_scoring() -> None:
+    with (
+        ROOT / "data/source_manifest/kids1000_cosebis_source_frozen_theory_vector_policy_v1.csv"
+    ).open(newline="") as f:
+        policy = list(csv.DictReader(f))[0]
+    assert policy["status"] == "KIDS1000_COSEBIS_SOURCE_FROZEN_THEORY_VECTOR_POLICY_FROZEN_NOT_SCORED"
+    assert policy["current_theory_vector_computed"] == "true"
+    assert policy["endpoint_scoring_allowed"] == "false"
+    assert policy["expected_rows"] == "300"
+    assert "mode^(-1/2)" in policy["mode_shape_rule"]
+    assert policy["amplitude_policy"] == "unit_amplitude_no_fit_no_residual_calibration"
+    for marker in [
+        "kids_data_vector_values",
+        "lensing_residuals",
+        "posthoc_mode_shape_choice",
+        "posthoc_amplitude_fit",
+    ]:
+        assert marker in policy["forbidden_inputs"]
+
+    with (
+        ROOT / "data/derived/kids1000_cosebis_source_frozen_theory_vector_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["status"] == "KIDS1000_COSEBIS_SOURCE_FROZEN_THEORY_VECTOR_BUILT_NOT_SCORED"
+    assert summary["theory_rows"] == "300"
+    assert summary["theory_vector_computed"] == "true"
+    assert summary["contains_theory_vector"] == "true"
+    assert summary["contains_predictions"] == "false"
+    assert summary["contains_residuals"] == "false"
+    assert summary["contains_fit_statistics"] == "false"
+    assert summary["uses_kids_data_vector_values"] == "false"
+    assert summary["uses_posterior_chains"] == "false"
+    assert summary["uses_posthoc_selection"] == "false"
+    assert summary["endpoint_scoring_allowed"] == "false"
+    assert summary["positive_theory_support"] == "true"
+    assert summary["positive_web_claim_allowed"] == "false"
+    assert abs(float(summary["mean_mode_shape_weight"]) - 1.0) < 1e-12
+
+    with (
+        ROOT / "data/derived/kids1000_cosebis_source_frozen_theory_vector_v1.csv"
+    ).open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    assert len(rows) == 300
+    assert len({row["pair_id"] for row in rows}) == 15
+    assert len({row["mode"] for row in rows}) == 20
+    assert all(float(row["theory_value"]) > 0 for row in rows)
+    assert all(row["contains_theory_vector"] == "true" for row in rows)
+    assert all(row["contains_prediction"] == "false" for row in rows)
+    assert all(row["contains_residual"] == "false" for row in rows)
+    assert all(row["contains_fit_statistic"] == "false" for row in rows)
+    assert all(row["uses_kids_data_vector_values"] == "false" for row in rows)
+    assert all(row["uses_posterior_chains"] == "false" for row in rows)
+    assert all(row["uses_posthoc_selection"] == "false" for row in rows)
+    assert all(row["endpoint_scoring_allowed"] == "false" for row in rows)
+    assert all(float(row["w_web_contribution"]) == 0 for row in rows)
 
 
 def test_kids1000_cosebis_theory_vector_template_is_row_index_only() -> None:
@@ -3705,13 +3771,13 @@ def test_kids1000_cosebis_non_degenerate_mapping_promotion_gate_is_not_ready() -
         summary = list(csv.DictReader(f))[0]
     assert summary["status"] == "NON_DEGENERATE_MAPPING_PROMOTION_GATE_BUILT_NOT_READY"
     assert summary["gate_count"] == "6"
-    assert summary["passed_gate_count"] == "2"
-    assert summary["blocking_gate_count"] == "4"
+    assert summary["passed_gate_count"] == "3"
+    assert summary["blocking_gate_count"] == "3"
     assert summary["first_blocking_gate"] == "PROMOTE_02_SOURCE_PREFLIGHT_MAPPING_READY"
     assert summary["non_degenerate_mapping_promotion_allowed"] == "false"
     assert summary["endpoint_scoring_allowed"] == "false"
     assert summary["scoring_executed"] == "false"
-    assert summary["contains_theory_vector"] == "false"
+    assert summary["contains_theory_vector"] == "true"
     assert summary["contains_predictions"] == "false"
     assert summary["contains_residuals"] == "false"
     assert summary["contains_fit_statistics"] == "false"
@@ -3734,18 +3800,27 @@ def test_kids1000_cosebis_non_degenerate_mapping_promotion_gate_is_not_ready() -
     }
     assert by_gate["PROMOTE_01_F_OVERLAP_ENDPOINT_ROUTE"]["blocking_status"] == "not_blocking"
     assert by_gate["PROMOTE_01_F_OVERLAP_ENDPOINT_ROUTE"]["gate_passed"] == "true"
+    assert by_gate["PROMOTE_04_THEORY_VECTOR_COMPUTED"]["blocking_status"] == "not_blocking"
+    assert by_gate["PROMOTE_04_THEORY_VECTOR_COMPUTED"]["gate_passed"] == "true"
     assert by_gate["PROMOTE_03_NON_DEGENERATE_BRANCH_GEOMETRY"]["blocking_status"] == "blocking_rank_one_partial_control"
     assert "positive_rank_1" in by_gate["PROMOTE_03_NON_DEGENERATE_BRANCH_GEOMETRY"]["current_state"]
     assert by_gate["PROMOTE_06_LEAKAGE_GUARDS"]["gate_passed"] == "true"
     for gate_id, row in by_gate.items():
-        if gate_id not in {"PROMOTE_01_F_OVERLAP_ENDPOINT_ROUTE", "PROMOTE_06_LEAKAGE_GUARDS"}:
+        if gate_id not in {
+            "PROMOTE_01_F_OVERLAP_ENDPOINT_ROUTE",
+            "PROMOTE_04_THEORY_VECTOR_COMPUTED",
+            "PROMOTE_06_LEAKAGE_GUARDS",
+        }:
             assert row["gate_passed"] == "false"
         assert row["endpoint_scoring_allowed"] == "false"
         assert row["scoring_executed"] == "false"
         assert row["uses_kids_data_vector_values"] == "false"
         assert row["uses_posterior_chains"] == "false"
         assert row["uses_posthoc_selection"] == "false"
-        assert row["contains_theory_vector"] == "false"
+        if gate_id == "PROMOTE_04_THEORY_VECTOR_COMPUTED":
+            assert row["contains_theory_vector"] == "true"
+        else:
+            assert row["contains_theory_vector"] == "false"
         assert row["contains_predictions"] == "false"
         assert row["contains_residuals"] == "false"
         assert row["contains_fit_statistics"] == "false"
@@ -4021,10 +4096,10 @@ def test_kids1000_cosebis_endpoint_scoring_readiness_is_not_scoring() -> None:
         summary = list(csv.DictReader(f))[0]
     assert summary["status"] == "KIDS1000_COSEBIS_ENDPOINT_SCORING_READINESS_BUILT_NOT_SCORED"
     assert summary["component_count"] == "12"
-    assert summary["ready_component_count"] == "8"
-    assert summary["blocking_component_count"] == "4"
-    assert summary["first_blocker"] == "theory_vector"
-    assert summary["next_action"] == "build_source_frozen_theory_vector_and_execute_null_controls_before_scoring"
+    assert summary["ready_component_count"] == "9"
+    assert summary["blocking_component_count"] == "3"
+    assert summary["first_blocker"] == "blocker_resolution_order"
+    assert summary["next_action"] == "execute_null_controls_and_resolve_non_degenerate_promotion_before_scoring"
     assert summary["endpoint_scoring_allowed"] == "false"
     assert summary["scoring_executed"] == "false"
     assert summary["contains_predictions"] == "false"
@@ -4058,7 +4133,12 @@ def test_kids1000_cosebis_endpoint_scoring_readiness_is_not_scoring() -> None:
         by_component["mapping_template_join_contract"]["readiness_note"]
         == "300_row_join_contract_no_mapping_values"
     )
-    assert by_component["theory_vector"]["blocking_status"] == "blocking"
+    assert by_component["theory_vector"]["blocking_status"] == "not_blocking"
+    assert by_component["theory_vector"]["ready_for_scoring"] == "true"
+    assert (
+        by_component["theory_vector"]["readiness_note"]
+        == "300_row_source_frozen_theory_vector_no_endpoint_score"
+    )
     assert by_component["web_path_mapping"]["blocking_status"] == "not_blocking"
     assert by_component["web_path_mapping"]["ready_for_scoring"] == "true"
     assert by_component["source_preflight"]["blocking_status"] == "not_blocking"
@@ -4097,7 +4177,7 @@ def test_kids1000_cosebis_endpoint_scoring_protocol_is_frozen_not_run() -> None:
     assert protocol["scoring_allowed"] == "false"
     assert protocol["parent_readiness_policy"] == readiness["policy_id"]
     assert readiness["endpoint_scoring_allowed"] == "false"
-    assert readiness["first_blocker"] == "theory_vector"
+    assert readiness["first_blocker"] == "blocker_resolution_order"
     assert "chi2=" in protocol["primary_score"]
     for marker in [
         "baseline_only",

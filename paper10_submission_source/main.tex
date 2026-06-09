@@ -421,19 +421,20 @@ route source-complete while still below the likelihood endpoint.
 The covariance-inversion policy is also frozen, but only as a future numerical
 method: a Cholesky solve against the full covariance, without materializing or
 storing an inverse covariance matrix. The solve is not executed in the present
-artifact because no source-frozen theory vector exists and the lensing scoring
-protocol remains a frozen-not-run shell.
+artifact because no endpoint-ready null-control replay exists and the lensing
+scoring protocol remains a frozen-not-run shell.
 
-The theory-vector gate is declared next, still without computing a prediction.
-It fixes the future target length to the 300 retained COSEBIs rows and keeps the
-lensing route restricted to \(W_{\rm web}\) and \(W_{\rm path}\), while
-forbidding use of KiDS data-vector values, posterior chains, residuals, or
-fit-improvement flags to choose the vector. A future endpoint must therefore
-freeze the web/path mapping and null controls before any lensing likelihood is
-allowed.
+The theory-vector gate is declared next. Its parent policy remains
+endpoint-disabled and declarative: it fixes the future target length to the 300
+retained COSEBIs rows and keeps the lensing route restricted to \(W_{\rm web}\)
+and \(W_{\rm path}\), while forbidding use of KiDS data-vector values, posterior
+chains, residuals, or fit-improvement flags to choose the vector. A separate
+source-frozen unit-amplitude shell is then built from the frozen mapping basis
+and a predeclared unit-mean \(n^{-1/2}\) mode-shape rule. This is still not a
+prediction: it contains no residual, likelihood, AIC value, null-control score,
+or endpoint validation.
 The companion template materializes the 300-row tomographic-pair/mode interface
-with empty theory-value and channel-contribution fields. It freezes row order
-only; it is not a prediction and contains no theory vector.
+and freezes row order before the source-frozen shell is assembled.
 
 The web/path mapping gate is also declared but not computed. It requires future
 source-frozen web-environment, lensing-path mask or depth-map, redshift-kernel,
@@ -619,23 +620,27 @@ We therefore add a non-degenerate mapping promotion gate. It freezes six
 conditions before any endpoint promotion is allowed: endpoint-grade
 \texttt{F\_overlap}, source-preflight readiness, non-degenerate branch
 geometry, a frozen 300-row theory vector, null controls after mapping, and
-leakage guards. In the current repository only the leakage guard passes. The
-first blocking gate remains \texttt{F\_overlap}, while the rank-one
-partial-control geometry remains an explicit promotion blocker.
+leakage guards. In the current repository the endpoint-grade
+\texttt{F\_overlap} rule, source-frozen theory-vector gate, and leakage guard
+pass. Source-preflight completion through null controls, non-degenerate branch
+geometry, and post-mapping null controls remain blocking, so endpoint scoring
+is still disabled.
 The scoring-facing view is then summarized by an endpoint-readiness ledger:
 the COSEBIs data-vector structure, covariance matrix, covariance solve policy,
-theory-vector row-interface template, and mapping-to-template join contract are
-source-side ready, and the F-overlap resolution/control decision is recorded,
-while the theory vector, web/path mapping,
-source-preflight state, blocker-resolution order, null controls, and the
-partial-control degeneracy audit still block scoring. The first blocker remains
-\texttt{F\_overlap}; no prediction, residual, fit statistic, or endpoint score
-is computed.
+theory-vector row-interface template, mapping-to-template join contract,
+F-overlap resolution/control decision, web/path source mapping, source-preflight
+mapping basis, and source-frozen unit-amplitude theory-vector shell are
+source-side ready. Blocker-resolution finalization through null controls,
+null-control execution, and the partial-control degeneracy audit still block
+scoring. The first endpoint blocker is now
+\texttt{blocker\_resolution\_order}; no residual, fit statistic, endpoint
+score, or validation result is computed.
 A corresponding scoring-protocol shell freezes only the future grammar
 \(\chi^2=(d-t)^T C^{-1}(d-t)\), with a Cholesky covariance solve and required
 baseline, candidate, wrong-channel, shuffled/rotated null, AIC, and control-rank
-outputs. This is not a likelihood run: no theory vector, residual, control
-score, AIC value, or validation result is produced in the present release.
+outputs. This is not a likelihood run: the current source-frozen shell is not
+an endpoint prediction, and no residual, control score, AIC value, or validation
+result is produced in the present release.
 The resulting source-preflight ledger is correspondingly mixed: the 300 COSEBIs
 target rows, five-bin redshift-kernel inventory, 196-tile route-coordinate
 index, 300-row design skeleton, and 58{,}800-row domain skeleton are available;

@@ -20,10 +20,11 @@ Current result:
   source factors;
 - the web/path mapping and source-preflight ledgers now expose a source-frozen
   300-row mapping basis;
-- blocking components: theory vector, blocker-resolution finalization through
-  null controls, null-control execution, and the partial-control degeneracy
-  audit;
-- first endpoint blocker: `theory_vector`;
+- a source-frozen unit-amplitude theory-vector shell is now built from the
+  frozen mapping basis and a predeclared unit-mean mode-shape rule;
+- blocking components: blocker-resolution finalization through null controls,
+  null-control execution, and the partial-control degeneracy audit;
+- first endpoint blocker: `blocker_resolution_order`;
 - endpoint scoring remains disabled.
 
 The ledger forbids KiDS data-vector values for source selection, posterior

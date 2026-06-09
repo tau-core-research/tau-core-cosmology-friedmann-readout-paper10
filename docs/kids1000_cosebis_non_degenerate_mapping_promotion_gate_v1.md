@@ -23,10 +23,11 @@ Current status:
 
 - the `F_overlap` endpoint-route gate now passes because the full-route
   pixel-fraction rule is source-frozen and non-degenerate;
-- the leakage guard also passes;
-- source-preflight mapping readiness, non-degenerate branch geometry, the frozen
-  theory vector, and post-mapping null controls remain blocking;
-- the first blocking promotion gate is now source-preflight mapping readiness;
+- the source-frozen theory-vector gate and leakage guard also pass;
+- source-preflight completion through null-control execution, non-degenerate
+  branch geometry, and post-mapping null controls remain blocking;
+- the first blocking promotion gate is now the source-preflight/null-control
+  path;
 - endpoint scoring remains disabled.
 
 Claim boundary:

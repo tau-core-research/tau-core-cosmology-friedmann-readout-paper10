@@ -24,13 +24,18 @@ def main() -> None:
     if policy["endpoint_scoring_allowed"] != "false":
         raise SystemExit("theory-vector policy must remain endpoint disabled")
     if policy["current_theory_vector_computed"] != "false":
-        raise SystemExit("theory vector must not be computed in the policy")
+        raise SystemExit("parent theory-vector policy must remain declarative")
     if summary["endpoint_scoring_allowed"] != "false" or row["endpoint_scoring_allowed"] != "false":
         raise SystemExit("theory-vector readiness must remain endpoint disabled")
-    if summary["current_theory_vector_computed"] != "false" or row["current_theory_vector_computed"] != "false":
-        raise SystemExit("theory vector must not be computed")
+    if summary["current_theory_vector_computed"] != "true" or row["current_theory_vector_computed"] != "true":
+        raise SystemExit("source-frozen theory-vector readiness must expose computed=true")
+    if summary["contains_theory_vector"] != "true" or row["contains_theory_vector"] != "true":
+        raise SystemExit("source-frozen theory-vector readiness must expose contains_theory_vector=true")
+    if row["theory_vector_status"] != "computed_from_source_frozen_mapping":
+        raise SystemExit("unexpected source-frozen theory-vector status")
+    if row["source_frozen_theory_vector_artifact"] != "data/derived/kids1000_cosebis_source_frozen_theory_vector_v1_summary.csv":
+        raise SystemExit("unexpected source-frozen theory-vector artifact")
     for key in [
-        "contains_theory_vector",
         "contains_predictions",
         "contains_residuals",
         "contains_fit_statistics",
@@ -49,7 +54,7 @@ def main() -> None:
         raise SystemExit("theory-vector policy must keep time channel disabled for this lensing route")
     if "kids_data_vector_values" not in policy["forbidden_inputs"]:
         raise SystemExit("policy must forbid use of KiDS observed data-vector values")
-    if summary["status"] != "KIDS1000_COSEBIS_THEORY_VECTOR_READINESS_BUILT_NOT_COMPUTED":
+    if summary["status"] != "KIDS1000_COSEBIS_THEORY_VECTOR_READINESS_BUILT_SOURCE_FROZEN_NOT_SCORED":
         raise SystemExit("unexpected theory-vector readiness status")
     print("PAPER10_KIDS1000_COSEBIS_THEORY_VECTOR_READINESS_V1_VALIDATED endpoint_allowed=false")
 

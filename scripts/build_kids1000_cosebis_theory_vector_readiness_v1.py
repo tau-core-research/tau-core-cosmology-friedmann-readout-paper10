@@ -10,6 +10,7 @@ POLICY = ROOT / "data" / "source_manifest" / "kids1000_cosebis_theory_vector_pol
 TOMO = ROOT / "data" / "derived" / "kids1000_cosebis_tomographic_mode_inventory_v1_summary.csv"
 MASK = ROOT / "data" / "derived" / "kids1000_cosebis_mask_modecut_inventory_v1_summary.csv"
 COV_INV = ROOT / "data" / "derived" / "kids1000_cosebis_covariance_inversion_readiness_v1_summary.csv"
+SOURCE_THEORY = ROOT / "data" / "derived" / "kids1000_cosebis_source_frozen_theory_vector_v1_summary.csv"
 OUT = ROOT / "data" / "derived" / "kids1000_cosebis_theory_vector_readiness_v1.csv"
 SUMMARY = ROOT / "data" / "derived" / "kids1000_cosebis_theory_vector_readiness_v1_summary.csv"
 
@@ -27,10 +28,15 @@ def main() -> None:
     tomo = read_one(TOMO)
     mask = read_one(MASK)
     cov_inv = read_one(COV_INV)
+    source_theory = read_one(SOURCE_THEORY)
     if policy["endpoint_scoring_allowed"].lower() != "false":
         raise SystemExit("COSEBIs theory-vector policy must remain endpoint disabled")
     if policy["current_theory_vector_computed"].lower() != "false":
-        raise SystemExit("COSEBIs theory vector must not be computed in this gate")
+        raise SystemExit("parent COSEBIs theory-vector policy must remain scoring-disabled and declarative")
+    if source_theory["theory_vector_computed"] != "true":
+        raise SystemExit("source-frozen theory-vector shell must be built before readiness can pass")
+    if source_theory["endpoint_scoring_allowed"] != "false":
+        raise SystemExit("source-frozen theory-vector shell must keep endpoint scoring disabled")
     if cov_inv["requires_frozen_theory_vector"].lower() != "true":
         raise SystemExit("covariance inversion readiness must require a frozen theory vector")
     expected_rows = policy["expected_theory_vector_rows"]
@@ -47,9 +53,10 @@ def main() -> None:
         "n_modes_per_pair": tomo["n_modes_per_pair"],
         "active_channels": policy["active_channels"],
         "disabled_channels": policy["disabled_channels"],
-        "theory_vector_status": policy["theory_vector_status"],
-        "current_theory_vector_computed": "false",
-        "contains_theory_vector": "false",
+        "theory_vector_status": "computed_from_source_frozen_mapping",
+        "current_theory_vector_computed": "true",
+        "source_frozen_theory_vector_artifact": "data/derived/kids1000_cosebis_source_frozen_theory_vector_v1_summary.csv",
+        "contains_theory_vector": "true",
         "contains_predictions": "false",
         "contains_residuals": "false",
         "contains_fit_statistics": "false",
@@ -64,14 +71,14 @@ def main() -> None:
         writer.writeheader()
         writer.writerow(row)
     summary = dict(row)
-    summary["status"] = "KIDS1000_COSEBIS_THEORY_VECTOR_READINESS_BUILT_NOT_COMPUTED"
+    summary["status"] = "KIDS1000_COSEBIS_THEORY_VECTOR_READINESS_BUILT_SOURCE_FROZEN_NOT_SCORED"
     with SUMMARY.open("w", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=list(summary.keys()), lineterminator="\n")
         writer.writeheader()
         writer.writerow(summary)
     print(
         "PAPER10_KIDS1000_COSEBIS_THEORY_VECTOR_READINESS_V1_BUILT "
-        f"rows={expected_rows} theory_vector_computed=false endpoint_allowed=false"
+        f"rows={expected_rows} theory_vector_computed=true endpoint_allowed=false"
     )
 
 

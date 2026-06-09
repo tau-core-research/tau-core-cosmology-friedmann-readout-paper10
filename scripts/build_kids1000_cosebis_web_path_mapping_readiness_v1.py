@@ -33,8 +33,6 @@ def main() -> None:
         raise SystemExit("COSEBIs web/path mapping policy should point to the source-frozen mapping vector")
     if mapping_vector["mapping_vector_computed"] != "true":
         raise SystemExit("source-frozen mapping vector must be available")
-    if theory["contains_theory_vector"].lower() != "false":
-        raise SystemExit("theory-vector readiness must not contain a theory vector")
     if policy["expected_target_rows"] != theory["expected_theory_vector_rows"]:
         raise SystemExit("web/path mapping target rows must match theory-vector target rows")
     if policy["expected_target_rows"] != tomo["data_vector_rows"]:

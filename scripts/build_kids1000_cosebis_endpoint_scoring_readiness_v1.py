@@ -96,9 +96,13 @@ def main() -> None:
             "component_id": "theory_vector",
             "component_status": theory["theory_vector_status"],
             "evidence_artifact": "data/derived/kids1000_cosebis_theory_vector_readiness_v1_summary.csv",
-            "ready_for_scoring": "false",
-            "blocking_status": "blocking",
-            "readiness_note": "300_row_theory_vector_required_not_computed",
+            "ready_for_scoring": "true" if theory["contains_theory_vector"] == "true" else "false",
+            "blocking_status": "not_blocking" if theory["contains_theory_vector"] == "true" else "blocking",
+            "readiness_note": (
+                "300_row_source_frozen_theory_vector_no_endpoint_score"
+                if theory["contains_theory_vector"] == "true"
+                else "300_row_theory_vector_required_not_computed"
+            ),
         },
         {
             "component_id": "web_path_mapping",
@@ -191,8 +195,8 @@ def main() -> None:
         "component_count": str(len(rows)),
         "ready_component_count": str(len(ready_rows)),
         "blocking_component_count": str(len(blocking_rows)),
-        "first_blocker": "theory_vector",
-        "next_action": "build_source_frozen_theory_vector_and_execute_null_controls_before_scoring",
+        "first_blocker": "blocker_resolution_order",
+        "next_action": "execute_null_controls_and_resolve_non_degenerate_promotion_before_scoring",
         "endpoint_scoring_allowed": "false",
         "scoring_executed": "false",
         "contains_predictions": "false",

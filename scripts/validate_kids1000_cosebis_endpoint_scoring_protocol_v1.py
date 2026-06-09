@@ -38,10 +38,10 @@ def main() -> None:
         raise SystemExit("KiDS endpoint scoring protocol parent readiness policy mismatch")
     if readiness["endpoint_scoring_allowed"] != "false":
         raise SystemExit("parent readiness ledger must keep endpoint scoring disabled")
-    if readiness["first_blocker"] != "theory_vector":
-        raise SystemExit("theory_vector must be the first blocker after source-frozen mapping support")
-    if readiness["blocking_component_count"] != "4":
-        raise SystemExit("KiDS endpoint scoring protocol should remain blocked by four components")
+    if readiness["first_blocker"] != "blocker_resolution_order":
+        raise SystemExit("blocker resolution order must be first after source-frozen theory-vector support")
+    if readiness["blocking_component_count"] != "3":
+        raise SystemExit("KiDS endpoint scoring protocol should remain blocked by three components")
     if "chi2=" not in protocol["primary_score"]:
         raise SystemExit("primary score must declare a chi-square shell")
     for marker in [

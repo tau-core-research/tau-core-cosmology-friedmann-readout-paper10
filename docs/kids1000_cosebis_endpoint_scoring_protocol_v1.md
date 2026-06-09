@@ -3,8 +3,9 @@
 This protocol freezes the future endpoint scoring grammar for the KiDS-1000
 COSEBIs lensing branch.
 
-It does not execute scoring. It does not compute a theory vector, residual,
-likelihood, AIC value, null-control score, or validation result.
+It does not execute scoring. The current release computes only a source-frozen
+unit-amplitude theory-vector shell. It does not compute a residual, likelihood,
+AIC value, null-control score, endpoint score, or validation result.
 
 The future scoring shell is:
 
@@ -32,7 +33,8 @@ The future comparison must report:
 The protocol can be interpreted only after the source-readiness ledger is green,
 null controls are executed under frozen seeds, and no endpoint-leakage flag is
 true. The current release fails that precondition: `F_overlap`, a caveated
-`D_path` mask-load proxy, a uniform null-web `E_web` control, `C_norm`, and a
-source-frozen mapping basis are source-supported, but no source-frozen theory
-vector or null-control replay has been built. The first endpoint blocker is now
-the theory vector.
+`D_path` mask-load proxy, a uniform null-web `E_web` control, `C_norm`, a
+source-frozen mapping basis, and a source-frozen unit-amplitude theory-vector
+shell are source-supported, but no null-control replay has been built and the
+partial-control degeneracy audit still blocks endpoint use. The first endpoint
+blocker is now the blocker-resolution/null-control path.

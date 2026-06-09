@@ -406,6 +406,12 @@ data/derived/kids1000_cosebis_theory_vector_template_v1_summary.csv
 docs/kids1000_cosebis_theory_vector_template_v1.md
 scripts/build_kids1000_cosebis_theory_vector_template_v1.py
 scripts/validate_kids1000_cosebis_theory_vector_template_v1.py
+data/source_manifest/kids1000_cosebis_source_frozen_theory_vector_policy_v1.csv
+data/derived/kids1000_cosebis_source_frozen_theory_vector_v1.csv
+data/derived/kids1000_cosebis_source_frozen_theory_vector_v1_summary.csv
+docs/kids1000_cosebis_source_frozen_theory_vector_v1.md
+scripts/build_kids1000_cosebis_source_frozen_theory_vector_v1.py
+scripts/validate_kids1000_cosebis_source_frozen_theory_vector_v1.py
 data/source_manifest/kids1000_cosebis_mapping_template_join_contract_policy_v1.csv
 data/derived/kids1000_cosebis_mapping_template_join_contract_v1.csv
 data/derived/kids1000_cosebis_mapping_template_join_contract_v1_summary.csv
@@ -414,10 +420,14 @@ scripts/build_kids1000_cosebis_mapping_template_join_contract_v1.py
 scripts/validate_kids1000_cosebis_mapping_template_join_contract_v1.py
 ```
 
-It declares a future `300`-row COSEBIs theory vector for the active
-`W_WEB_ANISOTROPY` and `W_PATH_PROJECTION` lensing route, but does not compute
-the vector. It also forbids using KiDS data-vector values, posterior chains,
-residuals, or fit-improvement flags to choose the theory vector.
+It declares the `300`-row COSEBIs theory-vector gate for the active
+`W_WEB_ANISOTROPY` and `W_PATH_PROJECTION` lensing route. The parent policy
+remains endpoint-disabled and declarative. A separate source-frozen,
+unit-amplitude theory-vector shell is now computed from the frozen mapping basis
+and a predeclared unit-mean `mode^{-1/2}` mode-shape rule. This shell forbids
+KiDS data-vector values, posterior chains, residuals, fit-improvement flags,
+post-hoc mode cuts, and post-hoc amplitude calibration. It is not endpoint
+scoring and not empirical validation.
 The accompanying template freezes the 300-row tomographic-pair/mode interface
 with empty theory-value and channel-contribution fields. It is a row-index
 template only, not a prediction.
@@ -1128,13 +1138,13 @@ structure, covariance matrix, covariance solve policy, theory-vector
 row-interface template, mapping-to-template join contract, F-overlap
 resolution/control decision, web/path mapping ledger, and source preflight are
 source-side ready. `F_overlap`, caveated `D_path`, null-control `E_web`,
-source-side `C_norm`, and the source-frozen mapping basis are supported, but
-the theory vector, null controls, blocker-resolution finalization through those
-controls, and the partial-control degeneracy audit still block scoring. The
-first endpoint blocker is now `theory_vector`. The partial-control diagnostic
-route is also explicitly blocked as endpoint evidence until a non-degenerate
-source-frozen theory vector and null-control replay exist. Endpoint scoring
-remains disabled.
+source-side `C_norm`, the source-frozen mapping basis, and a source-frozen
+unit-amplitude theory-vector shell are supported, but null controls,
+blocker-resolution finalization through those controls, and the partial-control
+degeneracy audit still block scoring. The first endpoint blocker is now
+`blocker_resolution_order`. The partial-control diagnostic route is also
+explicitly blocked as endpoint evidence until a non-degenerate null-control
+replay exists. Endpoint scoring remains disabled.
 
 The frozen endpoint scoring protocol shell is recorded in:
 
@@ -1147,7 +1157,8 @@ scripts/validate_kids1000_cosebis_endpoint_scoring_protocol_v1.py
 It declares the future COSEBIs scoring grammar
 `chi2 = (d - t)^T C^{-1} (d - t)`, the Cholesky solve policy, required
 baseline/candidate/null-control comparisons, AIC/control-rank reporting, and
-pass-condition shell. It does not compute a theory vector, residual,
+pass-condition shell. The current release computes only a source-frozen
+unit-amplitude theory-vector shell. It does not compute a residual,
 likelihood, AIC value, control score, or validation result.
 
 The COSEBIs path-mapping source-preflight ledger is recorded in:
