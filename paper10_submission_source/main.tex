@@ -598,6 +598,14 @@ amplitude-degenerate, and the run is included only as a scoring-pipeline smoke
 test showing that the partial-control route can be evaluated without changing
 source labels, branch labels, masks, weights, or mode cuts after seeing
 residuals.
+We then replay the observed positive-mask diagnostic branch against \(1008\)
+deterministic null controls: sky rotations, tomographic-pair shuffles,
+wrong-channel activations, and sign-flip controls. One tomographic-pair shuffle
+slightly outperforms the observed branch, so the observed branch is not an
+absolute winner. The conservative plus-one tail fraction is \(0.001982160555\).
+This is retained only as a diagnostic rarity check for the caveated
+partial-control route, not as endpoint validation and not as a KiDS lensing
+population claim.
 The scoring-facing view is then summarized by an endpoint-readiness ledger:
 the COSEBIs data-vector structure, covariance matrix, covariance solve policy,
 theory-vector row-interface template, and mapping-to-template join contract are

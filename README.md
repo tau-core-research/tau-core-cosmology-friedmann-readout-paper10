@@ -881,6 +881,25 @@ this simplified control, the positive mask branches are effectively
 amplitude-degenerate, so the result should be read only as a successful
 diagnostic scoring smoke test for the partial-control route.
 
+The corresponding null replay is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_partial_control_null_replay_v1.csv
+data/derived/kids1000_cosebis_partial_control_null_replay_v1_grid.csv
+data/derived/kids1000_cosebis_partial_control_null_replay_v1_summary.csv
+docs/kids1000_cosebis_partial_control_null_replay_v1.md
+scripts/run_kids1000_cosebis_partial_control_null_replay_v1.py
+scripts/validate_kids1000_cosebis_partial_control_null_replay_v1.py
+```
+
+This replay compares the observed positive-mask diagnostic branch against
+`1008` deterministic controls: sky rotations, tomographic-pair shuffles,
+wrong-channel activations, and sign-flip controls. One pair-shuffle null
+slightly outperforms the observed branch, so the observed branch is not an
+absolute winner. The conservative plus-one tail fraction is `0.001982160555`.
+This is a diagnostic rarity check only, not endpoint validation and not a
+KiDS lensing population claim.
+
 The endpoint scoring-readiness ledger is recorded in:
 
 ```text

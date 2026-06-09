@@ -196,6 +196,9 @@ def test_public_files_exist() -> None:
         "data/source_manifest/kids1000_cosebis_partial_control_diagnostic_scoring_v1.csv",
         "data/derived/kids1000_cosebis_partial_control_diagnostic_scoring_v1_grid.csv",
         "data/derived/kids1000_cosebis_partial_control_diagnostic_scoring_v1_summary.csv",
+        "data/source_manifest/kids1000_cosebis_partial_control_null_replay_v1.csv",
+        "data/derived/kids1000_cosebis_partial_control_null_replay_v1_grid.csv",
+        "data/derived/kids1000_cosebis_partial_control_null_replay_v1_summary.csv",
         "docs/kids1000_cosebis_f_overlap_filled_execution_review_validator_v1.md",
         "scripts/validate_kids1000_cosebis_f_overlap_filled_execution_review_artifact_v1.py",
         "data/source_manifest/kids1000_cosebis_endpoint_scoring_readiness_policy_v1.csv",
@@ -269,6 +272,7 @@ def test_public_files_exist() -> None:
         "docs/kids1000_cosebis_partial_control_mapping_values_v1.md",
         "docs/kids1000_cosebis_partial_control_design_matrix_v1.md",
         "docs/kids1000_cosebis_partial_control_diagnostic_scoring_v1.md",
+        "docs/kids1000_cosebis_partial_control_null_replay_v1.md",
         "docs/kids1000_cosebis_path_mapping_source_preflight_policy_v1.md",
         "docs/kids1000_cosebis_null_control_policy_v1.md",
         "docs/kids1000_cosebis_null_control_seed_policy_v1.md",
@@ -374,6 +378,8 @@ def test_public_files_exist() -> None:
         "scripts/validate_kids1000_cosebis_partial_control_design_matrix_v1.py",
         "scripts/run_kids1000_cosebis_partial_control_diagnostic_scoring_v1.py",
         "scripts/validate_kids1000_cosebis_partial_control_diagnostic_scoring_v1.py",
+        "scripts/run_kids1000_cosebis_partial_control_null_replay_v1.py",
+        "scripts/validate_kids1000_cosebis_partial_control_null_replay_v1.py",
         "scripts/build_kids1000_cosebis_path_mapping_source_preflight_v1.py",
         "scripts/validate_kids1000_cosebis_path_mapping_source_preflight_v1.py",
         "scripts/build_kids1000_cosebis_null_control_readiness_v1.py",
@@ -2908,6 +2914,80 @@ def test_kids1000_cosebis_partial_control_diagnostic_scoring_is_not_endpoint() -
         assert row["uses_posthoc_selection"] == "false"
         assert float(row["best_nonnegative_amplitude"]) >= 0
         assert abs(float(row["delta_chi2_vs_baseline"]) - (float(row["chi2"]) - baseline_chi2)) < 5e-8
+
+
+def test_kids1000_cosebis_partial_control_null_replay_is_not_endpoint() -> None:
+    with (
+        ROOT / "data/source_manifest/kids1000_cosebis_partial_control_null_replay_v1.csv"
+    ).open(newline="") as f:
+        manifest = list(csv.DictReader(f))[0]
+    assert manifest["status"] == "PARTIAL_CONTROL_NULL_REPLAY_NOT_ENDPOINT_VALIDATION"
+    assert manifest["partial_control_scoring_allowed"] == "true"
+    assert manifest["endpoint_scoring_allowed"] == "false"
+    assert "predeclared_null_control_seed_inventory" in manifest["allowed_inputs"]
+    for marker in [
+        "kids_data_vector_values_for_source_selection",
+        "posterior_chains",
+        "lensing_residuals_for_source_or_branch_selection",
+        "posthoc_mask_subset_selection",
+        "posthoc_weight_selection",
+    ]:
+        assert marker in manifest["forbidden_inputs"]
+    with (
+        ROOT / "data/derived/kids1000_cosebis_partial_control_null_replay_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["status"] == manifest["status"]
+    assert summary["observed_branch"] == "positive_mask_mean"
+    assert summary["null_draws"] == "1008"
+    assert summary["partial_control_null_replay_executed"] == "true"
+    assert summary["endpoint_scoring_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["uses_kids_data_vector_values_for_scoring"] == "true"
+    assert summary["uses_kids_data_vector_values_for_source_selection"] == "false"
+    assert summary["uses_posterior_chains"] == "false"
+    assert summary["uses_posthoc_selection"] == "false"
+    assert summary["claim_boundary"] == "partial_control_null_replay_not_endpoint_not_validation"
+    assert summary["null_chi2_le_observed_count"] == "1"
+    assert summary["null_aic_le_observed_count"] == "1"
+    assert abs(float(summary["plus_one_tail_fraction_chi2_le_observed"]) - 0.001982160555) < 5e-13
+    assert abs(float(summary["plus_one_tail_fraction_aic_le_observed"]) - 0.001982160555) < 5e-13
+    with (
+        ROOT / "data/derived/kids1000_cosebis_partial_control_null_replay_v1_grid.csv"
+    ).open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    assert len(rows) == 1008
+    family_counts = {
+        family: sum(row["control_family"] == family for row in rows)
+        for family in {row["control_family"] for row in rows}
+    }
+    assert family_counts == {
+        "sky_rotation": 4,
+        "tomographic_pair_shuffle": 1000,
+        "wrong_channel_activation": 2,
+        "web_path_sign_flip": 2,
+    }
+    observed_chi2 = float(summary["observed_chi2"])
+    observed_aic = float(summary["observed_aic"])
+    chi2_le = sum(float(row["chi2"]) <= observed_chi2 + 1e-10 for row in rows)
+    aic_le = sum(float(row["aic"]) <= observed_aic + 1e-10 for row in rows)
+    assert chi2_le == int(summary["null_chi2_le_observed_count"])
+    assert aic_le == int(summary["null_aic_le_observed_count"])
+    assert abs(float(summary["plus_one_tail_fraction_chi2_le_observed"]) - ((chi2_le + 1) / (len(rows) + 1))) < 5e-13
+    assert abs(float(summary["plus_one_tail_fraction_aic_le_observed"]) - ((aic_le + 1) / (len(rows) + 1))) < 5e-13
+    best = min(rows, key=lambda row: float(row["chi2"]))
+    assert summary["best_null_family"] == best["control_family"]
+    assert summary["best_null_descriptor"] == best["control_descriptor"]
+    assert float(summary["best_null_chi2"]) == float(best["chi2"])
+    assert float(summary["best_null_chi2"]) < observed_chi2
+    for row in rows:
+        assert row["claim_boundary"] == summary["claim_boundary"]
+        assert row["endpoint_scoring_allowed"] == "false"
+        assert row["uses_kids_data_vector_values_for_scoring"] == "true"
+        assert row["uses_kids_data_vector_values_for_source_selection"] == "false"
+        assert row["uses_posterior_chains"] == "false"
+        assert row["uses_posthoc_selection"] == "false"
+        assert float(row["best_nonnegative_amplitude"]) >= 0
 
 
 def test_kids1000_cosebis_f_overlap_execution_review_schema_is_not_execution() -> None:

@@ -334,6 +334,12 @@ predeclared branch. It does not use the KiDS data vector for source, branch,
 mask, or weight selection. Because the positive mask branches are
 amplitude-degenerate in this simplified control, the score is a diagnostic
 smoke test only, not endpoint validation or a population lensing claim.
+The partial-control null replay compares the observed positive-mask branch to
+`1008` deterministic controls: sky rotations, tomographic-pair shuffles,
+wrong-channel activations, and sign-flip controls. One tomographic-pair shuffle
+slightly outperforms the observed branch. The conservative plus-one tail
+fraction is `0.001982160555`, so this is retained as a diagnostic rarity check
+only, not endpoint validation and not a KiDS population lensing claim.
 
 The endpoint scoring-readiness ledger is a no-go summary, not a score. It
 records that the COSEBIs data-vector structure, covariance matrix, covariance
