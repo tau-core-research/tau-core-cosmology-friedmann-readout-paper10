@@ -199,6 +199,9 @@ def test_public_files_exist() -> None:
         "data/source_manifest/kids1000_cosebis_partial_control_null_replay_v1.csv",
         "data/derived/kids1000_cosebis_partial_control_null_replay_v1_grid.csv",
         "data/derived/kids1000_cosebis_partial_control_null_replay_v1_summary.csv",
+        "data/source_manifest/kids1000_cosebis_partial_control_degeneracy_audit_policy_v1.csv",
+        "data/derived/kids1000_cosebis_partial_control_degeneracy_audit_v1_pair_grid.csv",
+        "data/derived/kids1000_cosebis_partial_control_degeneracy_audit_v1_summary.csv",
         "docs/kids1000_cosebis_f_overlap_filled_execution_review_validator_v1.md",
         "scripts/validate_kids1000_cosebis_f_overlap_filled_execution_review_artifact_v1.py",
         "data/source_manifest/kids1000_cosebis_endpoint_scoring_readiness_policy_v1.csv",
@@ -273,6 +276,7 @@ def test_public_files_exist() -> None:
         "docs/kids1000_cosebis_partial_control_design_matrix_v1.md",
         "docs/kids1000_cosebis_partial_control_diagnostic_scoring_v1.md",
         "docs/kids1000_cosebis_partial_control_null_replay_v1.md",
+        "docs/kids1000_cosebis_partial_control_degeneracy_audit_v1.md",
         "docs/kids1000_cosebis_path_mapping_source_preflight_policy_v1.md",
         "docs/kids1000_cosebis_null_control_policy_v1.md",
         "docs/kids1000_cosebis_null_control_seed_policy_v1.md",
@@ -380,6 +384,8 @@ def test_public_files_exist() -> None:
         "scripts/validate_kids1000_cosebis_partial_control_diagnostic_scoring_v1.py",
         "scripts/run_kids1000_cosebis_partial_control_null_replay_v1.py",
         "scripts/validate_kids1000_cosebis_partial_control_null_replay_v1.py",
+        "scripts/build_kids1000_cosebis_partial_control_degeneracy_audit_v1.py",
+        "scripts/validate_kids1000_cosebis_partial_control_degeneracy_audit_v1.py",
         "scripts/build_kids1000_cosebis_path_mapping_source_preflight_v1.py",
         "scripts/validate_kids1000_cosebis_path_mapping_source_preflight_v1.py",
         "scripts/build_kids1000_cosebis_null_control_readiness_v1.py",
@@ -2990,6 +2996,57 @@ def test_kids1000_cosebis_partial_control_null_replay_is_not_endpoint() -> None:
         assert float(row["best_nonnegative_amplitude"]) >= 0
 
 
+def test_kids1000_cosebis_partial_control_degeneracy_audit_blocks_endpoint() -> None:
+    with (
+        ROOT / "data/source_manifest/kids1000_cosebis_partial_control_degeneracy_audit_policy_v1.csv"
+    ).open(newline="") as f:
+        policy = list(csv.DictReader(f))[0]
+    assert policy["status"] == "PARTIAL_CONTROL_DEGENERACY_AUDIT_NOT_ENDPOINT_VALIDATION"
+    assert policy["endpoint_scoring_allowed"] == "false"
+    assert "kids_data_vector_values" in policy["forbidden_inputs"]
+    assert "full_COVMAT_covariance_for_geometry_metric_only" in policy["allowed_inputs"]
+    with (
+        ROOT / "data/derived/kids1000_cosebis_partial_control_degeneracy_audit_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["status"] == "PARTIAL_CONTROL_DEGENERACY_AUDIT_BUILT_NOT_ENDPOINT_VALIDATION"
+    assert summary["positive_effective_rank_tol_1e_minus_8"] == "1"
+    assert summary["branch_degeneracy_detected"] == "true"
+    assert summary["endpoint_scoring_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["uses_kids_data_vector_values"] == "false"
+    assert summary["uses_kids_covariance_for_metric_only"] == "true"
+    assert summary["uses_posterior_chains"] == "false"
+    assert summary["uses_posthoc_selection"] == "false"
+    assert summary["claim_boundary"] == policy["claim_boundary"]
+    assert float(summary["min_positive_abs_covariance_inverse_cosine"]) >= 0.999999999
+    assert float(summary["max_positive_relative_shape_residual"]) <= 1e-9
+    assert summary["positive_sign_flip_covariance_inverse_cosine"] == "-1"
+    assert "non_degenerate_source_frozen_full_route" in summary["recommended_next_action"]
+    with (
+        ROOT / "data/derived/kids1000_cosebis_partial_control_degeneracy_audit_v1_pair_grid.csv"
+    ).open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    assert len(rows) == 10
+    positive_pairs = [
+        row
+        for row in rows
+        if row["branch_left"] in {"mask_sample_98", "mask_sample_195", "positive_mask_mean"}
+        and row["branch_right"] in {"mask_sample_98", "mask_sample_195", "positive_mask_mean"}
+    ]
+    assert len(positive_pairs) == 3
+    for row in rows:
+        assert row["endpoint_scoring_allowed"] == "false"
+        assert row["uses_kids_data_vector_values"] == "false"
+        assert row["uses_kids_covariance_for_metric_only"] == "true"
+        assert row["uses_posterior_chains"] == "false"
+        assert row["uses_posthoc_selection"] == "false"
+        assert row["claim_boundary"] == policy["claim_boundary"]
+    for row in positive_pairs:
+        assert abs(float(row["covariance_inverse_cosine"])) >= 0.999999999
+        assert float(row["relative_shape_residual_left_on_right"]) <= 1e-9
+
+
 def test_kids1000_cosebis_f_overlap_execution_review_schema_is_not_execution() -> None:
     with (
         ROOT / "data/source_manifest/kids1000_cosebis_f_overlap_execution_review_schema_policy_v1.csv"
@@ -3245,9 +3302,9 @@ def test_kids1000_cosebis_endpoint_scoring_readiness_is_not_scoring() -> None:
     ).open(newline="") as f:
         summary = list(csv.DictReader(f))[0]
     assert summary["status"] == "KIDS1000_COSEBIS_ENDPOINT_SCORING_READINESS_BUILT_NOT_SCORED"
-    assert summary["component_count"] == "11"
+    assert summary["component_count"] == "12"
     assert summary["ready_component_count"] == "6"
-    assert summary["blocking_component_count"] == "5"
+    assert summary["blocking_component_count"] == "6"
     assert summary["first_blocker"] == "F_overlap"
     assert summary["endpoint_scoring_allowed"] == "false"
     assert summary["scoring_executed"] == "false"
@@ -3272,6 +3329,7 @@ def test_kids1000_cosebis_endpoint_scoring_readiness_is_not_scoring() -> None:
         "blocker_resolution_order",
         "f_overlap_resolution_decision",
         "null_controls",
+        "partial_control_degeneracy_audit",
     }
     assert by_component["data_vector_structure"]["ready_for_scoring"] == "true"
     assert by_component["covariance_matrix"]["ready_for_scoring"] == "true"
@@ -3290,6 +3348,11 @@ def test_kids1000_cosebis_endpoint_scoring_readiness_is_not_scoring() -> None:
         == "endpoint_false_control_true"
     )
     assert by_component["null_controls"]["blocking_status"] == "blocking_until_mapping_exists"
+    assert (
+        by_component["partial_control_degeneracy_audit"]["blocking_status"]
+        == "blocking_partial_control_endpoint"
+    )
+    assert "positive_rank_1" in by_component["partial_control_degeneracy_audit"]["readiness_note"]
     for row in rows:
         assert row["endpoint_scoring_allowed"] == "false"
         assert row["scoring_executed"] == "false"

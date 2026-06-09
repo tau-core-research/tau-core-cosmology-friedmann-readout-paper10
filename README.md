@@ -900,6 +900,24 @@ absolute winner. The conservative plus-one tail fraction is `0.001982160555`.
 This is a diagnostic rarity check only, not endpoint validation and not a
 KiDS lensing population claim.
 
+The partial-control degeneracy audit is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_partial_control_degeneracy_audit_policy_v1.csv
+data/derived/kids1000_cosebis_partial_control_degeneracy_audit_v1_pair_grid.csv
+data/derived/kids1000_cosebis_partial_control_degeneracy_audit_v1_summary.csv
+docs/kids1000_cosebis_partial_control_degeneracy_audit_v1.md
+scripts/build_kids1000_cosebis_partial_control_degeneracy_audit_v1.py
+scripts/validate_kids1000_cosebis_partial_control_degeneracy_audit_v1.py
+```
+
+It shows that the positive partial-control branches are effectively rank one:
+their covariance-metric absolute cosine is numerically unity and the maximum
+positive-branch relative shape residual is about `2.2e-12`. This is the
+current scoring-facing blocker for the partial-control route. Before endpoint
+scoring, the three-mask branch family must be replaced by a non-degenerate,
+source-frozen full-route or official-geometry mapping.
+
 The endpoint scoring-readiness ledger is recorded in:
 
 ```text
@@ -915,9 +933,11 @@ It collects the current pre-scoring state in one place. The data-vector
 structure, covariance matrix, covariance solve policy, theory-vector
 row-interface template, mapping-to-template join contract, and F-overlap
 resolution/control decision are source-side ready; the theory vector, web/path
-mapping, source preflight, blocker resolution, and null controls still block
-scoring. The first blocker remains `F_overlap`, and endpoint scoring remains
-disabled.
+mapping, source preflight, blocker resolution, null controls, and the
+partial-control degeneracy audit still block scoring. The first blocker
+remains `F_overlap`; the partial-control diagnostic route is also explicitly
+blocked as endpoint evidence until a non-degenerate source-frozen mapping
+exists. Endpoint scoring remains disabled.
 
 The frozen endpoint scoring protocol shell is recorded in:
 

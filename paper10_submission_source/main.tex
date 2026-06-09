@@ -606,13 +606,22 @@ absolute winner. The conservative plus-one tail fraction is \(0.001982160555\).
 This is retained only as a diagnostic rarity check for the caveated
 partial-control route, not as endpoint validation and not as a KiDS lensing
 population claim.
+Finally, before promoting any such branch to an endpoint route, we audit the
+branch geometry itself without using the KiDS \(En\) data vector. The positive
+partial-control branches are effectively rank one: their covariance-metric
+absolute cosine is numerically unity and the maximum positive-branch relative
+shape residual is about \(2.2\times10^{-12}\). This audit is a useful negative
+result. It explains why the diagnostic score can be interesting while still
+being insufficient for endpoint evidence: the three-mask branch family must be
+replaced by a non-degenerate, source-frozen full-route or official-geometry
+mapping before endpoint scoring.
 The scoring-facing view is then summarized by an endpoint-readiness ledger:
 the COSEBIs data-vector structure, covariance matrix, covariance solve policy,
 theory-vector row-interface template, and mapping-to-template join contract are
 source-side ready, and the F-overlap resolution/control decision is recorded,
 while the theory vector, web/path mapping,
-source-preflight state, blocker-resolution order, and null controls still block
-scoring. The first blocker remains
+source-preflight state, blocker-resolution order, null controls, and the
+partial-control degeneracy audit still block scoring. The first blocker remains
 \texttt{F\_overlap}; no prediction, residual, fit statistic, or endpoint score
 is computed.
 A corresponding scoring-protocol shell freezes only the future grammar

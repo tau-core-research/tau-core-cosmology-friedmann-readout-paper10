@@ -340,14 +340,21 @@ wrong-channel activations, and sign-flip controls. One tomographic-pair shuffle
 slightly outperforms the observed branch. The conservative plus-one tail
 fraction is `0.001982160555`, so this is retained as a diagnostic rarity check
 only, not endpoint validation and not a KiDS population lensing claim.
+The partial-control degeneracy audit then measures branch geometry without
+using the KiDS `En` data vector. It shows that the positive partial-control
+branches are effectively rank one, with covariance-metric absolute cosine
+numerically equal to unity and maximum positive-branch relative shape residual
+about `2.2e-12`. This blocks the partial-control route from being read as an
+endpoint theory-vector test until a non-degenerate source-frozen full-route or
+official-geometry mapping replaces the three-mask branch family.
 
 The endpoint scoring-readiness ledger is a no-go summary, not a score. It
 records that the COSEBIs data-vector structure, covariance matrix, covariance
 solve policy, theory-vector row-interface template, and mapping-to-template
 join contract are source-side ready, and the F-overlap resolution/control
 decision is recorded, while the theory vector, web/path mapping, source
-preflight, blocker-resolution order, and null controls still block
-scoring. It contains no predictions,
+preflight, blocker-resolution order, null controls, and the partial-control
+degeneracy audit still block scoring. It contains no predictions,
 residuals, fit statistics, or endpoint scores.
 
 The endpoint scoring protocol shell freezes only the future scoring grammar:

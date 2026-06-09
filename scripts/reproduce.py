@@ -146,6 +146,8 @@ def main() -> None:
     run(["python", "scripts/validate_kids1000_cosebis_partial_control_diagnostic_scoring_v1.py"])
     run(["python", "scripts/run_kids1000_cosebis_partial_control_null_replay_v1.py"])
     run(["python", "scripts/validate_kids1000_cosebis_partial_control_null_replay_v1.py"])
+    run(["python", "scripts/build_kids1000_cosebis_partial_control_degeneracy_audit_v1.py"])
+    run(["python", "scripts/validate_kids1000_cosebis_partial_control_degeneracy_audit_v1.py"])
     run(["python", "scripts/build_kids1000_cosebis_path_mapping_source_preflight_v1.py"])
     run(["python", "scripts/validate_kids1000_cosebis_path_mapping_source_preflight_v1.py"])
     run(["python", "scripts/build_kids1000_cosebis_null_control_readiness_v1.py"])

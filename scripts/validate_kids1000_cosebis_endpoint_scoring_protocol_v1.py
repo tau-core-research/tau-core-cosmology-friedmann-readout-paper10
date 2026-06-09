@@ -40,8 +40,8 @@ def main() -> None:
         raise SystemExit("parent readiness ledger must keep endpoint scoring disabled")
     if readiness["first_blocker"] != "F_overlap":
         raise SystemExit("F_overlap must remain the first blocker before scoring")
-    if readiness["blocking_component_count"] != "5":
-        raise SystemExit("KiDS endpoint scoring protocol should remain blocked by five components")
+    if readiness["blocking_component_count"] != "6":
+        raise SystemExit("KiDS endpoint scoring protocol should remain blocked by six components")
     if "chi2=" not in protocol["primary_score"]:
         raise SystemExit("primary score must declare a chi-square shell")
     for marker in [
@@ -56,6 +56,7 @@ def main() -> None:
             raise SystemExit(f"comparison output missing: {marker}")
     for marker in [
         "source-ready",
+        "non-degenerate source-frozen mapping",
         "controls executed",
         "predeclared null controls",
         "endpoint leakage flags",
