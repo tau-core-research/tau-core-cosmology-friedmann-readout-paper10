@@ -80,17 +80,17 @@ def main() -> None:
             "resolution_stage": "define_source_side_normalization",
             "factor_id": "C_norm",
             "accepted_route_ids": "ROUTE_C_NORM_SOURCE_NORMALIZATION_PROTOCOL",
-            "stage_status": "declared_not_computed",
+            "stage_status": "resolved_source_supported",
             "why_first": "normalization_is_well_defined_only_after_nonzero_source_factors_exist",
             "minimum_exit_condition": "normalization_protocol_uses_only_source_side_nonzero_weights",
-            "next_allowed_stage_if_unresolved": "none",
+            "next_allowed_stage_if_unresolved": "proceed_to_mapping_vector",
         },
         {
             "order_rank": "5",
             "resolution_stage": "build_mapping_vector",
             "factor_id": "mapping_vector",
             "accepted_route_ids": "none_yet",
-            "stage_status": "not_allowed_yet",
+            "stage_status": "blocking_not_built",
             "why_first": "mapping_vector_requires_resolved_or_control_declared_factor_state",
             "minimum_exit_condition": "path_mapping_vector_built_from_frozen_factors_without_predictions_or_residuals",
             "next_allowed_stage_if_unresolved": "none",
@@ -138,12 +138,14 @@ def main() -> None:
         "stage_count": str(len(rows)),
         "resolved_source_supported_stage_count": str(sum(row["stage_status"] == "resolved_source_supported" for row in rows)),
         "resolved_control_supported_stage_count": str(sum(row["stage_status"] == "resolved_control_supported" for row in rows)),
-        "blocking_unresolved_stage_count": str(sum(row["stage_status"] == "blocking_not_resolved" for row in rows)),
+        "blocking_unresolved_stage_count": str(
+            sum(row["stage_status"] in {"blocking_not_resolved", "blocking_not_built"} for row in rows)
+        ),
         "not_allowed_stage_count": str(sum(row["stage_status"] == "not_allowed_yet" for row in rows)),
         "declared_not_computed_stage_count": str(sum(row["stage_status"] == "declared_not_computed" for row in rows)),
         "declared_not_executed_stage_count": str(sum(row["stage_status"] == "declared_not_executed" for row in rows)),
-        "first_blocker": "C_norm",
-        "next_action": "define_C_norm_source_side_rule_before_mapping_or_scoring",
+        "first_blocker": "mapping_vector",
+        "next_action": "build_source_frozen_mapping_vector_before_theory_vector_or_scoring",
         "external_products_fetched": "false",
         "numeric_factors_computed": "false",
         "path_mapping_computed": "false",
@@ -164,7 +166,7 @@ def main() -> None:
         writer.writerow(summary)
     print(
         "PAPER10_KIDS1000_COSEBIS_PATH_BLOCKER_RESOLUTION_ORDER_V1_BUILT "
-        f"stages={len(rows)} first_blocker=C_norm endpoint_allowed=false"
+        f"stages={len(rows)} first_blocker=mapping_vector endpoint_allowed=false"
     )
 
 

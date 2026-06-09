@@ -30,9 +30,9 @@ def main() -> None:
         raise SystemExit("unexpected acquisition plan summary status")
     if summary["requirement_count"] != "7":
         raise SystemExit("unexpected acquisition requirement count")
-    if summary["blocking_requirement_count"] != "1":
+    if summary["blocking_requirement_count"] != "0":
         raise SystemExit("unexpected blocking requirement count")
-    if summary["nonblocking_requirement_count"] != "6":
+    if summary["nonblocking_requirement_count"] != "7":
         raise SystemExit("unexpected nonblocking requirement count")
     by_req = {row["requirement_id"]: row for row in rows}
     expected = {
@@ -46,15 +46,13 @@ def main() -> None:
     }
     if set(by_req) != expected:
         raise SystemExit("unexpected acquisition requirements")
-    for req in ["REQ_C_NORM_RULE"]:
-        if by_req[req]["blocks_weight_computation"] != "true":
-            raise SystemExit(f"{req} must block weight computation")
     for req in [
         "REQ_N_PAIR_LOCK",
         "REQ_T_TILE_LOCK",
         "REQ_F_OVERLAP_SOURCE",
         "REQ_D_PATH_SOURCE",
         "REQ_E_WEB_SOURCE",
+        "REQ_C_NORM_RULE",
         "REQ_NULL_CONTROLS_EXECUTION",
     ]:
         if by_req[req]["blocks_weight_computation"] != "false":

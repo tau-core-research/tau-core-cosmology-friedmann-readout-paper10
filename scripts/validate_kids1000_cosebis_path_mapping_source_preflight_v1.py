@@ -40,7 +40,7 @@ def main() -> None:
         "preferred_route_tile_inventory": "available",
         "cosebis_path_mapping_design_skeleton": "available",
         "cosebis_path_mapping_domain_skeleton": "available",
-        "path_weight_construction_rule": "declared_not_computed",
+        "path_weight_construction_rule": "available_source_side_normalized_factor_rule",
         "full_path_depth_footprint_mapping": "available_caveated_mask_load_proxy",
         "web_environment_catalog": "available_uniform_null_web_control",
         "null_control_seed_policy": "declared_not_executed",

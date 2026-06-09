@@ -36,8 +36,8 @@ def main() -> None:
         )
     if summary["blocking_component_count"] != "6":
         raise SystemExit("six components should block endpoint scoring")
-    if summary["first_blocker"] != "C_norm":
-        raise SystemExit("C_norm must be the first scoring blocker after null E_web control is source-supported")
+    if summary["first_blocker"] != "mapping_vector":
+        raise SystemExit("mapping_vector must be the first scoring blocker after C_norm is source-supported")
 
     expected = {
         "data_vector_structure": ("true", "not_blocking"),

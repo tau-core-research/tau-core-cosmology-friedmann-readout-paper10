@@ -32,7 +32,7 @@ def main() -> None:
         raise SystemExit("unexpected path-weight summary status")
     if summary["factor_count"] != "7":
         raise SystemExit("unexpected path-weight factor count")
-    if summary["available_factor_count"] != "5":
+    if summary["available_factor_count"] != "6":
         raise SystemExit("unexpected available factor count")
     if summary["available_uniform_not_promotable_factor_count"] != "1":
         raise SystemExit("unexpected uniform-not-promotable factor count")
@@ -42,14 +42,14 @@ def main() -> None:
         raise SystemExit("unexpected partial factor count")
     if summary["missing_factor_count"] != "0":
         raise SystemExit("unexpected missing factor count")
-    if summary["declared_not_computed_factor_count"] != "1":
+    if summary["declared_not_computed_factor_count"] != "0":
         raise SystemExit("unexpected declared-not-computed factor count")
     if summary["declared_not_executed_factor_count"] != "1":
         raise SystemExit("unexpected declared-not-executed factor count")
     if summary["domain_rows"] != "58800":
         raise SystemExit("path-weight rule must refer to the 58,800-row domain")
-    if summary["path_weight_rule_computable"] != "false":
-        raise SystemExit("path-weight rule must not be marked computable")
+    if summary["path_weight_rule_computable"] != "true":
+        raise SystemExit("path-weight rule must be source-side computable after C_norm")
     by_factor = {row["factor_id"]: row for row in rows}
     expected = {
         "N_pair": "available_for_future_rule",
@@ -57,7 +57,7 @@ def main() -> None:
         "F_overlap": "available_non_degenerate_full_route_pixel_fraction",
         "D_path": "available_non_degenerate_full_route_mask_load_proxy",
         "E_web": "available_uniform_null_web_control",
-        "C_norm": "declared_not_computed",
+        "C_norm": "available_source_side_unit_mean_normalization",
         "null_controls": "declared_not_executed",
     }
     if set(by_factor) != set(expected):

@@ -198,6 +198,12 @@ def test_public_files_exist() -> None:
         "data/derived/kids1000_cosebis_e_web_null_control_tile_rule_v1.csv",
         "data/derived/kids1000_cosebis_e_web_null_control_rule_v1.csv",
         "data/derived/kids1000_cosebis_e_web_null_control_rule_v1_summary.csv",
+        "data/source_manifest/kids1000_cosebis_c_norm_source_side_rule_policy_v1.csv",
+        "data/derived/kids1000_cosebis_c_norm_source_side_domain_rule_v1.csv",
+        "data/derived/kids1000_cosebis_c_norm_source_side_rule_v1_summary.csv",
+        "docs/kids1000_cosebis_c_norm_source_side_rule_v1.md",
+        "scripts/build_kids1000_cosebis_c_norm_source_side_rule_v1.py",
+        "scripts/validate_kids1000_cosebis_c_norm_source_side_rule_v1.py",
         "data/source_manifest/kids1000_cosebis_partial_control_scoring_protocol_v1.csv",
         "data/source_manifest/kids1000_cosebis_partial_control_mapping_shell_policy_v1.csv",
         "data/derived/kids1000_cosebis_partial_control_mapping_shell_v1.csv",
@@ -292,6 +298,7 @@ def test_public_files_exist() -> None:
         "docs/kids1000_cosebis_f_overlap_full_route_pixel_fraction_rule_v1.md",
         "docs/kids1000_cosebis_d_path_full_route_mask_load_rule_v1.md",
         "docs/kids1000_cosebis_e_web_null_control_rule_v1.md",
+        "docs/kids1000_cosebis_c_norm_source_side_rule_v1.md",
         "docs/kids1000_cosebis_partial_control_scoring_protocol_v1.md",
         "docs/kids1000_cosebis_partial_control_mapping_shell_v1.md",
         "docs/kids1000_cosebis_partial_control_mapping_values_v1.md",
@@ -404,6 +411,8 @@ def test_public_files_exist() -> None:
         "scripts/validate_kids1000_cosebis_d_path_full_route_mask_load_rule_v1.py",
         "scripts/build_kids1000_cosebis_e_web_null_control_rule_v1.py",
         "scripts/validate_kids1000_cosebis_e_web_null_control_rule_v1.py",
+        "scripts/build_kids1000_cosebis_c_norm_source_side_rule_v1.py",
+        "scripts/validate_kids1000_cosebis_c_norm_source_side_rule_v1.py",
         "scripts/validate_kids1000_cosebis_partial_control_scoring_protocol_v1.py",
         "scripts/build_kids1000_cosebis_partial_control_mapping_shell_v1.py",
         "scripts/validate_kids1000_cosebis_partial_control_mapping_shell_v1.py",
@@ -2006,7 +2015,7 @@ def test_kids1000_cosebis_path_mapping_domain_skeleton_is_not_mapping() -> None:
         float(row["tile_dec_deg_filename_proxy"])
 
 
-def test_kids1000_cosebis_path_weight_construction_rule_is_not_computable() -> None:
+def test_kids1000_cosebis_path_weight_construction_rule_is_source_computable_not_mapping() -> None:
     with (
         ROOT / "data/source_manifest/kids1000_cosebis_path_weight_construction_rule_v1.csv"
     ).open(newline="") as f:
@@ -2036,15 +2045,15 @@ def test_kids1000_cosebis_path_weight_construction_rule_is_not_computable() -> N
         summary = list(csv.DictReader(f))[0]
     assert summary["status"] == "KIDS1000_COSEBIS_PATH_WEIGHT_CONSTRUCTION_RULE_BUILT_NOT_COMPUTED"
     assert summary["factor_count"] == "7"
-    assert summary["available_factor_count"] == "5"
+    assert summary["available_factor_count"] == "6"
     assert summary["available_uniform_not_promotable_factor_count"] == "1"
     assert summary["available_non_degenerate_factor_count"] == "2"
     assert summary["partial_available_factor_count"] == "0"
     assert summary["missing_factor_count"] == "0"
-    assert summary["declared_not_computed_factor_count"] == "1"
+    assert summary["declared_not_computed_factor_count"] == "0"
     assert summary["declared_not_executed_factor_count"] == "1"
     assert summary["domain_rows"] == "58800"
-    assert summary["path_weight_rule_computable"] == "false"
+    assert summary["path_weight_rule_computable"] == "true"
     assert summary["tile_weights_computed"] == "false"
     assert summary["path_mapping_computed"] == "false"
     assert summary["contains_mapping_vector"] == "false"
@@ -2066,7 +2075,9 @@ def test_kids1000_cosebis_path_weight_construction_rule_is_not_computable() -> N
     assert by_factor["E_web"]["source_state"] == "available_uniform_null_web_control"
     assert by_factor["E_web"]["source_count"] == "196"
     assert by_factor["E_web"]["numeric_factor_computed"] == "true"
-    assert by_factor["C_norm"]["source_state"] == "declared_not_computed"
+    assert by_factor["C_norm"]["source_state"] == "available_source_side_unit_mean_normalization"
+    assert by_factor["C_norm"]["source_count"] == "58800"
+    assert by_factor["C_norm"]["numeric_factor_computed"] == "true"
     assert by_factor["null_controls"]["source_state"] == "declared_not_executed"
     for row in rows:
         assert row["tile_weights_computed"] == "false"
@@ -2105,8 +2116,8 @@ def test_kids1000_cosebis_path_factor_acquisition_plan_is_not_fetching_or_scorin
         summary = list(csv.DictReader(f))[0]
     assert summary["status"] == "KIDS1000_COSEBIS_PATH_FACTOR_ACQUISITION_PLAN_BUILT_NOT_FETCHED"
     assert summary["requirement_count"] == "7"
-    assert summary["blocking_requirement_count"] == "1"
-    assert summary["nonblocking_requirement_count"] == "6"
+    assert summary["blocking_requirement_count"] == "0"
+    assert summary["nonblocking_requirement_count"] == "7"
     assert summary["external_products_fetched"] == "false"
     assert summary["numeric_factors_computed"] == "false"
     assert summary["path_mapping_computed"] == "false"
@@ -2128,7 +2139,8 @@ def test_kids1000_cosebis_path_factor_acquisition_plan_is_not_fetching_or_scorin
     )
     assert by_req["REQ_E_WEB_SOURCE"]["blocks_weight_computation"] == "false"
     assert by_req["REQ_E_WEB_SOURCE"]["current_state"] == "available_uniform_null_web_control"
-    assert by_req["REQ_C_NORM_RULE"]["blocks_weight_computation"] == "true"
+    assert by_req["REQ_C_NORM_RULE"]["blocks_weight_computation"] == "false"
+    assert by_req["REQ_C_NORM_RULE"]["current_state"] == "available_source_side_unit_mean_normalization"
     assert by_req["REQ_N_PAIR_LOCK"]["blocks_weight_computation"] == "false"
     assert by_req["REQ_T_TILE_LOCK"]["blocks_weight_computation"] == "false"
     assert by_req["REQ_NULL_CONTROLS_EXECUTION"]["blocks_weight_computation"] == "false"
@@ -2171,12 +2183,12 @@ def test_kids1000_cosebis_path_source_product_route_manifest_is_not_fetching_or_
     assert summary["status"] == "KIDS1000_COSEBIS_PATH_SOURCE_PRODUCT_ROUTE_MANIFEST_BUILT_NOT_FETCHED"
     assert summary["route_count"] == "10"
     assert summary["declared_not_acquired_route_count"] == "1"
-    assert summary["already_supported_route_count"] == "5"
+    assert summary["already_supported_route_count"] == "6"
     assert summary["alternative_not_needed_route_count"] == "2"
-    assert summary["declared_not_computed_route_count"] == "1"
+    assert summary["declared_not_computed_route_count"] == "0"
     assert summary["declared_not_executed_route_count"] == "1"
-    assert summary["blocker_resolving_candidate_count"] == "1"
-    assert summary["control_or_lock_candidate_count"] == "9"
+    assert summary["blocker_resolving_candidate_count"] == "0"
+    assert summary["control_or_lock_candidate_count"] == "10"
     assert summary["external_products_fetched"] == "false"
     assert summary["numeric_factors_computed"] == "false"
     assert summary["path_mapping_computed"] == "false"
@@ -2193,7 +2205,8 @@ def test_kids1000_cosebis_path_source_product_route_manifest_is_not_fetching_or_
     assert by_route["ROUTE_F_OVERLAP_PIXEL_MASK_DERIVED"]["may_resolve_blocker"] == "false"
     assert by_route["ROUTE_D_PATH_FULL_MASK_DEPTH_PRODUCTS"]["may_resolve_blocker"] == "false"
     assert by_route["ROUTE_E_WEB_EXTERNAL_ENVIRONMENT_CATALOG"]["may_resolve_blocker"] == "false"
-    assert by_route["ROUTE_C_NORM_SOURCE_NORMALIZATION_PROTOCOL"]["may_resolve_blocker"] == "true"
+    assert by_route["ROUTE_C_NORM_SOURCE_NORMALIZATION_PROTOCOL"]["may_resolve_blocker"] == "false"
+    assert by_route["ROUTE_C_NORM_SOURCE_NORMALIZATION_PROTOCOL"]["route_status"] == "already_source_supported_no_fetch"
     assert by_route["ROUTE_D_PATH_DOCUMENTED_SUBSET_CONTROL"]["may_resolve_blocker"] == "false"
     assert by_route["ROUTE_E_WEB_NULL_ABSENT_CONTROL"]["may_resolve_blocker"] == "false"
     assert by_route["ROUTE_NULL_CONTROLS_AFTER_MAPPING"]["may_resolve_blocker"] == "false"
@@ -2224,13 +2237,13 @@ def test_kids1000_cosebis_path_blocker_resolution_order_is_frozen_not_mapping() 
         summary = list(csv.DictReader(f))[0]
     assert summary["status"] == "KIDS1000_COSEBIS_PATH_BLOCKER_RESOLUTION_ORDER_BUILT_NOT_FETCHED"
     assert summary["stage_count"] == "6"
-    assert summary["resolved_source_supported_stage_count"] == "2"
+    assert summary["resolved_source_supported_stage_count"] == "3"
     assert summary["resolved_control_supported_stage_count"] == "1"
-    assert summary["blocking_unresolved_stage_count"] == "0"
-    assert summary["not_allowed_stage_count"] == "1"
-    assert summary["declared_not_computed_stage_count"] == "1"
+    assert summary["blocking_unresolved_stage_count"] == "1"
+    assert summary["not_allowed_stage_count"] == "0"
+    assert summary["declared_not_computed_stage_count"] == "0"
     assert summary["declared_not_executed_stage_count"] == "1"
-    assert summary["first_blocker"] == "C_norm"
+    assert summary["first_blocker"] == "mapping_vector"
     assert summary["external_products_fetched"] == "false"
     assert summary["numeric_factors_computed"] == "false"
     assert summary["path_mapping_computed"] == "false"
@@ -2247,8 +2260,8 @@ def test_kids1000_cosebis_path_blocker_resolution_order_is_frozen_not_mapping() 
         ("1", "F_overlap", "resolved_source_supported"),
         ("2", "D_path", "resolved_source_supported"),
         ("3", "E_web", "resolved_control_supported"),
-        ("4", "C_norm", "declared_not_computed"),
-        ("5", "mapping_vector", "not_allowed_yet"),
+        ("4", "C_norm", "resolved_source_supported"),
+        ("5", "mapping_vector", "blocking_not_built"),
         ("6", "null_controls", "declared_not_executed"),
     ]
     for row in rows:
@@ -3047,6 +3060,73 @@ def test_kids1000_cosebis_e_web_null_control_rule_is_source_only_uniform_control
         assert marker in policy["forbidden_inputs"]
 
 
+def test_kids1000_cosebis_c_norm_source_side_rule_is_source_only_normalization() -> None:
+    with (
+        ROOT / "data/source_manifest/kids1000_cosebis_c_norm_source_side_rule_policy_v1.csv"
+    ).open(newline="") as f:
+        policy = list(csv.DictReader(f))[0]
+    assert policy["status"] == "KIDS1000_COSEBIS_C_NORM_SOURCE_SIDE_RULE_SOURCE_ONLY_NOT_SCORED"
+    assert policy["source_scope"] == "full_58800_domain_rows"
+    assert policy["endpoint_scoring_allowed"] == "false"
+    assert policy["current_path_mapping_computed"] == "false"
+    assert policy["current_theory_vector_computed"] == "false"
+
+    with (
+        ROOT / "data/derived/kids1000_cosebis_c_norm_source_side_rule_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["status"] == "KIDS1000_COSEBIS_C_NORM_SOURCE_SIDE_RULE_BUILT_SOURCE_ONLY_NOT_MAPPED"
+    assert summary["domain_rows"] == "58800"
+    assert summary["c_norm_source_route_support"] == "true"
+    assert summary["c_norm_positive_raw_support"] == "true"
+    assert float(summary["min_raw_source_weight_fde"]) > 0.0
+    assert float(summary["max_raw_source_weight_fde"]) > float(summary["min_raw_source_weight_fde"])
+    assert float(summary["c_norm_value"]) > 0.0
+    assert abs(float(summary["mean_normalized_source_weight_fde"]) - 1.0) < 1.0e-10
+
+    with (
+        ROOT / "data/derived/kids1000_cosebis_c_norm_source_side_domain_rule_v1.csv"
+    ).open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    assert len(rows) == 58800
+    raw_values = [float(row["raw_source_weight_fde"]) for row in rows]
+    assert min(raw_values) > 0.0
+    assert abs((1.0 / (sum(raw_values) / len(raw_values))) - float(summary["c_norm_value"])) < 1.0e-10
+
+    for key in [
+        "path_mapping_computed",
+        "contains_mapping_vector",
+        "contains_theory_vector",
+        "contains_predictions",
+        "contains_residuals",
+        "contains_fit_statistics",
+        "uses_kids_data_vector_values",
+        "uses_posterior_chains",
+        "uses_posthoc_weight_selection",
+        "uses_posthoc_tile_selection",
+        "uses_posthoc_sky_direction_selection",
+        "uses_posthoc_web_environment_labels",
+        "uses_posthoc_path_projection_labels",
+        "endpoint_scoring_allowed",
+    ]:
+        assert summary[key] == "false"
+        assert all(row[key] == "false" for row in rows)
+    for marker in [
+        "kids_data_vector_values",
+        "posterior_chains",
+        "lensing_residuals",
+        "fit_statistics",
+        "fit_improvement_flags",
+        "posthoc_weight_selection",
+        "posthoc_tile_selection",
+        "posthoc_sky_direction_selection",
+        "posthoc_web_environment_labels",
+        "posthoc_path_projection_labels",
+        "posthoc_c_norm_rule_choice",
+    ]:
+        assert marker in policy["forbidden_inputs"]
+
+
 def test_kids1000_cosebis_partial_control_scoring_protocol_is_frozen_not_run() -> None:
     with (
         ROOT / "data/source_manifest/kids1000_cosebis_partial_control_scoring_protocol_v1.csv"
@@ -3747,7 +3827,7 @@ def test_kids1000_cosebis_path_mapping_source_preflight_is_not_mapping() -> None
     assert summary["partial_available_component_count"] == "1"
     assert summary["missing_component_count"] == "0"
     assert summary["declared_not_executed_component_count"] == "1"
-    assert summary["declared_not_computed_component_count"] == "1"
+    assert summary["declared_not_computed_component_count"] == "0"
     assert summary["target_rows"] == "300"
     assert summary["mapping_ready"] == "false"
     assert summary["endpoint_scoring_allowed"] == "false"
@@ -3784,7 +3864,7 @@ def test_kids1000_cosebis_path_mapping_source_preflight_is_not_mapping() -> None
     assert by_component["cosebis_path_mapping_design_skeleton"]["source_count"] == "300"
     assert by_component["cosebis_path_mapping_domain_skeleton"]["source_state"] == "available"
     assert by_component["cosebis_path_mapping_domain_skeleton"]["source_count"] == "58800"
-    assert by_component["path_weight_construction_rule"]["source_state"] == "declared_not_computed"
+    assert by_component["path_weight_construction_rule"]["source_state"] == "available_source_side_normalized_factor_rule"
     assert by_component["path_weight_construction_rule"]["source_count"] == "7"
     assert (
         by_component["full_path_depth_footprint_mapping"]["source_state"]
@@ -3834,7 +3914,7 @@ def test_kids1000_cosebis_endpoint_scoring_readiness_is_not_scoring() -> None:
     assert summary["component_count"] == "12"
     assert summary["ready_component_count"] == "6"
     assert summary["blocking_component_count"] == "6"
-    assert summary["first_blocker"] == "C_norm"
+    assert summary["first_blocker"] == "mapping_vector"
     assert summary["endpoint_scoring_allowed"] == "false"
     assert summary["scoring_executed"] == "false"
     assert summary["contains_predictions"] == "false"
@@ -3871,7 +3951,7 @@ def test_kids1000_cosebis_endpoint_scoring_readiness_is_not_scoring() -> None:
     assert by_component["theory_vector"]["blocking_status"] == "blocking"
     assert by_component["web_path_mapping"]["blocking_status"] == "blocking"
     assert by_component["source_preflight"]["blocking_status"] == "blocking"
-    assert by_component["blocker_resolution_order"]["readiness_note"] == "first_blocker_C_norm"
+    assert by_component["blocker_resolution_order"]["readiness_note"] == "first_blocker_mapping_vector"
     assert (
         by_component["f_overlap_resolution_decision"]["readiness_note"]
         == "endpoint_true_control_true"
@@ -3905,7 +3985,7 @@ def test_kids1000_cosebis_endpoint_scoring_protocol_is_frozen_not_run() -> None:
     assert protocol["scoring_allowed"] == "false"
     assert protocol["parent_readiness_policy"] == readiness["policy_id"]
     assert readiness["endpoint_scoring_allowed"] == "false"
-    assert readiness["first_blocker"] == "C_norm"
+    assert readiness["first_blocker"] == "mapping_vector"
     assert "chi2=" in protocol["primary_score"]
     for marker in [
         "baseline_only",

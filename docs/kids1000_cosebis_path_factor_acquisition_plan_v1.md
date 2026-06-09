@@ -10,9 +10,8 @@ Current status:
 - `D_path` is source-supported by the caveated full-route mask-load proxy;
 - `E_web` is source-supported only as a uniform null-web control, with no
   positive web/environment claim;
-- `C_norm` is now the first remaining blocker and is deferred until nonzero
-  source factors are fixed;
+- `C_norm` is source-side resolved by unit-mean normalization of the frozen nonzero source factors;
 - null controls are declared but not executed because no mapping vector exists.
 
 The plan fetches no external products, computes no path mapping, and reads no
-KiDS data-vector values, posterior chains, residuals, or fit-improvement flags.
+KiDS data-vector values, posterior chains, residuals, or fit-improvement flags. The next blocker is the source-frozen mapping vector.

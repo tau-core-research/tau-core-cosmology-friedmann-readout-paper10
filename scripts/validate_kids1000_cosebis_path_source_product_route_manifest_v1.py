@@ -33,17 +33,17 @@ def main() -> None:
         raise SystemExit("unexpected route count")
     if summary["declared_not_acquired_route_count"] != "1":
         raise SystemExit("unexpected declared-not-acquired route count")
-    if summary["already_supported_route_count"] != "5":
+    if summary["already_supported_route_count"] != "6":
         raise SystemExit("unexpected already-supported route count")
     if summary["alternative_not_needed_route_count"] != "2":
         raise SystemExit("unexpected alternative-not-needed route count")
-    if summary["declared_not_computed_route_count"] != "1":
+    if summary["declared_not_computed_route_count"] != "0":
         raise SystemExit("unexpected declared-not-computed route count")
     if summary["declared_not_executed_route_count"] != "1":
         raise SystemExit("unexpected declared-not-executed route count")
-    if summary["blocker_resolving_candidate_count"] != "1":
+    if summary["blocker_resolving_candidate_count"] != "0":
         raise SystemExit("unexpected blocker-resolving candidate count")
-    if summary["control_or_lock_candidate_count"] != "9":
+    if summary["control_or_lock_candidate_count"] != "10":
         raise SystemExit("unexpected control-or-lock candidate count")
 
     expected_routes = {
@@ -55,7 +55,7 @@ def main() -> None:
         "ROUTE_D_PATH_DOCUMENTED_SUBSET_CONTROL": ("REQ_D_PATH_SOURCE", "D_path", "false"),
         "ROUTE_E_WEB_EXTERNAL_ENVIRONMENT_CATALOG": ("REQ_E_WEB_SOURCE", "E_web", "false"),
         "ROUTE_E_WEB_NULL_ABSENT_CONTROL": ("REQ_E_WEB_SOURCE", "E_web", "false"),
-        "ROUTE_C_NORM_SOURCE_NORMALIZATION_PROTOCOL": ("REQ_C_NORM_RULE", "C_norm", "true"),
+        "ROUTE_C_NORM_SOURCE_NORMALIZATION_PROTOCOL": ("REQ_C_NORM_RULE", "C_norm", "false"),
         "ROUTE_NULL_CONTROLS_AFTER_MAPPING": ("REQ_NULL_CONTROLS_EXECUTION", "null_controls", "false"),
     }
     by_route = {row["route_id"]: row for row in rows}

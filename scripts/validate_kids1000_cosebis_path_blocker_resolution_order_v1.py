@@ -28,20 +28,20 @@ def main() -> None:
         raise SystemExit("unexpected blocker-resolution summary status")
     if summary["stage_count"] != "6":
         raise SystemExit("unexpected stage count")
-    if summary["first_blocker"] != "C_norm":
-        raise SystemExit("C_norm must be the first blocker after F_overlap, D_path, and null E_web are source-supported")
-    if summary["resolved_source_supported_stage_count"] != "2":
-        raise SystemExit("F_overlap and D_path should be source-supported")
+    if summary["first_blocker"] != "mapping_vector":
+        raise SystemExit("mapping_vector must be the first blocker after C_norm is source-supported")
+    if summary["resolved_source_supported_stage_count"] != "3":
+        raise SystemExit("F_overlap, D_path, and C_norm should be source-supported")
     if summary["resolved_control_supported_stage_count"] != "1":
         raise SystemExit("E_web should be resolved only as a null-control stage")
-    if summary["blocking_unresolved_stage_count"] != "0":
-        raise SystemExit("no explicit source stage should remain blocking before C_norm")
+    if summary["blocking_unresolved_stage_count"] != "1":
+        raise SystemExit("mapping_vector should be the only explicit unresolved blocker")
     expected = [
         ("1", "freeze_footprint_overlap", "F_overlap", "resolved_source_supported"),
         ("2", "promote_path_depth_support", "D_path", "resolved_source_supported"),
         ("3", "freeze_web_environment_support", "E_web", "resolved_control_supported"),
-        ("4", "define_source_side_normalization", "C_norm", "declared_not_computed"),
-        ("5", "build_mapping_vector", "mapping_vector", "not_allowed_yet"),
+        ("4", "define_source_side_normalization", "C_norm", "resolved_source_supported"),
+        ("5", "build_mapping_vector", "mapping_vector", "blocking_not_built"),
         ("6", "execute_null_controls", "null_controls", "declared_not_executed"),
     ]
     observed = [(row["order_rank"], row["resolution_stage"], row["factor_id"], row["stage_status"]) for row in rows]
@@ -56,8 +56,8 @@ def main() -> None:
         raise SystemExit("E_web stage must record the null-web control route")
     if "no_positive_web_claim" not in by_rank["3"]["next_allowed_stage_if_unresolved"]:
         raise SystemExit("E_web control stage must forbid positive web claims")
-    if by_rank["5"]["stage_status"] != "not_allowed_yet":
-        raise SystemExit("mapping vector must not be allowed yet")
+    if by_rank["5"]["stage_status"] != "blocking_not_built":
+        raise SystemExit("mapping vector must be the next unresolved blocker")
     for key in [
         "external_products_fetched",
         "path_mapping_computed",

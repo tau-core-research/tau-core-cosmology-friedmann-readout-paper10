@@ -606,15 +606,27 @@ scripts/build_kids1000_cosebis_path_weight_construction_rule_v1.py
 scripts/validate_kids1000_cosebis_path_weight_construction_rule_v1.py
 ```
 
+The source-side normalization rule is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_c_norm_source_side_rule_policy_v1.csv
+data/derived/kids1000_cosebis_c_norm_source_side_domain_rule_v1.csv
+data/derived/kids1000_cosebis_c_norm_source_side_rule_v1_summary.csv
+docs/kids1000_cosebis_c_norm_source_side_rule_v1.md
+scripts/build_kids1000_cosebis_c_norm_source_side_rule_v1.py
+scripts/validate_kids1000_cosebis_c_norm_source_side_rule_v1.py
+```
+
 It declares the future factorization
 `N_pair * T_tile * F_overlap * D_path * E_web * C_norm` and records which
-factors are source-supported. The rule is not computable yet: `F_overlap` has
+factors are source-supported. The source-weight rule is now source-side computable: `F_overlap` has
 non-degenerate source support from the full-route pixel-fraction rule,
 `D_path` has caveated non-degenerate source support from the full-route
-mask-load proxy, and `E_web` is source-supported only as a uniform null-web
-control. This does not make a positive web/environment claim. Source-side
-normalization is not yet computed, and no numeric path weight, mapping vector,
-or endpoint score is produced.
+mask-load proxy, `E_web` is source-supported only as a uniform null-web
+control, and `C_norm = 2.110707798749` normalizes the frozen raw source-factor
+product to unit mean over the 58,800-row domain. This does not make a positive
+web/environment claim. No mapping vector, theory vector, residual, or endpoint
+score is produced.
 
 The source-factor acquisition plan is recorded in:
 
@@ -627,11 +639,11 @@ scripts/build_kids1000_cosebis_path_factor_acquisition_plan_v1.py
 scripts/validate_kids1000_cosebis_path_factor_acquisition_plan_v1.py
 ```
 
-It converts the missing-factor status into seven source-side acquisition
-requirements. At the current stage one requirement blocks numeric path-weight
-computation: source-side normalization after the nonzero source factors and
-the null-web control exist. It fetches no products and computes no endpoint
-weights.
+It converts the source-factor status into seven source-side acquisition
+requirements. At the current stage none of the seven requirements blocks the
+source-weight algebra: source-side normalization is resolved after the nonzero
+source factors and the null-web control exist. It fetches no products and
+computes no endpoint weights. The next blocker is the mapping vector.
 
 The source-product route candidate manifest is recorded in:
 
@@ -645,8 +657,9 @@ scripts/validate_kids1000_cosebis_path_source_product_route_manifest_v1.py
 ```
 
 It declares ten source-product routes for the next source-gathering step:
-five already-supported locks/routes, one blocker-resolving candidate, two
-alternative-not-needed routes, and two deferred routes. The supported
+six already-supported locks/routes, no remaining blocker-resolving candidate
+before the mapping vector, two alternative-not-needed routes, one unfetched
+external web route kept as a future positive-web option, and one deferred null-control route. The supported
 `E_web` route is a null-web control only; the external web/environment catalogue
 route remains unfetched and does not support a positive web claim. The manifest
 still fetches no external products, creates no path mapping, and computes no
@@ -665,10 +678,10 @@ scripts/validate_kids1000_cosebis_path_blocker_resolution_order_v1.py
 
 It freezes the future source-side order: `F_overlap` first, then `D_path`,
 then `E_web`, then `C_norm`, then a mapping vector, then null controls. It
-records that `F_overlap`, a caveated `D_path` mask-load proxy, and a uniform
-null-web `E_web` control are now source-supported. The first remaining blocker
-is `C_norm`. It fetches no products and keeps mapping and endpoint scoring
-disabled.
+records that `F_overlap`, a caveated `D_path` mask-load proxy, a uniform
+null-web `E_web` control, and source-side `C_norm` are now supported. The first
+remaining blocker is the mapping vector. It fetches no products and keeps
+mapping and endpoint scoring disabled.
 
 The first-blocker `F_overlap` rule shell is recorded in:
 
@@ -1104,10 +1117,10 @@ It collects the current pre-scoring state in one place. The data-vector
 structure, covariance matrix, covariance solve policy, theory-vector
 row-interface template, mapping-to-template join contract, and F-overlap
 resolution/control decision are source-side ready. `F_overlap`, caveated
-`D_path`, and null-control `E_web` are source-side supported, but `C_norm` /
-source preflight, the theory vector, web/path mapping, null controls, and the
-partial-control degeneracy audit still block scoring. The first blocker is now
-`C_norm`. The partial-control diagnostic route is also explicitly blocked as
+`D_path`, null-control `E_web`, and source-side `C_norm` are supported, but
+the mapping vector/source preflight, theory vector, web/path mapping, null
+controls, and the partial-control degeneracy audit still block scoring. The
+first blocker is now `mapping_vector`. The partial-control diagnostic route is also explicitly blocked as
 endpoint evidence until a non-degenerate source-frozen mapping exists. Endpoint
 scoring remains disabled.
 

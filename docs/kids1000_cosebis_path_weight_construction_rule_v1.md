@@ -24,7 +24,7 @@ where:
 - `D_path(tile)` is a caveated full-route mask-load proxy,
 - `E_web(tile)` is currently a uniform null-web control, not a positive
   web/environment measurement,
-- `C_norm` is a future normalization rule.
+- `C_norm` is the source-side unit-mean normalization of the frozen `F_overlap * D_path * E_web` product over the 58,800-row domain.
 
 Current status:
 
@@ -35,8 +35,7 @@ Current status:
   proxy over all 196 route masks, but it is not a calibrated depth map;
 - `E_web` is source-supported only as a uniform null-web control with no
   positive web claim;
-- `C_norm` is not yet resolved strongly enough to make the full path weight
-  computable;
+- `C_norm = 2.110707798749` is source-side resolved, so the symbolic source-weight rule is computable as a source ledger;
 - no mapping vector, theory-vector element, prediction, residual, likelihood
   value, or endpoint score is computed here.
 

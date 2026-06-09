@@ -17,10 +17,11 @@ In the current source ledger, `F_overlap` is source-supported by the full-route
 pixel-fraction rule, `D_path` is source-supported only as a caveated full-route
 mask-load proxy, and `E_web` is source-supported only as a uniform null-web
 control. This means the current route is path-only/projection-only with no
-positive web/environment claim. The first remaining unresolved blocker is
-therefore `C_norm`. Later steps are intentionally not allowed to become
-endpoint-bearing shortcuts around missing source normalization or the mapping
-vector.
+positive web/environment claim. `C_norm` is now source-side resolved by
+unit-mean normalization of the frozen nonzero source factors. The first
+remaining unresolved blocker is therefore the mapping vector. Later steps are
+intentionally not allowed to become endpoint-bearing shortcuts around the
+missing mapping vector.
 
 This policy fetches no external products, computes no factor values, builds no
 mapping vector, and performs no scoring. It only fixes the future source-side

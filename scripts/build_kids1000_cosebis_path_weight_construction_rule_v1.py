@@ -15,6 +15,7 @@ HEADER_DEGENERACY = ROOT / "data" / "derived" / "kids1000_cosebis_f_overlap_head
 FULL_PIXEL_FRACTION = ROOT / "data" / "derived" / "kids1000_cosebis_f_overlap_full_route_pixel_fraction_rule_v1_summary.csv"
 D_PATH_MASK_LOAD = ROOT / "data" / "derived" / "kids1000_cosebis_d_path_full_route_mask_load_rule_v1_summary.csv"
 E_WEB_NULL = ROOT / "data" / "derived" / "kids1000_cosebis_e_web_null_control_rule_v1_summary.csv"
+C_NORM = ROOT / "data" / "derived" / "kids1000_cosebis_c_norm_source_side_rule_v1_summary.csv"
 NULL_SEEDS = ROOT / "data" / "derived" / "kids1000_cosebis_null_control_seed_inventory_v1_summary.csv"
 OUT = ROOT / "data" / "derived" / "kids1000_cosebis_path_weight_construction_rule_v1.csv"
 SUMMARY = ROOT / "data" / "derived" / "kids1000_cosebis_path_weight_construction_rule_v1_summary.csv"
@@ -38,6 +39,7 @@ def main() -> None:
     full_pixel_fraction = read_one(FULL_PIXEL_FRACTION)
     d_path_mask_load = read_one(D_PATH_MASK_LOAD)
     e_web_null = read_one(E_WEB_NULL)
+    c_norm = read_one(C_NORM)
     null_seeds = read_one(NULL_SEEDS)
     if policy["endpoint_scoring_allowed"].lower() != "false":
         raise SystemExit("path-weight construction policy must remain endpoint disabled")
@@ -102,12 +104,12 @@ def main() -> None:
         {
             "factor_id": "C_norm",
             "factor_role": "normalization_rule",
-            "source_state": "declared_not_computed",
-            "evidence_artifact": "data/source_manifest/kids1000_cosebis_path_weight_construction_rule_v1.csv",
-            "source_count": "0",
-            "numeric_factor_computed": "false",
-            "blocking_status": "blocking_until_factors_exist",
-            "limitation": "normalization_rule_cannot_be_evaluated_without_nonzero_source_frozen_factors",
+            "source_state": "available_source_side_unit_mean_normalization",
+            "evidence_artifact": "data/derived/kids1000_cosebis_c_norm_source_side_rule_v1_summary.csv",
+            "source_count": c_norm["domain_rows"],
+            "numeric_factor_computed": "true",
+            "blocking_status": "not_blocking",
+            "limitation": "source_side_unit_mean_normalization_available_not_mapping_not_fit",
         },
         {
             "factor_id": "null_controls",
@@ -163,7 +165,7 @@ def main() -> None:
         "declared_not_computed_factor_count": str(sum(row["source_state"] == "declared_not_computed" for row in rows)),
         "declared_not_executed_factor_count": str(sum(row["source_state"] == "declared_not_executed" for row in rows)),
         "domain_rows": domain["domain_rows"],
-        "path_weight_rule_computable": "false",
+        "path_weight_rule_computable": "true",
         "tile_weights_computed": "false",
         "path_mapping_computed": "false",
         "contains_mapping_vector": "false",
@@ -183,7 +185,7 @@ def main() -> None:
         writer.writerow(summary)
     print(
         "PAPER10_KIDS1000_COSEBIS_PATH_WEIGHT_CONSTRUCTION_RULE_V1_BUILT "
-        f"factors={len(rows)} computable=false endpoint_allowed=false"
+        f"factors={len(rows)} computable=true endpoint_allowed=false"
     )
 
 

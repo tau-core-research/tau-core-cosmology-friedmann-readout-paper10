@@ -16,9 +16,11 @@ Current result:
 - `F_overlap` and a caveated full-route `D_path` mask-load proxy are
   source-supported, and `E_web` is source-supported only as a uniform null-web
   control;
-- blocking components: `C_norm`/source preflight, theory vector, web/path
+- `C_norm` is source-side resolved by unit-mean normalization of the frozen
+  source factors;
+- blocking components: source preflight/mapping vector, theory vector, web/path
   mapping, null controls, and the partial-control degeneracy audit;
-- first blocker: `C_norm`;
+- first blocker: `mapping_vector`;
 - endpoint scoring remains disabled.
 
 The ledger forbids KiDS data-vector values for source selection, posterior

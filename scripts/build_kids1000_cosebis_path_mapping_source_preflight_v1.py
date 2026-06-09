@@ -108,12 +108,12 @@ def main() -> None:
         },
         {
             "component_id": "path_weight_construction_rule",
-            "source_state": "declared_not_computed",
+            "source_state": "available_source_side_normalized_factor_rule",
             "evidence_artifact": "data/derived/kids1000_cosebis_path_weight_construction_rule_v1_summary.csv",
             "source_count": weight_rule["factor_count"],
             "preflight_role": "symbolic_path_weight_factorization_and_factor_status",
-            "blocking_status": "blocking_until_missing_factors_exist",
-            "limitation": "symbolic_factorization_declared_but_numeric_weights_not_computable",
+            "blocking_status": "not_blocking",
+            "limitation": "all_source_factors_and_C_norm_available_but_mapping_vector_not_built",
         },
         {
             "component_id": "full_path_depth_footprint_mapping",

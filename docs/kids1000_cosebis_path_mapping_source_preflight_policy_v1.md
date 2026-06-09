@@ -12,6 +12,8 @@ Current status:
   proxy rather than a calibrated depth map;
 - `E_web` is available only as a uniform null-web control; no positive
   web/environment catalogue is used;
+- the path-weight construction rule is source-side available after `C_norm`,
+  but no mapping vector has been built;
 - null controls are declared but not executed;
 - no mapping vector, theory vector, prediction, residual, fit statistic, or
   endpoint score is computed.

@@ -87,9 +87,9 @@ def main() -> None:
             "factor_id": "C_norm",
             "current_state": by_factor["C_norm"]["source_state"],
             "required_source_class": "normalization_rule_defined_after_nonzero_source_factors_exist",
-            "minimum_acceptance": "normalizes_weights_without_using_lensing_residuals_or_fit_improvement",
-            "next_action": "define_source_side_C_norm_after_F_overlap_D_path_and_E_web_control_are_source_frozen",
-            "blocks_weight_computation": "true",
+            "minimum_acceptance": "unit_mean_normalization_without_using_lensing_residuals_or_fit_improvement",
+            "next_action": "none_c_norm_source_side_rule_resolved",
+            "blocks_weight_computation": "false",
         },
         {
             "requirement_id": "REQ_NULL_CONTROLS_EXECUTION",

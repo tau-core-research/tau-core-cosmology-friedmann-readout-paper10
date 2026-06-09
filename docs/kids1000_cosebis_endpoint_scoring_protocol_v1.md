@@ -33,4 +33,4 @@ The protocol can be interpreted only after the source-readiness ledger is green,
 null controls are executed under frozen seeds, and no endpoint-leakage flag is
 true. The current release fails that precondition: `F_overlap`, a caveated
 `D_path` mask-load proxy, and a uniform null-web `E_web` control are
-source-supported, but the first blocker remains `C_norm`.
+source-supported, and `C_norm` is source-side resolved by unit-mean normalization. The first blocker is now the mapping vector.

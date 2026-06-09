@@ -190,7 +190,7 @@ def main() -> None:
         "ready_component_count": str(len(ready_rows)),
         "blocking_component_count": str(len(blocking_rows)),
         "first_blocker": blockers["first_blocker"],
-        "next_action": "define_C_norm_before_theory_vector_mapping_and_scoring",
+        "next_action": "build_source_frozen_mapping_vector_before_theory_vector_and_scoring",
         "endpoint_scoring_allowed": "false",
         "scoring_executed": "false",
         "contains_predictions": "false",
