@@ -346,6 +346,13 @@ def test_public_files_exist() -> None:
         "docs/kids1000_cosebis_pure_mask_response_gate_v1.md",
         "scripts/build_kids1000_cosebis_pure_mask_response_gate_v1.py",
         "scripts/validate_kids1000_cosebis_pure_mask_response_gate_v1.py",
+        "data/source_manifest/kids1000_cosebis_mask_mode_leakage_audit_policy_v1.csv",
+        "data/derived/kids1000_cosebis_mask_mode_leakage_audit_v1.csv",
+        "data/derived/kids1000_cosebis_mask_mode_leakage_audit_v1_grid.csv",
+        "data/derived/kids1000_cosebis_mask_mode_leakage_audit_v1_summary.csv",
+        "docs/kids1000_cosebis_mask_mode_leakage_audit_v1.md",
+        "scripts/build_kids1000_cosebis_mask_mode_leakage_audit_v1.py",
+        "scripts/validate_kids1000_cosebis_mask_mode_leakage_audit_v1.py",
         "data/source_manifest/kids1000_cosebis_path_mapping_source_preflight_policy_v1.csv",
         "data/derived/kids1000_cosebis_path_mapping_source_preflight_v1.csv",
         "data/derived/kids1000_cosebis_path_mapping_source_preflight_v1_summary.csv",
@@ -580,6 +587,8 @@ def test_public_files_exist() -> None:
         "scripts/validate_kids1000_cosebis_operator_null_safety_gate_v1.py",
         "scripts/build_kids1000_cosebis_pure_mask_response_gate_v1.py",
         "scripts/validate_kids1000_cosebis_pure_mask_response_gate_v1.py",
+        "scripts/build_kids1000_cosebis_mask_mode_leakage_audit_v1.py",
+        "scripts/validate_kids1000_cosebis_mask_mode_leakage_audit_v1.py",
         "scripts/build_kids1000_cosebis_path_mapping_source_preflight_v1.py",
         "scripts/validate_kids1000_cosebis_path_mapping_source_preflight_v1.py",
         "scripts/build_kids1000_cosebis_null_control_readiness_v1.py",
@@ -5076,6 +5085,58 @@ def test_kids1000_cosebis_pure_mask_response_gate_builds_basis_but_not_operator_
         assert row["contains_fit_statistics"] == "false"
         assert row["uses_kids_data_vector_values"] == "false"
         assert row["endpoint_scoring_allowed"] == "false"
+
+
+def test_kids1000_cosebis_mask_mode_leakage_audit_records_risk_not_proof() -> None:
+    with (
+        ROOT / "data/source_manifest/kids1000_cosebis_mask_mode_leakage_audit_policy_v1.csv"
+    ).open(newline="") as f:
+        policy = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/kids1000_cosebis_mask_mode_leakage_audit_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/kids1000_cosebis_mask_mode_leakage_audit_v1.csv"
+    ).open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    with (
+        ROOT / "data/derived/kids1000_cosebis_mask_mode_leakage_audit_v1_grid.csv"
+    ).open(newline="") as f:
+        grid = list(csv.DictReader(f))
+
+    assert policy["status"] == "MASK_MODE_LEAKAGE_AUDIT_POLICY_FROZEN"
+    assert policy["uses_kids_data_vector_values"] == "false"
+    assert policy["uses_fit_statistics"] == "false"
+    assert policy["uses_random_noise"] == "false"
+    assert policy["endpoint_scoring_allowed"] == "false"
+    assert summary["status"] == "MASK_MODE_LEAKAGE_AUDIT_SOURCE_SIDE_COMPLETE_OPERATOR_BLOCKED"
+    assert summary["verdict"] == "uniform_mask_collapse_is_null_but_nonuniform_operator_leakage_remains_open"
+    assert summary["basis_count"] == "3"
+    assert summary["spectrum_family_count"] == "4"
+    assert summary["grid_rows"] == "12"
+    assert summary["uniform_collapse_all_null"] == "true"
+    assert summary["leakage_risk_recorded"] == "true"
+    assert summary["operator_level_leakage_theorem_proven"] == "false"
+    assert summary["mode_response_operator_derived"] == "false"
+    assert summary["open_blocker_count"] == "1"
+    assert float(summary["max_uniform_collapse_norm"]) < 1.0e-10
+    assert float(summary["max_low_mode_rms_envelope_norm"]) > 0.0
+    by_gate = {row["gate_id"]: row for row in rows}
+    assert by_gate["L1_centered_mask_uniform_collapse"]["status"] == "PASS"
+    assert by_gate["L2_nonuniform_operator_leakage_risk"]["status"] == "RISK_RECORDED"
+    assert by_gate["L4_operator_level_leakage_theorem"]["status"] == "OPEN_BLOCKER"
+    assert {row["claim_boundary"] for row in rows} == {policy["claim_boundary"]}
+    assert len(grid) == 12
+    assert {row["uniform_collapse_is_null"] for row in grid} == {"true"}
+    assert {row["leakage_risk_if_operator_uses_rms_or_abs_mask_load"] for row in grid} == {"true"}
+    for row in grid:
+        assert row["contains_theory_vector"] == "false"
+        assert row["contains_residuals"] == "false"
+        assert row["contains_fit_statistics"] == "false"
+        assert row["uses_kids_data_vector_values"] == "false"
+        assert row["endpoint_scoring_allowed"] == "false"
+        assert row["endpoint_validation_claimed"] == "false"
 
 
 def test_kids1000_cosebis_null_control_policy_is_declared_not_run() -> None:

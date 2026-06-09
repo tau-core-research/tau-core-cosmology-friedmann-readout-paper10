@@ -795,6 +795,12 @@ to the \(58{,}800\)-row target-by-tile domain. This makes future pure-mask null
 replay concrete. It does not prove that those directions are quotient-trivial,
 and it does not show that mask-only directions cannot leak into the low-mode
 COSEBIs envelope under a future survey-native response operator.
+A follow-up source-side leakage audit clarifies this point. Because the
+pure-mask directions are centered over route tiles, they collapse to zero under
+uniform tile averaging. This is a useful null limit. It is not an operator
+theorem: a non-uniform survey-native response could still couple mask-only
+tile amplitudes to the same low-mode envelope, so the leakage theorem remains
+open.
 
 The resulting source-preflight ledger is correspondingly mixed: the 300 COSEBIs
 target rows, five-bin redshift-kernel inventory, 196-tile route-coordinate
@@ -1142,7 +1148,9 @@ replay level, but pure-mask response, gauge quotient descent, and
 spectrum-null coupling remain open at operator level. The pure-mask sub-gate
 then constructs a rank-two centered mask-only perturbation basis from
 \(F_{\rm overlap}\) and \(D_{\rm path}\), while preserving quotient triviality
-and mode-response leakage as open blockers. The value of
+and mode-response leakage as open blockers. A source-side leakage audit records
+that uniform tile averaging kills the centered mask basis, but non-uniform
+operator leakage into the low-mode envelope is still not ruled out. The value of
 the scaffold is
 therefore to make the next cosmology test
 precise: a Tau Core-inspired late-time residual should be judged not by

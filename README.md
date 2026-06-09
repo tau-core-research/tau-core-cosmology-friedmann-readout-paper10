@@ -1494,6 +1494,26 @@ residual, fit statistic, or endpoint score. Quotient triviality and coupling to
 the COSEBIs mode response remain open blockers. The verdict is
 `pure_mask_basis_exists_but_quotient_triviality_and_mode_coupling_remain_blocked`.
 
+The COSEBIs mask-mode leakage audit is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_mask_mode_leakage_audit_policy_v1.csv
+data/derived/kids1000_cosebis_mask_mode_leakage_audit_v1.csv
+data/derived/kids1000_cosebis_mask_mode_leakage_audit_v1_grid.csv
+data/derived/kids1000_cosebis_mask_mode_leakage_audit_v1_summary.csv
+docs/kids1000_cosebis_mask_mode_leakage_audit_v1.md
+scripts/build_kids1000_cosebis_mask_mode_leakage_audit_v1.py
+scripts/validate_kids1000_cosebis_mask_mode_leakage_audit_v1.py
+```
+
+This artifact audits a source-side leakage risk. The centered pure-mask basis
+collapses to zero under uniform tile averaging, with
+`max_uniform_collapse_norm` at numerical roundoff level. However, if a future
+survey-native operator couples non-uniform mask amplitudes into a mode
+envelope, mask-only leakage into the low-mode carrier is not yet ruled out.
+The verdict is
+`uniform_mask_collapse_is_null_but_nonuniform_operator_leakage_remains_open`.
+
 The COSEBIs path-mapping source-preflight ledger is recorded in:
 
 ```text
