@@ -1213,6 +1213,25 @@ two predeclared null controls score better than the candidate, so the
 claim-safe reading is a low-tail endpoint signal that requires follow-up
 robustness.
 
+The endpoint scoring diagnostics are recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_endpoint_scoring_diagnostics_policy_v1.csv
+data/derived/kids1000_cosebis_endpoint_scoring_diagnostics_v1_family_summary.csv
+data/derived/kids1000_cosebis_endpoint_scoring_diagnostics_v1_top_nulls.csv
+data/derived/kids1000_cosebis_endpoint_scoring_diagnostics_v1_summary.csv
+scripts/build_kids1000_cosebis_endpoint_scoring_diagnostics_v1.py
+scripts/validate_kids1000_cosebis_endpoint_scoring_diagnostics_v1.py
+```
+
+The diagnostic result is
+`candidate_low_tail_but_not_absolute_winner_tomographic_shuffle_controls_dominate`.
+The two controls that beat the candidate both come from the
+`tomographic_pair_shuffle` family. No `sky_rotation`, `wrong_channel_activation`,
+or `web_path_sign_flip` control beats the candidate. This narrows the next
+robustness question to tomographic-pair structure rather than to a generic
+wrong-channel or sign-flip failure.
+
 The COSEBIs path-mapping source-preflight ledger is recorded in:
 
 ```text

@@ -256,6 +256,12 @@ def test_public_files_exist() -> None:
         "docs/kids1000_cosebis_endpoint_scoring_v1.md",
         "scripts/run_kids1000_cosebis_endpoint_scoring_v1.py",
         "scripts/validate_kids1000_cosebis_endpoint_scoring_v1.py",
+        "data/source_manifest/kids1000_cosebis_endpoint_scoring_diagnostics_policy_v1.csv",
+        "data/derived/kids1000_cosebis_endpoint_scoring_diagnostics_v1_family_summary.csv",
+        "data/derived/kids1000_cosebis_endpoint_scoring_diagnostics_v1_top_nulls.csv",
+        "data/derived/kids1000_cosebis_endpoint_scoring_diagnostics_v1_summary.csv",
+        "scripts/build_kids1000_cosebis_endpoint_scoring_diagnostics_v1.py",
+        "scripts/validate_kids1000_cosebis_endpoint_scoring_diagnostics_v1.py",
         "data/source_manifest/kids1000_cosebis_path_mapping_source_preflight_policy_v1.csv",
         "data/derived/kids1000_cosebis_path_mapping_source_preflight_v1.csv",
         "data/derived/kids1000_cosebis_path_mapping_source_preflight_v1_summary.csv",
@@ -462,6 +468,8 @@ def test_public_files_exist() -> None:
         "scripts/validate_kids1000_cosebis_endpoint_family_geometry_audit_v1.py",
         "scripts/run_kids1000_cosebis_endpoint_scoring_v1.py",
         "scripts/validate_kids1000_cosebis_endpoint_scoring_v1.py",
+        "scripts/build_kids1000_cosebis_endpoint_scoring_diagnostics_v1.py",
+        "scripts/validate_kids1000_cosebis_endpoint_scoring_diagnostics_v1.py",
         "scripts/build_kids1000_cosebis_path_mapping_source_preflight_v1.py",
         "scripts/validate_kids1000_cosebis_path_mapping_source_preflight_v1.py",
         "scripts/build_kids1000_cosebis_null_control_readiness_v1.py",
@@ -4345,6 +4353,54 @@ def test_kids1000_cosebis_endpoint_scoring_run_is_control_ranked_not_validation(
         assert row["uses_posterior_chains"] == "false"
         assert row["uses_posthoc_selection"] == "false"
         assert row["endpoint_validation_claimed"] == "false"
+
+
+def test_kids1000_cosebis_endpoint_scoring_diagnostics_localize_null_caveat() -> None:
+    with (
+        ROOT / "data/source_manifest/kids1000_cosebis_endpoint_scoring_diagnostics_policy_v1.csv"
+    ).open(newline="") as f:
+        policy = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/kids1000_cosebis_endpoint_scoring_diagnostics_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/kids1000_cosebis_endpoint_scoring_diagnostics_v1_family_summary.csv"
+    ).open(newline="") as f:
+        family_rows = list(csv.DictReader(f))
+    with (
+        ROOT / "data/derived/kids1000_cosebis_endpoint_scoring_diagnostics_v1_top_nulls.csv"
+    ).open(newline="") as f:
+        top_rows = list(csv.DictReader(f))
+
+    assert policy["status"] == "ENDPOINT_SCORING_DIAGNOSTICS_POLICY_FROZEN"
+    assert policy["endpoint_validation_claimed"] == "false"
+    assert "posthoc_source_selection" in policy["forbidden_future_use"]
+    assert summary["status"] == "KIDS1000_COSEBIS_ENDPOINT_SCORING_DIAGNOSTICS_BUILT"
+    assert summary["families_with_better_than_candidate"] == "tomographic_pair_shuffle"
+    assert (
+        summary["diagnostic_verdict"]
+        == "candidate_low_tail_but_not_absolute_winner_tomographic_shuffle_controls_dominate"
+    )
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["uses_kids_data_vector_values_for_scoring"] == "true"
+    assert summary["uses_kids_data_vector_values_for_source_selection"] == "false"
+    by_family = {row["control_family"]: row for row in family_rows}
+    assert set(by_family) == {
+        "sky_rotation",
+        "tomographic_pair_shuffle",
+        "web_path_sign_flip",
+        "wrong_channel_activation",
+    }
+    assert by_family["tomographic_pair_shuffle"]["controls_better_than_candidate_chi2"] == "2"
+    assert by_family["tomographic_pair_shuffle"]["controls_better_than_candidate_aic"] == "2"
+    for family_id in ["sky_rotation", "web_path_sign_flip", "wrong_channel_activation"]:
+        assert by_family[family_id]["controls_better_than_candidate_chi2"] == "0"
+        assert by_family[family_id]["controls_better_than_candidate_aic"] == "0"
+    assert len(top_rows) == 25
+    assert top_rows[0]["control_family"] == "tomographic_pair_shuffle"
+    assert top_rows[0]["beats_candidate_chi2"] == "true"
+    assert top_rows[0]["endpoint_validation_claimed"] == "false"
 
 
 def test_kids1000_cosebis_null_control_policy_is_declared_not_run() -> None:
