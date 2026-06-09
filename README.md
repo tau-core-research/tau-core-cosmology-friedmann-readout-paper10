@@ -1629,6 +1629,24 @@ The covariance metric is preserved as a future scoring metric but is explicitly
 not used as an amplitude derivation. The verdict is
 `dimensionless_source_amplitude_available_but_physical_response_amplitude_remains_open`.
 
+The COSEBIs response-unit normalization requirements gate is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_response_unit_normalization_requirements_gate_policy_v1.csv
+data/derived/kids1000_cosebis_response_unit_normalization_requirements_gate_v1.csv
+data/derived/kids1000_cosebis_response_unit_normalization_requirements_gate_v1_summary.csv
+docs/kids1000_cosebis_response_unit_normalization_requirements_gate_v1.md
+scripts/build_kids1000_cosebis_response_unit_normalization_requirements_gate_v1.py
+scripts/validate_kids1000_cosebis_response_unit_normalization_requirements_gate_v1.py
+```
+
+This gate freezes the requirements for mapping the dimensionless source kernel
+and \(A_{\rm src}=1\) into COSEBIs response units. The 300-row COSEBIs domain,
+dimensionless kernel/source amplitude, and covariance metric are available, but
+the response-unit map itself remains open and must be compatible with the
+standard-lensing/no-\(\tau\)-source null limit. The verdict is
+`cosebis_response_unit_requirements_frozen_but_normalization_remains_open`.
+
 The COSEBIs standard-lensing null-amplitude theorem-requirements gate is
 recorded in:
 
