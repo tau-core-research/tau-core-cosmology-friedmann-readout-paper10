@@ -10,12 +10,13 @@ endpoint can be attempted.
 Current result:
 
 - ready source-side components: data-vector structure, covariance matrix,
-  covariance solve policy, the theory-vector row-interface template, and the
-  mapping-to-template join contract, plus the F-overlap resolution/control
-  decision;
-- blocking components: theory vector, web/path mapping, source preflight,
-  blocker-resolution order, and null controls;
-- first blocker: `F_overlap`;
+  covariance solve policy, the theory-vector row-interface template, the
+  mapping-to-template join contract, the blocker-resolution ledger, and the
+  F-overlap resolution/control decision;
+- blocking components: `D_path`, `E_web`, `C_norm`/source preflight, theory
+  vector, web/path mapping, null controls, and the partial-control degeneracy
+  audit;
+- first blocker: `D_path`;
 - endpoint scoring remains disabled.
 
 The ledger forbids KiDS data-vector values for source selection, posterior

@@ -11,8 +11,8 @@ theory-vector family.
 
 The frozen gates are:
 
-1. accept an endpoint-grade `F_overlap` route from official geometry or full
-   route masks;
+1. accept an endpoint-route `F_overlap` source rule from official geometry or
+   full route masks;
 2. make the source-preflight mapping state ready;
 3. pass a non-degenerate branch-geometry audit;
 4. compute a frozen 300-row theory vector from the source-frozen mapping;
@@ -21,14 +21,12 @@ The frozen gates are:
 
 Current status:
 
-- only the leakage guard passes;
-- `F_overlap` remains the first blocker, but its immediate blocker has shifted
-  from raw full-route mask acquisition to pixel-mask/sub-tile overlap-rule
-  derivation, because the first header-footprint rule is uniform;
-- the three-mask pixel-fraction pilot is non-uniform, which supports the
-  feasibility of a pixel-content route, but it is still subset-only and cannot
-  satisfy the endpoint-grade `F_overlap` gate;
-- the partial-control rank-one geometry remains an explicit blocker;
+- the `F_overlap` endpoint-route gate now passes because the full-route
+  pixel-fraction rule is source-frozen and non-degenerate;
+- the leakage guard also passes;
+- source-preflight mapping readiness, non-degenerate branch geometry, the frozen
+  theory vector, and post-mapping null controls remain blocking;
+- the first blocking promotion gate is now source-preflight mapping readiness;
 - endpoint scoring remains disabled.
 
 Claim boundary:

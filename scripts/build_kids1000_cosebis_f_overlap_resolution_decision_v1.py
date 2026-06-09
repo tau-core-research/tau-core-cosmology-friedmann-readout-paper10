@@ -19,6 +19,9 @@ HEADER_DEGENERACY_SUMMARY = (
 PIXEL_FRACTION_PILOT_SUMMARY = (
     ROOT / "data" / "derived" / "kids1000_cosebis_f_overlap_pixel_fraction_pilot_v1_summary.csv"
 )
+FULL_PIXEL_FRACTION_SUMMARY = (
+    ROOT / "data" / "derived" / "kids1000_cosebis_f_overlap_full_route_pixel_fraction_rule_v1_summary.csv"
+)
 OUT = ROOT / "data" / "derived" / "kids1000_cosebis_f_overlap_resolution_decision_v1.csv"
 SUMMARY = ROOT / "data" / "derived" / "kids1000_cosebis_f_overlap_resolution_decision_v1_summary.csv"
 
@@ -40,6 +43,7 @@ def main() -> None:
     header_rule = read_one(HEADER_RULE_SUMMARY)
     header_degeneracy = read_one(HEADER_DEGENERACY_SUMMARY)
     pixel_fraction_pilot = read_one(PIXEL_FRACTION_PILOT_SUMMARY)
+    full_pixel_fraction = read_one(FULL_PIXEL_FRACTION_SUMMARY)
     with SOURCE_AVAILABILITY.open(newline="") as f:
         source_rows = list(csv.DictReader(f))
 
@@ -61,12 +65,18 @@ def main() -> None:
         raise SystemExit("header-footprint degeneracy audit must remain endpoint disabled")
     if pixel_fraction_pilot["endpoint_scoring_allowed"] != "false":
         raise SystemExit("pixel-fraction pilot must remain endpoint disabled")
+    if full_pixel_fraction["endpoint_scoring_allowed"] != "false":
+        raise SystemExit("full-route pixel-fraction rule must remain endpoint disabled")
 
     cache_complete = cache_summary["source_cache_complete"] == "true"
     header_rule_available = header_rule["header_footprint_rule_available"] == "true"
     header_rule_uniform = header_degeneracy["header_rule_uniform"] == "true"
     pixel_fraction_subset_non_degenerate = pixel_fraction_pilot["pixel_fraction_pilot_non_degenerate"] == "true"
+    full_pixel_fraction_non_degenerate = full_pixel_fraction["full_route_pixel_fraction_non_degenerate"] == "true"
     full_mask_decision_class = (
+        "accepted_source_frozen_full_route_pixel_fraction"
+        if cache_complete and full_pixel_fraction_non_degenerate
+        else
         "source_header_footprint_rule_available_but_uniform_not_promotable"
         if cache_complete and header_rule_available and header_rule_uniform
         else "source_cache_complete_overlap_rule_pending"
@@ -74,6 +84,9 @@ def main() -> None:
         else "rejected_unresolved"
     )
     full_mask_decision_reason = (
+        "full_196_mask_route_has_source_frozen_non_degenerate_pixel_fraction_rule_without_endpoint_inputs"
+        if cache_complete and full_pixel_fraction_non_degenerate
+        else
         "full_196_mask_route_has_uniform_header_rule_while_three_mask_pixel_fraction_pilot_is_non_degenerate_so_full_pixel_or_subtile_overlap_is_required"
         if cache_complete and header_rule_available and header_rule_uniform and pixel_fraction_subset_non_degenerate
         else "full_196_mask_route_has_source_frozen_header_footprint_rule_but_it_is_uniform_so_pixel_or_subtile_overlap_is_required"
@@ -87,6 +100,9 @@ def main() -> None:
         )
     )
     full_mask_exit = (
+        "f_overlap_source_route_resolved_proceed_to_remaining_path_weight_factors"
+        if cache_complete and full_pixel_fraction_non_degenerate
+        else
         "derive_pixel_mask_or_subtile_overlap_rule_without_endpoint_inputs"
         if cache_complete and header_rule_available and header_rule_uniform
         else "derive_source_frozen_full_mask_overlap_rule_without_endpoint_inputs"
@@ -109,7 +125,7 @@ def main() -> None:
             "decision_item_id": "F_OVERLAP_FULL_PIXEL_MASK_ROUTE",
             "source_evidence_item": "F_OVERLAP_FULL_PIXEL_MASK_SET",
             "decision_class": full_mask_decision_class,
-            "endpoint_route_accepted": "false",
+            "endpoint_route_accepted": "true" if full_pixel_fraction_non_degenerate else "false",
             "control_route_accepted": "false",
             "decision_reason": full_mask_decision_reason,
             "minimum_exit_condition": full_mask_exit,
@@ -179,7 +195,7 @@ def main() -> None:
         "endpoint_route_accepted_count": str(len(endpoint_routes)),
         "control_route_accepted_count": str(len(control_routes)),
         "unresolved_route_count": str(len(unresolved_routes)),
-        "f_overlap_endpoint_ready": "false",
+        "f_overlap_endpoint_ready": "true" if endpoint_routes else "false",
         "f_overlap_control_ready": "true" if control_routes else "false",
         "accepted_control_scope": "three_mask_subset_partial_path_control_only" if control_routes else "none",
         "full_route_source_cache_complete": "true" if cache_complete else "false",
@@ -191,6 +207,13 @@ def main() -> None:
         "pixel_fraction_subset_min_f_overlap": pixel_fraction_pilot["min_f_overlap_pixel_fraction_value"],
         "pixel_fraction_subset_max_f_overlap": pixel_fraction_pilot["max_f_overlap_pixel_fraction_value"],
         "pixel_fraction_subset_unique_value_count": pixel_fraction_pilot[
+            "unique_f_overlap_value_count_rounded_1e_minus_12"
+        ],
+        "full_route_pixel_fraction_non_degenerate": "true" if full_pixel_fraction_non_degenerate else "false",
+        "full_route_pixel_fraction_tile_count": full_pixel_fraction["tile_count"],
+        "full_route_pixel_fraction_min_f_overlap": full_pixel_fraction["min_f_overlap_value"],
+        "full_route_pixel_fraction_max_f_overlap": full_pixel_fraction["max_f_overlap_value"],
+        "full_route_pixel_fraction_unique_value_count": full_pixel_fraction[
             "unique_f_overlap_value_count_rounded_1e_minus_12"
         ],
         "first_required_next_action": full_mask_exit
@@ -216,8 +239,8 @@ def main() -> None:
         writer.writerow(summary)
     print(
         "PAPER10_KIDS1000_COSEBIS_F_OVERLAP_RESOLUTION_DECISION_V1_BUILT "
-        "endpoint_ready=false control_ready="
-        f"{summary['f_overlap_control_ready']} endpoint_allowed=false"
+        f"endpoint_ready={summary['f_overlap_endpoint_ready']} "
+        f"control_ready={summary['f_overlap_control_ready']} endpoint_allowed=false"
     )
 
 

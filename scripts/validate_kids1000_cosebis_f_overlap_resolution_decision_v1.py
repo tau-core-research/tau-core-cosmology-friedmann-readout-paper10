@@ -31,14 +31,14 @@ def main() -> None:
         raise SystemExit("unexpected F_overlap decision summary status")
     if summary["decision_item_count"] != "4":
         raise SystemExit("F_overlap decision must contain four decision items")
-    if summary["endpoint_route_accepted_count"] != "0":
-        raise SystemExit("no endpoint F_overlap route may be accepted yet")
+    if summary["endpoint_route_accepted_count"] != "1":
+        raise SystemExit("exactly one endpoint-grade F_overlap source route should be accepted")
     if summary["control_route_accepted_count"] != "1":
         raise SystemExit("exactly the three-mask subset should be accepted as control-only")
-    if summary["unresolved_route_count"] != "3":
-        raise SystemExit("three F_overlap routes should remain unresolved")
-    if summary["f_overlap_endpoint_ready"] != "false":
-        raise SystemExit("F_overlap endpoint must remain not ready")
+    if summary["unresolved_route_count"] != "2":
+        raise SystemExit("two F_overlap routes should remain unresolved")
+    if summary["f_overlap_endpoint_ready"] != "true":
+        raise SystemExit("F_overlap endpoint source route should now be ready")
     if summary["f_overlap_control_ready"] != "true":
         raise SystemExit("partial control route should be marked ready")
     if summary["full_route_source_cache_complete"] != "true":
@@ -62,8 +62,21 @@ def main() -> None:
         raise SystemExit("pixel-fraction pilot summary values should be normalized and non-uniform")
     if int(summary["pixel_fraction_subset_unique_value_count"]) <= 1:
         raise SystemExit("pixel-fraction pilot should carry more than one value")
-    if summary["first_required_next_action"] != "derive_pixel_mask_or_subtile_overlap_rule_without_endpoint_inputs":
-        raise SystemExit("next F_overlap action should be pixel/subtile overlap derivation")
+    if summary["full_route_pixel_fraction_non_degenerate"] != "true":
+        raise SystemExit("full-route pixel-fraction rule should be non-degenerate")
+    if summary["full_route_pixel_fraction_tile_count"] != "196":
+        raise SystemExit("full-route pixel-fraction rule should cover 196 tiles")
+    if not (
+        0.0
+        < float(summary["full_route_pixel_fraction_min_f_overlap"])
+        < float(summary["full_route_pixel_fraction_max_f_overlap"])
+        <= 1.0
+    ):
+        raise SystemExit("full-route pixel-fraction F_overlap values should be normalized and non-uniform")
+    if int(summary["full_route_pixel_fraction_unique_value_count"]) <= 1:
+        raise SystemExit("full-route pixel-fraction rule should carry more than one value")
+    if summary["first_required_next_action"] != "f_overlap_source_route_resolved_proceed_to_remaining_path_weight_factors":
+        raise SystemExit("next F_overlap action should move to remaining path-weight factors")
     by_item = {row["decision_item_id"]: row for row in rows}
     expected_items = {
         "F_OVERLAP_OFFICIAL_GEOMETRY_ROUTE",
@@ -86,11 +99,11 @@ def main() -> None:
         if by_item[item_id]["decision_class"] != "rejected_unresolved":
             raise SystemExit(f"{item_id} must remain unresolved")
     if by_item["F_OVERLAP_FULL_PIXEL_MASK_ROUTE"]["decision_class"] != (
-        "source_header_footprint_rule_available_but_uniform_not_promotable"
+        "accepted_source_frozen_full_route_pixel_fraction"
     ):
-        raise SystemExit("full mask route should have a uniform header rule but remain not promotable")
-    if by_item["F_OVERLAP_FULL_PIXEL_MASK_ROUTE"]["endpoint_route_accepted"] != "false":
-        raise SystemExit("full mask route must not be an endpoint route before overlap rule derivation")
+        raise SystemExit("full mask route should be accepted via source-frozen pixel fraction")
+    if by_item["F_OVERLAP_FULL_PIXEL_MASK_ROUTE"]["endpoint_route_accepted"] != "true":
+        raise SystemExit("full mask route should now satisfy the F_overlap endpoint route gate")
     for key in [
         "overlap_rule_computed",
         "numeric_factors_computed",

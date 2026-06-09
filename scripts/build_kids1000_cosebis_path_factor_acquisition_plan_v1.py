@@ -61,8 +61,8 @@ def main() -> None:
             "current_state": by_factor["F_overlap"]["source_state"],
             "required_source_class": "source_frozen_footprint_overlap_or_row_tile_assignment_rule",
             "minimum_acceptance": "assigns_each_domain_row_to_admissible_tile_footprint_support_without_kids_data_vector_values",
-            "next_action": "acquire_or_derive_footprint_overlap_rule_from_kids_mask_geometry_or_official_footprint_products",
-            "blocks_weight_computation": "true",
+            "next_action": "none_f_overlap_source_route_resolved_by_full_route_pixel_fraction_rule",
+            "blocks_weight_computation": "false",
         },
         {
             "requirement_id": "REQ_D_PATH_SOURCE",

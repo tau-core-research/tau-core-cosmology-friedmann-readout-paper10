@@ -1,36 +1,29 @@
 # KiDS-1000 COSEBIs F_overlap Resolution Decision v1
 
 This gate records the current formal decision for the first KiDS COSEBIs
-scoring blocker, `F_overlap`.
+path-weight factor, `F_overlap`.
 
 Current decision:
 
-- no endpoint-grade `F_overlap` route is accepted;
-- the official-footprint route remains unresolved because no source-frozen
-  official geometry product is present;
-- the full pixel-mask route is now source-cache complete in the committed
-  local inventory snapshot: all 196 preferred-route masks are accounted for by
-  193 ignored local-cache products plus the three committed subset masks;
-- a source-frozen header-footprint overlap rule has been derived from those
-  products;
-- that header-footprint rule is uniform across all 196 route tiles, so it is
-  not promotable as non-degenerate endpoint mapping support;
-- a three-mask pixel-fraction pilot is non-uniform on the committed subset,
-  showing that mask pixel content can carry source-side differentiating
-  support even though the header-footprint proxy is uniform;
-- the full pixel-mask route still remains endpoint-disabled because a
-  full-route pixel-mask or sub-tile overlap rule has not yet been derived;
-- the batch-0 dry-run remains unresolved because no filled execution-review
-  artifact and checksum manifest have been committed;
-- the three predeclared masks are accepted only as a caveated partial path-mask
-  control, not as a population endpoint overlap rule.
+- an endpoint-route source support for `F_overlap` is now accepted in the narrow
+  sense of a source-frozen, non-degenerate full-route pixel-fraction rule;
+- the rule uses all 196 preferred-route mask products represented in the local
+  full-route cache/inventory and the three committed subset masks;
+- it attaches a source-only pixel-content fraction to the full
+  `300 x 196 = 58,800` target-row by route-tile domain;
+- the resulting `F_overlap` values are non-uniform, with 196 rounded unique tile
+  values and a range of about `0.453` to `1.000`;
+- the older header-footprint route remains preserved as a negative control: it
+  was leakage-safe but uniform and therefore not promotable;
+- the three-mask pixel-fraction pilot remains proof-of-method only;
+- the official-footprint route is not needed for the current `F_overlap` gate;
+- the partial-control route remains a caveated control, not endpoint evidence.
 
-This artifact computes no overlap fraction, no path mapping, no theory vector,
-no prediction, no residual, and no score. It exists to prevent accidental
-promotion of source-cache evidence into endpoint validation.
+This artifact still computes no path mapping, no theory vector, no prediction,
+no residual, and no score. It exists to prevent accidental promotion of source
+support into endpoint validation.
 
-The next `F_overlap` action is therefore no longer raw acquisition or
-header-WCS footprint support. It is to derive a full-route pixel-mask or
-sub-tile overlap rule without reading endpoint data values, residuals,
-posterior chains, or fit-improvement flags. The three-mask pixel-fraction pilot
-is proof-of-method only; it is not an endpoint mapping route.
+The next scoring-facing action is no longer `F_overlap`. The first remaining
+path-weight blocker is `D_path`, followed by `E_web`, `C_norm`, mapping-vector
+construction, theory-vector construction, null controls, and only then endpoint
+scoring.

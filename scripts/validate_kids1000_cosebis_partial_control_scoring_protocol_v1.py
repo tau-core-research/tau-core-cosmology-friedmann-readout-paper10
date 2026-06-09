@@ -42,8 +42,10 @@ def main() -> None:
         raise SystemExit("partial-control protocol parent F_overlap decision mismatch")
     if protocol["parent_join_contract_policy"] != join_contract["policy_id"]:
         raise SystemExit("partial-control protocol parent join contract mismatch")
-    if f_overlap["f_overlap_endpoint_ready"] != "false":
-        raise SystemExit("partial-control protocol requires endpoint F_overlap to remain unavailable")
+    if f_overlap["f_overlap_endpoint_ready"] != "true":
+        raise SystemExit("partial-control protocol now expects endpoint-route F_overlap source support")
+    if f_overlap["endpoint_scoring_allowed"] != "false":
+        raise SystemExit("partial-control protocol must not inherit endpoint scoring permission")
     if f_overlap["f_overlap_control_ready"] != "true":
         raise SystemExit("partial-control protocol requires caveated F_overlap control readiness")
     if f_overlap["accepted_control_scope"] != protocol["control_scope"]:

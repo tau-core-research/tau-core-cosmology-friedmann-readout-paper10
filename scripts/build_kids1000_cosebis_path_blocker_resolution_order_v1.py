@@ -49,10 +49,10 @@ def main() -> None:
             "resolution_stage": "freeze_footprint_overlap",
             "factor_id": "F_overlap",
             "accepted_route_ids": "ROUTE_F_OVERLAP_OFFICIAL_FOOTPRINT_GEOMETRY;ROUTE_F_OVERLAP_PIXEL_MASK_DERIVED",
-            "stage_status": "blocking_not_resolved",
+            "stage_status": "resolved_source_supported",
             "why_first": "target_row_tile_support_is_structural_for_any_path_weight",
-            "minimum_exit_condition": "source_frozen_overlap_or_assignment_rule_exists_without_endpoint_inputs",
-            "next_allowed_stage_if_unresolved": "none",
+            "minimum_exit_condition": "source_frozen_full_route_pixel_fraction_rule_exists_without_endpoint_inputs",
+            "next_allowed_stage_if_unresolved": "proceed_to_D_path",
         },
         {
             "order_rank": "2",
@@ -135,12 +135,13 @@ def main() -> None:
         "policy_id": policy["policy_id"],
         "status": "KIDS1000_COSEBIS_PATH_BLOCKER_RESOLUTION_ORDER_BUILT_NOT_FETCHED",
         "stage_count": str(len(rows)),
+        "resolved_source_supported_stage_count": str(sum(row["stage_status"] == "resolved_source_supported" for row in rows)),
         "blocking_unresolved_stage_count": str(sum(row["stage_status"] == "blocking_not_resolved" for row in rows)),
         "not_allowed_stage_count": str(sum(row["stage_status"] == "not_allowed_yet" for row in rows)),
         "declared_not_computed_stage_count": str(sum(row["stage_status"] == "declared_not_computed" for row in rows)),
         "declared_not_executed_stage_count": str(sum(row["stage_status"] == "declared_not_executed" for row in rows)),
-        "first_blocker": "F_overlap",
-        "next_action": "resolve_or_formally_control_F_overlap_before_D_path_E_web_C_norm_mapping_or_scoring",
+        "first_blocker": "D_path",
+        "next_action": "promote_D_path_full_route_or_source_frozen_path_depth_support_before_E_web_C_norm_mapping_or_scoring",
         "external_products_fetched": "false",
         "numeric_factors_computed": "false",
         "path_mapping_computed": "false",
@@ -161,7 +162,7 @@ def main() -> None:
         writer.writerow(summary)
     print(
         "PAPER10_KIDS1000_COSEBIS_PATH_BLOCKER_RESOLUTION_ORDER_V1_BUILT "
-        f"stages={len(rows)} first_blocker=F_overlap endpoint_allowed=false"
+        f"stages={len(rows)} first_blocker=D_path endpoint_allowed=false"
     )
 
 

@@ -30,9 +30,9 @@ def main() -> None:
         raise SystemExit("unexpected acquisition plan summary status")
     if summary["requirement_count"] != "7":
         raise SystemExit("unexpected acquisition requirement count")
-    if summary["blocking_requirement_count"] != "4":
+    if summary["blocking_requirement_count"] != "3":
         raise SystemExit("unexpected blocking requirement count")
-    if summary["nonblocking_requirement_count"] != "3":
+    if summary["nonblocking_requirement_count"] != "4":
         raise SystemExit("unexpected nonblocking requirement count")
     by_req = {row["requirement_id"]: row for row in rows}
     expected = {
@@ -46,12 +46,14 @@ def main() -> None:
     }
     if set(by_req) != expected:
         raise SystemExit("unexpected acquisition requirements")
-    for req in ["REQ_F_OVERLAP_SOURCE", "REQ_D_PATH_SOURCE", "REQ_E_WEB_SOURCE", "REQ_C_NORM_RULE"]:
+    for req in ["REQ_D_PATH_SOURCE", "REQ_E_WEB_SOURCE", "REQ_C_NORM_RULE"]:
         if by_req[req]["blocks_weight_computation"] != "true":
             raise SystemExit(f"{req} must block weight computation")
-    for req in ["REQ_N_PAIR_LOCK", "REQ_T_TILE_LOCK", "REQ_NULL_CONTROLS_EXECUTION"]:
+    for req in ["REQ_N_PAIR_LOCK", "REQ_T_TILE_LOCK", "REQ_F_OVERLAP_SOURCE", "REQ_NULL_CONTROLS_EXECUTION"]:
         if by_req[req]["blocks_weight_computation"] != "false":
             raise SystemExit(f"{req} must not directly block weight computation")
+    if by_req["REQ_F_OVERLAP_SOURCE"]["current_state"] != "available_non_degenerate_full_route_pixel_fraction":
+        raise SystemExit("F_overlap acquisition state should be resolved by full-route pixel fraction")
     for key in [
         "external_products_fetched",
         "path_mapping_computed",

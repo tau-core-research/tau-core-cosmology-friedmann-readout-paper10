@@ -12,6 +12,7 @@ REDSHIFT = ROOT / "data" / "derived" / "kids1000_cosebis_redshift_kernel_invento
 ROUTE_TILES = ROOT / "data" / "derived" / "kids1000_dr4_path_mask_route_tile_inventory_v1_summary.csv"
 MASK_SHELL = ROOT / "data" / "derived" / "kids1000_dr4_path_mask_observable_shell_v1_summary.csv"
 HEADER_DEGENERACY = ROOT / "data" / "derived" / "kids1000_cosebis_f_overlap_header_footprint_degeneracy_audit_v1_summary.csv"
+FULL_PIXEL_FRACTION = ROOT / "data" / "derived" / "kids1000_cosebis_f_overlap_full_route_pixel_fraction_rule_v1_summary.csv"
 NULL_SEEDS = ROOT / "data" / "derived" / "kids1000_cosebis_null_control_seed_inventory_v1_summary.csv"
 OUT = ROOT / "data" / "derived" / "kids1000_cosebis_path_weight_construction_rule_v1.csv"
 SUMMARY = ROOT / "data" / "derived" / "kids1000_cosebis_path_weight_construction_rule_v1_summary.csv"
@@ -32,6 +33,7 @@ def main() -> None:
     route_tiles = read_one(ROUTE_TILES)
     mask_shell = read_one(MASK_SHELL)
     header_degeneracy = read_one(HEADER_DEGENERACY)
+    full_pixel_fraction = read_one(FULL_PIXEL_FRACTION)
     null_seeds = read_one(NULL_SEEDS)
     if policy["endpoint_scoring_allowed"].lower() != "false":
         raise SystemExit("path-weight construction policy must remain endpoint disabled")
@@ -66,12 +68,12 @@ def main() -> None:
         {
             "factor_id": "F_overlap",
             "factor_role": "row_tile_footprint_overlap_factor",
-            "source_state": "available_uniform_not_promotable",
-            "evidence_artifact": "data/derived/kids1000_cosebis_f_overlap_header_footprint_degeneracy_audit_v1_summary.csv",
-            "source_count": header_degeneracy["tile_count"],
-            "numeric_factor_computed": "false",
-            "blocking_status": "blocking",
-            "limitation": "header_footprint_rule_exists_but_is_uniform_requires_pixel_mask_or_subtile_overlap",
+            "source_state": "available_non_degenerate_full_route_pixel_fraction",
+            "evidence_artifact": "data/derived/kids1000_cosebis_f_overlap_full_route_pixel_fraction_rule_v1_summary.csv",
+            "source_count": full_pixel_fraction["tile_count"],
+            "numeric_factor_computed": "true",
+            "blocking_status": "not_blocking",
+            "limitation": "source_frozen_full_route_pixel_fraction_rule_available_not_full_path_mapping",
         },
         {
             "factor_id": "D_path",
@@ -145,9 +147,12 @@ def main() -> None:
         "policy_id": policy["policy_id"],
         "status": "KIDS1000_COSEBIS_PATH_WEIGHT_CONSTRUCTION_RULE_BUILT_NOT_COMPUTED",
         "factor_count": str(len(rows)),
-        "available_factor_count": str(sum(row["source_state"] == "available_for_future_rule" for row in rows)),
+        "available_factor_count": str(sum(row["source_state"].startswith("available") for row in rows)),
         "available_uniform_not_promotable_factor_count": str(
             sum(row["source_state"] == "available_uniform_not_promotable" for row in rows)
+        ),
+        "available_non_degenerate_factor_count": str(
+            sum(row["source_state"] == "available_non_degenerate_full_route_pixel_fraction" for row in rows)
         ),
         "partial_available_factor_count": str(sum(row["source_state"] == "partial_available" for row in rows)),
         "missing_factor_count": str(sum(row["source_state"] == "missing" for row in rows)),

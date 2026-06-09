@@ -822,6 +822,29 @@ proxy, this pixel-content pilot is non-uniform (`F_overlap` ranges from about
 population endpoint: it resolves the header-uniformity concern only for the
 subset and motivates a full-route streaming/cache pixel or sub-tile extractor.
 
+The source-frozen full-route pixel-fraction `F_overlap` rule is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_f_overlap_full_route_pixel_fraction_rule_policy_v1.csv
+data/derived/kids1000_cosebis_f_overlap_full_route_pixel_fraction_tile_rule_v1.csv
+data/derived/kids1000_cosebis_f_overlap_full_route_pixel_fraction_rule_v1.csv
+data/derived/kids1000_cosebis_f_overlap_full_route_pixel_fraction_rule_v1_summary.csv
+docs/kids1000_cosebis_f_overlap_full_route_pixel_fraction_rule_v1.md
+scripts/build_kids1000_cosebis_f_overlap_full_route_pixel_fraction_rule_v1.py
+scripts/validate_kids1000_cosebis_f_overlap_full_route_pixel_fraction_rule_v1.py
+```
+
+It reads the 196 source mask products from the local full-route cache plus the
+committed subset masks, computes a finite/nonzero pixel-content fraction for
+each route tile, and attaches the resulting source-only factor to the full
+`300 x 196 = 58,800` target-row by route-tile domain. The rule is
+non-degenerate (`F_overlap` ranges from about `0.453` to `1.000`, with 196
+rounded unique tile values). This resolves the `F_overlap` source blocker, but
+it still computes no path mapping, theory vector, prediction, residual, or
+score. Public reproduction validates the committed outputs; rebuilding them
+requires the ignored local raw mask cache documented in the full-route cache
+inventory.
+
 The `F_overlap` batch-promotion review checklist is recorded in:
 
 ```text
@@ -1015,11 +1038,10 @@ scripts/validate_kids1000_cosebis_non_degenerate_mapping_promotion_gate_v1.py
 It freezes six required promotion gates before any endpoint scoring: endpoint
 grade `F_overlap`, source-preflight readiness, non-degenerate branch geometry,
 a frozen 300-row theory vector, null controls after mapping, and leakage
-guards. In the current repository only the leakage guard passes. The first
-blocking gate is still `F_overlap`, but its immediate next action is now the
-source-frozen pixel-mask/sub-tile overlap derivation rather than raw-mask
-acquisition or header-only area support. The rank-one partial-control geometry
-remains an explicit promotion blocker.
+guards. In the current repository the `F_overlap` endpoint-route gate and the
+leakage guard pass. The first blocking promotion gate is now source-preflight
+mapping readiness, and the rank-one partial-control geometry remains an
+explicit promotion blocker. Endpoint scoring is still disabled.
 
 The endpoint scoring-readiness ledger is recorded in:
 
@@ -1035,12 +1057,12 @@ scripts/validate_kids1000_cosebis_endpoint_scoring_readiness_v1.py
 It collects the current pre-scoring state in one place. The data-vector
 structure, covariance matrix, covariance solve policy, theory-vector
 row-interface template, mapping-to-template join contract, and F-overlap
-resolution/control decision are source-side ready; the theory vector, web/path
-mapping, source preflight, blocker resolution, null controls, and the
-partial-control degeneracy audit still block scoring. The first blocker
-remains `F_overlap`; the partial-control diagnostic route is also explicitly
-blocked as endpoint evidence until a non-degenerate source-frozen mapping
-exists. Endpoint scoring remains disabled.
+resolution/control decision are source-side ready; `D_path`, `E_web`, `C_norm`
+/ source preflight, the theory vector, web/path mapping, null controls, and the
+partial-control degeneracy audit still block scoring. The first blocker is now
+`D_path`. The partial-control diagnostic route is also explicitly blocked as
+endpoint evidence until a non-degenerate source-frozen mapping exists. Endpoint
+scoring remains disabled.
 
 The frozen endpoint scoring protocol shell is recorded in:
 

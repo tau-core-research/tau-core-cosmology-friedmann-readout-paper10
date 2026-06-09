@@ -1,6 +1,6 @@
 # KiDS-1000 COSEBIs Path-Weight Construction Rule v1
 
-This gate declares, but does not compute, an admissible factorization for a
+This gate declares, but does not yet compute, an admissible factorization for a
 future source-frozen KiDS-1000 COSEBIs path-aware weight.
 
 The declared symbolic form is:
@@ -19,19 +19,21 @@ where:
 
 - `N_pair(row)` is a tomographic/redshift-kernel factor,
 - `T_tile(tile)` is a route-tile availability/coordinate factor,
-- `F_overlap(row,tile)` is a footprint/row-to-tile overlap factor,
+- `F_overlap(row,tile)` is a source-frozen full-route pixel-fraction overlap
+  support factor,
 - `D_path(tile)` is a future depth/mask/path-load factor,
 - `E_web(tile)` is a future web/environment factor,
 - `C_norm` is a future normalization rule.
 
-The current gate only records which factors have source-side support and which
-factors remain missing or non-promotable. `F_overlap` now has a source-frozen
-header-footprint rule candidate, but the degeneracy audit shows that this rule
-is uniform across all 196 route tiles. It therefore remains blocking for
-non-degenerate endpoint mapping until a pixel-mask or sub-tile overlap rule is
-derived. This gate does not compute any numeric path weights, mapping vector,
-theory-vector element, prediction, residual, likelihood value, or endpoint
-score.
+Current status:
+
+- `N_pair` and `T_tile` have source-side support;
+- `F_overlap` now has non-degenerate source-side support from the full-route
+  pixel-fraction rule over all 196 route masks;
+- `D_path`, `E_web`, and `C_norm` are not yet resolved strongly enough to make
+  the full path weight computable;
+- no mapping vector, theory-vector element, prediction, residual, likelihood
+  value, or endpoint score is computed here.
 
 Endpoint leakage remains forbidden: no KiDS data-vector values, posterior
 chains, residuals, fit-improvement flags, or post-hoc path labels may be used to

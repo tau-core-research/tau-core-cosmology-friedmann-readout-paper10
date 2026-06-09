@@ -32,10 +32,12 @@ def main() -> None:
         raise SystemExit("unexpected path-weight summary status")
     if summary["factor_count"] != "7":
         raise SystemExit("unexpected path-weight factor count")
-    if summary["available_factor_count"] != "2":
+    if summary["available_factor_count"] != "3":
         raise SystemExit("unexpected available factor count")
-    if summary["available_uniform_not_promotable_factor_count"] != "1":
+    if summary["available_uniform_not_promotable_factor_count"] != "0":
         raise SystemExit("unexpected uniform-not-promotable factor count")
+    if summary["available_non_degenerate_factor_count"] != "1":
+        raise SystemExit("unexpected non-degenerate factor count")
     if summary["partial_available_factor_count"] != "1":
         raise SystemExit("unexpected partial factor count")
     if summary["missing_factor_count"] != "1":
@@ -52,7 +54,7 @@ def main() -> None:
     expected = {
         "N_pair": "available_for_future_rule",
         "T_tile": "available_for_future_rule",
-        "F_overlap": "available_uniform_not_promotable",
+        "F_overlap": "available_non_degenerate_full_route_pixel_fraction",
         "D_path": "partial_available",
         "E_web": "missing",
         "C_norm": "declared_not_computed",
@@ -67,6 +69,10 @@ def main() -> None:
         raise SystemExit("D_path must remain limited to the three-mask shell")
     if by_factor["T_tile"]["source_count"] != "196":
         raise SystemExit("T_tile must reference all 196 route tiles")
+    if by_factor["F_overlap"]["source_count"] != "196":
+        raise SystemExit("F_overlap must reference all 196 route tiles")
+    if by_factor["F_overlap"]["numeric_factor_computed"] != "true":
+        raise SystemExit("F_overlap numeric factor should be computed from full-route pixels")
     for key in [
         "tile_weights_computed",
         "path_mapping_computed",

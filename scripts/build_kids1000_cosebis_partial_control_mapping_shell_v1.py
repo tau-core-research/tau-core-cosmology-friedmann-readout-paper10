@@ -48,8 +48,10 @@ def main() -> None:
         raise SystemExit("unexpected partial-control protocol parent")
     if protocol["partial_control_scoring_allowed"] != "false":
         raise SystemExit("parent partial-control protocol must remain frozen-not-run")
-    if f_overlap["f_overlap_endpoint_ready"] != "false" or f_overlap["f_overlap_control_ready"] != "true":
-        raise SystemExit("partial-control mapping shell requires control-only F_overlap decision")
+    if f_overlap["f_overlap_endpoint_ready"] != "true" or f_overlap["f_overlap_control_ready"] != "true":
+        raise SystemExit("partial-control mapping shell requires source-supported F_overlap decision")
+    if f_overlap["endpoint_scoring_allowed"] != "false":
+        raise SystemExit("partial-control mapping shell must not inherit endpoint scoring permission")
     if f_overlap["accepted_control_scope"] != policy["control_scope"]:
         raise SystemExit("partial-control scope mismatch")
     if template_summary["template_rows"] != policy["expected_target_rows"]:

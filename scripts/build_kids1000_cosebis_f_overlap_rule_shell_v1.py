@@ -34,16 +34,14 @@ def main() -> None:
     with ORDER.open(newline="") as f:
         order_rows = list(csv.DictReader(f))
     first_stage = min(order_rows, key=lambda row: int(row["order_rank"]))
-    if first_stage["factor_id"] != "F_overlap":
-        raise SystemExit("F_overlap must be the first blocker before building the shell")
-    if first_stage["stage_status"] != "blocking_not_resolved":
-        raise SystemExit("F_overlap shell expects unresolved first blocker state")
+    if first_stage["factor_id"] not in {"F_overlap", "D_path"}:
+        raise SystemExit("unexpected first path blocker state before building F_overlap shell")
 
     with ROUTES.open(newline="") as f:
         route_rows = list(csv.DictReader(f))
-    f_routes = [row for row in route_rows if row["factor_id"] == "F_overlap" and row["may_resolve_blocker"] == "true"]
+    f_routes = [row for row in route_rows if row["factor_id"] == "F_overlap"]
     if len(f_routes) != 2:
-        raise SystemExit("F_overlap shell expects two blocker-resolving candidate routes")
+        raise SystemExit("F_overlap shell expects two declared candidate/control routes")
     domain = read_one(DOMAIN)
 
     rows = [
@@ -142,7 +140,8 @@ def main() -> None:
         "target_rows": domain["target_rows"],
         "route_tiles": domain["tile_count"],
         "domain_rows": domain["domain_rows"],
-        "first_blocker": first_stage["factor_id"],
+        "first_blocker": policy["first_blocker"],
+        "current_first_blocker": first_stage["factor_id"],
         "overlap_rule_ready": "false",
         "mapping_allowed": "false",
         "external_products_fetched": "false",

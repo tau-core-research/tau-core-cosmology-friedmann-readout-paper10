@@ -32,12 +32,12 @@ def main() -> None:
         raise SystemExit("promotion gate should be built but not ready")
     if summary["gate_count"] != "6":
         raise SystemExit("promotion gate must contain six gates")
-    if summary["passed_gate_count"] != "1":
-        raise SystemExit("only the leakage guard should currently pass")
-    if summary["blocking_gate_count"] != "5":
-        raise SystemExit("five promotion gates should currently block")
-    if summary["first_blocking_gate"] != "PROMOTE_01_F_OVERLAP_ENDPOINT_ROUTE":
-        raise SystemExit("F_overlap endpoint route must remain first promotion blocker")
+    if summary["passed_gate_count"] != "2":
+        raise SystemExit("F_overlap and leakage guard should currently pass")
+    if summary["blocking_gate_count"] != "4":
+        raise SystemExit("four promotion gates should currently block")
+    if summary["first_blocking_gate"] != "PROMOTE_02_SOURCE_PREFLIGHT_MAPPING_READY":
+        raise SystemExit("source preflight must be the first remaining promotion blocker")
     if summary["non_degenerate_mapping_promotion_allowed"] != "false":
         raise SystemExit("non-degenerate mapping promotion must remain disabled")
     for key in [
@@ -56,7 +56,7 @@ def main() -> None:
         if any(row[key] != "false" for row in rows):
             raise SystemExit(f"rows must keep {key}=false")
     expected = {
-        "PROMOTE_01_F_OVERLAP_ENDPOINT_ROUTE": ("false", "blocking_source_overlap"),
+        "PROMOTE_01_F_OVERLAP_ENDPOINT_ROUTE": ("true", "not_blocking"),
         "PROMOTE_02_SOURCE_PREFLIGHT_MAPPING_READY": ("false", "blocking_source_preflight"),
         "PROMOTE_03_NON_DEGENERATE_BRANCH_GEOMETRY": ("false", "blocking_rank_one_partial_control"),
         "PROMOTE_04_THEORY_VECTOR_COMPUTED": ("false", "blocking_theory_vector"),
