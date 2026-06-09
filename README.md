@@ -1591,6 +1591,26 @@ null normalization before any physical COSEBIs prediction can be claimed. The
 verdict is
 `dimensionless_operator_kernel_identified_but_physical_units_and_amplitude_remain_open`.
 
+The COSEBIs source-side amplitude-map attempt is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_source_side_amplitude_map_attempt_policy_v1.csv
+data/derived/kids1000_cosebis_source_side_amplitude_map_attempt_v1.csv
+data/derived/kids1000_cosebis_source_side_amplitude_map_attempt_v1_ledger.csv
+data/derived/kids1000_cosebis_source_side_amplitude_map_attempt_v1_summary.csv
+docs/kids1000_cosebis_source_side_amplitude_map_attempt_v1.md
+scripts/build_kids1000_cosebis_source_side_amplitude_map_attempt_v1.py
+scripts/validate_kids1000_cosebis_source_side_amplitude_map_attempt_v1.py
+```
+
+This artifact freezes only the internal dimensionless source-normalized
+amplitude map \(A_{\rm src}=1\) induced by the unit-mean `C_norm` rule and the
+unit-mean operator skeleton. It removes an arbitrary source-side scale from the
+current skeleton, but it does not derive physical COSEBIs response units, does
+not calibrate an endpoint amplitude, and does not prove the standard-lensing
+null amplitude. The verdict is
+`dimensionless_source_amplitude_map_exists_but_physical_amplitude_remains_open`.
+
 The COSEBIs path-mapping source-preflight ledger is recorded in:
 
 ```text
