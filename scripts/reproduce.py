@@ -262,6 +262,30 @@ def main() -> None:
                                 "scripts/validate_void_source_basis_refinement_v2_path_sky_environment_screen_v1.py",
                             ]
                         )
+                        run(
+                            [
+                                "python",
+                                "scripts/build_void_source_basis_refinement_v2_observer_dependence_followup_template_v1.py",
+                            ]
+                        )
+                        run(
+                            [
+                                "python",
+                                "scripts/validate_void_source_basis_refinement_v2_observer_dependence_followup_template_v1.py",
+                            ]
+                        )
+                        run(
+                            [
+                                "python",
+                                "scripts/build_void_source_basis_refinement_v2_observer_dependence_followup_package_v1.py",
+                            ]
+                        )
+                        run(
+                            [
+                                "python",
+                                "scripts/validate_void_source_basis_refinement_v2_observer_dependence_followup_package_v1.py",
+                            ]
+                        )
                 run(["python", "scripts/build_void_source_basis_refinement_v2_path_projection_route_ledger_v1.py"])
                 run(["python", "scripts/validate_void_source_basis_refinement_v2_path_projection_route_ledger_v1.py"])
                 run(["python", "scripts/build_void_source_basis_refinement_v2_time_readout_route_ledger_v1.py"])

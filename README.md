@@ -769,6 +769,18 @@ data/derived/void_source_basis_refinement_v2_path_sky_environment_screen_v1_fami
 data/derived/void_source_basis_refinement_v2_path_sky_environment_screen_v1_summary.csv
 scripts/run_void_source_basis_refinement_v2_path_sky_environment_screen_v1.py
 scripts/validate_void_source_basis_refinement_v2_path_sky_environment_screen_v1.py
+docs/void_source_basis_refinement_v2_observer_dependence_followup_v1.md
+data/source_manifest/void_source_basis_refinement_v2_observer_dependence_followup_policy_v1.csv
+data/derived/void_source_basis_refinement_v2_observer_dependence_followup_response_template_v1.csv
+data/derived/void_source_basis_refinement_v2_observer_dependence_followup_template_v1_summary.csv
+data/derived/void_source_basis_refinement_v2_observer_dependence_followup_package_v1.zip
+data/derived/void_source_basis_refinement_v2_observer_dependence_followup_package_v1.zip.sha256
+data/derived/void_source_basis_refinement_v2_observer_dependence_followup_package_v1_manifest.csv
+data/derived/void_source_basis_refinement_v2_observer_dependence_followup_package_v1_summary.csv
+scripts/build_void_source_basis_refinement_v2_observer_dependence_followup_template_v1.py
+scripts/validate_void_source_basis_refinement_v2_observer_dependence_followup_template_v1.py
+scripts/build_void_source_basis_refinement_v2_observer_dependence_followup_package_v1.py
+scripts/validate_void_source_basis_refinement_v2_observer_dependence_followup_package_v1.py
 scripts/build_void_source_basis_refinement_v2_path_projection_route_ledger_v1.py
 scripts/validate_void_source_basis_refinement_v2_path_projection_route_ledger_v1.py
 scripts/build_void_source_basis_refinement_v2_time_readout_route_ledger_v1.py
@@ -861,7 +873,13 @@ control resistance: the candidate ranks seventh and six controls beat it. A
 narrower follow-up signal appears for `W_path_x_sky_z`, which survives its own
 family controls in the same 12-row screen. This is not endpoint validation, but
 it is the first screen-level hint that observer/sky-orientation terms may be a
-better source-side path basis than tile proximity alone. The
+better source-side path basis than tile proximity alone. A dedicated
+observer-dependence follow-up package is now built for `W_path_x_sky_z`. The
+package asks only whether this can be retained as a source-side
+observer-dependence follow-up candidate and whether the next action may be
+limited to a separate replay authorization package. It does not authorize
+replay, does not claim endpoint validation, and contains no endpoint residuals,
+endpoint scores, or fit statistics. The
 time/readout component also has a route ledger: CC/BAO/CMB products are
 declared but not fetched/frozen as numeric time-readout inputs, so no `W_time`
 values are computed.
