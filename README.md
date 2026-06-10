@@ -248,6 +248,26 @@ conservative safety floor (`z=10`) and at a recombination proxy (`z=1089.92`).
 The check passes, so the current late-time pilots do not directly modify the
 early-universe safety regime.
 
+The FLRW-audited void/web endpoint-readiness ledger is recorded in:
+
+```text
+data/source_manifest/void_web_endpoint_readiness_after_flrw_audit_policy_v1.csv
+data/derived/void_web_endpoint_readiness_after_flrw_audit_v1.csv
+data/derived/void_web_endpoint_readiness_after_flrw_audit_v1_summary.csv
+docs/void_web_endpoint_readiness_after_flrw_audit_v1.md
+scripts/build_void_web_endpoint_readiness_after_flrw_audit_v1.py
+scripts/validate_void_web_endpoint_readiness_after_flrw_audit_v1.py
+```
+
+This ledger combines the source-native Pantheon distance pilot, the SDSS growth
+pilot, the official-covariance SDSS multi-tracer pilot, the CMB-safety support
+check, and the FLRW-consistency channel audit. It records
+`endpoint_ready_count=0` and `support_ready_count=1`: the CMB-safety support
+passes, but the scoring-facing void/web pilots remain blocked by AIC loss,
+shuffled or wrong-sign controls, and near-zero full-covariance signal. The next
+required gate is a predeclared combined multiblock endpoint protocol with joint
+nulls and a unified information criterion.
+
 The first lensing route-freeze check is recorded in:
 
 ```text

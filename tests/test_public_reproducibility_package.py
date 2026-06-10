@@ -73,6 +73,12 @@ def test_public_files_exist() -> None:
         "data/source_manifest/cmb_safety_lowz_support_v1.csv",
         "data/derived/cmb_safety_lowz_support_v1.csv",
         "data/derived/cmb_safety_lowz_support_v1_summary.csv",
+        "data/source_manifest/void_web_endpoint_readiness_after_flrw_audit_policy_v1.csv",
+        "data/derived/void_web_endpoint_readiness_after_flrw_audit_v1.csv",
+        "data/derived/void_web_endpoint_readiness_after_flrw_audit_v1_summary.csv",
+        "docs/void_web_endpoint_readiness_after_flrw_audit_v1.md",
+        "scripts/build_void_web_endpoint_readiness_after_flrw_audit_v1.py",
+        "scripts/validate_void_web_endpoint_readiness_after_flrw_audit_v1.py",
         "data/source_manifest/kids1000_lensing_route_v1.csv",
         "data/derived/kids1000_lensing_route_v1_head.csv",
         "data/derived/kids1000_lensing_route_v1_summary.csv",
@@ -1131,6 +1137,45 @@ def test_cosmology_flrw_consistency_channel_audit_v1_is_not_scoring() -> None:
         "fit_improvement_flags",
     ]:
         assert marker in forbidden
+
+
+def test_void_web_endpoint_readiness_after_flrw_audit_v1_is_not_endpoint() -> None:
+    subprocess.run(
+        ["python", "scripts/build_void_web_endpoint_readiness_after_flrw_audit_v1.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    subprocess.run(
+        ["python", "scripts/validate_void_web_endpoint_readiness_after_flrw_audit_v1.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    with (
+        ROOT / "data/derived/void_web_endpoint_readiness_after_flrw_audit_v1.csv"
+    ).open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    with (
+        ROOT / "data/derived/void_web_endpoint_readiness_after_flrw_audit_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert len(rows) == 4
+    assert summary["endpoint_ready_count"] == "0"
+    assert summary["support_ready_count"] == "1"
+    assert summary["endpoint_scoring_allowed"] == "false"
+    assert summary["physical_validation_claimed"] == "false"
+    statuses = {row["readiness_status"] for row in rows}
+    assert "SAFETY_SUPPORT_PASS_NOT_ENDPOINT_SCORE" in statuses
+    assert "PILOT_SIGNAL_NOT_ENDPOINT_READY" in statuses
+    assert "GROWTH_STRESS_TEST_NOT_ENDPOINT_READY" in statuses
+    assert "SEMI_NEGATIVE_CONTROL_NOT_ENDPOINT_READY" in statuses
+    blockers = {row["endpoint_blocker"] for row in rows}
+    assert "aic_loss_and_shuffled_control_not_beaten" in blockers
+    assert "diagonal_covariance_and_wrong_sign_degeneracy" in blockers
+    assert "near_zero_signal_and_wrong_sign_degeneracy" in blockers
 
 
 def test_source_page_cache_is_hash_locked() -> None:
