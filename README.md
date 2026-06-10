@@ -432,6 +432,28 @@ current low-z void-support rule. It does not authorize or run endpoint scoring;
 `candidate_endpoint_run_allowed_now=false` and a separate authorization would
 still be required before any replay.
 
+The corresponding low-z replay authorization handoff package is:
+
+```text
+REVIEWER_README_LOW_Z_VOID_SCOPE_REPLAY_AUTHORIZATION.md
+data/source_manifest/low_z_pantheon_void_scope_replay_authorization_review_policy_v1.csv
+data/derived/low_z_pantheon_void_scope_replay_authorization_review_response_template_v1.csv
+data/derived/low_z_pantheon_void_scope_replay_authorization_review_template_v1_summary.csv
+data/derived/low_z_pantheon_void_scope_replay_authorization_review_package_v1.zip
+data/derived/low_z_pantheon_void_scope_replay_authorization_review_package_v1.zip.sha256
+data/derived/low_z_pantheon_void_scope_replay_authorization_review_package_v1_manifest.csv
+data/derived/low_z_pantheon_void_scope_replay_authorization_review_package_v1_summary.csv
+docs/low_z_pantheon_void_scope_replay_authorization_review_v1.md
+scripts/build_low_z_pantheon_void_scope_replay_authorization_review_template_v1.py
+scripts/validate_low_z_pantheon_void_scope_replay_authorization_review_template_v1.py
+scripts/build_low_z_pantheon_void_scope_replay_authorization_review_package_v1.py
+scripts/validate_low_z_pantheon_void_scope_replay_authorization_review_package_v1.py
+```
+
+This package is a reviewer handoff only. It is not completed, does not authorize
+a replay by itself, and records no endpoint residuals, scores, or fit
+statistics.
+
 The first lensing route-freeze check is recorded in:
 
 ```text

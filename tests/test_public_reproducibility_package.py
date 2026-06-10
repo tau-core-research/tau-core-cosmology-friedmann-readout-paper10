@@ -134,6 +134,19 @@ def test_public_files_exist() -> None:
         "docs/low_z_pantheon_void_scope_candidate_v1.md",
         "scripts/build_low_z_pantheon_void_scope_candidate_v1.py",
         "scripts/validate_low_z_pantheon_void_scope_candidate_v1.py",
+        "REVIEWER_README_LOW_Z_VOID_SCOPE_REPLAY_AUTHORIZATION.md",
+        "data/source_manifest/low_z_pantheon_void_scope_replay_authorization_review_policy_v1.csv",
+        "data/derived/low_z_pantheon_void_scope_replay_authorization_review_response_template_v1.csv",
+        "data/derived/low_z_pantheon_void_scope_replay_authorization_review_template_v1_summary.csv",
+        "data/derived/low_z_pantheon_void_scope_replay_authorization_review_package_v1.zip",
+        "data/derived/low_z_pantheon_void_scope_replay_authorization_review_package_v1.zip.sha256",
+        "data/derived/low_z_pantheon_void_scope_replay_authorization_review_package_v1_manifest.csv",
+        "data/derived/low_z_pantheon_void_scope_replay_authorization_review_package_v1_summary.csv",
+        "docs/low_z_pantheon_void_scope_replay_authorization_review_v1.md",
+        "scripts/build_low_z_pantheon_void_scope_replay_authorization_review_template_v1.py",
+        "scripts/validate_low_z_pantheon_void_scope_replay_authorization_review_template_v1.py",
+        "scripts/build_low_z_pantheon_void_scope_replay_authorization_review_package_v1.py",
+        "scripts/validate_low_z_pantheon_void_scope_replay_authorization_review_package_v1.py",
         "data/source_manifest/kids1000_lensing_route_v1.csv",
         "data/derived/kids1000_lensing_route_v1_head.csv",
         "data/derived/kids1000_lensing_route_v1_summary.csv",
@@ -1562,6 +1575,49 @@ def test_low_z_pantheon_void_scope_candidate_v1_is_not_endpoint_scoring() -> Non
     assert int(summary["included_rows"]) == len(included)
     assert all(float(row["zHD"]) <= float(summary["z_support_max"]) for row in included)
     assert all(float(row["W_void_source_native_basis"]) > 0.0 for row in included)
+
+
+def test_low_z_void_scope_replay_authorization_package_v1_is_handoff_only() -> None:
+    subprocess.run(
+        ["python", "scripts/build_low_z_pantheon_void_scope_replay_authorization_review_template_v1.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    subprocess.run(
+        ["python", "scripts/validate_low_z_pantheon_void_scope_replay_authorization_review_template_v1.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    subprocess.run(
+        ["python", "scripts/build_low_z_pantheon_void_scope_replay_authorization_review_package_v1.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    subprocess.run(
+        ["python", "scripts/validate_low_z_pantheon_void_scope_replay_authorization_review_package_v1.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    with (
+        ROOT / "data/derived/low_z_pantheon_void_scope_replay_authorization_review_package_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["status"] == "AUTHORIZATION_REVIEW_PACKAGE_BUILT_NOT_COMPLETED"
+    assert summary["review_completed"] == "false"
+    assert summary["endpoint_run_allowed"] == "false"
+    assert summary["physical_validation_claimed"] == "false"
+    assert summary["contains_endpoint_residuals"] == "false"
+    assert summary["contains_endpoint_scores"] == "false"
+    assert summary["contains_fit_statistics"] == "false"
+    assert summary["claim_boundary"] == "low_z_void_scope_replay_authorization_review_not_validation"
 
 
 def test_source_page_cache_is_hash_locked() -> None:
