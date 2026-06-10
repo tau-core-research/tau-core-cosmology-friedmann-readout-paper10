@@ -517,6 +517,19 @@ It freezes the blocker as
 `current_W_void_not_endpoint_ready_redshift_degenerate_not_control_unique` and
 allows only a future source-side acquisition manifest before any new void replay.
 
+That acquisition manifest is:
+
+```text
+docs/void_source_basis_refinement_acquisition_manifest_v1.md
+data/source_manifest/void_source_basis_refinement_acquisition_manifest_policy_v1.csv
+data/derived/void_source_basis_refinement_acquisition_manifest_v1.csv
+```
+
+It freezes six required source-side routes: object-level void catalogue
+properties, supernova host-to-void geometry, line-of-sight environment,
+redshift-independence preflight, control-resistance preflight, and independent
+leakage review. It attaches no sources yet and opens no replay.
+
 The first lensing route-freeze check is recorded in:
 
 ```text

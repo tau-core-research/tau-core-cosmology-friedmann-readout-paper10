@@ -93,6 +93,8 @@ def main() -> None:
         run(["python", "scripts/validate_low_z_void_replay_diagnostics_v1.py"])
         run(["python", "scripts/build_void_source_basis_refinement_gate_v1.py"])
         run(["python", "scripts/validate_void_source_basis_refinement_gate_v1.py"])
+        run(["python", "scripts/build_void_source_basis_refinement_acquisition_manifest_v1.py"])
+        run(["python", "scripts/validate_void_source_basis_refinement_acquisition_manifest_v1.py"])
     run(["python", "scripts/check_kids1000_lensing_route_v1.py"])
     run(["python", "scripts/validate_kids1000_lensing_route_v1.py"])
     run(["python", "scripts/validate_kids1000_lensing_products_v1.py"])

@@ -162,6 +162,10 @@ def test_public_files_exist() -> None:
         "docs/void_source_basis_refinement_gate_v1.md",
         "scripts/build_void_source_basis_refinement_gate_v1.py",
         "scripts/validate_void_source_basis_refinement_gate_v1.py",
+        "data/source_manifest/void_source_basis_refinement_acquisition_manifest_policy_v1.csv",
+        "docs/void_source_basis_refinement_acquisition_manifest_v1.md",
+        "scripts/build_void_source_basis_refinement_acquisition_manifest_v1.py",
+        "scripts/validate_void_source_basis_refinement_acquisition_manifest_v1.py",
         "data/source_manifest/kids1000_lensing_route_v1.csv",
         "data/derived/kids1000_lensing_route_v1_head.csv",
         "data/derived/kids1000_lensing_route_v1_summary.csv",
@@ -1891,6 +1895,54 @@ def test_void_source_basis_refinement_gate_v1_blocks_new_void_endpoint() -> None
     assert gate["source_unique_ready"] == "false"
     assert gate["endpoint_scoring_allowed"] == "false"
     assert gate["physical_validation_claimed"] == "false"
+
+
+def test_void_source_basis_refinement_acquisition_manifest_v1_freezes_next_routes() -> None:
+    response = ROOT / "data/derived/low_z_pantheon_void_scope_replay_authorization_review_response_v1.csv"
+    if not response.exists():
+        pytest.skip("completed low-z void authorization response not present")
+    subprocess.run(
+        ["python", "scripts/run_low_z_pantheon_void_replay_v1.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    subprocess.run(
+        ["python", "scripts/build_low_z_void_replay_diagnostics_v1.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    subprocess.run(
+        ["python", "scripts/build_void_source_basis_refinement_gate_v1.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    subprocess.run(
+        ["python", "scripts/build_void_source_basis_refinement_acquisition_manifest_v1.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    subprocess.run(
+        ["python", "scripts/validate_void_source_basis_refinement_acquisition_manifest_v1.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    with (ROOT / "data/derived/void_source_basis_refinement_acquisition_manifest_v1_summary.csv").open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["required_routes"] == "6"
+    assert summary["attached_routes"] == "0"
+    assert summary["source_unique_ready"] == "false"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["physical_validation_claimed"] == "false"
 
 
 def test_source_page_cache_is_hash_locked() -> None:
