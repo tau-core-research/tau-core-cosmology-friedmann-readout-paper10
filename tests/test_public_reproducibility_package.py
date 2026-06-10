@@ -6890,3 +6890,33 @@ def test_kids1000_cosebis_f_overlap_filled_review_validator_accepts_template_mod
     )
     assert "mode=template" in result.stdout
     assert "endpoint_allowed=false" in result.stdout
+
+
+def test_kids1000_cosebis_endpoint_replay_authorization_is_permission_only() -> None:
+    response = ROOT / "data/derived/kids1000_cosebis_endpoint_replay_authorization_review_response_v1.csv"
+    summary_out = ROOT / "data/derived/kids1000_cosebis_endpoint_replay_authorization_review_response_v1_summary.csv"
+    result = subprocess.run(
+        [
+            "python",
+            "scripts/validate_kids1000_cosebis_endpoint_replay_authorization_review_response_v1.py",
+            str(response),
+            "--summary-out",
+            str(summary_out),
+        ],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    assert "endpoint_replay_authorized_permission_only_not_validation" in result.stdout
+    with summary_out.open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    assert len(rows) == 1
+    summary = rows[0]
+    assert summary["endpoint_replay_allowed"] == "true"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["forbidden_inputs_used"] == "false"
+    assert (
+        summary["authorization_scope"]
+        == "single_predeclared_endpoint_replay_under_existing_frozen_source_side_state_permission_only_not_validation"
+    )

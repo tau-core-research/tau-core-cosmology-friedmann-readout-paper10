@@ -1489,10 +1489,13 @@ REVIEWER_MESSAGE_KIDS1000_ENDPOINT_REPLAY_AUTHORIZATION.md
 REVIEWER_README_KIDS1000_ENDPOINT_REPLAY_AUTHORIZATION.md
 data/source_manifest/kids1000_cosebis_endpoint_replay_authorization_review_policy_v1.csv
 data/derived/kids1000_cosebis_endpoint_replay_authorization_review_response_template_v1.csv
+data/derived/kids1000_cosebis_endpoint_replay_authorization_review_response_v1.csv
+data/derived/kids1000_cosebis_endpoint_replay_authorization_review_response_v1_summary.csv
 data/derived/kids1000_cosebis_endpoint_replay_authorization_review_package_v1.zip
 data/derived/kids1000_cosebis_endpoint_replay_authorization_review_package_v1.zip.sha256
 data/derived/kids1000_cosebis_endpoint_replay_authorization_review_package_v1_manifest.csv
 docs/kids1000_cosebis_endpoint_replay_authorization_review_v1.md
+scripts/validate_kids1000_cosebis_endpoint_replay_authorization_review_response_v1.py
 ```
 
 This package is for an external reviewer without repository access. It asks only
@@ -1501,6 +1504,9 @@ replay may be authorized under the frozen source-side state. It contains no
 observed COSEBIs values, endpoint residuals, endpoint scores, fit statistics,
 null-control ranks, or post-score residual shapes. A go decision would be replay
 permission only: `endpoint_validation_claimed=false` must remain fixed.
+The completed reviewer response accepts this permission-only gate:
+`endpoint_replay_allowed=true` and `endpoint_validation_claimed=false`. Its
+verdict is `endpoint_replay_authorized_permission_only_not_validation`.
 
 The endpoint jackknife/localization robustness audit is recorded in:
 

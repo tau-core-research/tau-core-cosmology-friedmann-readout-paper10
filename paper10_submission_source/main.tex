@@ -733,6 +733,12 @@ this current post-reviewer source-side state. The ledger does not rewrite the
 earlier prerequisite artifacts, does not compute new endpoint scores, and does
 not authorize endpoint replay; any future endpoint replay requires a separate
 explicit human authorization gate.
+A separate endpoint-replay authorization response was then validated. It gives
+\texttt{GO\_SOURCE\_SIDE\_REPLAY\_PERMISSION\_ONLY} for one predeclared replay
+under the existing frozen source-side state, while keeping
+\texttt{forbidden\_inputs\_used=false} and
+\texttt{endpoint\_validation\_claimed=false}. This changes the replay permission
+state only; it does not promote the KiDS endpoint to validation.
 A second post-score localization audit keeps the same source-frozen theory
 vector and same nonnegative single-amplitude scoring rule, but evaluates
 predeclared jackknife masks. All \(20/20\) leave-one source-bin and
