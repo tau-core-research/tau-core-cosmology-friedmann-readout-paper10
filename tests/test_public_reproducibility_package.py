@@ -333,6 +333,9 @@ def test_public_files_exist() -> None:
         "scripts/build_kids1000_cosebis_external_photoz_calibration_reviewer_handoff_package_v1.py",
         "scripts/validate_kids1000_cosebis_external_photoz_calibration_reviewer_handoff_package_v1.py",
         "data/source_manifest/kids1000_cosebis_external_photoz_calibration_completed_reviewer_response_policy_v1.csv",
+        "data/derived/kids1000_cosebis_external_photoz_calibration_completed_reviewer_response_v1.csv",
+        "data/derived/kids1000_cosebis_external_photoz_calibration_completed_reviewer_response_v1_summary.csv",
+        "docs/kids1000_cosebis_external_photoz_calibration_completed_review_notes_v1.md",
         "docs/kids1000_cosebis_external_photoz_calibration_completed_reviewer_response_v1.md",
         "scripts/validate_kids1000_cosebis_external_photoz_calibration_completed_reviewer_response_v1.py",
         "data/source_manifest/kids1000_cosebis_endpoint_jackknife_robustness_policy_v1.csv",
@@ -5251,6 +5254,44 @@ def test_kids1000_cosebis_external_photoz_calibration_completed_reviewer_respons
     assert accepted["endpoint_validation_claimed"] == "false"
     assert (
         accepted["verdict"]
+        == "completed_reviewer_response_accepted_source_side_only_endpoint_replay_still_forbidden"
+    )
+
+
+def test_kids1000_cosebis_external_photoz_calibration_completed_reviewer_response_is_imported_source_side_only() -> None:
+    with (
+        ROOT / "data/derived/kids1000_cosebis_external_photoz_calibration_completed_reviewer_response_v1.csv"
+    ).open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    with (
+        ROOT / "data/derived/kids1000_cosebis_external_photoz_calibration_completed_reviewer_response_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+
+    assert len(rows) == 4
+    assert {row["question_id"] for row in rows} == {
+        "Q1_source_identity",
+        "Q2_no_endpoint_fields",
+        "Q3_route_coverage",
+        "Q4_r4_decision",
+    }
+    assert all(row["review_completed"] == "true" for row in rows)
+    assert all(row["forbidden_inputs_used"] == "false" for row in rows)
+    assert all(row["endpoint_replay_allowed"] == "false" for row in rows)
+    assert all(row["endpoint_validation_claimed"] == "false" for row in rows)
+    assert summary["response_path"] == (
+        "data/derived/kids1000_cosebis_external_photoz_calibration_completed_reviewer_response_v1.csv"
+    )
+    assert summary["review_completed"] == "true"
+    assert summary["independent_reviewer_attestation_complete"] == "true"
+    assert summary["r4_leakage_review_complete"] == "true"
+    assert summary["h1_independent_evidence_complete"] == "true"
+    assert summary["computes_new_scores"] == "false"
+    assert summary["contains_endpoint_data"] == "false"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert (
+        summary["verdict"]
         == "completed_reviewer_response_accepted_source_side_only_endpoint_replay_still_forbidden"
     )
 

@@ -44,6 +44,13 @@ def sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def display_path(path: Path) -> str:
+    try:
+        return str(path.relative_to(ROOT))
+    except ValueError:
+        return str(path)
+
+
 def norm(value: str) -> str:
     return value.strip().lower()
 
@@ -106,7 +113,7 @@ def main() -> None:
         {
             "policy_id": policy["policy_id"],
             "status": "EXTERNAL_PHOTOZ_CALIBRATION_COMPLETED_REVIEWER_RESPONSE_ACCEPTED_SOURCE_SIDE_ONLY",
-            "response_path": str(response_path),
+            "response_path": display_path(response_path),
             "response_sha256": sha256(response_path),
             "review_completed": "true",
             "independent_reviewer_attestation_complete": "true",

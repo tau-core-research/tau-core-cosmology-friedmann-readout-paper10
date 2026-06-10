@@ -1440,12 +1440,23 @@ docs/kids1000_cosebis_external_photoz_calibration_completed_reviewer_response_v1
 scripts/validate_kids1000_cosebis_external_photoz_calibration_completed_reviewer_response_v1.py
 ```
 
-This validator is not run by the default reproduction pipeline because no
-completed independent reviewer response is bundled. It validates a returned
-reviewer CSV as source-side evidence only: even an accepted response does not
-compute new scores, does not claim endpoint validation, and does not authorize
-endpoint replay. Its accepted verdict is
+This validator checks a returned reviewer CSV as source-side evidence only:
+even an accepted response does not compute new scores, does not claim endpoint
+validation, and does not authorize endpoint replay. Its accepted verdict is
 `completed_reviewer_response_accepted_source_side_only_endpoint_replay_still_forbidden`.
+
+The completed source-side reviewer response is recorded in:
+
+```text
+data/derived/kids1000_cosebis_external_photoz_calibration_completed_reviewer_response_v1.csv
+data/derived/kids1000_cosebis_external_photoz_calibration_completed_reviewer_response_v1_summary.csv
+docs/kids1000_cosebis_external_photoz_calibration_completed_review_notes_v1.md
+```
+
+This response accepts R4 as caveated source-side evidence and marks the H1
+external photo-z calibration evidence gate as source-side complete. It remains
+strictly non-endpoint: it computes no new scores, contains no endpoint data,
+does not authorize endpoint replay, and does not claim endpoint validation.
 
 The endpoint jackknife/localization robustness audit is recorded in:
 
