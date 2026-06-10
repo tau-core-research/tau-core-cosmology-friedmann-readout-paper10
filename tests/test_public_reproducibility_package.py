@@ -239,6 +239,14 @@ def test_public_files_exist() -> None:
         "data/derived/void_source_basis_refinement_v2_path_partial_scope_completed_review_response_v1_summary.csv",
         "data/derived/void_source_basis_refinement_v2_path_partial_scope_completed_review_summary_v1.csv",
         "data/derived/void_source_basis_refinement_v2_path_partial_scope_completed_review_validation_log_v1.txt",
+        "docs/void_source_basis_refinement_v2_path_partial_scope_replay_authorization_review_v1.md",
+        "data/source_manifest/void_source_basis_refinement_v2_path_partial_scope_replay_authorization_review_policy_v1.csv",
+        "data/derived/void_source_basis_refinement_v2_path_partial_scope_replay_authorization_review_response_template_v1.csv",
+        "data/derived/void_source_basis_refinement_v2_path_partial_scope_replay_authorization_review_template_v1_summary.csv",
+        "data/derived/void_source_basis_refinement_v2_path_partial_scope_replay_authorization_review_package_v1.zip",
+        "data/derived/void_source_basis_refinement_v2_path_partial_scope_replay_authorization_review_package_v1.zip.sha256",
+        "data/derived/void_source_basis_refinement_v2_path_partial_scope_replay_authorization_review_package_v1_manifest.csv",
+        "data/derived/void_source_basis_refinement_v2_path_partial_scope_replay_authorization_review_package_v1_summary.csv",
         "data/derived/void_source_basis_refinement_v2_path_projection_route_ledger.csv",
         "data/derived/void_source_basis_refinement_v2_path_projection_route_ledger_summary.csv",
         "data/derived/void_source_basis_refinement_v2_time_readout_route_ledger.csv",
@@ -271,6 +279,10 @@ def test_public_files_exist() -> None:
         "scripts/build_void_source_basis_refinement_v2_path_partial_scope_reviewer_package_v1.py",
         "scripts/validate_void_source_basis_refinement_v2_path_partial_scope_reviewer_package_v1.py",
         "scripts/validate_void_source_basis_refinement_v2_path_partial_scope_completed_review_response_v1.py",
+        "scripts/build_void_source_basis_refinement_v2_path_partial_scope_replay_authorization_review_template_v1.py",
+        "scripts/validate_void_source_basis_refinement_v2_path_partial_scope_replay_authorization_review_template_v1.py",
+        "scripts/build_void_source_basis_refinement_v2_path_partial_scope_replay_authorization_review_package_v1.py",
+        "scripts/validate_void_source_basis_refinement_v2_path_partial_scope_replay_authorization_review_package_v1.py",
         "scripts/build_void_source_basis_refinement_v2_path_projection_route_ledger_v1.py",
         "scripts/validate_void_source_basis_refinement_v2_path_projection_route_ledger_v1.py",
         "scripts/build_void_source_basis_refinement_v2_time_readout_route_ledger_v1.py",
@@ -2700,6 +2712,45 @@ def test_void_source_basis_refinement_v2_path_partial_scope_completed_review_res
         == "prepare_separate_partial_scope_replay_authorization_package_only"
     )
     assert summary["verdict"] == "partial_path_scope_control_accepted_as_caveated_source_side_only"
+
+
+def test_void_source_basis_refinement_v2_path_partial_scope_replay_authorization_package_v1_is_permission_request_only() -> None:
+    for command in [
+        ["python", "scripts/validate_void_source_basis_refinement_v2_path_partial_scope_completed_review_response_v1.py"],
+        ["python", "scripts/build_void_source_basis_refinement_v2_path_partial_scope_replay_authorization_review_template_v1.py"],
+        ["python", "scripts/validate_void_source_basis_refinement_v2_path_partial_scope_replay_authorization_review_template_v1.py"],
+        ["python", "scripts/build_void_source_basis_refinement_v2_path_partial_scope_replay_authorization_review_package_v1.py"],
+        ["python", "scripts/validate_void_source_basis_refinement_v2_path_partial_scope_replay_authorization_review_package_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (
+        ROOT
+        / "data/derived/void_source_basis_refinement_v2_path_partial_scope_replay_authorization_review_package_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    with (
+        ROOT
+        / "data/derived/void_source_basis_refinement_v2_path_partial_scope_replay_authorization_review_package_v1_manifest.csv"
+    ).open(newline="") as f:
+        manifest = list(csv.DictReader(f))
+    zip_path = ROOT / summary["zip_path"]
+    assert summary["status"] == "V2_PATH_PARTIAL_SCOPE_REPLAY_AUTHORIZATION_PACKAGE_BUILT_NOT_COMPLETED"
+    assert summary["review_completed"] == "false"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["contains_endpoint_residuals"] == "false"
+    assert summary["contains_endpoint_scores"] == "false"
+    assert summary["contains_fit_statistics"] == "false"
+    assert summary["physical_lensing_path_weight_claimed"] == "false"
+    assert summary["verdict"] == "partial_path_scope_replay_authorization_package_ready_not_completed"
+    assert zip_path.exists()
+    assert {
+        "data/derived/void_source_basis_refinement_v2_path_partial_scope_replay_authorization_review_response_template_v1.csv",
+        "data/derived/void_source_basis_refinement_v2_path_partial_scope_completed_review_response_v1_summary.csv",
+    }.issubset({row["package_path"] for row in manifest})
+    assert {row["endpoint_replay_allowed"] for row in manifest} == {"false"}
+    assert {row["endpoint_validation_claimed"] for row in manifest} == {"false"}
+    assert {row["physical_lensing_path_weight_claimed"] for row in manifest} == {"false"}
 
 
 def test_void_source_basis_refinement_v2_time_readout_route_ledger_v1_preserves_blocker() -> None:
