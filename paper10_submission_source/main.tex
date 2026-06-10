@@ -814,6 +814,15 @@ modulo quotient-null directions, or route \(O(V_{\rm mask})\) into a
 predeclared null-control family. This criterion is not yet proven for the KiDS
 operator; its current verdict is
 \texttt{nonuniform\_leakage\_projection\_criterion\_frozen\_but\_not\_proven}.
+The component split itself is now declared only as bookkeeping:
+\(V_{\rm phys,cand}\) denotes the source-frozen low-mode candidate response
+shell, \(V_{\rm mask}\) denotes the pure-mask/depth/path basis, and
+\(V_{\rm ctrl/null}\) denotes the predeclared null-control family. This changes
+the \(C1\) status from definition-required to declared, but does not prove
+pairwise orthogonality, quotient triviality, null projection, control routing,
+or single-operator consistency. Its machine-readable verdict records that the
+domain decomposition is declared, while the projection and leakage theorem
+remain open.
 A second post-score localization audit keeps the same source-frozen theory
 vector and same nonnegative single-amplitude scoring rule, but evaluates
 predeclared jackknife masks. All \(20/20\) leave-one source-bin and

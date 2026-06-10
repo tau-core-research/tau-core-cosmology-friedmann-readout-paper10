@@ -11,6 +11,7 @@ PLAN = ROOT / "data" / "derived" / "kids1000_cosebis_operator_leakage_proof_plan
 REQ = ROOT / "data" / "derived" / "kids1000_cosebis_operator_leakage_theorem_requirements_v1_summary.csv"
 PURE = ROOT / "data" / "derived" / "kids1000_cosebis_pure_mask_response_gate_v1_summary.csv"
 NULL = ROOT / "data" / "derived" / "kids1000_cosebis_operator_null_safety_gate_v1_summary.csv"
+DOMAIN = ROOT / "data" / "derived" / "kids1000_cosebis_operator_leakage_domain_decomposition_v1_summary.csv"
 
 OUT = ROOT / "data" / "derived" / "kids1000_cosebis_operator_leakage_projection_criterion_v1.csv"
 SUMMARY = ROOT / "data" / "derived" / "kids1000_cosebis_operator_leakage_projection_criterion_v1_summary.csv"
@@ -43,6 +44,7 @@ def main() -> None:
     req = read_one(REQ)
     pure = read_one(PURE)
     null = read_one(NULL)
+    domain = read_one(DOMAIN)
 
     require(policy["status"] == "OPERATOR_LEAKAGE_PROJECTION_CRITERION_POLICY_FROZEN", "unexpected policy")
     require(policy["computes_new_scores"] == "false", "criterion must not compute scores")
@@ -53,17 +55,24 @@ def main() -> None:
     require(pure["pure_mask_basis_constructed"] == "true", "pure-mask basis must exist")
     require(pure["pure_mask_quotient_triviality_proven"] == "false", "pure-mask quotient triviality remains open")
     require(null["operator_null_safety_proven"] == "false", "operator null safety remains open")
+    require(
+        domain["status"] == "OPERATOR_LEAKAGE_DOMAIN_DECOMPOSITION_DECLARED_NOT_PROJECTION_PROOF",
+        "domain decomposition must be declared first",
+    )
+    require(domain["domain_decomposition_declared"] == "true", "domain decomposition must be declared")
+    require(domain["operator_projection_condition_proven"] == "false", "projection condition must remain open")
 
     rows = [
         {
             "policy_id": policy["policy_id"],
             "criterion_id": "C1_domain_decomposition",
-            "criterion_status": "DEFINITION_REQUIRED",
+            "criterion_status": "DECLARED_NOT_PROJECTION_PROOF",
             "formal_statement": "V_source = V_phys_candidate plus V_mask plus V_control_or_null",
             "purpose": "separate candidate path/readout response from mask-only directions before any physical promotion",
             "current_status": (
-                f"pure_mask_basis_constructed={pure['pure_mask_basis_constructed']};"
-                f"effective_centered_mask_basis_rank={pure['effective_centered_mask_basis_rank']}"
+                f"domain_decomposition_declared={domain['domain_decomposition_declared']};"
+                f"components_pairwise_orthogonality_proven={domain['components_pairwise_orthogonality_proven']};"
+                f"operator_projection_condition_proven={domain['operator_projection_condition_proven']}"
             ),
             "exit_condition": "source_native_operator_domain_decomposition_declared_without_endpoint_feedback",
             "claim_boundary": policy["claim_boundary"],
@@ -126,7 +135,7 @@ def main() -> None:
             "selected_statistic": policy["selected_statistic"],
             "criterion_rows": str(len(rows)),
             "sufficient_projection_criterion_frozen": "true",
-            "domain_decomposition_declared": "false",
+            "domain_decomposition_declared": "true",
             "null_projection_condition_proven": "false",
             "control_routing_condition_proven": "false",
             "single_operator_consistency_proven": "false",

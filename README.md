@@ -1668,6 +1668,12 @@ The non-uniform leakage projection criterion is recorded in:
 
 ```text
 data/source_manifest/kids1000_cosebis_operator_leakage_projection_criterion_policy_v1.csv
+data/source_manifest/kids1000_cosebis_operator_leakage_domain_decomposition_policy_v1.csv
+data/derived/kids1000_cosebis_operator_leakage_domain_decomposition_v1.csv
+data/derived/kids1000_cosebis_operator_leakage_domain_decomposition_v1_summary.csv
+docs/kids1000_cosebis_operator_leakage_domain_decomposition_v1.md
+scripts/build_kids1000_cosebis_operator_leakage_domain_decomposition_v1.py
+scripts/validate_kids1000_cosebis_operator_leakage_domain_decomposition_v1.py
 data/derived/kids1000_cosebis_operator_leakage_projection_criterion_v1.csv
 data/derived/kids1000_cosebis_operator_leakage_projection_criterion_v1_summary.csv
 docs/kids1000_cosebis_operator_leakage_projection_criterion_v1.md
@@ -1682,6 +1688,15 @@ low-mode response class, modulo quotient-null directions, or be routed into a
 predeclared null-control family by the same source-native operator that
 generates the mode response. The verdict is
 `nonuniform_leakage_projection_criterion_frozen_but_not_proven`.
+
+The supporting domain-decomposition ledger now declares the bookkeeping split
+`V_source = V_phys_candidate + V_mask + V_control_or_null`. Here
+`V_phys_candidate` is only the source-frozen low-mode candidate response shell,
+`V_mask` is the pure-mask/depth/path basis, and `V_control_or_null` is the
+predeclared null-control family. This closes only the naming/bookkeeping part of
+the criterion: pairwise orthogonality, null projection, control routing, and the
+operator-leakage theorem all remain open. Its verdict is
+`domain_decomposition_declared_but_projection_and_leakage_theorem_remain_open`.
 
 The endpoint jackknife/localization robustness audit is recorded in:
 

@@ -39,7 +39,7 @@ def main() -> None:
     require(summary["status"] == "OPERATOR_LEAKAGE_PROJECTION_CRITERION_BUILT_NOT_PROVEN", "unexpected status")
     require(summary["criterion_rows"] == "5", "expected five criterion rows")
     require(summary["sufficient_projection_criterion_frozen"] == "true", "criterion should be frozen")
-    require(summary["domain_decomposition_declared"] == "false", "domain decomposition is not yet declared")
+    require(summary["domain_decomposition_declared"] == "true", "domain decomposition should be declared")
     require(summary["null_projection_condition_proven"] == "false", "null projection condition must remain open")
     require(summary["control_routing_condition_proven"] == "false", "control routing condition must remain open")
     require(summary["single_operator_consistency_proven"] == "false", "single-operator condition must remain open")
@@ -53,7 +53,7 @@ def main() -> None:
     require(summary["physical_validation_claimed"] == "false", "physical validation must not be claimed")
     require(summary["verdict"] == "nonuniform_leakage_projection_criterion_frozen_but_not_proven", "unexpected verdict")
     by_id = {row["criterion_id"]: row for row in rows}
-    require(by_id["C1_domain_decomposition"]["criterion_status"] == "DEFINITION_REQUIRED", "C1 mismatch")
+    require(by_id["C1_domain_decomposition"]["criterion_status"] == "DECLARED_NOT_PROJECTION_PROOF", "C1 mismatch")
     require(
         by_id["C2_null_projection_condition"]["criterion_status"] == "SUFFICIENT_CONDITION_FROZEN_NOT_PROVEN",
         "C2 mismatch",
