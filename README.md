@@ -1482,6 +1482,26 @@ closed for the external photo-z calibration route, while endpoint replay remains
 forbidden and endpoint validation is not claimed. Earlier acquisition, manifest,
 preflight, and handoff artifacts remain historical prerequisite states.
 
+The endpoint replay authorization review package is recorded in:
+
+```text
+REVIEWER_MESSAGE_KIDS1000_ENDPOINT_REPLAY_AUTHORIZATION.md
+REVIEWER_README_KIDS1000_ENDPOINT_REPLAY_AUTHORIZATION.md
+data/source_manifest/kids1000_cosebis_endpoint_replay_authorization_review_policy_v1.csv
+data/derived/kids1000_cosebis_endpoint_replay_authorization_review_response_template_v1.csv
+data/derived/kids1000_cosebis_endpoint_replay_authorization_review_package_v1.zip
+data/derived/kids1000_cosebis_endpoint_replay_authorization_review_package_v1.zip.sha256
+data/derived/kids1000_cosebis_endpoint_replay_authorization_review_package_v1_manifest.csv
+docs/kids1000_cosebis_endpoint_replay_authorization_review_v1.md
+```
+
+This package is for an external reviewer without repository access. It asks only
+for a go/no-go decision on whether a separate, single, predeclared endpoint
+replay may be authorized under the frozen source-side state. It contains no
+observed COSEBIs values, endpoint residuals, endpoint scores, fit statistics,
+null-control ranks, or post-score residual shapes. A go decision would be replay
+permission only: `endpoint_validation_claimed=false` must remain fixed.
+
 The endpoint jackknife/localization robustness audit is recorded in:
 
 ```text
