@@ -400,6 +400,22 @@ runs to `z=2.26137`; all rows above `z=0.2` have zero void support. Therefore
 the combined endpoint should not be reopened until the void mapping is rebuilt
 for the declared observable scope or the endpoint scope is explicitly narrowed.
 
+The corresponding void-channel remediation decision gate is:
+
+```text
+data/source_manifest/void_channel_remediation_policy_v1.csv
+data/derived/void_channel_remediation_gate_v1.csv
+docs/void_channel_remediation_gate_v1.md
+scripts/build_void_channel_remediation_gate_v1.py
+scripts/validate_void_channel_remediation_gate_v1.py
+```
+
+It freezes the allowed future routes without running any new endpoint:
+predeclare a low-redshift Pantheon scope, rebuild the void source basis for the
+full distance scope, or quarantine the void channel from the full-distance
+endpoint. The current gate status is `ENDPOINT_REOPEN_BLOCKED`; no route is
+selected and `endpoint_scoring_allowed=false`.
+
 The first lensing route-freeze check is recorded in:
 
 ```text

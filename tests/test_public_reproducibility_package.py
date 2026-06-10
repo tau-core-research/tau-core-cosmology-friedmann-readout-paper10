@@ -123,6 +123,11 @@ def test_public_files_exist() -> None:
         "docs/void_source_basis_audit_v1.md",
         "scripts/build_void_source_basis_audit_v1.py",
         "scripts/validate_void_source_basis_audit_v1.py",
+        "data/source_manifest/void_channel_remediation_policy_v1.csv",
+        "data/derived/void_channel_remediation_gate_v1.csv",
+        "docs/void_channel_remediation_gate_v1.md",
+        "scripts/build_void_channel_remediation_gate_v1.py",
+        "scripts/validate_void_channel_remediation_gate_v1.py",
         "data/source_manifest/kids1000_lensing_route_v1.csv",
         "data/derived/kids1000_lensing_route_v1_head.csv",
         "data/derived/kids1000_lensing_route_v1_summary.csv",
@@ -1491,6 +1496,34 @@ def test_void_source_basis_audit_v1_freezes_low_z_support_blocker() -> None:
     assert float(summary["void_active_fraction"]) < 0.5
     assert {row["physical_validation_claimed"] for row in bins} == {"false"}
     assert all(float(row["void_active_fraction"]) == 0.0 for row in bins if float(row["z_bin_lo"]) >= 0.2)
+
+
+def test_void_channel_remediation_gate_v1_blocks_endpoint_reopen() -> None:
+    subprocess.run(
+        ["python", "scripts/build_void_channel_remediation_gate_v1.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    subprocess.run(
+        ["python", "scripts/validate_void_channel_remediation_gate_v1.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    with (ROOT / "data/derived/void_channel_remediation_gate_v1.csv").open(newline="") as f:
+        gate = list(csv.DictReader(f))[0]
+    assert gate["route_status"] == "ENDPOINT_REOPEN_BLOCKED"
+    assert gate["full_pantheon_void_endpoint_reopen_allowed"] == "false"
+    assert gate["low_z_scope_endpoint_allowed_now"] == "false"
+    assert gate["source_basis_rebuild_required_for_full_scope"] == "true"
+    assert gate["void_channel_quarantined_from_full_distance_endpoint"] == "true"
+    assert gate["endpoint_scoring_allowed"] == "false"
+    assert gate["physical_validation_claimed"] == "false"
+    assert gate["selected_route"] == "NO_ROUTE_SELECTED_NO_ENDPOINT_REOPEN"
+    assert gate["claim_boundary"] == "void_channel_remediation_gate_not_scoring_not_validation"
 
 
 def test_source_page_cache_is_hash_locked() -> None:
