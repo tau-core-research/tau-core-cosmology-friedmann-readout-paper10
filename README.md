@@ -1294,6 +1294,14 @@ endpoint residuals, `Delta chi2`, null-control ranks, best-control identity, and
 post-score residual shape from source-side selection. Its verdict is
 `tomographic_holdout_required_before_endpoint_replay_or_validation`.
 
+The following H1/R4 artifacts are chronological prerequisite states. Statements
+such as "H1 remains open" or "R4 remains incomplete" describe the local state of
+that artifact when it was created. The current post-reviewer source-side closure
+state is recorded later in
+`data/derived/kids1000_cosebis_external_photoz_calibration_closure_ledger_v1_summary.csv`:
+R4/H1 are source-side closed for the external photo-z calibration route, while
+endpoint replay remains forbidden and endpoint validation is not claimed.
+
 The first source-frozen tomographic holdout manifest is recorded in:
 
 ```text
