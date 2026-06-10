@@ -762,6 +762,13 @@ data/derived/void_source_basis_refinement_v2_path_transform_bank_screen_v1_famil
 data/derived/void_source_basis_refinement_v2_path_transform_bank_screen_v1_summary.csv
 scripts/run_void_source_basis_refinement_v2_path_transform_bank_screen_v1.py
 scripts/validate_void_source_basis_refinement_v2_path_transform_bank_screen_v1.py
+docs/void_source_basis_refinement_v2_path_sky_environment_screen_v1.md
+data/source_manifest/void_source_basis_refinement_v2_path_sky_environment_screen_v1.csv
+data/derived/void_source_basis_refinement_v2_path_sky_environment_screen_v1_grid.csv
+data/derived/void_source_basis_refinement_v2_path_sky_environment_screen_v1_family_summary.csv
+data/derived/void_source_basis_refinement_v2_path_sky_environment_screen_v1_summary.csv
+scripts/run_void_source_basis_refinement_v2_path_sky_environment_screen_v1.py
+scripts/validate_void_source_basis_refinement_v2_path_sky_environment_screen_v1.py
 scripts/build_void_source_basis_refinement_v2_path_projection_route_ledger_v1.py
 scripts/validate_void_source_basis_refinement_v2_path_projection_route_ledger_v1.py
 scripts/build_void_source_basis_refinement_v2_time_readout_route_ledger_v1.py
@@ -844,7 +851,17 @@ and 52 controls beat it. The verdict is
 useful negative search result: the bottleneck is unlikely to be fixed by a
 simple monotone transform of the 12-row tile-separation proxy. A stronger
 source-side path/projection basis is required before a new authorization
-package is scientifically justified. The
+package is scientifically justified. A third fast screen now tests the more
+Tau-Core-relevant observer/path idea that measurement readouts are
+observer-dependent: it combines the 12-row path control with frozen RA/DEC,
+sky-vector, tile-offset, line-of-sight environment, and void-geometry source
+fields. The global best candidate is `W_path_x_los_density_excess`, with
+`delta_chi2_candidate_minus_baseline=-0.51673114829`, but it still fails global
+control resistance: the candidate ranks seventh and six controls beat it. A
+narrower follow-up signal appears for `W_path_x_sky_z`, which survives its own
+family controls in the same 12-row screen. This is not endpoint validation, but
+it is the first screen-level hint that observer/sky-orientation terms may be a
+better source-side path basis than tile proximity alone. The
 time/readout component also has a route ledger: CC/BAO/CMB products are
 declared but not fetched/frozen as numeric time-readout inputs, so no `W_time`
 values are computed.
