@@ -105,6 +105,17 @@ def main() -> None:
         run(["python", "scripts/validate_void_source_basis_refinement_r6_reviewer_template_v1.py"])
         run(["python", "scripts/build_void_source_basis_refinement_r6_reviewer_handoff_package_v1.py"])
         run(["python", "scripts/validate_void_source_basis_refinement_r6_reviewer_handoff_package_v1.py"])
+        r6_response = ROOT / "data" / "derived" / "void_source_basis_refinement_r6_completed_reviewer_response_v1.csv"
+        if r6_response.exists():
+            run(
+                [
+                    "python",
+                    "scripts/validate_void_source_basis_refinement_r6_completed_reviewer_response_v1.py",
+                    str(r6_response),
+                    "--summary-out",
+                    "data/derived/void_source_basis_refinement_r6_completed_reviewer_response_v1_summary.csv",
+                ]
+            )
     run(["python", "scripts/check_kids1000_lensing_route_v1.py"])
     run(["python", "scripts/validate_kids1000_lensing_route_v1.py"])
     run(["python", "scripts/validate_kids1000_lensing_products_v1.py"])

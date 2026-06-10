@@ -593,6 +593,18 @@ It packages the source-side R1-R5 artifacts for an external reviewer who does
 not have repository access. The package is still incomplete until a reviewer
 returns a completed response; it does not authorize replay or claim validation.
 
+The completed R6 reviewer response is:
+
+```text
+data/derived/void_source_basis_refinement_r6_completed_reviewer_response_v1.csv
+data/derived/void_source_basis_refinement_r6_completed_reviewer_response_v1_summary.csv
+```
+
+The current response accepts the R6 review as
+`ACCEPT_AS_CAVEATED_SOURCE_SIDE_REVIEW`: R6 source-side leakage review is closed
+as caveated source-side evidence, while endpoint replay and endpoint validation
+remain false and require a separate authorization gate.
+
 The first lensing route-freeze check is recorded in:
 
 ```text
