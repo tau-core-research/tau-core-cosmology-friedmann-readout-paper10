@@ -316,6 +316,12 @@ def test_public_files_exist() -> None:
         "docs/kids1000_cosebis_external_photoz_calibration_leakage_review_preflight_v1.md",
         "scripts/build_kids1000_cosebis_external_photoz_calibration_leakage_review_preflight_v1.py",
         "scripts/validate_kids1000_cosebis_external_photoz_calibration_leakage_review_preflight_v1.py",
+        "data/source_manifest/kids1000_cosebis_external_photoz_calibration_reviewer_attestation_template_policy_v1.csv",
+        "data/derived/kids1000_cosebis_external_photoz_calibration_reviewer_attestation_template_v1.csv",
+        "data/derived/kids1000_cosebis_external_photoz_calibration_reviewer_attestation_template_v1_summary.csv",
+        "docs/kids1000_cosebis_external_photoz_calibration_reviewer_attestation_template_v1.md",
+        "scripts/build_kids1000_cosebis_external_photoz_calibration_reviewer_attestation_template_v1.py",
+        "scripts/validate_kids1000_cosebis_external_photoz_calibration_reviewer_attestation_template_v1.py",
         "data/source_manifest/kids1000_cosebis_endpoint_jackknife_robustness_policy_v1.csv",
         "data/derived/kids1000_cosebis_endpoint_jackknife_robustness_v1_grid.csv",
         "data/derived/kids1000_cosebis_endpoint_jackknife_robustness_v1_summary.csv",
@@ -685,6 +691,8 @@ def test_public_files_exist() -> None:
         "scripts/validate_kids1000_cosebis_external_photoz_calibration_source_manifest_v1.py",
         "scripts/build_kids1000_cosebis_external_photoz_calibration_leakage_review_preflight_v1.py",
         "scripts/validate_kids1000_cosebis_external_photoz_calibration_leakage_review_preflight_v1.py",
+        "scripts/build_kids1000_cosebis_external_photoz_calibration_reviewer_attestation_template_v1.py",
+        "scripts/validate_kids1000_cosebis_external_photoz_calibration_reviewer_attestation_template_v1.py",
         "scripts/run_kids1000_cosebis_endpoint_jackknife_robustness_v1.py",
         "scripts/validate_kids1000_cosebis_endpoint_jackknife_robustness_v1.py",
         "scripts/run_kids1000_cosebis_endpoint_mode_localization_v1.py",
@@ -5055,6 +5063,55 @@ def test_kids1000_cosebis_external_photoz_calibration_leakage_review_preflight_k
     assert by_check["L4_independent_reviewer_attestation"]["check_status"] == "OPEN"
     for row in rows:
         assert row["uses_endpoint_fields"] == "false"
+        assert row["forbidden_inputs_used"] == "false"
+        assert row["endpoint_replay_allowed"] == "false"
+        assert row["endpoint_validation_claimed"] == "false"
+        assert row["claim_boundary"] == policy["claim_boundary"]
+    assert summary["claim_boundary"] == policy["claim_boundary"]
+
+
+def test_kids1000_cosebis_external_photoz_calibration_reviewer_attestation_template_is_blank() -> None:
+    with (
+        ROOT / "data/source_manifest/kids1000_cosebis_external_photoz_calibration_reviewer_attestation_template_policy_v1.csv"
+    ).open(newline="") as f:
+        policy = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/kids1000_cosebis_external_photoz_calibration_reviewer_attestation_template_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/kids1000_cosebis_external_photoz_calibration_reviewer_attestation_template_v1.csv"
+    ).open(newline="") as f:
+        rows = list(csv.DictReader(f))
+
+    assert policy["status"] == "EXTERNAL_PHOTOZ_CALIBRATION_REVIEWER_ATTESTATION_TEMPLATE_POLICY_FROZEN"
+    assert policy["current_template_built"] == "true"
+    assert policy["independent_reviewer_attestation_complete"] == "false"
+    assert policy["r4_leakage_review_complete"] == "false"
+    assert policy["h1_independent_evidence_complete"] == "false"
+    assert policy["current_endpoint_replay_allowed"] == "false"
+    assert "endpoint_residuals" in policy["forbidden_inputs"]
+    assert summary["status"] == "EXTERNAL_PHOTOZ_CALIBRATION_REVIEWER_ATTESTATION_TEMPLATE_BUILT_NOT_COMPLETED"
+    assert summary["question_count"] == "4"
+    assert summary["review_completed"] == "false"
+    assert summary["independent_reviewer_attestation_complete"] == "false"
+    assert summary["r4_leakage_review_complete"] == "false"
+    assert summary["h1_independent_evidence_complete"] == "false"
+    assert summary["computes_new_scores"] == "false"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["verdict"] == "reviewer_attestation_template_ready_not_completed"
+    assert {row["question_id"] for row in rows} == {
+        "Q1_source_identity",
+        "Q2_no_endpoint_fields",
+        "Q3_route_coverage",
+        "Q4_r4_decision",
+    }
+    for row in rows:
+        assert row["reviewer_response"] == ""
+        assert row["reviewer_rationale"] == ""
+        assert row["reviewer_id_or_role"] == ""
+        assert row["review_completed"] == "false"
         assert row["forbidden_inputs_used"] == "false"
         assert row["endpoint_replay_allowed"] == "false"
         assert row["endpoint_validation_claimed"] == "false"

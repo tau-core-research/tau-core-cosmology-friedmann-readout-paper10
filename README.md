@@ -1391,6 +1391,23 @@ independent reviewer attestation. The full R4 leakage review remains open, H1
 remains incomplete, and endpoint replay remains forbidden. Its verdict is
 `automated_leakage_preflight_passed_independent_reviewer_still_open`.
 
+The independent reviewer attestation template is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_external_photoz_calibration_reviewer_attestation_template_policy_v1.csv
+data/derived/kids1000_cosebis_external_photoz_calibration_reviewer_attestation_template_v1.csv
+data/derived/kids1000_cosebis_external_photoz_calibration_reviewer_attestation_template_v1_summary.csv
+docs/kids1000_cosebis_external_photoz_calibration_reviewer_attestation_template_v1.md
+scripts/build_kids1000_cosebis_external_photoz_calibration_reviewer_attestation_template_v1.py
+scripts/validate_kids1000_cosebis_external_photoz_calibration_reviewer_attestation_template_v1.py
+```
+
+This template is a blank handoff artifact for the remaining independent review
+step. It records the questions and forbidden inputs a reviewer must respect,
+but it is not a completed review response. R4 remains incomplete, H1 remains
+incomplete, and endpoint replay remains forbidden. Its verdict is
+`reviewer_attestation_template_ready_not_completed`.
+
 The endpoint jackknife/localization robustness audit is recorded in:
 
 ```text
