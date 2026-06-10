@@ -314,6 +314,40 @@ The package contains only protocol, readiness, source-grounding, FLRW-audit,
 and blank authorization-template materials. It explicitly excludes endpoint
 residuals, endpoint scores, and fit statistics.
 
+The completed independent authorization response is recorded in:
+
+```text
+data/derived/void_web_combined_multiblock_endpoint_authorization_review_response_v1.csv
+data/derived/void_web_combined_multiblock_endpoint_authorization_review_response_v1_summary.csv
+data/derived/void_web_combined_multiblock_endpoint_authorization_review_response_v1_validation_report.txt
+docs/void_web_combined_multiblock_endpoint_authorization_review_response_v1.md
+scripts/validate_void_web_combined_multiblock_endpoint_authorization_review_response_v1.py
+```
+
+Its decision is `GO_COMBINED_VOID_WEB_ENDPOINT_PERMISSION_ONLY`. This permits
+one separate, predeclared combined void/web endpoint run under the frozen
+protocol. It does not promote the existing isolated pilots, does not score this
+package, and keeps `physical_validation_claimed=false`.
+
+The authorized combined endpoint run is recorded in:
+
+```text
+data/source_manifest/void_web_combined_multiblock_authorized_endpoint_run_v1.csv
+data/derived/void_web_combined_multiblock_authorized_endpoint_v1_summary.csv
+data/derived/void_web_combined_multiblock_authorized_endpoint_v1_grid.csv
+data/derived/void_web_combined_multiblock_authorized_endpoint_v1_block_drop.csv
+docs/void_web_combined_multiblock_authorized_endpoint_v1.md
+scripts/run_void_web_combined_multiblock_authorized_endpoint_v1.py
+scripts/validate_void_web_combined_multiblock_authorized_endpoint_v1.py
+```
+
+This endpoint result is preserved as a weak/negative combined result, not a
+validation. The source-native void/web candidate improves chi-square slightly
+relative to the baseline (`delta_chi2=-0.32825117`), but is worse by AIC/BIC
+(`delta_aic=3.67174883`, `delta_bic=14.13576949`) and does not beat the best
+deterministic shuffled void/web control. The next step is diagnostic rather than
+claim promotion.
+
 The first lensing route-freeze check is recorded in:
 
 ```text

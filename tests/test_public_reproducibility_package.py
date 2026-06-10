@@ -95,6 +95,18 @@ def test_public_files_exist() -> None:
         "data/derived/void_web_combined_multiblock_endpoint_authorization_review_package_v1_summary.csv",
         "scripts/build_void_web_combined_multiblock_endpoint_authorization_review_package_v1.py",
         "scripts/validate_void_web_combined_multiblock_endpoint_authorization_review_package_v1.py",
+        "data/derived/void_web_combined_multiblock_endpoint_authorization_review_response_v1.csv",
+        "data/derived/void_web_combined_multiblock_endpoint_authorization_review_response_v1_summary.csv",
+        "data/derived/void_web_combined_multiblock_endpoint_authorization_review_response_v1_validation_report.txt",
+        "docs/void_web_combined_multiblock_endpoint_authorization_review_response_v1.md",
+        "scripts/validate_void_web_combined_multiblock_endpoint_authorization_review_response_v1.py",
+        "data/source_manifest/void_web_combined_multiblock_authorized_endpoint_run_v1.csv",
+        "data/derived/void_web_combined_multiblock_authorized_endpoint_v1_summary.csv",
+        "data/derived/void_web_combined_multiblock_authorized_endpoint_v1_grid.csv",
+        "data/derived/void_web_combined_multiblock_authorized_endpoint_v1_block_drop.csv",
+        "docs/void_web_combined_multiblock_authorized_endpoint_v1.md",
+        "scripts/run_void_web_combined_multiblock_authorized_endpoint_v1.py",
+        "scripts/validate_void_web_combined_multiblock_authorized_endpoint_v1.py",
         "data/source_manifest/kids1000_lensing_route_v1.csv",
         "data/derived/kids1000_lensing_route_v1_head.csv",
         "data/derived/kids1000_lensing_route_v1_summary.csv",
@@ -1299,6 +1311,73 @@ def test_void_web_combined_multiblock_authorization_package_v1_is_clean_handoff(
     assert "REVIEWER_README_VOID_WEB_COMBINED_ENDPOINT_AUTHORIZATION.md" in {
         row["package_path"] for row in rows
     }
+
+
+def test_void_web_combined_multiblock_authorization_response_v1_grants_permission_only() -> None:
+    subprocess.run(
+        ["python", "scripts/validate_void_web_combined_multiblock_endpoint_authorization_review_response_v1.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    with (
+        ROOT / "data/derived/void_web_combined_multiblock_endpoint_authorization_review_response_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/void_web_combined_multiblock_endpoint_authorization_review_response_v1.csv"
+    ).open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    assert summary["status"] == "AUTHORIZATION_REVIEW_COMPLETED"
+    assert summary["decision"] == "GO_COMBINED_VOID_WEB_ENDPOINT_PERMISSION_ONLY"
+    assert summary["review_completed"] == "true"
+    assert summary["forbidden_inputs_used"] == "false"
+    assert summary["endpoint_run_allowed"] == "true"
+    assert summary["physical_validation_claimed"] == "false"
+    assert summary["authorization_scope"] == (
+        "single_predeclared_combined_void_web_endpoint_run_permission_only_not_validation"
+    )
+    assert summary["claim_boundary"] == "combined_multiblock_endpoint_authorization_review_not_validation"
+    assert {row["review_completed"] for row in rows} == {"true"}
+    assert {row["forbidden_inputs_used"] for row in rows} == {"false"}
+    assert {row["endpoint_run_allowed"] for row in rows} == {"true"}
+    assert {row["physical_validation_claimed"] for row in rows} == {"false"}
+
+
+def test_void_web_combined_multiblock_authorized_endpoint_v1_preserves_weak_negative_result() -> None:
+    subprocess.run(
+        ["python", "scripts/run_void_web_combined_multiblock_authorized_endpoint_v1.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    subprocess.run(
+        ["python", "scripts/validate_void_web_combined_multiblock_authorized_endpoint_v1.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    with (ROOT / "data/derived/void_web_combined_multiblock_authorized_endpoint_v1_summary.csv").open(
+        newline=""
+    ) as f:
+        summary = list(csv.DictReader(f))[0]
+    with (ROOT / "data/derived/void_web_combined_multiblock_authorized_endpoint_v1_grid.csv").open(
+        newline=""
+    ) as f:
+        rows = list(csv.DictReader(f))
+    assert summary["status"] == "AUTHORIZED_COMBINED_VOID_WEB_ENDPOINT_COMPLETE_PERMISSION_ONLY"
+    assert summary["physical_validation_claimed"] == "false"
+    assert summary["claim_boundary"] == "combined_void_web_endpoint_permission_only_not_validation"
+    assert float(summary["candidate_delta_chi2_vs_baseline"]) < 0.0
+    assert float(summary["candidate_delta_aic_vs_baseline"]) > 0.0
+    assert float(summary["candidate_delta_bic_vs_baseline"]) > 0.0
+    assert summary["candidate_beats_best_wrong_by_chi2"] == "false"
+    assert summary["candidate_beats_best_wrong_by_aic"] == "false"
+    assert summary["best_wrong_branch"] == "deterministic_shuffled_void_web"
+    assert {row["physical_validation_claimed"] for row in rows} == {"false"}
 
 
 def test_source_page_cache_is_hash_locked() -> None:
