@@ -683,12 +683,16 @@ data/derived/void_source_basis_refinement_v2_web_morphology_values.csv
 data/derived/void_source_basis_refinement_v2_web_morphology_values_summary.csv
 data/derived/void_source_basis_refinement_v2_cmb_safety_values.csv
 data/derived/void_source_basis_refinement_v2_cmb_safety_values_summary.csv
+data/derived/void_source_basis_refinement_v2_path_projection_route_ledger.csv
+data/derived/void_source_basis_refinement_v2_path_projection_route_ledger_summary.csv
 data/derived/void_source_basis_refinement_v2_projection_morphology_gate_v1.csv
 data/derived/void_source_basis_refinement_v2_projection_morphology_gate_v1_summary.csv
 scripts/build_void_source_basis_refinement_v2_web_morphology_values_v1.py
 scripts/validate_void_source_basis_refinement_v2_web_morphology_values_v1.py
 scripts/build_void_source_basis_refinement_v2_cmb_safety_values_v1.py
 scripts/validate_void_source_basis_refinement_v2_cmb_safety_values_v1.py
+scripts/build_void_source_basis_refinement_v2_path_projection_route_ledger_v1.py
+scripts/validate_void_source_basis_refinement_v2_path_projection_route_ledger_v1.py
 scripts/build_void_source_basis_refinement_v2_projection_morphology_gate_v1.py
 scripts/validate_void_source_basis_refinement_v2_projection_morphology_gate_v1.py
 ```
@@ -703,7 +707,9 @@ source-native W_web design matrix, with deterministic null controls and all
 endpoint/leakage flags set to false. This is not a replay authorization and
 does not score the endpoint. The CMB-safety component is also frozen as a
 low-z support/safety ledger; it uses no CMB map data, no CMB likelihood, and no
-endpoint residuals.
+endpoint residuals. The observer/path component now has a route ledger: KiDS
+path products are source-supported, but low-z Pantheon sky-coordinate
+crossmapping is still missing, so no `W_path` values are computed.
 
 The first lensing route-freeze check is recorded in:
 

@@ -59,3 +59,18 @@ This is a safety/support ledger only.  It records that the low-z replay scope is
 below the predeclared CMB safety floor and that the existing late-time void/web
 support check passes.  It does not use CMB map data, CMB likelihoods, endpoint
 residuals, or fit statistics.
+
+The observer/path projection channel is recorded as a route ledger:
+
+```text
+data/derived/void_source_basis_refinement_v2_path_projection_route_ledger.csv
+data/derived/void_source_basis_refinement_v2_path_projection_route_ledger_summary.csv
+scripts/build_void_source_basis_refinement_v2_path_projection_route_ledger_v1.py
+scripts/validate_void_source_basis_refinement_v2_path_projection_route_ledger_v1.py
+```
+
+This ledger preserves the current blocker rather than hiding it.  KiDS/path
+source products are route-supported, but the low-z Pantheon scope does not
+currently carry the sky-coordinate crossmap needed to assign source-frozen
+`W_path` values.  Therefore `W_path_source_value` remains `NA` and endpoint
+replay remains forbidden.

@@ -219,6 +219,8 @@ def test_public_files_exist() -> None:
         "data/derived/void_source_basis_refinement_v2_web_morphology_values_summary.csv",
         "data/derived/void_source_basis_refinement_v2_cmb_safety_values.csv",
         "data/derived/void_source_basis_refinement_v2_cmb_safety_values_summary.csv",
+        "data/derived/void_source_basis_refinement_v2_path_projection_route_ledger.csv",
+        "data/derived/void_source_basis_refinement_v2_path_projection_route_ledger_summary.csv",
         "data/derived/void_source_basis_refinement_v2_projection_morphology_gate_v1.csv",
         "data/derived/void_source_basis_refinement_v2_projection_morphology_gate_v1_summary.csv",
         "scripts/build_void_source_basis_refinement_endpoint_replay_authorization_review_template_v1.py",
@@ -234,6 +236,8 @@ def test_public_files_exist() -> None:
         "scripts/validate_void_source_basis_refinement_v2_web_morphology_values_v1.py",
         "scripts/build_void_source_basis_refinement_v2_cmb_safety_values_v1.py",
         "scripts/validate_void_source_basis_refinement_v2_cmb_safety_values_v1.py",
+        "scripts/build_void_source_basis_refinement_v2_path_projection_route_ledger_v1.py",
+        "scripts/validate_void_source_basis_refinement_v2_path_projection_route_ledger_v1.py",
         "scripts/build_void_source_basis_refinement_v2_projection_morphology_gate_v1.py",
         "scripts/validate_void_source_basis_refinement_v2_projection_morphology_gate_v1.py",
         "scripts/build_void_source_basis_refinement_r6_reviewer_template_v1.py",
@@ -2417,6 +2421,34 @@ def test_void_source_basis_refinement_v2_cmb_safety_values_v1_are_source_frozen(
     assert {row["low_z_below_safety_floor"] for row in rows} == {"true"}
     assert {row["endpoint_replay_allowed"] for row in rows} == {"false"}
     assert {row["contains_distance_residuals"] for row in rows} == {"false"}
+
+
+def test_void_source_basis_refinement_v2_path_projection_route_ledger_v1_preserves_blocker() -> None:
+    for command in [
+        ["python", "scripts/build_void_source_basis_refinement_v2_path_projection_route_ledger_v1.py"],
+        ["python", "scripts/validate_void_source_basis_refinement_v2_path_projection_route_ledger_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (ROOT / "data/derived/void_source_basis_refinement_v2_path_projection_route_ledger_summary.csv").open(
+        newline=""
+    ) as f:
+        summary = list(csv.DictReader(f))[0]
+    with (ROOT / "data/derived/void_source_basis_refinement_v2_path_projection_route_ledger.csv").open(
+        newline=""
+    ) as f:
+        rows = list(csv.DictReader(f))
+    assert summary["status"] == "V2_PATH_PROJECTION_ROUTE_LEDGER_FROZEN_VALUES_BLOCKED"
+    assert summary["n_rows"] == "424"
+    assert summary["kids_lensing_route_available"] == "true"
+    assert summary["pantheon_lowz_ra_dec_available"] == "false"
+    assert summary["lowz_to_kids_path_crossmap_available"] == "false"
+    assert summary["path_values_computed"] == "false"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["verdict"] == "path_route_available_but_lowz_coordinate_crossmap_missing"
+    assert rows
+    assert {row["W_path_value_status"] for row in rows} == {"BLOCKED_SOURCE_COORDINATE_JOIN_REQUIRED"}
+    assert {row["W_path_source_value"] for row in rows} == {"NA"}
+    assert {row["contains_lensing_residuals"] for row in rows} == {"false"}
 
 
 def test_void_source_basis_refinement_v2_projection_morphology_gate_v1_tracks_missing_channels() -> None:
