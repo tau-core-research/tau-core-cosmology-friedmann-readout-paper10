@@ -1,0 +1,7 @@
+combined_branch,chi2_total,aic_total,bic_total,delta_chi2_vs_baseline,delta_aic_vs_baseline,omega_m,omega_void,mu_web,chi2_distance,chi2_growth,chi2_multitracer,void_channel_active_at_best,web_channel_active_at_best,physical_validation_claimed,claim_boundary
+deterministic_shuffled_void_web,1223.17731629,1235.17731629,1266.56937828,-0.33946901,3.66053099,0.3,0.1,0,1210.43561098,5.5746031421,7.16710216814,true,false,false,combined_endpoint_diagnostic_not_validation
+source_native_void_web,1223.18853413,1235.18853413,1266.58059612,-0.32825117,3.67174883,0.34,0,-0.1,1209.67715202,6.11402705802,7.39735505588,false,true,false,combined_endpoint_diagnostic_not_validation
+web_only,1223.18853413,1233.18853413,1259.34858579,-0.32825117,1.67174883,0.34,0,-0.1,1209.67715202,6.11402705802,7.39735505588,false,true,false,combined_endpoint_diagnostic_not_validation
+baseline_only,1223.5167853,1231.5167853,1252.44482663,0,0,0.32,0,0,1210.18563751,5.95719105875,7.37395673435,false,false,false,combined_endpoint_diagnostic_not_validation
+void_only,1223.5167853,1233.5167853,1259.67683696,0,2,0.32,0,0,1210.18563751,5.95719105875,7.37395673435,false,false,false,combined_endpoint_diagnostic_not_validation
+wrong_web_sign,1223.5167853,1235.5167853,1266.90884729,0,4,0.32,0,0,1210.18563751,5.95719105875,7.37395673435,false,false,false,combined_endpoint_diagnostic_not_validation

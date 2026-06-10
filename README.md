@@ -348,6 +348,24 @@ relative to the baseline (`delta_chi2=-0.32825117`), but is worse by AIC/BIC
 deterministic shuffled void/web control. The next step is diagnostic rather than
 claim promotion.
 
+The first diagnostic ledger for this weak/negative result is:
+
+```text
+data/derived/void_web_combined_endpoint_diagnostics_v1_summary.csv
+data/derived/void_web_combined_endpoint_diagnostics_v1_branch_summary.csv
+data/derived/void_web_combined_endpoint_diagnostics_v1_block_drop_summary.csv
+docs/void_web_combined_endpoint_diagnostics_v1.md
+scripts/build_void_web_combined_endpoint_diagnostics_v1.py
+scripts/validate_void_web_combined_endpoint_diagnostics_v1.py
+```
+
+Its current failure-mode verdict is
+`void_channel_inactive_and_shuffled_control_marginally_better`: the best
+combined candidate has `omega_void=0`, so it collapses to the web-only branch,
+while the deterministic shuffled void/web control remains marginally better.
+This points to a void-source-basis or shared-amplitude-grammar diagnostic, not
+to endpoint claim promotion.
+
 The first lensing route-freeze check is recorded in:
 
 ```text

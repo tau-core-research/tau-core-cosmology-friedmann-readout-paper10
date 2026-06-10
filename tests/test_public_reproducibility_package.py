@@ -107,6 +107,12 @@ def test_public_files_exist() -> None:
         "docs/void_web_combined_multiblock_authorized_endpoint_v1.md",
         "scripts/run_void_web_combined_multiblock_authorized_endpoint_v1.py",
         "scripts/validate_void_web_combined_multiblock_authorized_endpoint_v1.py",
+        "data/derived/void_web_combined_endpoint_diagnostics_v1_summary.csv",
+        "data/derived/void_web_combined_endpoint_diagnostics_v1_branch_summary.csv",
+        "data/derived/void_web_combined_endpoint_diagnostics_v1_block_drop_summary.csv",
+        "docs/void_web_combined_endpoint_diagnostics_v1.md",
+        "scripts/build_void_web_combined_endpoint_diagnostics_v1.py",
+        "scripts/validate_void_web_combined_endpoint_diagnostics_v1.py",
         "data/source_manifest/kids1000_lensing_route_v1.csv",
         "data/derived/kids1000_lensing_route_v1_head.csv",
         "data/derived/kids1000_lensing_route_v1_summary.csv",
@@ -1378,6 +1384,40 @@ def test_void_web_combined_multiblock_authorized_endpoint_v1_preserves_weak_nega
     assert summary["candidate_beats_best_wrong_by_aic"] == "false"
     assert summary["best_wrong_branch"] == "deterministic_shuffled_void_web"
     assert {row["physical_validation_claimed"] for row in rows} == {"false"}
+
+
+def test_void_web_combined_endpoint_diagnostics_v1_identifies_void_inactive_failure_mode() -> None:
+    subprocess.run(
+        ["python", "scripts/build_void_web_combined_endpoint_diagnostics_v1.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    subprocess.run(
+        ["python", "scripts/validate_void_web_combined_endpoint_diagnostics_v1.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    with (ROOT / "data/derived/void_web_combined_endpoint_diagnostics_v1_summary.csv").open(
+        newline=""
+    ) as f:
+        summary = list(csv.DictReader(f))[0]
+    with (ROOT / "data/derived/void_web_combined_endpoint_diagnostics_v1_branch_summary.csv").open(
+        newline=""
+    ) as f:
+        rows = {row["combined_branch"]: row for row in csv.DictReader(f)}
+    assert summary["status"] == "DIAGNOSTIC_COMPLETE_NOT_VALIDATION"
+    assert summary["dominant_failure_mode"] == "void_channel_inactive_and_shuffled_control_marginally_better"
+    assert summary["candidate_void_channel_active_at_best"] == "false"
+    assert summary["candidate_web_channel_active_at_best"] == "true"
+    assert summary["candidate_equals_web_only_chi2"] == "true"
+    assert summary["physical_validation_claimed"] == "false"
+    assert rows["source_native_void_web"]["void_channel_active_at_best"] == "false"
+    assert rows["source_native_void_web"]["web_channel_active_at_best"] == "true"
+    assert float(summary["shuffled_minus_candidate_chi2"]) < 0.0
 
 
 def test_source_page_cache_is_hash_locked() -> None:
