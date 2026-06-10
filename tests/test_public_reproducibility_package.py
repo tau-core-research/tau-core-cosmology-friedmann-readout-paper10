@@ -282,6 +282,13 @@ def test_public_files_exist() -> None:
         "docs/kids1000_cosebis_tomographic_holdout_calibration_gate_v1.md",
         "scripts/build_kids1000_cosebis_tomographic_holdout_calibration_gate_v1.py",
         "scripts/validate_kids1000_cosebis_tomographic_holdout_calibration_gate_v1.py",
+        "data/source_manifest/kids1000_cosebis_source_frozen_tomographic_holdout_manifest_policy_v1.csv",
+        "data/derived/kids1000_cosebis_source_frozen_tomographic_holdout_bins_v1.csv",
+        "data/derived/kids1000_cosebis_source_frozen_tomographic_holdout_pairs_v1.csv",
+        "data/derived/kids1000_cosebis_source_frozen_tomographic_holdout_manifest_v1_summary.csv",
+        "docs/kids1000_cosebis_source_frozen_tomographic_holdout_manifest_v1.md",
+        "scripts/build_kids1000_cosebis_source_frozen_tomographic_holdout_manifest_v1.py",
+        "scripts/validate_kids1000_cosebis_source_frozen_tomographic_holdout_manifest_v1.py",
         "data/source_manifest/kids1000_cosebis_endpoint_jackknife_robustness_policy_v1.csv",
         "data/derived/kids1000_cosebis_endpoint_jackknife_robustness_v1_grid.csv",
         "data/derived/kids1000_cosebis_endpoint_jackknife_robustness_v1_summary.csv",
@@ -641,6 +648,8 @@ def test_public_files_exist() -> None:
         "scripts/validate_kids1000_cosebis_tomographic_control_plausibility_audit_v1.py",
         "scripts/build_kids1000_cosebis_tomographic_holdout_calibration_gate_v1.py",
         "scripts/validate_kids1000_cosebis_tomographic_holdout_calibration_gate_v1.py",
+        "scripts/build_kids1000_cosebis_source_frozen_tomographic_holdout_manifest_v1.py",
+        "scripts/validate_kids1000_cosebis_source_frozen_tomographic_holdout_manifest_v1.py",
         "scripts/run_kids1000_cosebis_endpoint_jackknife_robustness_v1.py",
         "scripts/validate_kids1000_cosebis_endpoint_jackknife_robustness_v1.py",
         "scripts/run_kids1000_cosebis_endpoint_mode_localization_v1.py",
@@ -4760,6 +4769,63 @@ def test_kids1000_cosebis_tomographic_holdout_calibration_gate_blocks_replay_unt
         assert "endpoint_residuals" in row["forbidden_inputs"]
         assert row["claim_boundary"] == policy["claim_boundary"]
     assert summary["claim_boundary"] == policy["claim_boundary"]
+
+
+def test_kids1000_cosebis_source_frozen_tomographic_holdout_manifest_freezes_h2_only() -> None:
+    with (
+        ROOT / "data/source_manifest/kids1000_cosebis_source_frozen_tomographic_holdout_manifest_policy_v1.csv"
+    ).open(newline="") as f:
+        policy = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/kids1000_cosebis_source_frozen_tomographic_holdout_manifest_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/kids1000_cosebis_source_frozen_tomographic_holdout_bins_v1.csv"
+    ).open(newline="") as f:
+        bins = list(csv.DictReader(f))
+    with (
+        ROOT / "data/derived/kids1000_cosebis_source_frozen_tomographic_holdout_pairs_v1.csv"
+    ).open(newline="") as f:
+        pairs = list(csv.DictReader(f))
+
+    assert policy["status"] == "SOURCE_FROZEN_TOMOGRAPHIC_HOLDOUT_MANIFEST_POLICY_FROZEN"
+    assert policy["computes_new_scores"] == "false"
+    assert policy["endpoint_replay_allowed"] == "false"
+    assert policy["endpoint_validation_claimed"] == "false"
+    assert "endpoint_residuals" in policy["forbidden_endpoint_fields"]
+    assert summary["status"] == "SOURCE_FROZEN_TOMOGRAPHIC_HOLDOUT_MANIFEST_BUILT"
+    assert summary["source_bin_count"] == "5"
+    assert summary["tomographic_pair_count"] == "15"
+    assert summary["holdout_fold_count"] == "5"
+    assert summary["holdout_pair_counts_by_fold"] == "1:5;2:5;3:5;4:5;5:5"
+    assert summary["calibration_pair_counts_by_fold"] == "1:10;2:10;3:10;4:10;5:10"
+    assert summary["source_native_nz_available"] == "true"
+    assert summary["independent_external_photoz_calibration_attached"] == "false"
+    assert summary["h1_independent_evidence_complete"] == "false"
+    assert summary["h2_holdout_partition_frozen"] == "true"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert (
+        summary["verdict"]
+        == "holdout_partition_frozen_but_independent_photoz_calibration_still_open"
+    )
+    assert len(bins) == 5
+    assert len(pairs) == 75
+    for fold in range(1, 6):
+        fold_rows = [row for row in pairs if row["held_out_source_bin"] == str(fold)]
+        assert len(fold_rows) == 15
+        holdout = [row for row in fold_rows if row["pair_role"] == "holdout_pair"]
+        assert len(holdout) == 5
+        for row in holdout:
+            assert str(fold) in {row["bin_i"], row["bin_j"]}
+    for row in [*bins, *pairs]:
+        assert row["uses_kids_data_vector_values_for_source_selection"] == "false"
+        assert row["uses_residuals"] == "false"
+        assert row["uses_fit_statistics"] == "false"
+        assert row["endpoint_replay_allowed"] == "false"
+        assert row["endpoint_validation_claimed"] == "false"
+        assert row["claim_boundary"] == policy["claim_boundary"]
 
 
 def test_kids1000_cosebis_endpoint_jackknife_robustness_is_not_single_pair_localized() -> None:

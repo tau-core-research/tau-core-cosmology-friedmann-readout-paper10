@@ -690,6 +690,14 @@ residuals, \(\Delta\chi^2\), null-control ranks, best-control identity, and
 post-score residual shape are forbidden source-selection inputs. The resulting
 gate verdict is that a tomographic holdout is required before endpoint replay
 or validation.
+As the first non-scoring response to that gate, we freeze a deterministic
+source-bin holdout manifest. The manifest uses only the committed
+source-native redshift-kernel inventory: in fold \(k\), all tomographic pairs
+that touch source bin \(k\) are held out and all remaining pairs are
+calibration pairs. This freezes the holdout partition but does not complete the
+independent-calibration requirement. Endpoint replay therefore remains
+forbidden until independent photometric-redshift or tomographic-calibration
+evidence is attached.
 A second post-score localization audit keeps the same source-frozen theory
 vector and same nonnegative single-amplitude scoring rule, but evaluates
 predeclared jackknife masks. All \(20/20\) leave-one source-bin and

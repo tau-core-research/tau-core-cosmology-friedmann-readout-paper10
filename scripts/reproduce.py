@@ -187,6 +187,8 @@ def main() -> None:
     run(["python", "scripts/validate_kids1000_cosebis_tomographic_control_plausibility_audit_v1.py"])
     run(["python", "scripts/build_kids1000_cosebis_tomographic_holdout_calibration_gate_v1.py"])
     run(["python", "scripts/validate_kids1000_cosebis_tomographic_holdout_calibration_gate_v1.py"])
+    run(["python", "scripts/build_kids1000_cosebis_source_frozen_tomographic_holdout_manifest_v1.py"])
+    run(["python", "scripts/validate_kids1000_cosebis_source_frozen_tomographic_holdout_manifest_v1.py"])
     run(["python", "scripts/run_kids1000_cosebis_endpoint_jackknife_robustness_v1.py"])
     run(["python", "scripts/validate_kids1000_cosebis_endpoint_jackknife_robustness_v1.py"])
     run(["python", "scripts/run_kids1000_cosebis_endpoint_mode_localization_v1.py"])

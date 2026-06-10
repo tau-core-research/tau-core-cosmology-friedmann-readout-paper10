@@ -1294,6 +1294,27 @@ endpoint residuals, `Delta chi2`, null-control ranks, best-control identity, and
 post-score residual shape from source-side selection. Its verdict is
 `tomographic_holdout_required_before_endpoint_replay_or_validation`.
 
+The first source-frozen tomographic holdout manifest is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_source_frozen_tomographic_holdout_manifest_policy_v1.csv
+data/derived/kids1000_cosebis_source_frozen_tomographic_holdout_bins_v1.csv
+data/derived/kids1000_cosebis_source_frozen_tomographic_holdout_pairs_v1.csv
+data/derived/kids1000_cosebis_source_frozen_tomographic_holdout_manifest_v1_summary.csv
+docs/kids1000_cosebis_source_frozen_tomographic_holdout_manifest_v1.md
+scripts/build_kids1000_cosebis_source_frozen_tomographic_holdout_manifest_v1.py
+scripts/validate_kids1000_cosebis_source_frozen_tomographic_holdout_manifest_v1.py
+```
+
+This manifest freezes the H2 holdout partition as a deterministic
+leave-one-source-bin schedule. In fold `k`, all tomographic pairs touching
+source bin `k` are held out, and all other pairs are calibration pairs. The
+manifest uses the committed source-native redshift-kernel inventory only; it
+does not use observed COSEBIs values, residuals, fit statistics, or null ranks.
+It does not complete H1: independent external photo-z/tomographic calibration is
+still open, so endpoint replay remains forbidden. Its verdict is
+`holdout_partition_frozen_but_independent_photoz_calibration_still_open`.
+
 The endpoint jackknife/localization robustness audit is recorded in:
 
 ```text
