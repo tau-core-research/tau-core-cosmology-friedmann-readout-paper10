@@ -338,6 +338,12 @@ def test_public_files_exist() -> None:
         "docs/kids1000_cosebis_external_photoz_calibration_completed_review_notes_v1.md",
         "docs/kids1000_cosebis_external_photoz_calibration_completed_reviewer_response_v1.md",
         "scripts/validate_kids1000_cosebis_external_photoz_calibration_completed_reviewer_response_v1.py",
+        "data/source_manifest/kids1000_cosebis_external_photoz_calibration_closure_ledger_policy_v1.csv",
+        "data/derived/kids1000_cosebis_external_photoz_calibration_closure_ledger_v1.csv",
+        "data/derived/kids1000_cosebis_external_photoz_calibration_closure_ledger_v1_summary.csv",
+        "docs/kids1000_cosebis_external_photoz_calibration_closure_ledger_v1.md",
+        "scripts/build_kids1000_cosebis_external_photoz_calibration_closure_ledger_v1.py",
+        "scripts/validate_kids1000_cosebis_external_photoz_calibration_closure_ledger_v1.py",
         "data/source_manifest/kids1000_cosebis_endpoint_jackknife_robustness_policy_v1.csv",
         "data/derived/kids1000_cosebis_endpoint_jackknife_robustness_v1_grid.csv",
         "data/derived/kids1000_cosebis_endpoint_jackknife_robustness_v1_summary.csv",
@@ -712,6 +718,8 @@ def test_public_files_exist() -> None:
         "scripts/build_kids1000_cosebis_external_photoz_calibration_reviewer_handoff_package_v1.py",
         "scripts/validate_kids1000_cosebis_external_photoz_calibration_reviewer_handoff_package_v1.py",
         "scripts/validate_kids1000_cosebis_external_photoz_calibration_completed_reviewer_response_v1.py",
+        "scripts/build_kids1000_cosebis_external_photoz_calibration_closure_ledger_v1.py",
+        "scripts/validate_kids1000_cosebis_external_photoz_calibration_closure_ledger_v1.py",
         "scripts/run_kids1000_cosebis_endpoint_jackknife_robustness_v1.py",
         "scripts/validate_kids1000_cosebis_endpoint_jackknife_robustness_v1.py",
         "scripts/run_kids1000_cosebis_endpoint_mode_localization_v1.py",
@@ -5332,6 +5340,40 @@ def test_kids1000_cosebis_external_photoz_calibration_completed_reviewer_respons
     assert result.returncode != 0
     assert "must not authorize endpoint replay" in result.stderr
     assert not summary.exists()
+
+
+def test_kids1000_cosebis_external_photoz_calibration_closure_ledger_closes_source_side_only() -> None:
+    with (
+        ROOT / "data/source_manifest/kids1000_cosebis_external_photoz_calibration_closure_ledger_policy_v1.csv"
+    ).open(newline="") as f:
+        policy = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/kids1000_cosebis_external_photoz_calibration_closure_ledger_v1.csv"
+    ).open(newline="") as f:
+        row = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/kids1000_cosebis_external_photoz_calibration_closure_ledger_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+
+    assert policy["status"] == "EXTERNAL_PHOTOZ_CALIBRATION_CLOSURE_LEDGER_POLICY_FROZEN"
+    assert policy["current_endpoint_replay_allowed"] == "false"
+    assert policy["endpoint_validation_claimed"] == "false"
+    assert row["closure_status"] == "SOURCE_SIDE_COMPLETE"
+    assert row["independent_reviewer_attestation_complete"] == "true"
+    assert row["r4_leakage_review_complete"] == "true"
+    assert row["h1_independent_evidence_complete"] == "true"
+    assert summary["r4_leakage_review_complete"] == "true"
+    assert summary["h1_independent_evidence_complete"] == "true"
+    for key in ["computes_new_scores", "contains_endpoint_data", "endpoint_replay_allowed", "endpoint_validation_claimed"]:
+        assert row[key] == "false"
+        assert summary[key] == "false"
+    assert (
+        summary["verdict"]
+        == "external_photoz_calibration_source_side_closed_endpoint_replay_still_forbidden"
+    )
+    assert row["claim_boundary"] == policy["claim_boundary"]
+    assert summary["claim_boundary"] == policy["claim_boundary"]
 
 
 def test_kids1000_cosebis_endpoint_jackknife_robustness_is_not_single_pair_localized() -> None:

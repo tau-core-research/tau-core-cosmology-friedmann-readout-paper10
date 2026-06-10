@@ -1458,6 +1458,22 @@ external photo-z calibration evidence gate as source-side complete. It remains
 strictly non-endpoint: it computes no new scores, contains no endpoint data,
 does not authorize endpoint replay, and does not claim endpoint validation.
 
+The external photo-z calibration closure ledger is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_external_photoz_calibration_closure_ledger_policy_v1.csv
+data/derived/kids1000_cosebis_external_photoz_calibration_closure_ledger_v1.csv
+data/derived/kids1000_cosebis_external_photoz_calibration_closure_ledger_v1_summary.csv
+docs/kids1000_cosebis_external_photoz_calibration_closure_ledger_v1.md
+scripts/build_kids1000_cosebis_external_photoz_calibration_closure_ledger_v1.py
+scripts/validate_kids1000_cosebis_external_photoz_calibration_closure_ledger_v1.py
+```
+
+This ledger is the current post-reviewer source-side closure state: R4/H1 are
+closed for the external photo-z calibration route, while endpoint replay remains
+forbidden and endpoint validation is not claimed. Earlier acquisition, manifest,
+preflight, and handoff artifacts remain historical prerequisite states.
+
 The endpoint jackknife/localization robustness audit is recorded in:
 
 ```text

@@ -208,6 +208,8 @@ def main() -> None:
         "--summary-out",
         "data/derived/kids1000_cosebis_external_photoz_calibration_completed_reviewer_response_v1_summary.csv",
     ])
+    run(["python", "scripts/build_kids1000_cosebis_external_photoz_calibration_closure_ledger_v1.py"])
+    run(["python", "scripts/validate_kids1000_cosebis_external_photoz_calibration_closure_ledger_v1.py"])
     run(["python", "scripts/run_kids1000_cosebis_endpoint_jackknife_robustness_v1.py"])
     run(["python", "scripts/validate_kids1000_cosebis_endpoint_jackknife_robustness_v1.py"])
     run(["python", "scripts/run_kids1000_cosebis_endpoint_mode_localization_v1.py"])
