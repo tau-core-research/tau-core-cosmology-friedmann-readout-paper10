@@ -210,6 +210,7 @@ def test_public_files_exist() -> None:
         "scripts/validate_void_source_basis_refinement_endpoint_replay_authorization_review_template_v1.py",
         "scripts/build_void_source_basis_refinement_endpoint_replay_authorization_review_package_v1.py",
         "scripts/validate_void_source_basis_refinement_endpoint_replay_authorization_review_package_v1.py",
+        "scripts/validate_void_source_basis_refinement_endpoint_replay_authorization_review_response_v1.py",
         "scripts/build_void_source_basis_refinement_r6_reviewer_template_v1.py",
         "scripts/validate_void_source_basis_refinement_r6_reviewer_template_v1.py",
         "scripts/build_void_source_basis_refinement_r6_reviewer_handoff_package_v1.py",
@@ -2185,6 +2186,74 @@ def test_void_source_basis_refinement_endpoint_replay_authorization_package_v1_i
     assert summary["contains_endpoint_scores"] == "false"
     assert summary["contains_fit_statistics"] == "false"
     assert int(summary["package_file_count"]) > 5
+
+
+def test_void_source_basis_refinement_endpoint_replay_authorization_response_v1_grants_permission_only(
+    tmp_path: Path,
+) -> None:
+    r6_response = ROOT / "data/derived/void_source_basis_refinement_r6_completed_reviewer_response_v1.csv"
+    if not r6_response.exists():
+        pytest.skip("completed R6 void reviewer response not present")
+    for command in [
+        [
+            "python",
+            "scripts/validate_void_source_basis_refinement_r6_completed_reviewer_response_v1.py",
+            str(r6_response),
+            "--summary-out",
+            "data/derived/void_source_basis_refinement_r6_completed_reviewer_response_v1_summary.csv",
+        ],
+        ["python", "scripts/build_void_source_basis_refinement_endpoint_replay_authorization_review_template_v1.py"],
+        ["python", "scripts/build_void_source_basis_refinement_endpoint_replay_authorization_review_package_v1.py"],
+        ["python", "scripts/validate_void_source_basis_refinement_endpoint_replay_authorization_review_package_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+
+    template = ROOT / "data/derived/void_source_basis_refinement_endpoint_replay_authorization_review_response_template_v1.csv"
+    response = tmp_path / "completed_refined_void_authorization_response.csv"
+    with template.open(newline="") as f:
+        rows = list(csv.DictReader(f))
+
+    responses = {
+        "Q1_r6_source_side_closure": "yes",
+        "Q2_refined_replay_scope": "caveated_yes",
+        "Q3_no_leakage": "yes",
+        "Q4_authorization": "GO_REFINED_VOID_REPLAY_PERMISSION_ONLY",
+    }
+    for row in rows:
+        row["review_completed"] = "true"
+        row["reviewer_id_or_role"] = "unit_test_permission_only_reviewer"
+        row["reviewer_response"] = responses[row["question_id"]]
+        row["reviewer_rationale"] = "Synthetic permission-only response for validator coverage; no endpoint data used."
+        row["forbidden_inputs_used"] = "false"
+        row["endpoint_replay_allowed"] = "true"
+        row["endpoint_validation_claimed"] = "false"
+
+    with response.open("w", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=list(rows[0].keys()), lineterminator="\n")
+        writer.writeheader()
+        writer.writerows(rows)
+
+    summary_out = tmp_path / "completed_refined_void_authorization_summary.csv"
+    subprocess.run(
+        [
+            "python",
+            "scripts/validate_void_source_basis_refinement_endpoint_replay_authorization_review_response_v1.py",
+            str(response),
+            "--summary-out",
+            str(summary_out),
+        ],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    with summary_out.open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["review_completed"] == "true"
+    assert summary["forbidden_inputs_used"] == "false"
+    assert summary["endpoint_replay_allowed"] == "true"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["verdict"] == "refined_void_replay_authorized_permission_only_not_validation"
 
 
 def test_source_page_cache_is_hash_locked() -> None:

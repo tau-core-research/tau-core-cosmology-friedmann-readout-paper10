@@ -616,11 +616,23 @@ data/derived/void_source_basis_refinement_endpoint_replay_authorization_review_p
 data/derived/void_source_basis_refinement_endpoint_replay_authorization_review_package_v1.zip.sha256
 data/derived/void_source_basis_refinement_endpoint_replay_authorization_review_package_v1_manifest.csv
 data/derived/void_source_basis_refinement_endpoint_replay_authorization_review_package_v1_summary.csv
+scripts/validate_void_source_basis_refinement_endpoint_replay_authorization_review_response_v1.py
 ```
 
 This package is ready but not completed. It asks whether one predeclared refined
 low-z void source-basis replay may be authorized as permission-only, without
 turning the R6 source-side review into endpoint validation.
+
+A completed reviewer response must be validated with:
+
+```bash
+python scripts/validate_void_source_basis_refinement_endpoint_replay_authorization_review_response_v1.py \
+  path/to/completed_response.csv
+```
+
+The validator accepts only a permission-only decision:
+`GO_REFINED_VOID_REPLAY_PERMISSION_ONLY`, with `forbidden_inputs_used=false`,
+`endpoint_replay_allowed=true`, and `endpoint_validation_claimed=false`.
 
 The first lensing route-freeze check is recorded in:
 
