@@ -634,6 +634,16 @@ The validator accepts only a permission-only decision:
 `GO_REFINED_VOID_REPLAY_PERMISSION_ONLY`, with `forbidden_inputs_used=false`,
 `endpoint_replay_allowed=true`, and `endpoint_validation_claimed=false`.
 
+The completed authorization response currently validates as permission-only:
+
+```text
+data/derived/void_source_basis_refinement_endpoint_replay_authorization_review_response_v1.csv
+data/derived/void_source_basis_refinement_endpoint_replay_authorization_review_response_v1_summary.csv
+```
+
+This opens only the next predeclared refined-void replay gate. It is not an
+endpoint validation result and does not by itself run scoring.
+
 The first lensing route-freeze check is recorded in:
 
 ```text

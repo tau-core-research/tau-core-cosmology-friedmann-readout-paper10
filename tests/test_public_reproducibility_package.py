@@ -206,6 +206,8 @@ def test_public_files_exist() -> None:
         "data/derived/void_source_basis_refinement_endpoint_replay_authorization_review_package_v1.zip.sha256",
         "data/derived/void_source_basis_refinement_endpoint_replay_authorization_review_package_v1_manifest.csv",
         "data/derived/void_source_basis_refinement_endpoint_replay_authorization_review_package_v1_summary.csv",
+        "data/derived/void_source_basis_refinement_endpoint_replay_authorization_review_response_v1.csv",
+        "data/derived/void_source_basis_refinement_endpoint_replay_authorization_review_response_v1_summary.csv",
         "scripts/build_void_source_basis_refinement_endpoint_replay_authorization_review_template_v1.py",
         "scripts/validate_void_source_basis_refinement_endpoint_replay_authorization_review_template_v1.py",
         "scripts/build_void_source_basis_refinement_endpoint_replay_authorization_review_package_v1.py",
@@ -2253,6 +2255,36 @@ def test_void_source_basis_refinement_endpoint_replay_authorization_response_v1_
     assert summary["forbidden_inputs_used"] == "false"
     assert summary["endpoint_replay_allowed"] == "true"
     assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["verdict"] == "refined_void_replay_authorized_permission_only_not_validation"
+
+
+def test_void_source_basis_refinement_endpoint_replay_authorization_completed_response_v1_is_permission_only() -> None:
+    response = ROOT / "data/derived/void_source_basis_refinement_endpoint_replay_authorization_review_response_v1.csv"
+    if not response.exists():
+        pytest.skip("completed refined void authorization response not present")
+    summary_out = ROOT / "data/derived/void_source_basis_refinement_endpoint_replay_authorization_review_response_v1_summary.csv"
+    subprocess.run(
+        [
+            "python",
+            "scripts/validate_void_source_basis_refinement_endpoint_replay_authorization_review_response_v1.py",
+            str(response),
+            "--summary-out",
+            str(summary_out),
+        ],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    with summary_out.open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["review_completed"] == "true"
+    assert summary["forbidden_inputs_used"] == "false"
+    assert summary["endpoint_replay_allowed"] == "true"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["authorization_scope"] == (
+        "single_predeclared_refined_low_z_void_source_basis_replay_permission_only_not_validation"
+    )
     assert summary["verdict"] == "refined_void_replay_authorized_permission_only_not_validation"
 
 

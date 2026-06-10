@@ -120,6 +120,22 @@ def main() -> None:
             run(["python", "scripts/validate_void_source_basis_refinement_endpoint_replay_authorization_review_template_v1.py"])
             run(["python", "scripts/build_void_source_basis_refinement_endpoint_replay_authorization_review_package_v1.py"])
             run(["python", "scripts/validate_void_source_basis_refinement_endpoint_replay_authorization_review_package_v1.py"])
+            refined_auth_response = (
+                ROOT
+                / "data"
+                / "derived"
+                / "void_source_basis_refinement_endpoint_replay_authorization_review_response_v1.csv"
+            )
+            if refined_auth_response.exists():
+                run(
+                    [
+                        "python",
+                        "scripts/validate_void_source_basis_refinement_endpoint_replay_authorization_review_response_v1.py",
+                        str(refined_auth_response),
+                        "--summary-out",
+                        "data/derived/void_source_basis_refinement_endpoint_replay_authorization_review_response_v1_summary.csv",
+                    ]
+                )
     run(["python", "scripts/check_kids1000_lensing_route_v1.py"])
     run(["python", "scripts/validate_kids1000_lensing_route_v1.py"])
     run(["python", "scripts/validate_kids1000_lensing_products_v1.py"])
