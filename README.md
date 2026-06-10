@@ -681,10 +681,14 @@ docs/void_source_basis_refinement_v2_projection_morphology_gate_v1.md
 data/source_manifest/void_source_basis_refinement_v2_projection_morphology_policy.csv
 data/derived/void_source_basis_refinement_v2_web_morphology_values.csv
 data/derived/void_source_basis_refinement_v2_web_morphology_values_summary.csv
+data/derived/void_source_basis_refinement_v2_cmb_safety_values.csv
+data/derived/void_source_basis_refinement_v2_cmb_safety_values_summary.csv
 data/derived/void_source_basis_refinement_v2_projection_morphology_gate_v1.csv
 data/derived/void_source_basis_refinement_v2_projection_morphology_gate_v1_summary.csv
 scripts/build_void_source_basis_refinement_v2_web_morphology_values_v1.py
 scripts/validate_void_source_basis_refinement_v2_web_morphology_values_v1.py
+scripts/build_void_source_basis_refinement_v2_cmb_safety_values_v1.py
+scripts/validate_void_source_basis_refinement_v2_cmb_safety_values_v1.py
 scripts/build_void_source_basis_refinement_v2_projection_morphology_gate_v1.py
 scripts/validate_void_source_basis_refinement_v2_projection_morphology_gate_v1.py
 ```
@@ -697,7 +701,9 @@ blocked until the missing V2 source values are frozen. The web-morphology
 component is now source-frozen for the low-z Pantheon scope from the existing
 source-native W_web design matrix, with deterministic null controls and all
 endpoint/leakage flags set to false. This is not a replay authorization and
-does not score the endpoint.
+does not score the endpoint. The CMB-safety component is also frozen as a
+low-z support/safety ledger; it uses no CMB map data, no CMB likelihood, and no
+endpoint residuals.
 
 The first lensing route-freeze check is recorded in:
 

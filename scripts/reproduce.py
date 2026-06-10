@@ -142,6 +142,8 @@ def main() -> None:
                 run(["python", "scripts/validate_void_source_basis_refinement_control_dominance_audit_v1.py"])
                 run(["python", "scripts/build_void_source_basis_refinement_v2_web_morphology_values_v1.py"])
                 run(["python", "scripts/validate_void_source_basis_refinement_v2_web_morphology_values_v1.py"])
+                run(["python", "scripts/build_void_source_basis_refinement_v2_cmb_safety_values_v1.py"])
+                run(["python", "scripts/validate_void_source_basis_refinement_v2_cmb_safety_values_v1.py"])
                 run(["python", "scripts/build_void_source_basis_refinement_v2_projection_morphology_gate_v1.py"])
                 run(["python", "scripts/validate_void_source_basis_refinement_v2_projection_morphology_gate_v1.py"])
     run(["python", "scripts/check_kids1000_lensing_route_v1.py"])

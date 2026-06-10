@@ -217,6 +217,8 @@ def test_public_files_exist() -> None:
         "data/source_manifest/void_source_basis_refinement_v2_projection_morphology_policy.csv",
         "data/derived/void_source_basis_refinement_v2_web_morphology_values.csv",
         "data/derived/void_source_basis_refinement_v2_web_morphology_values_summary.csv",
+        "data/derived/void_source_basis_refinement_v2_cmb_safety_values.csv",
+        "data/derived/void_source_basis_refinement_v2_cmb_safety_values_summary.csv",
         "data/derived/void_source_basis_refinement_v2_projection_morphology_gate_v1.csv",
         "data/derived/void_source_basis_refinement_v2_projection_morphology_gate_v1_summary.csv",
         "scripts/build_void_source_basis_refinement_endpoint_replay_authorization_review_template_v1.py",
@@ -230,6 +232,8 @@ def test_public_files_exist() -> None:
         "scripts/validate_void_source_basis_refinement_control_dominance_audit_v1.py",
         "scripts/build_void_source_basis_refinement_v2_web_morphology_values_v1.py",
         "scripts/validate_void_source_basis_refinement_v2_web_morphology_values_v1.py",
+        "scripts/build_void_source_basis_refinement_v2_cmb_safety_values_v1.py",
+        "scripts/validate_void_source_basis_refinement_v2_cmb_safety_values_v1.py",
         "scripts/build_void_source_basis_refinement_v2_projection_morphology_gate_v1.py",
         "scripts/validate_void_source_basis_refinement_v2_projection_morphology_gate_v1.py",
         "scripts/build_void_source_basis_refinement_r6_reviewer_template_v1.py",
@@ -2387,6 +2391,32 @@ def test_void_source_basis_refinement_v2_web_morphology_values_v1_are_source_fro
     assert {row["endpoint_replay_allowed"] for row in rows} == {"false"}
     assert {row["contains_distance_residuals"] for row in rows} == {"false"}
     assert {row["contains_fit_statistics"] for row in rows} == {"false"}
+
+
+def test_void_source_basis_refinement_v2_cmb_safety_values_v1_are_source_frozen() -> None:
+    for command in [
+        ["python", "scripts/build_void_source_basis_refinement_v2_cmb_safety_values_v1.py"],
+        ["python", "scripts/validate_void_source_basis_refinement_v2_cmb_safety_values_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (ROOT / "data/derived/void_source_basis_refinement_v2_cmb_safety_values_summary.csv").open(
+        newline=""
+    ) as f:
+        summary = list(csv.DictReader(f))[0]
+    with (ROOT / "data/derived/void_source_basis_refinement_v2_cmb_safety_values.csv").open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    assert summary["status"] == "V2_CMB_SAFETY_VALUES_FROZEN_NOT_ENDPOINT_READY"
+    assert summary["n_rows"] == "424"
+    assert summary["rows_below_safety_floor"] == "424"
+    assert summary["cmb_lowz_support_passed"] == "true"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["contains_cmb_map_data"] == "false"
+    assert summary["contains_cmb_likelihood"] == "false"
+    assert summary["verdict"] == "cmb_safety_values_frozen_not_endpoint_ready"
+    assert rows
+    assert {row["low_z_below_safety_floor"] for row in rows} == {"true"}
+    assert {row["endpoint_replay_allowed"] for row in rows} == {"false"}
+    assert {row["contains_distance_residuals"] for row in rows} == {"false"}
 
 
 def test_void_source_basis_refinement_v2_projection_morphology_gate_v1_tracks_missing_channels() -> None:

@@ -45,3 +45,17 @@ and include deterministic null controls.  They do not contain endpoint scores,
 distance residuals, or fit statistics, and they do not authorize replay.  The
 V2 gate therefore remains blocked until the remaining projection/morphology
 components are frozen with the same source-side discipline.
+
+The second frozen support component is `V2_CMB_SAFETY`:
+
+```text
+data/derived/void_source_basis_refinement_v2_cmb_safety_values.csv
+data/derived/void_source_basis_refinement_v2_cmb_safety_values_summary.csv
+scripts/build_void_source_basis_refinement_v2_cmb_safety_values_v1.py
+scripts/validate_void_source_basis_refinement_v2_cmb_safety_values_v1.py
+```
+
+This is a safety/support ledger only.  It records that the low-z replay scope is
+below the predeclared CMB safety floor and that the existing late-time void/web
+support check passes.  It does not use CMB map data, CMB likelihoods, endpoint
+residuals, or fit statistics.
