@@ -749,6 +749,12 @@ scripts/validate_void_source_basis_refinement_v2_path_partial_scope_replay_autho
 scripts/validate_void_source_basis_refinement_v2_path_partial_scope_replay_authorization_review_response_v1.py
 scripts/run_void_source_basis_refinement_v2_path_partial_scope_authorized_replay_v1.py
 scripts/validate_void_source_basis_refinement_v2_path_partial_scope_authorized_replay_v1.py
+docs/void_source_basis_refinement_v2_path_coupled_projection_screen_v1.md
+data/source_manifest/void_source_basis_refinement_v2_path_coupled_projection_screen_v1.csv
+data/derived/void_source_basis_refinement_v2_path_coupled_projection_screen_v1_grid.csv
+data/derived/void_source_basis_refinement_v2_path_coupled_projection_screen_v1_summary.csv
+scripts/run_void_source_basis_refinement_v2_path_coupled_projection_screen_v1.py
+scripts/validate_void_source_basis_refinement_v2_path_coupled_projection_screen_v1.py
 scripts/build_void_source_basis_refinement_v2_path_projection_route_ledger_v1.py
 scripts/validate_void_source_basis_refinement_v2_path_projection_route_ledger_v1.py
 scripts/build_void_source_basis_refinement_v2_time_readout_route_ledger_v1.py
@@ -806,7 +812,19 @@ the 12-row subset. It gives a small chi2 improvement over the baseline
 (`delta_chi2_candidate_minus_baseline=-0.20237914656`) but worsens AIC and
 ranks third among the candidate/control set because two frozen controls beat
 the candidate. This is therefore a weak caveated diagnostic replay, not a
-positive endpoint validation. The
+positive endpoint validation. A faster path-coupled projection screen has also
+been run on the same 12 predeclared rows, combining already frozen source-side
+`W_path`, `W_void_centered`, and `W_web_centered` values into bounded candidate
+families (`W_path`, `W_path x W_void`, `W_path x W_web`, and
+`W_path x W_void x W_web`). This screen is explicitly preauthorization-only:
+it is not an endpoint replay, does not claim validation, and does not promote a
+physical lensing-path weight. Its best candidate is the simple normalized
+`W_path` family, with `delta_chi2_candidate_minus_baseline=-0.29032427181`,
+but the candidate ranks eighth among candidate/control branches and seven
+controls beat it. The verdict is therefore
+`coupled_candidate_not_control_resistant_in_fast_screen`. In practical terms,
+the current simple path-coupled products do not justify a new authorization
+package without a stronger source-side projection basis. The
 time/readout component also has a route ledger: CC/BAO/CMB products are
 declared but not fetched/frozen as numeric time-readout inputs, so no `W_time`
 values are computed.
