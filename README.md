@@ -416,6 +416,22 @@ full distance scope, or quarantine the void channel from the full-distance
 endpoint. The current gate status is `ENDPOINT_REOPEN_BLOCKED`; no route is
 selected and `endpoint_scoring_allowed=false`.
 
+The first low-redshift void-scope candidate for the allowed low-z route is:
+
+```text
+data/source_manifest/low_z_pantheon_void_scope_candidate_policy_v1.csv
+data/derived/low_z_pantheon_void_scope_candidate_v1_row_mask.csv
+data/derived/low_z_pantheon_void_scope_candidate_v1_summary.csv
+docs/low_z_pantheon_void_scope_candidate_v1.md
+scripts/build_low_z_pantheon_void_scope_candidate_v1.py
+scripts/validate_low_z_pantheon_void_scope_candidate_v1.py
+```
+
+It freezes only an eligible row mask: `424 / 1371` Pantheon rows satisfy the
+current low-z void-support rule. It does not authorize or run endpoint scoring;
+`candidate_endpoint_run_allowed_now=false` and a separate authorization would
+still be required before any replay.
+
 The first lensing route-freeze check is recorded in:
 
 ```text

@@ -128,6 +128,12 @@ def test_public_files_exist() -> None:
         "docs/void_channel_remediation_gate_v1.md",
         "scripts/build_void_channel_remediation_gate_v1.py",
         "scripts/validate_void_channel_remediation_gate_v1.py",
+        "data/source_manifest/low_z_pantheon_void_scope_candidate_policy_v1.csv",
+        "data/derived/low_z_pantheon_void_scope_candidate_v1_row_mask.csv",
+        "data/derived/low_z_pantheon_void_scope_candidate_v1_summary.csv",
+        "docs/low_z_pantheon_void_scope_candidate_v1.md",
+        "scripts/build_low_z_pantheon_void_scope_candidate_v1.py",
+        "scripts/validate_low_z_pantheon_void_scope_candidate_v1.py",
         "data/source_manifest/kids1000_lensing_route_v1.csv",
         "data/derived/kids1000_lensing_route_v1_head.csv",
         "data/derived/kids1000_lensing_route_v1_summary.csv",
@@ -1524,6 +1530,38 @@ def test_void_channel_remediation_gate_v1_blocks_endpoint_reopen() -> None:
     assert gate["physical_validation_claimed"] == "false"
     assert gate["selected_route"] == "NO_ROUTE_SELECTED_NO_ENDPOINT_REOPEN"
     assert gate["claim_boundary"] == "void_channel_remediation_gate_not_scoring_not_validation"
+
+
+def test_low_z_pantheon_void_scope_candidate_v1_is_not_endpoint_scoring() -> None:
+    subprocess.run(
+        ["python", "scripts/build_low_z_pantheon_void_scope_candidate_v1.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    subprocess.run(
+        ["python", "scripts/validate_low_z_pantheon_void_scope_candidate_v1.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    with (ROOT / "data/derived/low_z_pantheon_void_scope_candidate_v1_summary.csv").open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    with (ROOT / "data/derived/low_z_pantheon_void_scope_candidate_v1_row_mask.csv").open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    included = [row for row in rows if row["included"] == "true"]
+    assert summary["scope_status"] == "SCOPE_CANDIDATE_FROZEN_NOT_ENDPOINT"
+    assert summary["endpoint_scoring_allowed"] == "false"
+    assert summary["physical_validation_claimed"] == "false"
+    assert summary["candidate_endpoint_run_allowed_now"] == "false"
+    assert summary["requires_separate_authorization_before_scoring"] == "true"
+    assert summary["claim_boundary"] == "low_z_void_scope_candidate_not_scoring_not_validation"
+    assert 0 < len(included) < len(rows)
+    assert int(summary["included_rows"]) == len(included)
+    assert all(float(row["zHD"]) <= float(summary["z_support_max"]) for row in included)
+    assert all(float(row["W_void_source_native_basis"]) > 0.0 for row in included)
 
 
 def test_source_page_cache_is_hash_locked() -> None:
