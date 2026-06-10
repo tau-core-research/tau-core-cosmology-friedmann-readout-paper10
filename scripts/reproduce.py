@@ -223,6 +223,8 @@ def main() -> None:
     run(["python", "scripts/validate_kids1000_cosebis_tomographic_control_disambiguation_v1.py"])
     run(["python", "scripts/run_kids1000_cosebis_tomographic_holdout_replay_v1.py"])
     run(["python", "scripts/validate_kids1000_cosebis_tomographic_holdout_replay_v1.py"])
+    run(["python", "scripts/build_kids1000_cosebis_best_tomographic_control_source_evidence_gate_v1.py"])
+    run(["python", "scripts/validate_kids1000_cosebis_best_tomographic_control_source_evidence_gate_v1.py"])
     run(["python", "scripts/run_kids1000_cosebis_endpoint_jackknife_robustness_v1.py"])
     run(["python", "scripts/validate_kids1000_cosebis_endpoint_jackknife_robustness_v1.py"])
     run(["python", "scripts/run_kids1000_cosebis_endpoint_mode_localization_v1.py"])

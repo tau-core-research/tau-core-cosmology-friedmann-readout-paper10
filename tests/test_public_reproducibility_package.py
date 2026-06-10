@@ -288,6 +288,12 @@ def test_public_files_exist() -> None:
         "docs/kids1000_cosebis_tomographic_holdout_replay_v1.md",
         "scripts/run_kids1000_cosebis_tomographic_holdout_replay_v1.py",
         "scripts/validate_kids1000_cosebis_tomographic_holdout_replay_v1.py",
+        "data/source_manifest/kids1000_cosebis_best_tomographic_control_source_evidence_gate_policy_v1.csv",
+        "data/derived/kids1000_cosebis_best_tomographic_control_source_evidence_gate_v1.csv",
+        "data/derived/kids1000_cosebis_best_tomographic_control_source_evidence_gate_v1_summary.csv",
+        "docs/kids1000_cosebis_best_tomographic_control_source_evidence_gate_v1.md",
+        "scripts/build_kids1000_cosebis_best_tomographic_control_source_evidence_gate_v1.py",
+        "scripts/validate_kids1000_cosebis_best_tomographic_control_source_evidence_gate_v1.py",
         "data/source_manifest/kids1000_cosebis_tomographic_holdout_calibration_gate_policy_v1.csv",
         "data/derived/kids1000_cosebis_tomographic_holdout_calibration_gate_v1.csv",
         "data/derived/kids1000_cosebis_tomographic_holdout_calibration_gate_v1_summary.csv",
@@ -7020,3 +7026,39 @@ def test_kids1000_cosebis_tomographic_holdout_replay_preserves_signal_without_va
     assert summary["uses_kids_data_vector_values_for_source_selection"] == "false"
     assert summary["endpoint_validation_claimed"] == "false"
     assert summary["verdict"] == "holdout_replay_preserves_signal_but_tomographic_control_caveat_remains"
+
+
+def test_kids1000_cosebis_best_tomographic_control_source_evidence_gate_keeps_control_only() -> None:
+    subprocess.run(
+        ["python", "scripts/build_kids1000_cosebis_best_tomographic_control_source_evidence_gate_v1.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    subprocess.run(
+        ["python", "scripts/validate_kids1000_cosebis_best_tomographic_control_source_evidence_gate_v1.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    with (
+        ROOT / "data/derived/kids1000_cosebis_best_tomographic_control_source_evidence_gate_v1_summary.csv"
+    ).open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    assert len(rows) == 1
+    summary = rows[0]
+    assert summary["status"] == "CONTROL_ONLY_NO_SOURCE_EVIDENCE_FOR_PHYSICAL_PROMOTION"
+    assert summary["target_operator"] == "seeded_auto_cross_shuffle_702759"
+    assert summary["target_control_family"] == "auto_cross_preserving_shuffle"
+    assert summary["target_is_global_source_bin_relabel"] == "false"
+    assert summary["target_has_independent_source_evidence"] == "false"
+    assert summary["accepted_physical_alternative_count"] == "0"
+    assert summary["source_systematic_candidate_count"] == "0"
+    assert summary["control_only_count"] == "1"
+    assert summary["best_control_refutes_endpoint_signal"] == "false"
+    assert summary["best_control_blocks_validation"] == "true"
+    assert summary["computes_new_scores"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["verdict"] == "best_holdout_control_is_control_only_not_physical_alternative"

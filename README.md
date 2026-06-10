@@ -1563,6 +1563,26 @@ tomographic control remains slightly better in the same replay, so the
 holdout replay preserves the endpoint signal diagnostically but keeps the
 tomographic-control caveat active. It is not validation.
 
+The best holdout-beating tomographic-control source-evidence gate is recorded
+in:
+
+```text
+data/source_manifest/kids1000_cosebis_best_tomographic_control_source_evidence_gate_policy_v1.csv
+data/derived/kids1000_cosebis_best_tomographic_control_source_evidence_gate_v1.csv
+data/derived/kids1000_cosebis_best_tomographic_control_source_evidence_gate_v1_summary.csv
+docs/kids1000_cosebis_best_tomographic_control_source_evidence_gate_v1.md
+scripts/build_kids1000_cosebis_best_tomographic_control_source_evidence_gate_v1.py
+scripts/validate_kids1000_cosebis_best_tomographic_control_source_evidence_gate_v1.py
+```
+
+This gate audits the one holdout-beating control,
+`seeded_auto_cross_shuffle_702759`. It is not induced by a single global
+source-bin relabel: the auto-pair map would imply `1->2` and `2->3`, so a
+global relabel would map `1-2` to `2-3`, whereas the control maps `1-2` to
+`1-5`. With no independent photo-z/tomographic source evidence attached, the
+control remains control-only. It does not refute the endpoint signal, but the
+broader tomographic-control caveat still blocks validation.
+
 The endpoint jackknife/localization robustness audit is recorded in:
 
 ```text
