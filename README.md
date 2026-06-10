@@ -1646,6 +1646,24 @@ standard-lensing/no-Tau-source null-amplitude theorem, and the full
 survey-native operator theorem remain downstream. Its verdict is
 `physical_promotion_ordered_leakage_and_gauge_are_next_not_validation`.
 
+The B2 operator-leakage proof-plan ledger is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_operator_leakage_proof_plan_policy_v1.csv
+data/derived/kids1000_cosebis_operator_leakage_proof_plan_v1.csv
+data/derived/kids1000_cosebis_operator_leakage_proof_plan_v1_summary.csv
+docs/kids1000_cosebis_operator_leakage_proof_plan_v1.md
+scripts/build_kids1000_cosebis_operator_leakage_proof_plan_v1.py
+scripts/validate_kids1000_cosebis_operator_leakage_proof_plan_v1.py
+```
+
+This ledger computes no new score and does not prove the leakage theorem. It
+freezes the exit conditions for the next primary proof gate. The uniform
+tile-average null limit is available, and the no-endpoint-feedback guard is
+satisfied. Three proof steps remain open: non-uniform leakage projection,
+pure-mask quotient/control, and single-operator coupling. Its verdict is
+`B2_operator_leakage_exit_conditions_frozen_but_theorem_open`.
+
 The endpoint jackknife/localization robustness audit is recorded in:
 
 ```text

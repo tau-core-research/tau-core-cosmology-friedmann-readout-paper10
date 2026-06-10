@@ -519,6 +519,12 @@ def test_public_files_exist() -> None:
         "docs/kids1000_cosebis_physical_promotion_dependency_order_v1.md",
         "scripts/build_kids1000_cosebis_physical_promotion_dependency_order_v1.py",
         "scripts/validate_kids1000_cosebis_physical_promotion_dependency_order_v1.py",
+        "data/source_manifest/kids1000_cosebis_operator_leakage_proof_plan_policy_v1.csv",
+        "data/derived/kids1000_cosebis_operator_leakage_proof_plan_v1.csv",
+        "data/derived/kids1000_cosebis_operator_leakage_proof_plan_v1_summary.csv",
+        "docs/kids1000_cosebis_operator_leakage_proof_plan_v1.md",
+        "scripts/build_kids1000_cosebis_operator_leakage_proof_plan_v1.py",
+        "scripts/validate_kids1000_cosebis_operator_leakage_proof_plan_v1.py",
         "data/source_manifest/kids1000_cosebis_tomographic_photoz_closure_status_policy_v1.csv",
         "data/derived/kids1000_cosebis_tomographic_photoz_closure_status_v1.csv",
         "data/derived/kids1000_cosebis_tomographic_photoz_closure_status_v1_summary.csv",
@@ -806,6 +812,8 @@ def test_public_files_exist() -> None:
         "scripts/validate_kids1000_cosebis_validation_readiness_ledger_v1.py",
         "scripts/build_kids1000_cosebis_physical_promotion_dependency_order_v1.py",
         "scripts/validate_kids1000_cosebis_physical_promotion_dependency_order_v1.py",
+        "scripts/build_kids1000_cosebis_operator_leakage_proof_plan_v1.py",
+        "scripts/validate_kids1000_cosebis_operator_leakage_proof_plan_v1.py",
         "scripts/build_kids1000_cosebis_tomographic_photoz_closure_status_v1.py",
         "scripts/validate_kids1000_cosebis_tomographic_photoz_closure_status_v1.py",
         "scripts/build_kids1000_cosebis_path_mapping_source_preflight_v1.py",
@@ -7258,3 +7266,47 @@ def test_kids1000_cosebis_physical_promotion_dependency_order_keeps_leakage_and_
     assert dependency_rows["B2_operator_leakage_theorem_open"]["dependency_status"] == "NEXT_PRIMARY_PROOF_GATE"
     assert dependency_rows["B3_gauge_quotient_descent_open"]["dependency_status"] == "NEXT_PARALLEL_PROOF_GATE"
     assert dependency_rows["B1_survey_native_operator_theorem_open"]["dependency_status"] == "FINAL_SYNTHESIS_PROOF_GATE"
+
+
+def test_kids1000_cosebis_operator_leakage_proof_plan_freezes_exit_conditions_not_theorem() -> None:
+    subprocess.run(
+        ["python", "scripts/build_kids1000_cosebis_operator_leakage_proof_plan_v1.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    subprocess.run(
+        ["python", "scripts/validate_kids1000_cosebis_operator_leakage_proof_plan_v1.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    with (ROOT / "data/derived/kids1000_cosebis_operator_leakage_proof_plan_v1_summary.csv").open(
+        newline=""
+    ) as f:
+        rows = list(csv.DictReader(f))
+    assert len(rows) == 1
+    summary = rows[0]
+    assert summary["status"] == "OPERATOR_LEAKAGE_PROOF_PLAN_BUILT_NOT_PROOF"
+    assert summary["proof_plan_rows"] == "5"
+    assert summary["anchor_available_count"] == "1"
+    assert summary["guard_satisfied_count"] == "1"
+    assert summary["open_proof_step_count"] == "3"
+    assert summary["operator_leakage_theorem_proven"] == "false"
+    assert summary["physical_promotion_ready"] == "false"
+    assert summary["validation_ready"] == "false"
+    assert summary["computes_new_scores"] == "false"
+    assert summary["uses_kids_data_vector_values_for_source_selection"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["physical_validation_claimed"] == "false"
+    assert summary["verdict"] == "B2_operator_leakage_exit_conditions_frozen_but_theorem_open"
+
+    with (ROOT / "data/derived/kids1000_cosebis_operator_leakage_proof_plan_v1.csv").open(newline="") as f:
+        plan = {row["step_id"]: row for row in csv.DictReader(f)}
+    assert plan["P1_uniform_null_limit_anchor"]["step_status"] == "ANCHOR_AVAILABLE"
+    assert plan["P2_nonuniform_leakage_projection"]["step_status"] == "PRIMARY_OPEN_PROOF_STEP"
+    assert plan["P3_pure_mask_quotient_or_control"]["step_status"] == "PRIMARY_OPEN_PROOF_STEP"
+    assert plan["P4_single_operator_coupling"]["step_status"] == "COUPLING_OPEN_PROOF_STEP"
+    assert plan["P5_no_endpoint_feedback_guard"]["step_status"] == "GUARD_SATISFIED"
