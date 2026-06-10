@@ -82,6 +82,7 @@ def main() -> None:
     run(["python", "scripts/validate_low_z_pantheon_void_scope_replay_authorization_review_template_v1.py"])
     run(["python", "scripts/build_low_z_pantheon_void_scope_replay_authorization_review_package_v1.py"])
     run(["python", "scripts/validate_low_z_pantheon_void_scope_replay_authorization_review_package_v1.py"])
+    run(["python", "scripts/validate_low_z_pantheon_void_replay_protocol_v1.py"])
     run(["python", "scripts/check_kids1000_lensing_route_v1.py"])
     run(["python", "scripts/validate_kids1000_lensing_route_v1.py"])
     run(["python", "scripts/validate_kids1000_lensing_products_v1.py"])

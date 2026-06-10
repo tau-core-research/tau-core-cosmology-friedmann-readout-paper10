@@ -148,6 +148,9 @@ def test_public_files_exist() -> None:
         "scripts/build_low_z_pantheon_void_scope_replay_authorization_review_package_v1.py",
         "scripts/validate_low_z_pantheon_void_scope_replay_authorization_review_package_v1.py",
         "scripts/validate_low_z_pantheon_void_scope_replay_authorization_review_response_v1.py",
+        "data/source_manifest/low_z_pantheon_void_replay_protocol_v1.csv",
+        "docs/low_z_pantheon_void_replay_protocol_v1.md",
+        "scripts/validate_low_z_pantheon_void_replay_protocol_v1.py",
         "data/source_manifest/kids1000_lensing_route_v1.csv",
         "data/derived/kids1000_lensing_route_v1_head.csv",
         "data/derived/kids1000_lensing_route_v1_summary.csv",
@@ -1719,6 +1722,39 @@ def test_low_z_void_replay_authorization_response_validator_rejects_validation_c
     assert result.returncode != 0
     assert "must not claim validation" in result.stderr
     assert not summary.exists()
+
+
+def test_low_z_pantheon_void_replay_protocol_v1_is_frozen_not_run() -> None:
+    subprocess.run(
+        ["python", "scripts/validate_low_z_pantheon_void_replay_protocol_v1.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    with (ROOT / "data/source_manifest/low_z_pantheon_void_replay_protocol_v1.csv").open(newline="") as f:
+        protocol = list(csv.DictReader(f))[0]
+    assert protocol["status"] == "LOW_Z_VOID_REPLAY_PROTOCOL_FROZEN_NOT_RUN"
+    assert protocol["scoring_allowed"] == "false"
+    assert protocol["physical_validation_claimed"] == "false"
+    assert protocol["included_channel_families"] == "W_VOID_MATURITY"
+    for channel in ["W_WEB_ANISOTROPY", "W_PATH_PROJECTION", "W_TIME_READOUT"]:
+        assert channel in protocol["disabled_channel_families"]
+    for forbidden in [
+        "distance_residual_driven_activation",
+        "posthoc_row_selection",
+        "posthoc_amplitude_tuning",
+        "endpoint_score_claims",
+        "physical_validation_claims",
+    ]:
+        assert forbidden in protocol["forbidden_inputs"]
+    forbidden_artifacts = [
+        ROOT / "data/derived/low_z_pantheon_void_replay_v1_results.csv",
+        ROOT / "data/derived/low_z_pantheon_void_replay_v1_residuals.csv",
+        ROOT / "data/derived/low_z_pantheon_void_replay_v1_grid.csv",
+        ROOT / "data/derived/low_z_pantheon_void_replay_v1_summary.csv",
+    ]
+    assert not any(path.exists() for path in forbidden_artifacts)
 
 
 def test_source_page_cache_is_hash_locked() -> None:

@@ -454,6 +454,19 @@ This package is a reviewer handoff only. It is not completed, does not authorize
 a replay by itself, and records no endpoint residuals, scores, or fit
 statistics.
 
+The frozen low-z replay protocol shell is:
+
+```text
+data/source_manifest/low_z_pantheon_void_replay_protocol_v1.csv
+docs/low_z_pantheon_void_replay_protocol_v1.md
+scripts/validate_low_z_pantheon_void_replay_protocol_v1.py
+```
+
+It declares only the future replay grammar: the low-z Pantheon distance subset,
+the active `W_VOID_MATURITY` channel, disabled web/path/time channels, low-z
+AIC shell, wrong/shuffled controls, and forbidden leakage fields. It remains
+`LOW_Z_VOID_REPLAY_PROTOCOL_FROZEN_NOT_RUN` with `scoring_allowed=false`.
+
 The first lensing route-freeze check is recorded in:
 
 ```text
