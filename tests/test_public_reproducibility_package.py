@@ -289,6 +289,12 @@ def test_public_files_exist() -> None:
         "docs/kids1000_cosebis_source_frozen_tomographic_holdout_manifest_v1.md",
         "scripts/build_kids1000_cosebis_source_frozen_tomographic_holdout_manifest_v1.py",
         "scripts/validate_kids1000_cosebis_source_frozen_tomographic_holdout_manifest_v1.py",
+        "data/source_manifest/kids1000_cosebis_photoz_tomographic_calibration_evidence_policy_v1.csv",
+        "data/derived/kids1000_cosebis_photoz_tomographic_calibration_evidence_v1.csv",
+        "data/derived/kids1000_cosebis_photoz_tomographic_calibration_evidence_v1_summary.csv",
+        "docs/kids1000_cosebis_photoz_tomographic_calibration_evidence_v1.md",
+        "scripts/build_kids1000_cosebis_photoz_tomographic_calibration_evidence_v1.py",
+        "scripts/validate_kids1000_cosebis_photoz_tomographic_calibration_evidence_v1.py",
         "data/source_manifest/kids1000_cosebis_endpoint_jackknife_robustness_policy_v1.csv",
         "data/derived/kids1000_cosebis_endpoint_jackknife_robustness_v1_grid.csv",
         "data/derived/kids1000_cosebis_endpoint_jackknife_robustness_v1_summary.csv",
@@ -650,6 +656,8 @@ def test_public_files_exist() -> None:
         "scripts/validate_kids1000_cosebis_tomographic_holdout_calibration_gate_v1.py",
         "scripts/build_kids1000_cosebis_source_frozen_tomographic_holdout_manifest_v1.py",
         "scripts/validate_kids1000_cosebis_source_frozen_tomographic_holdout_manifest_v1.py",
+        "scripts/build_kids1000_cosebis_photoz_tomographic_calibration_evidence_v1.py",
+        "scripts/validate_kids1000_cosebis_photoz_tomographic_calibration_evidence_v1.py",
         "scripts/run_kids1000_cosebis_endpoint_jackknife_robustness_v1.py",
         "scripts/validate_kids1000_cosebis_endpoint_jackknife_robustness_v1.py",
         "scripts/run_kids1000_cosebis_endpoint_mode_localization_v1.py",
@@ -4826,6 +4834,55 @@ def test_kids1000_cosebis_source_frozen_tomographic_holdout_manifest_freezes_h2_
         assert row["endpoint_replay_allowed"] == "false"
         assert row["endpoint_validation_claimed"] == "false"
         assert row["claim_boundary"] == policy["claim_boundary"]
+
+
+def test_kids1000_cosebis_photoz_tomographic_calibration_evidence_keeps_h1_open() -> None:
+    with (
+        ROOT / "data/source_manifest/kids1000_cosebis_photoz_tomographic_calibration_evidence_policy_v1.csv"
+    ).open(newline="") as f:
+        policy = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/kids1000_cosebis_photoz_tomographic_calibration_evidence_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/kids1000_cosebis_photoz_tomographic_calibration_evidence_v1.csv"
+    ).open(newline="") as f:
+        rows = list(csv.DictReader(f))
+
+    assert policy["status"] == "PHOTOZ_TOMOGRAPHIC_CALIBRATION_EVIDENCE_POLICY_FROZEN"
+    assert policy["computes_new_scores"] == "false"
+    assert policy["endpoint_replay_allowed"] == "false"
+    assert policy["endpoint_validation_claimed"] == "false"
+    assert "endpoint_residuals" in policy["forbidden_endpoint_fields"]
+    assert summary["status"] == "PHOTOZ_TOMOGRAPHIC_CALIBRATION_EVIDENCE_LEDGER_BUILT"
+    assert summary["evidence_rows"] == "4"
+    assert summary["source_native_product_frozen"] == "true"
+    assert summary["cached_public_photoz_markers_present"] == "true"
+    assert summary["source_native_nz_available"] == "true"
+    assert summary["independent_external_photoz_calibration_attached"] == "false"
+    assert summary["h1_independent_evidence_complete"] == "false"
+    assert summary["h2_holdout_partition_frozen"] == "true"
+    assert summary["computes_new_scores"] == "false"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert (
+        summary["verdict"]
+        == "partial_photoz_tomographic_evidence_available_but_h1_external_calibration_open"
+    )
+    by_id = {row["evidence_id"]: row for row in rows}
+    assert set(by_id) == {
+        "E0_kids_lensing_product",
+        "E1_kids_landing_page_photoz_markers",
+        "E2_nz_source_inventory",
+        "E3_independent_external_calibration",
+    }
+    assert by_id["E3_independent_external_calibration"]["evidence_status"] == "OPEN_REQUIRED_BEFORE_REPLAY"
+    for row in rows:
+        assert row["endpoint_replay_allowed"] == "false"
+        assert row["endpoint_validation_claimed"] == "false"
+        assert row["claim_boundary"] == policy["claim_boundary"]
+    assert summary["claim_boundary"] == policy["claim_boundary"]
 
 
 def test_kids1000_cosebis_endpoint_jackknife_robustness_is_not_single_pair_localized() -> None:

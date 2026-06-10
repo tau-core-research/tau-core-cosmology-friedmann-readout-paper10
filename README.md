@@ -1315,6 +1315,25 @@ It does not complete H1: independent external photo-z/tomographic calibration is
 still open, so endpoint replay remains forbidden. Its verdict is
 `holdout_partition_frozen_but_independent_photoz_calibration_still_open`.
 
+The source-side photo-z/tomographic calibration evidence ledger is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_photoz_tomographic_calibration_evidence_policy_v1.csv
+data/derived/kids1000_cosebis_photoz_tomographic_calibration_evidence_v1.csv
+data/derived/kids1000_cosebis_photoz_tomographic_calibration_evidence_v1_summary.csv
+docs/kids1000_cosebis_photoz_tomographic_calibration_evidence_v1.md
+scripts/build_kids1000_cosebis_photoz_tomographic_calibration_evidence_v1.py
+scripts/validate_kids1000_cosebis_photoz_tomographic_calibration_evidence_v1.py
+```
+
+This ledger records the H1 state without reopening endpoint scoring. It accepts
+the checksum-frozen KiDS lensing product, cached public KiDS DR4 lensing-page
+photo-z/SOM-gold documentation markers, and the committed source-native
+`NZ_SOURCE` five-bin inventory. It also records the remaining blocker:
+independent external photo-z or tomographic calibration is not yet attached.
+Endpoint replay and validation claims remain forbidden. Its verdict is
+`partial_photoz_tomographic_evidence_available_but_h1_external_calibration_open`.
+
 The endpoint jackknife/localization robustness audit is recorded in:
 
 ```text

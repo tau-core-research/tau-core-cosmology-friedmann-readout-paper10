@@ -698,6 +698,12 @@ calibration pairs. This freezes the holdout partition but does not complete the
 independent-calibration requirement. Endpoint replay therefore remains
 forbidden until independent photometric-redshift or tomographic-calibration
 evidence is attached.
+We also add a source-side photo-\(z\)/tomographic evidence ledger. It accepts
+the checksum-frozen KiDS lensing tarball, cached KiDS DR4 lensing-page
+photo-\(z\)/SOM-gold documentation markers, and the source-native
+\texttt{NZ\_SOURCE} five-bin inventory, but it keeps independent external
+photo-\(z\) or tomographic calibration open. This ledger computes no new score
+and does not authorize endpoint replay.
 A second post-score localization audit keeps the same source-frozen theory
 vector and same nonnegative single-amplitude scoring rule, but evaluates
 predeclared jackknife masks. All \(20/20\) leave-one source-bin and
