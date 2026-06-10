@@ -755,6 +755,13 @@ data/derived/void_source_basis_refinement_v2_path_coupled_projection_screen_v1_g
 data/derived/void_source_basis_refinement_v2_path_coupled_projection_screen_v1_summary.csv
 scripts/run_void_source_basis_refinement_v2_path_coupled_projection_screen_v1.py
 scripts/validate_void_source_basis_refinement_v2_path_coupled_projection_screen_v1.py
+docs/void_source_basis_refinement_v2_path_transform_bank_screen_v1.md
+data/source_manifest/void_source_basis_refinement_v2_path_transform_bank_screen_v1.csv
+data/derived/void_source_basis_refinement_v2_path_transform_bank_screen_v1_grid.csv
+data/derived/void_source_basis_refinement_v2_path_transform_bank_screen_v1_family_summary.csv
+data/derived/void_source_basis_refinement_v2_path_transform_bank_screen_v1_summary.csv
+scripts/run_void_source_basis_refinement_v2_path_transform_bank_screen_v1.py
+scripts/validate_void_source_basis_refinement_v2_path_transform_bank_screen_v1.py
 scripts/build_void_source_basis_refinement_v2_path_projection_route_ledger_v1.py
 scripts/validate_void_source_basis_refinement_v2_path_projection_route_ledger_v1.py
 scripts/build_void_source_basis_refinement_v2_time_readout_route_ledger_v1.py
@@ -824,7 +831,20 @@ but the candidate ranks eighth among candidate/control branches and seven
 controls beat it. The verdict is therefore
 `coupled_candidate_not_control_resistant_in_fast_screen`. In practical terms,
 the current simple path-coupled products do not justify a new authorization
-package without a stronger source-side projection basis. The
+package without a stronger source-side projection basis. A second fast
+transform-bank screen searched simple source-side transforms of the same
+12-row nearest-tile path control (`existing_W_path`, raw proximity, margin,
+inverse distance, Gaussian kernels, binary near/core cuts, and rank quantile),
+with optional void/web couplings. Its best candidate is
+`tile_gaussian_sigma_2p0__web`, with
+`delta_chi2_candidate_minus_baseline=-0.33433018032`, but it is still not
+control resistant: the candidate ranks 53rd among candidate/control branches
+and 52 controls beat it. The verdict is
+`path_transform_candidate_not_control_resistant_in_fast_screen`. This is a
+useful negative search result: the bottleneck is unlikely to be fixed by a
+simple monotone transform of the 12-row tile-separation proxy. A stronger
+source-side path/projection basis is required before a new authorization
+package is scientifically justified. The
 time/readout component also has a route ledger: CC/BAO/CMB products are
 declared but not fetched/frozen as numeric time-readout inputs, so no `W_time`
 values are computed.

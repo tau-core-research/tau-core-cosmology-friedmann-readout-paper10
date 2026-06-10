@@ -261,6 +261,13 @@ def test_public_files_exist() -> None:
         "data/derived/void_source_basis_refinement_v2_path_coupled_projection_screen_v1_summary.csv",
         "scripts/run_void_source_basis_refinement_v2_path_coupled_projection_screen_v1.py",
         "scripts/validate_void_source_basis_refinement_v2_path_coupled_projection_screen_v1.py",
+        "docs/void_source_basis_refinement_v2_path_transform_bank_screen_v1.md",
+        "data/source_manifest/void_source_basis_refinement_v2_path_transform_bank_screen_v1.csv",
+        "data/derived/void_source_basis_refinement_v2_path_transform_bank_screen_v1_grid.csv",
+        "data/derived/void_source_basis_refinement_v2_path_transform_bank_screen_v1_family_summary.csv",
+        "data/derived/void_source_basis_refinement_v2_path_transform_bank_screen_v1_summary.csv",
+        "scripts/run_void_source_basis_refinement_v2_path_transform_bank_screen_v1.py",
+        "scripts/validate_void_source_basis_refinement_v2_path_transform_bank_screen_v1.py",
         "data/derived/void_source_basis_refinement_v2_path_projection_route_ledger.csv",
         "data/derived/void_source_basis_refinement_v2_path_projection_route_ledger_summary.csv",
         "data/derived/void_source_basis_refinement_v2_time_readout_route_ledger.csv",
@@ -2857,6 +2864,40 @@ def test_void_source_basis_refinement_v2_path_coupled_projection_screen_v1_is_no
         "coupled_candidate_not_control_resistant_in_fast_screen",
     }
     assert summary["claim_boundary"] == "v2_path_coupled_projection_screen_not_endpoint_not_validation"
+
+
+def test_void_source_basis_refinement_v2_path_transform_bank_screen_v1_is_not_endpoint_validation() -> None:
+    for command in [
+        ["python", "scripts/run_void_source_basis_refinement_v2_path_transform_bank_screen_v1.py"],
+        ["python", "scripts/validate_void_source_basis_refinement_v2_path_transform_bank_screen_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (
+        ROOT / "data/derived/void_source_basis_refinement_v2_path_transform_bank_screen_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/void_source_basis_refinement_v2_path_transform_bank_screen_v1_family_summary.csv"
+    ).open(newline="") as f:
+        families = list(csv.DictReader(f))
+    assert summary["status"] == "V2_PATH_TRANSFORM_BANK_SCREEN_PREAUTH_DIAGNOSTIC_NOT_ENDPOINT"
+    assert summary["screen_status"] == "preauthorization_diagnostic_not_endpoint"
+    assert summary["n_rows"] == "12"
+    assert summary["normalization_rule"] == "max_abs_on_12_row_source_scope"
+    assert summary["diagnostic_screen_executed"] == "true"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["physical_lensing_path_weight_claimed"] == "false"
+    assert summary["best_candidate_family"]
+    assert float(summary["delta_chi2_candidate_minus_baseline"]) < 0.0
+    assert int(summary["candidate_rank_by_chi2_among_candidate_and_controls"]) >= 1
+    assert int(summary["controls_better_than_candidate_chi2"]) >= 0
+    assert len(families) == 40
+    assert summary["verdict"] in {
+        "path_transform_candidate_survives_fast_screen_requires_authorization",
+        "path_transform_candidate_not_control_resistant_in_fast_screen",
+    }
+    assert summary["claim_boundary"] == "v2_path_transform_bank_screen_not_endpoint_not_validation"
 
 
 def test_void_source_basis_refinement_v2_time_readout_route_ledger_v1_preserves_blocker() -> None:
