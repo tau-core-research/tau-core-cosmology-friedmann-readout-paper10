@@ -493,6 +493,18 @@ It is a weak/mixed result: `delta_chi2_void_minus_baseline=-0.37847238`, but
 than the candidate. This is retained as a caveated negative/control result, not
 as validation.
 
+The follow-up diagnostic is:
+
+```text
+docs/low_z_void_replay_diagnostics_v1.md
+data/derived/low_z_void_replay_diagnostics_v1_summary.csv
+data/derived/low_z_void_replay_diagnostics_v1_branch_summary.csv
+```
+
+It records `grid_edge_pressure_and_shuffled_control_beats_candidate`, so the
+next void-side step is source-basis refinement rather than post-hoc amplitude or
+grid tuning.
+
 The first lensing route-freeze check is recorded in:
 
 ```text

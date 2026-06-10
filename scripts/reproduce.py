@@ -89,6 +89,8 @@ def main() -> None:
     if response.exists():
         run(["python", "scripts/run_low_z_pantheon_void_replay_v1.py"])
         run(["python", "scripts/validate_low_z_pantheon_void_replay_v1.py"])
+        run(["python", "scripts/build_low_z_void_replay_diagnostics_v1.py"])
+        run(["python", "scripts/validate_low_z_void_replay_diagnostics_v1.py"])
     run(["python", "scripts/check_kids1000_lensing_route_v1.py"])
     run(["python", "scripts/validate_kids1000_lensing_route_v1.py"])
     run(["python", "scripts/validate_kids1000_lensing_products_v1.py"])

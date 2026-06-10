@@ -1,0 +1,7 @@
+diagnostic_id,branch,best_omega_m,best_omega_void,best_chi2_lowz_distance,best_aic_lowz,delta_chi2_vs_baseline,delta_chi2_vs_candidate,omega_m_at_grid_edge,omega_void_at_grid_edge,claim_boundary
+LOW_Z_VOID_REPLAY_DIAGNOSTICS_V1,baseline_only,0.2,0,381.794196616,385.794196616,0,0.37847238,true,false,low_z_void_replay_diagnostic_not_validation
+LOW_Z_VOID_REPLAY_DIAGNOSTICS_V1,void_only,0.4,-0.2,381.415724236,387.415724236,-0.37847238,0,true,true,low_z_void_replay_diagnostic_not_validation
+LOW_Z_VOID_REPLAY_DIAGNOSTICS_V1,wrong_void_sign,0.36,0.2,381.424801937,387.424801937,-0.369394679,0.00907770099997,false,true,low_z_void_replay_diagnostic_not_validation
+LOW_Z_VOID_REPLAY_DIAGNOSTICS_V1,wrong_void_threshold,0.4,-0.2,381.552820774,387.552820774,-0.241375842,0.137096538,true,true,low_z_void_replay_diagnostic_not_validation
+LOW_Z_VOID_REPLAY_DIAGNOSTICS_V1,deterministic_shuffled_void_within_low_z_mask,0.34,0.2,380.997553782,386.997553782,-0.796642834,-0.418170454,false,true,low_z_void_replay_diagnostic_not_validation
+LOW_Z_VOID_REPLAY_DIAGNOSTICS_V1,zero_void_amplitude,0.2,0,381.794196616,385.794196616,0,0.37847238,true,false,low_z_void_replay_diagnostic_not_validation

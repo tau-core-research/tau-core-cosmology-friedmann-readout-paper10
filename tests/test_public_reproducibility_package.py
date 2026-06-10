@@ -155,6 +155,9 @@ def test_public_files_exist() -> None:
         "docs/low_z_pantheon_void_replay_v1.md",
         "scripts/run_low_z_pantheon_void_replay_v1.py",
         "scripts/validate_low_z_pantheon_void_replay_v1.py",
+        "docs/low_z_void_replay_diagnostics_v1.md",
+        "scripts/build_low_z_void_replay_diagnostics_v1.py",
+        "scripts/validate_low_z_void_replay_diagnostics_v1.py",
         "data/source_manifest/kids1000_lensing_route_v1.csv",
         "data/derived/kids1000_lensing_route_v1_head.csv",
         "data/derived/kids1000_lensing_route_v1_summary.csv",
@@ -1810,6 +1813,40 @@ def test_low_z_pantheon_void_replay_v1_is_permission_only() -> None:
     assert abs(float(summary["delta_aic_void_minus_baseline"]) - 1.62152762) < 1e-8
     assert summary["candidate_rank_by_chi2_among_void_and_controls"] == "2"
     assert summary["controls_better_than_candidate_chi2"] == "1"
+
+
+def test_low_z_void_replay_diagnostics_v1_preserves_weak_mixed_verdict() -> None:
+    response = ROOT / "data/derived/low_z_pantheon_void_scope_replay_authorization_review_response_v1.csv"
+    if not response.exists():
+        pytest.skip("completed low-z void authorization response not present")
+    subprocess.run(
+        ["python", "scripts/run_low_z_pantheon_void_replay_v1.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    subprocess.run(
+        ["python", "scripts/build_low_z_void_replay_diagnostics_v1.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    subprocess.run(
+        ["python", "scripts/validate_low_z_void_replay_diagnostics_v1.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    with (ROOT / "data/derived/low_z_void_replay_diagnostics_v1_summary.csv").open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["diagnosis"] == "grid_edge_pressure_and_shuffled_control_beats_candidate"
+    assert float(summary["shuffled_minus_candidate_chi2"]) < 0.0
+    assert summary["candidate_omega_m_at_grid_edge"] == "true"
+    assert summary["candidate_omega_void_at_grid_edge"] == "true"
+    assert summary["physical_validation_claimed"] == "false"
 
 
 def test_source_page_cache_is_hash_locked() -> None:
