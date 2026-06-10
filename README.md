@@ -1427,6 +1427,21 @@ residual shapes. It is a handoff package only: R4 remains incomplete, H1
 remains incomplete, and endpoint replay remains forbidden. Its verdict is
 `reviewer_handoff_package_ready_not_completed`.
 
+The completed reviewer response validator is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_external_photoz_calibration_completed_reviewer_response_policy_v1.csv
+docs/kids1000_cosebis_external_photoz_calibration_completed_reviewer_response_v1.md
+scripts/validate_kids1000_cosebis_external_photoz_calibration_completed_reviewer_response_v1.py
+```
+
+This validator is not run by the default reproduction pipeline because no
+completed independent reviewer response is bundled. It validates a returned
+reviewer CSV as source-side evidence only: even an accepted response does not
+compute new scores, does not claim endpoint validation, and does not authorize
+endpoint replay. Its accepted verdict is
+`completed_reviewer_response_accepted_source_side_only_endpoint_replay_still_forbidden`.
+
 The endpoint jackknife/localization robustness audit is recorded in:
 
 ```text

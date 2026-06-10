@@ -329,6 +329,9 @@ def test_public_files_exist() -> None:
         "docs/kids1000_cosebis_external_photoz_calibration_reviewer_handoff_package_v1.md",
         "scripts/build_kids1000_cosebis_external_photoz_calibration_reviewer_handoff_package_v1.py",
         "scripts/validate_kids1000_cosebis_external_photoz_calibration_reviewer_handoff_package_v1.py",
+        "data/source_manifest/kids1000_cosebis_external_photoz_calibration_completed_reviewer_response_policy_v1.csv",
+        "docs/kids1000_cosebis_external_photoz_calibration_completed_reviewer_response_v1.md",
+        "scripts/validate_kids1000_cosebis_external_photoz_calibration_completed_reviewer_response_v1.py",
         "data/source_manifest/kids1000_cosebis_endpoint_jackknife_robustness_policy_v1.csv",
         "data/derived/kids1000_cosebis_endpoint_jackknife_robustness_v1_grid.csv",
         "data/derived/kids1000_cosebis_endpoint_jackknife_robustness_v1_summary.csv",
@@ -702,6 +705,7 @@ def test_public_files_exist() -> None:
         "scripts/validate_kids1000_cosebis_external_photoz_calibration_reviewer_attestation_template_v1.py",
         "scripts/build_kids1000_cosebis_external_photoz_calibration_reviewer_handoff_package_v1.py",
         "scripts/validate_kids1000_cosebis_external_photoz_calibration_reviewer_handoff_package_v1.py",
+        "scripts/validate_kids1000_cosebis_external_photoz_calibration_completed_reviewer_response_v1.py",
         "scripts/run_kids1000_cosebis_endpoint_jackknife_robustness_v1.py",
         "scripts/validate_kids1000_cosebis_endpoint_jackknife_robustness_v1.py",
         "scripts/run_kids1000_cosebis_endpoint_mode_localization_v1.py",
@@ -5172,6 +5176,64 @@ def test_kids1000_cosebis_external_photoz_calibration_reviewer_handoff_package_i
         assert row["endpoint_validation_claimed"] == "false"
         assert row["claim_boundary"] == policy["claim_boundary"]
     assert summary["claim_boundary"] == policy["claim_boundary"]
+
+
+def test_kids1000_cosebis_external_photoz_calibration_completed_reviewer_response_validator_accepts_source_side_only(
+    tmp_path: Path,
+) -> None:
+    with (
+        ROOT / "data/source_manifest/kids1000_cosebis_external_photoz_calibration_completed_reviewer_response_policy_v1.csv"
+    ).open(newline="") as f:
+        policy = list(csv.DictReader(f))[0]
+    assert policy["status"] == "EXTERNAL_PHOTOZ_CALIBRATION_COMPLETED_REVIEWER_RESPONSE_POLICY_FROZEN"
+    assert policy["current_endpoint_replay_allowed"] == "false"
+    assert policy["endpoint_validation_claimed"] == "false"
+
+    with (
+        ROOT / "data/derived/kids1000_cosebis_external_photoz_calibration_reviewer_attestation_template_v1.csv"
+    ).open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    for row in rows:
+        row["reviewer_response"] = "yes"
+        row["reviewer_rationale"] = "Reviewed source-side artifacts only; no endpoint fields inspected."
+        row["reviewer_id_or_role"] = "independent_source_reviewer"
+        row["review_completed"] = "true"
+        row["forbidden_inputs_used"] = "false"
+        row["endpoint_replay_allowed"] = "false"
+        row["endpoint_validation_claimed"] = "false"
+        if row["question_id"] == "Q4_r4_decision":
+            row["reviewer_response"] = "ACCEPT_AS_CAVEATED_SOURCE_SIDE_REVIEW"
+
+    response = tmp_path / "completed_reviewer_response.csv"
+    with response.open("w", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=list(rows[0].keys()), lineterminator="\n")
+        writer.writeheader()
+        writer.writerows(rows)
+    summary = tmp_path / "summary.csv"
+    subprocess.run(
+        [
+            "python",
+            str(ROOT / "scripts/validate_kids1000_cosebis_external_photoz_calibration_completed_reviewer_response_v1.py"),
+            str(response),
+            "--summary-out",
+            str(summary),
+        ],
+        cwd=ROOT,
+        check=True,
+    )
+    with summary.open(newline="") as f:
+        accepted = list(csv.DictReader(f))[0]
+    assert accepted["independent_reviewer_attestation_complete"] == "true"
+    assert accepted["r4_leakage_review_complete"] == "true"
+    assert accepted["h1_independent_evidence_complete"] == "true"
+    assert accepted["computes_new_scores"] == "false"
+    assert accepted["contains_endpoint_data"] == "false"
+    assert accepted["endpoint_replay_allowed"] == "false"
+    assert accepted["endpoint_validation_claimed"] == "false"
+    assert (
+        accepted["verdict"]
+        == "completed_reviewer_response_accepted_source_side_only_endpoint_replay_still_forbidden"
+    )
 
 
 def test_kids1000_cosebis_endpoint_jackknife_robustness_is_not_single_pair_localized() -> None:
