@@ -81,10 +81,14 @@ The observer/path projection channel is recorded as a route ledger:
 ```text
 data/derived/void_source_basis_refinement_v2_path_projection_crossmap_audit.csv
 data/derived/void_source_basis_refinement_v2_path_projection_crossmap_audit_summary.csv
+data/derived/void_source_basis_refinement_v2_path_partial_scope_policy.csv
+data/derived/void_source_basis_refinement_v2_path_partial_scope_policy_summary.csv
 data/derived/void_source_basis_refinement_v2_path_projection_route_ledger.csv
 data/derived/void_source_basis_refinement_v2_path_projection_route_ledger_summary.csv
 scripts/build_void_source_basis_refinement_v2_path_projection_crossmap_audit_v1.py
 scripts/validate_void_source_basis_refinement_v2_path_projection_crossmap_audit_v1.py
+scripts/build_void_source_basis_refinement_v2_path_partial_scope_policy_v1.py
+scripts/validate_void_source_basis_refinement_v2_path_partial_scope_policy_v1.py
 scripts/build_void_source_basis_refinement_v2_path_projection_route_ledger_v1.py
 scripts/validate_void_source_basis_refinement_v2_path_projection_route_ledger_v1.py
 ```
@@ -93,6 +97,8 @@ This ledger preserves the current blocker rather than hiding it.  KiDS/path
 source products are route-supported, and the low-z Pantheon geometry join does
 carry RA/DEC.  The crossmap audit finds partial KiDS tile candidates, but not a
 complete low-z crossmap and not a frozen Pantheon-row path-weight rule.
+The partial-scope policy freezes this as 5 strict and 7 caveated path-scope
+candidate rows.  This is not enough to promote `W_path` as a full low-z channel.
 Therefore `W_path_source_value` remains `NA` and endpoint replay remains
 forbidden.
 

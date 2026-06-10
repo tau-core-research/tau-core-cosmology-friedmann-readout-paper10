@@ -687,6 +687,8 @@ data/derived/void_source_basis_refinement_v2_cmb_safety_values.csv
 data/derived/void_source_basis_refinement_v2_cmb_safety_values_summary.csv
 data/derived/void_source_basis_refinement_v2_path_projection_crossmap_audit.csv
 data/derived/void_source_basis_refinement_v2_path_projection_crossmap_audit_summary.csv
+data/derived/void_source_basis_refinement_v2_path_partial_scope_policy.csv
+data/derived/void_source_basis_refinement_v2_path_partial_scope_policy_summary.csv
 data/derived/void_source_basis_refinement_v2_path_projection_route_ledger.csv
 data/derived/void_source_basis_refinement_v2_path_projection_route_ledger_summary.csv
 data/derived/void_source_basis_refinement_v2_time_readout_route_ledger.csv
@@ -703,6 +705,8 @@ scripts/build_void_source_basis_refinement_v2_cmb_safety_values_v1.py
 scripts/validate_void_source_basis_refinement_v2_cmb_safety_values_v1.py
 scripts/build_void_source_basis_refinement_v2_path_projection_crossmap_audit_v1.py
 scripts/validate_void_source_basis_refinement_v2_path_projection_crossmap_audit_v1.py
+scripts/build_void_source_basis_refinement_v2_path_partial_scope_policy_v1.py
+scripts/validate_void_source_basis_refinement_v2_path_partial_scope_policy_v1.py
 scripts/build_void_source_basis_refinement_v2_path_projection_route_ledger_v1.py
 scripts/validate_void_source_basis_refinement_v2_path_projection_route_ledger_v1.py
 scripts/build_void_source_basis_refinement_v2_time_readout_route_ledger_v1.py
@@ -730,7 +734,9 @@ path products are source-supported. A crossmap audit now confirms that low-z
 Pantheon RA/DEC are available and that a small number of rows have nearby KiDS
 tile candidates, but the crossmap is not complete for the low-z scope and no
 Pantheon-row path-weight rule is frozen. Therefore no `W_path` values are
-computed. The
+computed. The partial-scope policy freezes the consequence: `W_path` is at most
+a 12-row source-side candidate subset in this low-z replay scope, with 5 strict
+and 7 caveated candidates, not a full low-z channel. The
 time/readout component also has a route ledger: CC/BAO/CMB products are
 declared but not fetched/frozen as numeric time-readout inputs, so no `W_time`
 values are computed.

@@ -223,6 +223,8 @@ def test_public_files_exist() -> None:
         "data/derived/void_source_basis_refinement_v2_cmb_safety_values_summary.csv",
         "data/derived/void_source_basis_refinement_v2_path_projection_crossmap_audit.csv",
         "data/derived/void_source_basis_refinement_v2_path_projection_crossmap_audit_summary.csv",
+        "data/derived/void_source_basis_refinement_v2_path_partial_scope_policy.csv",
+        "data/derived/void_source_basis_refinement_v2_path_partial_scope_policy_summary.csv",
         "data/derived/void_source_basis_refinement_v2_path_projection_route_ledger.csv",
         "data/derived/void_source_basis_refinement_v2_path_projection_route_ledger_summary.csv",
         "data/derived/void_source_basis_refinement_v2_time_readout_route_ledger.csv",
@@ -248,6 +250,8 @@ def test_public_files_exist() -> None:
         "scripts/validate_void_source_basis_refinement_v2_cmb_safety_values_v1.py",
         "scripts/build_void_source_basis_refinement_v2_path_projection_crossmap_audit_v1.py",
         "scripts/validate_void_source_basis_refinement_v2_path_projection_crossmap_audit_v1.py",
+        "scripts/build_void_source_basis_refinement_v2_path_partial_scope_policy_v1.py",
+        "scripts/validate_void_source_basis_refinement_v2_path_partial_scope_policy_v1.py",
         "scripts/build_void_source_basis_refinement_v2_path_projection_route_ledger_v1.py",
         "scripts/validate_void_source_basis_refinement_v2_path_projection_route_ledger_v1.py",
         "scripts/build_void_source_basis_refinement_v2_time_readout_route_ledger_v1.py",
@@ -2523,6 +2527,36 @@ def test_void_source_basis_refinement_v2_path_projection_crossmap_audit_v1_is_no
     assert summary["verdict"] == "lowz_coordinates_available_but_path_values_not_computed"
     assert int(summary["rows_inside_kids_dec_filename_envelope"]) > 0
     assert int(summary["rows_nearest_tile_within_1_deg"]) > 0
+    assert rows
+    assert {row["W_path_source_value"] for row in rows} == {"NA"}
+    assert {row["contains_lensing_residuals"] for row in rows} == {"false"}
+
+
+def test_void_source_basis_refinement_v2_path_partial_scope_policy_v1_is_not_full_channel() -> None:
+    for command in [
+        ["python", "scripts/build_void_source_basis_refinement_v2_path_projection_crossmap_audit_v1.py"],
+        ["python", "scripts/validate_void_source_basis_refinement_v2_path_projection_crossmap_audit_v1.py"],
+        ["python", "scripts/build_void_source_basis_refinement_v2_path_partial_scope_policy_v1.py"],
+        ["python", "scripts/validate_void_source_basis_refinement_v2_path_partial_scope_policy_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (ROOT / "data/derived/void_source_basis_refinement_v2_path_partial_scope_policy_summary.csv").open(
+        newline=""
+    ) as f:
+        summary = list(csv.DictReader(f))[0]
+    with (ROOT / "data/derived/void_source_basis_refinement_v2_path_partial_scope_policy.csv").open(
+        newline=""
+    ) as f:
+        rows = list(csv.DictReader(f))
+    assert summary["status"] == "V2_PATH_PARTIAL_SCOPE_POLICY_FROZEN_VALUES_NOT_COMPUTED"
+    assert summary["n_rows"] == "424"
+    assert summary["strict_path_scope_candidate_count"] == "5"
+    assert summary["caveated_path_scope_candidate_count"] == "7"
+    assert summary["total_path_scope_candidate_count"] == "12"
+    assert summary["full_lowz_scope_path_ready"] == "false"
+    assert summary["path_values_computed"] == "false"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["verdict"] == "W_path_is_partial_scope_candidate_only_not_full_lowz_channel"
     assert rows
     assert {row["W_path_source_value"] for row in rows} == {"NA"}
     assert {row["contains_lensing_residuals"] for row in rows} == {"false"}
