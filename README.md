@@ -1664,6 +1664,25 @@ satisfied. Three proof steps remain open: non-uniform leakage projection,
 pure-mask quotient/control, and single-operator coupling. Its verdict is
 `B2_operator_leakage_exit_conditions_frozen_but_theorem_open`.
 
+The non-uniform leakage projection criterion is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_operator_leakage_projection_criterion_policy_v1.csv
+data/derived/kids1000_cosebis_operator_leakage_projection_criterion_v1.csv
+data/derived/kids1000_cosebis_operator_leakage_projection_criterion_v1_summary.csv
+docs/kids1000_cosebis_operator_leakage_projection_criterion_v1.md
+scripts/build_kids1000_cosebis_operator_leakage_projection_criterion_v1.py
+scripts/validate_kids1000_cosebis_operator_leakage_projection_criterion_v1.py
+```
+
+This criterion computes no new score and proves no new theorem. It states the
+sufficient condition needed to close the `P2_nonuniform_leakage_projection`
+step: mask-only source directions must either project to zero in the physical
+low-mode response class, modulo quotient-null directions, or be routed into a
+predeclared null-control family by the same source-native operator that
+generates the mode response. The verdict is
+`nonuniform_leakage_projection_criterion_frozen_but_not_proven`.
+
 The endpoint jackknife/localization robustness audit is recorded in:
 
 ```text

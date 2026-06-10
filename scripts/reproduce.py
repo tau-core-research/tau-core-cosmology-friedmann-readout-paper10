@@ -257,6 +257,8 @@ def main() -> None:
     run(["python", "scripts/validate_kids1000_cosebis_operator_leakage_theorem_requirements_v1.py"])
     run(["python", "scripts/build_kids1000_cosebis_operator_leakage_proof_plan_v1.py"])
     run(["python", "scripts/validate_kids1000_cosebis_operator_leakage_proof_plan_v1.py"])
+    run(["python", "scripts/build_kids1000_cosebis_operator_leakage_projection_criterion_v1.py"])
+    run(["python", "scripts/validate_kids1000_cosebis_operator_leakage_projection_criterion_v1.py"])
     run(["python", "scripts/build_kids1000_cosebis_gauge_quotient_descent_gate_v1.py"])
     run(["python", "scripts/validate_kids1000_cosebis_gauge_quotient_descent_gate_v1.py"])
     run(["python", "scripts/build_kids1000_cosebis_survey_native_operator_construction_attempt_v1.py"])

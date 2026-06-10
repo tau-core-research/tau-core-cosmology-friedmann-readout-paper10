@@ -525,6 +525,12 @@ def test_public_files_exist() -> None:
         "docs/kids1000_cosebis_operator_leakage_proof_plan_v1.md",
         "scripts/build_kids1000_cosebis_operator_leakage_proof_plan_v1.py",
         "scripts/validate_kids1000_cosebis_operator_leakage_proof_plan_v1.py",
+        "data/source_manifest/kids1000_cosebis_operator_leakage_projection_criterion_policy_v1.csv",
+        "data/derived/kids1000_cosebis_operator_leakage_projection_criterion_v1.csv",
+        "data/derived/kids1000_cosebis_operator_leakage_projection_criterion_v1_summary.csv",
+        "docs/kids1000_cosebis_operator_leakage_projection_criterion_v1.md",
+        "scripts/build_kids1000_cosebis_operator_leakage_projection_criterion_v1.py",
+        "scripts/validate_kids1000_cosebis_operator_leakage_projection_criterion_v1.py",
         "data/source_manifest/kids1000_cosebis_tomographic_photoz_closure_status_policy_v1.csv",
         "data/derived/kids1000_cosebis_tomographic_photoz_closure_status_v1.csv",
         "data/derived/kids1000_cosebis_tomographic_photoz_closure_status_v1_summary.csv",
@@ -814,6 +820,8 @@ def test_public_files_exist() -> None:
         "scripts/validate_kids1000_cosebis_physical_promotion_dependency_order_v1.py",
         "scripts/build_kids1000_cosebis_operator_leakage_proof_plan_v1.py",
         "scripts/validate_kids1000_cosebis_operator_leakage_proof_plan_v1.py",
+        "scripts/build_kids1000_cosebis_operator_leakage_projection_criterion_v1.py",
+        "scripts/validate_kids1000_cosebis_operator_leakage_projection_criterion_v1.py",
         "scripts/build_kids1000_cosebis_tomographic_photoz_closure_status_v1.py",
         "scripts/validate_kids1000_cosebis_tomographic_photoz_closure_status_v1.py",
         "scripts/build_kids1000_cosebis_path_mapping_source_preflight_v1.py",
@@ -7310,3 +7318,54 @@ def test_kids1000_cosebis_operator_leakage_proof_plan_freezes_exit_conditions_no
     assert plan["P3_pure_mask_quotient_or_control"]["step_status"] == "PRIMARY_OPEN_PROOF_STEP"
     assert plan["P4_single_operator_coupling"]["step_status"] == "COUPLING_OPEN_PROOF_STEP"
     assert plan["P5_no_endpoint_feedback_guard"]["step_status"] == "GUARD_SATISFIED"
+
+
+def test_kids1000_cosebis_operator_leakage_projection_criterion_is_not_a_proof() -> None:
+    subprocess.run(
+        ["python", "scripts/build_kids1000_cosebis_operator_leakage_projection_criterion_v1.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    subprocess.run(
+        ["python", "scripts/validate_kids1000_cosebis_operator_leakage_projection_criterion_v1.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    with (ROOT / "data/derived/kids1000_cosebis_operator_leakage_projection_criterion_v1_summary.csv").open(
+        newline=""
+    ) as f:
+        rows = list(csv.DictReader(f))
+    assert len(rows) == 1
+    summary = rows[0]
+    assert summary["status"] == "OPERATOR_LEAKAGE_PROJECTION_CRITERION_BUILT_NOT_PROVEN"
+    assert summary["criterion_rows"] == "5"
+    assert summary["sufficient_projection_criterion_frozen"] == "true"
+    assert summary["domain_decomposition_declared"] == "false"
+    assert summary["null_projection_condition_proven"] == "false"
+    assert summary["control_routing_condition_proven"] == "false"
+    assert summary["single_operator_consistency_proven"] == "false"
+    assert summary["operator_leakage_theorem_proven"] == "false"
+    assert summary["p2_nonuniform_leakage_closed"] == "false"
+    assert summary["physical_promotion_ready"] == "false"
+    assert summary["validation_ready"] == "false"
+    assert summary["computes_new_scores"] == "false"
+    assert summary["uses_kids_data_vector_values_for_source_selection"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["physical_validation_claimed"] == "false"
+    assert summary["verdict"] == "nonuniform_leakage_projection_criterion_frozen_but_not_proven"
+
+    with (ROOT / "data/derived/kids1000_cosebis_operator_leakage_projection_criterion_v1.csv").open(
+        newline=""
+    ) as f:
+        criteria = {row["criterion_id"]: row for row in csv.DictReader(f)}
+    assert criteria["C1_domain_decomposition"]["criterion_status"] == "DEFINITION_REQUIRED"
+    assert criteria["C2_null_projection_condition"]["criterion_status"] == "SUFFICIENT_CONDITION_FROZEN_NOT_PROVEN"
+    assert (
+        criteria["C3_control_routing_alternative"]["criterion_status"]
+        == "ALTERNATIVE_SUFFICIENT_CONDITION_FROZEN_NOT_PROVEN"
+    )
+    assert criteria["C5_theorem_status"]["criterion_status"] == "OPEN_NOT_PROVEN"
