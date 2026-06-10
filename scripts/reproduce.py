@@ -140,6 +140,8 @@ def main() -> None:
                 run(["python", "scripts/validate_void_source_basis_refinement_authorized_replay_v1.py"])
                 run(["python", "scripts/build_void_source_basis_refinement_control_dominance_audit_v1.py"])
                 run(["python", "scripts/validate_void_source_basis_refinement_control_dominance_audit_v1.py"])
+                run(["python", "scripts/build_void_source_basis_refinement_v2_projection_morphology_gate_v1.py"])
+                run(["python", "scripts/validate_void_source_basis_refinement_v2_projection_morphology_gate_v1.py"])
     run(["python", "scripts/check_kids1000_lensing_route_v1.py"])
     run(["python", "scripts/validate_kids1000_lensing_route_v1.py"])
     run(["python", "scripts/validate_kids1000_lensing_products_v1.py"])

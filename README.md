@@ -674,6 +674,23 @@ control beats it without obvious redshift/row-index leakage, so the current
 source-basis refinement is not source-specific enough for a positive endpoint
 reading.
 
+The V2 projection/morphology source-basis gate is recorded in:
+
+```text
+docs/void_source_basis_refinement_v2_projection_morphology_gate_v1.md
+data/source_manifest/void_source_basis_refinement_v2_projection_morphology_policy.csv
+data/derived/void_source_basis_refinement_v2_projection_morphology_gate_v1.csv
+data/derived/void_source_basis_refinement_v2_projection_morphology_gate_v1_summary.csv
+scripts/build_void_source_basis_refinement_v2_projection_morphology_gate_v1.py
+scripts/validate_void_source_basis_refinement_v2_projection_morphology_gate_v1.py
+```
+
+This is the first source-side accounting layer that includes the missing Tau
+Core projection/morphology channels: void morphology, web morphology,
+observer/path projection, time/readout projection, CMB safety, and multi-channel
+coupling. It currently tracks all six components but keeps endpoint replay
+blocked until the missing V2 source values are frozen.
+
 The first lensing route-freeze check is recorded in:
 
 ```text

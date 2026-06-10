@@ -213,6 +213,10 @@ def test_public_files_exist() -> None:
         "data/derived/void_source_basis_refinement_authorized_replay_v1_summary.csv",
         "data/derived/void_source_basis_refinement_control_dominance_audit_v1_branches.csv",
         "data/derived/void_source_basis_refinement_control_dominance_audit_v1_summary.csv",
+        "docs/void_source_basis_refinement_v2_projection_morphology_gate_v1.md",
+        "data/source_manifest/void_source_basis_refinement_v2_projection_morphology_policy.csv",
+        "data/derived/void_source_basis_refinement_v2_projection_morphology_gate_v1.csv",
+        "data/derived/void_source_basis_refinement_v2_projection_morphology_gate_v1_summary.csv",
         "scripts/build_void_source_basis_refinement_endpoint_replay_authorization_review_template_v1.py",
         "scripts/validate_void_source_basis_refinement_endpoint_replay_authorization_review_template_v1.py",
         "scripts/build_void_source_basis_refinement_endpoint_replay_authorization_review_package_v1.py",
@@ -222,6 +226,8 @@ def test_public_files_exist() -> None:
         "scripts/validate_void_source_basis_refinement_authorized_replay_v1.py",
         "scripts/build_void_source_basis_refinement_control_dominance_audit_v1.py",
         "scripts/validate_void_source_basis_refinement_control_dominance_audit_v1.py",
+        "scripts/build_void_source_basis_refinement_v2_projection_morphology_gate_v1.py",
+        "scripts/validate_void_source_basis_refinement_v2_projection_morphology_gate_v1.py",
         "scripts/build_void_source_basis_refinement_r6_reviewer_template_v1.py",
         "scripts/validate_void_source_basis_refinement_r6_reviewer_template_v1.py",
         "scripts/build_void_source_basis_refinement_r6_reviewer_handoff_package_v1.py",
@@ -2351,6 +2357,38 @@ def test_void_source_basis_refinement_control_dominance_audit_v1_explains_weak_n
     assert summary["verdict"] == (
         "candidate_signal_not_source_specific_shuffled_control_dominates_without_redshift_leak"
     )
+
+
+def test_void_source_basis_refinement_v2_projection_morphology_gate_v1_tracks_missing_channels() -> None:
+    for command in [
+        ["python", "scripts/build_void_source_basis_refinement_v2_projection_morphology_gate_v1.py"],
+        ["python", "scripts/validate_void_source_basis_refinement_v2_projection_morphology_gate_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (ROOT / "data/derived/void_source_basis_refinement_v2_projection_morphology_gate_v1_summary.csv").open(
+        newline=""
+    ) as f:
+        summary = list(csv.DictReader(f))[0]
+    with (ROOT / "data/derived/void_source_basis_refinement_v2_projection_morphology_gate_v1.csv").open(
+        newline=""
+    ) as f:
+        rows = list(csv.DictReader(f))
+    assert summary["all_components_tracked"] == "true"
+    assert summary["components_required"] == "6"
+    assert summary["components_tracked"] == "6"
+    assert summary["components_ready"] == "0"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["verdict"] == "missing_projection_morphology_components_accounted_endpoint_still_blocked"
+    component_ids = {row["component_id"] for row in rows}
+    assert {
+        "V2_VOID_MORPHOLOGY",
+        "V2_WEB_MORPHOLOGY",
+        "V2_OBSERVER_PATH_PROJECTION",
+        "V2_TIME_READOUT_PROJECTION",
+        "V2_CMB_SAFETY",
+        "V2_MULTI_CHANNEL_COUPLING",
+    } == component_ids
 
 
 def test_source_page_cache_is_hash_locked() -> None:
