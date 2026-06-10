@@ -714,8 +714,12 @@ We then attach cached public sources for the first three H1 routes: the
 KiDS-1000 redshift-calibration article, its arXiv metadata page, and the
 official KiDS DR4 SOM-gold catalogue page. These sources support the
 photo-\(z\)/\(n(z)\), SOM-gold, five-bin tomographic, and clustering-redshift
-calibration context. The leakage review route remains open, so H1 is still not
-complete and endpoint replay remains forbidden.
+calibration context. An automated leakage-review preflight then checks that the
+attached source artifacts and their manifest builder do not use endpoint
+residuals, endpoint scores, post-score ranks, or fit statistics. This automated
+preflight passes, but it is not an independent reviewer attestation. The full
+R4 leakage review route remains open, so H1 is still not complete and endpoint
+replay remains forbidden.
 A second post-score localization audit keeps the same source-frozen theory
 vector and same nonnegative single-amplitude scoring rule, but evaluates
 predeclared jackknife masks. All \(20/20\) leave-one source-bin and

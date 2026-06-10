@@ -310,6 +310,12 @@ def test_public_files_exist() -> None:
         "docs/kids1000_cosebis_external_photoz_calibration_source_manifest_v1.md",
         "scripts/build_kids1000_cosebis_external_photoz_calibration_source_manifest_v1.py",
         "scripts/validate_kids1000_cosebis_external_photoz_calibration_source_manifest_v1.py",
+        "data/source_manifest/kids1000_cosebis_external_photoz_calibration_leakage_review_preflight_policy_v1.csv",
+        "data/derived/kids1000_cosebis_external_photoz_calibration_leakage_review_preflight_v1.csv",
+        "data/derived/kids1000_cosebis_external_photoz_calibration_leakage_review_preflight_v1_summary.csv",
+        "docs/kids1000_cosebis_external_photoz_calibration_leakage_review_preflight_v1.md",
+        "scripts/build_kids1000_cosebis_external_photoz_calibration_leakage_review_preflight_v1.py",
+        "scripts/validate_kids1000_cosebis_external_photoz_calibration_leakage_review_preflight_v1.py",
         "data/source_manifest/kids1000_cosebis_endpoint_jackknife_robustness_policy_v1.csv",
         "data/derived/kids1000_cosebis_endpoint_jackknife_robustness_v1_grid.csv",
         "data/derived/kids1000_cosebis_endpoint_jackknife_robustness_v1_summary.csv",
@@ -677,6 +683,8 @@ def test_public_files_exist() -> None:
         "scripts/validate_kids1000_cosebis_external_photoz_calibration_acquisition_plan_v1.py",
         "scripts/build_kids1000_cosebis_external_photoz_calibration_source_manifest_v1.py",
         "scripts/validate_kids1000_cosebis_external_photoz_calibration_source_manifest_v1.py",
+        "scripts/build_kids1000_cosebis_external_photoz_calibration_leakage_review_preflight_v1.py",
+        "scripts/validate_kids1000_cosebis_external_photoz_calibration_leakage_review_preflight_v1.py",
         "scripts/run_kids1000_cosebis_endpoint_jackknife_robustness_v1.py",
         "scripts/validate_kids1000_cosebis_endpoint_jackknife_robustness_v1.py",
         "scripts/run_kids1000_cosebis_endpoint_mode_localization_v1.py",
@@ -4996,6 +5004,57 @@ def test_kids1000_cosebis_external_photoz_calibration_source_manifest_attaches_s
     for row in rows:
         assert (ROOT / row["cache_path"]).exists()
         assert row["all_required_markers_present"] == "true"
+        assert row["forbidden_inputs_used"] == "false"
+        assert row["endpoint_replay_allowed"] == "false"
+        assert row["endpoint_validation_claimed"] == "false"
+        assert row["claim_boundary"] == policy["claim_boundary"]
+    assert summary["claim_boundary"] == policy["claim_boundary"]
+
+
+def test_kids1000_cosebis_external_photoz_calibration_leakage_review_preflight_keeps_reviewer_open() -> None:
+    with (
+        ROOT / "data/source_manifest/kids1000_cosebis_external_photoz_calibration_leakage_review_preflight_policy_v1.csv"
+    ).open(newline="") as f:
+        policy = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/kids1000_cosebis_external_photoz_calibration_leakage_review_preflight_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/kids1000_cosebis_external_photoz_calibration_leakage_review_preflight_v1.csv"
+    ).open(newline="") as f:
+        rows = list(csv.DictReader(f))
+
+    assert policy["status"] == "EXTERNAL_PHOTOZ_CALIBRATION_LEAKAGE_REVIEW_PREFLIGHT_POLICY_FROZEN"
+    assert policy["automated_leakage_preflight_complete"] == "true"
+    assert policy["independent_reviewer_attestation_complete"] == "false"
+    assert policy["r4_leakage_review_complete"] == "false"
+    assert policy["h1_independent_evidence_complete"] == "false"
+    assert policy["current_endpoint_replay_allowed"] == "false"
+    assert "endpoint_residuals" in policy["forbidden_inputs"]
+    assert summary["status"] == "EXTERNAL_PHOTOZ_CALIBRATION_LEAKAGE_REVIEW_PREFLIGHT_BUILT"
+    assert summary["check_count"] == "4"
+    assert summary["passed_checks"] == "3"
+    assert summary["failed_checks"] == "0"
+    assert summary["open_checks"] == "1"
+    assert summary["automated_leakage_preflight_complete"] == "true"
+    assert summary["independent_reviewer_attestation_complete"] == "false"
+    assert summary["r4_leakage_review_complete"] == "false"
+    assert summary["h1_independent_evidence_complete"] == "false"
+    assert summary["computes_new_scores"] == "false"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert (
+        summary["verdict"]
+        == "automated_leakage_preflight_passed_independent_reviewer_still_open"
+    )
+    by_check = {row["check_id"]: row for row in rows}
+    assert by_check["L1_manifest_metadata_no_forbidden_inputs"]["check_status"] == "PASS"
+    assert by_check["L2_cached_public_sources_present"]["check_status"] == "PASS"
+    assert by_check["L3_source_manifest_builder_has_no_endpoint_dependencies"]["check_status"] == "PASS"
+    assert by_check["L4_independent_reviewer_attestation"]["check_status"] == "OPEN"
+    for row in rows:
+        assert row["uses_endpoint_fields"] == "false"
         assert row["forbidden_inputs_used"] == "false"
         assert row["endpoint_replay_allowed"] == "false"
         assert row["endpoint_validation_claimed"] == "false"

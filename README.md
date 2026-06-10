@@ -1373,6 +1373,24 @@ and the official KiDS \(n(z)\) product route. The R4 leakage review is still
 open, so H1 is not complete and endpoint replay remains forbidden. Its verdict
 is `external_photoz_calibration_sources_attached_pending_leakage_review`.
 
+The automated leakage-review preflight for those attached sources is recorded
+in:
+
+```text
+data/source_manifest/kids1000_cosebis_external_photoz_calibration_leakage_review_preflight_policy_v1.csv
+data/derived/kids1000_cosebis_external_photoz_calibration_leakage_review_preflight_v1.csv
+data/derived/kids1000_cosebis_external_photoz_calibration_leakage_review_preflight_v1_summary.csv
+docs/kids1000_cosebis_external_photoz_calibration_leakage_review_preflight_v1.md
+scripts/build_kids1000_cosebis_external_photoz_calibration_leakage_review_preflight_v1.py
+scripts/validate_kids1000_cosebis_external_photoz_calibration_leakage_review_preflight_v1.py
+```
+
+This preflight passes the automated no-endpoint-leakage checks for the cached
+R1--R3 source artifacts and the source-manifest builder. It is not an
+independent reviewer attestation. The full R4 leakage review remains open, H1
+remains incomplete, and endpoint replay remains forbidden. Its verdict is
+`automated_leakage_preflight_passed_independent_reviewer_still_open`.
+
 The endpoint jackknife/localization robustness audit is recorded in:
 
 ```text
