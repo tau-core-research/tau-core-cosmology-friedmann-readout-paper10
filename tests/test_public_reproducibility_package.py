@@ -300,6 +300,17 @@ def test_public_files_exist() -> None:
         "scripts/build_void_source_basis_refinement_v2_sky_z_replay_authorization_review_package_v1.py",
         "scripts/validate_void_source_basis_refinement_v2_sky_z_replay_authorization_review_package_v1.py",
         "scripts/validate_void_source_basis_refinement_v2_sky_z_replay_authorization_review_response_v1.py",
+        "docs/void_source_basis_refinement_v2_sky_z_authorized_replay_v1.md",
+        "data/source_manifest/void_source_basis_refinement_v2_sky_z_authorized_replay_run_v1.csv",
+        "data/derived/void_source_basis_refinement_v2_sky_z_replay_authorization_review_response_v1.csv",
+        "data/derived/void_source_basis_refinement_v2_sky_z_replay_authorization_review_response_v1_summary.csv",
+        "data/derived/void_source_basis_refinement_v2_sky_z_replay_authorization_review_completed_summary_v1.csv",
+        "data/derived/void_source_basis_refinement_v2_sky_z_replay_authorization_review_response_v1_validation_log.txt",
+        "docs/void_source_basis_refinement_v2_sky_z_replay_authorization_review_response_v1.md",
+        "data/derived/void_source_basis_refinement_v2_sky_z_authorized_replay_v1_grid.csv",
+        "data/derived/void_source_basis_refinement_v2_sky_z_authorized_replay_v1_summary.csv",
+        "scripts/run_void_source_basis_refinement_v2_sky_z_authorized_replay_v1.py",
+        "scripts/validate_void_source_basis_refinement_v2_sky_z_authorized_replay_v1.py",
         "data/derived/void_source_basis_refinement_v2_path_projection_route_ledger.csv",
         "data/derived/void_source_basis_refinement_v2_path_projection_route_ledger_summary.csv",
         "data/derived/void_source_basis_refinement_v2_time_readout_route_ledger.csv",
@@ -3044,6 +3055,38 @@ def test_void_source_basis_refinement_v2_sky_z_replay_authorization_package_v1_i
     assert "data/derived/void_source_basis_refinement_v2_sky_z_replay_authorization_review_response_template_v1.csv" in {
         row["package_path"] for row in manifest
     }
+
+
+def test_void_source_basis_refinement_v2_sky_z_authorized_replay_v1_is_permission_only_not_validation() -> None:
+    for command in [
+        ["python", "scripts/validate_void_source_basis_refinement_v2_sky_z_replay_authorization_review_response_v1.py"],
+        ["python", "scripts/run_void_source_basis_refinement_v2_sky_z_authorized_replay_v1.py"],
+        ["python", "scripts/validate_void_source_basis_refinement_v2_sky_z_authorized_replay_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (
+        ROOT / "data/derived/void_source_basis_refinement_v2_sky_z_replay_authorization_review_response_v1_summary.csv"
+    ).open(newline="") as f:
+        auth = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/void_source_basis_refinement_v2_sky_z_authorized_replay_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert auth["decision"] == "GO_SKY_Z_REPLAY_PERMISSION_ONLY"
+    assert auth["endpoint_replay_allowed"] == "true"
+    assert auth["endpoint_validation_claimed"] == "false"
+    assert summary["status"] == "V2_SKY_Z_REPLAY_AUTHORIZED_PERMISSION_ONLY_NOT_VALIDATION"
+    assert summary["active_family"] == "W_path_x_sky_z"
+    assert summary["n_rows"] == "12"
+    assert summary["family_survives_controls"] == "true"
+    assert summary["controls_better_than_candidate_chi2"] == "0"
+    assert float(summary["delta_chi2_candidate_minus_baseline"]) < 0.0
+    assert float(summary["delta_chi2_candidate_minus_best_control"]) < 0.0
+    assert summary["endpoint_replay_allowed"] == "true"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["physical_lensing_path_weight_claimed"] == "false"
+    assert summary["verdict"] == "sky_z_permission_replay_family_control_survives_not_validation"
+    assert summary["claim_boundary"] == "v2_sky_z_authorized_replay_permission_only_not_validation"
 
 
 def test_void_source_basis_refinement_v2_time_readout_route_ledger_v1_preserves_blocker() -> None:
