@@ -276,6 +276,12 @@ def test_public_files_exist() -> None:
         "docs/kids1000_cosebis_tomographic_control_plausibility_audit_v1.md",
         "scripts/build_kids1000_cosebis_tomographic_control_plausibility_audit_v1.py",
         "scripts/validate_kids1000_cosebis_tomographic_control_plausibility_audit_v1.py",
+        "data/source_manifest/kids1000_cosebis_tomographic_control_disambiguation_policy_v1.csv",
+        "data/derived/kids1000_cosebis_tomographic_control_disambiguation_v1.csv",
+        "data/derived/kids1000_cosebis_tomographic_control_disambiguation_v1_summary.csv",
+        "docs/kids1000_cosebis_tomographic_control_disambiguation_v1.md",
+        "scripts/build_kids1000_cosebis_tomographic_control_disambiguation_v1.py",
+        "scripts/validate_kids1000_cosebis_tomographic_control_disambiguation_v1.py",
         "data/source_manifest/kids1000_cosebis_tomographic_holdout_calibration_gate_policy_v1.csv",
         "data/derived/kids1000_cosebis_tomographic_holdout_calibration_gate_v1.csv",
         "data/derived/kids1000_cosebis_tomographic_holdout_calibration_gate_v1_summary.csv",
@@ -6941,3 +6947,37 @@ def test_kids1000_cosebis_authorized_endpoint_replay_is_not_validation() -> None
     assert summary["verdict"] == "authorized_endpoint_replay_low_tail_signal_not_validation"
     assert summary["candidate_rank_by_chi2"] == "3"
     assert summary["null_control_count"] == "1008"
+
+
+def test_kids1000_cosebis_tomographic_control_disambiguation_blocks_validation_only() -> None:
+    subprocess.run(
+        ["python", "scripts/build_kids1000_cosebis_tomographic_control_disambiguation_v1.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    subprocess.run(
+        ["python", "scripts/validate_kids1000_cosebis_tomographic_control_disambiguation_v1.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    with (ROOT / "data/derived/kids1000_cosebis_tomographic_control_disambiguation_v1_summary.csv").open(
+        newline=""
+    ) as f:
+        rows = list(csv.DictReader(f))
+    assert len(rows) == 1
+    summary = rows[0]
+    assert summary["status"] == "TOMOGRAPHIC_CONTROL_DISAMBIGUATION_COMPLETE"
+    assert summary["better_tomographic_control_count"] == "3"
+    assert summary["better_control_only_count"] == "2"
+    assert summary["better_conditional_source_systematic_count"] == "1"
+    assert summary["accepted_physical_alternative_count"] == "0"
+    assert summary["tomographic_controls_refute_endpoint_signal"] == "false"
+    assert summary["tomographic_controls_block_validation"] == "true"
+    assert summary["computes_new_scores"] == "false"
+    assert summary["uses_kids_data_vector_values_for_source_selection"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["verdict"] == "tomographic_controls_block_validation_but_do_not_refute_endpoint_signal"

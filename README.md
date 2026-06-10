@@ -1524,6 +1524,25 @@ endpoint signal (`Delta chi2 = -183.6152665217`, plus-one null tail fraction
 `endpoint_validation_claimed=false`. The claim-safe verdict is
 `authorized_endpoint_replay_low_tail_signal_not_validation`.
 
+The post-replay tomographic-control disambiguation ledger is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_tomographic_control_disambiguation_policy_v1.csv
+data/derived/kids1000_cosebis_tomographic_control_disambiguation_v1.csv
+data/derived/kids1000_cosebis_tomographic_control_disambiguation_v1_summary.csv
+docs/kids1000_cosebis_tomographic_control_disambiguation_v1.md
+scripts/build_kids1000_cosebis_tomographic_control_disambiguation_v1.py
+scripts/validate_kids1000_cosebis_tomographic_control_disambiguation_v1.py
+```
+
+This ledger computes no new endpoint score. It only classifies the three
+tomographic controls that beat the candidate in the stricter tomographic
+robustness ensemble: two are control-only relabel/pair-shuffle controls, one
+is a conditional source-systematic candidate requiring independent photo-z or
+tomographic support, and zero are accepted as physical alternatives. The
+result blocks endpoint validation but does not refute the low-tail endpoint
+signal.
+
 The endpoint jackknife/localization robustness audit is recorded in:
 
 ```text
