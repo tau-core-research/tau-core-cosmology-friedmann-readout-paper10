@@ -221,6 +221,8 @@ def test_public_files_exist() -> None:
         "data/derived/void_source_basis_refinement_v2_cmb_safety_values_summary.csv",
         "data/derived/void_source_basis_refinement_v2_path_projection_route_ledger.csv",
         "data/derived/void_source_basis_refinement_v2_path_projection_route_ledger_summary.csv",
+        "data/derived/void_source_basis_refinement_v2_time_readout_route_ledger.csv",
+        "data/derived/void_source_basis_refinement_v2_time_readout_route_ledger_summary.csv",
         "data/derived/void_source_basis_refinement_v2_projection_morphology_gate_v1.csv",
         "data/derived/void_source_basis_refinement_v2_projection_morphology_gate_v1_summary.csv",
         "scripts/build_void_source_basis_refinement_endpoint_replay_authorization_review_template_v1.py",
@@ -238,6 +240,8 @@ def test_public_files_exist() -> None:
         "scripts/validate_void_source_basis_refinement_v2_cmb_safety_values_v1.py",
         "scripts/build_void_source_basis_refinement_v2_path_projection_route_ledger_v1.py",
         "scripts/validate_void_source_basis_refinement_v2_path_projection_route_ledger_v1.py",
+        "scripts/build_void_source_basis_refinement_v2_time_readout_route_ledger_v1.py",
+        "scripts/validate_void_source_basis_refinement_v2_time_readout_route_ledger_v1.py",
         "scripts/build_void_source_basis_refinement_v2_projection_morphology_gate_v1.py",
         "scripts/validate_void_source_basis_refinement_v2_projection_morphology_gate_v1.py",
         "scripts/build_void_source_basis_refinement_r6_reviewer_template_v1.py",
@@ -2449,6 +2453,34 @@ def test_void_source_basis_refinement_v2_path_projection_route_ledger_v1_preserv
     assert {row["W_path_value_status"] for row in rows} == {"BLOCKED_SOURCE_COORDINATE_JOIN_REQUIRED"}
     assert {row["W_path_source_value"] for row in rows} == {"NA"}
     assert {row["contains_lensing_residuals"] for row in rows} == {"false"}
+
+
+def test_void_source_basis_refinement_v2_time_readout_route_ledger_v1_preserves_blocker() -> None:
+    for command in [
+        ["python", "scripts/build_void_source_basis_refinement_v2_time_readout_route_ledger_v1.py"],
+        ["python", "scripts/validate_void_source_basis_refinement_v2_time_readout_route_ledger_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (ROOT / "data/derived/void_source_basis_refinement_v2_time_readout_route_ledger_summary.csv").open(
+        newline=""
+    ) as f:
+        summary = list(csv.DictReader(f))[0]
+    with (ROOT / "data/derived/void_source_basis_refinement_v2_time_readout_route_ledger.csv").open(
+        newline=""
+    ) as f:
+        rows = list(csv.DictReader(f))
+    assert summary["status"] == "V2_TIME_READOUT_ROUTE_LEDGER_FROZEN_VALUES_BLOCKED"
+    assert summary["n_rows"] == "424"
+    assert summary["time_route_declared"] == "true"
+    assert summary["time_values_computable"] == "false"
+    assert summary["time_values_computed"] == "false"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["verdict"] == "time_route_declared_but_products_not_fetched_or_numeric_rule_missing"
+    assert "CC_HZ_TABLE=PRODUCT_SELECTED_NOT_FETCHED" in summary["required_product_status"]
+    assert rows
+    assert {row["W_time_value_status"] for row in rows} == {"BLOCKED_TIME_PRODUCTS_NOT_FETCHED_OR_NOT_NUMERIC"}
+    assert {row["W_time_source_value"] for row in rows} == {"NA"}
+    assert {row["contains_late_time_fit_parameters"] for row in rows} == {"false"}
 
 
 def test_void_source_basis_refinement_v2_projection_morphology_gate_v1_tracks_missing_channels() -> None:

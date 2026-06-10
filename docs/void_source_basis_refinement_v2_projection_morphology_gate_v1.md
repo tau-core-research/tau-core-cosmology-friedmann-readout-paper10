@@ -74,3 +74,18 @@ source products are route-supported, but the low-z Pantheon scope does not
 currently carry the sky-coordinate crossmap needed to assign source-frozen
 `W_path` values.  Therefore `W_path_source_value` remains `NA` and endpoint
 replay remains forbidden.
+
+The time/readout projection channel is also recorded as a route ledger:
+
+```text
+data/derived/void_source_basis_refinement_v2_time_readout_route_ledger.csv
+data/derived/void_source_basis_refinement_v2_time_readout_route_ledger_summary.csv
+scripts/build_void_source_basis_refinement_v2_time_readout_route_ledger_v1.py
+scripts/validate_void_source_basis_refinement_v2_time_readout_route_ledger_v1.py
+```
+
+This ledger records that the clock/readout channel is declared, but the
+required CC/BAO/CMB products remain selected-not-fetched and the activation
+rule remains non-numeric.  Therefore `W_time_source_value` remains `NA`; no
+clock anomaly, late-time fit, endpoint residual, or time-kernel score is
+claimed.
