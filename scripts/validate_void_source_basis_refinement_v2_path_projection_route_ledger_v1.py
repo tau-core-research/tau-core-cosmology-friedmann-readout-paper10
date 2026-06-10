@@ -44,6 +44,9 @@ def main() -> None:
         "partial low-z to KiDS crossmap candidates should be available",
     )
     require(summary["lowz_to_kids_path_crossmap_available"] == "false", "complete low-z to KiDS crossmap should remain unavailable")
+    require(summary["partial_path_values_computed"] == "true", "partial path values should be computed")
+    require(summary["full_lowz_path_values_computed"] == "false", "full low-z path values must remain unavailable")
+    require(summary["partial_path_candidate_count"] == "12", "partial candidate count mismatch")
     require(summary["path_values_computed"] == "false", "path values must not be computed")
     require(summary["endpoint_replay_allowed"] == "false", "summary must not allow endpoint replay")
     require(summary["endpoint_validation_claimed"] == "false", "summary must not claim endpoint validation")
@@ -54,7 +57,7 @@ def main() -> None:
     require(summary["uses_kids_data_vector_values"] == "false", "summary must not use KiDS data vector values")
     require(summary["uses_posterior_chains"] == "false", "summary must not use posterior chains")
     require(
-        summary["verdict"] == "path_route_and_lowz_coordinates_available_but_path_weight_values_not_frozen",
+        summary["verdict"] == "partial_path_values_available_but_full_lowz_path_channel_blocked",
         "unexpected verdict",
     )
     require(summary["claim_boundary"] == CLAIM_BOUNDARY, "summary claim boundary mismatch")
@@ -66,6 +69,8 @@ def main() -> None:
         require(row["pantheon_lowz_ra_dec_available"] == "true", "row should claim source-side RA/DEC")
         require(row["lowz_to_kids_path_crossmap_candidate_available"] == "true", "row should see partial crossmap candidates")
         require(row["lowz_to_kids_path_crossmap_available"] == "false", "row must not claim complete crossmap")
+        require(row["partial_path_values_computed"] == "true", "row should see partial path values")
+        require(row["full_lowz_path_values_computed"] == "false", "row must not claim full low-z path values")
         require(
             row["W_path_value_status"] == "BLOCKED_PATH_WEIGHT_RULE_NOT_FROZEN_FOR_PANTHEON_ROWS",
             "path value status mismatch",

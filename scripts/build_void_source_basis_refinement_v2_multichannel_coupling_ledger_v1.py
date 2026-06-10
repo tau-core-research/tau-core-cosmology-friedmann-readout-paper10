@@ -76,7 +76,7 @@ def main() -> None:
             "source_values_available": str(void_values_available and web_values_available and path_values_available).lower(),
             "coupling_values_computable": "false",
             "endpoint_ready": "false",
-            "blocking_reason": "W_path_values_blocked_lowz_coordinate_crossmap_missing",
+            "blocking_reason": "W_path_full_lowz_channel_blocked_partial_values_control_only",
             "required_next_artifact": "data/derived/void_source_basis_refinement_v2_path_projection_values.csv",
             "endpoint_replay_allowed": "false",
             "endpoint_validation_claimed": "false",

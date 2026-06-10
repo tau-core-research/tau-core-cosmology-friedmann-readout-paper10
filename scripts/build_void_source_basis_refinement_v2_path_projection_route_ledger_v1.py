@@ -10,6 +10,7 @@ LOW_Z_MASK = ROOT / "data" / "derived" / "low_z_pantheon_void_scope_candidate_v1
 KIDS_INVENTORY = ROOT / "data" / "derived" / "kids1000_lensing_inventory_v1_summary.csv"
 PATH_ROUTE = ROOT / "data" / "derived" / "kids1000_cosebis_path_source_product_route_manifest_v1.csv"
 CROSSMAP = ROOT / "data" / "derived" / "void_source_basis_refinement_v2_path_projection_crossmap_audit_summary.csv"
+PARTIAL_VALUES = ROOT / "data" / "derived" / "void_source_basis_refinement_v2_path_partial_scope_values_summary.csv"
 OUT = ROOT / "data" / "derived" / "void_source_basis_refinement_v2_path_projection_route_ledger.csv"
 SUMMARY = ROOT / "data" / "derived" / "void_source_basis_refinement_v2_path_projection_route_ledger_summary.csv"
 
@@ -44,6 +45,7 @@ def main() -> None:
     kids = read_one(KIDS_INVENTORY)
     route_rows = read_rows(PATH_ROUTE)
     crossmap = read_one(CROSSMAP)
+    partial_values = read_one(PARTIAL_VALUES)
     if not low_z_rows:
         raise SystemExit("no included low-z rows found")
     if kids["endpoint_scoring_allowed"] != "false":
@@ -67,6 +69,10 @@ def main() -> None:
     complete_crossmap_available = crossmap["crossmap_complete_for_lowz_scope"] == "true"
     if crossmap["path_values_computed"] != "false":
         raise SystemExit("crossmap audit must not compute path values")
+    partial_path_values_computed = partial_values["partial_path_values_computed"] == "true"
+    full_lowz_path_values_computed = partial_values["full_lowz_path_values_computed"] == "true"
+    if full_lowz_path_values_computed:
+        raise SystemExit("full low-z path values must remain blocked")
 
     rows: list[dict[str, str]] = []
     for row in low_z_rows:
@@ -84,6 +90,9 @@ def main() -> None:
                 "lowz_to_kids_path_crossmap_available": str(complete_crossmap_available).lower(),
                 "lowz_to_kids_path_crossmap_candidate_available": str(crossmap_candidate_available).lower(),
                 "crossmap_audit_artifact": str(CROSSMAP.relative_to(ROOT)),
+                "partial_scope_values_artifact": str(PARTIAL_VALUES.relative_to(ROOT)),
+                "partial_path_values_computed": str(partial_path_values_computed).lower(),
+                "full_lowz_path_values_computed": str(full_lowz_path_values_computed).lower(),
                 "W_path_value_status": "BLOCKED_PATH_WEIGHT_RULE_NOT_FROZEN_FOR_PANTHEON_ROWS",
                 "W_path_source_value": "NA",
                 "path_off_control": "0",
@@ -112,6 +121,7 @@ def main() -> None:
             "kids_inventory_artifact": str(KIDS_INVENTORY.relative_to(ROOT)),
             "path_route_artifact": str(PATH_ROUTE.relative_to(ROOT)),
             "crossmap_audit_artifact": str(CROSSMAP.relative_to(ROOT)),
+            "partial_scope_values_artifact": str(PARTIAL_VALUES.relative_to(ROOT)),
             "output_artifact": str(OUT.relative_to(ROOT)),
             "n_rows": str(len(rows)),
             "kids_lensing_route_available": str(route_supported).lower(),
@@ -119,6 +129,9 @@ def main() -> None:
             "pantheon_lowz_ra_dec_available": str(lowz_ra_dec_available).lower(),
             "lowz_to_kids_path_crossmap_available": str(complete_crossmap_available).lower(),
             "lowz_to_kids_path_crossmap_candidate_available": str(crossmap_candidate_available).lower(),
+            "partial_path_values_computed": str(partial_path_values_computed).lower(),
+            "full_lowz_path_values_computed": str(full_lowz_path_values_computed).lower(),
+            "partial_path_candidate_count": partial_values["total_path_scope_candidate_count"],
             "path_values_computed": "false",
             "endpoint_replay_allowed": "false",
             "endpoint_validation_claimed": "false",
@@ -128,7 +141,7 @@ def main() -> None:
             "contains_fit_statistics": "false",
             "uses_kids_data_vector_values": "false",
             "uses_posterior_chains": "false",
-            "verdict": "path_route_and_lowz_coordinates_available_but_path_weight_values_not_frozen",
+            "verdict": "partial_path_values_available_but_full_lowz_path_channel_blocked",
             "claim_boundary": CLAIM_BOUNDARY,
         }
     ]

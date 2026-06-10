@@ -225,6 +225,8 @@ def test_public_files_exist() -> None:
         "data/derived/void_source_basis_refinement_v2_path_projection_crossmap_audit_summary.csv",
         "data/derived/void_source_basis_refinement_v2_path_partial_scope_policy.csv",
         "data/derived/void_source_basis_refinement_v2_path_partial_scope_policy_summary.csv",
+        "data/derived/void_source_basis_refinement_v2_path_partial_scope_values.csv",
+        "data/derived/void_source_basis_refinement_v2_path_partial_scope_values_summary.csv",
         "data/derived/void_source_basis_refinement_v2_path_projection_route_ledger.csv",
         "data/derived/void_source_basis_refinement_v2_path_projection_route_ledger_summary.csv",
         "data/derived/void_source_basis_refinement_v2_time_readout_route_ledger.csv",
@@ -252,6 +254,8 @@ def test_public_files_exist() -> None:
         "scripts/validate_void_source_basis_refinement_v2_path_projection_crossmap_audit_v1.py",
         "scripts/build_void_source_basis_refinement_v2_path_partial_scope_policy_v1.py",
         "scripts/validate_void_source_basis_refinement_v2_path_partial_scope_policy_v1.py",
+        "scripts/build_void_source_basis_refinement_v2_path_partial_scope_values_v1.py",
+        "scripts/validate_void_source_basis_refinement_v2_path_partial_scope_values_v1.py",
         "scripts/build_void_source_basis_refinement_v2_path_projection_route_ledger_v1.py",
         "scripts/validate_void_source_basis_refinement_v2_path_projection_route_ledger_v1.py",
         "scripts/build_void_source_basis_refinement_v2_time_readout_route_ledger_v1.py",
@@ -2472,6 +2476,10 @@ def test_void_source_basis_refinement_v2_path_projection_route_ledger_v1_preserv
     for command in [
         ["python", "scripts/build_void_source_basis_refinement_v2_path_projection_crossmap_audit_v1.py"],
         ["python", "scripts/validate_void_source_basis_refinement_v2_path_projection_crossmap_audit_v1.py"],
+        ["python", "scripts/build_void_source_basis_refinement_v2_path_partial_scope_policy_v1.py"],
+        ["python", "scripts/validate_void_source_basis_refinement_v2_path_partial_scope_policy_v1.py"],
+        ["python", "scripts/build_void_source_basis_refinement_v2_path_partial_scope_values_v1.py"],
+        ["python", "scripts/validate_void_source_basis_refinement_v2_path_partial_scope_values_v1.py"],
         ["python", "scripts/build_void_source_basis_refinement_v2_path_projection_route_ledger_v1.py"],
         ["python", "scripts/validate_void_source_basis_refinement_v2_path_projection_route_ledger_v1.py"],
     ]:
@@ -2490,13 +2498,18 @@ def test_void_source_basis_refinement_v2_path_projection_route_ledger_v1_preserv
     assert summary["pantheon_lowz_ra_dec_available"] == "true"
     assert summary["lowz_to_kids_path_crossmap_candidate_available"] == "true"
     assert summary["lowz_to_kids_path_crossmap_available"] == "false"
+    assert summary["partial_path_values_computed"] == "true"
+    assert summary["full_lowz_path_values_computed"] == "false"
+    assert summary["partial_path_candidate_count"] == "12"
     assert summary["path_values_computed"] == "false"
     assert summary["endpoint_replay_allowed"] == "false"
-    assert summary["verdict"] == "path_route_and_lowz_coordinates_available_but_path_weight_values_not_frozen"
+    assert summary["verdict"] == "partial_path_values_available_but_full_lowz_path_channel_blocked"
     assert rows
     assert {row["pantheon_lowz_ra_dec_available"] for row in rows} == {"true"}
     assert {row["lowz_to_kids_path_crossmap_candidate_available"] for row in rows} == {"true"}
     assert {row["lowz_to_kids_path_crossmap_available"] for row in rows} == {"false"}
+    assert {row["partial_path_values_computed"] for row in rows} == {"true"}
+    assert {row["full_lowz_path_values_computed"] for row in rows} == {"false"}
     assert {row["W_path_value_status"] for row in rows} == {"BLOCKED_PATH_WEIGHT_RULE_NOT_FROZEN_FOR_PANTHEON_ROWS"}
     assert {row["W_path_source_value"] for row in rows} == {"NA"}
     assert {row["contains_lensing_residuals"] for row in rows} == {"false"}
@@ -2560,6 +2573,39 @@ def test_void_source_basis_refinement_v2_path_partial_scope_policy_v1_is_not_ful
     assert rows
     assert {row["W_path_source_value"] for row in rows} == {"NA"}
     assert {row["contains_lensing_residuals"] for row in rows} == {"false"}
+
+
+def test_void_source_basis_refinement_v2_path_partial_scope_values_v1_are_source_only_control() -> None:
+    for command in [
+        ["python", "scripts/build_void_source_basis_refinement_v2_path_projection_crossmap_audit_v1.py"],
+        ["python", "scripts/validate_void_source_basis_refinement_v2_path_projection_crossmap_audit_v1.py"],
+        ["python", "scripts/build_void_source_basis_refinement_v2_path_partial_scope_policy_v1.py"],
+        ["python", "scripts/validate_void_source_basis_refinement_v2_path_partial_scope_policy_v1.py"],
+        ["python", "scripts/build_void_source_basis_refinement_v2_path_partial_scope_values_v1.py"],
+        ["python", "scripts/validate_void_source_basis_refinement_v2_path_partial_scope_values_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (ROOT / "data/derived/void_source_basis_refinement_v2_path_partial_scope_values_summary.csv").open(
+        newline=""
+    ) as f:
+        summary = list(csv.DictReader(f))[0]
+    with (ROOT / "data/derived/void_source_basis_refinement_v2_path_partial_scope_values.csv").open(
+        newline=""
+    ) as f:
+        rows = list(csv.DictReader(f))
+    assert summary["status"] == "V2_PATH_PARTIAL_SCOPE_VALUES_FROZEN_NOT_ENDPOINT_READY"
+    assert summary["total_path_scope_candidate_count"] == "12"
+    assert summary["partial_path_values_computed"] == "true"
+    assert summary["full_lowz_path_values_computed"] == "false"
+    assert summary["nonzero_partial_path_value_count"] == "12"
+    assert summary["rule_status"] == "SOURCE_ONLY_TILE_PROXIMITY_CONTROL_NOT_PHYSICAL_LENSING_WEIGHT"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["verdict"] == "partial_scope_W_path_values_available_only_as_source_side_control"
+    assert rows
+    nonzero = [row for row in rows if float(row["W_path_source_value"]) > 0.0]
+    assert len(nonzero) == 12
+    assert {row["contains_lensing_residuals"] for row in rows} == {"false"}
+    assert {row["uses_kids_data_vector_values"] for row in rows} == {"false"}
 
 
 def test_void_source_basis_refinement_v2_time_readout_route_ledger_v1_preserves_blocker() -> None:
