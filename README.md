@@ -268,6 +268,20 @@ shuffled or wrong-sign controls, and near-zero full-covariance signal. The next
 required gate is a predeclared combined multiblock endpoint protocol with joint
 nulls and a unified information criterion.
 
+That next protocol shell is frozen in:
+
+```text
+data/source_manifest/void_web_combined_multiblock_endpoint_protocol_v1.csv
+docs/void_web_combined_multiblock_endpoint_protocol_v1.md
+scripts/validate_void_web_combined_multiblock_endpoint_protocol_v1.py
+```
+
+It declares the future combined observable blocks, active void/web channels,
+disabled path/time channels, shared AIC shell, joint null controls, block-drop
+controls, and forbidden endpoint-leakage fields. It remains
+`scoring_allowed=false` and computes no likelihood, residual, information
+criterion, endpoint score, or validation result.
+
 The first lensing route-freeze check is recorded in:
 
 ```text

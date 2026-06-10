@@ -79,6 +79,9 @@ def test_public_files_exist() -> None:
         "docs/void_web_endpoint_readiness_after_flrw_audit_v1.md",
         "scripts/build_void_web_endpoint_readiness_after_flrw_audit_v1.py",
         "scripts/validate_void_web_endpoint_readiness_after_flrw_audit_v1.py",
+        "data/source_manifest/void_web_combined_multiblock_endpoint_protocol_v1.csv",
+        "docs/void_web_combined_multiblock_endpoint_protocol_v1.md",
+        "scripts/validate_void_web_combined_multiblock_endpoint_protocol_v1.py",
         "data/source_manifest/kids1000_lensing_route_v1.csv",
         "data/derived/kids1000_lensing_route_v1_head.csv",
         "data/derived/kids1000_lensing_route_v1_summary.csv",
@@ -1176,6 +1179,38 @@ def test_void_web_endpoint_readiness_after_flrw_audit_v1_is_not_endpoint() -> No
     assert "aic_loss_and_shuffled_control_not_beaten" in blockers
     assert "diagonal_covariance_and_wrong_sign_degeneracy" in blockers
     assert "near_zero_signal_and_wrong_sign_degeneracy" in blockers
+
+
+def test_void_web_combined_multiblock_endpoint_protocol_v1_is_frozen_not_run() -> None:
+    subprocess.run(
+        ["python", "scripts/validate_void_web_combined_multiblock_endpoint_protocol_v1.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    with (
+        ROOT / "data/source_manifest/void_web_combined_multiblock_endpoint_protocol_v1.csv"
+    ).open(newline="") as f:
+        protocol = list(csv.DictReader(f))[0]
+    assert protocol["status"] == "COMBINED_MULTIBLOCK_ENDPOINT_PROTOCOL_FROZEN_NOT_RUN"
+    assert protocol["scoring_allowed"] == "false"
+    assert protocol["physical_validation_claimed"] == "false"
+    assert "W_VOID_MATURITY" in protocol["included_channel_families"]
+    assert "W_WEB_ANISOTROPY" in protocol["included_channel_families"]
+    assert "W_PATH_PROJECTION" in protocol["disabled_channel_families"]
+    assert "W_TIME_READOUT" in protocol["disabled_channel_families"]
+    assert "AIC_total" in protocol["unified_information_criterion"]
+    assert "deterministic_shuffled_void_web" in protocol["joint_null_controls"]
+    assert "block_drop_distance" in protocol["joint_null_controls"]
+    assert "block_drop_growth" in protocol["joint_null_controls"]
+    assert "block_drop_multitracer" in protocol["joint_null_controls"]
+    for marker in [
+        "posthoc_block_weights",
+        "posthoc_covariance_reweighting",
+        "endpoint_score_claims",
+    ]:
+        assert marker in protocol["forbidden_inputs"]
 
 
 def test_source_page_cache_is_hash_locked() -> None:

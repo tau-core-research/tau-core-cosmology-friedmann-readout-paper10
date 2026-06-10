@@ -60,6 +60,7 @@ def main() -> None:
     run(["python", "scripts/validate_cmb_safety_lowz_support_v1.py"])
     run(["python", "scripts/build_void_web_endpoint_readiness_after_flrw_audit_v1.py"])
     run(["python", "scripts/validate_void_web_endpoint_readiness_after_flrw_audit_v1.py"])
+    run(["python", "scripts/validate_void_web_combined_multiblock_endpoint_protocol_v1.py"])
     run(["python", "scripts/check_kids1000_lensing_route_v1.py"])
     run(["python", "scripts/validate_kids1000_lensing_route_v1.py"])
     run(["python", "scripts/validate_kids1000_lensing_products_v1.py"])
