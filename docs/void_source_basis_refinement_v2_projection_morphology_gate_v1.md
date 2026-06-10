@@ -85,6 +85,13 @@ data/derived/void_source_basis_refinement_v2_path_partial_scope_policy.csv
 data/derived/void_source_basis_refinement_v2_path_partial_scope_policy_summary.csv
 data/derived/void_source_basis_refinement_v2_path_partial_scope_values.csv
 data/derived/void_source_basis_refinement_v2_path_partial_scope_values_summary.csv
+docs/void_source_basis_refinement_v2_path_partial_scope_reviewer_package_v1.md
+data/source_manifest/void_source_basis_refinement_v2_path_partial_scope_reviewer_package_policy_v1.csv
+data/derived/void_source_basis_refinement_v2_path_partial_scope_reviewer_response_template_v1.csv
+data/derived/void_source_basis_refinement_v2_path_partial_scope_reviewer_package_v1.zip
+data/derived/void_source_basis_refinement_v2_path_partial_scope_reviewer_package_v1.zip.sha256
+data/derived/void_source_basis_refinement_v2_path_partial_scope_reviewer_package_v1_manifest.csv
+data/derived/void_source_basis_refinement_v2_path_partial_scope_reviewer_package_v1_summary.csv
 data/derived/void_source_basis_refinement_v2_path_projection_route_ledger.csv
 data/derived/void_source_basis_refinement_v2_path_projection_route_ledger_summary.csv
 scripts/build_void_source_basis_refinement_v2_path_projection_crossmap_audit_v1.py
@@ -93,6 +100,8 @@ scripts/build_void_source_basis_refinement_v2_path_partial_scope_policy_v1.py
 scripts/validate_void_source_basis_refinement_v2_path_partial_scope_policy_v1.py
 scripts/build_void_source_basis_refinement_v2_path_partial_scope_values_v1.py
 scripts/validate_void_source_basis_refinement_v2_path_partial_scope_values_v1.py
+scripts/build_void_source_basis_refinement_v2_path_partial_scope_reviewer_package_v1.py
+scripts/validate_void_source_basis_refinement_v2_path_partial_scope_reviewer_package_v1.py
 scripts/build_void_source_basis_refinement_v2_path_projection_route_ledger_v1.py
 scripts/validate_void_source_basis_refinement_v2_path_projection_route_ledger_v1.py
 ```
@@ -107,6 +116,10 @@ For those 12 rows only, a source-only tile-proximity control value is frozen
 from the nearest KiDS tile separation.  This value is a residual-blind control
 proxy, not a calibrated physical lensing-path weight and not a replay
 authorization.
+The accompanying reviewer package exposes the crossmap audit, partial-scope
+policy, frozen values, and blank response template for a reviewer without
+repository access.  That package is source-side only: even an accepted response
+can only support a later, separate partial-scope replay authorization request.
 Therefore `W_path_source_value` remains `NA` and endpoint replay remains
 forbidden.
 

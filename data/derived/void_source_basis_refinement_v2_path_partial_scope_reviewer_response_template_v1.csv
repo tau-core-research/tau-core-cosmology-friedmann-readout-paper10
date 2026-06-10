@@ -1,0 +1,6 @@
+review_item_id,question,allowed_responses,reviewer_response,reviewer_notes,forbidden_inputs_used,endpoint_replay_allowed,endpoint_validation_claimed
+Q1_NO_ENDPOINT_LEAKAGE,"Do the supplied artifacts avoid endpoint residuals, fit statistics, KiDS data-vector values, posterior chains, and post-hoc path labels?","yes;no;unclear",,,false,false,false
+Q2_SCOPE_LABELS,"Are the strict/caveated/off path-scope labels acceptable as source-side labels from nearest KiDS tile separation only?","yes;caveated_yes;no;unclear",,,false,false,false
+Q3_VALUE_RULE,"Is the tile-proximity bounded rule acceptable as a caveated source-side control, not a physical lensing-path weight?","yes;caveated_yes;no;unclear",,,false,false,false
+Q4_FUTURE_REPLAY_PACKAGE,"May the authors prepare a separate partial-scope replay authorization package using these frozen source-side labels and values, while keeping the full low-z W_path channel disabled?","yes;caveated_yes;no;unclear",,,false,false,false
+FINAL_VERDICT,"Choose the final review verdict.","ACCEPT_PARTIAL_PATH_CONTROL_AS_CAVEATED_SOURCE_SIDE;REJECT_KEEP_W_PATH_DISABLED;REQUEST_MORE_SOURCE_EVIDENCE",,,false,false,false
