@@ -311,6 +311,11 @@ def test_public_files_exist() -> None:
         "data/derived/void_source_basis_refinement_v2_sky_z_authorized_replay_v1_summary.csv",
         "scripts/run_void_source_basis_refinement_v2_sky_z_authorized_replay_v1.py",
         "scripts/validate_void_source_basis_refinement_v2_sky_z_authorized_replay_v1.py",
+        "docs/void_source_basis_refinement_v2_sky_z_source_audit_v1.md",
+        "data/derived/void_source_basis_refinement_v2_sky_z_source_audit_v1.csv",
+        "data/derived/void_source_basis_refinement_v2_sky_z_source_audit_v1_summary.csv",
+        "scripts/build_void_source_basis_refinement_v2_sky_z_source_audit_v1.py",
+        "scripts/validate_void_source_basis_refinement_v2_sky_z_source_audit_v1.py",
         "data/derived/void_source_basis_refinement_v2_path_projection_route_ledger.csv",
         "data/derived/void_source_basis_refinement_v2_path_projection_route_ledger_summary.csv",
         "data/derived/void_source_basis_refinement_v2_time_readout_route_ledger.csv",
@@ -3087,6 +3092,35 @@ def test_void_source_basis_refinement_v2_sky_z_authorized_replay_v1_is_permissio
     assert summary["physical_lensing_path_weight_claimed"] == "false"
     assert summary["verdict"] == "sky_z_permission_replay_family_control_survives_not_validation"
     assert summary["claim_boundary"] == "v2_sky_z_authorized_replay_permission_only_not_validation"
+
+
+def test_void_source_basis_refinement_v2_sky_z_source_audit_v1_is_not_scoring() -> None:
+    for command in [
+        ["python", "scripts/build_void_source_basis_refinement_v2_sky_z_source_audit_v1.py"],
+        ["python", "scripts/validate_void_source_basis_refinement_v2_sky_z_source_audit_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (ROOT / "data/derived/void_source_basis_refinement_v2_sky_z_source_audit_v1.csv").open(
+        newline=""
+    ) as f:
+        rows = list(csv.DictReader(f))
+    with (ROOT / "data/derived/void_source_basis_refinement_v2_sky_z_source_audit_v1_summary.csv").open(
+        newline=""
+    ) as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["status"] == "V2_SKY_Z_SOURCE_AUDIT_BUILT_NOT_SCORING"
+    assert summary["n_rows"] == "12"
+    assert summary["positive_raw_count"] == "5"
+    assert summary["negative_raw_count"] == "7"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["physical_lensing_path_weight_claimed"] == "false"
+    assert summary["claim_boundary"] == "v2_sky_z_source_audit_not_scoring_not_validation"
+    assert len(rows) == 12
+    assert all(row["contains_distance_residuals"] == "false" for row in rows)
+    assert all(row["contains_fit_statistics"] == "false" for row in rows)
+    assert all(row["endpoint_validation_claimed"] == "false" for row in rows)
+    assert abs(max(abs(float(row["W_path_x_sky_z_normalized"])) for row in rows) - 1.0) < 1e-9
 
 
 def test_void_source_basis_refinement_v2_time_readout_route_ledger_v1_preserves_blocker() -> None:
