@@ -211,6 +211,8 @@ def test_public_files_exist() -> None:
         "data/derived/void_source_basis_refinement_endpoint_replay_authorization_review_response_v1_summary.csv",
         "data/derived/void_source_basis_refinement_authorized_replay_v1_grid.csv",
         "data/derived/void_source_basis_refinement_authorized_replay_v1_summary.csv",
+        "data/derived/void_source_basis_refinement_control_dominance_audit_v1_branches.csv",
+        "data/derived/void_source_basis_refinement_control_dominance_audit_v1_summary.csv",
         "scripts/build_void_source_basis_refinement_endpoint_replay_authorization_review_template_v1.py",
         "scripts/validate_void_source_basis_refinement_endpoint_replay_authorization_review_template_v1.py",
         "scripts/build_void_source_basis_refinement_endpoint_replay_authorization_review_package_v1.py",
@@ -218,6 +220,8 @@ def test_public_files_exist() -> None:
         "scripts/validate_void_source_basis_refinement_endpoint_replay_authorization_review_response_v1.py",
         "scripts/run_void_source_basis_refinement_authorized_replay_v1.py",
         "scripts/validate_void_source_basis_refinement_authorized_replay_v1.py",
+        "scripts/build_void_source_basis_refinement_control_dominance_audit_v1.py",
+        "scripts/validate_void_source_basis_refinement_control_dominance_audit_v1.py",
         "scripts/build_void_source_basis_refinement_r6_reviewer_template_v1.py",
         "scripts/validate_void_source_basis_refinement_r6_reviewer_template_v1.py",
         "scripts/build_void_source_basis_refinement_r6_reviewer_handoff_package_v1.py",
@@ -2320,6 +2324,33 @@ def test_void_source_basis_refinement_authorized_replay_v1_is_permission_only_di
     assert float(summary["delta_chi2_candidate_minus_baseline"]) < 0.0
     assert float(summary["delta_aic_candidate_minus_baseline"]) > 0.0
     assert int(summary["controls_better_than_candidate_chi2"]) > 0
+
+
+def test_void_source_basis_refinement_control_dominance_audit_v1_explains_weak_negative() -> None:
+    response = ROOT / "data/derived/void_source_basis_refinement_endpoint_replay_authorization_review_response_v1.csv"
+    if not response.exists():
+        pytest.skip("completed refined void authorization response not present")
+    for command in [
+        ["python", "scripts/run_void_source_basis_refinement_authorized_replay_v1.py"],
+        ["python", "scripts/validate_void_source_basis_refinement_authorized_replay_v1.py"],
+        ["python", "scripts/build_void_source_basis_refinement_control_dominance_audit_v1.py"],
+        ["python", "scripts/validate_void_source_basis_refinement_control_dominance_audit_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (ROOT / "data/derived/void_source_basis_refinement_control_dominance_audit_v1_summary.csv").open(
+        newline=""
+    ) as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["candidate_improves_chi2_over_baseline"] == "true"
+    assert summary["candidate_loses_aic_to_baseline"] == "true"
+    assert summary["best_control_beats_candidate_chi2"] == "true"
+    assert summary["best_control_is_row_shuffle"] == "true"
+    assert summary["best_control_low_redshift_row_leakage"] == "true"
+    assert summary["uses_endpoint_residuals_for_new_source_selection"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["verdict"] == (
+        "candidate_signal_not_source_specific_shuffled_control_dominates_without_redshift_leak"
+    )
 
 
 def test_source_page_cache_is_hash_locked() -> None:

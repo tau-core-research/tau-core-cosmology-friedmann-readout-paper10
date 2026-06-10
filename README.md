@@ -658,6 +658,22 @@ Current replay status: the best refined source-basis candidate improves the
 low-z baseline chi2 modestly, but not AIC, and several frozen controls still
 beat it. This is a permission-only diagnostic replay, not validation.
 
+The targeted control-dominance audit is recorded in:
+
+```text
+data/derived/void_source_basis_refinement_control_dominance_audit_v1_branches.csv
+data/derived/void_source_basis_refinement_control_dominance_audit_v1_summary.csv
+scripts/build_void_source_basis_refinement_control_dominance_audit_v1.py
+scripts/validate_void_source_basis_refinement_control_dominance_audit_v1.py
+```
+
+Its current verdict is
+`candidate_signal_not_source_specific_shuffled_control_dominates_without_redshift_leak`.
+In plain terms: the candidate has a weak chi2 signal, but a frozen row-shuffled
+control beats it without obvious redshift/row-index leakage, so the current
+source-basis refinement is not source-specific enough for a positive endpoint
+reading.
+
 The first lensing route-freeze check is recorded in:
 
 ```text
