@@ -27,3 +27,21 @@ requested.
 This artifact does not compute scores, likelihoods, fit statistics, or physical
 validation.  Its purpose is to prevent another void-only replay from being
 overread as a full Tau Core projection/morphology test.
+
+## Current source-freeze status
+
+The first component promoted from "declared/available" to source-frozen is
+`V2_WEB_MORPHOLOGY`.  Its low-z scope values are recorded in:
+
+```text
+data/derived/void_source_basis_refinement_v2_web_morphology_values.csv
+data/derived/void_source_basis_refinement_v2_web_morphology_values_summary.csv
+scripts/build_void_source_basis_refinement_v2_web_morphology_values_v1.py
+scripts/validate_void_source_basis_refinement_v2_web_morphology_values_v1.py
+```
+
+These values are derived from the existing source-native `W_web` design matrix
+and include deterministic null controls.  They do not contain endpoint scores,
+distance residuals, or fit statistics, and they do not authorize replay.  The
+V2 gate therefore remains blocked until the remaining projection/morphology
+components are frozen with the same source-side discipline.

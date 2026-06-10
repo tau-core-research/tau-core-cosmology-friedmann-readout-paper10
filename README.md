@@ -679,8 +679,12 @@ The V2 projection/morphology source-basis gate is recorded in:
 ```text
 docs/void_source_basis_refinement_v2_projection_morphology_gate_v1.md
 data/source_manifest/void_source_basis_refinement_v2_projection_morphology_policy.csv
+data/derived/void_source_basis_refinement_v2_web_morphology_values.csv
+data/derived/void_source_basis_refinement_v2_web_morphology_values_summary.csv
 data/derived/void_source_basis_refinement_v2_projection_morphology_gate_v1.csv
 data/derived/void_source_basis_refinement_v2_projection_morphology_gate_v1_summary.csv
+scripts/build_void_source_basis_refinement_v2_web_morphology_values_v1.py
+scripts/validate_void_source_basis_refinement_v2_web_morphology_values_v1.py
 scripts/build_void_source_basis_refinement_v2_projection_morphology_gate_v1.py
 scripts/validate_void_source_basis_refinement_v2_projection_morphology_gate_v1.py
 ```
@@ -689,7 +693,11 @@ This is the first source-side accounting layer that includes the missing Tau
 Core projection/morphology channels: void morphology, web morphology,
 observer/path projection, time/readout projection, CMB safety, and multi-channel
 coupling. It currently tracks all six components but keeps endpoint replay
-blocked until the missing V2 source values are frozen.
+blocked until the missing V2 source values are frozen. The web-morphology
+component is now source-frozen for the low-z Pantheon scope from the existing
+source-native W_web design matrix, with deterministic null controls and all
+endpoint/leakage flags set to false. This is not a replay authorization and
+does not score the endpoint.
 
 The first lensing route-freeze check is recorded in:
 
