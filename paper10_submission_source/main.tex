@@ -709,7 +709,7 @@ an external photo-\(z\) calibration reference or product manifest, an
 independent SOM-gold or redshift-distribution validation manifest,
 tomographic-bin quality or \(\Delta z\) prior evidence, and a leakage review
 for any attached calibration artifact. At the acquisition-plan stage no route
-is attached, so H1 remains open and endpoint replay remains forbidden.
+was attached, so H1 remained open and endpoint replay remained forbidden.
 We then attach cached public sources for the first three H1 routes: the
 KiDS-1000 redshift-calibration article, its arXiv metadata page, and the
 official KiDS DR4 SOM-gold catalogue page. These sources support the
@@ -717,12 +717,22 @@ photo-\(z\)/\(n(z)\), SOM-gold, five-bin tomographic, and clustering-redshift
 calibration context. An automated leakage-review preflight then checks that the
 attached source artifacts and their manifest builder do not use endpoint
 residuals, endpoint scores, post-score ranks, or fit statistics. This automated
-preflight passes, but it is not an independent reviewer attestation. The full
-R4 leakage review route remains open, so H1 is still not complete and endpoint
-replay remains forbidden. We also provide a blank independent reviewer
-attestation template that states the source-side questions and forbidden
-endpoint fields for the remaining R4 step; it is a handoff artifact, not a
-completed review response.
+preflight passes, but it is not an independent reviewer attestation. At this
+handoff stage the full R4 leakage review route therefore remained open, H1 was
+not yet complete, and endpoint replay remained forbidden. We also provide a
+blank independent reviewer attestation template that states the source-side
+questions and forbidden endpoint fields for the remaining R4 step; it is a
+handoff artifact, not a completed review response.
+A completed source-side reviewer response was then imported and validated. The
+response accepts the R4 leakage review as caveated source-side evidence, marks
+the independent reviewer attestation, R4 leakage review, and H1 external
+photo-\(z\)/tomographic-calibration evidence gates as source-side complete, and
+explicitly keeps \texttt{endpoint\_replay\_allowed=false} and
+\texttt{endpoint\_validation\_claimed=false}. A separate closure ledger records
+this current post-reviewer source-side state. The ledger does not rewrite the
+earlier prerequisite artifacts, does not compute new endpoint scores, and does
+not authorize endpoint replay; any future endpoint replay requires a separate
+explicit human authorization gate.
 A second post-score localization audit keeps the same source-frozen theory
 vector and same nonnegative single-amplitude scoring rule, but evaluates
 predeclared jackknife masks. All \(20/20\) leave-one source-bin and
