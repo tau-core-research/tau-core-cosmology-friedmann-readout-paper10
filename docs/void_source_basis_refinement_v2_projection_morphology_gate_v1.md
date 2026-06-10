@@ -30,6 +30,22 @@ overread as a full Tau Core projection/morphology test.
 
 ## Current source-freeze status
 
+The void-morphology component is source-frozen, but its weak-negative status is
+preserved:
+
+```text
+data/derived/void_source_basis_refinement_v2_void_morphology_values.csv
+data/derived/void_source_basis_refinement_v2_void_morphology_values_summary.csv
+scripts/build_void_source_basis_refinement_v2_void_morphology_values_v1.py
+scripts/validate_void_source_basis_refinement_v2_void_morphology_values_v1.py
+```
+
+This ledger carries the existing low-z `W_void` values and deterministic null
+controls, but it also records the previous control-dominance audit verdict:
+the refined void replay remains weak-negative because shuffled controls beat
+the candidate.  This is intentionally preserved rather than repaired
+post-hoc.
+
 The first component promoted from "declared/available" to source-frozen is
 `V2_WEB_MORPHOLOGY`.  Its low-z scope values are recorded in:
 

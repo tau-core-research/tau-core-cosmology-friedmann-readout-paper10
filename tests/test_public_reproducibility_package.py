@@ -215,6 +215,8 @@ def test_public_files_exist() -> None:
         "data/derived/void_source_basis_refinement_control_dominance_audit_v1_summary.csv",
         "docs/void_source_basis_refinement_v2_projection_morphology_gate_v1.md",
         "data/source_manifest/void_source_basis_refinement_v2_projection_morphology_policy.csv",
+        "data/derived/void_source_basis_refinement_v2_void_morphology_values.csv",
+        "data/derived/void_source_basis_refinement_v2_void_morphology_values_summary.csv",
         "data/derived/void_source_basis_refinement_v2_web_morphology_values.csv",
         "data/derived/void_source_basis_refinement_v2_web_morphology_values_summary.csv",
         "data/derived/void_source_basis_refinement_v2_cmb_safety_values.csv",
@@ -234,6 +236,8 @@ def test_public_files_exist() -> None:
         "scripts/validate_void_source_basis_refinement_authorized_replay_v1.py",
         "scripts/build_void_source_basis_refinement_control_dominance_audit_v1.py",
         "scripts/validate_void_source_basis_refinement_control_dominance_audit_v1.py",
+        "scripts/build_void_source_basis_refinement_v2_void_morphology_values_v1.py",
+        "scripts/validate_void_source_basis_refinement_v2_void_morphology_values_v1.py",
         "scripts/build_void_source_basis_refinement_v2_web_morphology_values_v1.py",
         "scripts/validate_void_source_basis_refinement_v2_web_morphology_values_v1.py",
         "scripts/build_void_source_basis_refinement_v2_cmb_safety_values_v1.py",
@@ -2373,6 +2377,31 @@ def test_void_source_basis_refinement_control_dominance_audit_v1_explains_weak_n
     assert summary["verdict"] == (
         "candidate_signal_not_source_specific_shuffled_control_dominates_without_redshift_leak"
     )
+
+
+def test_void_source_basis_refinement_v2_void_morphology_values_v1_preserve_weak_negative() -> None:
+    for command in [
+        ["python", "scripts/build_void_source_basis_refinement_v2_void_morphology_values_v1.py"],
+        ["python", "scripts/validate_void_source_basis_refinement_v2_void_morphology_values_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (ROOT / "data/derived/void_source_basis_refinement_v2_void_morphology_values_summary.csv").open(
+        newline=""
+    ) as f:
+        summary = list(csv.DictReader(f))[0]
+    with (ROOT / "data/derived/void_source_basis_refinement_v2_void_morphology_values.csv").open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    assert summary["status"] == "V2_VOID_MORPHOLOGY_VALUES_FROZEN_WEAK_NEGATIVE_NOT_ENDPOINT_READY"
+    assert summary["n_rows"] == "424"
+    assert summary["weak_negative_status_inherited"] == "true"
+    assert summary["best_control_beats_candidate_chi2"] == "true"
+    assert summary["best_control_is_row_shuffle"] == "true"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["verdict"] == "void_morphology_values_frozen_but_weak_negative_preserved"
+    assert rows
+    assert {row["weak_negative_status_inherited"] for row in rows} == {"true"}
+    assert {row["contains_distance_residuals"] for row in rows} == {"false"}
+    assert {row["endpoint_replay_allowed"] for row in rows} == {"false"}
 
 
 def test_void_source_basis_refinement_v2_web_morphology_values_v1_are_source_frozen() -> None:
