@@ -6920,3 +6920,24 @@ def test_kids1000_cosebis_endpoint_replay_authorization_is_permission_only() -> 
         summary["authorization_scope"]
         == "single_predeclared_endpoint_replay_under_existing_frozen_source_side_state_permission_only_not_validation"
     )
+
+
+def test_kids1000_cosebis_authorized_endpoint_replay_is_not_validation() -> None:
+    subprocess.run(
+        ["python", "scripts/validate_kids1000_cosebis_authorized_endpoint_replay_v1.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    with (ROOT / "data/derived/kids1000_cosebis_authorized_endpoint_replay_v1_summary.csv").open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    assert len(rows) == 1
+    summary = rows[0]
+    assert summary["status"] == "AUTHORIZED_ENDPOINT_REPLAY_COMPLETE_PERMISSION_ONLY"
+    assert summary["endpoint_replay_executed"] == "true"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["forbidden_inputs_used_for_source_selection"] == "false"
+    assert summary["verdict"] == "authorized_endpoint_replay_low_tail_signal_not_validation"
+    assert summary["candidate_rank_by_chi2"] == "3"
+    assert summary["null_control_count"] == "1008"

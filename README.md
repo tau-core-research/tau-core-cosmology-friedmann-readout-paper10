@@ -1508,6 +1508,22 @@ The completed reviewer response accepts this permission-only gate:
 `endpoint_replay_allowed=true` and `endpoint_validation_claimed=false`. Its
 verdict is `endpoint_replay_authorized_permission_only_not_validation`.
 
+The authorized endpoint replay is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_authorized_endpoint_replay_run_v1.csv
+data/derived/kids1000_cosebis_authorized_endpoint_replay_v1_summary.csv
+scripts/run_kids1000_cosebis_authorized_endpoint_replay_v1.py
+scripts/validate_kids1000_cosebis_authorized_endpoint_replay_v1.py
+```
+
+This wrapper replays the already frozen KiDS/COSEBIs endpoint scoring grammar
+after the permission-only authorization gate. It records the same low-tail
+endpoint signal (`Delta chi2 = -183.6152665217`, plus-one null tail fraction
+`0.002973240832507`) while preserving
+`endpoint_validation_claimed=false`. The claim-safe verdict is
+`authorized_endpoint_replay_low_tail_signal_not_validation`.
+
 The endpoint jackknife/localization robustness audit is recorded in:
 
 ```text

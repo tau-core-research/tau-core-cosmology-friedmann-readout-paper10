@@ -217,6 +217,8 @@ def main() -> None:
         "--summary-out",
         "data/derived/kids1000_cosebis_endpoint_replay_authorization_review_response_v1_summary.csv",
     ])
+    run(["python", "scripts/run_kids1000_cosebis_authorized_endpoint_replay_v1.py"])
+    run(["python", "scripts/validate_kids1000_cosebis_authorized_endpoint_replay_v1.py"])
     run(["python", "scripts/run_kids1000_cosebis_endpoint_jackknife_robustness_v1.py"])
     run(["python", "scripts/validate_kids1000_cosebis_endpoint_jackknife_robustness_v1.py"])
     run(["python", "scripts/run_kids1000_cosebis_endpoint_mode_localization_v1.py"])
