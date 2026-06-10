@@ -201,6 +201,19 @@ def main() -> None:
                             "scripts/validate_void_source_basis_refinement_v2_path_partial_scope_replay_authorization_review_package_v1.py",
                         ]
                     )
+                    partial_path_auth_response = (
+                        ROOT
+                        / "data"
+                        / "derived"
+                        / "void_source_basis_refinement_v2_path_partial_scope_replay_authorization_review_response_v1.csv"
+                    )
+                    if partial_path_auth_response.exists():
+                        run(
+                            [
+                                "python",
+                                "scripts/validate_void_source_basis_refinement_v2_path_partial_scope_replay_authorization_review_response_v1.py",
+                            ]
+                        )
                 run(["python", "scripts/build_void_source_basis_refinement_v2_path_projection_route_ledger_v1.py"])
                 run(["python", "scripts/validate_void_source_basis_refinement_v2_path_projection_route_ledger_v1.py"])
                 run(["python", "scripts/build_void_source_basis_refinement_v2_time_readout_route_ledger_v1.py"])

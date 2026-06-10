@@ -247,6 +247,10 @@ def test_public_files_exist() -> None:
         "data/derived/void_source_basis_refinement_v2_path_partial_scope_replay_authorization_review_package_v1.zip.sha256",
         "data/derived/void_source_basis_refinement_v2_path_partial_scope_replay_authorization_review_package_v1_manifest.csv",
         "data/derived/void_source_basis_refinement_v2_path_partial_scope_replay_authorization_review_package_v1_summary.csv",
+        "docs/void_source_basis_refinement_v2_path_partial_scope_replay_authorization_review_response_v1.md",
+        "data/derived/void_source_basis_refinement_v2_path_partial_scope_replay_authorization_review_response_v1.csv",
+        "data/derived/void_source_basis_refinement_v2_path_partial_scope_replay_authorization_review_response_v1_summary.csv",
+        "data/derived/void_source_basis_refinement_v2_path_partial_scope_replay_authorization_review_response_v1_validation_log.txt",
         "data/derived/void_source_basis_refinement_v2_path_projection_route_ledger.csv",
         "data/derived/void_source_basis_refinement_v2_path_projection_route_ledger_summary.csv",
         "data/derived/void_source_basis_refinement_v2_time_readout_route_ledger.csv",
@@ -283,6 +287,7 @@ def test_public_files_exist() -> None:
         "scripts/validate_void_source_basis_refinement_v2_path_partial_scope_replay_authorization_review_template_v1.py",
         "scripts/build_void_source_basis_refinement_v2_path_partial_scope_replay_authorization_review_package_v1.py",
         "scripts/validate_void_source_basis_refinement_v2_path_partial_scope_replay_authorization_review_package_v1.py",
+        "scripts/validate_void_source_basis_refinement_v2_path_partial_scope_replay_authorization_review_response_v1.py",
         "scripts/build_void_source_basis_refinement_v2_path_projection_route_ledger_v1.py",
         "scripts/validate_void_source_basis_refinement_v2_path_projection_route_ledger_v1.py",
         "scripts/build_void_source_basis_refinement_v2_time_readout_route_ledger_v1.py",
@@ -2751,6 +2756,34 @@ def test_void_source_basis_refinement_v2_path_partial_scope_replay_authorization
     assert {row["endpoint_replay_allowed"] for row in manifest} == {"false"}
     assert {row["endpoint_validation_claimed"] for row in manifest} == {"false"}
     assert {row["physical_lensing_path_weight_claimed"] for row in manifest} == {"false"}
+
+
+def test_void_source_basis_refinement_v2_path_partial_scope_replay_authorization_response_v1_grants_permission_only() -> None:
+    for command in [
+        ["python", "scripts/validate_void_source_basis_refinement_v2_path_partial_scope_completed_review_response_v1.py"],
+        ["python", "scripts/build_void_source_basis_refinement_v2_path_partial_scope_replay_authorization_review_template_v1.py"],
+        ["python", "scripts/validate_void_source_basis_refinement_v2_path_partial_scope_replay_authorization_review_template_v1.py"],
+        ["python", "scripts/build_void_source_basis_refinement_v2_path_partial_scope_replay_authorization_review_package_v1.py"],
+        ["python", "scripts/validate_void_source_basis_refinement_v2_path_partial_scope_replay_authorization_review_package_v1.py"],
+        ["python", "scripts/validate_void_source_basis_refinement_v2_path_partial_scope_replay_authorization_review_response_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (
+        ROOT
+        / "data/derived/void_source_basis_refinement_v2_path_partial_scope_replay_authorization_review_response_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["status"] == "V2_PATH_PARTIAL_SCOPE_REPLAY_AUTHORIZATION_ACCEPTED_PERMISSION_ONLY"
+    assert summary["decision"] == "GO_PARTIAL_PATH_REPLAY_PERMISSION_ONLY"
+    assert summary["review_completed"] == "true"
+    assert summary["forbidden_inputs_used"] == "false"
+    assert summary["endpoint_replay_allowed"] == "true"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["physical_lensing_path_weight_claimed"] == "false"
+    assert summary["authorization_scope"] == "single_permission_only_12_row_partial_W_path_replay_not_validation"
+    assert summary["total_path_scope_candidate_count"] == "12"
+    assert summary["remaining_lowz_rows_full_W_path_disabled"] == "412"
+    assert summary["full_lowz_path_values_computed"] == "false"
 
 
 def test_void_source_basis_refinement_v2_time_readout_route_ledger_v1_preserves_blocker() -> None:
