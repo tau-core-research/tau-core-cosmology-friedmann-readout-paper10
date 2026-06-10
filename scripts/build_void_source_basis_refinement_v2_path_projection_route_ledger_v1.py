@@ -9,6 +9,7 @@ ROOT = Path(__file__).resolve().parents[1]
 LOW_Z_MASK = ROOT / "data" / "derived" / "low_z_pantheon_void_scope_candidate_v1_row_mask.csv"
 KIDS_INVENTORY = ROOT / "data" / "derived" / "kids1000_lensing_inventory_v1_summary.csv"
 PATH_ROUTE = ROOT / "data" / "derived" / "kids1000_cosebis_path_source_product_route_manifest_v1.csv"
+CROSSMAP = ROOT / "data" / "derived" / "void_source_basis_refinement_v2_path_projection_crossmap_audit_summary.csv"
 OUT = ROOT / "data" / "derived" / "void_source_basis_refinement_v2_path_projection_route_ledger.csv"
 SUMMARY = ROOT / "data" / "derived" / "void_source_basis_refinement_v2_path_projection_route_ledger_summary.csv"
 
@@ -42,6 +43,7 @@ def main() -> None:
     low_z_rows = [row for row in read_rows(LOW_Z_MASK) if row["included"] == "true"]
     kids = read_one(KIDS_INVENTORY)
     route_rows = read_rows(PATH_ROUTE)
+    crossmap = read_one(CROSSMAP)
     if not low_z_rows:
         raise SystemExit("no included low-z rows found")
     if kids["endpoint_scoring_allowed"] != "false":
@@ -60,6 +62,11 @@ def main() -> None:
         {"F_overlap", "D_path"} <= set(source_supported_factors)
         and kids["status"] == "KIDS1000_LENSING_INVENTORY_BUILT_NOT_SCORED"
     )
+    lowz_ra_dec_available = crossmap["lowz_ra_dec_available"] == "true"
+    crossmap_candidate_available = crossmap["crossmap_candidate_available"] == "true"
+    complete_crossmap_available = crossmap["crossmap_complete_for_lowz_scope"] == "true"
+    if crossmap["path_values_computed"] != "false":
+        raise SystemExit("crossmap audit must not compute path values")
 
     rows: list[dict[str, str]] = []
     for row in low_z_rows:
@@ -73,9 +80,11 @@ def main() -> None:
                 "zHD": row["zHD"],
                 "kids_lensing_route_available": str(route_supported).lower(),
                 "path_source_products_available": ";".join(source_supported_factors),
-                "pantheon_lowz_ra_dec_available": "false",
-                "lowz_to_kids_path_crossmap_available": "false",
-                "W_path_value_status": "BLOCKED_SOURCE_COORDINATE_JOIN_REQUIRED",
+                "pantheon_lowz_ra_dec_available": str(lowz_ra_dec_available).lower(),
+                "lowz_to_kids_path_crossmap_available": str(complete_crossmap_available).lower(),
+                "lowz_to_kids_path_crossmap_candidate_available": str(crossmap_candidate_available).lower(),
+                "crossmap_audit_artifact": str(CROSSMAP.relative_to(ROOT)),
+                "W_path_value_status": "BLOCKED_PATH_WEIGHT_RULE_NOT_FROZEN_FOR_PANTHEON_ROWS",
                 "W_path_source_value": "NA",
                 "path_off_control": "0",
                 "rotated_sky_control_available": "false",
@@ -102,12 +111,14 @@ def main() -> None:
             "low_z_scope_artifact": str(LOW_Z_MASK.relative_to(ROOT)),
             "kids_inventory_artifact": str(KIDS_INVENTORY.relative_to(ROOT)),
             "path_route_artifact": str(PATH_ROUTE.relative_to(ROOT)),
+            "crossmap_audit_artifact": str(CROSSMAP.relative_to(ROOT)),
             "output_artifact": str(OUT.relative_to(ROOT)),
             "n_rows": str(len(rows)),
             "kids_lensing_route_available": str(route_supported).lower(),
             "path_source_products_available": ";".join(source_supported_factors),
-            "pantheon_lowz_ra_dec_available": "false",
-            "lowz_to_kids_path_crossmap_available": "false",
+            "pantheon_lowz_ra_dec_available": str(lowz_ra_dec_available).lower(),
+            "lowz_to_kids_path_crossmap_available": str(complete_crossmap_available).lower(),
+            "lowz_to_kids_path_crossmap_candidate_available": str(crossmap_candidate_available).lower(),
             "path_values_computed": "false",
             "endpoint_replay_allowed": "false",
             "endpoint_validation_claimed": "false",
@@ -117,7 +128,7 @@ def main() -> None:
             "contains_fit_statistics": "false",
             "uses_kids_data_vector_values": "false",
             "uses_posterior_chains": "false",
-            "verdict": "path_route_available_but_lowz_coordinate_crossmap_missing",
+            "verdict": "path_route_and_lowz_coordinates_available_but_path_weight_values_not_frozen",
             "claim_boundary": CLAIM_BOUNDARY,
         }
     ]

@@ -38,8 +38,12 @@ def main() -> None:
     require(summary["status"] == "V2_PATH_PROJECTION_ROUTE_LEDGER_FROZEN_VALUES_BLOCKED", "bad summary status")
     require(summary["n_rows"] == str(len(rows)), "row count mismatch")
     require(summary["kids_lensing_route_available"] == "true", "KiDS route should be available")
-    require(summary["pantheon_lowz_ra_dec_available"] == "false", "low-z Pantheon RA/DEC should remain unavailable")
-    require(summary["lowz_to_kids_path_crossmap_available"] == "false", "low-z to KiDS crossmap should remain unavailable")
+    require(summary["pantheon_lowz_ra_dec_available"] == "true", "low-z Pantheon RA/DEC should be available")
+    require(
+        summary["lowz_to_kids_path_crossmap_candidate_available"] == "true",
+        "partial low-z to KiDS crossmap candidates should be available",
+    )
+    require(summary["lowz_to_kids_path_crossmap_available"] == "false", "complete low-z to KiDS crossmap should remain unavailable")
     require(summary["path_values_computed"] == "false", "path values must not be computed")
     require(summary["endpoint_replay_allowed"] == "false", "summary must not allow endpoint replay")
     require(summary["endpoint_validation_claimed"] == "false", "summary must not claim endpoint validation")
@@ -49,16 +53,23 @@ def main() -> None:
     require(summary["contains_fit_statistics"] == "false", "summary must not contain fit statistics")
     require(summary["uses_kids_data_vector_values"] == "false", "summary must not use KiDS data vector values")
     require(summary["uses_posterior_chains"] == "false", "summary must not use posterior chains")
-    require(summary["verdict"] == "path_route_available_but_lowz_coordinate_crossmap_missing", "unexpected verdict")
+    require(
+        summary["verdict"] == "path_route_and_lowz_coordinates_available_but_path_weight_values_not_frozen",
+        "unexpected verdict",
+    )
     require(summary["claim_boundary"] == CLAIM_BOUNDARY, "summary claim boundary mismatch")
 
     for row in rows:
         require(row["component_id"] == COMPONENT_ID, "row component mismatch")
         require(row["channel_id"] == "W_PATH_PROJECTION", "row channel mismatch")
         require(row["kids_lensing_route_available"] == "true", "row route availability mismatch")
-        require(row["pantheon_lowz_ra_dec_available"] == "false", "row must not claim RA/DEC")
-        require(row["lowz_to_kids_path_crossmap_available"] == "false", "row must not claim crossmap")
-        require(row["W_path_value_status"] == "BLOCKED_SOURCE_COORDINATE_JOIN_REQUIRED", "path value status mismatch")
+        require(row["pantheon_lowz_ra_dec_available"] == "true", "row should claim source-side RA/DEC")
+        require(row["lowz_to_kids_path_crossmap_candidate_available"] == "true", "row should see partial crossmap candidates")
+        require(row["lowz_to_kids_path_crossmap_available"] == "false", "row must not claim complete crossmap")
+        require(
+            row["W_path_value_status"] == "BLOCKED_PATH_WEIGHT_RULE_NOT_FROZEN_FOR_PANTHEON_ROWS",
+            "path value status mismatch",
+        )
         require(row["W_path_source_value"] == "NA", "path source value must remain NA")
         require(row["path_off_control"] == "0", "path off control must be zero")
         require(row["endpoint_replay_allowed"] == "false", "rows must not allow endpoint replay")

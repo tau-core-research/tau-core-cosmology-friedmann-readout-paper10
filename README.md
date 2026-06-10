@@ -685,6 +685,8 @@ data/derived/void_source_basis_refinement_v2_web_morphology_values.csv
 data/derived/void_source_basis_refinement_v2_web_morphology_values_summary.csv
 data/derived/void_source_basis_refinement_v2_cmb_safety_values.csv
 data/derived/void_source_basis_refinement_v2_cmb_safety_values_summary.csv
+data/derived/void_source_basis_refinement_v2_path_projection_crossmap_audit.csv
+data/derived/void_source_basis_refinement_v2_path_projection_crossmap_audit_summary.csv
 data/derived/void_source_basis_refinement_v2_path_projection_route_ledger.csv
 data/derived/void_source_basis_refinement_v2_path_projection_route_ledger_summary.csv
 data/derived/void_source_basis_refinement_v2_time_readout_route_ledger.csv
@@ -699,6 +701,8 @@ scripts/build_void_source_basis_refinement_v2_void_morphology_values_v1.py
 scripts/validate_void_source_basis_refinement_v2_void_morphology_values_v1.py
 scripts/build_void_source_basis_refinement_v2_cmb_safety_values_v1.py
 scripts/validate_void_source_basis_refinement_v2_cmb_safety_values_v1.py
+scripts/build_void_source_basis_refinement_v2_path_projection_crossmap_audit_v1.py
+scripts/validate_void_source_basis_refinement_v2_path_projection_crossmap_audit_v1.py
 scripts/build_void_source_basis_refinement_v2_path_projection_route_ledger_v1.py
 scripts/validate_void_source_basis_refinement_v2_path_projection_route_ledger_v1.py
 scripts/build_void_source_basis_refinement_v2_time_readout_route_ledger_v1.py
@@ -722,8 +726,11 @@ endpoint/leakage flags set to false. This is not a replay authorization and
 does not score the endpoint. The CMB-safety component is also frozen as a
 low-z support/safety ledger; it uses no CMB map data, no CMB likelihood, and no
 endpoint residuals. The observer/path component now has a route ledger: KiDS
-path products are source-supported, but low-z Pantheon sky-coordinate
-crossmapping is still missing, so no `W_path` values are computed. The
+path products are source-supported. A crossmap audit now confirms that low-z
+Pantheon RA/DEC are available and that a small number of rows have nearby KiDS
+tile candidates, but the crossmap is not complete for the low-z scope and no
+Pantheon-row path-weight rule is frozen. Therefore no `W_path` values are
+computed. The
 time/readout component also has a route ledger: CC/BAO/CMB products are
 declared but not fetched/frozen as numeric time-readout inputs, so no `W_time`
 values are computed.

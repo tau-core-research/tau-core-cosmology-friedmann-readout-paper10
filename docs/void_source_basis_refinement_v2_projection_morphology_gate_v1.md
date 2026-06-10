@@ -79,17 +79,22 @@ residuals, or fit statistics.
 The observer/path projection channel is recorded as a route ledger:
 
 ```text
+data/derived/void_source_basis_refinement_v2_path_projection_crossmap_audit.csv
+data/derived/void_source_basis_refinement_v2_path_projection_crossmap_audit_summary.csv
 data/derived/void_source_basis_refinement_v2_path_projection_route_ledger.csv
 data/derived/void_source_basis_refinement_v2_path_projection_route_ledger_summary.csv
+scripts/build_void_source_basis_refinement_v2_path_projection_crossmap_audit_v1.py
+scripts/validate_void_source_basis_refinement_v2_path_projection_crossmap_audit_v1.py
 scripts/build_void_source_basis_refinement_v2_path_projection_route_ledger_v1.py
 scripts/validate_void_source_basis_refinement_v2_path_projection_route_ledger_v1.py
 ```
 
 This ledger preserves the current blocker rather than hiding it.  KiDS/path
-source products are route-supported, but the low-z Pantheon scope does not
-currently carry the sky-coordinate crossmap needed to assign source-frozen
-`W_path` values.  Therefore `W_path_source_value` remains `NA` and endpoint
-replay remains forbidden.
+source products are route-supported, and the low-z Pantheon geometry join does
+carry RA/DEC.  The crossmap audit finds partial KiDS tile candidates, but not a
+complete low-z crossmap and not a frozen Pantheon-row path-weight rule.
+Therefore `W_path_source_value` remains `NA` and endpoint replay remains
+forbidden.
 
 The time/readout projection channel is also recorded as a route ledger:
 
