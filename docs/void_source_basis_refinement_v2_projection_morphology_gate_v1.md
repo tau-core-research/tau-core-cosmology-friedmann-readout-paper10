@@ -105,3 +105,21 @@ required CC/BAO/CMB products remain selected-not-fetched and the activation
 rule remains non-numeric.  Therefore `W_time_source_value` remains `NA`; no
 clock anomaly, late-time fit, endpoint residual, or time-kernel score is
 claimed.
+
+The multi-channel coupling component is recorded as a source-side coupling
+ledger:
+
+```text
+data/derived/void_source_basis_refinement_v2_multichannel_coupling_ledger.csv
+data/derived/void_source_basis_refinement_v2_multichannel_coupling_ledger_summary.csv
+scripts/build_void_source_basis_refinement_v2_multichannel_coupling_ledger_v1.py
+scripts/validate_void_source_basis_refinement_v2_multichannel_coupling_ledger_v1.py
+```
+
+This ledger does not repair the weak replay.  It freezes the current coupling
+accounting: void and web source values are present, CMB safety is satisfied for
+the low-z support scope, but path and time values remain unavailable and the
+void branch keeps its weak-negative/control-dominance verdict.  Therefore even
+the computable void-web value pair is not endpoint-ready.  All coupling rules
+keep `endpoint_ready=false`, `endpoint_replay_allowed=false`, and
+`endpoint_validation_claimed=false`.

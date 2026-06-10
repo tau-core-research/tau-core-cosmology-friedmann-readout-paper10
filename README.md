@@ -689,6 +689,8 @@ data/derived/void_source_basis_refinement_v2_path_projection_route_ledger.csv
 data/derived/void_source_basis_refinement_v2_path_projection_route_ledger_summary.csv
 data/derived/void_source_basis_refinement_v2_time_readout_route_ledger.csv
 data/derived/void_source_basis_refinement_v2_time_readout_route_ledger_summary.csv
+data/derived/void_source_basis_refinement_v2_multichannel_coupling_ledger.csv
+data/derived/void_source_basis_refinement_v2_multichannel_coupling_ledger_summary.csv
 data/derived/void_source_basis_refinement_v2_projection_morphology_gate_v1.csv
 data/derived/void_source_basis_refinement_v2_projection_morphology_gate_v1_summary.csv
 scripts/build_void_source_basis_refinement_v2_web_morphology_values_v1.py
@@ -701,6 +703,8 @@ scripts/build_void_source_basis_refinement_v2_path_projection_route_ledger_v1.py
 scripts/validate_void_source_basis_refinement_v2_path_projection_route_ledger_v1.py
 scripts/build_void_source_basis_refinement_v2_time_readout_route_ledger_v1.py
 scripts/validate_void_source_basis_refinement_v2_time_readout_route_ledger_v1.py
+scripts/build_void_source_basis_refinement_v2_multichannel_coupling_ledger_v1.py
+scripts/validate_void_source_basis_refinement_v2_multichannel_coupling_ledger_v1.py
 scripts/build_void_source_basis_refinement_v2_projection_morphology_gate_v1.py
 scripts/validate_void_source_basis_refinement_v2_projection_morphology_gate_v1.py
 ```
@@ -723,6 +727,13 @@ crossmapping is still missing, so no `W_path` values are computed. The
 time/readout component also has a route ledger: CC/BAO/CMB products are
 declared but not fetched/frozen as numeric time-readout inputs, so no `W_time`
 values are computed.
+
+The multi-channel coupling component is also accounted by a frozen source-side
+ledger. It combines the current V2 component statuses and deliberately keeps
+all coupling rules endpoint-blocked: the void branch retains its weak-negative
+control-dominance result, while path and time values are still unavailable.
+This ledger prevents the V2 gate from silently treating coupling as either
+solved or missing; it is present, reproducible, and not a replay authorization.
 
 The first lensing route-freeze check is recorded in:
 

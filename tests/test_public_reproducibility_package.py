@@ -225,6 +225,8 @@ def test_public_files_exist() -> None:
         "data/derived/void_source_basis_refinement_v2_path_projection_route_ledger_summary.csv",
         "data/derived/void_source_basis_refinement_v2_time_readout_route_ledger.csv",
         "data/derived/void_source_basis_refinement_v2_time_readout_route_ledger_summary.csv",
+        "data/derived/void_source_basis_refinement_v2_multichannel_coupling_ledger.csv",
+        "data/derived/void_source_basis_refinement_v2_multichannel_coupling_ledger_summary.csv",
         "data/derived/void_source_basis_refinement_v2_projection_morphology_gate_v1.csv",
         "data/derived/void_source_basis_refinement_v2_projection_morphology_gate_v1_summary.csv",
         "scripts/build_void_source_basis_refinement_endpoint_replay_authorization_review_template_v1.py",
@@ -246,6 +248,8 @@ def test_public_files_exist() -> None:
         "scripts/validate_void_source_basis_refinement_v2_path_projection_route_ledger_v1.py",
         "scripts/build_void_source_basis_refinement_v2_time_readout_route_ledger_v1.py",
         "scripts/validate_void_source_basis_refinement_v2_time_readout_route_ledger_v1.py",
+        "scripts/build_void_source_basis_refinement_v2_multichannel_coupling_ledger_v1.py",
+        "scripts/validate_void_source_basis_refinement_v2_multichannel_coupling_ledger_v1.py",
         "scripts/build_void_source_basis_refinement_v2_projection_morphology_gate_v1.py",
         "scripts/validate_void_source_basis_refinement_v2_projection_morphology_gate_v1.py",
         "scripts/build_void_source_basis_refinement_r6_reviewer_template_v1.py",
@@ -2542,6 +2546,45 @@ def test_void_source_basis_refinement_v2_projection_morphology_gate_v1_tracks_mi
         "V2_CMB_SAFETY",
         "V2_MULTI_CHANNEL_COUPLING",
     } == component_ids
+
+
+def test_void_source_basis_refinement_v2_multichannel_coupling_ledger_v1_blocks_endpoint() -> None:
+    for command in [
+        ["python", "scripts/build_void_source_basis_refinement_v2_multichannel_coupling_ledger_v1.py"],
+        ["python", "scripts/validate_void_source_basis_refinement_v2_multichannel_coupling_ledger_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (ROOT / "data/derived/void_source_basis_refinement_v2_multichannel_coupling_ledger_summary.csv").open(
+        newline=""
+    ) as f:
+        summary = list(csv.DictReader(f))[0]
+    with (ROOT / "data/derived/void_source_basis_refinement_v2_multichannel_coupling_ledger.csv").open(
+        newline=""
+    ) as f:
+        rows = list(csv.DictReader(f))
+    assert summary["status"] == "V2_MULTI_CHANNEL_COUPLING_LEDGER_FROZEN_ENDPOINT_BLOCKED"
+    assert summary["endpoint_ready_coupling_rule_count"] == "0"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["void_values_available"] == "true"
+    assert summary["web_values_available"] == "true"
+    assert summary["path_values_available"] == "false"
+    assert summary["time_values_available"] == "false"
+    assert summary["cmb_safety_passed"] == "true"
+    assert summary["void_weak_negative_preserved"] == "true"
+    assert summary["verdict"] == "multichannel_coupling_accounted_but_endpoint_blocked"
+    assert {row["coupling_rule_id"] for row in rows} == {
+        "VOID_WEB_VALUE_PAIR",
+        "VOID_WEB_PATH",
+        "VOID_WEB_TIME",
+        "FULL_V2_PROJECTION_MORPHOLOGY",
+    }
+    assert {row["endpoint_ready"] for row in rows} == {"false"}
+    assert {row["endpoint_replay_allowed"] for row in rows} == {"false"}
+    void_web = next(row for row in rows if row["coupling_rule_id"] == "VOID_WEB_VALUE_PAIR")
+    assert void_web["source_values_available"] == "true"
+    assert void_web["coupling_values_computable"] == "true"
+    assert void_web["blocking_reason"] == "void_branch_weak_negative_control_dominance_preserved"
 
 
 def test_source_page_cache_is_hash_locked() -> None:
