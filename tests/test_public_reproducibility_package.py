@@ -200,6 +200,7 @@ def test_public_files_exist() -> None:
         "data/derived/void_source_basis_refinement_r6_completed_reviewer_response_v1_summary.csv",
         "docs/void_source_basis_refinement_endpoint_replay_authorization_review_v1.md",
         "data/source_manifest/void_source_basis_refinement_endpoint_replay_authorization_review_policy_v1.csv",
+        "data/source_manifest/void_source_basis_refinement_authorized_replay_run_v1.csv",
         "data/derived/void_source_basis_refinement_endpoint_replay_authorization_review_response_template_v1.csv",
         "data/derived/void_source_basis_refinement_endpoint_replay_authorization_review_template_v1_summary.csv",
         "data/derived/void_source_basis_refinement_endpoint_replay_authorization_review_package_v1.zip",
@@ -208,11 +209,15 @@ def test_public_files_exist() -> None:
         "data/derived/void_source_basis_refinement_endpoint_replay_authorization_review_package_v1_summary.csv",
         "data/derived/void_source_basis_refinement_endpoint_replay_authorization_review_response_v1.csv",
         "data/derived/void_source_basis_refinement_endpoint_replay_authorization_review_response_v1_summary.csv",
+        "data/derived/void_source_basis_refinement_authorized_replay_v1_grid.csv",
+        "data/derived/void_source_basis_refinement_authorized_replay_v1_summary.csv",
         "scripts/build_void_source_basis_refinement_endpoint_replay_authorization_review_template_v1.py",
         "scripts/validate_void_source_basis_refinement_endpoint_replay_authorization_review_template_v1.py",
         "scripts/build_void_source_basis_refinement_endpoint_replay_authorization_review_package_v1.py",
         "scripts/validate_void_source_basis_refinement_endpoint_replay_authorization_review_package_v1.py",
         "scripts/validate_void_source_basis_refinement_endpoint_replay_authorization_review_response_v1.py",
+        "scripts/run_void_source_basis_refinement_authorized_replay_v1.py",
+        "scripts/validate_void_source_basis_refinement_authorized_replay_v1.py",
         "scripts/build_void_source_basis_refinement_r6_reviewer_template_v1.py",
         "scripts/validate_void_source_basis_refinement_r6_reviewer_template_v1.py",
         "scripts/build_void_source_basis_refinement_r6_reviewer_handoff_package_v1.py",
@@ -2286,6 +2291,35 @@ def test_void_source_basis_refinement_endpoint_replay_authorization_completed_re
         "single_predeclared_refined_low_z_void_source_basis_replay_permission_only_not_validation"
     )
     assert summary["verdict"] == "refined_void_replay_authorized_permission_only_not_validation"
+
+
+def test_void_source_basis_refinement_authorized_replay_v1_is_permission_only_diagnostic() -> None:
+    response = ROOT / "data/derived/void_source_basis_refinement_endpoint_replay_authorization_review_response_v1.csv"
+    if not response.exists():
+        pytest.skip("completed refined void authorization response not present")
+    for command in [
+        [
+            "python",
+            "scripts/validate_void_source_basis_refinement_endpoint_replay_authorization_review_response_v1.py",
+            str(response),
+            "--summary-out",
+            "data/derived/void_source_basis_refinement_endpoint_replay_authorization_review_response_v1_summary.csv",
+        ],
+        ["python", "scripts/run_void_source_basis_refinement_authorized_replay_v1.py"],
+        ["python", "scripts/validate_void_source_basis_refinement_authorized_replay_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (ROOT / "data/derived/void_source_basis_refinement_authorized_replay_v1_summary.csv").open(
+        newline=""
+    ) as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["endpoint_replay_allowed"] == "true"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["claim_boundary"] == "void_source_basis_refinement_authorized_replay_permission_only_not_validation"
+    assert summary["best_candidate_feature_id"]
+    assert float(summary["delta_chi2_candidate_minus_baseline"]) < 0.0
+    assert float(summary["delta_aic_candidate_minus_baseline"]) > 0.0
+    assert int(summary["controls_better_than_candidate_chi2"]) > 0
 
 
 def test_source_page_cache_is_hash_locked() -> None:

@@ -644,6 +644,20 @@ data/derived/void_source_basis_refinement_endpoint_replay_authorization_review_r
 This opens only the next predeclared refined-void replay gate. It is not an
 endpoint validation result and does not by itself run scoring.
 
+The permission-only refined void replay is recorded in:
+
+```text
+data/source_manifest/void_source_basis_refinement_authorized_replay_run_v1.csv
+data/derived/void_source_basis_refinement_authorized_replay_v1_grid.csv
+data/derived/void_source_basis_refinement_authorized_replay_v1_summary.csv
+scripts/run_void_source_basis_refinement_authorized_replay_v1.py
+scripts/validate_void_source_basis_refinement_authorized_replay_v1.py
+```
+
+Current replay status: the best refined source-basis candidate improves the
+low-z baseline chi2 modestly, but not AIC, and several frozen controls still
+beat it. This is a permission-only diagnostic replay, not validation.
+
 The first lensing route-freeze check is recorded in:
 
 ```text
