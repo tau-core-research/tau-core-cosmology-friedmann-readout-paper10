@@ -88,6 +88,13 @@ def test_public_files_exist() -> None:
         "docs/void_web_combined_multiblock_endpoint_authorization_review_v1.md",
         "scripts/build_void_web_combined_multiblock_endpoint_authorization_review_template_v1.py",
         "scripts/validate_void_web_combined_multiblock_endpoint_authorization_review_template_v1.py",
+        "REVIEWER_README_VOID_WEB_COMBINED_ENDPOINT_AUTHORIZATION.md",
+        "data/derived/void_web_combined_multiblock_endpoint_authorization_review_package_v1.zip",
+        "data/derived/void_web_combined_multiblock_endpoint_authorization_review_package_v1.zip.sha256",
+        "data/derived/void_web_combined_multiblock_endpoint_authorization_review_package_v1_manifest.csv",
+        "data/derived/void_web_combined_multiblock_endpoint_authorization_review_package_v1_summary.csv",
+        "scripts/build_void_web_combined_multiblock_endpoint_authorization_review_package_v1.py",
+        "scripts/validate_void_web_combined_multiblock_endpoint_authorization_review_package_v1.py",
         "data/source_manifest/kids1000_lensing_route_v1.csv",
         "data/derived/kids1000_lensing_route_v1_head.csv",
         "data/derived/kids1000_lensing_route_v1_summary.csv",
@@ -1252,6 +1259,45 @@ def test_void_web_combined_multiblock_authorization_template_v1_is_not_completed
     assert {row["forbidden_inputs_used"] for row in rows} == {"false"}
     assert {row["claim_boundary"] for row in rows} == {
         "combined_multiblock_endpoint_authorization_review_not_validation"
+    }
+
+
+def test_void_web_combined_multiblock_authorization_package_v1_is_clean_handoff() -> None:
+    subprocess.run(
+        ["python", "scripts/build_void_web_combined_multiblock_endpoint_authorization_review_package_v1.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    subprocess.run(
+        ["python", "scripts/validate_void_web_combined_multiblock_endpoint_authorization_review_package_v1.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    with (
+        ROOT / "data/derived/void_web_combined_multiblock_endpoint_authorization_review_package_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/void_web_combined_multiblock_endpoint_authorization_review_package_v1_manifest.csv"
+    ).open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    assert summary["status"] == "AUTHORIZATION_REVIEW_PACKAGE_BUILT_NOT_COMPLETED"
+    assert summary["package_file_count"] == "15"
+    assert summary["review_completed"] == "false"
+    assert summary["endpoint_run_allowed"] == "false"
+    assert summary["physical_validation_claimed"] == "false"
+    assert summary["contains_endpoint_residuals"] == "false"
+    assert summary["contains_endpoint_scores"] == "false"
+    assert summary["contains_fit_statistics"] == "false"
+    assert {row["contains_endpoint_residuals"] for row in rows} == {"false"}
+    assert {row["contains_endpoint_scores"] for row in rows} == {"false"}
+    assert {row["contains_fit_statistics"] for row in rows} == {"false"}
+    assert "REVIEWER_README_VOID_WEB_COMBINED_ENDPOINT_AUTHORIZATION.md" in {
+        row["package_path"] for row in rows
     }
 
 

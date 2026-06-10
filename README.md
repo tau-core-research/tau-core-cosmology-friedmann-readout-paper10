@@ -298,6 +298,22 @@ A future combined endpoint run requires a separate accepted response that uses
 only protocol/readiness/source-side artifacts, not residuals, fit statistics,
 or post-hoc block/channel choices.
 
+For reviewers without repository access, the authorization package is:
+
+```text
+REVIEWER_README_VOID_WEB_COMBINED_ENDPOINT_AUTHORIZATION.md
+data/derived/void_web_combined_multiblock_endpoint_authorization_review_package_v1.zip
+data/derived/void_web_combined_multiblock_endpoint_authorization_review_package_v1.zip.sha256
+data/derived/void_web_combined_multiblock_endpoint_authorization_review_package_v1_manifest.csv
+data/derived/void_web_combined_multiblock_endpoint_authorization_review_package_v1_summary.csv
+scripts/build_void_web_combined_multiblock_endpoint_authorization_review_package_v1.py
+scripts/validate_void_web_combined_multiblock_endpoint_authorization_review_package_v1.py
+```
+
+The package contains only protocol, readiness, source-grounding, FLRW-audit,
+and blank authorization-template materials. It explicitly excludes endpoint
+residuals, endpoint scores, and fit statistics.
+
 The first lensing route-freeze check is recorded in:
 
 ```text
