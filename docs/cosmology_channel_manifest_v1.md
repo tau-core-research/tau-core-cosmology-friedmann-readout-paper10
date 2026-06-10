@@ -82,3 +82,15 @@ The source-grounding gate ledger is:
 data/source_manifest/cosmology_source_grounding_gate_v1.csv
 docs/cosmology_source_grounding_gate_v1.md
 ```
+
+The companion FLRW-consistency axis audit is:
+
+```text
+data/source_manifest/cosmology_flrw_consistency_channel_audit_v1.csv
+docs/cosmology_flrw_consistency_channel_audit_v1.md
+```
+
+It declares which part of the FLRW consistency problem each channel is allowed
+to address: optical/path readout, expansion/time readout, density
+reconstruction, or the single-FLRW geometry assumption. This is not endpoint
+scoring.

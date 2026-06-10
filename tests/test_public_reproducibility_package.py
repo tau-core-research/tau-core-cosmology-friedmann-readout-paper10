@@ -25,10 +25,12 @@ def test_public_files_exist() -> None:
         "data/source_manifest/cosmology_activation_rule_manifest_v1.csv",
         "data/source_manifest/cosmology_activation_parameter_freeze_plan_v1.csv",
         "data/source_manifest/cosmology_source_grounding_gate_v1.csv",
+        "data/source_manifest/cosmology_flrw_consistency_channel_audit_v1.csv",
         "docs/cosmology_channel_manifest_v1.md",
         "docs/cosmology_activation_rule_manifest_v1.md",
         "docs/cosmology_activation_parameter_freeze_plan_v1.md",
         "docs/cosmology_source_grounding_gate_v1.md",
+        "docs/cosmology_flrw_consistency_channel_audit_v1.md",
         "docs/source_freeze_protocol.md",
         "docs/source_selection_audit_001.md",
         "scripts/validate_source_freeze.py",
@@ -36,6 +38,7 @@ def test_public_files_exist() -> None:
         "scripts/validate_cosmology_activation_rule_manifest_v1.py",
         "scripts/validate_cosmology_activation_parameter_freeze_plan_v1.py",
         "scripts/validate_cosmology_source_grounding_gate_v1.py",
+        "scripts/validate_cosmology_flrw_consistency_channel_audit_v1.py",
         "scripts/acquire_source_pages.py",
         "scripts/validate_cached_source_pages.py",
         "data/source_manifest/source_page_cache_manifest.csv",
@@ -1074,6 +1077,60 @@ def test_cosmology_source_grounding_gate_v1_is_not_derived() -> None:
         assert row["readout_survival_test"]
         assert row["required_future_artifact"].endswith(".csv")
         assert row["null_control"]
+
+
+def test_cosmology_flrw_consistency_channel_audit_v1_is_not_scoring() -> None:
+    subprocess.run(
+        ["python", "scripts/validate_cosmology_flrw_consistency_channel_audit_v1.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    with (ROOT / "data/source_manifest/cosmology_flrw_consistency_channel_audit_v1.csv").open(
+        newline=""
+    ) as f:
+        rows = list(csv.DictReader(f))
+    assert len(rows) == 4
+    channels = {row["channel_id"] for row in rows}
+    assert channels == {
+        "W_VOID_MATURITY",
+        "W_WEB_ANISOTROPY",
+        "W_PATH_PROJECTION",
+        "W_TIME_READOUT",
+    }
+    assert {row["current_status"] for row in rows} == {"FLRW_AXIS_DECLARED_NOT_SCORED"}
+    assert {row["endpoint_scoring_allowed"] for row in rows} == {"false"}
+    assert {row["physical_validation_claimed"] for row in rows} == {"false"}
+    primary_axes = {row["primary_flrw_consistency_axis"] for row in rows}
+    assert {
+        "density_reconstruction",
+        "distance_optical_readout",
+        "expansion_time_readout",
+    } <= primary_axes
+    all_axes = set()
+    all_baselines = set()
+    forbidden = []
+    for row in rows:
+        all_axes.add(row["primary_flrw_consistency_axis"])
+        all_axes.update(part for part in row["secondary_flrw_consistency_axes"].split(";") if part)
+        all_baselines.update(part for part in row["required_baseline_or_null_controls"].split(";") if part)
+        forbidden.extend(part for part in row["forbidden_endpoint_fields"].split(";") if part)
+    assert "single_flrw_geometry_assumption" in all_axes
+    for baseline in [
+        "flrw_curvature",
+        "backreaction",
+        "dark_energy",
+        "flrw_distance_expansion_consistency",
+    ]:
+        assert baseline in all_baselines
+    for marker in [
+        "distance_residuals",
+        "growth_residuals",
+        "lensing_residuals",
+        "fit_improvement_flags",
+    ]:
+        assert marker in forbidden
 
 
 def test_source_page_cache_is_hash_locked() -> None:

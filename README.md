@@ -53,14 +53,17 @@ data/source_manifest/cosmology_channel_manifest_v1.csv
 data/source_manifest/cosmology_activation_rule_manifest_v1.csv
 data/source_manifest/cosmology_activation_parameter_freeze_plan_v1.csv
 data/source_manifest/cosmology_source_grounding_gate_v1.csv
+data/source_manifest/cosmology_flrw_consistency_channel_audit_v1.csv
 docs/cosmology_channel_manifest_v1.md
 docs/cosmology_activation_rule_manifest_v1.md
 docs/cosmology_activation_parameter_freeze_plan_v1.md
 docs/cosmology_source_grounding_gate_v1.md
+docs/cosmology_flrw_consistency_channel_audit_v1.md
 scripts/validate_cosmology_channel_manifest_v1.py
 scripts/validate_cosmology_activation_rule_manifest_v1.py
 scripts/validate_cosmology_activation_parameter_freeze_plan_v1.py
 scripts/validate_cosmology_source_grounding_gate_v1.py
+scripts/validate_cosmology_flrw_consistency_channel_audit_v1.py
 ```
 
 It declares the four source-frozen channel families `W_void`, `W_web`,
@@ -73,6 +76,11 @@ be frozen from source-native data. The source-grounding manifest then freezes
 the four missing projection-induction checks for each channel: activation,
 quotient survival, closure stability, and 4D readout survival. Every row
 remains `endpoint_scoring_allowed=false`.
+The FLRW-consistency channel audit then declares whether each channel primarily
+touches optical/path readout, expansion/time readout, density reconstruction, or
+the single-FLRW-geometry assumption. This is a discipline artifact, not a new
+score: it prevents `C_tau,cosmo` from becoming an unfrozen absorber for
+curvature, backreaction, dark-energy, calibration, or reconstruction effects.
 
 ## Reproduce
 
