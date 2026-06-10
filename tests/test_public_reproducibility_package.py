@@ -287,6 +287,19 @@ def test_public_files_exist() -> None:
         "scripts/validate_void_source_basis_refinement_v2_observer_dependence_followup_template_v1.py",
         "scripts/build_void_source_basis_refinement_v2_observer_dependence_followup_package_v1.py",
         "scripts/validate_void_source_basis_refinement_v2_observer_dependence_followup_package_v1.py",
+        "docs/void_source_basis_refinement_v2_sky_z_replay_authorization_review_v1.md",
+        "data/source_manifest/void_source_basis_refinement_v2_sky_z_replay_authorization_review_policy_v1.csv",
+        "data/derived/void_source_basis_refinement_v2_sky_z_replay_authorization_review_response_template_v1.csv",
+        "data/derived/void_source_basis_refinement_v2_sky_z_replay_authorization_review_template_v1_summary.csv",
+        "data/derived/void_source_basis_refinement_v2_sky_z_replay_authorization_review_package_v1.zip",
+        "data/derived/void_source_basis_refinement_v2_sky_z_replay_authorization_review_package_v1.zip.sha256",
+        "data/derived/void_source_basis_refinement_v2_sky_z_replay_authorization_review_package_v1_manifest.csv",
+        "data/derived/void_source_basis_refinement_v2_sky_z_replay_authorization_review_package_v1_summary.csv",
+        "scripts/build_void_source_basis_refinement_v2_sky_z_replay_authorization_review_template_v1.py",
+        "scripts/validate_void_source_basis_refinement_v2_sky_z_replay_authorization_review_template_v1.py",
+        "scripts/build_void_source_basis_refinement_v2_sky_z_replay_authorization_review_package_v1.py",
+        "scripts/validate_void_source_basis_refinement_v2_sky_z_replay_authorization_review_package_v1.py",
+        "scripts/validate_void_source_basis_refinement_v2_sky_z_replay_authorization_review_response_v1.py",
         "data/derived/void_source_basis_refinement_v2_path_projection_route_ledger.csv",
         "data/derived/void_source_basis_refinement_v2_path_projection_route_ledger_summary.csv",
         "data/derived/void_source_basis_refinement_v2_time_readout_route_ledger.csv",
@@ -2988,6 +3001,49 @@ def test_void_source_basis_refinement_v2_observer_dependence_followup_package_v1
     assert package["physical_lensing_path_weight_claimed"] == "false"
     assert package["verdict"] == "observer_dependence_followup_package_ready_not_completed"
     assert package["claim_boundary"] == "v2_observer_dependence_followup_not_endpoint_not_validation"
+
+
+def test_void_source_basis_refinement_v2_sky_z_replay_authorization_package_v1_is_permission_request_only() -> None:
+    for command in [
+        ["python", "scripts/build_void_source_basis_refinement_v2_sky_z_replay_authorization_review_template_v1.py"],
+        ["python", "scripts/validate_void_source_basis_refinement_v2_sky_z_replay_authorization_review_template_v1.py"],
+        ["python", "scripts/build_void_source_basis_refinement_v2_sky_z_replay_authorization_review_package_v1.py"],
+        ["python", "scripts/validate_void_source_basis_refinement_v2_sky_z_replay_authorization_review_package_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (
+        ROOT / "data/derived/void_source_basis_refinement_v2_sky_z_replay_authorization_review_template_v1_summary.csv"
+    ).open(newline="") as f:
+        template = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/void_source_basis_refinement_v2_sky_z_replay_authorization_review_package_v1_summary.csv"
+    ).open(newline="") as f:
+        package = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/void_source_basis_refinement_v2_sky_z_replay_authorization_review_package_v1_manifest.csv"
+    ).open(newline="") as f:
+        manifest = list(csv.DictReader(f))
+    assert template["status"] == "V2_SKY_Z_REPLAY_AUTHORIZATION_TEMPLATE_READY_NOT_COMPLETED"
+    assert template["followup_family"] == "W_path_x_sky_z"
+    assert template["family_survives_controls"] == "true"
+    assert template["controls_better_than_candidate_chi2"] == "0"
+    assert template["review_completed"] == "false"
+    assert template["endpoint_replay_allowed"] == "false"
+    assert template["endpoint_validation_claimed"] == "false"
+    assert package["status"] == "V2_SKY_Z_REPLAY_AUTHORIZATION_PACKAGE_BUILT_NOT_COMPLETED"
+    assert package["followup_family"] == "W_path_x_sky_z"
+    assert package["review_completed"] == "false"
+    assert package["endpoint_replay_allowed"] == "false"
+    assert package["endpoint_validation_claimed"] == "false"
+    assert package["contains_endpoint_residuals"] == "false"
+    assert package["contains_endpoint_scores"] == "false"
+    assert package["contains_fit_statistics"] == "false"
+    assert package["physical_lensing_path_weight_claimed"] == "false"
+    assert package["verdict"] == "sky_z_replay_authorization_package_ready_not_completed"
+    assert package["claim_boundary"] == "v2_sky_z_replay_authorization_review_not_validation"
+    assert "data/derived/void_source_basis_refinement_v2_sky_z_replay_authorization_review_response_template_v1.csv" in {
+        row["package_path"] for row in manifest
+    }
 
 
 def test_void_source_basis_refinement_v2_time_readout_route_ledger_v1_preserves_blocker() -> None:
