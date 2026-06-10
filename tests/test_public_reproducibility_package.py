@@ -322,6 +322,18 @@ def test_public_files_exist() -> None:
         "data/derived/void_source_basis_refinement_v2_observer_orientation_kernel_v2_summary.csv",
         "scripts/build_void_source_basis_refinement_v2_observer_orientation_kernel_v2.py",
         "scripts/validate_void_source_basis_refinement_v2_observer_orientation_kernel_v2.py",
+        "docs/void_source_basis_refinement_v2_observer_orientation_kernel_v2_replay_authorization.md",
+        "data/source_manifest/void_source_basis_refinement_v2_observer_orientation_kernel_v2_replay_authorization_policy.csv",
+        "data/derived/void_source_basis_refinement_v2_observer_orientation_kernel_v2_replay_authorization_response_template.csv",
+        "data/derived/void_source_basis_refinement_v2_observer_orientation_kernel_v2_replay_authorization_template_summary.csv",
+        "data/derived/void_source_basis_refinement_v2_observer_orientation_kernel_v2_replay_authorization_package.zip",
+        "data/derived/void_source_basis_refinement_v2_observer_orientation_kernel_v2_replay_authorization_package.zip.sha256",
+        "data/derived/void_source_basis_refinement_v2_observer_orientation_kernel_v2_replay_authorization_package_manifest.csv",
+        "data/derived/void_source_basis_refinement_v2_observer_orientation_kernel_v2_replay_authorization_package_summary.csv",
+        "scripts/build_void_source_basis_refinement_v2_observer_orientation_kernel_v2_replay_authorization_template.py",
+        "scripts/validate_void_source_basis_refinement_v2_observer_orientation_kernel_v2_replay_authorization_template.py",
+        "scripts/build_void_source_basis_refinement_v2_observer_orientation_kernel_v2_replay_authorization_package.py",
+        "scripts/validate_void_source_basis_refinement_v2_observer_orientation_kernel_v2_replay_authorization_package.py",
         "data/derived/void_source_basis_refinement_v2_path_projection_route_ledger.csv",
         "data/derived/void_source_basis_refinement_v2_path_projection_route_ledger_summary.csv",
         "data/derived/void_source_basis_refinement_v2_time_readout_route_ledger.csv",
@@ -3159,6 +3171,38 @@ def test_void_source_basis_refinement_v2_observer_orientation_kernel_v2_is_sourc
     assert all(row["contains_distance_residuals"] == "false" for row in rows)
     assert all(row["contains_fit_statistics"] == "false" for row in rows)
     assert all(row["endpoint_validation_claimed"] == "false" for row in rows)
+
+
+def test_void_source_basis_refinement_v2_observer_orientation_kernel_v2_authorization_package_is_not_replay() -> None:
+    for command in [
+        ["python", "scripts/build_void_source_basis_refinement_v2_observer_orientation_kernel_v2_replay_authorization_template.py"],
+        ["python", "scripts/validate_void_source_basis_refinement_v2_observer_orientation_kernel_v2_replay_authorization_template.py"],
+        ["python", "scripts/build_void_source_basis_refinement_v2_observer_orientation_kernel_v2_replay_authorization_package.py"],
+        ["python", "scripts/validate_void_source_basis_refinement_v2_observer_orientation_kernel_v2_replay_authorization_package.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (
+        ROOT / "data/derived/void_source_basis_refinement_v2_observer_orientation_kernel_v2_replay_authorization_template_summary.csv"
+    ).open(newline="") as f:
+        template = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/void_source_basis_refinement_v2_observer_orientation_kernel_v2_replay_authorization_package_summary.csv"
+    ).open(newline="") as f:
+        package = list(csv.DictReader(f))[0]
+    assert template["status"] == "OBSERVER_ORIENTATION_KERNEL_V2_REPLAY_AUTHORIZATION_TEMPLATE_READY_NOT_COMPLETED"
+    assert template["primary_kernel"] == "W_path_times_centered_sky_z"
+    assert template["review_completed"] == "false"
+    assert template["endpoint_replay_allowed"] == "false"
+    assert template["endpoint_validation_claimed"] == "false"
+    assert package["status"] == "OBSERVER_ORIENTATION_KERNEL_V2_REPLAY_AUTHORIZATION_PACKAGE_BUILT_NOT_COMPLETED"
+    assert package["review_completed"] == "false"
+    assert package["endpoint_replay_allowed"] == "false"
+    assert package["endpoint_validation_claimed"] == "false"
+    assert package["contains_endpoint_scores"] == "false"
+    assert package["contains_fit_statistics"] == "false"
+    assert package["physical_lensing_path_weight_claimed"] == "false"
+    assert package["verdict"] == "observer_orientation_kernel_v2_replay_authorization_package_ready_not_completed"
+    assert package["claim_boundary"] == "v2_observer_orientation_kernel_v2_replay_authorization_not_validation"
 
 
 def test_void_source_basis_refinement_v2_time_readout_route_ledger_v1_preserves_blocker() -> None:
