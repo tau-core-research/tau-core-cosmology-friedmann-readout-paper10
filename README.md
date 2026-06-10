@@ -1583,6 +1583,28 @@ global relabel would map `1-2` to `2-3`, whereas the control maps `1-2` to
 control remains control-only. It does not refute the endpoint signal, but the
 broader tomographic-control caveat still blocks validation.
 
+The KiDS/COSEBIs validation-readiness ledger is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_validation_readiness_ledger_policy_v1.csv
+data/derived/kids1000_cosebis_validation_readiness_ledger_v1.csv
+data/derived/kids1000_cosebis_validation_readiness_ledger_v1_summary.csv
+docs/kids1000_cosebis_validation_readiness_ledger_v1.md
+scripts/build_kids1000_cosebis_validation_readiness_ledger_v1.py
+scripts/validate_kids1000_cosebis_validation_readiness_ledger_v1.py
+```
+
+This ledger computes no new score. It summarizes the current KiDS endpoint
+state after the authorized replay, tomographic-control disambiguation,
+source-bin holdout replay, best-control source-evidence gate, and physical
+promotion blocker ledger. Its allowed current claim is
+`diagnostic_low_tail_signal_with_reduced_tomographic_control_concern_not_validation`.
+The signal has survived the narrow follow-up checks performed so far, and the
+most dangerous tomographic control is not accepted as a physical alternative.
+However, `validation_ready=false`: the tomographic caveat remains active and
+physical promotion remains blocked by open operator/amplitude/normalization
+requirements.
+
 The endpoint jackknife/localization robustness audit is recorded in:
 
 ```text

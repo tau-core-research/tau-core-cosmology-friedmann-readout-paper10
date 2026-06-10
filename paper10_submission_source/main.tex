@@ -774,6 +774,14 @@ tomographic source evidence attached, this best holdout-beating control remains
 control-only rather than a physical alternative. It therefore does not refute
 the endpoint signal, although the broader tomographic-control caveat continues
 to block validation.
+A validation-readiness ledger then summarizes the current state without
+computing any new score. The allowed current claim is
+\texttt{diagnostic\_low\_tail\_signal\_with\_reduced\_tomographic\_control\_concern\_not\_validation}.
+The signal has survived the narrow follow-up checks performed so far, and the
+most dangerous tomographic control is not accepted as a physical alternative.
+Nevertheless, \texttt{validation\_ready=false}: the tomographic caveat remains
+active, and physical promotion remains blocked by open
+operator/amplitude/normalization requirements.
 A second post-score localization audit keeps the same source-frozen theory
 vector and same nonnegative single-amplitude scoring rule, but evaluates
 predeclared jackknife masks. All \(20/20\) leave-one source-bin and

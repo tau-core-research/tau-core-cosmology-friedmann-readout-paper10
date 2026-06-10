@@ -507,6 +507,12 @@ def test_public_files_exist() -> None:
         "docs/kids1000_cosebis_physical_promotion_blocker_ledger_v1.md",
         "scripts/build_kids1000_cosebis_physical_promotion_blocker_ledger_v1.py",
         "scripts/validate_kids1000_cosebis_physical_promotion_blocker_ledger_v1.py",
+        "data/source_manifest/kids1000_cosebis_validation_readiness_ledger_policy_v1.csv",
+        "data/derived/kids1000_cosebis_validation_readiness_ledger_v1.csv",
+        "data/derived/kids1000_cosebis_validation_readiness_ledger_v1_summary.csv",
+        "docs/kids1000_cosebis_validation_readiness_ledger_v1.md",
+        "scripts/build_kids1000_cosebis_validation_readiness_ledger_v1.py",
+        "scripts/validate_kids1000_cosebis_validation_readiness_ledger_v1.py",
         "data/source_manifest/kids1000_cosebis_path_mapping_source_preflight_policy_v1.csv",
         "data/derived/kids1000_cosebis_path_mapping_source_preflight_v1.csv",
         "data/derived/kids1000_cosebis_path_mapping_source_preflight_v1_summary.csv",
@@ -784,6 +790,8 @@ def test_public_files_exist() -> None:
         "scripts/validate_kids1000_cosebis_standard_lensing_null_amplitude_theorem_requirements_v1.py",
         "scripts/build_kids1000_cosebis_physical_promotion_blocker_ledger_v1.py",
         "scripts/validate_kids1000_cosebis_physical_promotion_blocker_ledger_v1.py",
+        "scripts/build_kids1000_cosebis_validation_readiness_ledger_v1.py",
+        "scripts/validate_kids1000_cosebis_validation_readiness_ledger_v1.py",
         "scripts/build_kids1000_cosebis_path_mapping_source_preflight_v1.py",
         "scripts/validate_kids1000_cosebis_path_mapping_source_preflight_v1.py",
         "scripts/build_kids1000_cosebis_null_control_readiness_v1.py",
@@ -7062,3 +7070,70 @@ def test_kids1000_cosebis_best_tomographic_control_source_evidence_gate_keeps_co
     assert summary["computes_new_scores"] == "false"
     assert summary["endpoint_validation_claimed"] == "false"
     assert summary["verdict"] == "best_holdout_control_is_control_only_not_physical_alternative"
+
+
+def test_kids1000_cosebis_validation_readiness_ledger_keeps_validation_blocked() -> None:
+    subprocess.run(
+        ["python", "scripts/build_kids1000_cosebis_validation_readiness_ledger_v1.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    subprocess.run(
+        ["python", "scripts/validate_kids1000_cosebis_validation_readiness_ledger_v1.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    with (ROOT / "data/derived/kids1000_cosebis_validation_readiness_ledger_v1_summary.csv").open(
+        newline=""
+    ) as f:
+        rows = list(csv.DictReader(f))
+    assert len(rows) == 1
+    summary = rows[0]
+    assert summary["status"] == "VALIDATION_READINESS_LEDGER_BUILT_NOT_VALIDATION"
+    assert summary["ledger_rows"] == "5"
+    assert summary["low_tail_endpoint_signal_present"] == "true"
+    assert summary["tomographic_controls_refute_endpoint_signal"] == "false"
+    assert summary["tomographic_control_concern_reduced"] == "true"
+    assert summary["source_bin_holdout_signal_survives"] == "true"
+    assert summary["candidate_holdout_improved_fold_count"] == "4"
+    assert summary["best_holdout_control_physical_alternative"] == "false"
+    assert summary["tomographic_caveat_active"] == "true"
+    assert summary["physical_promotion_ready"] == "false"
+    assert summary["validation_ready"] == "false"
+    assert (
+        summary["allowed_current_claim"]
+        == "diagnostic_low_tail_signal_with_reduced_tomographic_control_concern_not_validation"
+    )
+    assert (
+        summary["next_required_gate"]
+        == "independent_tomographic_or_photoz_holdout_and_physical_promotion_blocker_resolution"
+    )
+    assert summary["computes_new_scores"] == "false"
+    assert summary["uses_kids_data_vector_values_for_source_selection"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["physical_validation_claimed"] == "false"
+    assert (
+        summary["verdict"]
+        == "diagnostic_signal_survives_with_reduced_tomographic_concern_but_validation_blocked"
+    )
+
+    with (ROOT / "data/derived/kids1000_cosebis_validation_readiness_ledger_v1.csv").open(
+        newline=""
+    ) as f:
+        ledger = {row["component_id"]: row for row in csv.DictReader(f)}
+    assert ledger["R0_authorized_endpoint_replay"]["component_status"] == "LOW_TAIL_SIGNAL_PRESENT_NOT_VALIDATION"
+    assert (
+        ledger["R1_tomographic_control_disambiguation"]["component_status"]
+        == "CONTROLS_BLOCK_VALIDATION_BUT_DO_NOT_REFUTE"
+    )
+    assert ledger["R2_source_bin_holdout_replay"]["component_status"] == "HOLDS_OUT_DIAGNOSTICALLY_WITH_CAVEAT"
+    assert (
+        ledger["R3_best_holdout_control_source_evidence"]["component_status"]
+        == "BEST_CONTROL_CONTROL_ONLY_NOT_PHYSICAL"
+    )
+    assert ledger["R4_physical_promotion_blockers"]["component_status"] == "PHYSICAL_PROMOTION_BLOCKED"
+    assert ledger["R4_physical_promotion_blockers"]["supports_signal_survival"] == "false"
