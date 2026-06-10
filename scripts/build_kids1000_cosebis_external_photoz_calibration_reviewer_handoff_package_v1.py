@@ -11,6 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 POLICY = ROOT / "data" / "source_manifest" / "kids1000_cosebis_external_photoz_calibration_reviewer_handoff_package_policy_v1.csv"
 TEMPLATE_SUMMARY = ROOT / "data" / "derived" / "kids1000_cosebis_external_photoz_calibration_reviewer_attestation_template_v1_summary.csv"
 OUT_ZIP = ROOT / "data" / "derived" / "kids1000_cosebis_external_photoz_calibration_reviewer_handoff_package_v1.zip"
+OUT_ZIP_SHA256 = ROOT / "data" / "derived" / "kids1000_cosebis_external_photoz_calibration_reviewer_handoff_package_v1.zip.sha256"
 MANIFEST = ROOT / "data" / "derived" / "kids1000_cosebis_external_photoz_calibration_reviewer_handoff_package_v1_manifest.csv"
 SUMMARY = ROOT / "data" / "derived" / "kids1000_cosebis_external_photoz_calibration_reviewer_handoff_package_v1_summary.csv"
 
@@ -106,13 +107,16 @@ def main() -> None:
             info.date_time = (2026, 1, 1, 0, 0, 0)
             info.compress_type = zipfile.ZIP_DEFLATED
             zf.writestr(info, path.read_bytes())
+    zip_sha256 = sha256(OUT_ZIP)
+    OUT_ZIP_SHA256.write_text(f"{zip_sha256}  {OUT_ZIP.name}\n")
 
     summary = [
         {
             "policy_id": policy["policy_id"],
             "status": "EXTERNAL_PHOTOZ_CALIBRATION_REVIEWER_HANDOFF_PACKAGE_BUILT_NOT_COMPLETED",
             "zip_path": str(OUT_ZIP.relative_to(ROOT)),
-            "zip_sha256": sha256(OUT_ZIP),
+            "zip_sha256_path": str(OUT_ZIP_SHA256.relative_to(ROOT)),
+            "zip_sha256": zip_sha256,
             "package_file_count": str(len(package_rows)),
             "review_completed": "false",
             "independent_reviewer_attestation_complete": "false",

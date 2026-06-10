@@ -35,14 +35,20 @@ def main() -> None:
     rows = read_rows(MANIFEST)
     summary = read_one(SUMMARY)
     zip_path = ROOT / summary["zip_path"]
+    zip_sha256_path = ROOT / summary["zip_sha256_path"]
     if policy["status"] != "EXTERNAL_PHOTOZ_CALIBRATION_REVIEWER_HANDOFF_PACKAGE_POLICY_FROZEN":
         raise SystemExit("unexpected reviewer handoff package policy status")
     if summary["status"] != "EXTERNAL_PHOTOZ_CALIBRATION_REVIEWER_HANDOFF_PACKAGE_BUILT_NOT_COMPLETED":
         raise SystemExit("unexpected reviewer handoff package summary status")
     if not zip_path.exists():
         raise SystemExit("missing handoff package zip")
+    if not zip_sha256_path.exists():
+        raise SystemExit("missing handoff package checksum sidecar")
     if sha256(zip_path) != summary["zip_sha256"]:
         raise SystemExit("handoff package zip checksum mismatch")
+    checksum_line = zip_sha256_path.read_text().strip()
+    if checksum_line != f"{summary['zip_sha256']}  {zip_path.name}":
+        raise SystemExit("handoff package checksum sidecar mismatch")
     if summary["package_file_count"] != "16":
         raise SystemExit("expected 16 files in reviewer handoff package")
     for key in [

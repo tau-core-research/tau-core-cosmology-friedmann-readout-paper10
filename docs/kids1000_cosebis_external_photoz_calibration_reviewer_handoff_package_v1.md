@@ -20,6 +20,9 @@ complete H1, does not authorize endpoint replay, and does not claim validation.
 The included completed-response validator only checks a returned reviewer CSV
 against the source-side no-leakage rules.
 
+The adjacent `.zip.sha256` file is an integrity sidecar for transfer checks. It
+does not add reviewer evidence and does not change the claim boundary.
+
 ## Verdict
 
 `reviewer_handoff_package_ready_not_completed`

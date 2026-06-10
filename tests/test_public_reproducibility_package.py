@@ -324,6 +324,7 @@ def test_public_files_exist() -> None:
         "scripts/validate_kids1000_cosebis_external_photoz_calibration_reviewer_attestation_template_v1.py",
         "data/source_manifest/kids1000_cosebis_external_photoz_calibration_reviewer_handoff_package_policy_v1.csv",
         "data/derived/kids1000_cosebis_external_photoz_calibration_reviewer_handoff_package_v1.zip",
+        "data/derived/kids1000_cosebis_external_photoz_calibration_reviewer_handoff_package_v1.zip.sha256",
         "data/derived/kids1000_cosebis_external_photoz_calibration_reviewer_handoff_package_v1_manifest.csv",
         "data/derived/kids1000_cosebis_external_photoz_calibration_reviewer_handoff_package_v1_summary.csv",
         "docs/kids1000_cosebis_external_photoz_calibration_reviewer_handoff_package_v1.md",
@@ -5164,7 +5165,10 @@ def test_kids1000_cosebis_external_photoz_calibration_reviewer_handoff_package_i
     assert summary["endpoint_validation_claimed"] == "false"
     assert summary["verdict"] == "reviewer_handoff_package_ready_not_completed"
     zip_path = ROOT / summary["zip_path"]
+    zip_sha256_path = ROOT / summary["zip_sha256_path"]
     assert zip_path.exists()
+    assert zip_sha256_path.exists()
+    assert zip_sha256_path.read_text().strip() == f"{summary['zip_sha256']}  {zip_path.name}"
     with zipfile.ZipFile(zip_path) as zf:
         names = set(zf.namelist())
     expected = {row["package_path"] for row in rows}
