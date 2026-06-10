@@ -23,6 +23,18 @@ against the source-side no-leakage rules.
 The adjacent `.zip.sha256` file is an integrity sidecar for transfer checks. It
 does not add reviewer evidence and does not change the claim boundary.
 
+## Transfer Check
+
+The recipient can verify the transferred ZIP after placing the ZIP and
+`.zip.sha256` files in the same directory:
+
+```bash
+shasum -a 256 -c kids1000_cosebis_external_photoz_calibration_reviewer_handoff_package_v1.zip.sha256
+```
+
+This check only verifies file integrity. It is not a source review and does not
+complete R4 or H1.
+
 ## Verdict
 
 `reviewer_handoff_package_ready_not_completed`

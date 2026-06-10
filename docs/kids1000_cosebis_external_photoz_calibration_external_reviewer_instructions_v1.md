@@ -12,6 +12,28 @@ for the KiDS-1000 external photo-z calibration route. The goal is to decide
 whether the attached sources support a caveated source-side R4 leakage review
 without inspecting endpoint results.
 
+## Transfer Integrity Check
+
+If you received the ZIP and `.zip.sha256` sidecar together, first put both files
+in the same directory and verify that the transferred ZIP matches the recorded
+checksum:
+
+```bash
+shasum -a 256 -c kids1000_cosebis_external_photoz_calibration_reviewer_handoff_package_v1.zip.sha256
+```
+
+The expected result is:
+
+```text
+kids1000_cosebis_external_photoz_calibration_reviewer_handoff_package_v1.zip: OK
+```
+
+You can inspect the package contents without extracting it:
+
+```bash
+unzip -l kids1000_cosebis_external_photoz_calibration_reviewer_handoff_package_v1.zip
+```
+
 ## Files to Inspect
 
 - `data/derived/kids1000_cosebis_external_photoz_calibration_source_manifest_v1.csv`
