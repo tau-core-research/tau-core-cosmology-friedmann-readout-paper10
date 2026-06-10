@@ -322,6 +322,13 @@ def test_public_files_exist() -> None:
         "docs/kids1000_cosebis_external_photoz_calibration_reviewer_attestation_template_v1.md",
         "scripts/build_kids1000_cosebis_external_photoz_calibration_reviewer_attestation_template_v1.py",
         "scripts/validate_kids1000_cosebis_external_photoz_calibration_reviewer_attestation_template_v1.py",
+        "data/source_manifest/kids1000_cosebis_external_photoz_calibration_reviewer_handoff_package_policy_v1.csv",
+        "data/derived/kids1000_cosebis_external_photoz_calibration_reviewer_handoff_package_v1.zip",
+        "data/derived/kids1000_cosebis_external_photoz_calibration_reviewer_handoff_package_v1_manifest.csv",
+        "data/derived/kids1000_cosebis_external_photoz_calibration_reviewer_handoff_package_v1_summary.csv",
+        "docs/kids1000_cosebis_external_photoz_calibration_reviewer_handoff_package_v1.md",
+        "scripts/build_kids1000_cosebis_external_photoz_calibration_reviewer_handoff_package_v1.py",
+        "scripts/validate_kids1000_cosebis_external_photoz_calibration_reviewer_handoff_package_v1.py",
         "data/source_manifest/kids1000_cosebis_endpoint_jackknife_robustness_policy_v1.csv",
         "data/derived/kids1000_cosebis_endpoint_jackknife_robustness_v1_grid.csv",
         "data/derived/kids1000_cosebis_endpoint_jackknife_robustness_v1_summary.csv",
@@ -693,6 +700,8 @@ def test_public_files_exist() -> None:
         "scripts/validate_kids1000_cosebis_external_photoz_calibration_leakage_review_preflight_v1.py",
         "scripts/build_kids1000_cosebis_external_photoz_calibration_reviewer_attestation_template_v1.py",
         "scripts/validate_kids1000_cosebis_external_photoz_calibration_reviewer_attestation_template_v1.py",
+        "scripts/build_kids1000_cosebis_external_photoz_calibration_reviewer_handoff_package_v1.py",
+        "scripts/validate_kids1000_cosebis_external_photoz_calibration_reviewer_handoff_package_v1.py",
         "scripts/run_kids1000_cosebis_endpoint_jackknife_robustness_v1.py",
         "scripts/validate_kids1000_cosebis_endpoint_jackknife_robustness_v1.py",
         "scripts/run_kids1000_cosebis_endpoint_mode_localization_v1.py",
@@ -5113,6 +5122,52 @@ def test_kids1000_cosebis_external_photoz_calibration_reviewer_attestation_templ
         assert row["reviewer_id_or_role"] == ""
         assert row["review_completed"] == "false"
         assert row["forbidden_inputs_used"] == "false"
+        assert row["endpoint_replay_allowed"] == "false"
+        assert row["endpoint_validation_claimed"] == "false"
+        assert row["claim_boundary"] == policy["claim_boundary"]
+    assert summary["claim_boundary"] == policy["claim_boundary"]
+
+
+def test_kids1000_cosebis_external_photoz_calibration_reviewer_handoff_package_is_source_side_only() -> None:
+    with (
+        ROOT / "data/source_manifest/kids1000_cosebis_external_photoz_calibration_reviewer_handoff_package_policy_v1.csv"
+    ).open(newline="") as f:
+        policy = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/kids1000_cosebis_external_photoz_calibration_reviewer_handoff_package_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/kids1000_cosebis_external_photoz_calibration_reviewer_handoff_package_v1_manifest.csv"
+    ).open(newline="") as f:
+        rows = list(csv.DictReader(f))
+
+    assert policy["status"] == "EXTERNAL_PHOTOZ_CALIBRATION_REVIEWER_HANDOFF_PACKAGE_POLICY_FROZEN"
+    assert policy["current_handoff_package_built"] == "true"
+    assert policy["independent_reviewer_attestation_complete"] == "false"
+    assert policy["r4_leakage_review_complete"] == "false"
+    assert policy["h1_independent_evidence_complete"] == "false"
+    assert policy["current_endpoint_replay_allowed"] == "false"
+    assert summary["status"] == "EXTERNAL_PHOTOZ_CALIBRATION_REVIEWER_HANDOFF_PACKAGE_BUILT_NOT_COMPLETED"
+    assert summary["package_file_count"] == "13"
+    assert summary["review_completed"] == "false"
+    assert summary["independent_reviewer_attestation_complete"] == "false"
+    assert summary["r4_leakage_review_complete"] == "false"
+    assert summary["h1_independent_evidence_complete"] == "false"
+    assert summary["computes_new_scores"] == "false"
+    assert summary["contains_endpoint_data"] == "false"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["verdict"] == "reviewer_handoff_package_ready_not_completed"
+    zip_path = ROOT / summary["zip_path"]
+    assert zip_path.exists()
+    with zipfile.ZipFile(zip_path) as zf:
+        names = set(zf.namelist())
+    expected = {row["package_path"] for row in rows}
+    expected.add("data/derived/kids1000_cosebis_external_photoz_calibration_reviewer_handoff_package_v1_manifest.csv")
+    assert names == expected
+    for row in rows:
+        assert row["contains_endpoint_data"] == "false"
         assert row["endpoint_replay_allowed"] == "false"
         assert row["endpoint_validation_claimed"] == "false"
         assert row["claim_boundary"] == policy["claim_boundary"]

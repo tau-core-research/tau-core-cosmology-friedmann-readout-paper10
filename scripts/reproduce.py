@@ -199,6 +199,8 @@ def main() -> None:
     run(["python", "scripts/validate_kids1000_cosebis_external_photoz_calibration_leakage_review_preflight_v1.py"])
     run(["python", "scripts/build_kids1000_cosebis_external_photoz_calibration_reviewer_attestation_template_v1.py"])
     run(["python", "scripts/validate_kids1000_cosebis_external_photoz_calibration_reviewer_attestation_template_v1.py"])
+    run(["python", "scripts/build_kids1000_cosebis_external_photoz_calibration_reviewer_handoff_package_v1.py"])
+    run(["python", "scripts/validate_kids1000_cosebis_external_photoz_calibration_reviewer_handoff_package_v1.py"])
     run(["python", "scripts/run_kids1000_cosebis_endpoint_jackknife_robustness_v1.py"])
     run(["python", "scripts/validate_kids1000_cosebis_endpoint_jackknife_robustness_v1.py"])
     run(["python", "scripts/run_kids1000_cosebis_endpoint_mode_localization_v1.py"])

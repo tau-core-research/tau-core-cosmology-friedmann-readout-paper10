@@ -1408,6 +1408,25 @@ but it is not a completed review response. R4 remains incomplete, H1 remains
 incomplete, and endpoint replay remains forbidden. Its verdict is
 `reviewer_attestation_template_ready_not_completed`.
 
+The portable reviewer handoff package is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_external_photoz_calibration_reviewer_handoff_package_policy_v1.csv
+data/derived/kids1000_cosebis_external_photoz_calibration_reviewer_handoff_package_v1.zip
+data/derived/kids1000_cosebis_external_photoz_calibration_reviewer_handoff_package_v1_manifest.csv
+data/derived/kids1000_cosebis_external_photoz_calibration_reviewer_handoff_package_v1_summary.csv
+docs/kids1000_cosebis_external_photoz_calibration_reviewer_handoff_package_v1.md
+scripts/build_kids1000_cosebis_external_photoz_calibration_reviewer_handoff_package_v1.py
+scripts/validate_kids1000_cosebis_external_photoz_calibration_reviewer_handoff_package_v1.py
+```
+
+This ZIP packages the blank reviewer template, source manifest, automated
+leakage preflight, short docs, and cached public source pages. It contains no
+endpoint residuals, endpoint scores, ranks, fit statistics, or post-score
+residual shapes. It is a handoff package only: R4 remains incomplete, H1
+remains incomplete, and endpoint replay remains forbidden. Its verdict is
+`reviewer_handoff_package_ready_not_completed`.
+
 The endpoint jackknife/localization robustness audit is recorded in:
 
 ```text
