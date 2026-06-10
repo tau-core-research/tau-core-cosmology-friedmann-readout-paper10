@@ -467,6 +467,32 @@ the active `W_VOID_MATURITY` channel, disabled web/path/time channels, low-z
 AIC shell, wrong/shuffled controls, and forbidden leakage fields. It remains
 `LOW_Z_VOID_REPLAY_PROTOCOL_FROZEN_NOT_RUN` with `scoring_allowed=false`.
 
+If a completed independent review grants
+`low_z_void_replay_authorized_permission_only_not_validation`, the only
+allowed next run is:
+
+```text
+data/source_manifest/low_z_pantheon_void_replay_run_v1.csv
+scripts/run_low_z_pantheon_void_replay_v1.py
+scripts/validate_low_z_pantheon_void_replay_v1.py
+```
+
+This run remains a permission-only low-z replay. It does not reopen the
+full-Pantheon void endpoint and does not claim physical validation.
+
+The first authorized low-z replay is recorded in:
+
+```text
+docs/low_z_pantheon_void_replay_v1.md
+data/derived/low_z_pantheon_void_replay_v1_summary.csv
+data/derived/low_z_pantheon_void_replay_v1_grid.csv
+```
+
+It is a weak/mixed result: `delta_chi2_void_minus_baseline=-0.37847238`, but
+`delta_aic_void_minus_baseline=+1.62152762`, and one shuffled control is better
+than the candidate. This is retained as a caveated negative/control result, not
+as validation.
+
 The first lensing route-freeze check is recorded in:
 
 ```text

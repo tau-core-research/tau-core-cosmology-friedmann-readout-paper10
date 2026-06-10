@@ -151,6 +151,10 @@ def test_public_files_exist() -> None:
         "data/source_manifest/low_z_pantheon_void_replay_protocol_v1.csv",
         "docs/low_z_pantheon_void_replay_protocol_v1.md",
         "scripts/validate_low_z_pantheon_void_replay_protocol_v1.py",
+        "data/source_manifest/low_z_pantheon_void_replay_run_v1.csv",
+        "docs/low_z_pantheon_void_replay_v1.md",
+        "scripts/run_low_z_pantheon_void_replay_v1.py",
+        "scripts/validate_low_z_pantheon_void_replay_v1.py",
         "data/source_manifest/kids1000_lensing_route_v1.csv",
         "data/derived/kids1000_lensing_route_v1_head.csv",
         "data/derived/kids1000_lensing_route_v1_summary.csv",
@@ -1748,13 +1752,64 @@ def test_low_z_pantheon_void_replay_protocol_v1_is_frozen_not_run() -> None:
         "physical_validation_claims",
     ]:
         assert forbidden in protocol["forbidden_inputs"]
-    forbidden_artifacts = [
+    score_artifacts = [
         ROOT / "data/derived/low_z_pantheon_void_replay_v1_results.csv",
         ROOT / "data/derived/low_z_pantheon_void_replay_v1_residuals.csv",
         ROOT / "data/derived/low_z_pantheon_void_replay_v1_grid.csv",
         ROOT / "data/derived/low_z_pantheon_void_replay_v1_summary.csv",
     ]
-    assert not any(path.exists() for path in forbidden_artifacts)
+    if any(path.exists() for path in score_artifacts):
+        with (
+            ROOT
+            / "data/derived/low_z_pantheon_void_scope_replay_authorization_review_response_v1_summary.csv"
+        ).open(newline="") as f:
+            auth = list(csv.DictReader(f))[0]
+        assert auth["verdict"] == "low_z_void_replay_authorized_permission_only_not_validation"
+        assert auth["physical_validation_claimed"] == "false"
+
+
+def test_low_z_pantheon_void_replay_v1_is_permission_only() -> None:
+    response = ROOT / "data/derived/low_z_pantheon_void_scope_replay_authorization_review_response_v1.csv"
+    if not response.exists():
+        pytest.skip("completed low-z void authorization response not present")
+    subprocess.run(
+        [
+            "python",
+            "scripts/validate_low_z_pantheon_void_scope_replay_authorization_review_response_v1.py",
+            str(response),
+        ],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    subprocess.run(
+        ["python", "scripts/run_low_z_pantheon_void_replay_v1.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    subprocess.run(
+        ["python", "scripts/validate_low_z_pantheon_void_replay_v1.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    with (ROOT / "data/derived/low_z_pantheon_void_replay_v1_summary.csv").open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["authorization_verdict"] == "low_z_void_replay_authorized_permission_only_not_validation"
+    assert summary["n_rows"] == "424"
+    assert summary["physical_validation_claimed"] == "false"
+    assert summary["claim_boundary"] == "low_z_void_replay_permission_only_not_validation"
+    assert "W_VOID_MATURITY" in summary["active_channels"]
+    for channel in ["W_WEB_ANISOTROPY", "W_PATH_PROJECTION", "W_TIME_READOUT"]:
+        assert channel in summary["disabled_channels"]
+    assert abs(float(summary["delta_chi2_void_minus_baseline"]) + 0.37847238) < 1e-8
+    assert abs(float(summary["delta_aic_void_minus_baseline"]) - 1.62152762) < 1e-8
+    assert summary["candidate_rank_by_chi2_among_void_and_controls"] == "2"
+    assert summary["controls_better_than_candidate_chi2"] == "1"
 
 
 def test_source_page_cache_is_hash_locked() -> None:

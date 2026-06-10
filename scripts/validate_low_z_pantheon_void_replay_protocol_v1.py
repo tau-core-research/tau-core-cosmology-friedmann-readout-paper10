@@ -9,6 +9,7 @@ ROOT = Path(__file__).resolve().parents[1]
 PROTOCOL = ROOT / "data" / "source_manifest" / "low_z_pantheon_void_replay_protocol_v1.csv"
 SCOPE = ROOT / "data" / "derived" / "low_z_pantheon_void_scope_candidate_v1_summary.csv"
 PACKAGE = ROOT / "data" / "derived" / "low_z_pantheon_void_scope_replay_authorization_review_package_v1_summary.csv"
+AUTH_SUMMARY = ROOT / "data" / "derived" / "low_z_pantheon_void_scope_replay_authorization_review_response_v1_summary.csv"
 
 FORBIDDEN_SCORE_ARTIFACTS = [
     ROOT / "data" / "derived" / "low_z_pantheon_void_replay_v1_results.csv",
@@ -78,7 +79,14 @@ def main() -> None:
     ]:
         require(marker in protocol["forbidden_inputs"], f"forbidden marker missing: {marker}")
     existing_forbidden = [str(path.relative_to(ROOT)) for path in FORBIDDEN_SCORE_ARTIFACTS if path.exists()]
-    require(not existing_forbidden, "low-z protocol cannot coexist with score artifacts: " + ",".join(existing_forbidden))
+    if existing_forbidden:
+        require(AUTH_SUMMARY.exists(), "low-z score artifacts require completed authorization summary")
+        auth = read_one(AUTH_SUMMARY)
+        require(
+            auth["verdict"] == "low_z_void_replay_authorized_permission_only_not_validation",
+            "low-z score artifacts require permission-only authorization",
+        )
+        require(auth["physical_validation_claimed"] == "false", "authorization must not claim physical validation")
 
     print(
         "PAPER10_LOW_Z_PANTHEON_VOID_REPLAY_PROTOCOL_V1_VALIDATED "
