@@ -316,6 +316,12 @@ def test_public_files_exist() -> None:
         "data/derived/void_source_basis_refinement_v2_sky_z_source_audit_v1_summary.csv",
         "scripts/build_void_source_basis_refinement_v2_sky_z_source_audit_v1.py",
         "scripts/validate_void_source_basis_refinement_v2_sky_z_source_audit_v1.py",
+        "docs/void_source_basis_refinement_v2_observer_orientation_kernel_v2.md",
+        "data/source_manifest/void_source_basis_refinement_v2_observer_orientation_kernel_v2_manifest.csv",
+        "data/derived/void_source_basis_refinement_v2_observer_orientation_kernel_v2.csv",
+        "data/derived/void_source_basis_refinement_v2_observer_orientation_kernel_v2_summary.csv",
+        "scripts/build_void_source_basis_refinement_v2_observer_orientation_kernel_v2.py",
+        "scripts/validate_void_source_basis_refinement_v2_observer_orientation_kernel_v2.py",
         "data/derived/void_source_basis_refinement_v2_path_projection_route_ledger.csv",
         "data/derived/void_source_basis_refinement_v2_path_projection_route_ledger_summary.csv",
         "data/derived/void_source_basis_refinement_v2_time_readout_route_ledger.csv",
@@ -3121,6 +3127,38 @@ def test_void_source_basis_refinement_v2_sky_z_source_audit_v1_is_not_scoring() 
     assert all(row["contains_fit_statistics"] == "false" for row in rows)
     assert all(row["endpoint_validation_claimed"] == "false" for row in rows)
     assert abs(max(abs(float(row["W_path_x_sky_z_normalized"])) for row in rows) - 1.0) < 1e-9
+
+
+def test_void_source_basis_refinement_v2_observer_orientation_kernel_v2_is_source_side_only() -> None:
+    for command in [
+        ["python", "scripts/build_void_source_basis_refinement_v2_observer_orientation_kernel_v2.py"],
+        ["python", "scripts/validate_void_source_basis_refinement_v2_observer_orientation_kernel_v2.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (
+        ROOT / "data/derived/void_source_basis_refinement_v2_observer_orientation_kernel_v2.csv"
+    ).open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    with (
+        ROOT / "data/derived/void_source_basis_refinement_v2_observer_orientation_kernel_v2_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["status"] == "OBSERVER_ORIENTATION_KERNEL_V2_BUILT_NOT_SCORING"
+    assert summary["n_rows"] == "12"
+    assert summary["primary_kernel"] == "W_path_times_centered_sky_z"
+    assert summary["reference_kernel"] == "W_path_times_raw_sky_z"
+    assert summary["primary_positive_count"] == "10"
+    assert summary["primary_negative_count"] == "2"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["physical_lensing_path_weight_claimed"] == "false"
+    assert summary["claim_boundary"] == "v2_observer_orientation_kernel_v2_source_side_not_scoring"
+    assert len(rows) == 12
+    assert abs(sum(float(row["centered_sky_z"]) for row in rows)) < 1e-10
+    assert abs(max(abs(float(row["K_primary_normalized"])) for row in rows) - 1.0) < 1e-9
+    assert all(row["contains_distance_residuals"] == "false" for row in rows)
+    assert all(row["contains_fit_statistics"] == "false" for row in rows)
+    assert all(row["endpoint_validation_claimed"] == "false" for row in rows)
 
 
 def test_void_source_basis_refinement_v2_time_readout_route_ledger_v1_preserves_blocker() -> None:
