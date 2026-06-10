@@ -5178,17 +5178,7 @@ def test_kids1000_cosebis_external_photoz_calibration_reviewer_handoff_package_i
     assert summary["claim_boundary"] == policy["claim_boundary"]
 
 
-def test_kids1000_cosebis_external_photoz_calibration_completed_reviewer_response_validator_accepts_source_side_only(
-    tmp_path: Path,
-) -> None:
-    with (
-        ROOT / "data/source_manifest/kids1000_cosebis_external_photoz_calibration_completed_reviewer_response_policy_v1.csv"
-    ).open(newline="") as f:
-        policy = list(csv.DictReader(f))[0]
-    assert policy["status"] == "EXTERNAL_PHOTOZ_CALIBRATION_COMPLETED_REVIEWER_RESPONSE_POLICY_FROZEN"
-    assert policy["current_endpoint_replay_allowed"] == "false"
-    assert policy["endpoint_validation_claimed"] == "false"
-
+def _completed_reviewer_response_rows() -> list[dict[str, str]]:
     with (
         ROOT / "data/derived/kids1000_cosebis_external_photoz_calibration_reviewer_attestation_template_v1.csv"
     ).open(newline="") as f:
@@ -5203,21 +5193,44 @@ def test_kids1000_cosebis_external_photoz_calibration_completed_reviewer_respons
         row["endpoint_validation_claimed"] = "false"
         if row["question_id"] == "Q4_r4_decision":
             row["reviewer_response"] = "ACCEPT_AS_CAVEATED_SOURCE_SIDE_REVIEW"
+    return rows
 
-    response = tmp_path / "completed_reviewer_response.csv"
-    with response.open("w", newline="") as f:
+
+def _write_completed_reviewer_response(path: Path, rows: list[dict[str, str]]) -> None:
+    with path.open("w", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=list(rows[0].keys()), lineterminator="\n")
         writer.writeheader()
         writer.writerows(rows)
+
+
+def _completed_reviewer_response_validator_cmd(response: Path, summary: Path) -> list[str]:
+    return [
+        "python",
+        str(ROOT / "scripts/validate_kids1000_cosebis_external_photoz_calibration_completed_reviewer_response_v1.py"),
+        str(response),
+        "--summary-out",
+        str(summary),
+    ]
+
+
+def test_kids1000_cosebis_external_photoz_calibration_completed_reviewer_response_validator_accepts_source_side_only(
+    tmp_path: Path,
+) -> None:
+    with (
+        ROOT / "data/source_manifest/kids1000_cosebis_external_photoz_calibration_completed_reviewer_response_policy_v1.csv"
+    ).open(newline="") as f:
+        policy = list(csv.DictReader(f))[0]
+    assert policy["status"] == "EXTERNAL_PHOTOZ_CALIBRATION_COMPLETED_REVIEWER_RESPONSE_POLICY_FROZEN"
+    assert policy["current_endpoint_replay_allowed"] == "false"
+    assert policy["endpoint_validation_claimed"] == "false"
+
+    rows = _completed_reviewer_response_rows()
+
+    response = tmp_path / "completed_reviewer_response.csv"
+    _write_completed_reviewer_response(response, rows)
     summary = tmp_path / "summary.csv"
     subprocess.run(
-        [
-            "python",
-            str(ROOT / "scripts/validate_kids1000_cosebis_external_photoz_calibration_completed_reviewer_response_v1.py"),
-            str(response),
-            "--summary-out",
-            str(summary),
-        ],
+        _completed_reviewer_response_validator_cmd(response, summary),
         cwd=ROOT,
         check=True,
     )
@@ -5234,6 +5247,44 @@ def test_kids1000_cosebis_external_photoz_calibration_completed_reviewer_respons
         accepted["verdict"]
         == "completed_reviewer_response_accepted_source_side_only_endpoint_replay_still_forbidden"
     )
+
+
+def test_kids1000_cosebis_external_photoz_calibration_completed_reviewer_response_validator_rejects_forbidden_inputs(
+    tmp_path: Path,
+) -> None:
+    rows = _completed_reviewer_response_rows()
+    rows[0]["forbidden_inputs_used"] = "true"
+    response = tmp_path / "completed_reviewer_response_forbidden.csv"
+    summary = tmp_path / "summary.csv"
+    _write_completed_reviewer_response(response, rows)
+    result = subprocess.run(
+        _completed_reviewer_response_validator_cmd(response, summary),
+        cwd=ROOT,
+        text=True,
+        capture_output=True,
+    )
+    assert result.returncode != 0
+    assert "forbidden_inputs_used=false" in result.stderr
+    assert not summary.exists()
+
+
+def test_kids1000_cosebis_external_photoz_calibration_completed_reviewer_response_validator_rejects_endpoint_replay(
+    tmp_path: Path,
+) -> None:
+    rows = _completed_reviewer_response_rows()
+    rows[1]["endpoint_replay_allowed"] = "true"
+    response = tmp_path / "completed_reviewer_response_replay.csv"
+    summary = tmp_path / "summary.csv"
+    _write_completed_reviewer_response(response, rows)
+    result = subprocess.run(
+        _completed_reviewer_response_validator_cmd(response, summary),
+        cwd=ROOT,
+        text=True,
+        capture_output=True,
+    )
+    assert result.returncode != 0
+    assert "must not authorize endpoint replay" in result.stderr
+    assert not summary.exists()
 
 
 def test_kids1000_cosebis_endpoint_jackknife_robustness_is_not_single_pair_localized() -> None:
