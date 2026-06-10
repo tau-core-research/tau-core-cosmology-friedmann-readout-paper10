@@ -7,10 +7,11 @@
 
 ## Contents
 
-The package contains the blank reviewer attestation template, external reviewer
-instructions, the source manifest, the leakage-review preflight, the
-completed-response validation policy and script, short documentation, and the
-three cached public source pages used by the source manifest.
+The package contains a root reviewer README, the blank reviewer attestation
+template, external reviewer instructions, the source manifest, the
+leakage-review preflight, the completed-response validation policy and script,
+short documentation, and the three cached public source pages used by the
+source manifest.
 
 ## Boundary
 

@@ -49,8 +49,8 @@ def main() -> None:
     checksum_line = zip_sha256_path.read_text().strip()
     if checksum_line != f"{summary['zip_sha256']}  {zip_path.name}":
         raise SystemExit("handoff package checksum sidecar mismatch")
-    if summary["package_file_count"] != "17":
-        raise SystemExit("expected 17 files in reviewer handoff package")
+    if summary["package_file_count"] != "18":
+        raise SystemExit("expected 18 files in reviewer handoff package")
     for key in [
         "review_completed",
         "independent_reviewer_attestation_complete",

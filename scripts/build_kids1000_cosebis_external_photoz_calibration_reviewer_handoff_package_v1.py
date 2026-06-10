@@ -17,6 +17,7 @@ SUMMARY = ROOT / "data" / "derived" / "kids1000_cosebis_external_photoz_calibrat
 
 
 PACKAGE_FILES = [
+    "REVIEWER_README_KIDS1000_PHOTOZ_HANDOFF.md",
     "data/derived/kids1000_cosebis_external_photoz_calibration_reviewer_attestation_template_v1.csv",
     "data/derived/kids1000_cosebis_external_photoz_calibration_reviewer_attestation_template_v1_summary.csv",
     "docs/kids1000_cosebis_external_photoz_calibration_reviewer_attestation_template_v1.md",
