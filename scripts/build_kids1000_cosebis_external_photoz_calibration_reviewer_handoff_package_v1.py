@@ -28,6 +28,9 @@ PACKAGE_FILES = [
     "data/source_manifest/source_page_cache/kids1000_photoz_calibration_v1/KIDS1000_PHOTOZ_CALIBRATION_AANDA.html",
     "data/source_manifest/source_page_cache/kids1000_photoz_calibration_v1/KIDS1000_PHOTOZ_CALIBRATION_ARXIV.html",
     "data/source_manifest/source_page_cache/kids1000_photoz_calibration_v1/KIDS1000_SOM_GOLD_CATALOGUE.html",
+    "data/source_manifest/kids1000_cosebis_external_photoz_calibration_completed_reviewer_response_policy_v1.csv",
+    "docs/kids1000_cosebis_external_photoz_calibration_completed_reviewer_response_v1.md",
+    "scripts/validate_kids1000_cosebis_external_photoz_calibration_completed_reviewer_response_v1.py",
 ]
 
 

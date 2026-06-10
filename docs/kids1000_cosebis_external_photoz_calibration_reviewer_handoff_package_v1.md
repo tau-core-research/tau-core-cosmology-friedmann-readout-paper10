@@ -8,14 +8,17 @@
 ## Contents
 
 The package contains the blank reviewer attestation template, the source
-manifest, the leakage-review preflight, short documentation, and the three
-cached public source pages used by the source manifest.
+manifest, the leakage-review preflight, the completed-response validation
+policy and script, short documentation, and the three cached public source
+pages used by the source manifest.
 
 ## Boundary
 
 The package contains no endpoint residuals, endpoint scores, ranks, fit
 statistics, or post-score residual shapes. It does not complete R4, does not
 complete H1, does not authorize endpoint replay, and does not claim validation.
+The included completed-response validator only checks a returned reviewer CSV
+against the source-side no-leakage rules.
 
 ## Verdict
 

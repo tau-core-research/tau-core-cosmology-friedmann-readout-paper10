@@ -43,8 +43,8 @@ def main() -> None:
         raise SystemExit("missing handoff package zip")
     if sha256(zip_path) != summary["zip_sha256"]:
         raise SystemExit("handoff package zip checksum mismatch")
-    if summary["package_file_count"] != "13":
-        raise SystemExit("expected 13 files in reviewer handoff package")
+    if summary["package_file_count"] != "16":
+        raise SystemExit("expected 16 files in reviewer handoff package")
     for key in [
         "review_completed",
         "independent_reviewer_attestation_complete",

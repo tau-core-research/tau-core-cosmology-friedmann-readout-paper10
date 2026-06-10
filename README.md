@@ -1421,11 +1421,11 @@ scripts/validate_kids1000_cosebis_external_photoz_calibration_reviewer_handoff_p
 ```
 
 This ZIP packages the blank reviewer template, source manifest, automated
-leakage preflight, short docs, and cached public source pages. It contains no
-endpoint residuals, endpoint scores, ranks, fit statistics, or post-score
-residual shapes. It is a handoff package only: R4 remains incomplete, H1
-remains incomplete, and endpoint replay remains forbidden. Its verdict is
-`reviewer_handoff_package_ready_not_completed`.
+leakage preflight, completed-response validation rule, short docs, and cached
+public source pages. It contains no endpoint residuals, endpoint scores, ranks,
+fit statistics, or post-score residual shapes. It is a handoff package only:
+R4 remains incomplete, H1 remains incomplete, and endpoint replay remains
+forbidden. Its verdict is `reviewer_handoff_package_ready_not_completed`.
 
 The completed reviewer response validator is recorded in:
 
