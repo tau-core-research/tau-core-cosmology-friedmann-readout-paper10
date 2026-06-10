@@ -282,6 +282,22 @@ controls, and forbidden endpoint-leakage fields. It remains
 `scoring_allowed=false` and computes no likelihood, residual, information
 criterion, endpoint score, or validation result.
 
+The authorization-review template for that future combined run is recorded in:
+
+```text
+data/source_manifest/void_web_combined_multiblock_endpoint_authorization_review_policy_v1.csv
+data/derived/void_web_combined_multiblock_endpoint_authorization_review_response_template_v1.csv
+data/derived/void_web_combined_multiblock_endpoint_authorization_review_template_v1_summary.csv
+docs/void_web_combined_multiblock_endpoint_authorization_review_v1.md
+scripts/build_void_web_combined_multiblock_endpoint_authorization_review_template_v1.py
+scripts/validate_void_web_combined_multiblock_endpoint_authorization_review_template_v1.py
+```
+
+The template is intentionally uncompleted and keeps `endpoint_run_allowed=false`.
+A future combined endpoint run requires a separate accepted response that uses
+only protocol/readiness/source-side artifacts, not residuals, fit statistics,
+or post-hoc block/channel choices.
+
 The first lensing route-freeze check is recorded in:
 
 ```text

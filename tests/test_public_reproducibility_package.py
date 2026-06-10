@@ -82,6 +82,12 @@ def test_public_files_exist() -> None:
         "data/source_manifest/void_web_combined_multiblock_endpoint_protocol_v1.csv",
         "docs/void_web_combined_multiblock_endpoint_protocol_v1.md",
         "scripts/validate_void_web_combined_multiblock_endpoint_protocol_v1.py",
+        "data/source_manifest/void_web_combined_multiblock_endpoint_authorization_review_policy_v1.csv",
+        "data/derived/void_web_combined_multiblock_endpoint_authorization_review_response_template_v1.csv",
+        "data/derived/void_web_combined_multiblock_endpoint_authorization_review_template_v1_summary.csv",
+        "docs/void_web_combined_multiblock_endpoint_authorization_review_v1.md",
+        "scripts/build_void_web_combined_multiblock_endpoint_authorization_review_template_v1.py",
+        "scripts/validate_void_web_combined_multiblock_endpoint_authorization_review_template_v1.py",
         "data/source_manifest/kids1000_lensing_route_v1.csv",
         "data/derived/kids1000_lensing_route_v1_head.csv",
         "data/derived/kids1000_lensing_route_v1_summary.csv",
@@ -1211,6 +1217,42 @@ def test_void_web_combined_multiblock_endpoint_protocol_v1_is_frozen_not_run() -
         "endpoint_score_claims",
     ]:
         assert marker in protocol["forbidden_inputs"]
+
+
+def test_void_web_combined_multiblock_authorization_template_v1_is_not_completed() -> None:
+    subprocess.run(
+        ["python", "scripts/build_void_web_combined_multiblock_endpoint_authorization_review_template_v1.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    subprocess.run(
+        ["python", "scripts/validate_void_web_combined_multiblock_endpoint_authorization_review_template_v1.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    with (
+        ROOT / "data/derived/void_web_combined_multiblock_endpoint_authorization_review_response_template_v1.csv"
+    ).open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    with (
+        ROOT / "data/derived/void_web_combined_multiblock_endpoint_authorization_review_template_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert len(rows) == 4
+    assert summary["review_completed"] == "false"
+    assert summary["endpoint_run_allowed"] == "false"
+    assert summary["physical_validation_claimed"] == "false"
+    assert {row["review_completed"] for row in rows} == {"false"}
+    assert {row["endpoint_run_allowed"] for row in rows} == {"false"}
+    assert {row["physical_validation_claimed"] for row in rows} == {"false"}
+    assert {row["forbidden_inputs_used"] for row in rows} == {"false"}
+    assert {row["claim_boundary"] for row in rows} == {
+        "combined_multiblock_endpoint_authorization_review_not_validation"
+    }
 
 
 def test_source_page_cache_is_hash_locked() -> None:
