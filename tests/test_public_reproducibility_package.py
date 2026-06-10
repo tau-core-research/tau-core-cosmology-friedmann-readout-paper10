@@ -295,6 +295,12 @@ def test_public_files_exist() -> None:
         "docs/kids1000_cosebis_photoz_tomographic_calibration_evidence_v1.md",
         "scripts/build_kids1000_cosebis_photoz_tomographic_calibration_evidence_v1.py",
         "scripts/validate_kids1000_cosebis_photoz_tomographic_calibration_evidence_v1.py",
+        "data/source_manifest/kids1000_cosebis_external_photoz_calibration_acquisition_plan_policy_v1.csv",
+        "data/derived/kids1000_cosebis_external_photoz_calibration_acquisition_plan_v1.csv",
+        "data/derived/kids1000_cosebis_external_photoz_calibration_acquisition_plan_v1_summary.csv",
+        "docs/kids1000_cosebis_external_photoz_calibration_acquisition_plan_v1.md",
+        "scripts/build_kids1000_cosebis_external_photoz_calibration_acquisition_plan_v1.py",
+        "scripts/validate_kids1000_cosebis_external_photoz_calibration_acquisition_plan_v1.py",
         "data/source_manifest/kids1000_cosebis_endpoint_jackknife_robustness_policy_v1.csv",
         "data/derived/kids1000_cosebis_endpoint_jackknife_robustness_v1_grid.csv",
         "data/derived/kids1000_cosebis_endpoint_jackknife_robustness_v1_summary.csv",
@@ -658,6 +664,8 @@ def test_public_files_exist() -> None:
         "scripts/validate_kids1000_cosebis_source_frozen_tomographic_holdout_manifest_v1.py",
         "scripts/build_kids1000_cosebis_photoz_tomographic_calibration_evidence_v1.py",
         "scripts/validate_kids1000_cosebis_photoz_tomographic_calibration_evidence_v1.py",
+        "scripts/build_kids1000_cosebis_external_photoz_calibration_acquisition_plan_v1.py",
+        "scripts/validate_kids1000_cosebis_external_photoz_calibration_acquisition_plan_v1.py",
         "scripts/run_kids1000_cosebis_endpoint_jackknife_robustness_v1.py",
         "scripts/validate_kids1000_cosebis_endpoint_jackknife_robustness_v1.py",
         "scripts/run_kids1000_cosebis_endpoint_mode_localization_v1.py",
@@ -4879,6 +4887,52 @@ def test_kids1000_cosebis_photoz_tomographic_calibration_evidence_keeps_h1_open(
     }
     assert by_id["E3_independent_external_calibration"]["evidence_status"] == "OPEN_REQUIRED_BEFORE_REPLAY"
     for row in rows:
+        assert row["endpoint_replay_allowed"] == "false"
+        assert row["endpoint_validation_claimed"] == "false"
+        assert row["claim_boundary"] == policy["claim_boundary"]
+    assert summary["claim_boundary"] == policy["claim_boundary"]
+
+
+def test_kids1000_cosebis_external_photoz_calibration_acquisition_plan_keeps_replay_forbidden() -> None:
+    with (
+        ROOT / "data/source_manifest/kids1000_cosebis_external_photoz_calibration_acquisition_plan_policy_v1.csv"
+    ).open(newline="") as f:
+        policy = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/kids1000_cosebis_external_photoz_calibration_acquisition_plan_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/kids1000_cosebis_external_photoz_calibration_acquisition_plan_v1.csv"
+    ).open(newline="") as f:
+        rows = list(csv.DictReader(f))
+
+    assert policy["status"] == "EXTERNAL_PHOTOZ_CALIBRATION_ACQUISITION_PLAN_FROZEN_NOT_ATTACHED"
+    assert policy["current_external_calibration_manifest_attached"] == "false"
+    assert policy["current_endpoint_replay_allowed"] == "false"
+    assert policy["endpoint_validation_claimed"] == "false"
+    assert "endpoint_residuals" in policy["forbidden_inputs"]
+    assert summary["status"] == "EXTERNAL_PHOTOZ_CALIBRATION_ACQUISITION_PLAN_BUILT_NOT_ATTACHED"
+    assert summary["required_routes"] == "4"
+    assert summary["attached_routes"] == "0"
+    assert summary["leakage_review_complete"] == "false"
+    assert summary["h1_independent_evidence_complete"] == "false"
+    assert summary["h2_holdout_partition_frozen"] == "true"
+    assert summary["computes_new_scores"] == "false"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert (
+        summary["verdict"]
+        == "external_photoz_calibration_acquisition_plan_frozen_h1_still_open"
+    )
+    assert {row["route_id"] for row in rows} == {
+        "R1_photoz_calibration_reference_manifest",
+        "R2_som_gold_or_nz_validation_manifest",
+        "R3_tomographic_bin_quality_manifest",
+        "R4_leakage_review_for_attached_calibration",
+    }
+    for row in rows:
+        assert row["forbidden_inputs_used"] == "false"
         assert row["endpoint_replay_allowed"] == "false"
         assert row["endpoint_validation_claimed"] == "false"
         assert row["claim_boundary"] == policy["claim_boundary"]

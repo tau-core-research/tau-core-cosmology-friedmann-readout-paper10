@@ -1334,6 +1334,24 @@ independent external photo-z or tomographic calibration is not yet attached.
 Endpoint replay and validation claims remain forbidden. Its verdict is
 `partial_photoz_tomographic_evidence_available_but_h1_external_calibration_open`.
 
+The external photo-z/tomographic calibration acquisition plan is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_external_photoz_calibration_acquisition_plan_policy_v1.csv
+data/derived/kids1000_cosebis_external_photoz_calibration_acquisition_plan_v1.csv
+data/derived/kids1000_cosebis_external_photoz_calibration_acquisition_plan_v1_summary.csv
+docs/kids1000_cosebis_external_photoz_calibration_acquisition_plan_v1.md
+scripts/build_kids1000_cosebis_external_photoz_calibration_acquisition_plan_v1.py
+scripts/validate_kids1000_cosebis_external_photoz_calibration_acquisition_plan_v1.py
+```
+
+This plan freezes the missing H1 acquisition routes: a source-frozen photo-z
+calibration reference or product manifest, a SOM-gold or redshift-distribution
+validation manifest, tomographic-bin quality or \(\Delta z\) prior evidence, and
+a leakage review for any attached calibration artifacts. No route is attached
+yet, so H1 remains open and endpoint replay remains forbidden. Its verdict is
+`external_photoz_calibration_acquisition_plan_frozen_h1_still_open`.
+
 The endpoint jackknife/localization robustness audit is recorded in:
 
 ```text
