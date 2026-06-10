@@ -184,6 +184,23 @@ def test_public_files_exist() -> None:
         "data/derived/void_source_basis_refinement_r5_control_resistance_preflight_v1_summary.csv",
         "scripts/build_void_source_basis_refinement_r5_control_resistance_preflight_v1.py",
         "scripts/validate_void_source_basis_refinement_r5_control_resistance_preflight_v1.py",
+        "data/source_manifest/void_source_basis_refinement_r6_reviewer_template_policy_v1.csv",
+        "data/source_manifest/void_source_basis_refinement_r6_reviewer_handoff_package_policy_v1.csv",
+        "data/source_manifest/void_source_basis_refinement_r6_completed_reviewer_response_policy_v1.csv",
+        "docs/void_source_basis_refinement_r6_external_reviewer_instructions_v1.md",
+        "docs/void_source_basis_refinement_r6_reviewer_template_v1.md",
+        "docs/void_source_basis_refinement_r6_reviewer_handoff_package_v1.md",
+        "data/derived/void_source_basis_refinement_r6_reviewer_template_v1.csv",
+        "data/derived/void_source_basis_refinement_r6_reviewer_template_v1_summary.csv",
+        "data/derived/void_source_basis_refinement_r6_reviewer_handoff_package_v1.zip",
+        "data/derived/void_source_basis_refinement_r6_reviewer_handoff_package_v1.zip.sha256",
+        "data/derived/void_source_basis_refinement_r6_reviewer_handoff_package_v1_manifest.csv",
+        "data/derived/void_source_basis_refinement_r6_reviewer_handoff_package_v1_summary.csv",
+        "scripts/build_void_source_basis_refinement_r6_reviewer_template_v1.py",
+        "scripts/validate_void_source_basis_refinement_r6_reviewer_template_v1.py",
+        "scripts/build_void_source_basis_refinement_r6_reviewer_handoff_package_v1.py",
+        "scripts/validate_void_source_basis_refinement_r6_reviewer_handoff_package_v1.py",
+        "scripts/validate_void_source_basis_refinement_r6_completed_reviewer_response_v1.py",
         "data/source_manifest/kids1000_lensing_route_v1.csv",
         "data/derived/kids1000_lensing_route_v1_head.csv",
         "data/derived/kids1000_lensing_route_v1_summary.csv",
@@ -2050,6 +2067,42 @@ def test_void_source_basis_refinement_r5_control_resistance_preflight_v1_freezes
     assert summary["endpoint_replay_allowed"] == "false"
     assert summary["computes_new_scores"] == "false"
     assert summary["physical_validation_claimed"] == "false"
+
+
+def test_void_source_basis_refinement_r6_reviewer_handoff_package_v1_keeps_review_open() -> None:
+    response = ROOT / "data/derived/low_z_pantheon_void_scope_replay_authorization_review_response_v1.csv"
+    if not response.exists():
+        pytest.skip("completed low-z void authorization response not present")
+    for command in [
+        ["python", "scripts/run_low_z_pantheon_void_replay_v1.py"],
+        ["python", "scripts/build_low_z_void_replay_diagnostics_v1.py"],
+        ["python", "scripts/build_void_source_basis_refinement_gate_v1.py"],
+        ["python", "scripts/build_void_source_basis_refinement_acquisition_manifest_v1.py"],
+        ["python", "scripts/build_void_source_basis_refinement_r1_r3_source_attachment_v1.py"],
+        ["python", "scripts/build_void_source_basis_refinement_r4_independence_preflight_v1.py"],
+        ["python", "scripts/build_void_source_basis_refinement_r5_control_resistance_preflight_v1.py"],
+        ["python", "scripts/build_void_source_basis_refinement_r6_reviewer_template_v1.py"],
+        ["python", "scripts/validate_void_source_basis_refinement_r6_reviewer_template_v1.py"],
+        ["python", "scripts/build_void_source_basis_refinement_r6_reviewer_handoff_package_v1.py"],
+        ["python", "scripts/validate_void_source_basis_refinement_r6_reviewer_handoff_package_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (ROOT / "data/derived/void_source_basis_refinement_r6_reviewer_template_v1_summary.csv").open(
+        newline=""
+    ) as f:
+        template_summary = list(csv.DictReader(f))[0]
+    with (ROOT / "data/derived/void_source_basis_refinement_r6_reviewer_handoff_package_v1_summary.csv").open(
+        newline=""
+    ) as f:
+        package_summary = list(csv.DictReader(f))[0]
+    assert template_summary["review_completed"] == "false"
+    assert template_summary["leakage_review_complete"] == "false"
+    assert package_summary["review_completed"] == "false"
+    assert package_summary["leakage_review_complete"] == "false"
+    assert package_summary["source_unique_ready"] == "false"
+    assert package_summary["endpoint_replay_allowed"] == "false"
+    assert package_summary["endpoint_validation_claimed"] == "false"
+    assert int(package_summary["package_file_count"]) > 10
 
 
 def test_source_page_cache_is_hash_locked() -> None:

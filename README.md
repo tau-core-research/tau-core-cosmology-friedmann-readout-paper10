@@ -576,6 +576,23 @@ upper-quartile threshold controls. This remains non-scoring and does not reopen
 void replay: R6 independent leakage review is still required before any endpoint
 request.
 
+The R6 independent leakage-review handoff is:
+
+```text
+docs/void_source_basis_refinement_r6_external_reviewer_instructions_v1.md
+docs/void_source_basis_refinement_r6_reviewer_template_v1.md
+docs/void_source_basis_refinement_r6_reviewer_handoff_package_v1.md
+data/derived/void_source_basis_refinement_r6_reviewer_template_v1.csv
+data/derived/void_source_basis_refinement_r6_reviewer_handoff_package_v1.zip
+data/derived/void_source_basis_refinement_r6_reviewer_handoff_package_v1.zip.sha256
+data/derived/void_source_basis_refinement_r6_reviewer_handoff_package_v1_manifest.csv
+data/derived/void_source_basis_refinement_r6_reviewer_handoff_package_v1_summary.csv
+```
+
+It packages the source-side R1-R5 artifacts for an external reviewer who does
+not have repository access. The package is still incomplete until a reviewer
+returns a completed response; it does not authorize replay or claim validation.
+
 The first lensing route-freeze check is recorded in:
 
 ```text
