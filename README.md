@@ -715,6 +715,10 @@ docs/void_source_basis_refinement_v2_path_partial_scope_replay_authorization_rev
 data/derived/void_source_basis_refinement_v2_path_partial_scope_replay_authorization_review_response_v1.csv
 data/derived/void_source_basis_refinement_v2_path_partial_scope_replay_authorization_review_response_v1_summary.csv
 data/derived/void_source_basis_refinement_v2_path_partial_scope_replay_authorization_review_response_v1_validation_log.txt
+docs/void_source_basis_refinement_v2_path_partial_scope_authorized_replay_v1.md
+data/source_manifest/void_source_basis_refinement_v2_path_partial_scope_authorized_replay_run_v1.csv
+data/derived/void_source_basis_refinement_v2_path_partial_scope_authorized_replay_v1_grid.csv
+data/derived/void_source_basis_refinement_v2_path_partial_scope_authorized_replay_v1_summary.csv
 data/derived/void_source_basis_refinement_v2_path_projection_route_ledger.csv
 data/derived/void_source_basis_refinement_v2_path_projection_route_ledger_summary.csv
 data/derived/void_source_basis_refinement_v2_time_readout_route_ledger.csv
@@ -743,6 +747,8 @@ scripts/validate_void_source_basis_refinement_v2_path_partial_scope_replay_autho
 scripts/build_void_source_basis_refinement_v2_path_partial_scope_replay_authorization_review_package_v1.py
 scripts/validate_void_source_basis_refinement_v2_path_partial_scope_replay_authorization_review_package_v1.py
 scripts/validate_void_source_basis_refinement_v2_path_partial_scope_replay_authorization_review_response_v1.py
+scripts/run_void_source_basis_refinement_v2_path_partial_scope_authorized_replay_v1.py
+scripts/validate_void_source_basis_refinement_v2_path_partial_scope_authorized_replay_v1.py
 scripts/build_void_source_basis_refinement_v2_path_projection_route_ledger_v1.py
 scripts/validate_void_source_basis_refinement_v2_path_projection_route_ledger_v1.py
 scripts/build_void_source_basis_refinement_v2_time_readout_route_ledger_v1.py
@@ -795,7 +801,12 @@ completed authorization response grants
 predeclared 12-row partial `W_path` replay is permitted. This permission still
 does not claim endpoint validation, does not enable a full low-z `W_path`
 channel, and does not promote the tile-proximity control to a calibrated
-physical lensing-path weight. The
+physical lensing-path weight. The permission-only replay has now been run on
+the 12-row subset. It gives a small chi2 improvement over the baseline
+(`delta_chi2_candidate_minus_baseline=-0.20237914656`) but worsens AIC and
+ranks third among the candidate/control set because two frozen controls beat
+the candidate. This is therefore a weak caveated diagnostic replay, not a
+positive endpoint validation. The
 time/readout component also has a route ledger: CC/BAO/CMB products are
 declared but not fetched/frozen as numeric time-readout inputs, so no `W_time`
 values are computed.
