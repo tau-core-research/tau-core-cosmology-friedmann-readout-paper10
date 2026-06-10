@@ -1543,6 +1543,26 @@ tomographic support, and zero are accepted as physical alternatives. The
 result blocks endpoint validation but does not refute the low-tail endpoint
 signal.
 
+The source-frozen tomographic holdout replay is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_tomographic_holdout_replay_policy_v1.csv
+data/derived/kids1000_cosebis_tomographic_holdout_replay_v1_grid.csv
+data/derived/kids1000_cosebis_tomographic_holdout_replay_v1_summary.csv
+docs/kids1000_cosebis_tomographic_holdout_replay_v1.md
+scripts/run_kids1000_cosebis_tomographic_holdout_replay_v1.py
+scripts/validate_kids1000_cosebis_tomographic_holdout_replay_v1.py
+```
+
+This replay uses the pre-frozen five source-bin holdout manifest. For each
+fold, it fits the nonnegative amplitude on calibration tomographic pairs that
+do not touch the held-out source bin, then scores only the held-out pairs. The
+candidate improves over the zero baseline in `4/5` held-out folds and has
+aggregate holdout `Delta chi2 = -521.8035067179`. One candidate-beating
+tomographic control remains slightly better in the same replay, so the
+holdout replay preserves the endpoint signal diagnostically but keeps the
+tomographic-control caveat active. It is not validation.
+
 The endpoint jackknife/localization robustness audit is recorded in:
 
 ```text

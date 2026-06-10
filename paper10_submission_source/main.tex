@@ -755,6 +755,15 @@ no new endpoint score and keeps
 \texttt{endpoint\_validation\_claimed=false}. The resulting status is therefore
 that the tomographic controls block validation but do not refute the low-tail
 endpoint signal.
+A source-frozen tomographic holdout replay gives the next diagnostic check. For
+each of the five source-bin folds, the nonnegative amplitude is frozen using
+only calibration tomographic pairs that do not touch the held-out source bin,
+and the held-out pairs are then scored. The candidate improves over the zero
+baseline in \(4/5\) held-out folds, with aggregate holdout
+\(\Delta\chi^2=-521.8035067179\). However, one of the candidate-beating
+tomographic controls remains slightly better in the same replay. Thus the
+holdout replay preserves the low-tail signal diagnostically, but it does not
+remove the tomographic-control caveat and does not constitute KiDS validation.
 A second post-score localization audit keeps the same source-frozen theory
 vector and same nonnegative single-amplitude scoring rule, but evaluates
 predeclared jackknife masks. All \(20/20\) leave-one source-bin and

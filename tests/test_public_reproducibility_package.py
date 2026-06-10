@@ -282,6 +282,12 @@ def test_public_files_exist() -> None:
         "docs/kids1000_cosebis_tomographic_control_disambiguation_v1.md",
         "scripts/build_kids1000_cosebis_tomographic_control_disambiguation_v1.py",
         "scripts/validate_kids1000_cosebis_tomographic_control_disambiguation_v1.py",
+        "data/source_manifest/kids1000_cosebis_tomographic_holdout_replay_policy_v1.csv",
+        "data/derived/kids1000_cosebis_tomographic_holdout_replay_v1_grid.csv",
+        "data/derived/kids1000_cosebis_tomographic_holdout_replay_v1_summary.csv",
+        "docs/kids1000_cosebis_tomographic_holdout_replay_v1.md",
+        "scripts/run_kids1000_cosebis_tomographic_holdout_replay_v1.py",
+        "scripts/validate_kids1000_cosebis_tomographic_holdout_replay_v1.py",
         "data/source_manifest/kids1000_cosebis_tomographic_holdout_calibration_gate_policy_v1.csv",
         "data/derived/kids1000_cosebis_tomographic_holdout_calibration_gate_v1.csv",
         "data/derived/kids1000_cosebis_tomographic_holdout_calibration_gate_v1_summary.csv",
@@ -6981,3 +6987,36 @@ def test_kids1000_cosebis_tomographic_control_disambiguation_blocks_validation_o
     assert summary["uses_kids_data_vector_values_for_source_selection"] == "false"
     assert summary["endpoint_validation_claimed"] == "false"
     assert summary["verdict"] == "tomographic_controls_block_validation_but_do_not_refute_endpoint_signal"
+
+
+def test_kids1000_cosebis_tomographic_holdout_replay_preserves_signal_without_validation() -> None:
+    subprocess.run(
+        ["python", "scripts/run_kids1000_cosebis_tomographic_holdout_replay_v1.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    subprocess.run(
+        ["python", "scripts/validate_kids1000_cosebis_tomographic_holdout_replay_v1.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    with (ROOT / "data/derived/kids1000_cosebis_tomographic_holdout_replay_v1_summary.csv").open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    assert len(rows) == 1
+    summary = rows[0]
+    assert summary["status"] == "TOMOGRAPHIC_HOLDOUT_REPLAY_COMPLETE"
+    assert summary["fold_count"] == "5"
+    assert summary["comparison_branch_count"] == "4"
+    assert summary["candidate_holdout_improved_fold_count"] == "4"
+    assert summary["candidate_rank_by_total_holdout_delta_chi2"] == "2"
+    assert summary["candidate_beating_control_count"] == "1"
+    assert summary["holdout_replay_refutes_endpoint_signal"] == "false"
+    assert summary["tomographic_controls_block_validation"] == "true"
+    assert summary["computes_new_labels"] == "false"
+    assert summary["uses_kids_data_vector_values_for_source_selection"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["verdict"] == "holdout_replay_preserves_signal_but_tomographic_control_caveat_remains"
