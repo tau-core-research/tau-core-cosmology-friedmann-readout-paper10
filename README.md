@@ -505,6 +505,18 @@ It records `grid_edge_pressure_and_shuffled_control_beats_candidate`, so the
 next void-side step is source-basis refinement rather than post-hoc amplitude or
 grid tuning.
 
+The source-side refinement gate is:
+
+```text
+docs/void_source_basis_refinement_gate_v1.md
+data/source_manifest/void_source_basis_refinement_gate_policy_v1.csv
+data/derived/void_source_basis_refinement_gate_v1.csv
+```
+
+It freezes the blocker as
+`current_W_void_not_endpoint_ready_redshift_degenerate_not_control_unique` and
+allows only a future source-side acquisition manifest before any new void replay.
+
 The first lensing route-freeze check is recorded in:
 
 ```text
