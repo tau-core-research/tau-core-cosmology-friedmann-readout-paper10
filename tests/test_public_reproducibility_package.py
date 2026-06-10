@@ -234,6 +234,11 @@ def test_public_files_exist() -> None:
         "data/derived/void_source_basis_refinement_v2_path_partial_scope_reviewer_package_v1.zip.sha256",
         "data/derived/void_source_basis_refinement_v2_path_partial_scope_reviewer_package_v1_manifest.csv",
         "data/derived/void_source_basis_refinement_v2_path_partial_scope_reviewer_package_v1_summary.csv",
+        "docs/void_source_basis_refinement_v2_path_partial_scope_completed_review_notes_v1.md",
+        "data/derived/void_source_basis_refinement_v2_path_partial_scope_completed_review_response_v1.csv",
+        "data/derived/void_source_basis_refinement_v2_path_partial_scope_completed_review_response_v1_summary.csv",
+        "data/derived/void_source_basis_refinement_v2_path_partial_scope_completed_review_summary_v1.csv",
+        "data/derived/void_source_basis_refinement_v2_path_partial_scope_completed_review_validation_log_v1.txt",
         "data/derived/void_source_basis_refinement_v2_path_projection_route_ledger.csv",
         "data/derived/void_source_basis_refinement_v2_path_projection_route_ledger_summary.csv",
         "data/derived/void_source_basis_refinement_v2_time_readout_route_ledger.csv",
@@ -265,6 +270,7 @@ def test_public_files_exist() -> None:
         "scripts/validate_void_source_basis_refinement_v2_path_partial_scope_values_v1.py",
         "scripts/build_void_source_basis_refinement_v2_path_partial_scope_reviewer_package_v1.py",
         "scripts/validate_void_source_basis_refinement_v2_path_partial_scope_reviewer_package_v1.py",
+        "scripts/validate_void_source_basis_refinement_v2_path_partial_scope_completed_review_response_v1.py",
         "scripts/build_void_source_basis_refinement_v2_path_projection_route_ledger_v1.py",
         "scripts/validate_void_source_basis_refinement_v2_path_projection_route_ledger_v1.py",
         "scripts/build_void_source_basis_refinement_v2_time_readout_route_ledger_v1.py",
@@ -2662,6 +2668,38 @@ def test_void_source_basis_refinement_v2_path_partial_scope_reviewer_package_v1_
     assert {row["contains_endpoint_residuals"] for row in manifest} == {"false"}
     assert {row["contains_endpoint_scores"] for row in manifest} == {"false"}
     assert {row["contains_fit_statistics"] for row in manifest} == {"false"}
+
+
+def test_void_source_basis_refinement_v2_path_partial_scope_completed_review_response_v1_is_caveated_source_side_only() -> None:
+    for command in [
+        ["python", "scripts/build_void_source_basis_refinement_v2_path_projection_crossmap_audit_v1.py"],
+        ["python", "scripts/validate_void_source_basis_refinement_v2_path_projection_crossmap_audit_v1.py"],
+        ["python", "scripts/build_void_source_basis_refinement_v2_path_partial_scope_policy_v1.py"],
+        ["python", "scripts/validate_void_source_basis_refinement_v2_path_partial_scope_policy_v1.py"],
+        ["python", "scripts/build_void_source_basis_refinement_v2_path_partial_scope_values_v1.py"],
+        ["python", "scripts/validate_void_source_basis_refinement_v2_path_partial_scope_values_v1.py"],
+        ["python", "scripts/build_void_source_basis_refinement_v2_path_partial_scope_reviewer_package_v1.py"],
+        ["python", "scripts/validate_void_source_basis_refinement_v2_path_partial_scope_reviewer_package_v1.py"],
+        ["python", "scripts/validate_void_source_basis_refinement_v2_path_partial_scope_completed_review_response_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (
+        ROOT
+        / "data/derived/void_source_basis_refinement_v2_path_partial_scope_completed_review_response_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["review_completed"] == "true"
+    assert summary["final_verdict"] == "ACCEPT_PARTIAL_PATH_CONTROL_AS_CAVEATED_SOURCE_SIDE"
+    assert summary["acceptance_scope"] == "partial_scope_12_row_W_path_source_side_control_only"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["forbidden_inputs_used"] == "false"
+    assert summary["physical_lensing_path_weight_claimed"] == "false"
+    assert (
+        summary["future_action_allowed"]
+        == "prepare_separate_partial_scope_replay_authorization_package_only"
+    )
+    assert summary["verdict"] == "partial_path_scope_control_accepted_as_caveated_source_side_only"
 
 
 def test_void_source_basis_refinement_v2_time_readout_route_ledger_v1_preserves_blocker() -> None:

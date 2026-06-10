@@ -1,0 +1,26 @@
+V2 path partial-scope review validation log v1
+source_package_sha256=cc5b7a12bdcf9cdcf16ecfbd398951ea02ecc3ab7ac680f8b8abc06264305f91
+
+manifest_rows=17 manifest_errors=0
+manifest_byte_sha256_and_boundary_flags_ok=true
+
+$ python3 scripts/validate_void_source_basis_refinement_v2_path_projection_crossmap_audit_v1.py
+PAPER10_V2_PATH_PROJECTION_CROSSMAP_AUDIT_VALIDATED rows=424 path_values_computed=false
+exit_code=0
+
+$ python3 scripts/validate_void_source_basis_refinement_v2_path_partial_scope_policy_v1.py
+PAPER10_V2_PATH_PARTIAL_SCOPE_POLICY_VALIDATED strict=5 caveated=7 path_values_computed=false
+exit_code=0
+
+$ python3 scripts/validate_void_source_basis_refinement_v2_path_partial_scope_values_v1.py
+PAPER10_V2_PATH_PARTIAL_SCOPE_VALUES_VALIDATED candidate_rows=12 full_lowz=false endpoint=false
+exit_code=0
+
+$ python3 scripts/validate_void_source_basis_refinement_v2_path_partial_scope_reviewer_package_v1.py
+(scratch package summary/zip sidecar reconstructed because they were not included as extracted files)
+PAPER10_V2_PATH_PARTIAL_SCOPE_REVIEWER_PACKAGE_V1_VALIDATED verdict=partial_path_scope_reviewer_package_ready_not_completed
+exit_code=0
+
+completed_response_rows=5 completed_response_errors=0
+completed_response_allowed_values_and_endpoint_flags_ok=true
+final_verdict=ACCEPT_PARTIAL_PATH_CONTROL_AS_CAVEATED_SOURCE_SIDE

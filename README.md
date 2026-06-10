@@ -698,6 +698,11 @@ data/derived/void_source_basis_refinement_v2_path_partial_scope_reviewer_package
 data/derived/void_source_basis_refinement_v2_path_partial_scope_reviewer_package_v1.zip.sha256
 data/derived/void_source_basis_refinement_v2_path_partial_scope_reviewer_package_v1_manifest.csv
 data/derived/void_source_basis_refinement_v2_path_partial_scope_reviewer_package_v1_summary.csv
+docs/void_source_basis_refinement_v2_path_partial_scope_completed_review_notes_v1.md
+data/derived/void_source_basis_refinement_v2_path_partial_scope_completed_review_response_v1.csv
+data/derived/void_source_basis_refinement_v2_path_partial_scope_completed_review_response_v1_summary.csv
+data/derived/void_source_basis_refinement_v2_path_partial_scope_completed_review_summary_v1.csv
+data/derived/void_source_basis_refinement_v2_path_partial_scope_completed_review_validation_log_v1.txt
 data/derived/void_source_basis_refinement_v2_path_projection_route_ledger.csv
 data/derived/void_source_basis_refinement_v2_path_projection_route_ledger_summary.csv
 data/derived/void_source_basis_refinement_v2_time_readout_route_ledger.csv
@@ -720,6 +725,7 @@ scripts/build_void_source_basis_refinement_v2_path_partial_scope_values_v1.py
 scripts/validate_void_source_basis_refinement_v2_path_partial_scope_values_v1.py
 scripts/build_void_source_basis_refinement_v2_path_partial_scope_reviewer_package_v1.py
 scripts/validate_void_source_basis_refinement_v2_path_partial_scope_reviewer_package_v1.py
+scripts/validate_void_source_basis_refinement_v2_path_partial_scope_completed_review_response_v1.py
 scripts/build_void_source_basis_refinement_v2_path_projection_route_ledger_v1.py
 scripts/validate_void_source_basis_refinement_v2_path_projection_route_ledger_v1.py
 scripts/build_void_source_basis_refinement_v2_time_readout_route_ledger_v1.py
@@ -758,7 +764,11 @@ source-side audit of this 12-row control. It asks only whether the partial
 control may be retained as caveated source-side material for a future separate
 authorization package; it does not authorize endpoint scoring and contains no
 endpoint residuals, fit statistics, posterior chains, or KiDS data-vector
-values. The
+values. The completed reviewer response accepts this as
+`ACCEPT_PARTIAL_PATH_CONTROL_AS_CAVEATED_SOURCE_SIDE`: the 12-row control can be
+kept only as caveated source-side material for a later, separate partial-scope
+authorization package. Endpoint replay, endpoint validation, a full low-z
+`W_path` channel, and physical lensing-path weight claims remain false. The
 time/readout component also has a route ledger: CC/BAO/CMB products are
 declared but not fetched/frozen as numeric time-readout inputs, so no `W_time`
 values are computed.
