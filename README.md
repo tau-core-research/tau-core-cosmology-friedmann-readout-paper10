@@ -382,6 +382,24 @@ basis, and that every non-zero frozen `omega_void` profile worsens relative to
 `omega_void=0`. This preserves the next action as a void mapping/source-basis
 audit before any endpoint scoring is reopened.
 
+The follow-up void source-basis audit is:
+
+```text
+data/derived/void_source_basis_audit_v1_summary.csv
+data/derived/void_source_basis_audit_v1_redshift_bins.csv
+docs/void_source_basis_audit_v1.md
+scripts/build_void_source_basis_audit_v1.py
+scripts/validate_void_source_basis_audit_v1.py
+```
+
+It identifies the immediate blocker as
+`low_z_volume_limited_void_catalog_mapped_to_full_pantheon_distance_block`.
+The current void catalogue support is only approximately
+`z=0.0103747416544` to `z=0.108950468807`, while the Pantheon distance block
+runs to `z=2.26137`; all rows above `z=0.2` have zero void support. Therefore
+the combined endpoint should not be reopened until the void mapping is rebuilt
+for the declared observable scope or the endpoint scope is explicitly narrowed.
+
 The first lensing route-freeze check is recorded in:
 
 ```text

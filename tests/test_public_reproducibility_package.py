@@ -118,6 +118,11 @@ def test_public_files_exist() -> None:
         "docs/void_channel_inactivity_diagnostic_v1.md",
         "scripts/build_void_channel_inactivity_diagnostic_v1.py",
         "scripts/validate_void_channel_inactivity_diagnostic_v1.py",
+        "data/derived/void_source_basis_audit_v1_summary.csv",
+        "data/derived/void_source_basis_audit_v1_redshift_bins.csv",
+        "docs/void_source_basis_audit_v1.md",
+        "scripts/build_void_source_basis_audit_v1.py",
+        "scripts/validate_void_source_basis_audit_v1.py",
         "data/source_manifest/kids1000_lensing_route_v1.csv",
         "data/derived/kids1000_lensing_route_v1_head.csv",
         "data/derived/kids1000_lensing_route_v1_summary.csv",
@@ -1454,6 +1459,38 @@ def test_void_channel_inactivity_diagnostic_v1_preserves_void_mapping_blocker() 
     )
     assert summary["physical_validation_claimed"] == "false"
     assert {row["physical_validation_claimed"] for row in profile} == {"false"}
+
+
+def test_void_source_basis_audit_v1_freezes_low_z_support_blocker() -> None:
+    subprocess.run(
+        ["python", "scripts/build_void_source_basis_audit_v1.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    subprocess.run(
+        ["python", "scripts/validate_void_source_basis_audit_v1.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    with (ROOT / "data/derived/void_source_basis_audit_v1_summary.csv").open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    with (ROOT / "data/derived/void_source_basis_audit_v1_redshift_bins.csv").open(newline="") as f:
+        bins = list(csv.DictReader(f))
+    assert summary["status"] == "SOURCE_BASIS_AUDIT_COMPLETE_NOT_VALIDATION"
+    assert summary["source_basis_limitation"] == (
+        "low_z_volume_limited_void_catalog_mapped_to_full_pantheon_distance_block"
+    )
+    assert summary["endpoint_scoring_allowed"] == "false"
+    assert summary["physical_validation_claimed"] == "false"
+    assert float(summary["void_catalog_z_support_max_proxy"]) < 0.2
+    assert float(summary["pantheon_z_max"]) > 2.0
+    assert float(summary["void_active_fraction"]) < 0.5
+    assert {row["physical_validation_claimed"] for row in bins} == {"false"}
+    assert all(float(row["void_active_fraction"]) == 0.0 for row in bins if float(row["z_bin_lo"]) >= 0.2)
 
 
 def test_source_page_cache_is_hash_locked() -> None:

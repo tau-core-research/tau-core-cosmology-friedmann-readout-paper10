@@ -72,6 +72,8 @@ def main() -> None:
     run(["python", "scripts/validate_void_web_combined_endpoint_diagnostics_v1.py"])
     run(["python", "scripts/build_void_channel_inactivity_diagnostic_v1.py"])
     run(["python", "scripts/validate_void_channel_inactivity_diagnostic_v1.py"])
+    run(["python", "scripts/build_void_source_basis_audit_v1.py"])
+    run(["python", "scripts/validate_void_source_basis_audit_v1.py"])
     run(["python", "scripts/check_kids1000_lensing_route_v1.py"])
     run(["python", "scripts/validate_kids1000_lensing_route_v1.py"])
     run(["python", "scripts/validate_kids1000_lensing_products_v1.py"])

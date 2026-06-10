@@ -1,0 +1,7 @@
+z_bin_lo,z_bin_hi,pantheon_rows,void_active_rows,void_active_fraction,mean_void_basis,physical_validation_claimed,claim_boundary
+0.000,0.050,315,315,1,0.0298038845848,false,void_source_basis_audit_not_validation
+0.050,0.100,96,96,1,0.257921226532,false,void_source_basis_audit_not_validation
+0.100,0.200,207,15,0.0724637681159,0.0674990313962,false,void_source_basis_audit_not_validation
+0.200,0.500,543,0,0,0,false,void_source_basis_audit_not_validation
+0.500,1.000,185,0,0,0,false,void_source_basis_audit_not_validation
+1.000,3.000,25,0,0,0,false,void_source_basis_audit_not_validation
