@@ -1348,9 +1348,30 @@ scripts/validate_kids1000_cosebis_external_photoz_calibration_acquisition_plan_v
 This plan freezes the missing H1 acquisition routes: a source-frozen photo-z
 calibration reference or product manifest, a SOM-gold or redshift-distribution
 validation manifest, tomographic-bin quality or \(\Delta z\) prior evidence, and
-a leakage review for any attached calibration artifacts. No route is attached
-yet, so H1 remains open and endpoint replay remains forbidden. Its verdict is
+a leakage review for any attached calibration artifacts. At this planning
+stage, no route is attached, so H1 remains open and endpoint replay remains
+forbidden. Its verdict is
 `external_photoz_calibration_acquisition_plan_frozen_h1_still_open`.
+
+The external photo-z/tomographic calibration source manifest is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_external_photoz_calibration_source_manifest_policy_v1.csv
+data/derived/kids1000_cosebis_external_photoz_calibration_source_manifest_v1.csv
+data/derived/kids1000_cosebis_external_photoz_calibration_source_manifest_v1_summary.csv
+docs/kids1000_cosebis_external_photoz_calibration_source_manifest_v1.md
+scripts/build_kids1000_cosebis_external_photoz_calibration_source_manifest_v1.py
+scripts/validate_kids1000_cosebis_external_photoz_calibration_source_manifest_v1.py
+```
+
+This manifest attaches cached public sources for the H1 routes R1--R3: the
+A&A KiDS-1000 redshift-calibration article, its arXiv metadata page, and the
+official KiDS DR4 SOM-gold catalogue page. The marker checks are source-side
+only: SOM calibration, five tomographic redshift bins, gold selection,
+mean-redshift bias/uncertainty statements, clustering-redshift cross-checks,
+and the official KiDS \(n(z)\) product route. The R4 leakage review is still
+open, so H1 is not complete and endpoint replay remains forbidden. Its verdict
+is `external_photoz_calibration_sources_attached_pending_leakage_review`.
 
 The endpoint jackknife/localization robustness audit is recorded in:
 

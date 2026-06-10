@@ -1,0 +1,1306 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd ">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>KiDS</title>
+<link rel="stylesheet" type="text/css" href="../kids.css" />
+<link rel="shortcut icon" href="http://kids.strw.leidenuniv.nl/images/favicon.ico" type="image/x-icon"/>
+<meta name="description" content="The fourth public data release (DR4) of the Kilo-Degree Survey (KiDS)." />
+<meta name="keywords" content="Kilo Degree Survey,KiDS,survey,kids survey,VST,cosmology,lensing,omegacam,dark energy,astronomy,wide-field survey,ESO public survey" />
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-31544673-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</head>
+
+<body>
+<div id="wrapper">
+   <a id="top"></a>
+
+   <div id="header">
+         <img src="images/header_dr4.png" />
+   </div>
+
+
+   <div id="page">
+
+       <div id="sidebar">
+           <div class="menu">
+         <ul>
+    <li>KiDS DR4
+        <ul>
+            <li><a href="index.php">About DR4</a></li>
+            <li><a href="releasenotes.php">Release notes and paper</a></li>
+            <li><a href="data_table.php">Observations table</a></li>
+            <li><a href="format.php">File formats</a></li>
+            <li><a href="access.php">Data access</a></li>
+            <li><a href="acknowledgments.php">Acknowledgments</a></li>
+        </ul>
+    </li>
+    <li>Additional data products
+        <ul>
+            <li><a href="lensing.php">Weak lensing data</a></li>
+            <li><a href="quasarcatalog.php">Quasar catalog</a></li>
+            <li><a href="brightsample.php">Bright galaxy catalog</a></li>
+            <li><a href="hqlenses.php">Strong lens candidates</a></li>
+        </ul>
+    </li>
+    <li>
+        <ul>
+            <li><a href="http://kids.strw.leidenuniv.nl">KiDS home</a></li>
+        </ul>
+    </li>
+</ul>
+           </div>
+       </div>
+
+
+
+<div id="content">
+    <h1>Weak lensing SOM-gold catalogue</h1>
+
+    <p>
+        The weak lensing SOM-gold catalogue is described in a series of papers.   The source detection and photometry is presented in  <a href="https://arxiv.org/abs/1902.11265">Kuijken, Heymans, Dvornik, Hildebrandt, de Jong, Wright, Erben et al 2019</a>.  The weak lensing measurement and systematics tests are presented in  <a href="https://arxiv.org/abs/2007.01845">Giblin, Heymans, Asgari et al 2021</a>.   The SOM methodology for redshift calibration is presented in  <a href="http://adsabs.net/cgi-bin/nph-bib_query?bibcode=2020A&A...637A.100W&data_type=BIBTEX">Wright et al. 2020</a>.  The KiDS-1000 redshift calibration is presented in <a href="https://arxiv.org/abs/2007.15635">Hildebrandt, van den Busch, Wright et al 2021</a>.
+    </p>
+
+    <p>
+        This <a href="https://www.youtube.com/channel/UCstdttIo3HM6h3hDk_v2hug?">Cosmology Talk</a> seminar summarises the main results.
+    </p>
+
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/r_hMWpl6xd0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+    <h2> Download the KiDS-1000 Catalogue </h2>
+
+    <p>
+        The KiDS-1000 data set encompasses 1006 survey tiles. Only galaxies
+        with reliable shape and redshift measurements, our "gold sample", are included in this catalogue.
+        The catalogue contains a total
+        of 21,262,011 sources, and is presented as a single 16GB FITS table.
+        It can be downloaded <a href="data_files/KiDS_DR4.1_ugriZYJHKs_SOM_gold_WL_cat.fits">here</a>.
+    </p>
+
+    <p>
+        You can also <a href="./data_files/KiDS1000_SOM_N_of_Z.tar.gz">download an n(z) tarball</a>
+        containing SOM-calibrated redshift distributions for the 5 tomographic
+        redshift bins used in the KiDS-1000 analysis.
+    </p>
+
+    <p>
+        <b>Users of these data are asked to acknowledge us in any publications
+            as indicated at the <a href="#ack">bottom of this page</a></b>.
+    </p>
+
+    <p>
+        The table below lists the columns provided in the source catalogue.
+    </p>
+
+
+    <table border="1">
+        <tr>
+            <th>Column</th>
+            <th>Unit</th>
+            <th>Description</th>
+            <th>Format</th>
+        </tr>
+        <tr>
+            <td class="left"> SeqNr </td>
+            <td>  </td>
+            <td class="left"> Running object number within the catalogue </td>
+            <td> 1J </td>
+        </tr>
+        <tr>
+            <td class="left"> SLID </td>
+            <td>  </td>
+            <td class="left"> AstroWise Source list ID </td>
+            <td> 1J </td>
+        </tr>
+        <tr>
+            <td class="left"> SID </td>
+            <td>  </td>
+            <td class="left"> AstroWise Source ID within the source list </td>
+            <td> 1J </td>
+        </tr>
+        <tr>
+            <td class="left"> ID </td>
+            <td>  </td>
+            <td class="left"> ESO ID </td>
+            <td> 25A </td>
+        </tr>
+        <tr>
+            <td class="left"> FLUX_AUTO </td>
+            <td> count </td>
+            <td class="left"> r-band flux (count) </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> FLUXERR_AUTO </td>
+            <td> count </td>
+            <td class="left"> Error on  FLUX_AUTO (count) </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> MAG_AUTO </td>
+            <td> mag </td>
+            <td class="left"> r-band magnitude (mag) </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> MAGERR_AUTO </td>
+            <td> mag </td>
+            <td class="left"> Error on  MAG_AUTO (mag) </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> KRON_RADIUS </td>
+            <td> pixel </td>
+            <td class="left"> Scaling radius of the ellipse for magnitude measurements </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> BackGr </td>
+            <td> count </td>
+            <td class="left"> Background count at centroid position (count) </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> Level </td>
+            <td> count </td>
+            <td class="left"> Detection threshold above background (count) </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> MU_THRESHOLD </td>
+            <td> mag * arcsec**(-2) </td>
+            <td class="left"> Detection threshold above background (mag arcsec^-2) </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> MaxVal </td>
+            <td> count </td>
+            <td class="left"> Peak flux above background (count) </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> MU_MAX </td>
+            <td> mag * arcsec**(-2) </td>
+            <td class="left"> Peak surface brightness above background (mag arcsec^-2) </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> ISOAREA_WORLD </td>
+            <td> deg**2 </td>
+            <td class="left"> Isophotal area above analysis threshold (deg^2) </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> Xpos </td>
+            <td> pixel </td>
+            <td class="left"> Centroid x position in the THELI image (pix) </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> Ypos </td>
+            <td> pixel </td>
+            <td class="left"> Centroid y position in the THELI image (pix) </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> RAJ2000 </td>
+            <td> deg </td>
+            <td class="left"> Centroid sky position right ascension (J2000) (deg) </td>
+            <td> 1D </td>
+        </tr>
+        <tr>
+            <td class="left"> DECJ2000 </td>
+            <td> deg </td>
+            <td class="left"> Centroid sky position declination (J2000) (deg) </td>
+            <td> 1D </td>
+        </tr>
+        <tr>
+            <td class="left"> A_WORLD </td>
+            <td> deg </td>
+            <td class="left"> Profile RMS along major axis (deg) </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> B_WORLD </td>
+            <td> deg </td>
+            <td class="left"> Profile RMS along minor axis (deg) </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> THETA_J2000 </td>
+            <td> deg </td>
+            <td class="left"> Position angle (West of North) (deg) </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> THETA_WORLD </td>
+            <td> deg </td>
+            <td class="left"> Position angle (Counterclockwise from world x-axis (deg) </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> ERRA_WORLD </td>
+            <td> deg </td>
+            <td class="left"> World RMS position error along major axis (deg) </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> ERRB_WORLD </td>
+            <td> deg </td>
+            <td class="left"> World RMS position error along minor axis (deg) </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> ERRTHETA_J2000 </td>
+            <td> deg </td>
+            <td class="left"> Error on  THETA_J2000 (deg) </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> ERRTHETA_WORLD </td>
+            <td> deg </td>
+            <td class="left"> Error on THETA_WORLD (deg) </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> FWHM_IMAGE </td>
+            <td> pixel </td>
+            <td class="left"> FWHM assuming a gaussian object profile (pix) </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> FWHM_WORLD </td>
+            <td> deg </td>
+            <td class="left"> FWHM assuming a gaussian object profile (deg) </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> Flag </td>
+            <td>  </td>
+            <td class="left"> SExtractor extraction flags </td>
+            <td> 1I </td>
+        </tr>
+        <tr>
+            <td class="left"> FLUX_RADIUS </td>
+            <td> pixel </td>
+            <td class="left"> Half-light radius (pix) </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> CLASS_STAR </td>
+            <td>  </td>
+            <td class="left"> Star-galaxy classifier </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> EXTINCTION_u </td>
+            <td> mag </td>
+            <td class="left"> Galactic extinction in the u band (mag) </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> EXTINCTION_g </td>
+            <td> mag </td>
+            <td class="left"> Galactic extinction in the g band (mag) </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> EXTINCTION_r </td>
+            <td> mag </td>
+            <td class="left"> Galactic extinctio in the r band (mag) </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> EXTINCTION_i </td>
+            <td> mag </td>
+            <td class="left"> Galactic extincion in the i band (mag) </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> PAgaap </td>
+            <td> deg </td>
+            <td class="left"> Position angle of major axis of GAaP aperture (North of West) (deg) </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> MAG_ISO </td>
+            <td> mag </td>
+            <td class="left"> r-band Isophotal Magnitude (mag) </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> MAGERR_ISO </td>
+            <td> mag </td>
+            <td class="left"> Error on MAG_ISO (mag) </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> FLUX_ISO </td>
+            <td> count </td>
+            <td class="left"> r-band Isophotal Flux (count) </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> FLUXERR_ISO </td>
+            <td> count </td>
+            <td class="left"> Error on FLUX_ISO (count) </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> MAG_ISOCOR </td>
+            <td> mag </td>
+            <td class="left"> r-band Corrected Isophotal Magnitude (mag) </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> MAGERR_ISOCOR </td>
+            <td> mag </td>
+            <td class="left"> Error on MAG_ISOCOR (mag) </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> FLUX_ISOCOR </td>
+            <td> count </td>
+            <td class="left"> r-band Corrected Isophotal Flux (count) </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> FLUXERR_ISOCOR </td>
+            <td> count </td>
+            <td class="left"> Error on FLUX_ISOCOR (count) </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> NIMAFLAGS_ISO </td>
+            <td>  </td>
+            <td class="left"> Number of flagged pixels over the isophotal profile </td>
+            <td> 1I </td>
+        </tr>
+        <tr>
+            <td class="left"> IMAFLAGS_ISO </td>
+            <td>  </td>
+            <td class="left"> FLAG-image flags ORed over the isophotal profile </td>
+            <td> 1I </td>
+        </tr>
+        <tr>
+            <td class="left"> XMIN_IMAGE </td>
+            <td> pixel </td>
+            <td class="left"> Minimum x-coordinate among detected pixels (pixel) </td>
+            <td> 1I </td>
+        </tr>
+        <tr>
+            <td class="left"> YMIN_IMAGE </td>
+            <td> pixel </td>
+            <td class="left"> Minimum y-coordinate among detected pixels (pixel) </td>
+            <td> 1I </td>
+        </tr>
+        <tr>
+            <td class="left"> XMAX_IMAGE </td>
+            <td> pixel </td>
+            <td class="left"> Maximum x-coordinate among detected pixels (pixel) </td>
+            <td> 1I </td>
+        </tr>
+        <tr>
+            <td class="left"> YMAX_IMAGE </td>
+            <td> pixel </td>
+            <td class="left"> Maximum x-coordinate among detected pixels (pixel) </td>
+            <td> 1I </td>
+        </tr>
+        <tr>
+            <td class="left"> X_WORLD </td>
+            <td> deg </td>
+            <td class="left"> Barycentre position along world x axis (deg) </td>
+            <td> 1D </td>
+        </tr>
+        <tr>
+            <td class="left"> Y_WORLD </td>
+            <td> deg </td>
+            <td class="left"> Barycentre position along world y axis (deg) </td>
+            <td> 1D </td>
+        </tr>
+        <tr>
+            <td class="left"> X2_WORLD </td>
+            <td> deg**2 </td>
+            <td class="left"> Variance of position along X_WORLD (alpha) (deg^2) </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> Y2_WORLD </td>
+            <td> deg**2 </td>
+            <td class="left"> Variance of position along X_WORLD (delta) (deg^2) </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> XY_WORLD </td>
+            <td> deg**2 </td>
+            <td class="left"> Covariance of position X_WORLD/Y_WORLD (deg^2) </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> ERRX2_WORLD </td>
+            <td> deg**2 </td>
+            <td class="left"> Error on XY_WORLD (deg^2) </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> ERRY2_WORLD </td>
+            <td> deg**2 </td>
+            <td class="left"> Error on XY_WORLD (deg^2) </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> ERRXY_WORLD </td>
+            <td> deg**2 </td>
+            <td class="left"> Error on XY_WORLD (deg^2) </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> CXX_WORLD </td>
+            <td> deg**(-2) </td>
+            <td class="left"> SExtractor Cxx object ellipse parameter (deg^-2) </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> CYY_WORLD </td>
+            <td> deg**(-2) </td>
+            <td class="left"> SExtractor Cyy object ellipse parameter (deg^-2) </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> CXY_WORLD </td>
+            <td> deg**(-2) </td>
+            <td class="left"> SExtractor Cxy object ellipse parameter (deg^-2) </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> ERRCXX_WORLD </td>
+            <td> deg**(-2) </td>
+            <td class="left"> Error on CXX_WORLD (deg^-2) </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> ERRCYY_WORLD </td>
+            <td> deg**(-2) </td>
+            <td class="left"> Error on CYY_WORLD (deg^-2) </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> ERRCXY_WORLD </td>
+            <td> deg**(-2) </td>
+            <td class="left"> Error on CXY_WORLD (deg^-2) </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> A_IMAGE </td>
+            <td> pixel </td>
+            <td class="left"> Profile RMS along x-axis (pix) </td>
+            <td> 1D </td>
+        </tr>
+        <tr>
+            <td class="left"> B_IMAGE </td>
+            <td> pixel </td>
+            <td class="left"> Profile RMS along y-axis (pix) </td>
+            <td> 1D </td>
+        </tr>
+        <tr>
+            <td class="left"> ERRA_IMAGE </td>
+            <td> pixel </td>
+            <td class="left"> Error on A_IMAGE </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> ERRB_IMAGE </td>
+            <td> pixel </td>
+            <td class="left"> Error on B_IMAGE </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> S_ELLIPTICITY </td>
+            <td>  </td>
+            <td class="left"> SExtractor Ellipticity (1-B_IMAGE/A_IMAGE) </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> S_ELONGATION </td>
+            <td>  </td>
+            <td class="left"> SExtractor Elongation (A_IMAGE/B_IMAGE) </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> ALPHA_J2000 </td>
+            <td> deg </td>
+            <td class="left"> SExtractor named Centroid sky position right ascension (J2000) (deg) </td>
+            <td> 1D </td>
+        </tr>
+        <tr>
+            <td class="left"> DELTA_J2000 </td>
+            <td> deg </td>
+            <td class="left"> SEXtractor named Centroid sky position declination (J2000)  (deg) </td>
+            <td> 1D </td>
+        </tr>
+        <tr>
+            <td class="left"> SG2DPHOT </td>
+            <td>  </td>
+            <td class="left"> 2DPhot Star/Galaxy classifier (1 for high confidence star) </td>
+            <td> 1I </td>
+        </tr>
+        <tr>
+            <td class="left"> HTM </td>
+            <td>  </td>
+            <td class="left"> Hierarchical Triangular Mesh (level 25) </td>
+            <td> 1J </td>
+        </tr>
+        <tr>
+            <td class="left"> FIELD_POS </td>
+            <td>  </td>
+            <td class="left"> Reference number to field parameters </td>
+            <td> 1I </td>
+        </tr>
+        <tr>
+            <td class="left"> EXTINCTION_Z </td>
+            <td>  </td>
+            <td class="left"> Galactic extinction in the Z band (mag) </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> EXTINCTION_Y </td>
+            <td>  </td>
+            <td class="left"> Galactic extinction in the Y band (mag) </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> EXTINCTION_J </td>
+            <td>  </td>
+            <td class="left"> Galactic extinction in the J band (mag) </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> EXTINCTION_H </td>
+            <td>  </td>
+            <td class="left"> Galactic extinction in the H band (mag) </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> EXTINCTION_Ks </td>
+            <td>  </td>
+            <td class="left"> Galactic extinction in the Ks band (mag) </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> MAG_GAAP_u </td>
+            <td> mag </td>
+            <td class="left"> u-band GAaP magnitude optimal min_aper </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> MAGERR_GAAP_u </td>
+            <td> mag </td>
+            <td class="left"> u-band GAaP magnitude error optimal min_aper </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> FLUX_GAAP_u </td>
+            <td> count </td>
+            <td class="left"> u-band GAaP flux optimal min_aper </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> FLUXERR_GAAP_u </td>
+            <td> count </td>
+            <td class="left"> u-band GAaP flux error optimal min_aper </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> FLAG_GAAP_u </td>
+            <td>  </td>
+            <td class="left"> GAaP Flag for MAG_GAAP_u optimal min_aper </td>
+            <td> 1I </td>
+        </tr>
+        <tr>
+            <td class="left"> MAG_GAAP_g </td>
+            <td> mag </td>
+            <td class="left"> g-band GAaP magnitude optimal min_aper </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> MAGERR_GAAP_g </td>
+            <td> mag </td>
+            <td class="left"> g-band GAaP magnitude error optimal min_aper </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> FLUX_GAAP_g </td>
+            <td> count </td>
+            <td class="left"> g-band GAaP flux optimal min_aper </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> FLUXERR_GAAP_g </td>
+            <td> count </td>
+            <td class="left"> g-band GAaP flux error optimal min_aper </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> FLAG_GAAP_g </td>
+            <td>  </td>
+            <td class="left"> GAaP Flag for MAG_GAAP_g optimal min_aper </td>
+            <td> 1I </td>
+        </tr>
+        <tr>
+            <td class="left"> MAG_GAAP_r </td>
+            <td> mag </td>
+            <td class="left"> r-band GAaP magnitude optimal min_aper </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> MAGERR_GAAP_r </td>
+            <td> mag </td>
+            <td class="left"> r-band GAaP magnitude error optimal min_aper </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> FLUX_GAAP_r </td>
+            <td> count </td>
+            <td class="left"> r-band GAaP flux optimal min_aper </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> FLUXERR_GAAP_r </td>
+            <td> count </td>
+            <td class="left"> r-band GAaP flux error optimal min_aper </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> FLAG_GAAP_r </td>
+            <td>  </td>
+            <td class="left"> GAaP Flag for MAG_GAAP_r optimal min_aper </td>
+            <td> 1I </td>
+        </tr>
+        <tr>
+            <td class="left"> MAG_GAAP_i </td>
+            <td> mag </td>
+            <td class="left"> i-band GAaP magnitude optimal min_aper </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> MAGERR_GAAP_i </td>
+            <td> mag </td>
+            <td class="left"> i-band GAaP magnitude error optimal min_aper </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> FLUX_GAAP_i </td>
+            <td> count </td>
+            <td class="left"> i-band GAaP flux optimal min_aper </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> FLUXERR_GAAP_i </td>
+            <td> count </td>
+            <td class="left"> i-band GAaP flux error optimal min_aper </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> FLAG_GAAP_i </td>
+            <td>  </td>
+            <td class="left"> GAaP Flag for MAG_GAAP_i optimal min_aper </td>
+            <td> 1I </td>
+        </tr>
+        <tr>
+            <td class="left"> MAG_GAAP_Z </td>
+            <td> mag </td>
+            <td class="left"> Z-band GAaP magnitude optimal min_aper </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> MAGERR_GAAP_Z </td>
+            <td> mag </td>
+            <td class="left"> Z-band GAaP magnitude error optimal min_aper </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> FLUX_GAAP_Z </td>
+            <td> count </td>
+            <td class="left"> Z-band GAaP flux optimal min_aper </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> FLUXERR_GAAP_Z </td>
+            <td> count </td>
+            <td class="left"> Z-band GAaP flux error optimal min_aper </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> FLAG_GAAP_Z </td>
+            <td>  </td>
+            <td class="left"> GAaP Flag for MAG_GAAP_Z optimal min_aper </td>
+            <td> 1I </td>
+        </tr>
+        <tr>
+            <td class="left"> MAG_GAAP_Y </td>
+            <td> mag </td>
+            <td class="left"> Y-band GAaP magnitude optimal min_aper </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> MAGERR_GAAP_Y </td>
+            <td> mag </td>
+            <td class="left"> Y-band GAaP magnitude error optimal min_aper </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> FLUX_GAAP_Y </td>
+            <td> count </td>
+            <td class="left"> Y-band GAaP flux optimal min_aper </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> FLUXERR_GAAP_Y </td>
+            <td> count </td>
+            <td class="left"> Y-band GAaP flux error optimal min_aper </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> FLAG_GAAP_Y </td>
+            <td>  </td>
+            <td class="left"> GAaP Flag for MAG_GAAP_Y optimal min_aper </td>
+            <td> 1I </td>
+        </tr>
+        <tr>
+            <td class="left"> MAG_GAAP_J </td>
+            <td> mag </td>
+            <td class="left"> J-band GAaP magnitude optimal min_aper </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> MAGERR_GAAP_J </td>
+            <td> mag </td>
+            <td class="left"> J-band GAaP magnitude error optimal min_aper </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> FLUX_GAAP_J </td>
+            <td> count </td>
+            <td class="left"> J-band GAaP flux optimal min_aper </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> FLUXERR_GAAP_J </td>
+            <td> count </td>
+            <td class="left"> J-band GAaP flux error optimal min_aper </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> FLAG_GAAP_J </td>
+            <td>  </td>
+            <td class="left"> GAaP Flag for MAG_GAAP_J optimal min_aper </td>
+            <td> 1I </td>
+        </tr>
+        <tr>
+            <td class="left"> MAG_GAAP_H </td>
+            <td> mag </td>
+            <td class="left"> H-band GAaP magnitude optimal min_aper </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> MAGERR_GAAP_H </td>
+            <td> mag </td>
+            <td class="left"> H-band GAaP magnitude error optimal min_aper </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> FLUX_GAAP_H </td>
+            <td> count </td>
+            <td class="left"> H-band GAaP flux optimal min_aper </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> FLUXERR_GAAP_H </td>
+            <td> count </td>
+            <td class="left"> H-band GAaP flux error optimal min_aper </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> FLAG_GAAP_H </td>
+            <td>  </td>
+            <td class="left"> GAaP Flag for MAG_GAAP_H optimal min_aper </td>
+            <td> 1I </td>
+        </tr>
+        <tr>
+            <td class="left"> MAG_GAAP_Ks </td>
+            <td> mag </td>
+            <td class="left"> Ks-band GAaP magnitude optimal min_aper </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> MAGERR_GAAP_Ks </td>
+            <td> mag </td>
+            <td class="left"> Ks-band GAaP magnitude error optimal min_aper </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> FLUX_GAAP_Ks </td>
+            <td> count </td>
+            <td class="left"> Ks-band GAaP flux optimal min_aper </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> FLUXERR_GAAP_Ks </td>
+            <td> count </td>
+            <td class="left"> Ks-band GAaP flux error optimal min_aper </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> FLAG_GAAP_Ks </td>
+            <td>  </td>
+            <td class="left"> GAaP Flag for MAG_GAAP_Ks optimal min_aper </td>
+            <td> 1I </td>
+        </tr>
+        <tr>
+            <td class="left"> Agaper </td>
+            <td> arcsec </td>
+            <td class="left"> Major axis of GAaP aperture optimal min_aper (arcsec) </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> Bgaper </td>
+            <td> arcsec </td>
+            <td class="left"> Minor axis of GAaP aperture optimal min_aper (arcsec) </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> MAG_LIM_u </td>
+            <td> mag </td>
+            <td class="left"> u-band limiting magnitude optimal min_aper </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> MAG_LIM_g </td>
+            <td> mag </td>
+            <td class="left"> g-band limiting magnitude optimal min_aper </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> MAG_LIM_r </td>
+            <td> mag </td>
+            <td class="left"> r-band limiting magnitude optimal min_aper </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> MAG_LIM_i </td>
+            <td> mag </td>
+            <td class="left"> i-band limiting magnitude optimal min_aper </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> MAG_LIM_Z </td>
+            <td> mag </td>
+            <td class="left"> Z-band limiting magnitude optimal min_aper </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> MAG_LIM_Y </td>
+            <td> mag </td>
+            <td class="left"> Y-band limiting magnitude optimal min_aper </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> MAG_LIM_J </td>
+            <td> mag </td>
+            <td class="left"> J-band limiting magnitude optimal min_aper </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> MAG_LIM_H </td>
+            <td> mag </td>
+            <td class="left"> H-band limiting magnitude optimal min_aper </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> MAG_LIM_Ks </td>
+            <td> mag </td>
+            <td class="left"> Ks-band limiting magnitude optimal min_aper </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> Z_B </td>
+            <td>  </td>
+            <td class="left"> 9-band BPZ redshift estimate; peak of posterior probability distribution </td>
+            <td> 1D </td>
+        </tr>
+        <tr>
+            <td class="left"> Z_B_MIN </td>
+            <td>  </td>
+            <td class="left"> Lower bound of the 68% confidence interval of Z_B </td>
+            <td> 1D </td>
+        </tr>
+        <tr>
+            <td class="left"> Z_B_MAX </td>
+            <td>  </td>
+            <td class="left"> Upper bound of the 68% confidence interval of Z_B </td>
+            <td> 1D </td>
+        </tr>
+        <tr>
+            <td class="left"> T_B </td>
+            <td>  </td>
+            <td class="left"> Spectral type corresponding to Z_B </td>
+            <td> 1D </td>
+        </tr>
+        <tr>
+            <td class="left"> ODDS </td>
+            <td>  </td>
+            <td class="left"> Empirical ODDS of Z_B </td>
+            <td> 1D </td>
+        </tr>
+        <tr>
+            <td class="left"> Z_ML </td>
+            <td>  </td>
+            <td class="left"> 9-band BPZ maximum likelihood redshift </td>
+            <td> 1D </td>
+        </tr>
+        <tr>
+            <td class="left"> T_ML </td>
+            <td>  </td>
+            <td class="left"> Spectral type corresponding to Z_ML </td>
+            <td> 1D </td>
+        </tr>
+        <tr>
+            <td class="left"> CHI_SQUARED_BPZ </td>
+            <td>  </td>
+            <td class="left"> chi sqared value associated with Z_B </td>
+            <td> 1D </td>
+        </tr>
+        <tr>
+            <td class="left"> M_0 </td>
+            <td> mag </td>
+            <td class="left"> Reference magnitude for BPZ prior </td>
+            <td> 1D </td>
+        </tr>
+        <tr>
+            <td class="left"> BPZ_FILT </td>
+            <td>  </td>
+            <td class="left"> filters with good photometry (BPZ) </td>
+            <td> 1J </td>
+        </tr>
+        <tr>
+            <td class="left"> NBPZ_FILT </td>
+            <td>  </td>
+            <td class="left"> number of filters with good phot. (BPZ) </td>
+            <td> 1J </td>
+        </tr>
+        <tr>
+            <td class="left"> BPZ_NONDETFILT </td>
+            <td>  </td>
+            <td class="left"> filters with faint photometry (BPZ) </td>
+            <td> 1J </td>
+        </tr>
+        <tr>
+            <td class="left"> NBPZ_NONDETFILT </td>
+            <td>  </td>
+            <td class="left"> number of filters with faint phot. (BPZ) </td>
+            <td> 1J </td>
+        </tr>
+        <tr>
+            <td class="left"> BPZ_FLAGFILT </td>
+            <td>  </td>
+            <td class="left"> flagged filters (BPZ) </td>
+            <td> 1J </td>
+        </tr>
+        <tr>
+            <td class="left"> NBPZ_FLAGFILT </td>
+            <td>  </td>
+            <td class="left"> number of flagged filters (BPZ) </td>
+            <td> 1J </td>
+        </tr>
+        <tr>
+            <td class="left"> SG_FLAG </td>
+            <td>  </td>
+            <td class="left"> Star/Gal Classifier </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> MASK </td>
+            <td>  </td>
+            <td class="left"> 9-band mask information </td>
+            <td> 1J </td>
+        </tr>
+        <tr>
+            <td class="left"> THELI_NAME </td>
+            <td>  </td>
+            <td class="left"> THELI name for the tile </td>
+            <td> 16A </td>
+        </tr>
+        <tr>
+            <td class="left"> fitclass </td>
+            <td>  </td>
+            <td class="left"> fit class (=0 for galaxies)</td>
+            <td> 1I </td>
+        </tr>
+        <tr>
+            <td class="left"> bias_corrected_scalelength_pixels </td>
+            <td> pix </td>
+            <td class="left"> galaxy model scale length </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> bulge_fraction </td>
+            <td>  </td>
+            <td class="left"> galaxy model bulge fraction </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> model_flux </td>
+            <td> counts </td>
+            <td class="left"> galaxy model r-band flux </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> pixel_SNratio </td>
+            <td>  </td>
+            <td class="left"> SNR on the pixels </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> model_SNratio </td>
+            <td>  </td>
+            <td class="left"> SNR for model fit </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> contamination_radius </td>
+            <td> pix </td>
+            <td class="left"> Distance to nearest contaminating pixel </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> PSF_e1 </td>
+            <td>  </td>
+            <td class="left"> mean ellipticity of PSF, component 1 </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> PSF_e2 </td>
+            <td>  </td>
+            <td class="left"> mean ellipticity of PSF, component 2 </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> PSF_Strehl_ratio </td>
+            <td>  </td>
+            <td class="left"> Pseudo-Strehl ratio of PSF (flux fraction in central pixel) </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> PSF_Q11 </td>
+            <td>  </td>
+            <td class="left"> model PSF moment Q11 </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> PSF_Q22 </td>
+            <td>  </td>
+            <td class="left"> model PSF moment Q22 </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> PSF_Q12 </td>
+            <td>  </td>
+            <td class="left"> model PSF moment Q12 </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> star_galaxy_f_probability </td>
+            <td>  </td>
+            <td class="left"> Lensfit star/galaxy probability </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> r_correction </td>
+            <td>  </td>
+            <td class="left"> Lensfit size correction </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> 2D_measurement_variance </td>
+            <td>  </td>
+            <td class="left"> Lensfit measurement variance </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> mean_likelihood_e </td>
+            <td>  </td>
+            <td class="left"> Lensfit mean likelihoo ellipticity </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> neighbour_mag </td>
+            <td> mag </td>
+            <td class="left"> Lensfit neighbour magnitude </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> neighbour_distance </td>
+            <td> pix </td>
+            <td class="left"> Lensfit neighbour distance </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> catmag </td>
+            <td> mag </td>
+            <td class="left"> Lensfit input magnitude (same as MAG_AUTO) </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> n_exposures_used </td>
+            <td>  </td>
+            <td class="left"> Number of exposures used </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> cat_ID </td>
+            <td>  </td>
+            <td class="left"> Lensfit used ID (same as SeqNr) </td>
+            <td> 1J </td>
+        </tr>
+        <tr>
+            <td class="left"> delta_SNR </td>
+            <td>  </td>
+            <td class="left"> Lensift change in SNR between exposures - useful to detect asteroids </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> PSF_e1_exp1 </td>
+            <td>  </td>
+            <td class="left"> PSF model ellipticity component 1 on exposure 1 </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> PSF_e2_exp1 </td>
+            <td>  </td>
+            <td class="left"> PSF model ellipticity component 2 on exposure 1 </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> PSF_e1_exp2 </td>
+            <td>  </td>
+            <td class="left"> PSF model ellipticity component 1 on exposure 2 </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> PSF_e2_exp2 </td>
+            <td>  </td>
+            <td class="left"> PSF model ellipticity component 2 on exposure 2 </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> PSF_e1_exp3 </td>
+            <td>  </td>
+            <td class="left"> PSF model ellipticity component 1 on exposure 3 </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> PSF_e2_exp3 </td>
+            <td>  </td>
+            <td class="left"> PSF model ellipticity component 2 on exposure 3 </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> PSF_e1_exp4 </td>
+            <td>  </td>
+            <td class="left"> PSF model ellipticity component 1 on exposure 4 </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> PSF_e2_exp4 </td>
+            <td>  </td>
+            <td class="left"> PSF model ellipticity component 2 on exposure 4 </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> PSF_e1_exp5 </td>
+            <td>  </td>
+            <td class="left"> PSF model ellipticity component 1 on exposure 5 </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> PSF_e2_exp5 </td>
+            <td>  </td>
+            <td class="left"> PSF model ellipticity component 2 on exposure 5 </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> SeqNr_field </td>
+            <td>  </td>
+            <td class="left"> SeqNr in THELI_NAME </td>
+            <td> 1J </td>
+        </tr>
+        <tr>
+            <td class="left"> THELI_INT </td>
+            <td>  </td>
+            <td class="left"> Integer identifier for KiDS tile (unique in KiDS-N and KiDS-S each) </td>
+            <td> 1I </td>
+        </tr>
+        <tr>
+            <td class="left"> e1 </td>
+            <td>  </td>
+            <td class="left"> Lensfit ellipticity e1 - no m or c corr </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> e2 </td>
+            <td>  </td>
+            <td class="left"> Lensfit ellipticity e2 - no m or c corr </td>
+            <td> 1E </td>
+        </tr>
+        <tr>
+            <td class="left"> weight </td>
+            <td>  </td>
+            <td class="left"> Recalibrated Lensfit inverse variance weight </td>
+            <td> 1E </td>
+        </tr>
+    </table>
+
+    <h2 id="ack">Acknowledgment</h2>
+
+    <p>
+        We welcome independent analyses of the KiDS-1000 data products, provided that KiDS is acknowledged in any resulting publications.  Users of these data are required to include the following statement in their paper:
+    </p>
+
+    <p>
+        <i>Based on observations made with ESO Telescopes at the La Silla Paranal Observatory under programme IDs 177.A-3016, 177.A-3017, 177.A-3018 and 179.A-2004, and on data products produced by the KiDS consortium. The KiDS production team acknowledges support from: Deutsche Forschungsgemeinschaft, ERC, NOVA and NWO-M grants; Target; the University of Padova, and the University Federico II (Naples).</i>
+    </p>
+
+    <p>
+        Additionally, any publications should cite the relevant KiDS-1000 papers as follows:
+    </p>
+
+    <p>
+        <i>We use the gold sample of weak lensing and photometric redshift measurements from the fourth data release of the Kilo-Degree Survey (<a href="https://ui.adsabs.harvard.edu/abs/2019A%26A...625A...2K/exportcitation">Kuijken et al. 2019</a>, <a href="http://adsabs.net/cgi-bin/nph-bib_query?bibcode=2020A&A...637A.100W&data_type=BIBTEX">Wright et al. 2020</a>, <a href="https://arxiv.org/abs/2007.15635">Hildebrandt et al. 2021</a>, <a href="https://arxiv.org/abs/2007.01845">Giblin et al 2021</a>), hereafter referred to as KiDS-1000.  Cosmological parameter constraints from KiDS-1000 have been presented in <a href="https://arxiv.org/abs/2007.15633">Asgari et al 2021</a> (cosmic shear), <a href="https://arxiv.org/abs/2007.15632">Heymans et al 2021</a> (3x2pt) and <a href="https://arxiv.org/abs/2010.16416">Tr&ouml;ster et al 2021</a> (beyond &Lambda;CDM), with the methodology presented in <a href="https://arxiv.org/abs/2007.01844">Joachimi et al 2021</a>. </i>
+    </p>
+
+
+</div>
+
+</div>
+   <div style="clear: both;">&nbsp;</div>
+
+   <div id="footer">
+       <p class="copy">Website design: <a href="http://www.fenids.com" target="_new">Fenids Webdesign</a><br />&copy; KiDS</p>
+
+   </div>
+
+</div>
+
+</body> </html>
