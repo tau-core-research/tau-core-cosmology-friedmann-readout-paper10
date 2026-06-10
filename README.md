@@ -1605,6 +1605,28 @@ However, `validation_ready=false`: the tomographic caveat remains active and
 physical promotion remains blocked by open operator/amplitude/normalization
 requirements.
 
+The KiDS/COSEBIs tomographic/photo-z closure status ledger is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_tomographic_photoz_closure_status_policy_v1.csv
+data/derived/kids1000_cosebis_tomographic_photoz_closure_status_v1.csv
+data/derived/kids1000_cosebis_tomographic_photoz_closure_status_v1_summary.csv
+docs/kids1000_cosebis_tomographic_photoz_closure_status_v1.md
+scripts/build_kids1000_cosebis_tomographic_photoz_closure_status_v1.py
+scripts/validate_kids1000_cosebis_tomographic_photoz_closure_status_v1.py
+```
+
+This ledger computes no new score. It records the narrower post-reviewer
+status: the external photo-z/tomographic route is source-side closed
+(`h1_independent_evidence_complete=true`,
+`r4_leakage_review_complete=true`), the source-bin holdout signal survives
+diagnostically, and the best holdout-beating tomographic control remains
+control-only rather than a physical alternative. The allowed current claim is
+`source_side_photoz_closed_and_holdout_signal_survives_but_validation_blocked`.
+It reduces the tomographic/photo-z source-side concern, but it does not make the
+KiDS branch validation-ready: `validation_ready=false` and
+`physical_promotion_ready=false`.
+
 The endpoint jackknife/localization robustness audit is recorded in:
 
 ```text

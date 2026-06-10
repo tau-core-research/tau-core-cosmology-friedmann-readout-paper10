@@ -782,6 +782,16 @@ most dangerous tomographic control is not accepted as a physical alternative.
 Nevertheless, \texttt{validation\_ready=false}: the tomographic caveat remains
 active, and physical promotion remains blocked by open
 operator/amplitude/normalization requirements.
+We then add a narrower tomographic/photo-\(z\) closure-status ledger. This
+ledger uses the completed external photo-\(z\) reviewer response and records
+\texttt{h1\_independent\_evidence\_complete=true} and
+\texttt{r4\_leakage\_review\_complete=true} for the source-side photo-\(z\)
+route. It therefore reduces the photo-\(z\)/tomographic source-side concern.
+However, it computes no new score and does not change the validation boundary:
+the source-bin holdout remains diagnostic, the best holdout-beating control is
+still not promoted to a physical alternative, and
+\texttt{validation\_ready=false} until the physical-promotion blockers are
+closed.
 A second post-score localization audit keeps the same source-frozen theory
 vector and same nonnegative single-amplitude scoring rule, but evaluates
 predeclared jackknife masks. All \(20/20\) leave-one source-bin and
