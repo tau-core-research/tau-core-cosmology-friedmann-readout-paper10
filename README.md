@@ -561,6 +561,21 @@ redshift-correlated. This is a preflight result only: R5 control-resistance
 preflight and R6 independent leakage review remain required before any new void
 replay request.
 
+The R5 control-resistance preflight is:
+
+```text
+docs/void_source_basis_refinement_r5_control_resistance_preflight_v1.md
+data/derived/void_source_basis_refinement_r5_control_resistance_preflight_v1.csv
+data/derived/void_source_basis_refinement_r5_control_vectors_v1.csv
+data/derived/void_source_basis_refinement_r5_control_resistance_preflight_v1_summary.csv
+```
+
+It freezes five source-side control families for the five R4-passing features:
+zero, wrong-sign, deterministic row-shuffle, lower-quartile threshold, and
+upper-quartile threshold controls. This remains non-scoring and does not reopen
+void replay: R6 independent leakage review is still required before any endpoint
+request.
+
 The first lensing route-freeze check is recorded in:
 
 ```text
