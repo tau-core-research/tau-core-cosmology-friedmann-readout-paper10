@@ -1416,17 +1416,19 @@ data/derived/kids1000_cosebis_external_photoz_calibration_reviewer_handoff_packa
 data/derived/kids1000_cosebis_external_photoz_calibration_reviewer_handoff_package_v1.zip.sha256
 data/derived/kids1000_cosebis_external_photoz_calibration_reviewer_handoff_package_v1_manifest.csv
 data/derived/kids1000_cosebis_external_photoz_calibration_reviewer_handoff_package_v1_summary.csv
+docs/kids1000_cosebis_external_photoz_calibration_external_reviewer_instructions_v1.md
 docs/kids1000_cosebis_external_photoz_calibration_reviewer_handoff_package_v1.md
 scripts/build_kids1000_cosebis_external_photoz_calibration_reviewer_handoff_package_v1.py
 scripts/validate_kids1000_cosebis_external_photoz_calibration_reviewer_handoff_package_v1.py
 ```
 
-This ZIP packages the blank reviewer template, source manifest, automated
-leakage preflight, completed-response validation rule, short docs, and cached
-public source pages. It contains no endpoint residuals, endpoint scores, ranks,
-fit statistics, or post-score residual shapes. It is a handoff package only:
-R4 remains incomplete, H1 remains incomplete, and endpoint replay remains
-forbidden. Its verdict is `reviewer_handoff_package_ready_not_completed`.
+This ZIP packages the blank reviewer template, external reviewer instructions,
+source manifest, automated leakage preflight, completed-response validation
+rule, short docs, and cached public source pages. It contains no endpoint
+residuals, endpoint scores, ranks, fit statistics, or post-score residual
+shapes. It is a handoff package only: R4 remains incomplete, H1 remains
+incomplete, and endpoint replay remains forbidden. Its verdict is
+`reviewer_handoff_package_ready_not_completed`.
 The adjacent `.zip.sha256` sidecar is provided only for transfer integrity.
 
 The completed reviewer response validator is recorded in:

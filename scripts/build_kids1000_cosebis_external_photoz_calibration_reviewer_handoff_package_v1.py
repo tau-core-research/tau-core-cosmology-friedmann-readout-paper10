@@ -20,6 +20,7 @@ PACKAGE_FILES = [
     "data/derived/kids1000_cosebis_external_photoz_calibration_reviewer_attestation_template_v1.csv",
     "data/derived/kids1000_cosebis_external_photoz_calibration_reviewer_attestation_template_v1_summary.csv",
     "docs/kids1000_cosebis_external_photoz_calibration_reviewer_attestation_template_v1.md",
+    "docs/kids1000_cosebis_external_photoz_calibration_external_reviewer_instructions_v1.md",
     "data/derived/kids1000_cosebis_external_photoz_calibration_leakage_review_preflight_v1.csv",
     "data/derived/kids1000_cosebis_external_photoz_calibration_leakage_review_preflight_v1_summary.csv",
     "docs/kids1000_cosebis_external_photoz_calibration_leakage_review_preflight_v1.md",

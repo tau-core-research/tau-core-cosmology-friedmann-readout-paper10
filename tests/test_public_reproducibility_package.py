@@ -327,6 +327,7 @@ def test_public_files_exist() -> None:
         "data/derived/kids1000_cosebis_external_photoz_calibration_reviewer_handoff_package_v1.zip.sha256",
         "data/derived/kids1000_cosebis_external_photoz_calibration_reviewer_handoff_package_v1_manifest.csv",
         "data/derived/kids1000_cosebis_external_photoz_calibration_reviewer_handoff_package_v1_summary.csv",
+        "docs/kids1000_cosebis_external_photoz_calibration_external_reviewer_instructions_v1.md",
         "docs/kids1000_cosebis_external_photoz_calibration_reviewer_handoff_package_v1.md",
         "scripts/build_kids1000_cosebis_external_photoz_calibration_reviewer_handoff_package_v1.py",
         "scripts/validate_kids1000_cosebis_external_photoz_calibration_reviewer_handoff_package_v1.py",
@@ -5154,7 +5155,7 @@ def test_kids1000_cosebis_external_photoz_calibration_reviewer_handoff_package_i
     assert policy["h1_independent_evidence_complete"] == "false"
     assert policy["current_endpoint_replay_allowed"] == "false"
     assert summary["status"] == "EXTERNAL_PHOTOZ_CALIBRATION_REVIEWER_HANDOFF_PACKAGE_BUILT_NOT_COMPLETED"
-    assert summary["package_file_count"] == "16"
+    assert summary["package_file_count"] == "17"
     assert summary["review_completed"] == "false"
     assert summary["independent_reviewer_attestation_complete"] == "false"
     assert summary["r4_leakage_review_complete"] == "false"
