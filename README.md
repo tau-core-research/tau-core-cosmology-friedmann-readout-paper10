@@ -546,6 +546,21 @@ line-of-sight environment proxy. The layer remains non-scoring and keeps R4-R6
 open: redshift-independence preflight, control-resistance preflight, and
 independent leakage review are still required before any new void replay request.
 
+The R4 redshift/source-row independence preflight is:
+
+```text
+docs/void_source_basis_refinement_r4_independence_preflight_v1.md
+data/derived/void_source_basis_refinement_r4_independence_preflight_v1.csv
+data/derived/void_source_basis_refinement_r4_independence_preflight_v1_summary.csv
+```
+
+It tests seven R1-R3 source-side features against `zHD` and
+`source_row_index`. Five pass the frozen low-correlation threshold, while the
+distance-like void-center and wall-distance features remain moderately
+redshift-correlated. This is a preflight result only: R5 control-resistance
+preflight and R6 independent leakage review remain required before any new void
+replay request.
+
 The first lensing route-freeze check is recorded in:
 
 ```text

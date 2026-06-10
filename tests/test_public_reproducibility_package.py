@@ -173,6 +173,11 @@ def test_public_files_exist() -> None:
         "data/derived/low_z_pantheon_los_environment_v1.csv",
         "scripts/build_void_source_basis_refinement_r1_r3_source_attachment_v1.py",
         "scripts/validate_void_source_basis_refinement_r1_r3_source_attachment_v1.py",
+        "docs/void_source_basis_refinement_r4_independence_preflight_v1.md",
+        "data/derived/void_source_basis_refinement_r4_independence_preflight_v1.csv",
+        "data/derived/void_source_basis_refinement_r4_independence_preflight_v1_summary.csv",
+        "scripts/build_void_source_basis_refinement_r4_independence_preflight_v1.py",
+        "scripts/validate_void_source_basis_refinement_r4_independence_preflight_v1.py",
         "data/source_manifest/kids1000_lensing_route_v1.csv",
         "data/derived/kids1000_lensing_route_v1_head.csv",
         "data/derived/kids1000_lensing_route_v1_summary.csv",
@@ -1975,6 +1980,34 @@ def test_void_source_basis_refinement_r1_r3_source_attachment_v1_attaches_source
     assert int(summary["host_to_void_geometry_rows"]) == 424
     assert int(summary["los_environment_nonempty_rows"]) > 0
     assert summary["redshift_independence_preflight_complete"] == "false"
+    assert summary["control_resistance_preflight_complete"] == "false"
+    assert summary["leakage_review_complete"] == "false"
+    assert summary["source_unique_ready"] == "false"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["physical_validation_claimed"] == "false"
+
+
+def test_void_source_basis_refinement_r4_independence_preflight_v1_preserves_replay_block() -> None:
+    response = ROOT / "data/derived/low_z_pantheon_void_scope_replay_authorization_review_response_v1.csv"
+    if not response.exists():
+        pytest.skip("completed low-z void authorization response not present")
+    for command in [
+        ["python", "scripts/run_low_z_pantheon_void_replay_v1.py"],
+        ["python", "scripts/build_low_z_void_replay_diagnostics_v1.py"],
+        ["python", "scripts/build_void_source_basis_refinement_gate_v1.py"],
+        ["python", "scripts/build_void_source_basis_refinement_acquisition_manifest_v1.py"],
+        ["python", "scripts/build_void_source_basis_refinement_r1_r3_source_attachment_v1.py"],
+        ["python", "scripts/build_void_source_basis_refinement_r4_independence_preflight_v1.py"],
+        ["python", "scripts/validate_void_source_basis_refinement_r4_independence_preflight_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (ROOT / "data/derived/void_source_basis_refinement_r4_independence_preflight_v1_summary.csv").open(
+        newline=""
+    ) as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["redshift_independence_preflight_complete"] == "true"
+    assert int(summary["features_tested"]) == 7
+    assert int(summary["features_passing_low_correlation"]) >= 1
     assert summary["control_resistance_preflight_complete"] == "false"
     assert summary["leakage_review_complete"] == "false"
     assert summary["source_unique_ready"] == "false"
