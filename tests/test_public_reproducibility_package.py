@@ -147,6 +147,7 @@ def test_public_files_exist() -> None:
         "scripts/validate_low_z_pantheon_void_scope_replay_authorization_review_template_v1.py",
         "scripts/build_low_z_pantheon_void_scope_replay_authorization_review_package_v1.py",
         "scripts/validate_low_z_pantheon_void_scope_replay_authorization_review_package_v1.py",
+        "scripts/validate_low_z_pantheon_void_scope_replay_authorization_review_response_v1.py",
         "data/source_manifest/kids1000_lensing_route_v1.csv",
         "data/derived/kids1000_lensing_route_v1_head.csv",
         "data/derived/kids1000_lensing_route_v1_summary.csv",
@@ -1618,6 +1619,106 @@ def test_low_z_void_scope_replay_authorization_package_v1_is_handoff_only() -> N
     assert summary["contains_endpoint_scores"] == "false"
     assert summary["contains_fit_statistics"] == "false"
     assert summary["claim_boundary"] == "low_z_void_scope_replay_authorization_review_not_validation"
+
+
+def _low_z_void_replay_authorization_response_rows() -> list[dict[str, str]]:
+    with (
+        ROOT / "data/derived/low_z_pantheon_void_scope_replay_authorization_review_response_template_v1.csv"
+    ).open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    for row in rows:
+        row["review_completed"] = "true"
+        row["reviewer_id_or_role"] = "independent_low_z_void_scope_reviewer"
+        row["reviewer_response"] = "yes"
+        row["reviewer_rationale"] = "Reviewed source-side handoff only; no endpoint residuals, scores, or fits used."
+        row["forbidden_inputs_used"] = "false"
+        row["endpoint_run_allowed"] = "true"
+        row["physical_validation_claimed"] = "false"
+        if row["question_id"] == "Q2_low_z_rationale":
+            row["reviewer_response"] = "caveated_yes"
+        if row["question_id"] == "Q4_authorization":
+            row["reviewer_response"] = "GO_LOW_Z_VOID_REPLAY_PERMISSION_ONLY"
+    return rows
+
+
+def _write_low_z_void_replay_authorization_response(path: Path, rows: list[dict[str, str]]) -> None:
+    with path.open("w", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=list(rows[0].keys()), lineterminator="\n")
+        writer.writeheader()
+        writer.writerows(rows)
+
+
+def _low_z_void_replay_authorization_validator_cmd(response: Path, summary: Path) -> list[str]:
+    return [
+        "python",
+        str(ROOT / "scripts/validate_low_z_pantheon_void_scope_replay_authorization_review_response_v1.py"),
+        str(response),
+        "--summary-out",
+        str(summary),
+    ]
+
+
+def test_low_z_void_replay_authorization_response_validator_accepts_permission_only(
+    tmp_path: Path,
+) -> None:
+    rows = _low_z_void_replay_authorization_response_rows()
+    response = tmp_path / "low_z_void_replay_authorization_response.csv"
+    summary = tmp_path / "summary.csv"
+    _write_low_z_void_replay_authorization_response(response, rows)
+    subprocess.run(
+        _low_z_void_replay_authorization_validator_cmd(response, summary),
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    with summary.open(newline="") as f:
+        accepted = list(csv.DictReader(f))[0]
+    assert accepted["status"] == "LOW_Z_VOID_SCOPE_REPLAY_AUTHORIZATION_ACCEPTED_PERMISSION_ONLY"
+    assert accepted["review_completed"] == "true"
+    assert accepted["forbidden_inputs_used"] == "false"
+    assert accepted["endpoint_run_allowed"] == "true"
+    assert accepted["physical_validation_claimed"] == "false"
+    assert accepted["verdict"] == "low_z_void_replay_authorized_permission_only_not_validation"
+    assert accepted["claim_boundary"] == "low_z_void_scope_replay_authorization_review_not_validation"
+
+
+def test_low_z_void_replay_authorization_response_validator_rejects_forbidden_inputs(
+    tmp_path: Path,
+) -> None:
+    rows = _low_z_void_replay_authorization_response_rows()
+    rows[0]["forbidden_inputs_used"] = "true"
+    response = tmp_path / "low_z_void_replay_authorization_forbidden.csv"
+    summary = tmp_path / "summary.csv"
+    _write_low_z_void_replay_authorization_response(response, rows)
+    result = subprocess.run(
+        _low_z_void_replay_authorization_validator_cmd(response, summary),
+        cwd=ROOT,
+        text=True,
+        capture_output=True,
+    )
+    assert result.returncode != 0
+    assert "forbidden_inputs_used=false" in result.stderr
+    assert not summary.exists()
+
+
+def test_low_z_void_replay_authorization_response_validator_rejects_validation_claim(
+    tmp_path: Path,
+) -> None:
+    rows = _low_z_void_replay_authorization_response_rows()
+    rows[1]["physical_validation_claimed"] = "true"
+    response = tmp_path / "low_z_void_replay_authorization_validation_claim.csv"
+    summary = tmp_path / "summary.csv"
+    _write_low_z_void_replay_authorization_response(response, rows)
+    result = subprocess.run(
+        _low_z_void_replay_authorization_validator_cmd(response, summary),
+        cwd=ROOT,
+        text=True,
+        capture_output=True,
+    )
+    assert result.returncode != 0
+    assert "must not claim validation" in result.stderr
+    assert not summary.exists()
 
 
 def test_source_page_cache_is_hash_locked() -> None:
