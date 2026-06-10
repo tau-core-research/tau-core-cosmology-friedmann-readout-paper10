@@ -513,6 +513,12 @@ def test_public_files_exist() -> None:
         "docs/kids1000_cosebis_validation_readiness_ledger_v1.md",
         "scripts/build_kids1000_cosebis_validation_readiness_ledger_v1.py",
         "scripts/validate_kids1000_cosebis_validation_readiness_ledger_v1.py",
+        "data/source_manifest/kids1000_cosebis_physical_promotion_dependency_order_policy_v1.csv",
+        "data/derived/kids1000_cosebis_physical_promotion_dependency_order_v1.csv",
+        "data/derived/kids1000_cosebis_physical_promotion_dependency_order_v1_summary.csv",
+        "docs/kids1000_cosebis_physical_promotion_dependency_order_v1.md",
+        "scripts/build_kids1000_cosebis_physical_promotion_dependency_order_v1.py",
+        "scripts/validate_kids1000_cosebis_physical_promotion_dependency_order_v1.py",
         "data/source_manifest/kids1000_cosebis_tomographic_photoz_closure_status_policy_v1.csv",
         "data/derived/kids1000_cosebis_tomographic_photoz_closure_status_v1.csv",
         "data/derived/kids1000_cosebis_tomographic_photoz_closure_status_v1_summary.csv",
@@ -798,6 +804,8 @@ def test_public_files_exist() -> None:
         "scripts/validate_kids1000_cosebis_physical_promotion_blocker_ledger_v1.py",
         "scripts/build_kids1000_cosebis_validation_readiness_ledger_v1.py",
         "scripts/validate_kids1000_cosebis_validation_readiness_ledger_v1.py",
+        "scripts/build_kids1000_cosebis_physical_promotion_dependency_order_v1.py",
+        "scripts/validate_kids1000_cosebis_physical_promotion_dependency_order_v1.py",
         "scripts/build_kids1000_cosebis_tomographic_photoz_closure_status_v1.py",
         "scripts/validate_kids1000_cosebis_tomographic_photoz_closure_status_v1.py",
         "scripts/build_kids1000_cosebis_path_mapping_source_preflight_v1.py",
@@ -7199,3 +7207,54 @@ def test_kids1000_cosebis_tomographic_photoz_closure_status_reduces_caveat_witho
     )
     assert ledger["C3_validation_readiness"]["component_status"] == "VALIDATION_STILL_BLOCKED"
     assert ledger["C3_validation_readiness"]["blocks_validation"] == "true"
+
+
+def test_kids1000_cosebis_physical_promotion_dependency_order_keeps_leakage_and_gauge_next() -> None:
+    subprocess.run(
+        ["python", "scripts/build_kids1000_cosebis_physical_promotion_dependency_order_v1.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    subprocess.run(
+        ["python", "scripts/validate_kids1000_cosebis_physical_promotion_dependency_order_v1.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    with (ROOT / "data/derived/kids1000_cosebis_physical_promotion_dependency_order_v1_summary.csv").open(
+        newline=""
+    ) as f:
+        rows = list(csv.DictReader(f))
+    assert len(rows) == 1
+    summary = rows[0]
+    assert summary["status"] == "PHYSICAL_PROMOTION_DEPENDENCY_ORDER_BUILT_NOT_PROOF"
+    assert summary["dependency_rows"] == "5"
+    assert summary["open_physical_blocker_count"] == "5"
+    assert summary["next_primary_proof_gate"] == "B2_operator_leakage_theorem_open"
+    assert summary["next_parallel_proof_gate"] == "B3_gauge_quotient_descent_open"
+    assert (
+        summary["unit_normalization_waits_for"]
+        == "B2_operator_leakage_theorem_open;B3_gauge_quotient_descent_open"
+    )
+    assert (
+        summary["standard_null_waits_for"]
+        == "B2_operator_leakage_theorem_open;B3_gauge_quotient_descent_open;B4_response_unit_normalization_open"
+    )
+    assert summary["physical_promotion_ready"] == "false"
+    assert summary["validation_ready"] == "false"
+    assert summary["computes_new_scores"] == "false"
+    assert summary["uses_kids_data_vector_values_for_source_selection"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["physical_validation_claimed"] == "false"
+    assert summary["verdict"] == "physical_promotion_ordered_leakage_and_gauge_are_next_not_validation"
+
+    with (ROOT / "data/derived/kids1000_cosebis_physical_promotion_dependency_order_v1.csv").open(
+        newline=""
+    ) as f:
+        dependency_rows = {row["blocker_id"]: row for row in csv.DictReader(f)}
+    assert dependency_rows["B2_operator_leakage_theorem_open"]["dependency_status"] == "NEXT_PRIMARY_PROOF_GATE"
+    assert dependency_rows["B3_gauge_quotient_descent_open"]["dependency_status"] == "NEXT_PARALLEL_PROOF_GATE"
+    assert dependency_rows["B1_survey_native_operator_theorem_open"]["dependency_status"] == "FINAL_SYNTHESIS_PROOF_GATE"

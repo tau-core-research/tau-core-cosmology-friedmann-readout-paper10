@@ -1627,6 +1627,25 @@ It reduces the tomographic/photo-z source-side concern, but it does not make the
 KiDS branch validation-ready: `validation_ready=false` and
 `physical_promotion_ready=false`.
 
+The physical-promotion dependency order ledger is recorded in:
+
+```text
+data/source_manifest/kids1000_cosebis_physical_promotion_dependency_order_policy_v1.csv
+data/derived/kids1000_cosebis_physical_promotion_dependency_order_v1.csv
+data/derived/kids1000_cosebis_physical_promotion_dependency_order_v1_summary.csv
+docs/kids1000_cosebis_physical_promotion_dependency_order_v1.md
+scripts/build_kids1000_cosebis_physical_promotion_dependency_order_v1.py
+scripts/validate_kids1000_cosebis_physical_promotion_dependency_order_v1.py
+```
+
+This ledger computes no new score and proves no new theorem. It orders the five
+remaining physical-promotion blockers by logical dependency. The next primary
+proof gate is `B2_operator_leakage_theorem_open`; the next parallel proof gate
+is `B3_gauge_quotient_descent_open`. Response-unit normalization, the
+standard-lensing/no-Tau-source null-amplitude theorem, and the full
+survey-native operator theorem remain downstream. Its verdict is
+`physical_promotion_ordered_leakage_and_gauge_are_next_not_validation`.
+
 The endpoint jackknife/localization robustness audit is recorded in:
 
 ```text

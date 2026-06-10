@@ -271,6 +271,8 @@ def main() -> None:
     run(["python", "scripts/validate_kids1000_cosebis_response_unit_normalization_requirements_gate_v1.py"])
     run(["python", "scripts/build_kids1000_cosebis_physical_promotion_blocker_ledger_v1.py"])
     run(["python", "scripts/validate_kids1000_cosebis_physical_promotion_blocker_ledger_v1.py"])
+    run(["python", "scripts/build_kids1000_cosebis_physical_promotion_dependency_order_v1.py"])
+    run(["python", "scripts/validate_kids1000_cosebis_physical_promotion_dependency_order_v1.py"])
     run(["python", "scripts/build_kids1000_cosebis_validation_readiness_ledger_v1.py"])
     run(["python", "scripts/validate_kids1000_cosebis_validation_readiness_ledger_v1.py"])
     run(["python", "scripts/build_kids1000_cosebis_tomographic_photoz_closure_status_v1.py"])
