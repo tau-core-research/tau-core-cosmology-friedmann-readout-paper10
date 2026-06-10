@@ -605,6 +605,23 @@ The current response accepts the R6 review as
 as caveated source-side evidence, while endpoint replay and endpoint validation
 remain false and require a separate authorization gate.
 
+The separate refined-void endpoint replay authorization handoff is:
+
+```text
+docs/void_source_basis_refinement_endpoint_replay_authorization_review_v1.md
+data/source_manifest/void_source_basis_refinement_endpoint_replay_authorization_review_policy_v1.csv
+data/derived/void_source_basis_refinement_endpoint_replay_authorization_review_response_template_v1.csv
+data/derived/void_source_basis_refinement_endpoint_replay_authorization_review_template_v1_summary.csv
+data/derived/void_source_basis_refinement_endpoint_replay_authorization_review_package_v1.zip
+data/derived/void_source_basis_refinement_endpoint_replay_authorization_review_package_v1.zip.sha256
+data/derived/void_source_basis_refinement_endpoint_replay_authorization_review_package_v1_manifest.csv
+data/derived/void_source_basis_refinement_endpoint_replay_authorization_review_package_v1_summary.csv
+```
+
+This package is ready but not completed. It asks whether one predeclared refined
+low-z void source-basis replay may be authorized as permission-only, without
+turning the R6 source-side review into endpoint validation.
+
 The first lensing route-freeze check is recorded in:
 
 ```text

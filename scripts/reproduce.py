@@ -116,6 +116,10 @@ def main() -> None:
                     "data/derived/void_source_basis_refinement_r6_completed_reviewer_response_v1_summary.csv",
                 ]
             )
+            run(["python", "scripts/build_void_source_basis_refinement_endpoint_replay_authorization_review_template_v1.py"])
+            run(["python", "scripts/validate_void_source_basis_refinement_endpoint_replay_authorization_review_template_v1.py"])
+            run(["python", "scripts/build_void_source_basis_refinement_endpoint_replay_authorization_review_package_v1.py"])
+            run(["python", "scripts/validate_void_source_basis_refinement_endpoint_replay_authorization_review_package_v1.py"])
     run(["python", "scripts/check_kids1000_lensing_route_v1.py"])
     run(["python", "scripts/validate_kids1000_lensing_route_v1.py"])
     run(["python", "scripts/validate_kids1000_lensing_products_v1.py"])

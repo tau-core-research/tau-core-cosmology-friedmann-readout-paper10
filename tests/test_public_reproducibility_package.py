@@ -198,6 +198,18 @@ def test_public_files_exist() -> None:
         "data/derived/void_source_basis_refinement_r6_reviewer_handoff_package_v1_summary.csv",
         "data/derived/void_source_basis_refinement_r6_completed_reviewer_response_v1.csv",
         "data/derived/void_source_basis_refinement_r6_completed_reviewer_response_v1_summary.csv",
+        "docs/void_source_basis_refinement_endpoint_replay_authorization_review_v1.md",
+        "data/source_manifest/void_source_basis_refinement_endpoint_replay_authorization_review_policy_v1.csv",
+        "data/derived/void_source_basis_refinement_endpoint_replay_authorization_review_response_template_v1.csv",
+        "data/derived/void_source_basis_refinement_endpoint_replay_authorization_review_template_v1_summary.csv",
+        "data/derived/void_source_basis_refinement_endpoint_replay_authorization_review_package_v1.zip",
+        "data/derived/void_source_basis_refinement_endpoint_replay_authorization_review_package_v1.zip.sha256",
+        "data/derived/void_source_basis_refinement_endpoint_replay_authorization_review_package_v1_manifest.csv",
+        "data/derived/void_source_basis_refinement_endpoint_replay_authorization_review_package_v1_summary.csv",
+        "scripts/build_void_source_basis_refinement_endpoint_replay_authorization_review_template_v1.py",
+        "scripts/validate_void_source_basis_refinement_endpoint_replay_authorization_review_template_v1.py",
+        "scripts/build_void_source_basis_refinement_endpoint_replay_authorization_review_package_v1.py",
+        "scripts/validate_void_source_basis_refinement_endpoint_replay_authorization_review_package_v1.py",
         "scripts/build_void_source_basis_refinement_r6_reviewer_template_v1.py",
         "scripts/validate_void_source_basis_refinement_r6_reviewer_template_v1.py",
         "scripts/build_void_source_basis_refinement_r6_reviewer_handoff_package_v1.py",
@@ -2141,6 +2153,38 @@ def test_void_source_basis_refinement_r6_completed_response_v1_closes_source_sid
     assert summary["contains_endpoint_data"] == "false"
     assert summary["endpoint_replay_allowed"] == "false"
     assert summary["endpoint_validation_claimed"] == "false"
+
+
+def test_void_source_basis_refinement_endpoint_replay_authorization_package_v1_is_handoff_only() -> None:
+    r6_response = ROOT / "data/derived/void_source_basis_refinement_r6_completed_reviewer_response_v1.csv"
+    if not r6_response.exists():
+        pytest.skip("completed R6 void reviewer response not present")
+    for command in [
+        [
+            "python",
+            "scripts/validate_void_source_basis_refinement_r6_completed_reviewer_response_v1.py",
+            str(r6_response),
+            "--summary-out",
+            "data/derived/void_source_basis_refinement_r6_completed_reviewer_response_v1_summary.csv",
+        ],
+        ["python", "scripts/build_void_source_basis_refinement_endpoint_replay_authorization_review_template_v1.py"],
+        ["python", "scripts/validate_void_source_basis_refinement_endpoint_replay_authorization_review_template_v1.py"],
+        ["python", "scripts/build_void_source_basis_refinement_endpoint_replay_authorization_review_package_v1.py"],
+        ["python", "scripts/validate_void_source_basis_refinement_endpoint_replay_authorization_review_package_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (
+        ROOT
+        / "data/derived/void_source_basis_refinement_endpoint_replay_authorization_review_package_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["review_completed"] == "false"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["contains_endpoint_residuals"] == "false"
+    assert summary["contains_endpoint_scores"] == "false"
+    assert summary["contains_fit_statistics"] == "false"
+    assert int(summary["package_file_count"]) > 5
 
 
 def test_source_page_cache_is_hash_locked() -> None:
