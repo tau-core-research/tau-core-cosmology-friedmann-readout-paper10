@@ -530,6 +530,22 @@ properties, supernova host-to-void geometry, line-of-sight environment,
 redshift-independence preflight, control-resistance preflight, and independent
 leakage review. It attaches no sources yet and opens no replay.
 
+The first R1-R3 source attachment layer is:
+
+```text
+docs/void_source_basis_refinement_r1_r3_source_attachment_v1.md
+data/derived/void_source_basis_refinement_r1_r3_source_attachment_v1.csv
+data/derived/void_source_basis_refinement_r1_r3_source_attachment_v1_summary.csv
+data/derived/low_z_pantheon_void_geometry_join_v1.csv
+data/derived/low_z_pantheon_los_environment_v1.csv
+```
+
+It attaches the source-native object-level void catalogue, builds a residual-blind
+low-z Pantheon host/SN-to-void geometry join, and builds a fixed-window
+line-of-sight environment proxy. The layer remains non-scoring and keeps R4-R6
+open: redshift-independence preflight, control-resistance preflight, and
+independent leakage review are still required before any new void replay request.
+
 The first lensing route-freeze check is recorded in:
 
 ```text
