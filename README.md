@@ -366,6 +366,22 @@ while the deterministic shuffled void/web control remains marginally better.
 This points to a void-source-basis or shared-amplitude-grammar diagnostic, not
 to endpoint claim promotion.
 
+The first void-channel inactivity diagnostic is:
+
+```text
+data/derived/void_channel_inactivity_diagnostic_v1_summary.csv
+data/derived/void_channel_inactivity_diagnostic_v1_profile.csv
+docs/void_channel_inactivity_diagnostic_v1.md
+scripts/build_void_channel_inactivity_diagnostic_v1.py
+scripts/validate_void_channel_inactivity_diagnostic_v1.py
+```
+
+It finds that the source-native void basis is active on only
+`0.310722100656` of the Pantheon rows, versus `0.972283005106` for the web
+basis, and that every non-zero frozen `omega_void` profile worsens relative to
+`omega_void=0`. This preserves the next action as a void mapping/source-basis
+audit before any endpoint scoring is reopened.
+
 The first lensing route-freeze check is recorded in:
 
 ```text

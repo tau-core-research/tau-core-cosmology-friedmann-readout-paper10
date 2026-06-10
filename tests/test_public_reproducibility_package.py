@@ -113,6 +113,11 @@ def test_public_files_exist() -> None:
         "docs/void_web_combined_endpoint_diagnostics_v1.md",
         "scripts/build_void_web_combined_endpoint_diagnostics_v1.py",
         "scripts/validate_void_web_combined_endpoint_diagnostics_v1.py",
+        "data/derived/void_channel_inactivity_diagnostic_v1_summary.csv",
+        "data/derived/void_channel_inactivity_diagnostic_v1_profile.csv",
+        "docs/void_channel_inactivity_diagnostic_v1.md",
+        "scripts/build_void_channel_inactivity_diagnostic_v1.py",
+        "scripts/validate_void_channel_inactivity_diagnostic_v1.py",
         "data/source_manifest/kids1000_lensing_route_v1.csv",
         "data/derived/kids1000_lensing_route_v1_head.csv",
         "data/derived/kids1000_lensing_route_v1_summary.csv",
@@ -1418,6 +1423,37 @@ def test_void_web_combined_endpoint_diagnostics_v1_identifies_void_inactive_fail
     assert rows["source_native_void_web"]["void_channel_active_at_best"] == "false"
     assert rows["source_native_void_web"]["web_channel_active_at_best"] == "true"
     assert float(summary["shuffled_minus_candidate_chi2"]) < 0.0
+
+
+def test_void_channel_inactivity_diagnostic_v1_preserves_void_mapping_blocker() -> None:
+    subprocess.run(
+        ["python", "scripts/build_void_channel_inactivity_diagnostic_v1.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    subprocess.run(
+        ["python", "scripts/validate_void_channel_inactivity_diagnostic_v1.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    with (ROOT / "data/derived/void_channel_inactivity_diagnostic_v1_summary.csv").open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    with (ROOT / "data/derived/void_channel_inactivity_diagnostic_v1_profile.csv").open(newline="") as f:
+        profile = list(csv.DictReader(f))
+    assert summary["status"] == "DIAGNOSTIC_COMPLETE_NOT_VALIDATION"
+    assert summary["combined_candidate_void_channel_active_at_best"] == "false"
+    assert summary["combined_candidate_equals_web_only_chi2"] == "true"
+    assert float(summary["void_nonzero_fraction"]) < float(summary["web_nonzero_fraction"])
+    assert float(summary["best_nonzero_void_delta_chi2_vs_zero"]) > 0.0
+    assert summary["diagnostic_verdict"] == (
+        "void_basis_has_limited_support_and_nonzero_void_amplitudes_do_not_improve_frozen_profiles"
+    )
+    assert summary["physical_validation_claimed"] == "false"
+    assert {row["physical_validation_claimed"] for row in profile} == {"false"}
 
 
 def test_source_page_cache_is_hash_locked() -> None:

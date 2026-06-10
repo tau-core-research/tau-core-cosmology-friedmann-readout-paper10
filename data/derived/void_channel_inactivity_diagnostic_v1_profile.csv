@@ -1,0 +1,11 @@
+profile_source,omega_void,best_chi2,best_omega_m,best_mu_web,physical_validation_claimed,claim_boundary,delta_chi2_vs_omega_void_zero
+source_native_void_only,-0.2,1218.24864763,0.4,0,false,void_channel_inactivity_diagnostic_not_validation,8.06301012
+source_native_void_only,-0.1,1212.8128519,0.36,0,false,void_channel_inactivity_diagnostic_not_validation,2.62721439
+source_native_void_only,0,1210.18563751,0.32,0,false,void_channel_inactivity_diagnostic_not_validation,0
+source_native_void_only,0.1,1210.93791018,0.3,0,false,void_channel_inactivity_diagnostic_not_validation,0.75227267
+source_native_void_only,0.2,1217.277077,0.26,0,false,void_channel_inactivity_diagnostic_not_validation,7.09143949
+void_only,-0.2,1233.45269939,0.38,0,false,void_channel_inactivity_diagnostic_not_validation,9.93591409
+void_only,-0.1,1227.20598779,0.36,0,false,void_channel_inactivity_diagnostic_not_validation,3.68920249
+void_only,0,1223.5167853,0.32,0,false,void_channel_inactivity_diagnostic_not_validation,0
+void_only,0.1,1223.67961549,0.3,0,false,void_channel_inactivity_diagnostic_not_validation,0.16283019
+void_only,0.2,1229.26599412,0.26,0,false,void_channel_inactivity_diagnostic_not_validation,5.74920882
