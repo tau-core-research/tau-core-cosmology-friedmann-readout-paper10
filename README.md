@@ -214,6 +214,26 @@ DESI shape/readout blocks have only narrow, caveated surrogate covariance
 support. Cross-probe covariance or a reviewed block-diagonal independence
 attestation remains missing, so endpoint scoring is still disabled.
 
+A block-diagonal independence reviewer handoff package is frozen in:
+
+```text
+data/source_manifest/joint_block_diagonal_independence_review_policy_v1.csv
+data/derived/joint_block_diagonal_independence_review_response_template_v1.csv
+data/derived/joint_block_diagonal_independence_review_package_v1.zip
+data/derived/joint_block_diagonal_independence_review_package_v1.zip.sha256
+data/derived/joint_block_diagonal_independence_review_package_v1_manifest.csv
+data/derived/joint_block_diagonal_independence_review_package_v1_summary.csv
+docs/joint_block_diagonal_independence_review_package_v1.md
+scripts/build_joint_block_diagonal_independence_review_package_v1.py
+scripts/validate_joint_block_diagonal_independence_review_package_v1.py
+```
+
+Its current status is
+`JOINT_BLOCK_DIAGONAL_INDEPENDENCE_REVIEW_PACKAGE_READY_NOT_COMPLETED`. This is
+a reviewer package only: it asks whether a block-diagonal surrogate may be
+prepared as a future protocol shell and keeps endpoint scoring, endpoint
+validation, and cosmological validation disabled.
+
 A standalone reviewer handoff package is also available for reviewers who do
 not have repository access:
 
