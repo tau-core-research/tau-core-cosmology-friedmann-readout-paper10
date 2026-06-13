@@ -28,19 +28,27 @@ Koushiappas cosmological uncertainty proposal, in which non-sharp
 scale-factor and expansion-rate variables modify Friedmann closure and can
 produce late-time acceleration without adding new particles or fields. The
 present paper does not validate that model and does not claim that Tau Core
-explains dark energy. Instead, it translates the idea into a source-frozen
-cosmological audit: independent void-maturity and cosmic-web-anisotropy
-source blocks define activation functions before distance, growth, lensing,
-and CMB-safety observables are scored. The target signature is not merely
-\(w(z)\ne -1\), but a Lambda-like distance readout paired with
-web/environment-dependent growth or lensing residuals. The first release is a
-protocol scaffold with claim boundaries, source blocks, null controls,
-reproducibility checks, diagonal- and full-covariance pilot scores, and a first
-KiDS COSEBIs endpoint score. No cosmological validation or discovery claim is
-made. The present evidence should instead be read as a viability signal for a
-Tau Core cosmology audit program: source-frozen morphology/projection channels
-can be operationalized, scored, and controlled without immediately collapsing
-into a post-hoc residual fit.
+explains dark energy. Instead, it translates the idea into a two-stage
+source-frozen cosmological audit. First, projection/readout source channels
+are tested separately: void/web distance and growth proxies, observer/path
+proxies, time/clock proxies, DESI shape/readout proxies, KiDS lensing
+proxies, and ACT lensing/path proxies. Some channels show control-surviving or
+otherwise suggestive structure, while others are weak, control-dominated, or
+explicitly negative. Second, the already frozen channel summaries are combined
+in a joint preflight layer. A best-justified joint kernel built only from the
+currently positive-support channels is positive and remains positive under five
+source-side weighting stresses, but it is still not a joint endpoint
+validation. The theory-side scaffold is the current Tau Core readout-basis
+discipline: source, path, time, closure, and null channels must be separated,
+and any future physical source must pass activation, quotient-survival,
+closure-stability, and 4D-readout-survival gates. The target signature is not
+merely \(w(z)\ne -1\), but a Lambda-like distance readout paired with
+web/environment-dependent growth or lensing residuals. No cosmological
+validation or discovery claim is made. The present evidence should be read as a
+source-frozen, control-aware viability audit: individual channels can be
+operationalized and the combined pattern is nonempty, but the current result
+remains pre-validation rather than evidence for a new gravitational or
+dark-energy law.
 \end{abstract}
 
 \section{Scope and non-claims}
@@ -50,6 +58,21 @@ read as a protocol scaffold, not as a discovery paper. It is downstream of the
 finite-memory cosmology diagnostic in Paper 5~\cite{Paper5FiniteMemory} and
 inherits leakage-prevention discipline from Papers 8 and 9
 ~\cite{Paper8ForwardReadout,Paper9ProjectionReadout}.
+It also uses the current Tau Core readout-basis discipline only operationally:
+branch channels must be declared and source-frozen before scoring, and the
+stronger projection-induction interpretation remains a future derivation target
+rather than an assumption required by the numerical audit.
+
+The paper is organized around two evidence levels.  The first level is
+\emph{source-by-source}: each readout channel is frozen, audited, and, where
+authorized, scored against its own controls before any cross-channel
+interpretation is allowed.  The second level is \emph{joint}: only after these
+separate outcomes are recorded do we assemble a multi-channel preflight ledger
+and ask whether the pattern is collectively suggestive.  This ordering is
+important.  A single positive branch is not treated as validation, and a single
+negative branch is not treated as a Tau Core falsification unless the
+source-side morphology/projection basis is complete and the branch has failed
+its predeclared controls.
 
 The allowed claim is:
 
@@ -70,6 +93,67 @@ The disallowed claims are:
 \item that CMB maps directly show a Tau Core effect;
 \item that a perturbation-level covariant Tau Core cosmology has been derived.
 \end{itemize}
+
+\section{Evidence architecture}
+
+The audit has the following claim hierarchy:
+
+\begin{enumerate}[leftmargin=1.5em]
+\item \textbf{Source-side readiness.}  A public source product, transform rule,
+normalization rule, forbidden-field ledger, and control suite are frozen before
+endpoint residuals are inspected.  This level may promote a route to
+review-ready or replay-ready status, but not to validation.
+\item \textbf{Single-channel replay.}  A channel may be scored only after the
+source-side choices are frozen and, where required, externally reviewed.  The
+result is classified as control-surviving, weak, neutral, or control-dominated.
+\item \textbf{Joint preflight.}  The frozen single-channel summaries may then
+be combined with predeclared weights or block transforms.  This tests whether
+the whole source/readout program has a coherent sign pattern.  It is not a
+joint cosmological likelihood.
+\item \textbf{Future joint endpoint.}  A validation-facing result would require
+a single predeclared multi-probe likelihood with covariance-aware controls,
+shuffled-channel tests, wrong-channel tests, and source-complete channel
+definitions.  This paper does not reach that level.
+\end{enumerate}
+
+Table~\ref{tab:evidence-architecture} summarizes how the current artifacts fit
+this hierarchy.  The main point is that the paper does not contain one
+monolithic ``Tau Core fit''.  It contains a sequence of source-frozen channel
+tests, followed by an explicitly weaker joint-preflight synthesis.
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{p{0.22\linewidth}p{0.32\linewidth}p{0.34\linewidth}}
+\toprule
+Evidence level & What was tested & Current reading \\
+\midrule
+Void/web distance and growth & Pantheon, SDSS growth, BAO/RSD, CMB-safety
+source routes & Pipeline works, but distance/growth pilots are weak or
+model-selection negative; no void/web detection. \\
+Observer/path low-\(z\) & Source-frozen sky/path basis functions and
+observer-orientation controls & Narrow observer/path signals survive some
+immediate controls; enriched proxy stacking does not automatically help. \\
+Time/clock and DESI shape/readout & Cosmic-chronometer, radial BAO, and DESI
+shape-route source proxies & Simple time proxies are weak or blocked; DESI
+shape/readout gives a positive but narrow permission-only signal. \\
+KiDS/COSEBIs lensing & Source-frozen COSEBIs endpoint with null, tomographic,
+mode, and kernel audits & Structured low-tail endpoint signal, but
+tomographic and operator-level blockers prevent validation. \\
+ACT lensing/path & Source-side ACT \(K_{\rm path}\) proxy with curl and
+frequency-difference controls & Preserved negative/control-dominated result;
+the caveated K-path route is not rescued. \\
+Joint channel layer & Already frozen channel summaries combined as protocol
+weights/block scores and a best-justified support kernel & Positive preflight
+signal; best-justified kernel is robust to five source-side weighting stresses,
+but still not a joint likelihood or validation. \\
+\bottomrule
+\end{tabular}
+\caption{High-level evidence architecture.  The first rows are separate
+source-by-source audits.  The final row is a joint preflight synthesis of those
+already recorded outcomes, not an independent validation likelihood.}
+\label{tab:evidence-architecture}
+\end{table}
 
 \section{External motivation}
 
@@ -206,989 +290,73 @@ The corresponding lensing shell is
 Here \(W_W\) must be frozen from a cosmic-web-anisotropy source block before
 growth or lensing residuals are scored.
 
-\section{Data blocks}
 
-The intended public data blocks are summarized in
-Table~\ref{tab:data-blocks}. The table is a work order, not a completed
-measurement.
+\section{Data blocks and source-channel audit summary}
 
-\begin{table}[h]
-\centering
-\small
-\begin{tabular}{lll}
-\toprule
-Block & Candidate public sources & Role \\
-\midrule
-Distance & DESI BAO, SNe, \(H(z)\), CMB priors & test \(E_D(z)\) \\
-Void maturity & void catalogues & freeze \(W_V(a)\) \\
-Web anisotropy & cosmic-web classifiers & freeze \(W_W(a)\), \(Q_{\rm env}\) \\
-Growth & RSD \(f\sigma_8\), clustering & test \(\mu_\tau\) \\
-Lensing & weak lensing, CMB lensing, cluster lensing & test \(\Sigma_{\rm lens}\) \\
-CMB safety & Planck/LAMBDA products & early safety and lensing controls \\
-\bottomrule
-\end{tabular}
-\caption{Planned source blocks for the Friedmann-readout audit. DESI data
-products~\cite{DESIDR2BAO2025,DESIDR2Products2025}, Planck products
-~\cite{Planck2018Cosmology,PlanckLegacyArchive}, and NASA LAMBDA
-~\cite{NASALAMBDA}, the public Cosmic Chronometers data page
-~\cite{CosmicChronometersData}, SDSS cosmic-web and eBOSS/LSS products
-~\cite{SDSSCosmicWebVAC,SDSSDR16LSS}, and KiDS-1000 lensing products
-~\cite{KiDS1000Lensing} are examples of public source routes.}
-\label{tab:data-blocks}
-\end{table}
+The detailed source-channel ledgers are long, because each route records source
+products, forbidden endpoint fields, review status, control status, and replay
+permissions.  To keep the main paper readable, the full route-by-route ledger is
+moved to the supplementary source file
+\url{supplement_route_ledgers.tex}.  The main text retains the scientific
+summary needed to interpret the numerical results.
 
-The repository also contains a source-freeze manifest:
-\[
-\texttt{data/source\_manifest/paper10\_source\_freeze\_manifest.csv}.
-\]
-It records candidate public source families, whether the source has merely been
-selected or remains blocked, the planned local artifact path, and the endpoint
-fields forbidden during source selection. In the current manifest, the first
-source-selection audit has identified candidate public source routes for all
-required blocks, but no source row is yet \texttt{FETCHED\_FROZEN}. This is the
-key distinction: source-family selection is not endpoint readiness. These
-blocks cannot be used for endpoint scoring until the public source product,
-version, transformation rule, and checksum policy are frozen.
-
-\section{Leakage prevention}
-
-The audit follows a source-freeze discipline:
+The audit uses six operational source-channel families:
 
 \begin{enumerate}[leftmargin=1.5em]
-\item Freeze void maturity \(W_V\) before distance residual scoring.
-\item Freeze web anisotropy \(W_W\) and \(Q_{\rm env}\) before growth/lensing scoring.
-\item Keep CMB primary maps as early-safety and consistency controls.
-\item Run shuffled environment labels and wrong-proxy nulls.
-\item Do not use target residuals to choose activation functions.
+\item \textbf{Distance and void/web channels.} Pantheon+, SDSS growth/BAO/RSD,
+void catalogues, web/environment proxies, and CMB-safety checks define the
+minimal distance/growth pipeline.  The present void/web proxy runs are useful
+pipeline tests but are weak, AIC-negative, or control-limited.
+\item \textbf{Observer/path channels.} Low-redshift observer/path basis functions
+and sky/path controls test whether line-of-sight or observer-frame projection
+information carries residual structure.  The narrow observer/path replay is one
+of the current positive-support channels, but it is not population validation.
+\item \textbf{Time/clock channels.} Cosmic-chronometer and BAO/time-readout
+routes test whether expansion-time readout proxies can be source-grounded.  The
+simple time bases remain control-limited or source-blocked in this release.
+\item \textbf{DESI shape/readout channels.} DESI BAO shape/readout routes provide
+a narrow, row-sensitive positive permission replay.  They enter the
+best-justified joint kernel as positive support, but not as validation.
+\item \textbf{KiDS/COSEBIs lensing channels.} KiDS low-mode COSEBIs provide the
+strongest structured single-channel signal.  Tomographic, operator, and physical
+promotion blockers remain open, so this is endpoint evidence but not validation.
+\item \textbf{ACT lensing/path channels.} ACT \(K_{\rm path}\) products are
+preserved as a controlled negative/diagnostic route: the latest caveated replay
+is control-dominated, with curl-null controls beating the candidate.
 \end{enumerate}
 
-This is the cosmological analogue of the matched-vs-wrong and non-overlap
-ledger discipline used in Papers 8 and 9.
+This source-channel summary is the basis for the later joint-preflight layer.
+It is important that channels are not promoted merely because they would improve
+a combined score.  Positive joint support is assigned only after a channel has a
+source-frozen route and at least local control survival; otherwise it remains a
+negative, diagnostic, or null-control branch.
 
-In the current scaffold, the validation script
-\(\texttt{scripts/validate\_source\_freeze.py}\) checks that the manifest covers
-the required blocks and explicitly forbids endpoint leakage fields such as
-distance residuals, growth residuals, lensing residuals, fit-improvement flags,
-and post-hoc environment labels. Passing this script is not a data result; it is
-a precondition for a later real-data pilot.
+\section{Leakage prevention and reproducibility summary}
 
-The repository further includes a compact provenance cache of the official
-source landing pages. The acquisition script
-\(\texttt{scripts/acquire\_source\_pages.py}\) records the landing-page payloads,
-byte counts, and SHA-256 hashes, while
-\(\texttt{scripts/validate\_cached\_source\_pages.py}\) verifies the committed
-cache during reproduction. These cached pages are not raw survey products and
-are not used to compute cosmological observables; they only make the source
-routes auditable without requiring live network access during reproduction.
+The main leakage-prevention rule is that source choices precede endpoint
+scoring.  Each replay-eligible channel must freeze its source product, transform
+rule, normalization rule, forbidden endpoint fields, and control family before
+using endpoint residuals or fit scores.  Completed reviewer responses may reduce
+source-side caveats or authorize a narrow replay, but they are not allowed to set
+validation flags.
 
-A second preflight artifact,
-\(\texttt{data/source\_manifest/paper10\_product\_freeze\_plan.csv}\),
-declares the product role, planned local path, transformation-rule identifier,
-covariance policy, mask or selection policy, and forbidden endpoint fields for
-each source family. In this scaffold every product row has
-\(\texttt{endpoint\_allowed=false}\). Thus the protocol now specifies the next
-data-acquisition step, but still does not contain endpoint data or a
-measurement result.
+The repository implements this discipline through executable artifacts rather
+than prose-only declarations:
 
-The next void/web-specific preflight artifact is a source-native freeze plan.
-It selects a preferred source-native void route through a VAST/SDSS DR7 archive
-candidate~\cite{VASTSDSSDR7VoidZenodo} and a preferred web route through the
-SDSS DR17 MCPM cosmic-web catalogue identified by the SDSS value-added
-catalogue page~\cite{SDSSCosmicWebVAC}. This artifact exists because the
-current \(W_{\rm void}+W_{\rm web}\) pilot still uses redshift/scale-factor
-proxy bases. The rows in this new plan are selected but not fetched, and
-endpoint scoring remains disabled; they freeze candidate routes, not numerical
-endpoint inputs.
+\begin{itemize}[leftmargin=1.2em]
+\item source manifests in \texttt{data/source\_manifest/};
+\item derived score and control ledgers in \texttt{data/derived/};
+\item route-specific explanations in \texttt{docs/};
+\item build and validation scripts in \texttt{scripts/};
+\item public reproducibility checks in \texttt{tests/test\_public\_reproducibility\_package.py};
+\item a one-command reproduction entry point, \texttt{python scripts/reproduce.py}.
+\end{itemize}
 
-After that route-selection gate, the current repository also freezes the first
-source-native void/web products. The void side contains a VAST/SDSS DR7
-Planck2018 maximal void table with 1163 rows and its NSA mask. The web side
-contains the SDSS DR17 MCPM SlimeMold galaxy catalogue. Its first FITS table
-extension contains 638820 rows, and the provider sha1sum file is frozen as an
-additional provenance check. These files are checksum-locked and source-native,
-but still not endpoint inputs: the transform from catalogue quantities to
-\(W_{\rm void}\) and \(W_{\rm web}\) scoring columns remains a future frozen
-gate.
-
-The current package then adds that first transform as a separate non-scoring
-design-matrix step. It maps the maximal-void catalogue to a cumulative
-source-only void load and the MCPM catalogue to a redshift-binned web-density
-load. In the retained Pantheon+ scope, 426 rows receive nonzero void support and
-1333 rows receive nonzero web support. A separate source-native full-covariance
-pilot can score these columns under the same distance-only grammar. It improves
-\(\chi^2\) by \(0.508\) relative to the flat-\(\Lambda\)CDM branch, but loses
-under AIC by \(3.49\), and the deterministic shuffled control still reaches a
-lower \(\chi^2\). This is therefore a useful source-native pipeline step, not a
-void/web detection and not endpoint validation.
-
-The first growth-side extension freezes six SDSS final BAO/RSD
-\(f\sigma_8(z)\) summary points from the public SDSS final-measurements table
-and attaches the source-native \(W_{\rm web}\) basis to those redshifts. This
-diagonal-summary pilot improves \(\chi^2\) by \(0.306\) relative to a simple
-growth-index \(\Lambda\)CDM branch, but loses under AIC by \(1.69\). The
-wrong-sign control is equally good on the symmetric pilot grid, so the run does
-not establish a preferred web direction. Its value is narrower: it shows how
-the web channel enters a growth-side observable and why the next real gate must
-use the official compressed-parameter covariance or a fuller RSD likelihood.
-
-That next covariance gate is included as a separate SDSS multi-tracer
-BAO/RSD pilot. The repository fetches and hash-locks the official DR16
-LRG+ELG compressed BAO/RSD products and uses the Fourier-space six-component
-vector
-\[
-\{D_M/r_d,D_H/r_d,f\sigma_8\}_{z=0.70,0.845}
-\]
-with its published \(6\times6\) covariance. In this pilot \(W_{\rm web}\)
-acts only on the two growth entries, while the BAO entries remain in the
-shared covariance block. The result is essentially neutral: the web branch
-improves \(\chi^2\) by only \(0.010\), loses under AIC by \(1.99\), and the
-wrong-sign control reaches the same best \(\chi^2\). This is therefore a useful
-multi-probe covariance check and seminegative control, not evidence for a
-preferred web-growth direction.
-
-After the FLRW-consistency audit, the repository records these source-native
-distance and growth pilots in a separate void/web endpoint-readiness ledger.
-The ledger has four components: Pantheon distance, SDSS growth, SDSS
-multi-tracer BAO/RSD, and CMB safety. It records no endpoint-ready scoring
-component. The CMB-safety component passes only as a known-limit support check;
-the scoring-facing components remain blocked by AIC loss, shuffled or
-wrong-sign controls, and near-zero full-covariance signal. The next legitimate
-void/web step is therefore a predeclared combined multiblock endpoint protocol
-with joint null controls and a unified information criterion, not promotion of
-any isolated pilot.
-That protocol is now frozen only as a shell: the active families are
-\(W_{\rm void}\) and \(W_{\rm web}\), \(W_{\rm path}\) and \(W_{\rm time}\)
-remain disabled, and the future score must combine distance, growth, and
-multi-tracer covariance blocks under a shared information criterion with
-block-drop and shuffled/wrong-family controls. No combined likelihood or
-endpoint score is computed in the present paper.
-A separate authorization-review template is also frozen. It remains
-uncompleted and keeps endpoint execution disabled; a future combined run
-requires an accepted permission-only response based on the protocol and
-source-side readiness artifacts, not on residuals or fit statistics.
-
-The first CMB-safety artifact is even narrower. It is not a CMB likelihood and
-does not use CMB maps. It only asks whether the currently active late-time
-void/web source-native bases vanish outside their low-redshift support. Using a
-conservative safety floor \(z=10\) and a recombination proxy \(z=1089.92\), the
-check finds
-\[
-W_{\rm void}(z)=W_{\rm web}(z)=0
-\]
-at both probe redshifts. This is a known-limit sanity check: the present
-late-time pilots do not directly modify the early-universe CMB-safety regime.
-It is not evidence for a CMB-detected Tau Core effect.
-
-The lensing block is advanced only to a route-freeze stage. The repository
-records the public KiDS-1000 cosmic-shear tarball route and verifies its HEAD
-metadata, including availability, content type, and content length. It does not
-fetch or redistribute the tarball and contains no KiDS data vector, covariance
-matrix, posterior chain, lensing residual, or fit statistic. A future lensing
-pilot must first freeze the tomographic-bin policy, statistic choice
-\((\mathrm{COSEBIs},\xi_\pm,\mathrm{bandpowers})\), covariance block, mask
-policy, and readout policy before any \(W_{\rm web}\) or \(W_{\rm path}\)
-lensing score can be interpreted.
-
-The next lensing preflight step then checksum-locks the KiDS-1000 cosmic-shear
-tarball and builds a non-scoring inventory. The tarball contains three FITS
-summary-statistic products, and the route selects exactly one source-side
-COSEBIs FITS member as the first narrow future lensing statistic route. This is
-motivated by the KiDS release documentation, which identifies COSEBIs as the
-fiducial analysis statistic for the cosmic-shear products. The artifact remains
-endpoint disabled: it records file membership and the future COSEBIs route, not
-a lensing likelihood or a Tau Core lensing score.
-
-Finally, the selected COSEBIs FITS product is inspected at the HDU-policy level.
-The frozen roles are \( \mathrm{COVMAT} \) for the \(300\times300\) covariance
-matrix, \(\mathrm{En}\) for the 300-row COSEBIs data-vector table, and
-\(\mathrm{NZ\_SOURCE}\) for the 119-row source redshift-distribution table.
-The covariance is positive definite. This closes the first source-side
-lensing-survival route down to an identifiable statistic and covariance block,
-but it still does not define a theory prediction, likelihood, residual, or Tau
-Core lensing amplitude.
-
-The COSEBIs data-vector structure is then frozen at the tomographic/mode level.
-The selected \(\mathrm{En}\) table contains five source bins, 15
-upper-triangular tomographic bin pairs, and 20 COSEBIs modes per pair, for 300
-data-vector rows. This closes the source-side pair/mode inventory required by a
-future lensing pilot, but still does not choose a mode cut, invert the
-covariance, define a theory vector, or score any \(W_{\rm web}\) or
-\(W_{\rm path}\) lensing residual.
-
-The covariance block is separately audited as a readiness object. The selected
-\(\mathrm{COVMAT}\) matrix is checked for shape, symmetry, positive diagonal,
-eigenvalue spectrum, condition number, and Cholesky readiness. No inverse
-covariance is saved, and no likelihood is evaluated. Thus the lensing route now
-has a source-side statistic, data-vector structure, and covariance-readiness
-record, but it remains below the endpoint threshold until the theory-vector,
-mode-cut, mask, tomographic-weight, and covariance-inversion policies are
-predeclared.
-
-The first mask/mode-cut policy is intentionally conservative: all 300
-source-side COSEBIs rows are retained, covering all 15 tomographic pairs and
-modes \(1,\ldots,20\). No row, tomographic pair, or mode is removed using
-endpoint residuals, fit statistics, posterior chains, or model-performance
-information. This makes the later lensing route more restrictive rather than
-more flexible: any future physically motivated cut must be declared in a new
-source-side policy before scoring.
-
-The tomographic-pair retention weights are likewise frozen to a neutral
-pre-score rule: every retained pair receives unit source-retention weight. These
-are not likelihood weights and not fitted amplitudes. They only record that no
-tomographic pair is upweighted or downweighted using endpoint residuals,
-posterior chains, or fit-improvement information. Statistical coupling remains
-reserved for a future predeclared covariance-inversion policy.
-
-The covariance-subselection policy then retains the full \(300\times300\)
-covariance block. It records the contiguous 20-row covariance intervals
-corresponding to each retained tomographic pair, but removes no covariance rows
-or columns. No inverse covariance is saved at this stage. This keeps the lensing
-route source-complete while still below the likelihood endpoint.
-
-The covariance-inversion policy is also frozen, but only as a future numerical
-method: a Cholesky solve against the full covariance, without materializing or
-storing an inverse covariance matrix. The endpoint-family geometry gate is now
-resolved below, but the solve is still not executed in the present artifact
-because the lensing scoring protocol remains a frozen-not-run shell.
-
-The theory-vector gate is declared next. Its parent policy remains
-endpoint-disabled and declarative: it fixes the future target length to the 300
-retained COSEBIs rows and keeps the lensing route restricted to \(W_{\rm web}\)
-and \(W_{\rm path}\), while forbidding use of KiDS data-vector values, posterior
-chains, residuals, or fit-improvement flags to choose the vector. A separate
-source-frozen unit-amplitude shell is then built from the frozen mapping basis
-and a predeclared unit-mean \(n^{-1/2}\) mode-shape rule. This is still not a
-prediction: it contains no residual, likelihood, AIC value, null-control score,
-or endpoint validation.
-The companion template materializes the 300-row tomographic-pair/mode interface
-and freezes row order before the source-frozen shell is assembled.
-
-The web/path mapping gate is also declared but not computed. It requires future
-source-frozen web-environment, lensing-path mask or depth-map, redshift-kernel,
-and null sky-rotation or pair-shuffle products before a COSEBIs theory vector
-can be constructed. The mapping policy explicitly forbids KiDS data-vector
-values, posterior chains, residuals, fit-improvement flags, and post-hoc sky
-direction choices.
-
-One of those required source products is then advanced from a declaration to a
-source-side inventory: the selected \(\mathrm{NZ\_SOURCE}\) table is read to
-record the redshift-distribution area, mean redshift, and support interval of
-each of the five KiDS source bins. This redshift-kernel inventory is not a
-lensing prediction. It does not evaluate a COSEBIs theory vector, does not
-reweight bins using endpoint behavior, and does not use the KiDS data-vector
-values, residuals, posterior chains, or fit statistics.
-
-The path-projection input is treated more conservatively. A source-side gap
-audit scans the selected KiDS-1000 cosmic-shear release tarball and records no
-accepted standalone footprint, depth map, survey mask map, random catalogue, or
-equivalent path-load product. The word ``mask'' appears in the statistic FITS
-filenames, but this is not accepted as a survey path map. Thus the
-\(W_{\rm path}\) lensing route remains blocked on an external source-frozen
-path/mask/depth product before any path-aware COSEBIs theory vector can be
-constructed.
-The next route-freeze step identifies the official KiDS DR4 mask-script route:
-the preferred DR4.1 nine-band mask wget script is hash-frozen and lists 196
-external mask FITS products. Those FITS products are not downloaded in the
-present package, and no mask map or path-mapping vector is parsed. This narrows
-the blocker from an unknown missing product to a source-frozen external mask
-route.
-The preferred route is then parsed into a 196-tile filename-coordinate
-inventory. This gives a source-frozen route geometry index, but still not a
-survey footprint polygon, pixel-level path weight, COSEBIs row assignment, or
-theory vector.
-A first route-health check then performs HEAD requests for the first, middle,
-and last mask products in the preferred route. All three return HTTP 200 with
-FITS content and positive content length. This is still only metadata: no mask
-FITS file is downloaded and no path-aware lensing theory vector is constructed.
-The same predeclared first/middle/last sample is then materialized as a tiny
-source-side mask subset. The three downloaded mask FITS products are hash-frozen
-and parsed only to record image shapes and finite/nonzero pixel summaries. This
-establishes that the route can supply actual mask images, but it still does not
-construct a \(W_{\rm path}\) mapping, connect mask pixels to the 300 COSEBIs
-rows, or evaluate any lensing score.
-From this subset we build only a source-observable shell: filename-derived tile
-coordinates plus a centered zero-fraction shell across the three frozen masks.
-The mask-value semantics are not interpreted as physical lensing path weights in
-this gate. The shell is therefore a pre-mapping observable, not a COSEBIs
-mapping vector, theory vector, or endpoint likelihood input.
-We then assemble a 300-row design skeleton: each COSEBIs target row carries its
-tomographic pair, mode index, the relevant source-bin redshift summaries, and
-the preferred-route sky span. This is still only a layout. No tile/path weight,
-mapping-vector element, or theory-vector element is evaluated.
-Finally, the design layout is expanded to the full target-row by route-tile
-domain of \(300\times 196=58{,}800\) rows. This freezes the future mapping
-domain without assigning footprint overlap, depth/path weight, web-environment
-label, mapping-vector element, or likelihood contribution.
-The admissible future weight rule is then declared symbolically as a product of
-redshift-pair, route-tile, footprint-overlap, path/depth, web-environment, and
-normalization factors. This rule is not yet computable: the footprint-overlap
-and web-environment factors are missing, the path/depth factor is only a
-three-mask partial shell, and no numeric weight is produced.
-The corresponding acquisition plan turns this into concrete source-side
-requirements: obtain or derive a footprint/row-tile overlap rule, promote the
-path/depth factor beyond the three-mask shell, attach a source-frozen
-web-environment catalogue or predeclared null-web control, and define the
-normalization only after nonzero source factors exist. No products are fetched
-and no factors are evaluated in this gate.
-We also freeze a source-product route manifest for the next step. It lists ten
-candidate routes: two already-supported locks, five blocker-resolution
-candidates, and three control/deferred routes. This manifest is still
-source-side only: it fetches no products, computes no factor values, and does
-not construct a path mapping or score.
-Finally, a blocker-resolution order policy fixes the future source-side order:
-footprint overlap first, then path/depth support, web/environment support,
-normalization, mapping-vector construction, and null controls. Thus later
-normalization or null-control steps cannot bypass the missing footprint
-support.
-For the first blocker, a \texttt{F\_overlap} shell declares the future accepted schema:
-one source-frozen support row per COSEBIs target-row by route-tile domain entry
-over the full $300\times196=58{,}800$ domain. The shell accepts official
-footprint geometry or source-native full-mask overlap derivations, but computes
-no overlap values in this paper.
-The corresponding availability audit preserves the current negative state: the
-route script and the three-mask subset are present, but neither an accepted
-official footprint geometry product nor a full 196-mask source-native product
-set is available. Therefore \texttt{F\_overlap} remains unresolved.
-The full-mask acquisition manifest makes this explicit at tile level: three
-mask products are locally present and 193 remain missing.
-These missing products are split into ten future acquisition batches, with
-large FITS products assigned to an ignored cache rather than to the committed
-paper repository.
-A first batch dry run then inspects batch 0, containing 20 planned product URLs
-and cache paths, without downloading any FITS file. The dry run is included in
-the public reproduction script, while the manual \texttt{--execute} acquisition
-mode is kept outside the public reproduce path and writes only to ignored local
-execution logs. This gate computes no overlap fraction, path-mapping vector,
-theory vector, prediction, residual, or endpoint score; it is only a
-leakage-safe acquisition-readiness check.
-The following batch-promotion checklist is deliberately negative in the current
-release: no fetched-batch review artifact, checksum manifest, complete batch
-accounting, or forbidden-input audit has been committed. The checklist therefore
-keeps promotion disabled and does not read ignored local execution logs. Passing
-such a checklist in the future would still not be an overlap rule; it would only
-make a fetched batch eligible for a separate source-native overlap derivation.
-The checklist now records the filled-review validator as available, but this is
-only a future-review readiness condition and does not change the present
-negative promotion status.
-To make that future step auditable, the repository also freezes the required
-schema for a fetched-batch execution-review artifact: product identity, URL,
-cache path, HTTP status, byte count, SHA-256, review status, reviewer role,
-forbidden-input flags, and claim-boundary flags. This is a schema declaration
-only; no fetched-batch review artifact is present in the current release.
-An empty batch-0 template is also materialized in that schema. It contains the
-20 planned product rows, but no network status, checksum, timestamp, reviewer
-entry, or source-freeze decision. It is therefore a review template, not an
-execution log.
-A separate filled-review validator is provided to check this template, or a
-future manually completed execution-review artifact, against the frozen schema
-and dry-run batch identities. This validator is not a promotion gate and does
-not compute an overlap rule, mapping vector, theory vector, prediction,
-residual, or score.
-The corresponding F-overlap resolution decision records that no endpoint-grade
-overlap route is accepted yet: the three source-frozen masks are retained only
-as a caveated partial path-mask control, while the official-geometry,
-full-196-mask, and batch-0 dry-run routes remain unresolved.
-A separate partial-control scoring protocol freezes only a future diagnostic
-grammar for that caveated three-mask control. It does not run scoring, emit
-score artifacts, or create a population endpoint claim.
-The accompanying partial-control mapping shell materializes only the
-\(300\times3=900\) source-side support table connecting COSEBIs rows to the
-three caveated mask controls; it computes no mapping value, theory vector,
-residual, or score.
-A further source-only diagnostic artifact freezes partial-control mapping
-values on this same support table using
-\[
-  m_{\rm pc} =
-  s_{\rm mask}\,
-  w_{\bar z}(i,j)\,
-  n^{-1/2},
-\]
-where \(s_{\rm mask}\) is the three-mask shell value, \(w_{\bar z}(i,j)\) is a
-normalized mean-redshift pair weight from the KiDS \(NZ\_SOURCE\) inventory,
-and \(n\) is the COSEBIs mode index. This is a caveated partial-control
-mapping-value artifact only: it is not an endpoint mapping vector, not a
-COSEBIs theory vector, and it computes no residual, likelihood, score, or
-validation statistic.
-The next scoring-facing, still non-scoring object is a partial-control design
-matrix: the \(900\) mapping values are reduced to six deterministic 300-row
-branches, namely a zero baseline, the three individual mask-sample branches, a
-positive-mask mean, and a sign-flipped positive-mask control. This design
-matrix is not an endpoint theory vector. It is only the branch interface that a
-future diagnostic partial-control score would use after a separate scoring
-protocol is opened.
-We then run that caveated diagnostic score, still outside endpoint validation.
-The retained KiDS COSEBIs \(En\) vector is compared to each predeclared branch
-using the full \(300\times300\) covariance and a nonnegative one-amplitude rule.
-The best positive-mask branch lowers the diagnostic \(\chi^2\) by about
-\(183.6\) relative to the zero branch. This number is not a KiDS endpoint
-claim: in this simplified three-mask control the positive branches are
-amplitude-degenerate, and the run is included only as a scoring-pipeline smoke
-test showing that the partial-control route can be evaluated without changing
-source labels, branch labels, masks, weights, or mode cuts after seeing
-residuals.
-We then replay the observed positive-mask diagnostic branch against \(1008\)
-deterministic null controls: sky rotations, tomographic-pair shuffles,
-wrong-channel activations, and sign-flip controls. One tomographic-pair shuffle
-slightly outperforms the observed branch, so the observed branch is not an
-absolute winner. The conservative plus-one tail fraction is \(0.001982160555\).
-This is retained only as a diagnostic rarity check for the caveated
-partial-control route, not as endpoint validation and not as a KiDS lensing
-population claim.
-Finally, before promoting any such branch to an endpoint route, we audit the
-branch geometry itself without using the KiDS \(En\) data vector. The positive
-partial-control branches are effectively rank one: their covariance-metric
-absolute cosine is numerically unity and the maximum positive-branch relative
-shape residual is about \(2.2\times10^{-12}\). This audit is a useful negative
-result. It explains why the diagnostic score can be interesting while still
-being insufficient for endpoint evidence: the three-mask branch family must be
-replaced by a non-degenerate, source-frozen full-route or official-geometry
-mapping before endpoint scoring.
-We therefore add a non-degenerate mapping promotion gate. It freezes six
-conditions before any endpoint promotion is allowed: endpoint-grade
-\texttt{F\_overlap}, source-preflight readiness, endpoint-family geometry, a
-frozen 300-row theory vector, null controls after mapping, and leakage guards.
-The earlier positive partial-control branch remains rank one and is preserved
-as a negative diagnostic result. It is not used as the endpoint family. Instead
-we audit the source-frozen candidate theory shell together with the
-predeclared source-frozen null-control theory replay. This endpoint comparison
-family contains \(1009\) vectors over the \(300\) retained COSEBIs rows and has
-effective rank \(15\) in both the raw Euclidean and covariance-metric geometry
-audits. The geometry audit uses the KiDS covariance only as a metric; it does
-not read the KiDS \(E_n\) data-vector values, residuals, posterior chains, fit
-statistics, or endpoint scores. With this replacement, all six promotion gates
-pass. Endpoint scoring remains disabled because no explicit endpoint scoring
-run is executed in this release.
-The scoring-facing view is then summarized by an endpoint-readiness ledger:
-the COSEBIs data-vector structure, covariance matrix, covariance solve policy,
-theory-vector row-interface template, mapping-to-template join contract,
-F-overlap resolution/control decision, web/path source mapping, source-preflight
-mapping basis, and source-frozen unit-amplitude theory-vector shell are
-source-side ready. The predeclared null controls have also been replayed against
-the source-frozen theory shell as deterministic control-vector digests, without
-computing null scores. After the endpoint-family geometry audit, the readiness
-ledger records twelve ready components and no remaining readiness blocker.
-A corresponding scoring-protocol shell freezes only the future grammar
-\(\chi^2=(d-t)^T C^{-1}(d-t)\), with a Cholesky covariance solve and required
-baseline, candidate, wrong-channel, shuffled/rotated null, AIC, and control-rank
-outputs. The protocol shell itself is not a likelihood run. After explicit
-approval, the first endpoint scoring run applies this frozen grammar to the
-retained 300-row KiDS COSEBIs \(E_n\) vector. The source-frozen candidate
-improves on the zero baseline by
-\[
-  \Delta\chi^2=-183.6152665217,
-  \qquad
-  \Delta{\rm AIC}=-181.6152665217,
-\]
-using the full covariance Cholesky solve and a nonnegative single-amplitude
-branch rule. Against the 1008 predeclared null-control vectors, the candidate
-ranks \(3/1009\) by both \(\chi^2\) and AIC, giving a plus-one null-tail
-fraction \(0.002973240832507\). This is a KiDS endpoint score, not validation:
-the KiDS data vector enters only after source-side choices, candidate vectors,
-and null controls are frozen, and two predeclared null controls still score
-better than the candidate.
-The post-score diagnostic localizes this caveat: both better controls are
-tomographic-pair shuffles, while the sky-rotation, wrong-channel, and sign-flip
-control families do not beat the candidate. The next robustness question is
-therefore whether the signal is stable to stricter tomographic-pair structure
-tests, not whether it is explained by a generic wrong-channel activation.
-A follow-up robustness run answers this in the same claim-safe sense. Against
-all \(119\) non-identity five-bin label permutations and \(1000\)
-auto/cross-preserving pair shuffles, the candidate ranks \(4/1120\), with
-plus-one tail fraction \(0.003571428571429\). Three structured controls beat
-the candidate, so this still is not validation, but the low-tail behavior
-survives a stricter tomographic-structure null ensemble.
-We then audit whether the better tomographic controls are plausible physical
-alternatives. The top-control plausibility ledger reads the top 25 controls and
-the source-side redshift kernel inventory, but computes no new score. The three
-better controls are classified as two control-only non-global pair shuffles and
-one conditional source-systematic candidate that would require independent
-photometric-redshift or tomographic-calibration support. Thus the controls do
-not refute the endpoint signal in the present source state, but they do block a
-validation claim.
-We therefore freeze a tomographic holdout/calibration gate before any further
-endpoint replay. This gate computes no new score and authorizes no replay. It
-requires, first, independent photometric-redshift or tomographic-calibration
-evidence; second, a source-bin or tomographic-pair holdout partition fixed
-before scoring; third, a source-side rule for when a tomographic control may be
-promoted to a calibration-systematic candidate; fourth, a frozen replay
-protocol; and fifth, a leakage validator. Observed COSEBIs values, endpoint
-residuals, \(\Delta\chi^2\), null-control ranks, best-control identity, and
-post-score residual shape are forbidden source-selection inputs. The resulting
-gate verdict is that a tomographic holdout is required before endpoint replay
-or validation.
-As the first non-scoring response to that gate, we freeze a deterministic
-source-bin holdout manifest. The manifest uses only the committed
-source-native redshift-kernel inventory: in fold \(k\), all tomographic pairs
-that touch source bin \(k\) are held out and all remaining pairs are
-calibration pairs. This freezes the holdout partition but does not complete the
-independent-calibration requirement. Endpoint replay therefore remains
-forbidden until independent photometric-redshift or tomographic-calibration
-evidence is attached.
-We also add a source-side photo-\(z\)/tomographic evidence ledger. It accepts
-the checksum-frozen KiDS lensing tarball, cached KiDS DR4 lensing-page
-photo-\(z\)/SOM-gold documentation markers, and the source-native
-\texttt{NZ\_SOURCE} five-bin inventory, but it keeps independent external
-photo-\(z\) or tomographic calibration open. This ledger computes no new score
-and does not authorize endpoint replay.
-Finally, we freeze a source-side acquisition plan for the missing H1 evidence:
-an external photo-\(z\) calibration reference or product manifest, an
-independent SOM-gold or redshift-distribution validation manifest,
-tomographic-bin quality or \(\Delta z\) prior evidence, and a leakage review
-for any attached calibration artifact. At the acquisition-plan stage no route
-was attached, so H1 remained open and endpoint replay remained forbidden.
-We then attach cached public sources for the first three H1 routes: the
-KiDS-1000 redshift-calibration article, its arXiv metadata page, and the
-official KiDS DR4 SOM-gold catalogue page. These sources support the
-photo-\(z\)/\(n(z)\), SOM-gold, five-bin tomographic, and clustering-redshift
-calibration context. An automated leakage-review preflight then checks that the
-attached source artifacts and their manifest builder do not use endpoint
-residuals, endpoint scores, post-score ranks, or fit statistics. This automated
-preflight passes, but it is not an independent reviewer attestation. At this
-handoff stage the full R4 leakage review route therefore remained open, H1 was
-not yet complete, and endpoint replay remained forbidden. We also provide a
-blank independent reviewer attestation template that states the source-side
-questions and forbidden endpoint fields for the remaining R4 step; it is a
-handoff artifact, not a completed review response.
-A completed source-side reviewer response was then imported and validated. The
-response accepts the R4 leakage review as caveated source-side evidence, marks
-the independent reviewer attestation, R4 leakage review, and H1 external
-photo-\(z\)/tomographic-calibration evidence gates as source-side complete, and
-explicitly keeps \texttt{endpoint\_replay\_allowed=false} and
-\texttt{endpoint\_validation\_claimed=false}. A separate closure ledger records
-this current post-reviewer source-side state. The ledger does not rewrite the
-earlier prerequisite artifacts, does not compute new endpoint scores, and does
-not authorize endpoint replay; any future endpoint replay requires a separate
-explicit human authorization gate.
-A separate endpoint-replay authorization response was then validated. It gives
-\texttt{GO\_SOURCE\_SIDE\_REPLAY\_PERMISSION\_ONLY} for one predeclared replay
-under the existing frozen source-side state, while keeping
-\texttt{forbidden\_inputs\_used=false} and
-\texttt{endpoint\_validation\_claimed=false}. This changes the replay permission
-state only; it does not promote the KiDS endpoint to validation.
-Under this permission-only gate the endpoint replay reproduces the frozen
-COSEBIs result: \(\Delta\chi^2=-183.6152665217\), \(\Delta{\rm AIC}=-181.6152665217\),
-candidate rank \(3/1009\) against the predeclared null controls, and plus-one
-tail fraction \(0.002973240832507\). The replay summary keeps
-\texttt{endpoint\_validation\_claimed=false}, so the claim-safe reading remains a
-low-tail endpoint signal, not KiDS validation.
-A post-replay tomographic-control disambiguation ledger then classifies the
-three tomographic controls that beat the candidate in the stricter
-tomographic-structure robustness ensemble. Two are control-only
-non-global relabel or pair-shuffle controls, one is only a conditional
-source-systematic candidate requiring independent photo-\(z\) or tomographic
-support, and none is accepted as a physical alternative. This ledger computes
-no new endpoint score and keeps
-\texttt{endpoint\_validation\_claimed=false}. The resulting status is therefore
-that the tomographic controls block validation but do not refute the low-tail
-endpoint signal.
-A source-frozen tomographic holdout replay gives the next diagnostic check. For
-each of the five source-bin folds, the nonnegative amplitude is frozen using
-only calibration tomographic pairs that do not touch the held-out source bin,
-and the held-out pairs are then scored. The candidate improves over the zero
-baseline in \(4/5\) held-out folds, with aggregate holdout
-\(\Delta\chi^2=-521.8035067179\). However, one of the candidate-beating
-tomographic controls remains slightly better in the same replay. Thus the
-holdout replay preserves the low-tail signal diagnostically, but it does not
-remove the tomographic-control caveat and does not constitute KiDS validation.
-A final narrow source-evidence gate audits this remaining holdout-beating
-control, \texttt{seeded\_auto\_cross\_shuffle\_702759}. The mapping is not
-induced by a single global source-bin relabel: its auto-pair map would imply
-\(1\mapsto2\) and \(2\mapsto3\), so a global relabel would send
-\(1\text{--}2\) to \(2\text{--}3\), while the observed control sends
-\(1\text{--}2\) to \(1\text{--}5\). With no independent photo-\(z\) or
-tomographic source evidence attached, this best holdout-beating control remains
-control-only rather than a physical alternative. It therefore does not refute
-the endpoint signal, although the broader tomographic-control caveat continues
-to block validation.
-A validation-readiness ledger then summarizes the current state without
-computing any new score. The allowed current claim is
-\texttt{diagnostic\_low\_tail\_signal\_with\_reduced\_tomographic\_control\_concern\_not\_validation}.
-The signal has survived the narrow follow-up checks performed so far, and the
-most dangerous tomographic control is not accepted as a physical alternative.
-Nevertheless, \texttt{validation\_ready=false}: the tomographic caveat remains
-active, and physical promotion remains blocked by open
-operator/amplitude/normalization requirements.
-We then add a narrower tomographic/photo-\(z\) closure-status ledger. This
-ledger uses the completed external photo-\(z\) reviewer response and records
-\texttt{h1\_independent\_evidence\_complete=true} and
-\texttt{r4\_leakage\_review\_complete=true} for the source-side photo-\(z\)
-route. It therefore reduces the photo-\(z\)/tomographic source-side concern.
-However, it computes no new score and does not change the validation boundary:
-the source-bin holdout remains diagnostic, the best holdout-beating control is
-still not promoted to a physical alternative, and
-\texttt{validation\_ready=false} until the physical-promotion blockers are
-closed.
-We also freeze a physical-promotion dependency-order ledger. This ledger does
-not prove the missing theorems; it only orders them. The next primary proof gate
-is the operator-leakage theorem, and the next parallel gate is gauge/quotient
-descent. Response-unit normalization, the standard-lensing/no-Tau-source
-null-amplitude theorem, and the full survey-native operator theorem are
-downstream of those two gates. Thus the next theory-side step is not another
-endpoint score but leakage and quotient control.
-For the leakage branch, we freeze a proof-plan ledger rather than a theorem.
-The uniform tile-average null limit is already available, and the
-no-endpoint-feedback guard is satisfied. The open exit conditions are:
-non-uniform leakage projection, pure-mask quotient/control, and single-operator
-coupling between the mode-response spectrum and null descent. The resulting
-verdict is
-\texttt{B2\_operator\_leakage\_exit\_conditions\_frozen\_but\_theorem\_open}.
-For the first of these open steps, we freeze a sufficient non-uniform leakage
-projection criterion. If \(V_{\rm source}\) is decomposed into candidate
-physical, mask-only, and control/null subspaces, then a future operator \(O\)
-must either satisfy \(\Pi_{\rm phys} O m=0\) for every mask-only direction \(m\)
-modulo quotient-null directions, or route \(O(V_{\rm mask})\) into a
-predeclared null-control family. This criterion is not yet proven for the KiDS
-operator; its current verdict is
-\texttt{nonuniform\_leakage\_projection\_criterion\_frozen\_but\_not\_proven}.
-The component split itself is now declared only as bookkeeping:
-\(V_{\rm phys,cand}\) denotes the source-frozen low-mode candidate response
-shell, \(V_{\rm mask}\) denotes the pure-mask/depth/path basis, and
-\(V_{\rm ctrl/null}\) denotes the predeclared null-control family. This changes
-the \(C1\) status from definition-required to declared, but does not prove
-pairwise orthogonality, quotient triviality, null projection, control routing,
-or single-operator consistency. Its machine-readable verdict records that the
-domain decomposition is declared, while the projection and leakage theorem
-remain open.
-A second post-score localization audit keeps the same source-frozen theory
-vector and same nonnegative single-amplitude scoring rule, but evaluates
-predeclared jackknife masks. All \(20/20\) leave-one source-bin and
-leave-one tomographic-pair subsets retain negative \(\Delta\chi^2\) and
-negative \(\Delta{\rm AIC}\). Thus the endpoint score is not carried by one
-single source bin or one single tomographic pair under this first jackknife.
-The mode-band result remains caveated: only \(2/3\) mode-only subsets improve,
-and removing the low \(n=1\ldots5\) COSEBIs modes leaves no improvement over the
-zero baseline. This strengthens localization robustness but does not promote
-the result to KiDS validation.
-A final mode-localization audit sharpens that caveat. Scoring the predeclared
-single-mode, cumulative-low-mode, and low-mode-removal subsets shows that the
-best single mode is \(n=1\), with
-\(\Delta\chi^2=-101.5735188246\), while the strongest cumulative subset is
-\(n=1\ldots3\), with \(\Delta\chi^2=-237.1074068478\). All cumulative
-low-mode subsets improve, but removing the first five modes gives
-\(\Delta\chi^2=0\). The endpoint signal is therefore not single-bin or
-single-pair localized, but it is strongly low-mode localized. This is a
-diagnostic localization result, not a validation claim.
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=\linewidth]{figures/fig_kids1000_cosebis_mode_localization.pdf}
-\caption{KiDS-1000 COSEBIs endpoint mode-localization diagnostic. The left
-panel scores single-mode subsets of the source-frozen endpoint candidate. The
-right panel compares cumulative low-mode subsets against complementary
-low-mode-removal subsets under the same full-covariance submatrix and
-nonnegative single-amplitude rule. The improvement is concentrated in the low
-COSEBIs modes: \(n=1\) is the strongest single mode, \(n=1\ldots3\) is the
-strongest cumulative subset, and removing \(n=1\ldots5\) removes the
-improvement. This is a localization diagnostic, not validation.}
-\label{fig:kids-mode-localization}
-\end{figure}
-
-Because the source-frozen theory shell already contains a deliberately simple,
-source-independent mode carrier \(M(n)\propto n^{-1/2}\), we also run a
-mode-shape stress audit. The same source-frozen \(W_{\rm path}\) mapping and
-the same endpoint scoring rule are kept fixed, but the mode carrier is replaced
-by a small predeclared family: flat, \(n^{-0.25}\), the candidate \(n^{-0.5}\),
-\(n^{-0.75}\), \(n^{-1}\), \(\sqrt n\), and \(n\). The candidate \(n^{-0.5}\)
-carrier remains best in this stress family with
-\(\Delta\chi^2=-183.6152665217\). A flat carrier still improves over the zero
-baseline, with \(\Delta\chi^2=-136.5504934506\), while the high-\(n\) carrier
-gives \(\Delta\chi^2=0\). Thus the low-mode result is carrier-sensitive, but
-not reducible in this stress family to the exact \(n^{-1/2}\) choice alone:
-low-weighted carriers are preferred, while high-mode weighting removes the
-signal. This remains a diagnostic sensitivity result, not validation.
-
-An endpoint-scoring synthesis ledger then aggregates the approved score, the
-null-control diagnostics, tomographic-structure robustness, top-control
-plausibility audit, jackknife, mode-localization, mode-shape stress, and
-physical-promotion blocker ledger. It
-computes no new score and claims no validation. Its verdict is that the KiDS
-COSEBIs branch contains a low-tail diagnostic endpoint signal, caveated by
-tomographic controls and by the physical-promotion blockers. This makes the
-next scoring-facing step a predeclared tomographic holdout or an independent
-lensing-probe replay, not a physical prediction claim.
-
-We therefore add a separate source-grounding ledger for the low-mode carrier.
-It records what is source-side acceptable and what is still open: the
-\(n^{-1/2}\) carrier is predeclared, source independent, unit-mean normalized,
-retains all \(n=1\ldots20\) modes, and is compatible with a broad coherent
-path/readout prior. The mode-localization and mode-shape audits are recorded
-only as supporting diagnostics. The ledger verdict is deliberately limited:
-partial protocol grounding with an open first-principles mode-kernel derivation
-blocker. Thus the carrier is not treated as a final Tau Core lensing theorem.
-The next derivation artifact narrows that blocker but does not remove it. If a
-smooth path/readout residual carries approximately constant source-side power
-per logarithmic COSEBIs mode band, \(dP/d\ln n\simeq\mathrm{const}\), then a
-unit-spaced discrete mode bin has \(P_n\propto 1/n\), and the coherent
-amplitude envelope satisfies \(M(n)\propto \sqrt{P_n}\propto n^{-1/2}\). The
-finite retained mode domain \(n=1\ldots20\) then only fixes the dimensionless
-unit-mean normalization. This is a conditional envelope derivation; a covariant
-or survey-native lensing path-kernel derivation remains open.
-We also add an eligibility gate for using this log-band prior as a protocol
-object. The current COSEBIs route passes the ordered-mode-domain,
-no-posthoc-mode-cut, source-side path-mapping, and no-high-frequency-only
-guardrails. It does not source-prove the smooth coherent path residual
-assumption, and it does not close the covariant/survey-native kernel blocker.
-Thus the envelope is protocol-eligible for this preflight, but not full-kernel
-validated.
-
-As a narrow guardrail, we additionally run a deterministic mock-sanity suite
-over the same retained \(15\times20\) COSEBIs row structure. Four synthetic
-truth families are compared to four fixed templates: low log-band
-\(n^{-1/2}\), flat coherent, high-mode \(n\), and oscillatory alternating. Each
-truth recovers its matching template. This is not a physical mock validation and
-does not use KiDS data-vector values, fit statistics, random noise, or endpoint
-scores. Its role is only to check that the template protocol does not
-automatically relabel every deterministic pattern as low-mode.
-
-The final preflight gate in this chain separates survey-native route support
-from a full path-kernel derivation. The current route has a source-frozen
-mapping basis, a caveated full-route mask-load path proxy, a source-side
-path-weight factorization rule, a source-frozen theory-vector shell, and the
-deterministic template-recovery guardrail. These items make the route concrete,
-but they do not close the kernel derivation. Three blockers remain explicit: a
-survey-native operator from path observables to COSEBIs mode response, a
-derivation of the log-band prior from that response spectrum, and a covariant
-or survey-native lensing/path limit with units and gauge descent audited.
-We therefore freeze a narrower mode-response operator specification before any
-further scoring: its domain must be a source-side path observable or caveated
-path proxy, its codomain is the retained 300-row COSEBIs domain, it must be
-linear before endpoint amplitude, it must separate pair/redshift/path support
-from mode response, it must use no KiDS data-vector or fit feedback, and it must
-have both gauge/mask null safety and a standard-lensing null limit. This is a
-specification, not a derivation; the source-native mode-response spectrum and
-operator-level null-safety theorem remain open.
-We also isolate the spectrum-level part of this missing operator. Under the
-explicit smooth coherent path/readout prior, constant power per logarithmic
-COSEBIs mode band gives \(P_n\propto 1/n\) and coherent amplitude
-\(M_n\propto n^{-1/2}\). This remains conditional: the flat spectrum is kept as
-a boundary control, while high-mode and oscillatory spectra are rejected only
-under the smooth-path prior. The survey-native response operator and
-operator-level gauge/mask null-safety blockers remain open.
-We then separate the null-safety blocker into its own operator-level gate. The
-available source-frozen null controls have been replayed without endpoint
-scores, the retained COSEBIs row domain and caveated path/mask-load proxy are
-available, and the uniform web route is retained only as a null control. This
-does not prove gauge or mask safety for the future response operator. The gate
-therefore leaves three explicit blockers: pure-mask response must be shown to
-be quotient-trivial or controlled as a null direction, gauge/coordinate
-representation changes must descend to the physical quotient, and the
-conditional mode spectrum must be coupled to the null transforms by the same
-source-native operator.
-The first sub-gate under pure-mask response constructs a source-only mask
-perturbation basis rather than a physical response. The full-route
-\(F_{\rm overlap}\) and \(D_{\rm path}\) mask observables are centered and
-unit-RMS normalized over the 196 route tiles; their centered directions are
-non-degenerate, so the resulting pure-mask basis has rank two and can be lifted
-to the \(58{,}800\)-row target-by-tile domain. This makes future pure-mask null
-replay concrete. It does not prove that those directions are quotient-trivial,
-and it does not show that mask-only directions cannot leak into the low-mode
-COSEBIs envelope under a future survey-native response operator.
-A follow-up source-side leakage audit clarifies this point. Because the
-pure-mask directions are centered over route tiles, they collapse to zero under
-uniform tile averaging. This is a useful null limit. It is not an operator
-theorem: a non-uniform survey-native response could still couple mask-only
-tile amplitudes to the same low-mode envelope, so the leakage theorem remains
-open.
-We therefore add one more source-side gate before treating this branch as an
-operator result. The operator-leakage theorem requirements ledger freezes what
-a future survey-native theorem must prove: the uniform tile-average null limit
-must be recovered, non-uniform mask load must be projected to a quotient-null or
-explicit null-control subspace, pure-mask directions must not create a positive
-path signal, and the mode spectrum and null descent must be handled by the same
-operator. This gate is not a proof. It records two remaining blockers, the
-operator leakage theorem itself and gauge/quotient descent, with no use of KiDS
-data-vector values, posterior chains, residuals, or endpoint scores.
-We also freeze the corresponding gauge/quotient descent requirements. The
-future operator must be invariant under admissible representative changes such
-as tile relabeling, source-basis recentering, allowed normalization changes,
-and pure gauge/null directions. The current source artifacts provide only the
-uniform mask-offset null limit and a reproducible route domain. They do not yet
-prove normalization invariance, tile-relabeling invariance, pure-mask
-control compatibility, or representation independence for a constructed
-survey-native operator. The quotient-descent gate therefore remains a blocker,
-not a validation claim.
-With those blockers made explicit, the repository now records a first
-factorized operator-construction attempt. It combines the source-frozen
-path/readout mapping component \(M_i\) with the conditional log-band
-mode-response weight \(S_n\) into a unit-amplitude skeleton
-\[
-K_i = M_i S_n .
-\]
-This is useful because the missing operator is no longer only a name: there is
-a reproducible 300-row source-side kernel to audit. It is still not a physical
-prediction. The construction does not derive the operator units, does not close
-mask leakage, does not prove gauge/quotient descent, and does not use KiDS
-data-vector values, posterior chains, residuals, or endpoint scores.
-Finally, a physical-units gate separates this source-side skeleton from a
-physical COSEBIs readout. The current \(K_i\) is dimensionless and
-unit-amplitude. A future result would still need a source-side amplitude map,
-the response-unit normalization connecting the kernel to the COSEBIs statistic,
-and a standard-lensing/no-\(\tau\)-source null normalization. The covariance
-metric can support later scoring, but it is not by itself a derivation of the
-operator units.
-A source-side amplitude-map attempt then freezes only the internal
-dimensionless normalization \(A_{\rm src}=1\) induced by the unit-mean
-\(C_{\rm norm}\) rule and the unit-mean operator skeleton. This removes an
-arbitrary source-side scale from the skeleton, but it does not derive physical
-COSEBIs response units, an endpoint amplitude, or the standard-lensing null
-amplitude. The construction uses no KiDS data-vector values, residuals, scores,
-posterior chains, or random noise.
-A physical-amplitude requirements gate then records the remaining distinction:
-\(A_{\rm src}=1\) is an internal dimensionless normalization, whereas a future
-physical response amplitude \(A_{\rm phys}\) would still need the missing
-COSEBIs response-unit normalization and the standard-lensing/no-\(\tau\)-source
-null-amplitude theorem. The covariance metric is kept as a later scoring
-metric, but is not treated as an amplitude derivation.
-A response-unit normalization requirements gate freezes this first missing
-piece more explicitly. The 300-row COSEBIs codomain, the dimensionless
-source-side kernel, \(A_{\rm src}=1\), and the covariance metric are available,
-but the map that would turn \(A_{\rm src}K_i\) into a physical COSEBIs response
-remains open and must be compatible with the standard-lensing null limit.
-A standard-lensing null-amplitude theorem-requirements gate then freezes what
-that theorem would have to show: source-replayed null controls are only control
-limits, the zero-\(\tau\)-source amplitude statement is specified but not
-derived, and operator null-safety, gauge/quotient descent, and non-uniform
-leakage control remain open blockers.
-A final physical-promotion blocker ledger therefore separates diagnostic
-endpoint readiness from a physical prediction claim. The diagnostic endpoint
-pipeline can be run, but physical promotion remains blocked by five open
-requirements: a survey-native operator theorem, an operator leakage theorem,
-gauge/quotient descent, response-unit normalization, and the
-standard-lensing/no-\(\tau\)-source null-amplitude theorem.
-
-The resulting source-preflight ledger is correspondingly mixed: the 300 COSEBIs
-target rows, five-bin redshift-kernel inventory, 196-tile route-coordinate
-index, 300-row design skeleton, and 58{,}800-row domain skeleton are available;
-the weight-construction rule is source-side computable; the mask shell is only a
-partial three-tile source observable; the full path/depth footprint mapping is
-represented by a caveated full-route mask-load proxy; the KiDS-footprint
-web-environment catalogue remains absent and is therefore represented only by a
-uniform null-web control; and null controls have been scored under the approved
-endpoint run. Thus the lensing branch is now narrowed to a source-side ready,
-geometry-audited, endpoint-scored but not validated protocol rather than an
-unspecified missing-input state.
-
-The null-control gate is declared in parallel. It predeclares sky rotation,
-tomographic-pair shuffle, wrong-channel activation, and web/path sign-flip
-control families. A future endpoint must freeze the control seed and
-multiplicity policies before any null score is interpreted.
-The present package now freezes that seed/multiplicity layer as a protocol
-artifact: deterministic seeds and fixed planned multiplicities are recorded for
-the four control families, totaling 1008 control draws. These controls are then
-replayed against the source-frozen unit-amplitude theory-vector shell and saved
-only as deterministic vector digests and source-side summary statistics. No
-control score is computed, no likelihood replay is executed, and no KiDS data-vector value or
-residual is used to choose the seeds or multiplicities.
-
-Finally, the repository includes a tiny pilot product-freeze manifest in the
-source-manifest data folder. It hash-locks three public distance-side files: a
-cosmic-chronometer \(H(z)\) table, a Pantheon+ distance table, and a Pantheon+
-STAT+SYS covariance matrix. These are provenance and covariance-shape tests,
-not endpoint inputs. The Pantheon+ table and covariance dimensions are checked
-during reproduction. All pilot rows keep the endpoint permission flag set to
-false, because the associated mask, calibration, nuisance-parameter, and
-systematics policies are not yet frozen.
-
-The first endpoint-eligible distance scope is also frozen without scoring. For
-Pantheon+, the residual-blind row rule is to exclude Cepheid calibrators and
-retain rows with \(z_{\rm HD}\ge 0.023\). This yields 1371 retained rows out of
-1701 source rows, with the full STAT+SYS covariance dimension checked against
-the source table. The resulting row mask is a source-derived artifact only:
-no \(\Lambda\)CDM residuals, Tau residual parameters, fit-improvement flags, or
-late-time activation fits are used.
-
-The first scoring grammar is then frozen as a protocol artifact. The declared
-baseline family is a flat-\(\Lambda\)CDM distance modulus branch with analytic
-marginalization of the absolute magnitude/Hubble offset. The declared Tau
-comparison family is only the late-activation shell
-\(W_\tau(a)=a^q/(a^q+a_\tau^q)\). The required controls include baseline-only,
-Tau-shell, shuffled-activation, and wrong-activation branches.
-
-As a final dry-run layer, the repository builds a Pantheon+ design matrix with
-1371 rows. It contains source columns, the scale factor \(a=1/(1+z_{\rm HD})\),
-and fixed activation-family basis columns. It deliberately excludes model
-predictions, residuals, likelihoods, \(\chi^2\) values, fit-improvement flags,
-and fitted Tau parameters. This verifies that the frozen scope and scoring
-grammar can produce numerical inputs without crossing into endpoint scoring.
-
-The repository also includes the first numerical Pantheon+ pilot scoring run,
-marked throughout as \(\texttt{PILOT\_SCORING\_NOT\_VALIDATION}\). This run is
-a diagonal-covariance smoke test of the frozen scoring grammar, not a
-covariance-complete cosmological likelihood. It uses the diagonal of the
-retained STAT+SYS covariance submatrix, analytic intercept marginalization, and
-the frozen grid declared in the pilot manifest. On this grid the Tau
-late-activation shell has a slightly lower diagonal-covariance \(\chi^2\) than
-the flat-\(\Lambda\)CDM branch,
-\[
-\Delta\chi^2_{\tau-\Lambda{\rm CDM}}=-0.084,
-\]
-but its AIC is worse,
-\[
-\Delta{\rm AIC}_{\tau-\Lambda{\rm CDM}}=+5.916,
-\]
-because the shell carries more effective parameters. This is therefore a
-pipeline and claim-boundary test, not evidence for dark energy, not validation
-of Tau Core cosmology, and not a replacement for a full-covariance analysis.
-
-The next pilot layer repeats the same frozen branch grammar with the retained
-Pantheon+ STAT+SYS covariance submatrix, using Cholesky solves and no
-eigenvalue-floor regularization. This full-covariance run is marked as
-\(\texttt{FULL\_COV\_PILOT\_SCORING\_NOT\_VALIDATION}\). On the same 1371-row
-scope, the Tau late-activation shell again has a slightly lower
-\(\chi^2\) than the flat-\(\Lambda\)CDM branch,
-\[
-\Delta\chi^2_{\tau-\Lambda{\rm CDM}}=-0.192,
-\]
-but again loses under AIC,
-\[
-\Delta{\rm AIC}_{\tau-\Lambda{\rm CDM}}=+5.808.
-\]
-Thus the full-covariance pilot preserves the same interpretation as the
-diagonal smoke test: the scoring pipeline is operational, but the present
-single-probe evidence is weak and model-selection negative for the Tau shell.
-This should be read primarily as a limitation of the homogeneous late-activation
-shell, not as a true negative against the broader Tau Core
-morphology/projection-readout framework. In particular, the pilot tests only a
-single isotropic activation family \(W_\tau(a)\). It does not yet contain the
-multi-channel morphology, observer/path, or time/readout projection structure
-suggested by the broader Tau Core readout framework.
-
-A subsequent low-redshift source-basis refinement makes this limitation more
-explicit. The first void/source-basis attempts and the caveated partial
-\(W_{\rm path}\) route are retained as diagnostic attempts rather than as
-validation claims. Simple coupled path--void/web variants and a bank of
-monotone path transforms improve the baseline only weakly and do not survive
-their frozen controls. A broader path/sky/environment screen is also globally
-non-positive: its best overall candidate is not control-resistant. However, one
-narrow family, \(W_{\rm path}\times\mathrm{sky}_z\), survives its own
-predeclared family controls. After a separate external permission-only review,
-the repository replays only this family on the same 12-row partial path scope.
-The replay gives
-\[
-  \Delta\chi^2_{\mathrm{sky}_z-\Lambda{\rm CDM}}=-0.44407920978,
-  \qquad
-  \Delta\chi^2_{\mathrm{sky}_z-{\rm best\ control}}=-0.06205941383,
-\]
-with zero family controls beating the candidate. This is the best
-control-surviving result among the current low-redshift source-basis
-experiments, and it points toward observer/path projection as the most
-promising channel tested so far. It remains a 12-object, permission-only
-diagnostic replay, not population validation and not a physical
-lensing-path-weight derivation.
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=\linewidth]{figures/fig_pantheon_full_cov_pilot_branch_diagnostics.pdf}
-\caption{Pantheon+ full-covariance pilot scoring diagnostics under the frozen
-Paper 10 grammar.
-Each panel shows all finite grid scores relative to the best
-flat-\(\Lambda\)CDM branch. The x-axis labels denote flat-\(\Lambda\)CDM,
-Tau-shell, wrong-activation, and deterministic shuffled-activation branches;
-filled markers denote branch minima. The Tau shell obtains a tiny
-full-covariance \(\chi^2\) improvement but loses under AIC, so the figure should
-be read as a scoring-pipeline diagnostic, not as cosmological validation.}
-\label{fig:pantheon-pilot-diagnostics}
-\end{figure}
+The full audit trail is intentionally preserved in the supplement.  The main
+paper reports only the channel status, the best-justified joint-kernel rule, and
+the validation boundary.  This separation is part of the claim discipline: the
+paper is a source-frozen preflight protocol, not a post-hoc fit log and not a
+cosmological validation claim.
 
 \section{General Tau Core readout principle and missing channels}
 
@@ -1209,6 +377,17 @@ basis. The endpoint statistics in this paper do not require accepting the full
 theory architecture; they require only the operational rules stated here:
 predeclared channels, source-frozen labels, forbidden endpoint fields, and
 explicit null controls.
+
+The latest theory-side refinement adds two operational cautions that matter for
+this paper.  First, a non-injective readout constrains a source class rather
+than identifying a unique source.  Thus a successful \(W_{\rm time}\) or
+\(W_{\rm path}\) proxy would not by itself prove a unique Tau-side clock or
+path source.  Second, an observer-dependent readout must declare its interface:
+position, scale, coupling, protocol, resolution, channel access, and null
+model.  In this paper these are treated as future freeze fields, not as fitted
+degrees of freedom.  This is why the CC and radial-BAO time/readout routes are
+kept as source-side route candidates until a joint interface and nuisance
+policy is frozen.
 
 The generalized Tau Core readout structure can be stated schematically as
 \begin{equation}
@@ -1233,15 +412,53 @@ four source-frozen channel families:
 W_{\rm void}(a) &: \hbox{void maturity / late-time distance activation},\\
 W_{\rm web}(a,k,\mathrm{env}) &: \hbox{cosmic-web anisotropy for growth and lensing},\\
 W_{\rm path}(z,\hat n) &: \hbox{observer/path projection along the null-geodesic bundle},\\
-W_{\rm time}(a) &: \hbox{time/readout projection of the observed } a(t)\hbox{ and }H(t).
+W_{\rm time}(\cdots)
+  &: \hbox{morphology-aware time/readout projection of } a(t)\hbox{ and }H(t).
 \end{align}
 Here \(W_{\rm path}\) is not a claim that objects outside the relevant causal
 past act on the observation. It denotes the metric and matter environment
 affecting the bundle of null geodesics by which light from a source reaches the
-observer. Likewise \(W_{\rm time}\) is not a backward-causation term; it is a
-readout-channel diagnostic for the possibility that the observed four-dimensional
-clock variables \(a(t)\) and \(H(t)\) are not fundamental Tau-side time
-coordinates.
+observer. Likewise \(W_{\rm time}\) is not a backward-causation term and not a
+universal clock-rescaling factor.  It is a readout-channel diagnostic for the
+possibility that the observed four-dimensional clock variables \(a(t)\) and
+\(H(t)\) are not fundamental Tau-side time coordinates and that their effective
+readout may depend on source morphology, cosmic environment, observer/path
+projection, and a source-frozen readout phase \(\phi_{\rm readout}\).
+Operationally, the current low-redshift observer-basis replay uses only the
+very reduced proxy \(W_{\rm path}\times\mathrm{sky}_x\times z_{\rm centered}\).
+A more complete path/readout kernel would schematically depend on
+\[
+W_{\rm path}^{\rm full}
+  =W_{\rm path}(z,\hat n,\mathcal E_{\rm los},
+      \mathcal V_{\rm void},\mathcal W_{\rm web},
+      \mathcal O_{\rm obs},\mathcal L_{\rm metric},\mathcal T_{\rm readout}),
+\]
+where \(\mathcal E_{\rm los}\) denotes the line-of-sight environment,
+\(\mathcal V_{\rm void}\) and \(\mathcal W_{\rm web}\) denote void and web
+source structure, \(\mathcal O_{\rm obs}\) records observer/survey-frame
+orientation, \(\mathcal L_{\rm metric}\) denotes metric or lensing-path
+information, and \(\mathcal T_{\rm readout}\) denotes any independently
+source-grounded time/readout phase.  The present paper does not fit or validate
+this full object; it only shows that a restricted observer/path projection proxy
+survives a narrow permission-only replay and is therefore worth a future
+source-grounding campaign.  A first enlarged proxy-bank screen reinforces this
+interpretation: the currently available void/web/environment multipliers do not
+outperform the simpler observer-basis carrier, so the next step is not to stack
+more proxies but to derive better source-native path, environment, and
+readout-phase observables.  The associated component audit records zero
+enriched families stronger than the base carrier, with only one enriched family
+surviving local controls while remaining weaker than the base.  This is a
+constraint on the current proxy grammar, not a negative result against the
+observer/path channel itself.
+For this reason the repository includes a source-requirements manifest for the
+future full observer/path kernel.  It explicitly keeps replay, validation, and
+physical lensing-path claims disabled until these observables are independently
+source-frozen.  A first line-of-sight radial-profile artifact now partially
+satisfies the environment-observable requirement, but it remains a partial
+source observable rather than a replay-ready full path term.  A path-aware
+void-geometry artifact similarly upgrades the nearest-void scalar into a
+segment-based observable, while leaving metric/lensing weighting as an explicit
+future blocker.
 
 A more faithful cosmological residual shell would then take the schematic form
 \begin{equation}
@@ -1258,6 +475,289 @@ This is a programme definition, not a completed derivation. The source-freeze
 requirement becomes stronger: each channel must be selected from independent
 source-side observables before the corresponding distance, growth, lensing, or
 CMB-safety residuals are scored.
+
+\subsection{Admissible joint kernel}
+
+The previous decomposition also fixes what a future joint Tau Core kernel may
+mean operationally.  It cannot be the best-fitting linear combination found
+after looking at residuals.  It must be a source-declared readout mixture whose
+eligible components are fixed before scoring.  Let
+\(\mathcal A\) denote the set of channels that pass the source-side
+admissibility gate:
+\[
+\mathcal A
+=\left\{i:
+\begin{array}{l}
+\hbox{source product, transform rule, normalization,}\\
+\hbox{controls, and forbidden-field ledger are frozen}
+\end{array}
+\right\}.
+\]
+The claim-safe joint kernel is then
+\begin{equation}
+K_{\rm joint}^{\tau}
+=
+\sum_{i\in\mathcal A} w_i K_i,
+\label{eq:joint-kernel}
+\end{equation}
+where the candidate channel kernels may include source/morphology,
+observer/path, time/readout, closure, and lensing terms:
+\[
+K_i\in
+\{K_{\rm void},K_{\rm web},K_{\rm path},K_{\rm time},
+K_{\rm closure},K_{\rm lens}\}.
+\]
+The weights are not fitted endpoint amplitudes.  They are source-side support
+weights,
+\begin{equation}
+w_i=\frac{Q_i}{\sum_{j\in\mathcal A}Q_j},
+\label{eq:joint-source-weight}
+\end{equation}
+where \(Q_i\) is a predeclared channel-quality score built from source-only
+quantities such as coverage, provenance strength, independence from other
+channels, leakage safety, null-control availability, dimensional admissibility,
+and projection relevance.  Endpoint residuals, fit improvements, posterior
+chains, and post-score control ranks are forbidden inputs to \(Q_i\).
+
+Equation~\eqref{eq:joint-kernel} is therefore not a curve-fitting ansatz.  It
+is the operational form of the Tau Core expectation that a four-dimensional
+cosmological observable may be a combined readout of several deeper
+source/projection channels.  The expected test is not that every individual
+channel wins by itself, but that the admissible joint kernel outperforms
+wrong-channel, shuffled-channel, null, and single-channel controls under the
+same frozen scoring grammar.  Conversely, a channel that is control-dominated
+or source-incomplete may still enter the paper as a negative/control component,
+but it must not receive positive joint-kernel weight unless its source-side
+admissibility is reopened and re-frozen before scoring.
+
+In the current release this construction remains a future endpoint target.
+The existing joint-channel artifacts below are only preflight summaries of
+already recorded branch outcomes.  They do not yet implement a single
+covariance-aware likelihood for \(K_{\rm joint}^{\tau}\), and they do not
+derive the physical support weights \(Q_i\) from first principles.
+
+\subsection{Best-justified source-side weighting rule}
+
+The phrase ``best justified'' is used here in a restricted protocol sense.  It
+does not mean that the weights are physically derived amplitudes, and it does
+not mean that the weights maximize the endpoint likelihood.  It means that,
+among the currently available channels, the joint kernel uses only those
+components whose source-side support is strongest under predeclared,
+residual-blind criteria.
+
+For each candidate channel \(i\), define a gate vector
+\begin{equation}
+G_i=
+(g^{\rm src}_i,g^{\rm tr}_i,g^{\rm norm}_i,g^{\rm ctrl}_i,
+g^{\rm leak}_i,g^{\rm dim}_i,g^{\rm proj}_i),
+\end{equation}
+with entries in \([0,1]\).  The entries record, respectively, source-product
+coverage, transform-rule readiness, normalization readiness, null-control
+readiness, leakage safety, dimensional admissibility, and projection relevance.
+The admissible set is then
+\begin{equation}
+\mathcal A
+=
+\{i:\min_a g_i^a>0\hbox{ and all hard blockers are closed or explicitly
+caveated}\}.
+\end{equation}
+Channels outside \(\mathcal A\) may still be reported as negative or
+diagnostic branches, but they receive no positive joint-kernel support:
+\[
+i\notin\mathcal A \quad\Rightarrow\quad w_i=0.
+\]
+
+For channels in \(\mathcal A\), the protocol support score should not be a
+linear sum, because a linear sum would allow one strong source-side feature to
+compensate for a missing hard gate.  The claim-safe rule is instead the
+weighted geometric support
+\begin{equation}
+Q_i
+=
+\prod_a (g_i^a)^{\alpha_a},
+\qquad
+\alpha_a\ge0,\qquad \sum_a\alpha_a=1.
+\label{eq:channel-quality}
+\end{equation}
+This choice has three useful properties.  First, any zero hard-gate component
+sets \(Q_i=0\).  Second, the score is monotone in each source-side support
+factor.  Third, the rule is scale-free and cannot be improved by changing the
+units of a source observable.  The default predeclared protocol uses equal
+exponents unless a future source-side review freezes a different exponent
+vector before scoring:
+\[
+\alpha_a=\frac{1}{7}.
+\]
+
+Combining Eqs.~\eqref{eq:joint-source-weight} and
+\eqref{eq:channel-quality}, the best-justified joint kernel available to the
+present protocol is therefore
+\begin{equation}
+K_{\rm joint,bj}^{\tau}
+=
+\sum_{i}
+\frac{\mathbf 1_{i\in\mathcal A}
+      \prod_a (g_i^a)^{\alpha_a}}
+     {\sum_j \mathbf 1_{j\in\mathcal A}
+      \prod_a (g_j^a)^{\alpha_a}}
+K_i.
+\label{eq:best-justified-joint-kernel}
+\end{equation}
+This is the kernel that should be expected to perform best if the Tau Core
+multi-readout hypothesis is correct and if the channel-support ledger is
+accurate.  It is also the kernel that should fail if the source-supported
+channel structure is irrelevant: shuffled-channel, wrong-channel, null, and
+single-channel controls should then perform comparably or better.
+
+The present paper has not yet executed
+Eq.~\eqref{eq:best-justified-joint-kernel} as a validation-grade endpoint.  The
+existing joint scores use simplified protocol weights and already frozen
+channel summaries.  Their purpose is to show that the combined layer is
+nonempty but fragile.  A future paper-grade joint endpoint should replace those
+summary weights by the explicit gate vector \(G_i\), freeze the \(\alpha_a\)
+exponents, and then run the joint kernel against covariance-aware shuffled,
+wrong-channel, null, and leave-one-channel controls.
+
+At the level of the current evidence ledger, the natural positive-support
+candidate set is therefore not ``all channels''.  It is the subset of channels
+with source-frozen support and at least local control survival, principally the
+KiDS/COSEBIs low-mode lensing channel, the narrow observer/path basis, and the
+DESI shape/readout route.  The void/web and homogeneous-distance channels
+remain low-weight or negative-proxy components until a stronger source-native
+void/web basis survives its controls.  The ACT \(K_{\rm path}\) branch remains
+a \(K_{\rm null}\)-style diagnostic component under the current source basis,
+because its latest guarded replay is control-dominated.  This current
+classification is not a final channel ontology; it is the residual-blind rule
+that prevents a weak or negative branch from being promoted into the joint
+kernel merely because a combined score would improve.
+
+We now materialize this rule as a prevalidation artifact.  The manifest
+\url{joint_best_justified_kernel_manifest_v1.csv} records the gate
+vector \(G_i\), the geometric support \(Q_i\), and the resulting role of each
+current channel.  The only positive-support channels in this first ledger are
+\[
+\mathcal A_{\rm bj}
+=
+\begin{gathered}
+\{\hbox{KiDS/COSEBIs low-mode},\\
+\hbox{observer/path low-}z,\quad
+\hbox{DESI shape/readout}\}.
+\end{gathered}
+\]
+The ACT \(K_{\rm path}\) branch is explicitly assigned \(Q_i=0\) and retained
+as a \(K_{\rm null}\)-style diagnostic component because its latest guarded
+replay is control-dominated.  The homogeneous distance and void/web proxy
+branches are likewise assigned no positive support under the present proxy
+basis.
+
+Using the frozen equal-exponent rule \(\alpha_a=1/7\), the corresponding
+preflight score gives
+\[
+S_{\rm bj}=0.412105634,\qquad
+\widehat S_{\rm bj}=0.713515777,
+\]
+where \(S_{\rm bj}\) is the weighted sum and \(\widehat S_{\rm bj}\) is the
+weight-norm-normalized score.  Exact sign-flip controls over the three active
+channels give
+\[
+p(S_{\rm control}\ge S_{\rm bj})=0.125,
+\]
+and the seeded combined-control bank gives
+\[
+p(S_{\rm control}\ge S_{\rm bj})=0.164682540.
+\]
+All three leave-one-channel removals remain positive.  The artifact verdict is
+\[
+\begin{gathered}
+\texttt{BEST\_JUSTIFIED\_JOINT\_KERNEL\_POSITIVE}\\
+\texttt{PREFLIGHT\_NOT\_VALIDATION}
+\end{gathered}
+\]
+This is stronger than the earlier all-channel protocol-weight preflight in the
+narrow sense that the negative/control-dominated branches are no longer allowed
+to dilute or rescue the joint kernel.  It is still not a joint cosmological
+likelihood, because \(Q_i\) is a protocol support score rather than a
+first-principles physical amplitude, and because no cross-probe covariance has
+yet been evaluated.
+
+Table~\ref{tab:best-justified-joint-kernel} summarizes the ledger in compact
+form, and Fig.~\ref{fig:best-justified-joint-kernel} shows both the frozen
+channel support scores and the sensitivity of the preflight score to the
+source-side weighting rule.  These are deliberately presented as audit
+quantities rather than fitted physical amplitudes.
+
+\begin{table}[t]
+\centering
+\small
+\caption{Best-justified joint-kernel preflight ledger.  Positive support is
+assigned only to channels with source-frozen support and local control
+survival.  Control-dominated or negative-proxy branches remain in the ledger but
+receive \(Q_i=0\).  The table is a prevalidation audit summary, not a joint
+cosmological likelihood.}
+\label{tab:best-justified-joint-kernel}
+\begin{tabular}{p{0.27\linewidth}p{0.22\linewidth}p{0.14\linewidth}p{0.26\linewidth}}
+\toprule
+Channel & Current role & \(Q_i\) & Reason for role \\
+\midrule
+KiDS/COSEBIs low-mode & positive support & 0.744274332 &
+Structured low-tail signal; endpoint-source frozen, with tomographic/operator caveats. \\
+Observer/path low-\(z\) & positive support & 0.722061699 &
+Narrow permission replay survives local controls; not population validation. \\
+DESI shape/readout & positive support & 0.695580725 &
+Frozen controls survive with a small, row-sensitive margin. \\
+ACT \(K_{\rm path}\) & \(K_{\rm null}\)-diagnostic & 0 &
+Guarded replay is control-dominated; curl null is the best current control. \\
+Distance shell, void/web, sky-\(z\), time basis & negative/control/diagnostic & 0 &
+Current proxy branches are model-selection negative, control-limited, or diagnostic only. \\
+\midrule
+Best-justified preflight & three active channels & \(\widehat S_{\rm bj}=0.713515777\) &
+Exact sign-flip \(p=0.125000000\); combined-control \(p=0.164682540\). \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{figures/fig_joint_best_justified_kernel_v1.pdf}
+\caption{Best-justified joint-kernel audit.  Panel A shows the frozen
+source-side support \(Q_i\) for the current channel ledger; only the three blue
+channels are allowed to contribute positive support.  Panel B shows the
+normalized preflight score under five residual-blind weighting rules.  All five
+remain positive, with the weakest normalized score \(0.703534932\).  The figure
+does not show validation significance: the combined weight-shuffle control is
+weak for the conservative min-gate case because the active weights become
+equal.}
+\label{fig:best-justified-joint-kernel}
+\end{figure}
+
+We also run a source-side weighting robustness stress for
+Eq.~\eqref{eq:best-justified-joint-kernel}.  The stress keeps the same frozen
+channel ledger and the same three active channels, but changes the admissible
+exponent vector in Eq.~\eqref{eq:channel-quality}: equal geometric weights,
+source-heavy weights, control-heavy weights, projection-heavy weights, and a
+conservative min-gate rule.  All five schemes remain positive.  The weakest
+normalized score is the conservative min-gate case,
+\[
+\min_{\rm schemes}\widehat S_{\rm bj}=0.703534932,
+\]
+and the exact sign-flip one-sided probability remains
+\[
+\max_{\rm schemes}p(S_{\rm control}\ge S_{\rm bj})=0.125.
+\]
+This gives the artifact verdict
+\[
+\begin{gathered}
+\texttt{BEST\_JUSTIFIED\_KERNEL\_ROBUST\_POSITIVE}\\
+\texttt{PREFLIGHT\_NOT\_VALIDATION}
+\end{gathered}
+\]
+The combined weight-shuffle bank is weaker for this robustness stress: in the
+conservative min-gate case the active weights are exactly equal, so the seeded
+weight-shuffle control is nearly degenerate and gives
+\(p=0.993055556\).  We therefore interpret the robustness run only as evidence
+that the sign of the best-justified preflight is not an artifact of the
+default equal-exponent rule.  It is not a validation-grade null rejection and
+not a replacement for a future covariance-aware joint likelihood.
 
 This release therefore adds a channel-level manifest,
 \(\texttt{cosmology\_channel\_manifest\_v1.csv}\), which declares the four
@@ -1348,6 +848,18 @@ the Pantheon+ residuals, but to predeclare void, web, path, and time/readout
 channels from independent source-side information and then repeat the scoring
 under the same full-covariance discipline.
 
+This also sets the boundary between the present cosmology-readout paper and a
+future dark-sector decision paper.  The current tests ask whether declared
+projection/readout channels leave a source-frozen residual signature.  They do
+not test a Tau base-substrate response layer, a standard dark-sector benchmark,
+or a competition between no-dark and dark-sector endpoint families.  Therefore
+any narrow positive replay in this paper should be read only as protocol-level
+support for an incomplete channel-basis audit, not as evidence that the missing
+channel is a dark-sector response.  A dark-sector conclusion would require a separate
+source-frozen \(M_0/M_1/M_2\) decision protocol with frozen formulas for the
+no-dark Tau readout family, the Tau base-substrate response family, and the
+standard dark-sector benchmark.
+
 As a first pipeline step in that direction, the repository includes a
 two-channel full-covariance proxy pilot with \(W_{\rm void}\) and \(W_{\rm web}\)
 active and \(W_{\rm path}\), \(W_{\rm time}\) disabled.  The pilot uses only
@@ -1394,76 +906,145 @@ A fail result occurs if:
 \item early-universe constraints fail.
 \end{itemize}
 
+\section{What would count as validation?}
+
+The present evidence is intentionally classified as pre-validation.  A future
+result would count as a validation-facing cosmological endpoint only if all of
+the following conditions are satisfied before the final score is inspected:
+
+\begin{enumerate}[leftmargin=1.5em]
+\item \textbf{Source-native channel support.}  Each active channel must have a
+source-native observable, transform rule, normalization rule, dimensional audit,
+and forbidden-field ledger.  Protocol support scores \(Q_i\) must be frozen by
+source-side review rather than inferred from endpoint improvement.
+\item \textbf{Single joint likelihood.}  The combined statistic must be a
+single predeclared multi-probe likelihood or likelihood surrogate with the
+covariance treatment specified in advance.  The current best-justified joint
+kernel is a support-weighted preflight score, not such a likelihood.
+\item \textbf{Covariance-aware controls.}  The endpoint must be tested against
+shuffled-channel, wrong-channel, sign-flip, block-drop, and null/readout
+controls using the same covariance and row-selection rules as the candidate.
+\item \textbf{Holdout or replay discipline.}  Any channel promoted after a
+diagnostic pass must be replayed under a frozen manifest.  A branch that becomes
+control-dominated, such as the present ACT \(K_{\rm path}\) route, must remain
+available as a negative/control artifact rather than being removed from the
+record.
+\item \textbf{Known-limit checks.}  The final model family must preserve the
+appropriate LCDM, GR/Newtonian, CMB-safety, and early-universe limits in the
+regime where the relevant channel is inactive or quotient-trivial.
+\end{enumerate}
+
+Table~\ref{tab:paper10-status-ledger} gives the current status of the main
+channel families against this validation boundary.  The table is meant to make
+the falsifiability and promotion rules explicit: a source-complete future
+endpoint that fails these tests should be retained as a true negative, not
+reinterpreted as a hidden positive signal.
+
+The repository now prepares the first source-side \(Q_i\) review package for
+this purpose:
+\url{joint_best_justified_qi_review_requirements_v1.csv}.
+It freezes the questions a reviewer must answer before the protocol support
+scores in Eq.~\eqref{eq:channel-quality} can be promoted beyond preflight
+bookkeeping.  It computes no endpoint score and keeps all validation flags
+false.
+
+\begin{table}[t]
+\centering
+\small
+\caption{Current Paper 10 status ledger.  ``Positive'' means positive within
+the current prevalidation protocol, not cosmological validation.  Branches with
+zero positive joint support remain part of the record as controls, diagnostics,
+or negative current proxies.}
+\label{tab:paper10-status-ledger}
+\begin{tabular}{p{0.23\linewidth}p{0.23\linewidth}p{0.38\linewidth}}
+\toprule
+Channel family & Current status & Validation blocker or next gate \\
+\midrule
+KiDS/COSEBIs low-mode & Strongest caveated positive support &
+Tomographic/operator-level blockers; covariant source-native mode-response
+operator still open. \\
+Observer/path low-\(z\) & Narrow positive support &
+Twelve-object permission replay; needs population-scale source-native path and
+metric/environment observables. \\
+DESI shape/readout & Narrow positive support &
+Small row-sensitive margin; needs validation-oriented replay with frozen
+source-native \(Q_i\). \\
+Void/web distance and growth & Weak/negative current proxy &
+Current proxy basis is AIC-negative or control-limited; requires stronger
+source-native void/web basis. \\
+Time/clock basis & Diagnostic/control-limited &
+Simple chronometer/uncertainty proxies fail controls or remain source-blocked;
+requires independent time/readout evidence. \\
+ACT \(K_{\rm path}\) & Control-dominated diagnostic &
+Curl-null control dominates; physical \(K_{\rm path}\) units and quotient
+descent remain open. \\
+Best-justified joint kernel & Positive robust preflight &
+Needs source-native \(Q_i\) review and covariance-aware joint likelihood before
+validation language. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+
 \section{Conclusion}
 
-The present repository defines a source-frozen Friedmann-readout audit protocol
-and now includes one explicitly approved KiDS COSEBIs endpoint score. It does
-not report cosmological validation. Its first numerical Pantheon+ pilots are
-deliberately neutral: the Tau shell slightly improves \(\chi^2\) in both the
-diagonal-covariance smoke test and the full-covariance pilot, but loses under
-AIC in both cases. The KiDS endpoint score is more structured: the
-source-frozen candidate improves over the zero baseline and lies in the low
-tail of predeclared null controls, but it is not an absolute null-control
-winner; the two better controls are tomographic-pair shuffles. A stricter
-tomographic-structure robustness run preserves the low-tail behavior with rank
-\(4/1120\), and a jackknife localization audit finds that all \(20/20\)
-leave-one source-bin/pair subsets retain negative \(\Delta\chi^2\), although
-the signal remains mode-band dependent. The mode-localization audit makes this
-specific: modes \(1\ldots5\) dominate the candidate score, and removing them
-removes the improvement. A mode-shape stress audit further shows that the
-source-independent low-mode carrier is important but not uniquely responsible:
-a flat carrier still improves, while high-mode weighting fails. A source-grounding
-ledger then classifies the \(n^{-1/2}\) carrier as a partial protocol carrier
-with an open first-principles mode-kernel derivation blocker. A follow-up
-envelope derivation shows that \(n^{-1/2}\) follows conditionally from a
-log-band-neutral path/readout power prior, but the covariant/survey-native
-kernel derivation remains open. A separate eligibility gate records that this
-prior is protocol-eligible under the current COSEBIs route while preserving the
-smoothness assumption and full-kernel blocker. A deterministic mock-sanity suite
-then verifies that low-mode, flat, high-mode, and oscillatory synthetic patterns
-recover their matching templates, rather than all collapsing into the low-mode
-candidate; this is a guardrail only, not physical mock validation. A
-survey-native path-kernel derivation gate then records that the route support is
-concrete but the mode-response operator, log-band-from-kernel derivation, and
-covariant or survey-native lensing limit remain open. A subsequent operator
-specification freezes the requirements for that missing mode-response map
-without claiming it has been derived. A spectrum-level attempt then preserves
-the \(n^{-1/2}\) envelope as a conditional smooth-path consequence, while
-leaving the operator and null-safety blockers open. Finally, an operator
-null-safety gate records that null controls exist and are leakage-safe at the
-replay level, but pure-mask response, gauge quotient descent, and
-spectrum-null coupling remain open at operator level. The pure-mask sub-gate
-then constructs a rank-two centered mask-only perturbation basis from
-\(F_{\rm overlap}\) and \(D_{\rm path}\), while preserving quotient triviality
-and mode-response leakage as open blockers. A source-side leakage audit records
-that uniform tile averaging kills the centered mask basis, but non-uniform
-operator leakage into the low-mode envelope is still not ruled out. On the
-distance-side low-redshift branch, the present sequence of void/source-basis,
-path-transform, coupled path, and sky/environment attempts is likewise mixed:
-the strongest control-surviving replay so far is the observer-orientation
-\(W_{\rm path}\times\mathrm{sky}_z\) channel, but only as a narrow
-permission-only diagnostic. Taken together, these results do not prove a Tau
-Core cosmology, but they do justify treating the direction as scientifically
-live: the framework now has operational source-frozen channels, leakage
-guards, null controls, and at least one observer/projection replay signal that
-survives its immediate family controls. The value of the scaffold is
-therefore to make the next cosmology test
-precise: a Tau Core-inspired late-time residual should be judged not by
-\(w(z)\ne -1\) alone, but by the joint pattern
+This paper defines and exercises a source-frozen Friedmann-readout audit
+protocol for a Tau-Core-inspired cosmological residual hypothesis.  It does not
+report cosmological validation, a dark-energy explanation, a modified-gravity
+law, or a dark-sector decision.  Its main contribution is operational: it shows
+how late-time projection/readout channels can be separated, frozen before
+scoring, tested against controls, preserved when negative, and combined only at
+a weaker joint-preflight level.
+
+The source-by-source record is mixed.  The distance-side void/web and simple
+time/clock proxies remain weak, control-limited, or AIC-negative in their current
+forms.  The ACT lensing/path route is deliberately preserved as a negative or
+control-dominated diagnostic: it improves weakly over a baseline in some guarded
+replays, but null/control branches, especially the curl branch, outperform it.
+By contrast, the KiDS/COSEBIs low-mode route, the low-redshift observer/path
+route, and the DESI shape/readout route provide the current positive-support
+channels.  Each remains caveated: none is promoted to physical validation, and
+each requires stronger source-native grounding before it can enter a validation-
+facing joint likelihood.
+
+The best-justified joint-kernel pass summarizes this status without allowing
+negative or control-dominated branches to rescue the score.  Positive support is
+assigned only to the three currently source-supported channels, using the
+residual-blind rule
 \[
-\begin{aligned}
-&\hbox{Lambda-like distance behavior}\\
-&\quad+\hbox{ web/environment-dependent growth or lensing residual}\\
-&\quad+\hbox{ CMB early-safety}.
-\end{aligned}
+  Q_i=\prod_a (g_i^a)^{1/7}.
+\]
+The resulting normalized preflight score is
+\(\widehat S_{\rm bj}=0.713515777\), with exact sign-flip
+\(p=0.125000000\) and combined-control \(p=0.164682540\).  A robustness stress
+over five source-side weighting rules keeps all variants positive, with minimum
+score \(0.703534932\).  This is the strongest current joint result in the paper,
+but only in the protocol-score sense.  Its recorded status remains
+\[
+\begin{gathered}
+\texttt{BEST\_JUSTIFIED\_KERNEL\_ROBUST\_POSITIVE}\\
+\texttt{PREFLIGHT\_NOT\_VALIDATION}
+\end{gathered}
 \]
 
-The next paper-grade step is a public-data pilot analysis with DESI/SNe/\(H(z)\)
-distance data, void and web source proxies, growth/lensing blocks, CMB safety
-checks, predeclared null controls, and an explicit source-grounding gate ledger
-for any channel promoted beyond proxy status.  The final target is not another
-Pantheon-only distance run but a multi-probe full-covariance score across
-distance, growth, lensing, and CMB-safety blocks.
+The interpretation is therefore deliberately narrow.  The current data products
+show that several Tau-Core-style readout/projection channels can be made
+operational and that the strongest source-supported channels form a nonempty
+joint pattern.  They do not show that Tau Core explains late-time acceleration,
+that a new gravitational law has been detected, or that the present kernel is a
+cosmological endpoint.  The detailed route ledgers, including weak and negative
+branches, are preserved in the supplementary source file so that the main text
+can state the evidence hierarchy without becoming a fit log.
+
+The next validation-facing step is now precise.  The protocol requires
+source-native review of the channel-quality factors \(Q_i\), followed by a
+single predeclared covariance-aware joint likelihood or likelihood surrogate
+with shuffled-channel, wrong-channel, sign-flip, block-drop, and null/readout
+controls.  A future source-complete case or channel family that fails those
+predeclared tests should be retained as a true negative rather than reinterpreted
+as hidden support.  Until that gate is passed, Paper 10 should be read as a
+reproducible multi-channel viability and audit-discipline result, not as a
+validated cosmological model.
 
 \bibliographystyle{plain}
 \bibliography{refs}

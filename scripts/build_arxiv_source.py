@@ -9,6 +9,10 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "paper10_submission_source"
 OUT = ROOT / "arxiv_submission_source.zip"
+GENERATED_MANUSCRIPT_PDFS = {
+    "main.pdf",
+    "supplement_route_ledgers.pdf",
+}
 
 EXCLUDE_SUFFIXES = {
     ".aux",
@@ -32,7 +36,9 @@ def main() -> None:
     for path in sorted(SOURCE.rglob("*")):
         if not path.is_file():
             continue
-        if path.name == "main.pdf":
+        if any(part.startswith(".") for part in path.relative_to(SOURCE).parts):
+            continue
+        if path.name in GENERATED_MANUSCRIPT_PDFS:
             continue
         if path.suffix in EXCLUDE_SUFFIXES:
             continue

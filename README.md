@@ -6,20 +6,30 @@ This repository is the initial private reproducibility scaffold for Paper 10:
 
 The paper is a protocol and pilot-analysis design. It connects the
 Koushiappas uncertainty-Friedmann external comparison to a Tau Core
-Friedmann-readout residual audit, then defines the data blocks needed to test
-whether late-time acceleration is better read as a structured projection/readout
-residual than as a homogeneous fluid.
+Friedmann-readout residual audit, then asks a two-level question:
+
+1. source-by-source, do independently frozen readout/projection channels carry
+   any control-surviving or diagnostically informative signal?
+2. jointly, do the already recorded channel outcomes form a nonempty
+   multi-channel pattern?
+
+The current answer is intentionally cautious. Some source channels are
+suggestive, some are weak, and some are preserved negatives. The joint layer is
+positive in sign but fragile and not a validation result.
 
 ## Main Claim
 
 The repository defines a reproducible audit protocol:
 
 ```text
-source-frozen void maturity and cosmic-web anisotropy proxies
-    -> late-time activation shells
-    -> distance, growth, lensing, and CMB safety tests
-    -> shuffled and wrong-proxy null controls.
+source-frozen projection/readout channels
+    -> separate source-by-source audits with controls
+    -> joint preflight synthesis of recorded channel summaries
+    -> future multi-probe endpoint only after covariance-aware controls.
 ```
+
+The current evidence is best described as
+`multi-channel viability evidence, not cosmological validation`.
 
 ## Does Not Claim
 
@@ -81,6 +91,86 @@ touches optical/path readout, expansion/time readout, density reconstruction, or
 the single-FLRW-geometry assumption. This is a discipline artifact, not a new
 score: it prevents `C_tau,cosmo` from becoming an unfrozen absorber for
 curvature, backreaction, dark-energy, calibration, or reconstruction effects.
+
+The current best-justified joint-kernel preflight is recorded in:
+
+```text
+data/source_manifest/joint_best_justified_kernel_manifest_v1.csv
+data/derived/joint_best_justified_kernel_score_v1.csv
+data/derived/joint_best_justified_kernel_score_v1_controls.csv
+data/derived/joint_best_justified_kernel_score_v1_leave_one_channel.csv
+data/derived/joint_best_justified_kernel_score_v1_summary.csv
+docs/joint_best_justified_kernel_score_v1.md
+scripts/run_joint_best_justified_kernel_score_v1.py
+scripts/validate_joint_best_justified_kernel_score_v1.py
+```
+
+It implements the residual-blind rule
+`Q_i = product_a (g_i^a)^(1/7)` and `w_i = Q_i / sum_j Q_j`.
+The first run keeps only KiDS/COSEBIs low-mode, observer/path low-z, and DESI
+shape/readout as positive-support channels. It gives normalized score
+`0.713515777`, exact sign-flip `p = 0.125000000`, and verdict
+`BEST_JUSTIFIED_JOINT_KERNEL_POSITIVE_PREFLIGHT_NOT_VALIDATION`. This is not a
+joint cosmological likelihood and not validation.
+
+The source-side weighting robustness stress for that same frozen channel
+ledger is recorded in:
+
+```text
+data/derived/joint_best_justified_kernel_robustness_v1.csv
+data/derived/joint_best_justified_kernel_robustness_v1_controls.csv
+data/derived/joint_best_justified_kernel_robustness_v1_summary.csv
+docs/joint_best_justified_kernel_robustness_v1.md
+paper10_submission_source/figures/fig_joint_best_justified_kernel_v1.pdf
+scripts/run_joint_best_justified_kernel_robustness_v1.py
+scripts/validate_joint_best_justified_kernel_robustness_v1.py
+scripts/build_joint_best_justified_kernel_figure_v1.py
+```
+
+It tests equal-geometric, source-heavy, control-heavy, projection-heavy, and
+conservative min-gate support rules. All five remain positive, with minimum
+normalized score `0.703534932`, exact sign-flip `p = 0.125000000`, and verdict
+`BEST_JUSTIFIED_KERNEL_ROBUST_POSITIVE_PREFLIGHT_NOT_VALIDATION`. The
+conservative min-gate combined weight-shuffle control is intentionally reported
+as weak (`p = 0.993055556`) because equal active weights make that shuffle
+nearly degenerate. This robustness stress supports sign stability against
+source-side exponent choice; it is not validation and not a joint likelihood.
+The figure is generated directly from the frozen manifest and robustness CSVs.
+
+A compact referee-readiness audit of the current manuscript claim boundary is
+recorded in:
+
+```text
+docs/paper10_referee_readiness_audit_v1.md
+```
+
+Its verdict is `SUBMIT_AFTER_MAJOR_STRUCTURE_REDUCTION_OR_AS_LONG_PROTOCOL_PREFLIGHT`.
+It records the current strongest points, reviewer-risk points, and the next
+required gate before stronger claims: source-native `Q_i` review plus a
+covariance-aware joint likelihood prototype.
+
+The first source-side `Q_i` review package for the best-justified joint kernel
+is prepared in:
+
+```text
+data/source_manifest/joint_best_justified_qi_review_requirements_v1.csv
+docs/joint_best_justified_qi_review_package_v1.md
+scripts/validate_joint_best_justified_qi_review_package_v1.py
+```
+
+This package does not compute new endpoint scores. It freezes the review
+questions needed before the protocol support scores `Q_i` can be promoted
+beyond preflight bookkeeping.
+
+The detailed route-by-route ledgers that were too log-like for the main
+manuscript are preserved in the supplementary source file:
+
+```text
+paper10_submission_source/supplement_route_ledgers.tex
+```
+
+The main manuscript keeps the narrative, status ledgers, best-justified joint
+kernel, and validation boundary; the supplement preserves the full audit trail.
 
 ## Reproduce
 
@@ -828,6 +918,61 @@ scripts/build_void_source_basis_refinement_v2_observer_orientation_kernel_v2_rep
 scripts/validate_void_source_basis_refinement_v2_observer_orientation_kernel_v2_replay_authorization_template.py
 scripts/build_void_source_basis_refinement_v2_observer_orientation_kernel_v2_replay_authorization_package.py
 scripts/validate_void_source_basis_refinement_v2_observer_orientation_kernel_v2_replay_authorization_package.py
+docs/void_source_basis_refinement_v2_observer_orientation_kernel_v2_replay_authorization_review_notes_v1.md
+data/derived/void_source_basis_refinement_v2_observer_orientation_kernel_v2_replay_authorization_response_v1.csv
+data/derived/void_source_basis_refinement_v2_observer_orientation_kernel_v2_replay_authorization_response_v1_summary.csv
+data/derived/void_source_basis_refinement_v2_observer_orientation_kernel_v2_replay_authorization_review_completed_summary_v1.csv
+data/derived/void_source_basis_refinement_v2_observer_orientation_kernel_v2_replay_authorization_response_v1_validation_log.txt
+scripts/validate_void_source_basis_refinement_v2_observer_orientation_kernel_v2_replay_authorization_response.py
+docs/void_source_basis_refinement_v2_observer_orientation_kernel_v2_authorized_replay.md
+data/source_manifest/void_source_basis_refinement_v2_observer_orientation_kernel_v2_authorized_replay_run.csv
+data/derived/void_source_basis_refinement_v2_observer_orientation_kernel_v2_authorized_replay_grid.csv
+data/derived/void_source_basis_refinement_v2_observer_orientation_kernel_v2_authorized_replay_summary.csv
+scripts/run_void_source_basis_refinement_v2_observer_orientation_kernel_v2_authorized_replay.py
+scripts/validate_void_source_basis_refinement_v2_observer_orientation_kernel_v2_authorized_replay.py
+docs/void_source_basis_refinement_v2_observer_basis_fast_screen_v1.md
+data/source_manifest/void_source_basis_refinement_v2_observer_basis_fast_screen_v1.csv
+data/derived/void_source_basis_refinement_v2_observer_basis_fast_screen_v1_grid.csv
+data/derived/void_source_basis_refinement_v2_observer_basis_fast_screen_v1_family_summary.csv
+data/derived/void_source_basis_refinement_v2_observer_basis_fast_screen_v1_summary.csv
+scripts/run_void_source_basis_refinement_v2_observer_basis_fast_screen_v1.py
+scripts/validate_void_source_basis_refinement_v2_observer_basis_fast_screen_v1.py
+docs/void_source_basis_refinement_v2_observer_basis_candidate_review_v1.md
+data/source_manifest/void_source_basis_refinement_v2_observer_basis_candidate_review_policy_v1.csv
+data/derived/void_source_basis_refinement_v2_observer_basis_candidate_review_response_template_v1.csv
+data/derived/void_source_basis_refinement_v2_observer_basis_candidate_review_package_v1.zip
+data/derived/void_source_basis_refinement_v2_observer_basis_candidate_review_package_v1.zip.sha256
+data/derived/void_source_basis_refinement_v2_observer_basis_candidate_review_package_v1_manifest.csv
+data/derived/void_source_basis_refinement_v2_observer_basis_candidate_review_package_v1_summary.csv
+scripts/build_void_source_basis_refinement_v2_observer_basis_candidate_review_package_v1.py
+scripts/validate_void_source_basis_refinement_v2_observer_basis_candidate_review_package_v1.py
+docs/void_source_basis_refinement_v2_observer_basis_candidate_review_notes_v1.md
+data/derived/void_source_basis_refinement_v2_observer_basis_candidate_review_response_v1.csv
+data/derived/void_source_basis_refinement_v2_observer_basis_candidate_review_response_v1_summary.csv
+data/derived/void_source_basis_refinement_v2_observer_basis_candidate_review_completed_summary_v1.csv
+data/derived/void_source_basis_refinement_v2_observer_basis_candidate_review_response_v1_validation_log.txt
+scripts/validate_void_source_basis_refinement_v2_observer_basis_candidate_review_response_v1.py
+docs/void_source_basis_refinement_v2_observer_basis_replay_authorization_v1.md
+data/source_manifest/void_source_basis_refinement_v2_observer_basis_replay_authorization_policy_v1.csv
+data/derived/void_source_basis_refinement_v2_observer_basis_replay_authorization_response_template_v1.csv
+data/derived/void_source_basis_refinement_v2_observer_basis_replay_authorization_package_v1.zip
+data/derived/void_source_basis_refinement_v2_observer_basis_replay_authorization_package_v1.zip.sha256
+data/derived/void_source_basis_refinement_v2_observer_basis_replay_authorization_package_v1_manifest.csv
+data/derived/void_source_basis_refinement_v2_observer_basis_replay_authorization_package_v1_summary.csv
+scripts/build_void_source_basis_refinement_v2_observer_basis_replay_authorization_package_v1.py
+scripts/validate_void_source_basis_refinement_v2_observer_basis_replay_authorization_package_v1.py
+docs/void_source_basis_refinement_v2_observer_basis_replay_authorization_review_notes_v1.md
+data/derived/void_source_basis_refinement_v2_observer_basis_replay_authorization_response_v1.csv
+data/derived/void_source_basis_refinement_v2_observer_basis_replay_authorization_response_v1_summary.csv
+data/derived/void_source_basis_refinement_v2_observer_basis_replay_authorization_review_completed_summary_v1.csv
+data/derived/void_source_basis_refinement_v2_observer_basis_replay_authorization_response_v1_validation_log.txt
+scripts/validate_void_source_basis_refinement_v2_observer_basis_replay_authorization_response_v1.py
+docs/void_source_basis_refinement_v2_observer_basis_authorized_replay_v1.md
+data/source_manifest/void_source_basis_refinement_v2_observer_basis_authorized_replay_run_v1.csv
+data/derived/void_source_basis_refinement_v2_observer_basis_authorized_replay_v1_grid.csv
+data/derived/void_source_basis_refinement_v2_observer_basis_authorized_replay_v1_summary.csv
+scripts/run_void_source_basis_refinement_v2_observer_basis_authorized_replay_v1.py
+scripts/validate_void_source_basis_refinement_v2_observer_basis_authorized_replay_v1.py
 scripts/build_void_source_basis_refinement_v2_path_projection_route_ledger_v1.py
 scripts/validate_void_source_basis_refinement_v2_path_projection_route_ledger_v1.py
 scripts/build_void_source_basis_refinement_v2_time_readout_route_ledger_v1.py
@@ -926,10 +1071,1992 @@ package asks only whether this can be retained as a source-side
 observer-dependence follow-up candidate and whether the next action may be
 limited to a separate replay authorization package. It does not authorize
 replay, does not claim endpoint validation, and contains no endpoint residuals,
-endpoint scores, or fit statistics. The
-time/readout component also has a route ledger: CC/BAO/CMB products are
-declared but not fetched/frozen as numeric time-readout inputs, so no `W_time`
-values are computed.
+endpoint scores, or fit statistics. The completed external review authorizes
+exactly one permission-only replay of the centered observer-orientation kernel
+`K_v2 = W_path * (sky_z - mean_sky_z_scope)`. That replay improves the baseline
+chi2 (`delta_chi2_candidate_minus_baseline=-0.47326976306`), but it is not
+control-resistant: one deterministic-shuffle control is slightly better
+(`delta_chi2_candidate_minus_best_control=0.01875086453`). The verdict is
+`observer_orientation_v2_permission_replay_not_control_resistant_not_validation`.
+This is a useful diagnostic negative: centering the sky-orientation coordinate
+does not by itself preserve the raw `W_path_x_sky_z` control-surviving signal.
+An accelerated preauthorization observer-basis bank was therefore run without
+reviewer-gated endpoint promotion. It tests only predeclared source-side
+sky-vector and redshift-modulated observer-basis functions on the same 12-row
+scope. The best candidate is
+`W_path_x_sky_x_x_zcenter`, with
+`delta_chi2_candidate_minus_baseline=-0.58072431813`; it survives its local
+controls with `delta_chi2_candidate_minus_best_control=-0.08783266799` and is
+slightly better than the best global control in the bank
+(`best_candidate_delta_chi2_minus_best_global_control=-0.02302956281`). This is
+still a preauthorization diagnostic, not validation. Because it improves on the
+previous raw `W_path_x_sky_z` candidate, it is the next family that should go to
+external reviewer authorization before any replay claim. The subsequent
+permission-only replay authorization review accepted exactly one frozen 12-row
+replay for `W_path_x_sky_x_x_zcenter`. The replay preserves the signal:
+`delta_chi2_candidate_minus_baseline=-0.58072431813`,
+`delta_chi2_candidate_minus_best_control=-0.08783266799`, rank 1 among the
+candidate and frozen controls, with zero controls better than the candidate.
+This is the strongest current narrow observer/projection replay, but still not
+population validation or a physical path-weight derivation. It is also still a
+simplified observer/path proxy: `W_path_x_sky_x_x_zcenter` keeps only a
+source-side path proxy, one sky-vector component, and a centered redshift
+coordinate. A future full Tau Core observer/path kernel would need to include
+the full sky direction, redshift, line-of-sight environment, void/web geometry,
+observer/survey-frame orientation, metric or lensing-path information, and any
+independently source-grounded time/readout phase. The current result motivates
+that full-kernel construction; it does not provide or validate it.
+A first preauthorization full-kernel-proxy fast screen has now been run on the
+same 12-row scope. It multiplies the observer-basis carrier by frozen source-side
+void, web, line-of-sight environment, and void-geometry proxies. The best family
+is still the simpler `W_path_x_sky_x_x_zcenter`
+(`delta_chi2_candidate_minus_baseline=-0.58072431813`). The only enriched family
+that survives its local controls is
+`W_path_x_sky_x_x_zcenter_x_web_centered_x_los_density_mean`, and it is weaker
+(`delta_chi2_candidate_minus_baseline=-0.451413`,
+`delta_chi2_candidate_minus_best_control=-0.048323`). The best global control in
+the enlarged bank is slightly better than the best candidate
+(`best_candidate_delta_chi2_minus_best_global_control=0.115454`). This is a
+useful diagnostic constraint, not a failure of the observer/path idea: simply
+stacking available source-side proxies is not enough. A genuine full kernel
+needs better source-native path/environment/readout observables.
+A component audit makes this sharper: zero enriched families are stronger than
+the base observer-basis carrier. The mixed void-web proxy is close but fails
+controls; the mixed web-LOS-density proxy survives local controls but remains
+weaker than the base. This keeps the interpretation narrow and useful: the
+current evidence points to an observer-basis channel, not to arbitrary
+environment-proxy accumulation.
+The next gate is therefore a source-requirements gate, not another score search:
+the full observer/path kernel needs a full observer-frame basis, radial
+line-of-sight environment integral, path-aware void geometry, directional web
+anisotropy, independent metric/lensing-path information, and independent
+time/readout phase evidence before replay or validation language is allowed.
+The first concrete R2 upgrade is now present: a source-side LOS radial profile
+with five frozen redshift shells inside the same 2 degree cone. It is available
+for 424 low-z rows, with 153 complete five-shell profiles; on the 12-row partial
+path scope, 7 rows have complete profiles and 10 have at least one non-empty
+shell. This is a better source observable than the earlier scalar count/density
+proxy, but it is still not a full metric/lensing-weighted path integral.
+A first R3 upgrade is also present: a path-aware void-geometry observable that
+uses the observer-to-source segment instead of only the nearest void to the
+source position. It finds 180 effective-void path crossings among 424 low-z
+rows, and 10 crossings in the 12-row partial path scope. This is a better void
+geometry source observable, but still a low-z Euclidean proxy rather than a
+metric/lensing-weighted null-geodesic bundle term.
+A first R4 upgrade is now present as well: a source-side directional web
+anisotropy observable computed from the same SDSS DR17 MCPM catalogue. It uses
+a fixed 2 degree cone and a frozen redshift window around each low-z Pantheon+
+source, then records tangent-plane density-weighted dipole and quadrupole
+moments. It is quadrupole-ready for 238 of 424 low-z rows and for 9 of the 12
+partial path-scope rows. This improves the earlier scalar web proxy, but it is
+still not a full cosmic-web tensor contracted with a metric/lensing-weighted
+observer-source path.
+The R5 metric/lensing-path route audit is also now explicit. Public KiDS and
+CMB lensing routes are cached, and the low-z Pantheon+ rows are cross-checked
+against the KiDS DR4.1 tile-coordinate inventory. Only 5 of 424 low-z rows are
+within 1 degree of a KiDS tile proxy, and no source-aligned kappa, shear,
+mass-map integral, or metric/lensing path weight is computed. This narrows the
+blocker: R5 is route-grounded but not yet observable-grounded.
+The first CMB-lensing source-product acquisition route is now frozen for ACT
+DR6 through the public NASA LAMBDA release. The manifest records the LAMBDA
+info/download pages, provider download script, expected byte count, local byte
+count, checksum when complete, and the explicit endpoint-disabled claim
+boundary. This is still source-side acquisition only: it does not yet synthesize
+a physical metric/lensing path weight and does not authorize endpoint replay.
+The route therefore strengthens R5 data availability without authorizing
+observer/path endpoint replay.
+The source inventory contains 13 ACT DR6 lensing variants with kappa alm,
+HEALPix mask, filter, and noise products for each variant. The baseline variant
+is available as the recommended science route, and `diff_f150_f090`,
+`diff_f150_f090_tonly`, and `curl` are available as null-control variants.
+A first low-resolution source-side sampling pilot now synthesizes ACT DR6
+kappa maps from the baseline, curl, and `diff_f150_f090` alm products at
+`nside=512`, `lmax=1024`, samples them at the 424 low-z Pantheon+ sky
+positions, and samples the baseline `nside=4096` ACT mask. The pilot finds 168
+mask-positive rows and records all sampled values with `endpoint_replay_allowed
+= false`, `contains_distance_residuals = false`, and `contains_fit_statistics
+= false`. This is an observer/path lensing input artifact, not a physical
+metric-path kernel and not a validation result.
+A follow-up candidate freezes a unitless ACT lensing path-weight shape by
+normalizing the baseline kappa samples over mask-positive rows with a
+source-side median/MAD rule and assigning zero weight outside the ACT mask. The
+curl and `diff_f150_f090` channels are frozen with the same rule as null
+controls. The active-row baseline/control correlations are
+`corr(baseline,curl)=-0.0415435390521` and
+`corr(baseline,diff_f150_f090)=-0.230185832443`, so the candidate is
+nondegenerate enough for external review. It remains not endpoint replay, not
+validation, and not a physical path-weight claim.
+After the guarded replay and control-dominance diagnostic, the Paper11-style
+control-veto gate records:
+
+```text
+data/derived/act_dr6_lensing_path_weight_paper11_control_veto_gate_v1_summary.csv
+```
+
+The gate maps the ACT result into the Paper11 decision language:
+`M0_no_dark_tau_readout`, `M1_tau_base_substrate`, and
+`M2_standard_dark_sector`. Because four controls beat the present candidate and
+the best control is `curl_null`, the current ACT path-weight source basis is
+not family-verdict eligible. This blocks an M0/M1 source-structure claim for
+this ACT basis, but it also explicitly blocks any inference that the result
+favors a standard dark-sector benchmark. The required next gate is therefore
+`source_basis_freeze_or_demote_act_path_weight`, not combination search.
+That gate is now materialized as:
+
+```text
+data/derived/act_dr6_lensing_path_weight_source_basis_freeze_or_demote_gate_v1_summary.csv
+data/derived/act_dr6_lensing_path_weight_source_basis_freeze_or_demote_gate_v1_checklist.csv
+```
+
+It demotes the current unitless ACT path-weight basis to a preserved
+negative/control-dominated candidate. Reopening remains allowed only through a
+new source-side basis freeze that supplies the source object, E-mode route,
+curl-null policy, mask/coverage policy, units/normalization, channel handoff,
+and predeclared control suite before any replay.
+The first item in that reopen checklist is now defined source-side:
+
+```text
+data/source_manifest/act_dr6_lensing_observer_path_source_object_v1.csv
+data/derived/act_dr6_lensing_observer_path_source_object_v1_summary.csv
+```
+
+The source object is the ACT DR6 observer/path lensing-environment bundle:
+baseline convergence reconstruction samples, curl and frequency-difference
+null-control samples, and ACT mask coverage sampled at predeclared low-z
+Pantheon sky positions. It is explicitly not a metric/lensing path integral,
+not a physical `K_path` kernel, not an endpoint score, and not a dark-sector
+decision object. Therefore `ACT_REOPEN_01_SOURCE_OBJECT` is now
+`DEFINED_SOURCE_SIDE`, while replay remains disabled by the remaining reopen
+requirements.
+The second item is also defined only at source-route level:
+
+```text
+data/source_manifest/act_dr6_lensing_e_mode_route_v1.csv
+data/derived/act_dr6_lensing_e_mode_route_v1_summary.csv
+```
+
+This freezes why the baseline channel is the candidate route: the ACT inventory
+labels `baseline` as the recommended science variant and provides baseline
+kappa alm modes plus mask support. This is not yet a physical E/B theorem,
+gauge-descent proof, metric/lensing path integral, or replay authorization.
+Thus `ACT_REOPEN_02_E_MODE_ROUTE` is `DEFINED_SOURCE_SIDE`, while
+`ACT_REOPEN_03_CURL_NULL_POLICY`, normalization, channel handoff, and controls
+remain active blockers.
+The curl-null policy is now frozen as a protocol veto:
+
+```text
+data/source_manifest/act_dr6_lensing_curl_null_policy_v1.csv
+data/derived/act_dr6_lensing_curl_null_policy_v1_summary.csv
+```
+
+The policy treats `curl` as a source-native null/control branch for the ACT
+path-weight candidate, not as a positive Tau path channel in this paper. Since
+the guarded replay already found `curl_null` as the best control, the current
+branch is explicitly vetoed: the ACT basis remains control-dominated and cannot
+support a family verdict. This freezes `ACT_REOPEN_03_CURL_NULL_POLICY` as
+`FROZEN_SOURCE_SIDE_VETO_ACTIVE`; it does not prove operator-level curl quotient
+triviality or physical E/B gauge descent.
+The mask and coverage policy is now frozen source-side:
+
+```text
+data/source_manifest/act_dr6_lensing_mask_coverage_policy_v1.csv
+data/derived/act_dr6_lensing_mask_coverage_policy_v1_summary.csv
+```
+
+It records the predeclared low-z Pantheon scope of 424 rows, 168 ACT
+mask-positive rows, and 256 outside-mask rows. Mask-positive rows are used only
+for source-side center/scale normalization; outside-mask rows are assigned zero
+weight but kept in the scope. The policy explicitly forbids endpoint-driven row
+dropping or post-hoc selection. Thus `ACT_REOPEN_04_MASK_AND_COVERAGE_POLICY`
+is now `FROZEN_SOURCE_SIDE`.
+The units/normalization policy is now frozen only as a proxy-level diagnostic:
+
+```text
+data/source_manifest/act_dr6_lensing_units_normalization_policy_v1.csv
+data/derived/act_dr6_lensing_units_normalization_policy_v1_summary.csv
+```
+
+It records the current mask-positive median/MAD rule as a deterministic
+source-side, dimensionless proxy normalization. This does not define physical
+path-weight units, response amplitude, or endpoint amplitude tuning. A physical
+ACT path-weight reopen would still require source-native convergence-to-path
+response units, or a theorem-bounded mapping from ACT kappa samples to
+`K_path` amplitude. Thus `ACT_REOPEN_05_UNITS_AND_NORMALIZATION` is now
+`PROXY_FROZEN_PHYSICAL_BLOCKER_OPEN`, while channel handoff and the full
+control suite remain open.
+The channel handoff is now frozen as a source-diagnostic demotion:
+
+```text
+data/source_manifest/act_dr6_lensing_channel_handoff_policy_v1.csv
+data/derived/act_dr6_lensing_channel_handoff_policy_v1_summary.csv
+```
+
+The baseline ACT kappa route remains a `K_path` observer/path candidate, but
+only as `K_path_candidate_source_diagnostic_only`. Positive `K_path` promotion
+is blocked because physical units are still missing and the Paper11-style veto
+found `curl_null` as the best control. No `K_closure` handoff is allowed because
+no closure equation or theorem-bounded mapping is frozen. The curl branch is
+retained as `K_null` control. Thus `ACT_REOPEN_06_CHANNEL_HANDOFF` is now
+`SOURCE_DIAGNOSTIC_ONLY_NOT_PHYSICAL_K_PATH`, while the full control suite
+remains open.
+The current ACT control suite is now frozen:
+
+```text
+data/source_manifest/act_dr6_lensing_control_suite_policy_v1.csv
+data/derived/act_dr6_lensing_control_suite_policy_v1_summary.csv
+```
+
+It records seven scored controls from the guarded replay: `off`,
+`baseline_only`, `curl_null`, `diff_f150_f090_null`, `wrong_sign`,
+`deterministic_shuffle`, and `rank_reverse`. It also records
+`source_basis_recenter_stress` as a future reopen stress, not as a scored
+current-branch rescue. All controls are bound as `K_null`. Because `curl_null`
+is already the best control, the suite freezes the veto rather than reopening
+the branch. Thus `ACT_REOPEN_07_CONTROL_SUITE` is
+`FROZEN_CURRENT_BRANCH_REPLAY_STILL_DISABLED`.
+The resulting ACT reopen closure ledger is:
+
+```text
+data/derived/act_dr6_lensing_reopen_closure_ledger_v1.csv
+data/derived/act_dr6_lensing_reopen_closure_ledger_v1_summary.csv
+```
+
+It records that all seven ACT reopen gates are now accounted for and closed or
+frozen for the current branch. This is not replay authorization. It is a
+quarantine result: the current ACT branch is preserved as a
+control-dominated diagnostic, and any future ACT path-weight attempt must start
+from a new source-side basis design without reusing endpoint scores.
+The corresponding next-basis design scaffold is now frozen at:
+
+```text
+data/source_manifest/act_dr6_lensing_next_source_basis_design_scaffold_v1.csv
+data/derived/act_dr6_lensing_next_source_basis_design_scaffold_v1_summary.csv
+```
+
+It predeclares seven requirements for any future ACT attempt: a physical
+`K_path` mapping, operator/quotient descent, mask and coverage policy,
+source-only recenter stress, a complete control suite, channel-handoff decision,
+and a forbidden-endpoint-field ledger. This artifact is not replay
+authorization and does not improve the current ACT score. Its role is to make
+the next ACT source-basis route auditable before any future endpoint scoring.
+The first caveated source-design instance for that route is:
+
+```text
+data/source_manifest/act_dr6_lensing_caveated_kpath_source_design_v1.csv
+data/derived/act_dr6_lensing_caveated_kpath_source_design_v1_summary.csv
+data/derived/act_dr6_lensing_caveated_kpath_source_design_review_package_v1.zip
+```
+
+This design carries ACT baseline kappa only as a dimensionless
+`K_path`-shape proxy, keeps curl and frequency-difference products as
+`K_null` controls, preserves the partial ACT mask coverage, and requires
+external review before any future permission-only replay. It does not reopen
+the quarantined ACT endpoint branch and does not claim a physical path-weight
+amplitude.
+The completed external source-design response is now imported and validated:
+
+```text
+data/derived/act_dr6_lensing_caveated_kpath_source_design_review_response_v1.csv
+data/derived/act_dr6_lensing_caveated_kpath_source_design_review_completed_summary_v1.csv
+```
+
+The decision is `ACCEPT_CAVEATED_KPATH_SOURCE_DESIGN_FOR_REVIEW_ONLY`.
+This permits preparation of a later permission-only replay-review package, but
+it still sets `current_replay_authorized_by_this_review=false`,
+`endpoint_replay_allowed=false`, `endpoint_validation_claimed=false`, and
+`physical_lensing_path_weight_claimed=false`.
+That next replay-authorization review package is now prepared at:
+
+```text
+data/derived/act_dr6_lensing_caveated_kpath_replay_authorization_review_package_v1.zip
+data/derived/act_dr6_lensing_caveated_kpath_replay_authorization_review_package_v1_summary.csv
+```
+
+It is still pending reviewer completion. The package asks only whether a
+separate permission-only guarded replay package may be prepared from the
+accepted caveated source design. It does not itself authorize replay,
+validation, physical `K_path` promotion, or a dark-sector/family verdict.
+When a completed response is returned, it is imported and checked with:
+
+```text
+scripts/import_act_dr6_lensing_caveated_kpath_replay_authorization_review_response_v1.py
+scripts/validate_act_dr6_lensing_caveated_kpath_replay_authorization_review_response_v1.py
+```
+
+The validator can only permit preparation of a later guarded replay package.
+It keeps `endpoint_replay_allowed_by_this_review=false`; scoring remains a
+separate downstream gate.
+The completed response now authorizes that preparation step only:
+
+```text
+data/derived/act_dr6_lensing_caveated_kpath_replay_authorization_review_response_v1_summary.csv
+data/derived/act_dr6_lensing_caveated_kpath_guarded_replay_package_v1.zip
+data/derived/act_dr6_lensing_caveated_kpath_guarded_replay_package_v1_summary.csv
+```
+
+The guarded replay package is ready but not executed. It keeps
+`endpoint_replay_executed=false`, `endpoint_validation_claimed=false`, and
+`physical_lensing_path_weight_claimed=false`. The next step, if chosen, is a
+separate guarded replay execution with all mandatory controls retained.
+That guarded replay has now been executed as a permission-only diagnostic:
+
+```text
+data/derived/act_dr6_lensing_caveated_kpath_guarded_replay_v1_grid.csv
+data/derived/act_dr6_lensing_caveated_kpath_guarded_replay_v1_summary.csv
+```
+
+The result remains control-dominated. The candidate improves over the baseline
+(`Delta chi2 candidate - baseline = -1.218200515`), but the best control is
+still `curl_null`, with
+`Delta chi2 candidate - best control = 1.241099132`, and four controls beat
+the candidate. The verdict is
+`ACT_CAVEATED_KPATH_GUARDED_REPLAY_CONTROL_DOMINATED_PERMISSION_ONLY_NOT_VALIDATION`.
+This preserves ACT as a negative/control-dominated branch under the current
+caveated source basis.
+The time/readout component now has a sharper R6 source audit. The cosmic
+chronometer `H(z)` table is fetched and frozen, the SDSS DR16 multi-tracer
+BAO/RSD products are fetched and frozen, and the Planck/LAMBDA CMB route page
+is cached. The 424 low-z Pantheon+ rows all have a nearby CC `H(z)` redshift
+support point under the current source-side coverage rule. However, no
+`Delta_clock`, `Delta_clock_star`, redshift-bin phase rule, or numeric `W_time`
+activation has been derived or frozen. R6 is therefore route-grounded but still
+activation-blocked.
+The next R6 subgate freezes only a source-side normalization candidate:
+`Delta_clock_star_candidate = median(errHz/Hz) = 0.16581626506` from the
+fetched/frozen cosmic-chronometer table. This removes one normalization
+ambiguity, but it still does not compute `Delta_clock` or activate `W_time`.
+The following R6 subgate freezes a source-side redshift-bin policy candidate:
+low-z Pantheon+ rows are assigned to source-native cosmic-chronometer support
+cells, with SDSS BAO/RSD nodes recorded only as route markers. This fixes the
+domain on which a later clock/readout observable could be evaluated, but it
+still does not compute `Delta_clock`, does not smooth `H(z)`, and does not
+activate `W_time`.
+The next R6 subgate freezes a narrow uncertainty-channel `Delta_clock`
+candidate:
+`Delta_clock_uncertainty_candidate = log((errHz/Hz)_assigned_CC_bin /
+median(errHz/Hz)_CC)`. This is a residual-blind CC measurement-uncertainty
+contrast, not a physical clock-drift measurement and not a `W_time` activation.
+The resulting low-z candidate has range `[0.0476000829881, 0.834341816646]`
+under the current CC-support assignment.
+The next source-only transform freezes a `W_time` basis candidate by centering
+and scaling that `Delta_clock` candidate over the source rows:
+`W_time_uncertainty_basis = (Delta_clock_uncertainty_candidate - source_mean) /
+source_std`. The resulting basis has range `[-4.23048519997, 2.81443932804]`
+and zero source mean, but it remains a candidate basis only: it does not
+authorize replay, does not claim validation, and must pass a separate control
+or replay-authorization gate before scoring.
+A replay-authorization review package for this basis is now prepared and
+validated at
+`data/derived/low_z_pantheon_w_time_uncertainty_basis_replay_authorization_review_package_v1.zip`
+with checksum
+`2067b221b0309bb8fcc3a294fcebf5c8fddd6123d7d7d7a151615c992a2fd69f`.
+The package is intentionally not completed: `endpoint_replay_allowed=false`
+until an external response is filled and validated.
+A replay run template and guarded runner are also present.  After the completed
+external reviewer response was imported, one permission-only replay was run.
+The result is diagnostic rather than validating: the candidate improves over
+the baseline slightly (`Delta chi2 = -0.652452012`) but is not control
+resistant because three controls beat the candidate and the best control is
+`rank_reverse`.
+This is structurally useful: in Tau Core language a full `W_time` projection is
+not expected to be a homogeneous function of redshift or scale factor alone.
+It should be treated as potentially observer/path dependent and morphology
+aware, with source environment, void/web structure, null-geodesic bundle,
+observer frame, and readout phase all eligible only when frozen from
+independent source-side observables. The tested `W_time_uncertainty_basis` is
+therefore only a narrow CC-uncertainty stress test. Its control failure
+motivates a richer source-frozen `W_time(z, n_hat, env, path, phi_readout)`
+basis rather than a validation claim.
+A first preauthorization overlap screen combines the current observer-basis
+carrier with this narrow time/readout basis on the same 12-row observer scope.
+It tests `observer_only`, `time_on_observer_scope`, `observer_times_time`, and
+`observer_plus_time`. The best family remains the pure observer carrier
+`W_path_x_sky_x_x_zcenter` with
+`delta_chi2_candidate_minus_baseline=-0.58072431813`; the multiplicative
+observer/time coupling is weaker (`-0.477935`), the additive proxy is weaker
+(`-0.423746`), and the time basis alone is nearly inactive (`-0.030493`). This
+is not replay authorization and not validation. It says the present
+CC-uncertainty `W_time` proxy does not improve the successful narrow
+observer/path proxy; a combined observer/time kernel needs a better
+source-native clock/readout observable.
+The next source-side attempt replaces uncertainty with a clock-rate/phase
+candidate from the fetched cosmic-chronometer `H(z)` values: assigned `log H`,
+finite-difference `d log H / d log(1+z)`, and their normalized product. The
+preauthorization fast screen finds the product `clock_phase` family as the best
+candidate, with `delta_chi2_candidate_minus_baseline=-0.523771964`, but it is
+not control-resistant: the best global control is `rank_reverse` on
+`clock_level` with `chi2=377.625521`, better than the candidate
+`chi2=381.270425`. This is a stronger negative diagnostic than the
+uncertainty-only branch: direct CC rate information is more relevant, but the
+current low-z CC support has only three bins and remains vulnerable to
+redshift-ordering controls.
+A follow-up rank-control audit makes the blocker explicit without promoting the
+branch to replay. The low-z rows occupy only three CC support bins
+(`0:397;1:20;2:7`), each clock family has at most three unique basis values,
+and `rank_reverse` is the best local control for all three clock families. The
+verdict is
+`low_cc_bin_count_rank_control_dominance_confirmed_not_validation`. This means
+the present clock-rate/phase proxy is a useful source-side failure analysis,
+not an endpoint-ready Tau Core time/readout kernel.
+
+The next focused stress test widens the CC support from low-z only to the
+Pantheon rows covered by the fetched CC table. It includes `1370 / 1371`
+Pantheon design rows, uses 31 nearest-neighbor CC support bins, and excludes
+one row above the CC support. This improves the time/readout signal:
+`clock_slope` gives `delta_chi2_candidate_minus_baseline=-1.142872` and
+survives its local family controls. But the global control gate still fails:
+`rank_reverse/clock_level` remains better than the best candidate. The verdict
+is `clock_rate_phase_cc_support_fast_screen_not_control_resistant`. This is a
+promising diagnostic for a clock-slope route, not replay authorization.
+The follow-up route gate freezes this status explicitly:
+`CLOCK_SLOPE_REVIEW_CANDIDATE_ENDPOINT_BLOCKED_BY_GLOBAL_CONTROL`. The allowed
+next route is a reviewer-gated `clock_slope`-only candidate, because the slope
+tracks a rate of expansion readout, `d log H / d log(1+z)`, rather than the
+background clock level. The forbidden route is endpoint replay or validation
+language before the global control blocker is resolved.
+The reviewer authorization package for this next route is now prepared but not
+completed:
+`data/derived/pantheon_clock_slope_route_replay_authorization_review_package_v1.zip`.
+It contains no endpoint residuals, no endpoint scores, and no fit statistics;
+its checksum is recorded in the adjacent `.sha256` file. A completed reviewer
+response is required before any `clock_slope`-only replay candidate can be
+prepared.
+
+An independent SDSS radial-BAO route audit now checks whether the frozen
+multi-tracer BAO/RSD products contain a non-CC time/readout observable. The
+radial BAO entries satisfy `D_H/r_d = c/(H(z) r_d)`, so `-log(DH_over_rd)` is a
+source-side proxy for `log H(z)` up to the unresolved sound-horizon nuisance
+`r_d`. The audit finds exactly two usable `DH_over_rd` rows at `z_eff=0.700`
+and `z_eff=0.845`, independent of Pantheon distance residuals and independent
+of the CC `clock_level` route. The verdict is
+`independent_radial_bao_time_observable_present_but_underresolved_not_replay`:
+this is a useful source-side route discovery, not replay authorization and not
+validation.
+
+The joint CC+BAO consistency audit then compares the two BAO radial points with
+the nearest CC support values. In this two-point source-side check, radial BAO
+aligns with the CC `logH` level route (`bao_cc_level_two_point_alignment=1`) and
+anti-aligns with the current CC `clock_slope` route
+(`bao_cc_slope_two_point_alignment=-1`). This prevents overpromoting BAO as
+clock-slope support. The result is instead an independent, underresolved
+expansion-level time/readout route:
+`radial_bao_aligns_with_cc_level_not_cc_slope_underresolved_not_replay`.
+
+The resulting time/readout synthesis gate records the current route state as:
+`clock_slope_review_candidate_plus_independent_bao_level_route_underresolved_not_endpoint`.
+The allowed next route is either a completed external authorization for the
+`clock_slope` route or separate source-side level/slope time routes built
+without endpoint scores. Endpoint replay, validation language, and any claim
+that radial BAO already supports the clock-slope route remain forbidden until a
+joint nuisance/interface policy is frozen and the current blockers are closed.
+
+The route split is now explicit in:
+
+```text
+data/source_manifest/paper10_time_readout_level_slope_route_split_ledger_policy_v1.csv
+data/derived/paper10_time_readout_level_slope_route_split_ledger_v1.csv
+data/derived/paper10_time_readout_level_slope_route_split_ledger_v1_summary.csv
+docs/paper10_time_readout_level_slope_route_split_ledger_v1.md
+scripts/build_paper10_time_readout_level_slope_route_split_ledger_v1.py
+scripts/validate_paper10_time_readout_level_slope_route_split_ledger_v1.py
+```
+
+It records two non-endpoint routes. The `time_level_route` has independent BAO
+support and CC-level alignment, but remains two-point underresolved and
+`r_d`-blocked. The `time_slope_route` has the CC clock-slope candidate signal,
+but remains blocked by global controls and cannot cite radial BAO as supporting
+evidence. The ledger verdict is
+`level_and_slope_time_routes_split_source_side_not_endpoint`.
+
+The level route also has an explicit nuisance/interface freeze plan:
+
+```text
+data/source_manifest/paper10_time_level_route_nuisance_interface_freeze_plan_v1.csv
+data/derived/paper10_time_level_route_nuisance_interface_freeze_plan_v1_summary.csv
+docs/paper10_time_level_route_nuisance_interface_freeze_plan_v1.md
+scripts/validate_paper10_time_level_route_nuisance_interface_freeze_plan_v1.py
+```
+
+This plan permits only two-point directional level alignment from `D_H/r_d`.
+It forbids fitting `r_d` from Pantheon residuals, claiming an absolute `H(z)`
+scale without an `r_d` policy, or using radial BAO as clock-slope support. The
+next source gate must freeze an external `r_d` prior or an `r_d`
+marginalization policy and expand radial-BAO support before endpoint scoring.
+
+A first `r_d`-cancelled differential check is recorded in:
+
+```text
+data/source_manifest/paper10_bao_rd_cancelled_time_level_difference_audit_policy_v1.csv
+data/derived/paper10_bao_rd_cancelled_time_level_difference_audit_v1.csv
+data/derived/paper10_bao_rd_cancelled_time_level_difference_audit_v1_summary.csv
+docs/paper10_bao_rd_cancelled_time_level_difference_audit_v1.md
+scripts/build_paper10_bao_rd_cancelled_time_level_difference_audit_v1.py
+scripts/validate_paper10_bao_rd_cancelled_time_level_difference_audit_v1.py
+```
+
+Because `Delta[-log(D_H/r_d)] = Delta[log H]`, the constant `r_d` term cancels
+in the two-point difference. The audit finds directional agreement with the
+nearest CC `logH` difference, but the BAO differential signal is low
+significance (`delta_bao_snr=0.0997626410319`). The verdict is
+`rd_cancels_direction_agrees_but_bao_delta_low_significance_not_endpoint`.
+This is useful route discipline, not endpoint evidence.
+
+The current `r_d` policy-selection gate is recorded in:
+
+```text
+data/source_manifest/paper10_time_level_rd_policy_selection_gate_v1.csv
+data/derived/paper10_time_level_rd_policy_selection_gate_v1_summary.csv
+docs/paper10_time_level_rd_policy_selection_gate_v1.md
+scripts/validate_paper10_time_level_rd_policy_selection_gate_v1.py
+```
+
+It accepts only `rd_cancelled_differential_direction` as the current
+source-side policy. `external_rd_prior` and `analytic_rd_marginalization` remain
+future routes pending source/protocol freeze. `fit_rd_from_pantheon_residuals`
+is explicitly forbidden. The current verdict is
+`rd_cancelled_direction_only_currently_allowed_external_or_marginalized_rd_pending`.
+
+The external `r_d` prior route now has a source-side freeze protocol and blank
+response template:
+
+```text
+data/source_manifest/paper10_external_rd_prior_freeze_protocol_v1.csv
+data/derived/paper10_external_rd_prior_freeze_response_template_v1.csv
+data/derived/paper10_external_rd_prior_freeze_protocol_v1_summary.csv
+docs/paper10_external_rd_prior_freeze_protocol_v1.md
+scripts/validate_paper10_external_rd_prior_freeze_protocol_v1.py
+```
+
+The protocol accepts only source-side prior families such as
+`Planck2018_base_LCDM_rdrag`, `DESI_or_BAO_external_rd_prior`, or
+`BBN_BAO_external_rd_prior`, with explicit fields for `rd_mpc`,
+`sigma_rd_mpc`, assumption family, source reference, URL/DOI, extraction note,
+and source hash/page cache. The template defaults all leakage flags to false.
+The current verdict is
+`external_rd_prior_protocol_ready_but_no_numeric_prior_frozen`: the protocol is
+ready, but no numerical prior is frozen and no endpoint replay is opened.
+
+A first completed caveated external prior response is now recorded in:
+
+```text
+data/derived/paper10_external_rd_prior_freeze_response_v1.csv
+data/derived/paper10_external_rd_prior_freeze_response_v1_summary.csv
+docs/paper10_external_rd_prior_freeze_response_v1.md
+scripts/validate_paper10_external_rd_prior_freeze_response_v1.py
+```
+
+It freezes the Planck2018 base-\(\Lambda\)CDM TT,TE,EE+lowE+lensing
+`rdrag` source value:
+`r_d = 147.09 +/- 0.26 Mpc`, cited to Planck 2018 cosmological parameters,
+Table 2. This is a caveated external early-universe prior for the time-level
+route only. It uses no Pantheon residuals, endpoint scores, or late-time fit
+parameters, and it does not authorize endpoint replay. The response verdict is
+`planck2018_rd_prior_frozen_as_caveated_external_source_not_endpoint`.
+
+The BAO `r_d` marginalization protocol is recorded in:
+
+```text
+data/source_manifest/paper10_bao_rd_marginalization_protocol_v1.csv
+data/derived/paper10_bao_rd_marginalization_protocol_v1_summary.csv
+docs/paper10_bao_rd_marginalization_protocol_v1.md
+scripts/validate_paper10_bao_rd_marginalization_protocol_v1.py
+```
+
+It freezes the source-side interface
+`-log(D_H/r_d)=logH+beta_rd`, with
+`beta_rd=log(r_d)-log(c)` in consistent units. The protocol allows only
+analytic linear nuisance projection or predeclared `r_d` prior marginalization.
+It forbids Pantheon residuals, endpoint scores, late-time fit parameters,
+posthoc `r_d` choices, and using radial BAO as clock-slope support. Its verdict
+is `rd_marginalization_protocol_frozen_but_endpoint_still_blocked`.
+
+The time-level endpoint control-suite protocol is recorded in:
+
+```text
+data/source_manifest/paper10_time_level_endpoint_control_suite_protocol_v1.csv
+data/derived/paper10_time_level_endpoint_control_suite_protocol_v1_summary.csv
+docs/paper10_time_level_endpoint_control_suite_protocol_v1.md
+scripts/validate_paper10_time_level_endpoint_control_suite_protocol_v1.py
+```
+
+It declares seven future control families: `rd_off_control`,
+`external_prior_width_stress`, `wrong_prior_control`, `BAO_pair_drop_control`,
+`CC_match_window_stress`, `level_slope_swap_control`, and
+`redshift_order_shuffle_control`. This is only a protocol declaration. The
+controls are not replayed here, no endpoint score is computed, and a future
+seed manifest is still required before any replay.
+
+The BAO-support expansion manifest is recorded in:
+
+```text
+data/source_manifest/paper10_time_level_bao_support_expansion_manifest_v1.csv
+data/derived/paper10_time_level_bao_support_expansion_manifest_v1_summary.csv
+docs/paper10_time_level_bao_support_expansion_manifest_v1.md
+scripts/validate_paper10_time_level_bao_support_expansion_manifest_v1.py
+```
+
+It declares the current SDSS DR16 radial route plus three candidate future
+source routes: public DESI radial BAO products, eBOSS/SDSS LyA-QSO radial BAO,
+and an independent low-z BAO compilation cross-check. It imports no new BAO
+values and opens no endpoint replay. The protocol target is at least four
+independent radial BAO support bins before a future endpoint can be considered.
+
+The first source-frozen expansion inventory, for public DESI DR2 BAO products,
+is recorded in:
+
+```text
+data/source_manifest/paper10_desi_dr2_bao_source_inventory_policy_v1.csv
+data/raw/desi_dr2_bao/desi_gaussian_bao_ALL_GCcomb_mean.txt
+data/raw/desi_dr2_bao/desi_gaussian_bao_ALL_GCcomb_cov.txt
+data/derived/paper10_desi_dr2_bao_source_inventory_v1.csv
+data/derived/paper10_desi_dr2_bao_source_inventory_v1_summary.csv
+docs/paper10_desi_dr2_bao_source_inventory_v1.md
+scripts/build_paper10_desi_dr2_bao_source_inventory_v1.py
+scripts/validate_paper10_desi_dr2_bao_source_inventory_v1.py
+```
+
+The inventory freezes the public DESI DR2 combined Gaussian BAO mean/covariance
+files from the DESI/Cobaya public BAO likelihood route. The cached mean file
+contains 13 BAO rows, including 6 radial `DH_over_rs` rows, with a 13 by 13
+covariance block. This is source-freeze evidence only: the DESI rows are not
+yet integrated into the time-level replay matrix, `r_d` marginalization, or
+endpoint controls.
+
+The DESI radial BAO time-level interface is recorded in:
+
+```text
+data/source_manifest/paper10_desi_dr2_radial_bao_time_interface_policy_v1.csv
+data/derived/paper10_desi_dr2_radial_bao_time_interface_v1.csv
+data/derived/paper10_desi_dr2_radial_bao_time_interface_covariance_v1.csv
+data/derived/paper10_desi_dr2_radial_bao_time_interface_v1_summary.csv
+docs/paper10_desi_dr2_radial_bao_time_interface_v1.md
+scripts/build_paper10_desi_dr2_radial_bao_time_interface_v1.py
+scripts/validate_paper10_desi_dr2_radial_bao_time_interface_v1.py
+```
+
+It converts the six DESI `DH_over_rs` rows into the source-side time-level
+observable `-log(DH_over_rs)=logH+beta_rd`, with `beta_rd` retained as an
+`r_d` nuisance parameter. The radial covariance subblock is propagated by the
+Jacobian rule `C_y,ij=C_x,ij/(x_i*x_j)`. This freezes the interface only; it
+still does not match to CC support, open a replay, or claim validation.
+
+The DESI radial BAO to cosmic-chronometer match ledger is recorded in:
+
+```text
+data/source_manifest/paper10_desi_dr2_radial_bao_cc_match_policy_v1.csv
+data/derived/paper10_desi_dr2_radial_bao_cc_match_v1.csv
+data/derived/paper10_desi_dr2_radial_bao_cc_match_v1_summary.csv
+docs/paper10_desi_dr2_radial_bao_cc_match_v1.md
+scripts/build_paper10_desi_dr2_radial_bao_cc_match_v1.py
+scripts/validate_paper10_desi_dr2_radial_bao_cc_match_v1.py
+```
+
+It matches DESI radial BAO rows to the nearest frozen cosmic-chronometer
+`H(z)` support point without smoothing or extrapolation. Five DESI rows are
+matched within the CC redshift range; the `z=2.33` row is explicitly blocked as
+outside CC coverage. This is a source-side support ledger only.
+
+The external-prior readiness gate is recorded in:
+
+```text
+data/source_manifest/paper10_time_level_route_external_rd_readiness_gate_v1.csv
+data/derived/paper10_time_level_route_external_rd_readiness_gate_v1.csv
+data/derived/paper10_time_level_route_external_rd_readiness_gate_v1_summary.csv
+docs/paper10_time_level_route_external_rd_readiness_gate_v1.md
+scripts/build_paper10_time_level_route_external_rd_readiness_gate_v1.py
+scripts/validate_paper10_time_level_route_external_rd_readiness_gate_v1.py
+```
+
+This closes only source-side blockers:
+`external_rd_prior_source_freeze` and
+`joint_rd_marginalization_protocol_definition`, and
+`endpoint_control_suite_definition`, and
+`bao_support_expansion_manifest_declared`, and
+`desi_dr2_public_bao_source_inventory_frozen`, and
+`desi_dr2_radial_bao_time_interface_frozen`, and
+`desi_dr2_radial_bao_cc_match_ledger_frozen`, and
+`desi_dr2_high_z_row_policy_frozen`, and
+`desi_time_level_control_seed_manifest_frozen`. The seed manifest freezes seven
+control families over the first five-row DESI/CC-matched scope with deterministic
+seeds `41001`--`41007`. It deliberately keeps the time-level route outside
+endpoint replay. The remaining endpoint blocker is
+`time_level_endpoint_authorization_review_missing`. The older
+`low_significance_current_sdss_bao_difference` is retained as a diagnostic of the
+earlier SDSS-only two-point route, not as an active DESI blocker. The gate verdict
+is
+`desi_time_cc_matched_scope_and_controls_frozen_but_endpoint_authorization_missing`.
+
+The reviewer handoff for that final blocker is recorded in:
+
+```text
+docs/paper10_desi_time_level_endpoint_authorization_review_v1.md
+data/source_manifest/paper10_desi_time_level_endpoint_authorization_review_policy_v1.csv
+data/derived/paper10_desi_time_level_endpoint_authorization_review_response_template_v1.csv
+data/derived/paper10_desi_time_level_endpoint_authorization_review_template_v1_summary.csv
+data/derived/paper10_desi_time_level_endpoint_authorization_review_package_v1.zip
+data/derived/paper10_desi_time_level_endpoint_authorization_review_package_v1.zip.sha256
+data/derived/paper10_desi_time_level_endpoint_authorization_review_package_v1_manifest.csv
+data/derived/paper10_desi_time_level_endpoint_authorization_review_package_v1_summary.csv
+scripts/build_paper10_desi_time_level_endpoint_authorization_review_template_v1.py
+scripts/validate_paper10_desi_time_level_endpoint_authorization_review_template_v1.py
+scripts/build_paper10_desi_time_level_endpoint_authorization_review_package_v1.py
+scripts/validate_paper10_desi_time_level_endpoint_authorization_review_package_v1.py
+```
+
+The package is intentionally blank/not completed:
+`endpoint_replay_allowed=false`, `endpoint_validation_claimed=false`, and
+`physical_validation_claimed=false`. It contains no endpoint residuals, scores,
+or fit statistics. It only asks a reviewer whether a later permission-only
+five-row DESI/CC replay may be prepared under the frozen controls.
+
+If a completed external reviewer CSV is returned for this DESI handoff, validate
+and import it with:
+
+```bash
+python scripts/import_paper10_desi_time_level_endpoint_authorization_review_response_v1.py \
+  /path/to/completed_desi_time_level_endpoint_authorization_response.csv
+```
+
+The importer first runs
+`scripts/validate_paper10_desi_time_level_endpoint_authorization_review_response_v1.py`.
+Canonical response artifacts are written only if the completed CSV accepts all
+five authorization questions, keeps `forbidden_inputs_used=false`, and keeps
+`endpoint_validation_claimed=false` and `physical_validation_claimed=false`.
+
+The replay grammar that would be used after such an authorization is frozen in:
+
+```text
+docs/paper10_desi_time_level_endpoint_replay_run_template_v1.md
+data/source_manifest/paper10_desi_time_level_endpoint_replay_run_template_v1.csv
+scripts/validate_paper10_desi_time_level_endpoint_replay_run_template_v1.py
+```
+
+This template remains `endpoint_replay_allowed=false`. It only records the
+future replay scope, excluded high-z row, seven control families, and forbidden
+inputs.
+
+The completed DESI authorization response has now been imported and validated:
+
+```text
+docs/paper10_desi_time_level_endpoint_authorization_review_response_v1.md
+data/derived/paper10_desi_time_level_endpoint_authorization_review_response_v1.csv
+data/derived/paper10_desi_time_level_endpoint_authorization_review_response_v1_summary.csv
+```
+
+Its decision is
+`GO_DESI_CC_5ROW_TIME_LEVEL_REPLAY_PERMISSION_ONLY`. This authorizes preparation
+of one guarded replay under the frozen five-row scope and seven controls, while
+keeping `endpoint_validation_claimed=false` and
+`physical_validation_claimed=false`. No endpoint score is produced by the
+authorization response.
+
+The permission-only replay has now been run and preserved as a negative
+control-result artifact:
+
+```text
+docs/paper10_desi_time_level_endpoint_authorized_replay_v1.md
+data/derived/paper10_desi_time_level_endpoint_authorized_replay_v1_grid.csv
+data/derived/paper10_desi_time_level_endpoint_authorized_replay_v1_summary.csv
+scripts/run_paper10_desi_time_level_endpoint_authorized_replay_v1.py
+scripts/validate_paper10_desi_time_level_endpoint_authorized_replay_v1.py
+```
+
+It fits the constant `beta_rd` nuisance over the five DESI/CC rows and reports
+`candidate_chi2=5.52425578108`. The result is not control-resistant:
+`best_control_branch=redshift_order_shuffle_control`,
+`best_control_chi2=2.14549721198`, and
+`verdict=desi_time_level_permission_replay_not_control_resistant_not_validation`.
+This is a useful endpoint diagnostic, not a validation result.
+
+A focused negative-control diagnostic explains the failure mode without changing
+the replay:
+
+```text
+docs/paper10_desi_time_level_negative_control_diagnostic_v1.md
+data/derived/paper10_desi_time_level_negative_control_diagnostic_v1_rows.csv
+data/derived/paper10_desi_time_level_negative_control_diagnostic_v1_branches.csv
+data/derived/paper10_desi_time_level_negative_control_diagnostic_v1_summary.csv
+paper10_submission_source/figures/fig_desi_time_level_negative_control_diagnostic.pdf
+scripts/build_paper10_desi_time_level_negative_control_diagnostic_v1.py
+scripts/validate_paper10_desi_time_level_negative_control_diagnostic_v1.py
+```
+
+The diagnostic verdict is
+`desi_time_level_negative_control_diagnostic_explains_non_control_resistance_not_validation`.
+Its failure mode is
+`five_row_time_level_constant_beta_endpoint_is_ordering_fragile`: the candidate
+constant-level fit is not catastrophic, but the five-row time-level endpoint is
+too small and ordering-fragile to distinguish the candidate from frozen
+controls. The recommended next action is to retain this negative control and
+require richer independent clock or time-readout support before any endpoint
+claim.
+
+The negative-control response gate is recorded in:
+
+```text
+docs/paper10_desi_time_level_negative_control_response_gate_v1.md
+data/source_manifest/paper10_desi_time_level_negative_control_response_gate_v1.csv
+data/derived/paper10_desi_time_level_negative_control_response_gate_v1.csv
+data/derived/paper10_desi_time_level_negative_control_response_gate_v1_summary.csv
+scripts/build_paper10_desi_time_level_negative_control_response_gate_v1.py
+scripts/validate_paper10_desi_time_level_negative_control_response_gate_v1.py
+```
+
+It closes the first DESI/CC constant-beta route as
+`DESI_TIME_LEVEL_ROUTE_BLOCKED_PENDING_RICHER_CLOCK_READOUT_SUPPORT`; replay
+remains disabled. The next allowed action is only
+`build_source_side_time_readout_expansion_manifest_only`.
+
+That expansion manifest is recorded in:
+
+```text
+docs/paper10_desi_time_readout_expansion_manifest_v1.md
+data/source_manifest/paper10_desi_time_readout_expansion_manifest_v1.csv
+data/derived/paper10_desi_time_readout_expansion_manifest_v1_summary.csv
+scripts/validate_paper10_desi_time_readout_expansion_manifest_v1.py
+```
+
+It freezes five required source-side gates before the DESI time-level route can
+be considered again: high-z independent clock support, multiple clock support
+per BAO row, a time/readout shape observable beyond a constant level, preserved
+ordering controls, and a joint covariance/nuisance policy. It currently has
+`endpoint_ready_route_count=0`; the next primary source gate is
+`HIGH_Z_INDEPENDENT_CLOCK_SUPPORT`, with `TIME_READOUT_SHAPE_OBSERVABLE` as the
+parallel route.
+
+The first high-z support audit is recorded in:
+
+```text
+docs/paper10_desi_high_z_independent_clock_support_audit_v1.md
+data/source_manifest/paper10_desi_high_z_independent_clock_support_audit_policy_v1.csv
+data/derived/paper10_desi_high_z_independent_clock_support_audit_v1.csv
+data/derived/paper10_desi_high_z_independent_clock_support_audit_v1_summary.csv
+scripts/build_paper10_desi_high_z_independent_clock_support_audit_v1.py
+scripts/validate_paper10_desi_high_z_independent_clock_support_audit_v1.py
+```
+
+It confirms that the frozen CC table has 32 rows and ends at `z=1.965`.
+The excluded DESI Ly-alpha row is at `z=2.33`, with
+`delta_z_to_nearest_frozen_clock=0.365`, so it is neither inside nor bracketed
+by the frozen clock support. The verdict is
+`desi_high_z_clock_support_missing_row_remains_holdout_not_validation`, and the
+row cannot enter replay without a new source-frozen high-z clock/readout route.
+
+The parallel time/readout shape-observable gate is recorded in:
+
+```text
+docs/paper10_desi_time_readout_shape_observable_gate_v1.md
+data/source_manifest/paper10_desi_time_readout_shape_observable_gate_policy_v1.csv
+data/derived/paper10_desi_time_readout_shape_observable_gate_v1.csv
+data/derived/paper10_desi_time_readout_shape_observable_gate_v1_summary.csv
+scripts/build_paper10_desi_time_readout_shape_observable_gate_v1.py
+scripts/validate_paper10_desi_time_readout_shape_observable_gate_v1.py
+```
+
+It removes the constant `beta_rd` nuisance by freezing adjacent first
+differences of `-log(D_H/r_d)-log H_CC` over the five CC-matched DESI rows, and
+also records an uneven-grid second-difference curvature proxy. The gate produces
+four first-difference rows and three second-difference rows, with maximum
+diagonal signal-to-noise values `1.90323313675` and `1.72319652004`,
+respectively. This is a useful source-side candidate shape, but it is not an
+endpoint route: the excluded high-z row still lacks independent clock support,
+and the shape observable uses only the five nearest-neighbor CC-matched rows.
+The verdict is
+`desi_time_readout_shape_candidate_frozen_but_not_endpoint_ready`.
+
+The same frozen shape observable is also mapped onto the current Tau Core
+general readout-basis and projection-induction discipline:
+
+```text
+docs/paper10_desi_time_readout_shape_projection_induction_v1.md
+data/source_manifest/paper10_desi_time_readout_shape_projection_induction_policy_v1.csv
+data/derived/paper10_desi_time_readout_shape_projection_induction_v1.csv
+data/derived/paper10_desi_time_readout_shape_projection_induction_v1_summary.csv
+scripts/build_paper10_desi_time_readout_shape_projection_induction_v1.py
+scripts/validate_paper10_desi_time_readout_shape_projection_induction_v1.py
+```
+
+This ledger classifies the clock-slope and curvature shapes as `K_time`
+candidates, keeps radial BAO level information as `K_closure` context, and
+keeps redshift-order controls in `K_null`. Its verdict is
+`time_shape_maps_to_K_time_candidate_but_projection_induction_incomplete`: the
+shape has source-candidate activation, but quotient survival, closure
+stability, and 4D readout survival are not yet proven, and replay remains
+disabled.
+
+The corresponding `K_null` ordering-control suite is recorded in:
+
+```text
+docs/paper10_desi_ordering_control_suite_v1.md
+data/source_manifest/paper10_desi_ordering_control_suite_policy_v1.csv
+data/derived/paper10_desi_ordering_control_suite_v1.csv
+data/derived/paper10_desi_ordering_control_suite_v1_summary.csv
+scripts/build_paper10_desi_ordering_control_suite_v1.py
+scripts/validate_paper10_desi_ordering_control_suite_v1.py
+```
+
+It declares five required control families:
+`redshift_order_shuffle`, `leave_row_or_pair`, `cc_window_stress`,
+`wrong_time_basis`, and `rd_prior_stress`. Only the redshift-order shuffle is
+currently available from the negative-control diagnostic; none are yet bound to
+the shape route. The verdict is
+`k_null_ordering_controls_declared_but_not_shape_bound`.
+
+The first shape-bound control-vector ledger is recorded in:
+
+```text
+docs/paper10_desi_shape_bound_control_vectors_v1.md
+data/source_manifest/paper10_desi_shape_bound_control_vectors_policy_v1.csv
+data/derived/paper10_desi_shape_bound_control_vectors_v1.csv
+data/derived/paper10_desi_shape_bound_control_vectors_v1_summary.csv
+scripts/build_paper10_desi_shape_bound_control_vectors_v1.py
+scripts/validate_paper10_desi_shape_bound_control_vectors_v1.py
+```
+
+It now binds all five controls to the frozen shape route without endpoint
+scores or endpoint residuals. The CC-window stress is supplied by the Row4
+source-side review chain and is bound only as caveated source context:
+
+```text
+docs/paper10_desi_cc_window_stress_binding_v1.md
+data/source_manifest/paper10_desi_cc_window_stress_binding_policy_v1.csv
+data/derived/paper10_desi_cc_window_stress_binding_v1.csv
+data/derived/paper10_desi_cc_window_stress_binding_v1_summary.csv
+scripts/build_paper10_desi_cc_window_stress_binding_v1.py
+scripts/validate_paper10_desi_cc_window_stress_binding_v1.py
+```
+
+The control suite is therefore shape-bound, but it still cannot enter replay.
+The verdict is `shape_route_controls_bound_but_replay_not_authorized`.
+
+The corresponding multi-clock support audit is recorded in:
+
+```text
+docs/paper10_desi_multi_clock_support_per_bao_row_audit_v1.md
+data/source_manifest/paper10_desi_multi_clock_support_per_bao_row_audit_policy_v1.csv
+data/derived/paper10_desi_multi_clock_support_per_bao_row_audit_v1.csv
+data/derived/paper10_desi_multi_clock_support_per_bao_row_audit_v1_summary.csv
+scripts/build_paper10_desi_multi_clock_support_per_bao_row_audit_v1.py
+scripts/validate_paper10_desi_multi_clock_support_per_bao_row_audit_v1.py
+```
+
+It checks whether each of the five authorized DESI radial rows has at least two
+clock entries and at least two independent reference sources in fixed redshift
+windows. In the strict `delta_z <= 0.05` window, three of five rows pass. In the
+relaxed `delta_z <= 0.10` window, four of five pass; radial row `4` remains
+blocked because its two relaxed-window clock entries come from only one
+independent reference source. The verdict is
+`desi_multi_clock_support_incomplete_not_endpoint_ready`.
+
+Because the shape observable exists but the clock support remains incomplete, a
+separate independent shape-review handoff package is prepared:
+
+```text
+docs/paper10_desi_time_readout_shape_independent_review_v1.md
+data/source_manifest/paper10_desi_time_readout_shape_independent_review_policy_v1.csv
+data/derived/paper10_desi_time_readout_shape_independent_review_response_template_v1.csv
+data/derived/paper10_desi_time_readout_shape_independent_review_package_v1.zip
+data/derived/paper10_desi_time_readout_shape_independent_review_package_v1.zip.sha256
+data/derived/paper10_desi_time_readout_shape_independent_review_package_v1_manifest.csv
+data/derived/paper10_desi_time_readout_shape_independent_review_package_v1_summary.csv
+scripts/build_paper10_desi_time_readout_shape_independent_review_package_v1.py
+scripts/validate_paper10_desi_time_readout_shape_independent_review_package_v1.py
+```
+
+This package asks only whether the adjacent-difference / curvature shape
+observable may be retained as a caveated source-side diagnostic candidate. It is
+blank and uncompleted, contains no endpoint residuals, scores, or fit
+statistics, and keeps `endpoint_replay_allowed=false`.
+
+After the five shape-route controls are bound, a separate replay-authorization
+handoff is prepared:
+
+```text
+docs/paper10_desi_shape_route_replay_authorization_review_v1.md
+data/source_manifest/paper10_desi_shape_route_replay_authorization_review_policy_v1.csv
+data/derived/paper10_desi_shape_route_replay_authorization_review_response_template_v1.csv
+data/derived/paper10_desi_shape_route_replay_authorization_review_package_v1.zip
+data/derived/paper10_desi_shape_route_replay_authorization_review_package_v1.zip.sha256
+data/derived/paper10_desi_shape_route_replay_authorization_review_package_v1_manifest.csv
+data/derived/paper10_desi_shape_route_replay_authorization_review_package_v1_summary.csv
+scripts/build_paper10_desi_shape_route_replay_authorization_review_package_v1.py
+scripts/validate_paper10_desi_shape_route_replay_authorization_review_package_v1.py
+scripts/validate_paper10_desi_shape_route_replay_authorization_review_response_v1.py
+scripts/import_paper10_desi_shape_route_replay_authorization_review_response_v1.py
+```
+
+This package asks a reviewer whether the already frozen DESI shape route may be
+advanced to replay. It is still blank and uncompleted, contains no endpoint
+residuals, scores, or fit statistics, keeps `endpoint_replay_allowed=false`, and
+records `shape_bound_control_count=5` with `unbound_control_families=none`.
+The verdict is
+`desi_shape_route_replay_authorization_package_ready_not_completed`.
+The completed-response validator can only promote a reviewer `GO` to
+permission-only replay status; it still requires
+`endpoint_validation_claimed=false` and `physical_validation_claimed=false`, and
+rejects any response with forbidden endpoint fields.
+
+The completed external response has been imported and validated:
+
+```text
+docs/paper10_desi_shape_route_replay_authorization_review_notes_v1.md
+data/derived/paper10_desi_shape_route_replay_authorization_review_response_v1.csv
+data/derived/paper10_desi_shape_route_replay_authorization_review_response_v1_summary.csv
+data/derived/paper10_desi_shape_route_replay_authorization_review_completed_summary_v1.csv
+data/derived/paper10_desi_shape_route_replay_authorization_validation_log_v1.txt
+```
+
+The decision is `GO_DESI_SHAPE_ROUTE_REPLAY_PERMISSION_ONLY`. This authorizes
+one separate predeclared DESI shape-route replay. It does not claim endpoint
+validation or physical validation.
+
+The corresponding shape-route replay-run template is recorded in:
+
+```text
+docs/paper10_desi_shape_route_replay_run_template_v1.md
+data/source_manifest/paper10_desi_shape_route_replay_run_template_v1.csv
+scripts/validate_paper10_desi_shape_route_replay_run_template_v1.py
+```
+
+This template freezes the five-row radial scope, four adjacent shape rows, three
+curvature rows, and the five shape-bound control families. It remains
+authorization-required and keeps `endpoint_replay_allowed=false`; it is a run
+grammar, not a replay result.
+
+The authorized DESI shape-route replay is recorded in:
+
+```text
+data/derived/paper10_desi_shape_route_authorized_replay_v1_grid.csv
+data/derived/paper10_desi_shape_route_authorized_replay_v1_summary.csv
+scripts/run_paper10_desi_shape_route_authorized_replay_v1.py
+scripts/validate_paper10_desi_shape_route_authorized_replay_v1.py
+```
+
+The replay uses a source-native quadratic shape score. The candidate
+`CLOCK_SLOPE_SHAPE` score is `5.52425578108`; the best control is
+`control_leave_shape_row_max` with score `5.50939872844`. The candidate exceeds
+all frozen controls, but the margin to the strongest leave-row control is small
+(`0.01485705264`). This is therefore a permission-only positive replay signal,
+not endpoint validation and not physical validation.
+
+The internal robustness stress for this replay is recorded in:
+
+```text
+docs/paper10_desi_shape_route_robustness_stress_v1.md
+data/source_manifest/paper10_desi_shape_route_robustness_stress_policy_v1.csv
+data/derived/paper10_desi_shape_route_robustness_stress_v1.csv
+data/derived/paper10_desi_shape_route_robustness_stress_v1_summary.csv
+paper10_submission_source/figures/fig_desi_shape_route_robustness_stress.pdf
+scripts/build_paper10_desi_shape_route_robustness_stress_v1.py
+scripts/validate_paper10_desi_shape_route_robustness_stress_v1.py
+scripts/build_paper10_desi_shape_route_robustness_figure_v1.py
+scripts/validate_paper10_desi_shape_route_robustness_figure_v1.py
+docs/paper10_desi_shape_row_sensitivity_source_audit_v1.md
+data/source_manifest/paper10_desi_shape_row_sensitivity_source_audit_policy_v1.csv
+data/derived/paper10_desi_shape_row_sensitivity_source_audit_v1.csv
+data/derived/paper10_desi_shape_row_sensitivity_source_audit_v1_summary.csv
+scripts/build_paper10_desi_shape_row_sensitivity_source_audit_v1.py
+scripts/validate_paper10_desi_shape_row_sensitivity_source_audit_v1.py
+docs/paper10_desi_shape_core_source_acquisition_manifest_v1.md
+data/source_manifest/paper10_desi_shape_core_source_acquisition_manifest_policy_v1.csv
+data/derived/paper10_desi_shape_core_source_acquisition_manifest_v1.csv
+data/derived/paper10_desi_shape_core_source_acquisition_manifest_v1_summary.csv
+scripts/build_paper10_desi_shape_core_source_acquisition_manifest_v1.py
+scripts/validate_paper10_desi_shape_core_source_acquisition_manifest_v1.py
+docs/paper10_desi_shape_core_source_support_scan_v1.md
+data/source_manifest/paper10_desi_shape_core_source_support_scan_policy_v1.csv
+data/derived/paper10_desi_shape_core_source_support_scan_v1.csv
+data/derived/paper10_desi_shape_core_source_support_scan_v1_summary.csv
+scripts/build_paper10_desi_shape_core_source_support_scan_v1.py
+scripts/validate_paper10_desi_shape_core_source_support_scan_v1.py
+docs/paper10_desi_shape_row2_moresco2012_source_attachment_v1.md
+data/source_manifest/paper10_desi_shape_row2_moresco2012_source_attachment_policy_v1.csv
+data/derived/paper10_desi_shape_row2_moresco2012_source_attachment_v1.csv
+data/derived/paper10_desi_shape_row2_moresco2012_source_attachment_v1_summary.csv
+scripts/build_paper10_desi_shape_row2_moresco2012_source_attachment_v1.py
+scripts/validate_paper10_desi_shape_row2_moresco2012_source_attachment_v1.py
+docs/paper10_desi_shape_row2_moresco2012_source_attachment_review_v1.md
+data/source_manifest/paper10_desi_shape_row2_moresco2012_source_attachment_review_policy_v1.csv
+data/derived/paper10_desi_shape_row2_moresco2012_source_attachment_review_response_template_v1.csv
+data/derived/paper10_desi_shape_row2_moresco2012_source_attachment_review_package_v1.zip
+data/derived/paper10_desi_shape_row2_moresco2012_source_attachment_review_package_v1.zip.sha256
+data/derived/paper10_desi_shape_row2_moresco2012_source_attachment_review_package_v1_manifest.csv
+data/derived/paper10_desi_shape_row2_moresco2012_source_attachment_review_package_v1_summary.csv
+scripts/build_paper10_desi_shape_row2_moresco2012_source_attachment_review_package_v1.py
+scripts/validate_paper10_desi_shape_row2_moresco2012_source_attachment_review_package_v1.py
+scripts/validate_paper10_desi_shape_row2_moresco2012_source_attachment_review_response_v1.py
+scripts/import_paper10_desi_shape_row2_moresco2012_source_attachment_review_response_v1.py
+data/derived/paper10_desi_shape_row2_moresco2012_source_attachment_review_response_v1.csv
+data/derived/paper10_desi_shape_row2_moresco2012_source_attachment_review_response_v1_summary.csv
+docs/paper10_desi_shape_row2_moresco2012_source_attachment_review_notes_v1.md
+data/derived/paper10_desi_shape_row2_moresco2012_source_attachment_review_validation_log_v1.txt
+docs/paper10_desi_shape_row2_promotion_readiness_gate_v1.md
+data/source_manifest/paper10_desi_shape_row2_promotion_readiness_gate_policy_v1.csv
+data/derived/paper10_desi_shape_row2_promotion_readiness_gate_v1.csv
+data/derived/paper10_desi_shape_row2_promotion_readiness_gate_v1_summary.csv
+scripts/build_paper10_desi_shape_row2_promotion_readiness_gate_v1.py
+scripts/validate_paper10_desi_shape_row2_promotion_readiness_gate_v1.py
+docs/paper10_desi_shape_row2_endpoint_pair_independence_scout_v1.md
+data/source_manifest/paper10_desi_shape_row2_endpoint_pair_independence_scout_policy_v1.csv
+data/derived/paper10_desi_shape_row2_endpoint_pair_independence_scout_v1.csv
+data/derived/paper10_desi_shape_row2_endpoint_pair_independence_scout_v1_summary.csv
+scripts/build_paper10_desi_shape_row2_endpoint_pair_independence_scout_v1.py
+scripts/validate_paper10_desi_shape_row2_endpoint_pair_independence_scout_v1.py
+docs/paper10_desi_shape_row2_left_endpoint_nearmiss_freeze_v1.md
+data/source_manifest/paper10_desi_shape_row2_left_endpoint_nearmiss_freeze_policy_v1.csv
+data/derived/paper10_desi_shape_row2_left_endpoint_nearmiss_freeze_v1.csv
+data/derived/paper10_desi_shape_row2_left_endpoint_nearmiss_freeze_v1_summary.csv
+scripts/build_paper10_desi_shape_row2_left_endpoint_nearmiss_freeze_v1.py
+scripts/validate_paper10_desi_shape_row2_left_endpoint_nearmiss_freeze_v1.py
+docs/paper10_desi_shape_row2_left_endpoint_window_review_v1.md
+data/source_manifest/paper10_desi_shape_row2_left_endpoint_window_review_policy_v1.csv
+data/derived/paper10_desi_shape_row2_left_endpoint_window_review_response_template_v1.csv
+data/derived/paper10_desi_shape_row2_left_endpoint_window_review_package_v1.zip
+data/derived/paper10_desi_shape_row2_left_endpoint_window_review_package_v1.zip.sha256
+data/derived/paper10_desi_shape_row2_left_endpoint_window_review_package_v1_manifest.csv
+data/derived/paper10_desi_shape_row2_left_endpoint_window_review_package_v1_summary.csv
+scripts/build_paper10_desi_shape_row2_left_endpoint_window_review_package_v1.py
+scripts/validate_paper10_desi_shape_row2_left_endpoint_window_review_package_v1.py
+scripts/validate_paper10_desi_shape_row2_left_endpoint_window_review_response_v1.py
+scripts/import_paper10_desi_shape_row2_left_endpoint_window_review_response_v1.py
+data/derived/paper10_desi_shape_row2_left_endpoint_window_review_response_v1.csv
+data/derived/paper10_desi_shape_row2_left_endpoint_window_review_response_v1_summary.csv
+docs/paper10_desi_shape_row2_left_endpoint_window_review_notes_v1.md
+data/derived/paper10_desi_shape_row2_left_endpoint_window_review_validation_log_v1.txt
+docs/paper10_desi_shape_row2_left_endpoint_window_decision_gate_v1.md
+data/source_manifest/paper10_desi_shape_row2_left_endpoint_window_decision_gate_policy_v1.csv
+data/derived/paper10_desi_shape_row2_left_endpoint_window_decision_gate_v1.csv
+data/derived/paper10_desi_shape_row2_left_endpoint_window_decision_gate_v1_summary.csv
+scripts/build_paper10_desi_shape_row2_left_endpoint_window_decision_gate_v1.py
+scripts/validate_paper10_desi_shape_row2_left_endpoint_window_decision_gate_v1.py
+docs/paper10_desi_shape_row2_post_window_review_source_plan_v1.md
+data/source_manifest/paper10_desi_shape_row2_post_window_review_source_plan_policy_v1.csv
+data/derived/paper10_desi_shape_row2_post_window_review_source_plan_v1.csv
+data/derived/paper10_desi_shape_row2_post_window_review_source_plan_v1_summary.csv
+scripts/build_paper10_desi_shape_row2_post_window_review_source_plan_v1.py
+scripts/validate_paper10_desi_shape_row2_post_window_review_source_plan_v1.py
+docs/paper10_desi_shape_row2_left_strict_support_scout_v1.md
+data/source_manifest/paper10_desi_shape_row2_left_strict_support_scout_policy_v1.csv
+data/derived/paper10_desi_shape_row2_left_strict_support_scout_v1.csv
+data/derived/paper10_desi_shape_row2_left_strict_support_scout_v1_summary.csv
+scripts/build_paper10_desi_shape_row2_left_strict_support_scout_v1.py
+scripts/validate_paper10_desi_shape_row2_left_strict_support_scout_v1.py
+docs/paper10_desi_shape_row2_source_native_shape_support_scout_v1.md
+data/source_manifest/paper10_desi_shape_row2_source_native_shape_support_scout_policy_v1.csv
+data/derived/paper10_desi_shape_row2_source_native_shape_support_scout_v1.csv
+data/derived/paper10_desi_shape_row2_source_native_shape_support_scout_v1_summary.csv
+scripts/build_paper10_desi_shape_row2_source_native_shape_support_scout_v1.py
+scripts/validate_paper10_desi_shape_row2_source_native_shape_support_scout_v1.py
+docs/paper10_desi_shape_row2_source_native_shape_support_review_v1.md
+data/source_manifest/paper10_desi_shape_row2_source_native_shape_support_review_policy_v1.csv
+data/derived/paper10_desi_shape_row2_source_native_shape_support_review_response_template_v1.csv
+data/derived/paper10_desi_shape_row2_source_native_shape_support_review_package_v1.zip
+data/derived/paper10_desi_shape_row2_source_native_shape_support_review_package_v1.zip.sha256
+data/derived/paper10_desi_shape_row2_source_native_shape_support_review_package_v1_manifest.csv
+data/derived/paper10_desi_shape_row2_source_native_shape_support_review_package_v1_summary.csv
+scripts/build_paper10_desi_shape_row2_source_native_shape_support_review_package_v1.py
+scripts/validate_paper10_desi_shape_row2_source_native_shape_support_review_package_v1.py
+scripts/validate_paper10_desi_shape_row2_source_native_shape_support_review_response_v1.py
+scripts/import_paper10_desi_shape_row2_source_native_shape_support_review_response_v1.py
+data/derived/paper10_desi_shape_row2_source_native_shape_support_review_response_v1.csv
+data/derived/paper10_desi_shape_row2_source_native_shape_support_review_response_v1_summary.csv
+docs/paper10_desi_shape_row2_source_native_shape_support_review_notes_v1.md
+data/derived/paper10_desi_shape_row2_source_native_shape_support_review_validation_log_v1.txt
+docs/paper10_desi_shape_row2_gate_status_ledger_v1.md
+data/source_manifest/paper10_desi_shape_row2_gate_status_ledger_policy_v1.csv
+data/derived/paper10_desi_shape_row2_gate_status_ledger_v1.csv
+data/derived/paper10_desi_shape_row2_gate_status_ledger_v1_summary.csv
+scripts/build_paper10_desi_shape_row2_gate_status_ledger_v1.py
+scripts/validate_paper10_desi_shape_row2_gate_status_ledger_v1.py
+docs/paper10_desi_shape_row2_promotion_review_v1.md
+data/source_manifest/paper10_desi_shape_row2_promotion_review_policy_v1.csv
+data/derived/paper10_desi_shape_row2_promotion_review_response_template_v1.csv
+data/derived/paper10_desi_shape_row2_promotion_review_package_v1.zip
+data/derived/paper10_desi_shape_row2_promotion_review_package_v1.zip.sha256
+data/derived/paper10_desi_shape_row2_promotion_review_package_v1_manifest.csv
+data/derived/paper10_desi_shape_row2_promotion_review_package_v1_summary.csv
+scripts/build_paper10_desi_shape_row2_promotion_review_package_v1.py
+scripts/validate_paper10_desi_shape_row2_promotion_review_package_v1.py
+```
+
+The stress keeps the candidate ranked first by the frozen shape score, but it
+also shows that the margin is very narrow (`0.00268942156713` fractionally
+relative to the candidate score) and that the strongest leave-one-row stress
+retains `0.997310578432` of the full candidate score. The verdict is therefore
+`positive_but_narrow_margin_and_row_sensitive_not_validation`.
+
+Compact stress ledger:
+
+| Quantity | Value | Claim-safe reading |
+| --- | ---: | --- |
+| Candidate score | `5.52425578108` | Rank `1` by frozen quadratic shape score |
+| Best control score | `5.50939872844` | Strongest control is leave-shape-row |
+| Fractional margin | `0.00268942156713` | Positive but narrow |
+| Strongest leave-one stress | `0.997310578432` | Row-sensitive |
+| Drop Row2 stress | `0.749151602906` | Row2 is important but not the sole carrier |
+| Most required row | Row1; `0.669168123641` retained when dropped | Core signal is concentrated in middle rows |
+| Strongest leave-two stress | `0.83195519127` | Not purely single-row, but not validation |
+
+The follow-up row-sensitivity source audit identifies shape rows `1;2` as the
+core-sensitive middle rows. Row `0` is the most dispensable row, row `1` is the
+most required row, and row `2` remains source-caveated because its current CC
+support endpoints come from the same reference family. The recommended next
+action is independent clock or shape support for rows `1` and `2`, especially
+row `2`, before any DESI shape-route promotion.
+
+The shape-core source acquisition manifest freezes this as a concrete work
+order: `DESI_SHAPE_ROW_2_CORE_SUPPORT` is `P0`, because it is core-sensitive and
+single-reference caveated; `DESI_SHAPE_ROW_1_CORE_SUPPORT` is `P1`, because it
+is the most required row and needs confirmatory independent support. The
+manifest does not fetch sources and keeps replay disabled.
+
+Scanning the already frozen cosmic-chronometer table finds existing
+independent in-interval support for the P0 row-2 target: `Moresco et al. (2012)`
+at `z=1.037`, with `H(z)=153.7 +/- 19.6736`. This partially strengthens the
+row-2 source status, but it is not a full endpoint-pair replacement and does
+not authorize replay.
+For the P1 Row1 target, the same frozen CC scan also supplies two independent
+in-interval confirmatory support rows: `Borghi et al. (2022)` at `z=0.75` and
+`Stern et al. (2010)` at `z=0.88`. These are attached only as source-side
+confirmation for the most required row; they do not make Row1 endpoint-ready and
+do not authorize replay.
+The corresponding repository-independent Row1 source-review package has now
+also been completed. The reviewer response accepts those two rows as
+confirmatory independent in-interval Row1 support, while keeping endpoint
+replay, endpoint validation, physical validation, and route promotion false.
+
+The follow-up source-attachment ledger promotes that support-scan finding into
+a reviewable row-2 attachment:
+`row2_moresco2012_in_interval_support_attached_partial_not_endpoint_ready`.
+It records source key `Moresco2012ExpansionRate`, arXiv `1201.3609`, DOI
+`10.1088/1475-7516/2012/08/006`, and keeps
+`endpoint_replay_allowed=false`, `endpoint_validation_claimed=false`, and
+`physical_validation_claimed=false`. The attachment reduces the row-2 source
+caveat but still does not supply an endpoint-pair replacement.
+
+A repository-independent reviewer package is also prepared at
+`data/derived/paper10_desi_shape_row2_moresco2012_source_attachment_review_package_v1.zip`.
+It asks only whether the attachment may be accepted as caveat-reducing
+source-side support. The package is blank/uncompleted and cannot authorize
+replay or validation.
+The completed-response validator accepts only three source-side outcomes:
+caveat-reducing acceptance, rejection, or needs-more-context. Even an accepted
+response keeps `endpoint_pair_replacement=false`, `row2_endpoint_ready=false`,
+`endpoint_replay_allowed=false`, and all validation claims false. The importer
+copies completed reviewer artifacts into canonical paths only after this
+validator succeeds.
+
+The completed reviewer response accepts the attachment only as caveat-reducing
+row-2 source support:
+`row2_moresco2012_attachment_accepted_as_caveat_reducing_not_endpoint_ready`.
+The canonical response keeps `forbidden_inputs_used=false`,
+`endpoint_pair_replacement=false`, `row2_endpoint_ready=false`,
+`endpoint_replay_allowed=false`, `endpoint_validation_claimed=false`, and
+`physical_validation_claimed=false`. The next allowed action remains endpoint
+pair independence or a separate replay/promotion gate; this review alone does
+not move the DESI shape route to endpoint-ready status.
+The row-2 promotion-readiness gate freezes this implication:
+`row2_combined_caveats_reduced_but_promotion_and_endpoint_pair_independence_blockers_remain`.
+Thus row 2 is stronger than before because both the Moresco2012 in-interval
+support and the DESI source-native shape context are accepted as caveat-reducing
+source-side evidence, but `row2_promotion_ready=false` and
+`shape_route_promotion_allowed=false` until endpoint-pair independence or a
+separate promotion review is obtained.
+
+A focused endpoint-pair independence scout then checks the already frozen
+cosmic-chronometer table around row 2. It finds one strict independent
+right-endpoint candidate, `Moresco (2015)`, but no strict independent
+left-endpoint support. The resulting verdict is
+`row2_endpoint_pair_independence_not_satisfied_in_frozen_CC_table`; the row
+therefore remains caveat-reduced but not promotion-ready. The next allowed
+source-side action is a left-endpoint independent clock source or a
+source-native shape support route before any replay or promotion can be
+considered.
+
+The left-endpoint near-miss freeze records the useful but still insufficient
+context explicitly. It finds two relaxed independent left-endpoint candidates:
+`Stern et al. (2010)` at `z=0.88` and `Moresco et al. (2012)` at `z=0.8754`.
+The closest one misses the frozen strict endpoint window by a small amount
+(`|0.88-0.934|=0.054` while the strict window is `0.05`). The machine verdict is
+`row2_left_endpoint_has_relaxed_independent_nearmisses_but_no_strict_support`.
+This motivates a separate source-window review or a source-native
+shape-support search, but it keeps `left_endpoint_release_allowed=false`,
+`row2_promotion_ready=false`, and all replay/validation flags false.
+
+A repository-independent source-window review package is prepared for that
+narrow question at
+`data/derived/paper10_desi_shape_row2_left_endpoint_window_review_package_v1.zip`
+with checksum
+`bea5e03193895643398a20d2603eebe0b41fa57e54a0efbe63f1f87178fdb574`.
+The package is intentionally blank and asks only whether the relaxed near-miss
+sources may be treated as caveated source-window context. It contains no
+endpoint residuals, no endpoint scores, and no fit statistics. Until a completed
+response is validated, `left_endpoint_release_allowed=false`,
+`row2_promotion_ready=false`, and replay remains disabled.
+The completed-response validator accepts only internally consistent
+source-window outcomes. In the strongest allowed positive case it records
+`source_reopen_caveated=true`, but still keeps
+`left_endpoint_release_allowed=false`, `row2_promotion_ready=false`, and
+`endpoint_replay_allowed=false`. Any response that sets replay or validation
+flags is rejected before canonical artifacts are modified.
+The companion decision gate resolves the current machine state. With no
+completed response imported it would record pending status. The completed
+reviewer response is now imported and validates the strongest allowed
+source-side outcome:
+`ROW2_LEFT_SOURCE_REOPEN_CAVEATED_NO_REPLAY`, with verdict
+`row2_left_source_reopen_caveated_no_replay`. This means the left endpoint
+source-window route is reopened only as caveated source context. It still keeps
+`left_endpoint_release_allowed=false`, `row2_promotion_ready=false`,
+`shape_route_promotion_allowed=false`, and all replay/validation flags false.
+The post-window-review source plan then freezes the only allowed next source
+targets. The current status is
+`ROW2_SOURCE_REOPENED_CAVEATED_LEFT_ENDPOINT_STILL_NOT_RELEASED`: the source
+route is reopened only in a caveated source-side sense, with strict left-endpoint
+support still at zero. The two P0 targets are (i) independent strict left-endpoint
+support inside the frozen window, or (ii) source-native shape support for the
+row-2 interval. Both routes forbid endpoint residuals, endpoint scores, and
+kernel-performance feedback.
+The left strict-support scout preserves the current negative source-side
+result. In the frozen CC table the nearest point to the row-2 left endpoint is
+the existing same-family Simon et al. (2005) point at `z=0.9`; the nearest
+independent candidate is Stern et al. (2010) at `z=0.88`, with
+`|Delta z|=0.054`, just outside the strict `0.05` window. The verdict is
+`row2_left_strict_support_absent_in_frozen_cc_table`. Thus the strict-left P0
+route remains genuinely open and no replay or promotion is authorized.
+The complementary source-native shape-support scout finds that the row-2
+interval does have DESI DR2 BAO shape information at both endpoints: `DM/rs`
+and `DH/rs` at `z=0.934` and `z=1.321`, with a positive-definite covariance
+subblock. It freezes the source-native vector
+`delta_log_DM_over_rs=0.246281910984`,
+`delta_log_DH_over_rs=-0.218701863111`, and
+`delta_log_anisotropy_DM_over_DH=0.464983774095`. This is positive source-side
+support for the shape route, but it still uses no endpoint residuals or scores
+and keeps `row2_promotion_ready=false`.
+The corresponding external review package is now built as a blank
+source-side-only package. It asks whether this DESI DR2 source-native BAO vector
+may be accepted as caveat-reducing Row2 support. It contains the frozen source
+rows, covariance source files, inventory, scout artifacts, and response
+template, but no endpoint residuals, scores, or fit statistics. The package
+verdict is `row2_source_native_shape_support_review_package_ready_not_completed`.
+The completed external response accepts the vector as caveat-reducing
+source-native shape context:
+`row2_source_native_shape_support_accepted_as_caveat_reducing_not_endpoint_ready`.
+This reduces the Row2 source caveat, but it does not make Row2 endpoint-ready,
+does not promote the route, and does not authorize replay.
+The Row2 gate-status ledger now freezes the combined state as
+`ROW2_ENDPOINT_REPLAY_BLOCKED_PROMOTION_NOT_READY`: the source-native shape
+context has passed review and both source-side caveats are reduced, but Row2
+remains non-promotion-ready and endpoint replay remains forbidden.
+The follow-up Row2 promotion-review package is therefore only a handoff asking
+whether a separate future replay-authorization package may be prepared. It is
+not replay authorization, not endpoint validation, and not a route-success
+claim.
+The completed promotion-review response accepts only that narrow handoff:
+`row2_promotion_review_accepts_preparing_separate_replay_authorization_not_direct_replay`.
+The Row2 gate-status ledger therefore moves to
+`ROW2_SEPARATE_REPLAY_AUTH_REVIEW_ALLOWED_NOT_REPLAY`. This still keeps
+`endpoint_replay_allowed=false`; it only permits preparing the next reviewer
+package.
+The Row2 replay-authorization reviewer package is now built as a permission-only
+handoff. It asks whether one frozen Row2 replay may later be run without
+endpoint-validation, physical-validation, or route-success claims. It contains
+no endpoint residuals, scores, or fit statistics:
+
+```text
+docs/paper10_desi_shape_row2_replay_authorization_review_v1.md
+data/source_manifest/paper10_desi_shape_row2_replay_authorization_review_policy_v1.csv
+data/derived/paper10_desi_shape_row2_replay_authorization_review_response_template_v1.csv
+data/derived/paper10_desi_shape_row2_replay_authorization_review_package_v1.zip
+data/derived/paper10_desi_shape_row2_replay_authorization_review_package_v1.zip.sha256
+data/derived/paper10_desi_shape_row2_replay_authorization_review_package_v1_manifest.csv
+data/derived/paper10_desi_shape_row2_replay_authorization_review_package_v1_summary.csv
+scripts/build_paper10_desi_shape_row2_replay_authorization_review_package_v1.py
+scripts/validate_paper10_desi_shape_row2_replay_authorization_review_package_v1.py
+```
+
+The completed replay-authorization review accepts the narrow permission-only
+scope:
+`GO_DESI_SHAPE_ROW2_REPLAY_PERMISSION_ONLY`. The ledger now records
+`ROW2_PERMISSION_ONLY_REPLAY_AUTHORIZED_NOT_VALIDATION`. This turns on
+`endpoint_replay_allowed=true` only for one frozen Row2 diagnostic replay; it
+does not turn on endpoint validation, physical validation, route promotion, or
+route-success claims. The imported response artifacts are:
+
+```text
+data/derived/paper10_desi_shape_row2_replay_authorization_review_response_v1.csv
+data/derived/paper10_desi_shape_row2_replay_authorization_review_response_v1_summary.csv
+data/derived/paper10_desi_shape_row2_replay_authorization_review_completed_summary_v1.csv
+data/derived/paper10_desi_shape_row2_replay_authorization_review_validation_log_v1.txt
+docs/paper10_desi_shape_row2_replay_authorization_review_notes_v1.md
+scripts/import_paper10_desi_shape_row2_replay_authorization_review_response_v1.py
+scripts/validate_paper10_desi_shape_row2_replay_authorization_review_response_v1.py
+```
+
+The authorized Row2-only diagnostic replay has now been run under the same
+permission-only boundary. It isolates `shape_row=2` (`z=0.934--1.321`) rather
+than replaying the full DESI shape route. The result is preserved as a weak
+local diagnostic:
+`row2_permission_replay_candidate_not_control_resistant_not_validation`.
+The frozen candidate score is `0.415519707291`, while the strongest local
+control is `control_redshift_order_shuffle_ROW2` with score `1.62654904473`.
+Thus Row2 alone does not carry the full route signal. This is not a validation
+or falsification claim; it narrows the interpretation of the earlier route-wide
+shape replay by showing that the evidence is not concentrated in Row2 alone.
+Combined with the route-wide ablation ledger, the current interpretation is a
+multi-row, narrow-margin pattern: Row2 by itself is not control-resistant, but
+the route-wide candidate retains about `75%` of its score when Row2 is removed.
+
+The shape-core support synthesis gate now freezes this in one non-scoring
+ledger:
+`DESI_SHAPE_CORE_SUPPORT_SYNTHESIS_BUILT_SOURCE_STRENGTHENED_NOT_VALIDATION`.
+It combines the route-wide stress, row-sensitivity audit, source-support scan,
+Row2 source-side reviews, and isolated Row2 permission replay. The reading is
+source-side strengthening of a multi-row, narrow-margin route signal: rows `1;2`
+are the core, Row1 is the most required row with confirmatory independent
+source support externally accepted, Row2 is caveat-reduced but not
+promotion-ready, and the Row2-only replay is retained as a negative local
+control. The gate does not authorize new replay and does not claim endpoint or
+physical validation.
+
+The current reproducibility rerun preserves the same boundary. Re-running the
+frozen full DESI shape-route permission replay gives candidate score
+`5.52425578108`, strongest control score `5.50939872844`, and narrow margin
+`0.01485705264`. The full route replay is therefore positive only in the
+permission-only sense. The synthesis gate itself keeps
+`endpoint_replay_allowed_by_this_gate=false`; the next allowed scientific step
+is a route-level source-synthesis review before any stronger validation-oriented
+claim.
+
+That next reviewer handoff is now prepared and validated as:
+
+```text
+docs/paper10_desi_shape_route_source_synthesis_review_v1.md
+data/source_manifest/paper10_desi_shape_route_source_synthesis_review_policy_v1.csv
+data/derived/paper10_desi_shape_route_source_synthesis_review_response_template_v1.csv
+data/derived/paper10_desi_shape_route_source_synthesis_review_package_v1.zip
+data/derived/paper10_desi_shape_route_source_synthesis_review_package_v1.zip.sha256
+data/derived/paper10_desi_shape_route_source_synthesis_review_package_v1_manifest.csv
+data/derived/paper10_desi_shape_route_source_synthesis_review_package_v1_summary.csv
+scripts/build_paper10_desi_shape_route_source_synthesis_review_package_v1.py
+scripts/validate_paper10_desi_shape_route_source_synthesis_review_package_v1.py
+```
+
+The package checksum is
+`a7c71dc3d5e9d5adeb3ce3313177dba0f757d80465b3e3834ff4c48ddd4f56f9`.
+It asks only whether the Row1 and Row2 source-side support can be synthesized
+as future-gate preparation. It keeps `endpoint_replay_allowed=false`,
+`endpoint_validation_claimed=false`, `physical_validation_claimed=false`, and
+`shape_route_promotion_allowed=false`.
+
+The completed source-synthesis review response is now imported as:
+
+```text
+data/derived/paper10_desi_shape_route_source_synthesis_review_response_v1.csv
+data/derived/paper10_desi_shape_route_source_synthesis_review_response_v1_summary.csv
+data/derived/paper10_desi_shape_route_source_synthesis_review_completed_summary_v1.csv
+data/derived/paper10_desi_shape_route_source_synthesis_review_validation_log_v1.txt
+docs/paper10_desi_shape_route_source_synthesis_review_notes_v1.md
+scripts/import_paper10_desi_shape_route_source_synthesis_review_response_v1.py
+scripts/validate_paper10_desi_shape_route_source_synthesis_review_response_v1.py
+```
+
+Decision:
+`ACCEPT_AS_SOURCE_SYNTHESIS_SUPPORT_FOR_FUTURE_GATE_PREPARATION_NOT_REPLAY_NOT_VALIDATION`.
+The response accepts all four questions and sets
+`future_gate_preparation_allowed=true`, while keeping
+`shape_route_promotion_allowed=false`, `endpoint_replay_allowed=false`,
+`endpoint_validation_claimed=false`, `physical_validation_claimed=false`, and
+`forbidden_inputs_used=false`.
+
+The next staged handoff is now prepared as a post-synthesis gate-authorization
+package:
+
+```text
+docs/paper10_desi_shape_post_synthesis_gate_authorization_review_v1.md
+data/source_manifest/paper10_desi_shape_post_synthesis_gate_authorization_review_policy_v1.csv
+data/derived/paper10_desi_shape_post_synthesis_gate_authorization_review_response_template_v1.csv
+data/derived/paper10_desi_shape_post_synthesis_gate_authorization_review_package_v1.zip
+data/derived/paper10_desi_shape_post_synthesis_gate_authorization_review_package_v1.zip.sha256
+data/derived/paper10_desi_shape_post_synthesis_gate_authorization_review_package_v1_manifest.csv
+data/derived/paper10_desi_shape_post_synthesis_gate_authorization_review_package_v1_summary.csv
+scripts/build_paper10_desi_shape_post_synthesis_gate_authorization_review_package_v1.py
+scripts/validate_paper10_desi_shape_post_synthesis_gate_authorization_review_package_v1.py
+```
+
+Checksum:
+`4a125b1cc20e54d93de131e68c6798ae6ec2de74030abf5855d590ad190aecfd`.
+This package only asks whether a later replay-authorization package may be
+prepared. It keeps `prepare_later_authorization_package_allowed=false`,
+`endpoint_replay_allowed=false`, `endpoint_validation_claimed=false`, and
+`physical_validation_claimed=false` until a completed reviewer response is
+validated.
+
+The completed post-synthesis gate authorization response is imported as:
+
+```text
+data/derived/paper10_desi_shape_post_synthesis_gate_authorization_review_response_v1.csv
+data/derived/paper10_desi_shape_post_synthesis_gate_authorization_review_response_v1_summary.csv
+data/derived/paper10_desi_shape_post_synthesis_gate_authorization_review_completed_summary_v1.csv
+data/derived/paper10_desi_shape_post_synthesis_gate_authorization_review_validation_log_v1.txt
+docs/paper10_desi_shape_post_synthesis_gate_authorization_review_notes_v1.md
+scripts/import_paper10_desi_shape_post_synthesis_gate_authorization_review_response_v1.py
+scripts/validate_paper10_desi_shape_post_synthesis_gate_authorization_review_response_v1.py
+```
+
+Decision:
+`ACCEPT_PREPARE_SEPARATE_VALIDATION_ORIENTED_GATE_PACKAGE_NOT_REPLAY_NOT_VALIDATION`.
+It sets `prepare_later_authorization_package_allowed=true`, while keeping
+`endpoint_replay_allowed=false`, `endpoint_validation_claimed=false`, and
+`physical_validation_claimed=false`.
+
+The separate validation-oriented gate reviewer package is now prepared as:
+
+```text
+docs/paper10_desi_shape_validation_oriented_gate_review_v1.md
+data/source_manifest/paper10_desi_shape_validation_oriented_gate_review_policy_v1.csv
+data/derived/paper10_desi_shape_validation_oriented_gate_review_response_template_v1.csv
+data/derived/paper10_desi_shape_validation_oriented_gate_review_package_v1.zip
+data/derived/paper10_desi_shape_validation_oriented_gate_review_package_v1.zip.sha256
+data/derived/paper10_desi_shape_validation_oriented_gate_review_package_v1_manifest.csv
+data/derived/paper10_desi_shape_validation_oriented_gate_review_package_v1_summary.csv
+scripts/build_paper10_desi_shape_validation_oriented_gate_review_package_v1.py
+scripts/validate_paper10_desi_shape_validation_oriented_gate_review_package_v1.py
+```
+
+Checksum:
+`26fddf67c46cd82585ecc185abee13e0c309ba8c9c3c6b657b4d8d4bcbf8ec52`.
+It is still blank and uncompleted. It asks whether a future completed response
+may authorize one frozen permission-only replay diagnostic; it does not itself
+authorize replay or validation.
+
+The completed validation-oriented gate response is now imported as:
+
+```text
+data/derived/paper10_desi_shape_validation_oriented_gate_review_response_v1.csv
+data/derived/paper10_desi_shape_validation_oriented_gate_review_response_v1_summary.csv
+data/derived/paper10_desi_shape_validation_oriented_gate_review_completed_summary_v1.csv
+data/derived/paper10_desi_shape_validation_oriented_gate_review_validation_log_v1.txt
+docs/paper10_desi_shape_validation_oriented_gate_review_notes_v1.md
+scripts/import_paper10_desi_shape_validation_oriented_gate_review_response_v1.py
+scripts/validate_paper10_desi_shape_validation_oriented_gate_review_response_v1.py
+```
+
+Decision:
+`GO_DESI_SHAPE_VALIDATION_ORIENTED_PERMISSION_REPLAY_ONLY`.
+The response accepts preparation for a future permission-only diagnostic replay,
+but it does not itself authorize replay. It keeps
+`endpoint_replay_allowed=false`, `endpoint_validation_claimed=false`,
+`physical_validation_claimed=false`, and `forbidden_inputs_used=false`, while
+retaining the narrow-margin, row-sensitive, and Row2-negative caveats. The next
+required handoff is therefore a separate completed permission-only replay
+authorization response before any run.
+
+That final permission-only replay authorization package is now prepared as:
+
+```text
+docs/paper10_desi_shape_validation_permission_replay_authorization_review_v1.md
+data/source_manifest/paper10_desi_shape_validation_permission_replay_authorization_review_policy_v1.csv
+data/derived/paper10_desi_shape_validation_permission_replay_authorization_review_response_template_v1.csv
+data/derived/paper10_desi_shape_validation_permission_replay_authorization_review_package_v1.zip
+data/derived/paper10_desi_shape_validation_permission_replay_authorization_review_package_v1.zip.sha256
+data/derived/paper10_desi_shape_validation_permission_replay_authorization_review_package_v1_manifest.csv
+data/derived/paper10_desi_shape_validation_permission_replay_authorization_review_package_v1_summary.csv
+scripts/build_paper10_desi_shape_validation_permission_replay_authorization_review_package_v1.py
+scripts/validate_paper10_desi_shape_validation_permission_replay_authorization_review_package_v1.py
+```
+
+Checksum:
+`03dd33a4968f710adf0490fe9d8e9e1e2c4298455202aab4af795905dbb3579d`.
+It asks only whether one future frozen DESI shape-route permission-only
+diagnostic replay may be authorized. It remains blank and keeps
+`endpoint_replay_allowed=false`, `endpoint_validation_claimed=false`, and
+`physical_validation_claimed=false` until a completed reviewer response is
+validated.
+
+The completed validation-permission authorization response is now imported as:
+
+```text
+data/derived/paper10_desi_shape_validation_permission_replay_authorization_review_response_v1.csv
+data/derived/paper10_desi_shape_validation_permission_replay_authorization_review_response_v1_summary.csv
+data/derived/paper10_desi_shape_validation_permission_replay_authorization_review_completed_summary_v1.csv
+data/derived/paper10_desi_shape_validation_permission_replay_authorization_review_validation_log_v1.txt
+docs/paper10_desi_shape_validation_permission_replay_authorization_review_notes_v1.md
+scripts/import_paper10_desi_shape_validation_permission_replay_authorization_review_response_v1.py
+scripts/validate_paper10_desi_shape_validation_permission_replay_authorization_review_response_v1.py
+```
+
+Decision:
+`GO_DESI_SHAPE_VALIDATION_PERMISSION_REPLAY_ONLY`.
+It authorizes exactly one frozen permission-only diagnostic replay while keeping
+`endpoint_validation_claimed=false`, `physical_validation_claimed=false`, and
+all retained caveats active.
+
+That replay has now been run as a separate artifact:
+
+```text
+data/derived/paper10_desi_shape_validation_permission_authorized_replay_v1_grid.csv
+data/derived/paper10_desi_shape_validation_permission_authorized_replay_v1_summary.csv
+scripts/run_paper10_desi_shape_validation_permission_authorized_replay_v1.py
+scripts/validate_paper10_desi_shape_validation_permission_authorized_replay_v1.py
+```
+
+Result:
+`candidate_shape_quadratic_score=5.52425578108`,
+`best_control_branch=control_leave_shape_row_max`,
+`best_control_shape_quadratic_score=5.50939872844`,
+`delta_candidate_minus_best_control_score=0.01485705264`.
+The candidate remains ahead of all frozen controls, but the margin is narrow and
+row-sensitive. Verdict:
+`desi_shape_validation_permission_replay_candidate_exceeds_all_controls_not_validation`.
+
+```text
+data/source_manifest/paper10_desi_shape_row2_authorized_replay_run_v1.csv
+data/derived/paper10_desi_shape_row2_authorized_replay_v1_grid.csv
+data/derived/paper10_desi_shape_row2_authorized_replay_v1_summary.csv
+docs/paper10_desi_shape_row2_authorized_replay_v1.md
+scripts/run_paper10_desi_shape_row2_authorized_replay_v1.py
+scripts/validate_paper10_desi_shape_row2_authorized_replay_v1.py
+docs/paper10_desi_shape_row1_confirmatory_source_attachment_v1.md
+data/source_manifest/paper10_desi_shape_row1_confirmatory_source_attachment_policy_v1.csv
+data/derived/paper10_desi_shape_row1_confirmatory_source_attachment_v1.csv
+data/derived/paper10_desi_shape_row1_confirmatory_source_attachment_v1_summary.csv
+scripts/build_paper10_desi_shape_row1_confirmatory_source_attachment_v1.py
+scripts/validate_paper10_desi_shape_row1_confirmatory_source_attachment_v1.py
+docs/paper10_desi_shape_row1_confirmatory_source_review_v1.md
+data/source_manifest/paper10_desi_shape_row1_confirmatory_source_review_policy_v1.csv
+data/derived/paper10_desi_shape_row1_confirmatory_source_review_response_template_v1.csv
+data/derived/paper10_desi_shape_row1_confirmatory_source_review_package_v1.zip
+data/derived/paper10_desi_shape_row1_confirmatory_source_review_package_v1.zip.sha256
+data/derived/paper10_desi_shape_row1_confirmatory_source_review_package_v1_manifest.csv
+data/derived/paper10_desi_shape_row1_confirmatory_source_review_package_v1_summary.csv
+scripts/build_paper10_desi_shape_row1_confirmatory_source_review_package_v1.py
+scripts/validate_paper10_desi_shape_row1_confirmatory_source_review_package_v1.py
+docs/paper10_desi_shape_core_support_synthesis_gate_v1.md
+data/source_manifest/paper10_desi_shape_core_support_synthesis_gate_policy_v1.csv
+data/derived/paper10_desi_shape_core_support_synthesis_gate_v1.csv
+data/derived/paper10_desi_shape_core_support_synthesis_gate_v1_summary.csv
+scripts/build_paper10_desi_shape_core_support_synthesis_gate_v1.py
+scripts/validate_paper10_desi_shape_core_support_synthesis_gate_v1.py
+```
+
+The final source-side DESI clock-support action in this chain freezes the
+missing acquisition targets before any source fetch:
+
+```text
+docs/paper10_desi_clock_support_acquisition_manifest_v1.md
+data/source_manifest/paper10_desi_clock_support_acquisition_manifest_policy_v1.csv
+data/derived/paper10_desi_clock_support_acquisition_manifest_v1.csv
+data/derived/paper10_desi_clock_support_acquisition_manifest_v1_summary.csv
+scripts/build_paper10_desi_clock_support_acquisition_manifest_v1.py
+scripts/validate_paper10_desi_clock_support_acquisition_manifest_v1.py
+```
+
+It freezes exactly two targets: radial row `4` at `z_eff=1.484`, where relaxed
+clock support exists but only from one independent reference family, and the
+excluded high-redshift row `5` at `z_eff=2.33`, where support must cover or
+bracket the row without extrapolation. This manifest is not a source fetch, not
+a replay authorization, and not validation.
+
+A first source-side candidate scan for these two targets is recorded in:
+
+```text
+docs/paper10_desi_clock_support_source_candidate_scan_v1.md
+data/source_manifest/paper10_desi_clock_support_source_candidate_scan_policy_v1.csv
+data/derived/paper10_desi_clock_support_source_candidate_scan_v1.csv
+data/derived/paper10_desi_clock_support_source_candidate_scan_v1_summary.csv
+scripts/build_paper10_desi_clock_support_source_candidate_scan_v1.py
+scripts/validate_paper10_desi_clock_support_source_candidate_scan_v1.py
+```
+
+It identifies useful context sources but no gate-closing clock support. The
+eBOSS DR16 QSO BAO/RSD route is near row 4 at `z_eff=1.48`, but it is a
+clustering route rather than an independent clock measurement. The VANDELS
+`z=1.26` and LEGA-C `z=0.8` CC measurements are source-relevant but outside the
+frozen row-4 `z=1.484` window; the eBOSS/SDSS Ly-alpha BAO route covers
+`z=2.33`, but is a BAO/r_d cross-probe route rather than an independent clock
+measurement. The scan verdict is
+`desi_clock_support_candidate_scan_found_cross_probe_context_but_no_gate_closing_clock_support`.
+
+The resulting blocker verdict is recorded in:
+
+```text
+docs/paper10_desi_clock_support_blocker_verdict_v1.md
+data/source_manifest/paper10_desi_clock_support_blocker_verdict_policy_v1.csv
+data/derived/paper10_desi_clock_support_blocker_verdict_v1.csv
+data/derived/paper10_desi_clock_support_blocker_verdict_v1_summary.csv
+scripts/build_paper10_desi_clock_support_blocker_verdict_v1.py
+scripts/validate_paper10_desi_clock_support_blocker_verdict_v1.py
+```
+
+It closes the current search loop as
+`DESI_CLOCK_SUPPORT_ROUTE_BLOCKED_AFTER_SOURCE_SCAN_NOT_REPLAY_NOT_VALIDATION`.
+The DESI time-readout route can only be reopened if an independent row-4 clock
+reference near `z=1.484` or an independent high-z clock/source-native
+time-readout route for `z=2.33` is frozen before replay.
+
+A completed external source-side review is recorded in:
+
+```text
+docs/paper10_desi_clock_support_blocker_external_review_notes_v1.md
+data/derived/paper10_desi_clock_support_blocker_external_review_response_v1.csv
+data/derived/paper10_desi_clock_support_blocker_external_review_completed_summary_v1.csv
+data/derived/paper10_desi_clock_support_blocker_external_review_response_v1_summary.csv
+data/derived/paper10_desi_clock_support_blocker_external_review_validation_log_v1.txt
+scripts/import_paper10_desi_clock_support_blocker_external_review_response_v1.py
+scripts/validate_paper10_desi_clock_support_blocker_external_review_response_v1.py
+```
+
+The completed review partially reopens source acquisition for row 4 only:
+independent cosmic-chronometer entries bracketing `z=1.484` at `z=1.43` and
+`z=1.53` were reported. Row 5 at `z=2.33` remains blocked, and BAO/RSD plus
+Ly-alpha BAO remain cross-probe/context controls unless independent
+clock/time-readout evidence is attached. The response explicitly keeps
+`endpoint_replay_allowed=false` and makes no validation claim.
+
+The row-4-only reopen manifest is recorded in:
+
+```text
+docs/paper10_desi_row4_clock_reopen_manifest_v1.md
+data/source_manifest/paper10_desi_row4_clock_reopen_manifest_policy_v1.csv
+data/derived/paper10_desi_row4_clock_reopen_manifest_v1.csv
+data/derived/paper10_desi_row4_clock_reopen_manifest_v1_summary.csv
+scripts/build_paper10_desi_row4_clock_reopen_manifest_v1.py
+scripts/validate_paper10_desi_row4_clock_reopen_manifest_v1.py
+```
+
+It keeps `row4_can_enter_replay=false` until the source-native CC values,
+uncertainties, reference provenance, and covariance status for `z=1.43` and
+`z=1.53` are cached and frozen.
+
+That source-native freeze is recorded in:
+
+```text
+docs/paper10_desi_row4_cc_bracket_source_freeze_v1.md
+data/source_manifest/paper10_desi_row4_cc_bracket_source_freeze_policy_v1.csv
+data/derived/paper10_desi_row4_cc_bracket_source_freeze_v1.csv
+data/derived/paper10_desi_row4_cc_bracket_source_freeze_v1_summary.csv
+scripts/build_paper10_desi_row4_cc_bracket_source_freeze_v1.py
+scripts/validate_paper10_desi_row4_cc_bracket_source_freeze_v1.py
+```
+
+It freezes `H(z=1.43)=177+/-18` and `H(z=1.53)=140+/-14` km/s/Mpc from the
+compiled cosmic-chronometer table. Both entries are attributed to the
+Simon et al. (2005) reference family. Therefore this improves the explicit row-4
+source record, but it does **not** satisfy the independent-reference-family
+redundancy blocker. Row 4 remains `row4_can_enter_replay=false`.
+
+The strict non-Simon row-4 follow-up search is recorded in:
+
+```text
+docs/paper10_desi_row4_non_simon_clock_search_v1.md
+data/source_manifest/paper10_desi_row4_non_simon_clock_search_policy_v1.csv
+data/derived/paper10_desi_row4_non_simon_clock_search_v1.csv
+data/derived/paper10_desi_row4_non_simon_clock_search_v1_summary.csv
+scripts/build_paper10_desi_row4_non_simon_clock_search_v1.py
+scripts/validate_paper10_desi_row4_non_simon_clock_search_v1.py
+```
+
+It checks the frozen row-4 release condition under the strict
+`|Delta z| <= 0.10` source window. The nearest non-Simon cosmic-chronometer
+candidate currently attached to the source chain is Moresco (2015) at
+`z=1.363`, with `H(z)=160+/-33.6` km/s/Mpc. This is independent of the Simon
+reference family, but `|1.363-1.484|=0.121`, just outside the frozen row-4
+window. The verdict is therefore
+`row4_non_simon_strict_window_search_negative_blocker_remains`: useful
+near-miss source context, no endpoint replay, no validation claim.
+
+The resulting row-4 source-window external review handoff is:
+
+```text
+docs/paper10_desi_row4_window_review_v1.md
+data/source_manifest/paper10_desi_row4_window_review_policy_v1.csv
+data/derived/paper10_desi_row4_window_review_response_template_v1.csv
+data/derived/paper10_desi_row4_window_review_package_v1.zip
+data/derived/paper10_desi_row4_window_review_package_v1.zip.sha256
+data/derived/paper10_desi_row4_window_review_package_v1_manifest.csv
+data/derived/paper10_desi_row4_window_review_package_v1_summary.csv
+scripts/build_paper10_desi_row4_window_review_package_v1.py
+scripts/validate_paper10_desi_row4_window_review_package_v1.py
+scripts/validate_paper10_desi_row4_window_review_response_v1.py
+scripts/import_paper10_desi_row4_window_review_response_v1.py
+```
+
+This package asks only whether the strict row-4 window should remain fixed or
+whether the Moresco (2015) `z=1.363` near miss may be accepted as caveated
+source-side context. It contains no endpoint residuals, scores, or fit
+statistics, and does not authorize replay.
+
+If a completed reviewer ZIP is returned, import it with:
+
+```bash
+python scripts/import_paper10_desi_row4_window_review_response_v1.py \
+  /path/to/completed_row4_window_review.zip
+```
+
+The importer first runs
+`scripts/validate_paper10_desi_row4_window_review_response_v1.py`. Even a
+positive response can only set `source_reopen_caveated=true`; it keeps
+`row4_can_enter_replay=false` and requires a separate replay-authorization
+handoff before any endpoint scoring.
+
+The row-4 source-window decision gate is recorded in:
+
+```text
+docs/paper10_desi_row4_window_decision_gate_v1.md
+data/source_manifest/paper10_desi_row4_window_decision_gate_policy_v1.csv
+data/derived/paper10_desi_row4_window_decision_gate_v1.csv
+data/derived/paper10_desi_row4_window_decision_gate_v1_summary.csv
+scripts/build_paper10_desi_row4_window_decision_gate_v1.py
+scripts/validate_paper10_desi_row4_window_decision_gate_v1.py
+```
+
+The completed source-blocker review accepts the Moresco (2015) near miss only
+as caveated source-side context. The imported row-4 decision gate now reports
+`ROW4_SOURCE_REOPEN_CAVEATED_NO_REPLAY`; endpoint replay remains disabled.
+
+The route-level DESI time-readout closure status is recorded in:
+
+```text
+docs/paper10_desi_time_route_closure_status_v1.md
+data/source_manifest/paper10_desi_time_route_closure_status_policy_v1.csv
+data/derived/paper10_desi_time_route_closure_status_v1.csv
+data/derived/paper10_desi_time_route_closure_status_v1_summary.csv
+scripts/build_paper10_desi_time_route_closure_status_v1.py
+scripts/validate_paper10_desi_time_route_closure_status_v1.py
+```
+
+It synthesizes the current DESI time-route state from the row-4 and row-5
+decision gates as
+`DESI_TIME_ROUTE_CLOSED_PENDING_SOURCE_BLOCKERS_NOT_REPLAY`: row 4 is caveated
+source-reopened but not replay-ready, row 5 lacks high-z independent clock
+support, and the negative-control response gate still blocks replay until
+richer clock/readout support exists.
+
+The row-5 high-z source-side review handoff is:
+
+```text
+docs/paper10_desi_row5_high_z_review_v1.md
+data/source_manifest/paper10_desi_row5_high_z_review_policy_v1.csv
+data/derived/paper10_desi_row5_high_z_review_response_template_v1.csv
+data/derived/paper10_desi_row5_high_z_review_package_v1.zip
+data/derived/paper10_desi_row5_high_z_review_package_v1.zip.sha256
+data/derived/paper10_desi_row5_high_z_review_package_v1_manifest.csv
+data/derived/paper10_desi_row5_high_z_review_package_v1_summary.csv
+scripts/build_paper10_desi_row5_high_z_review_package_v1.py
+scripts/validate_paper10_desi_row5_high_z_review_package_v1.py
+scripts/validate_paper10_desi_row5_high_z_review_response_v1.py
+scripts/import_paper10_desi_row5_high_z_review_response_v1.py
+```
+
+This package asks whether a public/citable high-z clock or source-native
+time/readout route can support `z=2.33` without extrapolating the frozen
+cosmic-chronometer table. It keeps Ly-alpha BAO as cross-probe context unless
+an independent clock/time-readout observable is explicitly attached. It contains
+no endpoint residuals, scores, or fit statistics, and does not authorize replay.
+
+If a completed reviewer ZIP is returned, import it with:
+
+```bash
+python scripts/import_paper10_desi_row5_high_z_review_response_v1.py \
+  /path/to/completed_row5_high_z_review.zip
+```
+
+The importer first runs
+`scripts/validate_paper10_desi_row5_high_z_review_response_v1.py`. Even a
+positive response can only set a source-side reopen flag or request a separate
+replay-authorization handoff; it keeps `row5_can_enter_replay=false`.
+
+The row-5 high-z decision gate is recorded in:
+
+```text
+docs/paper10_desi_row5_high_z_decision_gate_v1.md
+data/source_manifest/paper10_desi_row5_high_z_decision_gate_policy_v1.csv
+data/derived/paper10_desi_row5_high_z_decision_gate_v1.csv
+data/derived/paper10_desi_row5_high_z_decision_gate_v1_summary.csv
+scripts/build_paper10_desi_row5_high_z_decision_gate_v1.py
+scripts/validate_paper10_desi_row5_high_z_decision_gate_v1.py
+```
+
+The completed row-5 review identifies no independent high-z clock source and no
+source-native high-z time/readout observable covering `z=2.33`; Ly-alpha BAO
+remains cross-probe context only. The imported decision gate now reports
+`ROW5_HIGH_Z_BLOCKER_REMAINS_NOT_REPLAY`, so endpoint replay remains disabled.
+
+The focused row-5 high-z route scout is recorded in:
+
+```text
+docs/paper10_desi_row5_high_z_source_route_scout_v1.md
+data/source_manifest/paper10_desi_row5_high_z_source_route_scout_policy_v1.csv
+data/derived/paper10_desi_row5_high_z_source_route_scout_v1.csv
+data/derived/paper10_desi_row5_high_z_source_route_scout_v1_summary.csv
+scripts/build_paper10_desi_row5_high_z_source_route_scout_v1.py
+scripts/validate_paper10_desi_row5_high_z_source_route_scout_v1.py
+```
+
+It records four context routes: DESI DR1 cosmic chronometers, the current
+cosmic-chronometer review/forecast route, DESI/Ly-alpha BAO at `z=2.33`, and a
+future standard-timer style prompt. The verdict is
+`row5_high_z_scout_found_context_but_no_gate_closing_source`; all rows remain
+context/control only and endpoint replay remains disabled.
+
+The post-review Row5 holdout confirmation gate is recorded in:
+
+```text
+docs/paper10_desi_row5_holdout_confirmation_v1.md
+data/source_manifest/paper10_desi_row5_holdout_confirmation_policy_v1.csv
+data/derived/paper10_desi_row5_holdout_confirmation_v1.csv
+data/derived/paper10_desi_row5_holdout_confirmation_v1_summary.csv
+scripts/build_paper10_desi_row5_holdout_confirmation_v1.py
+scripts/validate_paper10_desi_row5_holdout_confirmation_v1.py
+```
+
+It freezes the consequence of the review and scout: row 5 remains holdout, rows
+`0;1;2;3;4` remain the only first CC-matched DESI endpoint rows, and this is not
+a post-score row selection.
+
+The post-review DESI time-route priority ledger is recorded in:
+
+```text
+docs/paper10_desi_post_review_time_route_priority_v1.md
+data/source_manifest/paper10_desi_post_review_time_route_priority_policy_v1.csv
+data/derived/paper10_desi_post_review_time_route_priority_v1.csv
+data/derived/paper10_desi_post_review_time_route_priority_v1_summary.csv
+scripts/build_paper10_desi_post_review_time_route_priority_v1.py
+scripts/validate_paper10_desi_post_review_time_route_priority_v1.py
+```
+
+It freezes the next source-side priority after the Row5 holdout decision:
+`TIME_READOUT_SHAPE_OBSERVABLE` is now the primary next gate, while high-z
+support becomes a future holdout-reopen route rather than the current replay
+target.
+
+For the separate low-z Pantheon \(W_{\rm time}\) uncertainty-basis replay
+authorization route, import a completed external reviewer CSV with:
+
+```bash
+python scripts/import_paper10_desi_time_readout_shape_independent_review_response_v1.py \
+  /path/to/completed_shape_review_response.csv
+```
+
+The importer first runs
+`scripts/validate_paper10_desi_time_readout_shape_independent_review_response_v1.py`.
+The only accepted positive outcome retains the shape as a caveated source-side
+candidate; it still keeps endpoint replay, endpoint validation, and physical
+validation false.
+
+When a completed external reviewer CSV is returned, import it with:
+
+```bash
+python scripts/import_low_z_pantheon_w_time_uncertainty_basis_replay_authorization_review_response_v1.py \
+  /path/to/completed_response.csv
+```
+
+The importer validates the external CSV before copying it into
+`data/derived/`; an incomplete or non-GO response is rejected without modifying
+the canonical response artifacts.
+A gate-status ledger records this state explicitly: the source-side basis,
+review package, completed GO response, and replay template all pass for a
+permission-only replay, while endpoint validation remains false.
 
 The multi-channel coupling component is also accounted by a frozen source-side
 ledger. It combines the current V2 component statuses and deliberately keeps
@@ -3052,14 +5179,324 @@ channels. In cosmology this requires source-frozen channel families:
 W_void(a)          void maturity / distance activation
 W_web(a,k,env)     cosmic-web anisotropy for growth and lensing
 W_path(z,n_hat)    observer/path projection along the null-geodesic bundle
-W_time(a)          time/readout projection for observed a(t), H(t)
+W_time(z,n_hat,env,path,phi_readout)
+                   morphology-aware time/readout projection for observed a(t), H(t)
 ```
 
 These channels must be frozen from independent source-side observables before
 distance, growth, lensing, or CMB-safety residuals are scored.
 
+The latest Tau Core theory-side readout packets sharpen the claim boundary for
+this branch. A non-injective readout constrains a source class rather than a
+unique source, so a positive `W_time` or `W_path` proxy would not by itself
+identify a unique Tau-side time or path mechanism. Observer-dependent readouts
+must also declare an embedded interface profile: position, scale, coupling,
+protocol, resolution, channel access, and null model. Paper 10 therefore keeps
+the CC and radial-BAO time/readout routes below endpoint status until a joint
+interface/nuisance policy is source-frozen.
+
+The current DESI shape/readout replay should be interpreted in the same
+restricted way. It is positive but narrow: the frozen candidate score
+`5.52425578108` exceeds the best frozen control score `5.50939872844` by
+`0.01485705264`, while endpoint validation and physical validation remain
+false. This is a source-strengthened, row-sensitive diagnostic, not a
+validated cosmological result.
+
+The main Paper 10 takeaway is therefore not a single-channel discovery claim.
+It is a convergent multi-channel viability pattern: distance, lensing,
+observer/path, and shape/time-readout routes each remain caveated, but together
+they form a coherent source-frozen evidence pattern with low-tail,
+control-surviving, or diagnostically constraining behavior. This may be
+reported as pre-validation evidence, not empirical validation. The next
+required test is a declared joint endpoint with shuffled-channel,
+wrong-channel, and covariance-aware controls.
+
+The existing-artifact cross-channel meta-score is recorded in:
+
+```text
+data/derived/joint_existing_artifact_meta_score_v1.csv
+data/derived/joint_existing_artifact_meta_score_v1_summary.csv
+docs/joint_existing_artifact_meta_score_v1.md
+scripts/build_joint_existing_artifact_meta_score_v1.py
+scripts/validate_joint_existing_artifact_meta_score_v1.py
+```
+
+It audits seven already frozen summary artifacts and returns
+`MULTI_CHANNEL_VIABILITY_PATTERN_PRESENT_NOT_VALIDATION`, with three positive
+caveated channels, two neutral/control-negative diagnostic channels, two
+negative current-proxy channels, and net protocol weight `2.500`. These are
+protocol weights, not physical likelihood weights.
+
+The first executable joint-channel endpoint-candidate preflight is recorded in:
+
+```text
+data/source_manifest/joint_multichannel_endpoint_manifest_v1.csv
+data/derived/joint_multichannel_endpoint_candidate_v1.csv
+data/derived/joint_multichannel_endpoint_candidate_v1_summary.csv
+docs/joint_multichannel_endpoint_candidate_v1.md
+scripts/run_joint_multichannel_endpoint_candidate_v1.py
+scripts/validate_joint_multichannel_endpoint_candidate_v1.py
+```
+
+It uses the same seven frozen channel summaries, predeclared metric transforms,
+and no endpoint residual fields for label selection. With negative current-proxy
+branches pulling the score downward, the normalized joint score is `0.200059110`
+and the verdict is
+`JOINT_ENDPOINT_CANDIDATE_INCONCLUSIVE_PREVALIDATION`. This is a positive-sign
+combined preflight, not a joint endpoint pass and not cosmological validation.
+
+The block-aware preflight adds sign-flip controls, seeded channel-weight
+shuffles, and leave-one-channel stress:
+
+```text
+data/derived/joint_multichannel_block_score_v1.csv
+data/derived/joint_multichannel_block_score_v1_controls.csv
+data/derived/joint_multichannel_block_score_v1_leave_one_channel.csv
+data/derived/joint_multichannel_block_score_v1_summary.csv
+docs/joint_multichannel_block_score_v1.md
+scripts/run_joint_multichannel_block_score_v1.py
+scripts/validate_joint_multichannel_block_score_v1.py
+```
+
+It returns block-normalized score `0.413070369`, exact sign-flip
+`p(score >= observed) = 0.375000000`, and leave-one positive `4/5`.
+The missing leave-one pass occurs when the KiDS/COSEBIs lensing block is removed,
+so the present joint pattern is positive but materially carried by that block.
+The verdict is
+`JOINT_BLOCK_SCORE_FRAGILE_OR_INCONCLUSIVE_PREVALIDATION`.
+
+The direct non-lensing lift diagnostic is recorded in:
+
+```text
+data/derived/joint_non_lensing_lift_diagnostic_v1.csv
+data/derived/joint_non_lensing_lift_diagnostic_v1_summary.csv
+docs/joint_non_lensing_lift_diagnostic_v1.md
+scripts/build_joint_non_lensing_lift_diagnostic_v1.py
+scripts/validate_joint_non_lensing_lift_diagnostic_v1.py
+```
+
+It shows that the active non-lensing weighted sum is `-0.363118958`.
+The non-lensing block therefore needs lift `0.363118958` to become positive, and
+lift `1.113118958` to reach the illustrative protocol margin `0.25`. The
+highest lift-priority channel is `observer_path_basis_low_z`. This diagnostic
+does not authorize post-hoc retuning; it only identifies where independent
+source-side work would most efficiently reduce KiDS/lensing dominance.
+
+The observer/path strengthening gate is recorded in:
+
+```text
+data/derived/observer_path_strengthening_gate_v1.csv
+data/derived/observer_path_strengthening_gate_v1_summary.csv
+docs/observer_path_strengthening_gate_v1.md
+scripts/build_observer_path_strengthening_gate_v1.py
+scripts/validate_observer_path_strengthening_gate_v1.py
+```
+
+It keeps the current narrow `W_path_x_sky_x_x_zcenter` route as the accepted
+source-frozen observer/path diagnostic, keeps centered sky-z as a control or
+secondary route only, and blocks full metric/lensing path weighting until a
+source-aligned numeric kappa/shear/mass-map product exists. In the current
+12-object scope, `0/12` rows have such a source-aligned metric path product.
+
+The next source-product blocker is packaged explicitly in:
+
+```text
+data/derived/observer_path_metric_product_requirements_package_v1_summary.csv
+data/derived/observer_path_metric_product_requirements_package_v1_manifest.csv
+data/derived/observer_path_metric_product_requirements_review_response_template_v1.csv
+data/derived/observer_path_metric_product_requirements_package_v1.zip
+docs/observer_path_metric_product_requirements_package_v1.md
+docs/observer_path_metric_product_requirements_reviewer_instructions_v1.md
+scripts/build_observer_path_metric_product_requirements_package_v1.py
+scripts/validate_observer_path_metric_product_requirements_package_v1.py
+```
+
+This is a requirements-only external-review package. It asks what independent
+source-aligned metric/path observable would be needed to reopen the physical
+observer/path route: convergence, shear, mass-map integral, or a documented
+metric-environment path weight. It preserves `endpoint_replay_allowed=false`
+and `endpoint_validation_claimed=false`. The summary separates the active
+observer/path scope (`12` rows) from the broader low-z route-audit universe
+(`424` rows), and both currently have zero source-aligned numeric metric/path
+products.
+
+The completed external response is recorded in:
+
+```text
+data/derived/observer_path_metric_product_requirements_review_response_v1.csv
+data/derived/observer_path_metric_product_requirements_review_completed_summary_v1.csv
+data/derived/observer_path_metric_product_requirements_review_validation_log_v1.txt
+docs/observer_path_metric_product_requirements_review_notes_v1.md
+scripts/import_observer_path_metric_product_requirements_review_response_v1.py
+scripts/validate_observer_path_metric_product_requirements_review_response_v1.py
+```
+
+The reviewer decision is `ACCEPT_REQUIREMENTS_ONLY` for all four review rows.
+This strengthens the data-acquisition gate but does not provide the missing
+metric/path product: `source_aligned_metric_product_count=0`,
+`endpoint_replay_allowed=false`, and `physical_lensing_path_weight_claimed=false`
+remain frozen.
+
+After that requirements review, a first source-aligned caveated
+metric-environment path product is built for the active observer/path scope:
+
+```text
+data/derived/observer_path_metric_environment_product_v1.csv
+data/derived/observer_path_metric_environment_product_v1_summary.csv
+docs/observer_path_metric_environment_product_v1.md
+data/derived/observer_path_metric_product_acquisition_status_v1.csv
+data/derived/observer_path_metric_product_acquisition_status_v1_summary.csv
+docs/observer_path_metric_product_acquisition_status_v1.md
+scripts/build_observer_path_metric_environment_product_v1.py
+scripts/validate_observer_path_metric_environment_product_v1.py
+scripts/build_observer_path_metric_product_acquisition_status_v1.py
+scripts/validate_observer_path_metric_product_acquisition_status_v1.py
+```
+
+This uses existing source-side path-aware void geometry, line-of-sight radial
+profile, and directional-web anisotropy artifacts to provide a numeric
+`caveated_metric_environment_path_proxy` for `12/12` active observer/path rows.
+It changes the data status from no source-aligned metric/path observable to a
+caveated metric-environment observable. It still does not provide kappa, shear,
+or a mass-map integral, so the physical lensing-path branch remains blocked and
+any endpoint use requires a separate replay-authorization gate.
+
+A focused preauthorization diagnostic screen is then run in:
+
+```text
+data/derived/observer_path_metric_environment_fast_screen_v1_grid.csv
+data/derived/observer_path_metric_environment_fast_screen_v1_family_summary.csv
+data/derived/observer_path_metric_environment_fast_screen_v1_summary.csv
+docs/observer_path_metric_environment_fast_screen_v1.md
+scripts/run_observer_path_metric_environment_fast_screen_v1.py
+scripts/validate_observer_path_metric_environment_fast_screen_v1.py
+```
+
+The best candidate is `metric_environment_path`. It improves the 12-row
+baseline by `Delta chi2 = -0.55793885392`, but it does not survive local
+family controls: `Delta chi2(candidate - best control) = 0.12520399356`. The
+verdict is
+`METRIC_ENVIRONMENT_PREAUTH_SIGNAL_NOT_CONTROL_RESISTANT_NOT_ENDPOINT`. This is
+preserved as a useful negative/control result: the new source-aligned product is
+informative, but the current formula is not ready for replay promotion.
+
+The follow-up source-side ordering diagnostic is:
+
+```text
+data/derived/observer_path_metric_environment_ordering_diagnostic_v1.csv
+data/derived/observer_path_metric_environment_ordering_diagnostic_v1_pairwise.csv
+data/derived/observer_path_metric_environment_ordering_diagnostic_v1_summary.csv
+docs/observer_path_metric_environment_ordering_diagnostic_v1.md
+scripts/build_observer_path_metric_environment_ordering_diagnostic_v1.py
+scripts/validate_observer_path_metric_environment_ordering_diagnostic_v1.py
+```
+
+It preserves the failure mode rather than hiding it: the best local control is
+still `rank_reverse`, and the candidate-minus-best-control gap remains
+`0.12520399356`. The source-side product is not simply a redshift proxy
+(`Spearman(metric environment, zHD) = -0.195804195804`) and is not simply the
+older `W_path` proxy (`Spearman(metric environment, W_path) = -0.048951048951`),
+but its ordering is still not control-resistant. The next honest step is
+therefore a source-native ordering rule for the metric-environment path kernel,
+frozen before any replay scoring, not endpoint promotion of the current proxy.
+
+That source-native ordering bank is now built and screened:
+
+```text
+data/derived/observer_path_source_native_ordering_kernel_v1.csv
+data/derived/observer_path_source_native_ordering_kernel_v1_summary.csv
+docs/observer_path_source_native_ordering_kernel_v1.md
+data/derived/observer_path_source_native_ordering_fast_screen_v1_grid.csv
+data/derived/observer_path_source_native_ordering_fast_screen_v1_family_summary.csv
+data/derived/observer_path_source_native_ordering_fast_screen_v1_summary.csv
+docs/observer_path_source_native_ordering_fast_screen_v1.md
+scripts/build_observer_path_source_native_ordering_kernel_v1.py
+scripts/validate_observer_path_source_native_ordering_kernel_v1.py
+scripts/run_observer_path_source_native_ordering_fast_screen_v1.py
+scripts/validate_observer_path_source_native_ordering_fast_screen_v1.py
+```
+
+The result is preserved as another useful negative/control result. The best
+source-native ordering candidate is `K_order_void_web_los_balanced`; it improves
+the baseline by `Delta chi2 = -0.16922377119`, but it does not survive controls:
+`Delta chi2(candidate - best control) = 0.07467294067`. This means that simply
+combining the available void, web, LOS, and observer-basis source proxies is not
+yet enough. A stronger next route needs either a genuinely source-native path
+metric/lensing observable or a more physically justified ordering rule, frozen
+before any endpoint replay.
+
+The route is therefore closed by an explicit next-action gate:
+
+```text
+data/derived/observer_path_metric_lensing_next_gate_v1.csv
+data/derived/observer_path_metric_lensing_next_gate_v1_summary.csv
+docs/observer_path_metric_lensing_next_gate_v1.md
+scripts/build_observer_path_metric_lensing_next_gate_v1.py
+scripts/validate_observer_path_metric_lensing_next_gate_v1.py
+```
+
+The gate verdict is
+`ACT_DR6_PATH_WEIGHT_CANDIDATE_READY_BUT_REVIEW_BLOCKS_REPLAY`. It records:
+`caveated_metric_environment_proxy_available=true`,
+`act_dr6_source_side_kappa_sampling_available=true`,
+`act_dr6_source_frozen_path_weight_candidate_available=true`,
+`act_dr6_mask_positive_rows=168`,
+`physical_metric_lensing_path_product_available=false`,
+`metric_environment_screen_survives_controls=false`,
+`source_native_ordering_screen_survives_controls=false`, and
+`endpoint_replay_allowed=false`. The next required action is not another
+combination search; it is external review and replay authorization for the ACT
+path-weight candidate, including explicit null-control handling, before any
+endpoint scoring.
+The external-review handoff package is now built at
+`data/derived/act_dr6_lensing_path_weight_replay_authorization_review_package_v1.zip`
+with checksum
+`8594b1cd9e967836b9c7238834619e558f176ad888c70de15fc067e8d6ec676d`.
+It contains the response template, candidate summaries, gate ledger, docs, and
+relevant scripts, but it remains `review_completed=false` and
+`endpoint_replay_allowed=false`.
+A completed reviewer response can be checked with
+`scripts/validate_act_dr6_lensing_path_weight_replay_authorization_review_response_v1.py`
+or imported with
+`scripts/import_act_dr6_lensing_path_weight_replay_authorization_review_response_v1.py`.
+Even an accepted response only authorizes a separate caveated replay; it does
+not turn the package into validation and does not claim a physical lensing
+path-weight derivation.
+A guarded replay run template is also frozen at
+`data/source_manifest/act_dr6_lensing_path_weight_replay_run_template_v1.csv`.
+It fixes the candidate basis, authorization-summary dependency, grid, six
+mandatory controls (`off`, `wrong_sign`, `curl_null`, `diff_f150_f090_null`,
+`deterministic_shuffle`, `rank_reverse`), and forbidden-input markers. The
+template remains `ACT_DR6_LENSING_PATH_WEIGHT_REPLAY_PREPARED_AUTH_REQUIRED_NOT_VALIDATION`.
+The guarded runner/validator pair is prepared in
+`scripts/run_act_dr6_lensing_path_weight_authorized_replay_v1.py` and
+`scripts/validate_act_dr6_lensing_path_weight_authorized_replay_v1.py`. A
+completed external response now authorizes only a caveated permission-only
+replay, not validation or a physical path-weight claim. The guarded replay
+reports `candidate_best_chi2_act_path=380.575996101` versus
+`baseline_best_chi2_act_path=381.794196616`, but the best null control is
+`curl_null` with `best_control_chi2_act_path=379.334896969`. The recorded verdict
+is therefore
+`act_dr6_lensing_path_weight_candidate_not_control_resistant_permission_only_not_validation`.
+This is a preserved negative/control-dominance result for the present ACT
+unitless path-weight candidate. A follow-up diagnostic is recorded in
+`data/derived/act_dr6_lensing_path_weight_control_dominance_diagnostic_v1_summary.csv`:
+the candidate improves over baseline but loses to null/order controls, so the
+present ACT vector is a weak, non-specific source-side signal rather than a
+promotable observer/path metric-lensing readout.
+
+Paper 10 also does not test a Tau base-substrate or dark-sector response layer.
+Narrow or weak signals in this repository may indicate an incomplete channel
+basis, but they do not identify the missing channel as dark-sector response.
+That question belongs to a separate source-frozen `M0/M1/M2` decision protocol:
+no-dark Tau readout versus Tau base-substrate response versus a standard
+dark-sector benchmark.
+
 ## Scope
 
 This is a protocol scaffold and branch-opening paper package. The next
 scientific milestone is a real-data pilot using public distance, void,
-cosmic-web, growth, lensing, and CMB products under the frozen audit ladder.
+cosmic-web, observer/path, time/readout, growth, lensing, and CMB products
+under the frozen audit ladder. A dark-sector decision should only be attempted
+after both the no-dark channel basis and the candidate base-substrate response
+basis are frozen without endpoint leakage.

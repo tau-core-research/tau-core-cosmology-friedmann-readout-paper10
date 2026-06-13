@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import csv
+import os
 import subprocess
 import zipfile
 from pathlib import Path
@@ -16,6 +17,7 @@ def test_public_files_exist() -> None:
         "CITATION.cff",
         "LICENSE",
         "paper10_submission_source/main.tex",
+        "paper10_submission_source/supplement_route_ledgers.tex",
         "paper10_submission_source/refs.bib",
         "paper10_submission_source/main.pdf",
         "arxiv_submission_source.zip",
@@ -334,6 +336,763 @@ def test_public_files_exist() -> None:
         "scripts/validate_void_source_basis_refinement_v2_observer_orientation_kernel_v2_replay_authorization_template.py",
         "scripts/build_void_source_basis_refinement_v2_observer_orientation_kernel_v2_replay_authorization_package.py",
         "scripts/validate_void_source_basis_refinement_v2_observer_orientation_kernel_v2_replay_authorization_package.py",
+        "docs/void_source_basis_refinement_v2_observer_orientation_kernel_v2_replay_authorization_review_notes_v1.md",
+        "data/derived/void_source_basis_refinement_v2_observer_orientation_kernel_v2_replay_authorization_response_v1.csv",
+        "data/derived/void_source_basis_refinement_v2_observer_orientation_kernel_v2_replay_authorization_response_v1_summary.csv",
+        "data/derived/void_source_basis_refinement_v2_observer_orientation_kernel_v2_replay_authorization_review_completed_summary_v1.csv",
+        "data/derived/void_source_basis_refinement_v2_observer_orientation_kernel_v2_replay_authorization_response_v1_validation_log.txt",
+        "scripts/validate_void_source_basis_refinement_v2_observer_orientation_kernel_v2_replay_authorization_response.py",
+        "docs/void_source_basis_refinement_v2_observer_orientation_kernel_v2_authorized_replay.md",
+        "data/source_manifest/void_source_basis_refinement_v2_observer_orientation_kernel_v2_authorized_replay_run.csv",
+        "data/derived/void_source_basis_refinement_v2_observer_orientation_kernel_v2_authorized_replay_grid.csv",
+        "data/derived/void_source_basis_refinement_v2_observer_orientation_kernel_v2_authorized_replay_summary.csv",
+        "scripts/run_void_source_basis_refinement_v2_observer_orientation_kernel_v2_authorized_replay.py",
+        "scripts/validate_void_source_basis_refinement_v2_observer_orientation_kernel_v2_authorized_replay.py",
+        "docs/void_source_basis_refinement_v2_observer_basis_fast_screen_v1.md",
+        "data/source_manifest/void_source_basis_refinement_v2_observer_basis_fast_screen_v1.csv",
+        "data/derived/void_source_basis_refinement_v2_observer_basis_fast_screen_v1_grid.csv",
+        "data/derived/void_source_basis_refinement_v2_observer_basis_fast_screen_v1_family_summary.csv",
+        "data/derived/void_source_basis_refinement_v2_observer_basis_fast_screen_v1_summary.csv",
+        "scripts/run_void_source_basis_refinement_v2_observer_basis_fast_screen_v1.py",
+        "scripts/validate_void_source_basis_refinement_v2_observer_basis_fast_screen_v1.py",
+        "docs/void_source_basis_refinement_v2_observer_basis_candidate_review_v1.md",
+        "data/source_manifest/void_source_basis_refinement_v2_observer_basis_candidate_review_policy_v1.csv",
+        "data/derived/void_source_basis_refinement_v2_observer_basis_candidate_review_response_template_v1.csv",
+        "data/derived/void_source_basis_refinement_v2_observer_basis_candidate_review_package_v1.zip",
+        "data/derived/void_source_basis_refinement_v2_observer_basis_candidate_review_package_v1.zip.sha256",
+        "data/derived/void_source_basis_refinement_v2_observer_basis_candidate_review_package_v1_manifest.csv",
+        "data/derived/void_source_basis_refinement_v2_observer_basis_candidate_review_package_v1_summary.csv",
+        "scripts/build_void_source_basis_refinement_v2_observer_basis_candidate_review_package_v1.py",
+        "scripts/validate_void_source_basis_refinement_v2_observer_basis_candidate_review_package_v1.py",
+        "docs/void_source_basis_refinement_v2_observer_basis_candidate_review_notes_v1.md",
+        "data/derived/void_source_basis_refinement_v2_observer_basis_candidate_review_response_v1.csv",
+        "data/derived/void_source_basis_refinement_v2_observer_basis_candidate_review_response_v1_summary.csv",
+        "data/derived/void_source_basis_refinement_v2_observer_basis_candidate_review_completed_summary_v1.csv",
+        "data/derived/void_source_basis_refinement_v2_observer_basis_candidate_review_response_v1_validation_log.txt",
+        "scripts/validate_void_source_basis_refinement_v2_observer_basis_candidate_review_response_v1.py",
+        "docs/void_source_basis_refinement_v2_observer_basis_replay_authorization_v1.md",
+        "data/source_manifest/void_source_basis_refinement_v2_observer_basis_replay_authorization_policy_v1.csv",
+        "data/derived/void_source_basis_refinement_v2_observer_basis_replay_authorization_response_template_v1.csv",
+        "data/derived/void_source_basis_refinement_v2_observer_basis_replay_authorization_package_v1.zip",
+        "data/derived/void_source_basis_refinement_v2_observer_basis_replay_authorization_package_v1.zip.sha256",
+        "data/derived/void_source_basis_refinement_v2_observer_basis_replay_authorization_package_v1_manifest.csv",
+        "data/derived/void_source_basis_refinement_v2_observer_basis_replay_authorization_package_v1_summary.csv",
+        "scripts/build_void_source_basis_refinement_v2_observer_basis_replay_authorization_package_v1.py",
+        "scripts/validate_void_source_basis_refinement_v2_observer_basis_replay_authorization_package_v1.py",
+        "docs/void_source_basis_refinement_v2_observer_basis_replay_authorization_review_notes_v1.md",
+        "data/derived/void_source_basis_refinement_v2_observer_basis_replay_authorization_response_v1.csv",
+        "data/derived/void_source_basis_refinement_v2_observer_basis_replay_authorization_response_v1_summary.csv",
+        "data/derived/void_source_basis_refinement_v2_observer_basis_replay_authorization_review_completed_summary_v1.csv",
+        "data/derived/void_source_basis_refinement_v2_observer_basis_replay_authorization_response_v1_validation_log.txt",
+        "scripts/validate_void_source_basis_refinement_v2_observer_basis_replay_authorization_response_v1.py",
+        "docs/void_source_basis_refinement_v2_observer_basis_authorized_replay_v1.md",
+        "data/source_manifest/void_source_basis_refinement_v2_observer_basis_authorized_replay_run_v1.csv",
+        "data/derived/void_source_basis_refinement_v2_observer_basis_authorized_replay_v1_grid.csv",
+        "data/derived/void_source_basis_refinement_v2_observer_basis_authorized_replay_v1_summary.csv",
+        "scripts/run_void_source_basis_refinement_v2_observer_basis_authorized_replay_v1.py",
+        "scripts/validate_void_source_basis_refinement_v2_observer_basis_authorized_replay_v1.py",
+        "docs/void_source_basis_refinement_v2_full_kernel_proxy_fast_screen_v1.md",
+        "data/source_manifest/void_source_basis_refinement_v2_full_kernel_proxy_fast_screen_v1.csv",
+        "data/derived/void_source_basis_refinement_v2_full_kernel_proxy_fast_screen_v1_grid.csv",
+        "data/derived/void_source_basis_refinement_v2_full_kernel_proxy_fast_screen_v1_family_summary.csv",
+        "data/derived/void_source_basis_refinement_v2_full_kernel_proxy_fast_screen_v1_summary.csv",
+        "scripts/run_void_source_basis_refinement_v2_full_kernel_proxy_fast_screen_v1.py",
+        "scripts/validate_void_source_basis_refinement_v2_full_kernel_proxy_fast_screen_v1.py",
+        "docs/void_source_basis_refinement_v2_full_kernel_proxy_component_audit_v1.md",
+        "data/derived/void_source_basis_refinement_v2_full_kernel_proxy_component_audit_v1.csv",
+        "data/derived/void_source_basis_refinement_v2_full_kernel_proxy_component_audit_v1_class_summary.csv",
+        "data/derived/void_source_basis_refinement_v2_full_kernel_proxy_component_audit_v1_summary.csv",
+        "scripts/build_void_source_basis_refinement_v2_full_kernel_proxy_component_audit_v1.py",
+        "scripts/validate_void_source_basis_refinement_v2_full_kernel_proxy_component_audit_v1.py",
+        "docs/full_observer_path_kernel_source_requirements_v1.md",
+        "data/source_manifest/full_observer_path_kernel_source_requirements_v1.csv",
+        "scripts/validate_full_observer_path_kernel_source_requirements_v1.py",
+        "docs/low_z_pantheon_los_radial_profile_v1.md",
+        "data/source_manifest/low_z_pantheon_los_radial_profile_policy_v1.csv",
+        "data/derived/low_z_pantheon_los_radial_profile_v1.csv",
+        "data/derived/low_z_pantheon_los_radial_profile_v1_summary.csv",
+        "scripts/build_low_z_pantheon_los_radial_profile_v1.py",
+        "scripts/validate_low_z_pantheon_los_radial_profile_v1.py",
+        "docs/low_z_pantheon_path_aware_void_geometry_v1.md",
+        "data/source_manifest/low_z_pantheon_path_aware_void_geometry_policy_v1.csv",
+        "data/derived/low_z_pantheon_path_aware_void_geometry_v1.csv",
+        "data/derived/low_z_pantheon_path_aware_void_geometry_v1_summary.csv",
+        "scripts/build_low_z_pantheon_path_aware_void_geometry_v1.py",
+        "scripts/validate_low_z_pantheon_path_aware_void_geometry_v1.py",
+        "docs/low_z_pantheon_directional_web_anisotropy_v1.md",
+        "data/source_manifest/low_z_pantheon_directional_web_anisotropy_policy_v1.csv",
+        "data/derived/low_z_pantheon_directional_web_anisotropy_v1.csv",
+        "data/derived/low_z_pantheon_directional_web_anisotropy_v1_summary.csv",
+        "scripts/build_low_z_pantheon_directional_web_anisotropy_v1.py",
+        "scripts/validate_low_z_pantheon_directional_web_anisotropy_v1.py",
+        "docs/low_z_pantheon_metric_lensing_path_route_audit_v1.md",
+        "data/source_manifest/low_z_pantheon_metric_lensing_path_route_audit_policy_v1.csv",
+        "data/derived/low_z_pantheon_metric_lensing_path_route_audit_v1.csv",
+        "data/derived/low_z_pantheon_metric_lensing_path_route_audit_v1_summary.csv",
+        "scripts/build_low_z_pantheon_metric_lensing_path_route_audit_v1.py",
+        "scripts/validate_low_z_pantheon_metric_lensing_path_route_audit_v1.py",
+        "docs/low_z_pantheon_time_readout_source_audit_v1.md",
+        "data/source_manifest/low_z_pantheon_time_readout_source_audit_policy_v1.csv",
+        "data/derived/low_z_pantheon_time_readout_source_audit_v1.csv",
+        "data/derived/low_z_pantheon_time_readout_source_audit_v1_summary.csv",
+        "scripts/build_low_z_pantheon_time_readout_source_audit_v1.py",
+        "scripts/validate_low_z_pantheon_time_readout_source_audit_v1.py",
+        "docs/low_z_pantheon_time_readout_clock_scale_candidate_v1.md",
+        "data/source_manifest/low_z_pantheon_time_readout_clock_scale_candidate_policy_v1.csv",
+        "data/derived/low_z_pantheon_time_readout_clock_scale_candidate_v1.csv",
+        "data/derived/low_z_pantheon_time_readout_clock_scale_candidate_v1_summary.csv",
+        "scripts/build_low_z_pantheon_time_readout_clock_scale_candidate_v1.py",
+        "scripts/validate_low_z_pantheon_time_readout_clock_scale_candidate_v1.py",
+        "docs/low_z_pantheon_time_readout_redshift_bin_policy_candidate_v1.md",
+        "data/source_manifest/low_z_pantheon_time_readout_redshift_bin_policy_candidate_policy_v1.csv",
+        "data/derived/low_z_pantheon_time_readout_redshift_bin_policy_candidate_v1.csv",
+        "data/derived/low_z_pantheon_time_readout_redshift_bin_policy_candidate_v1_summary.csv",
+        "scripts/build_low_z_pantheon_time_readout_redshift_bin_policy_candidate_v1.py",
+        "scripts/validate_low_z_pantheon_time_readout_redshift_bin_policy_candidate_v1.py",
+        "docs/low_z_pantheon_time_readout_delta_clock_uncertainty_candidate_v1.md",
+        "data/source_manifest/low_z_pantheon_time_readout_delta_clock_uncertainty_candidate_policy_v1.csv",
+        "data/derived/low_z_pantheon_time_readout_delta_clock_uncertainty_candidate_v1.csv",
+        "data/derived/low_z_pantheon_time_readout_delta_clock_uncertainty_candidate_v1_summary.csv",
+        "scripts/build_low_z_pantheon_time_readout_delta_clock_uncertainty_candidate_v1.py",
+        "scripts/validate_low_z_pantheon_time_readout_delta_clock_uncertainty_candidate_v1.py",
+        "docs/low_z_pantheon_w_time_uncertainty_basis_candidate_v1.md",
+        "data/source_manifest/low_z_pantheon_w_time_uncertainty_basis_candidate_policy_v1.csv",
+        "data/derived/low_z_pantheon_w_time_uncertainty_basis_candidate_v1.csv",
+        "data/derived/low_z_pantheon_w_time_uncertainty_basis_candidate_v1_summary.csv",
+        "scripts/build_low_z_pantheon_w_time_uncertainty_basis_candidate_v1.py",
+        "scripts/validate_low_z_pantheon_w_time_uncertainty_basis_candidate_v1.py",
+        "docs/low_z_pantheon_w_time_uncertainty_basis_replay_authorization_review_v1.md",
+        "data/source_manifest/low_z_pantheon_w_time_uncertainty_basis_replay_authorization_review_policy_v1.csv",
+        "data/derived/low_z_pantheon_w_time_uncertainty_basis_replay_authorization_review_response_template_v1.csv",
+        "data/derived/low_z_pantheon_w_time_uncertainty_basis_replay_authorization_review_template_v1_summary.csv",
+        "data/derived/low_z_pantheon_w_time_uncertainty_basis_replay_authorization_review_package_v1.zip",
+        "data/derived/low_z_pantheon_w_time_uncertainty_basis_replay_authorization_review_package_v1.zip.sha256",
+        "data/derived/low_z_pantheon_w_time_uncertainty_basis_replay_authorization_review_package_v1_manifest.csv",
+        "data/derived/low_z_pantheon_w_time_uncertainty_basis_replay_authorization_review_package_v1_summary.csv",
+        "data/derived/low_z_pantheon_w_time_uncertainty_basis_replay_authorization_review_response_v1.csv",
+        "data/derived/low_z_pantheon_w_time_uncertainty_basis_replay_authorization_review_response_v1_summary.csv",
+        "data/derived/low_z_pantheon_w_time_uncertainty_basis_replay_authorization_review_completed_summary_v1.csv",
+        "data/derived/low_z_pantheon_w_time_uncertainty_basis_replay_authorization_validation_log_v1.txt",
+        "docs/low_z_pantheon_w_time_uncertainty_basis_replay_authorization_review_notes_v1.md",
+        "scripts/build_low_z_pantheon_w_time_uncertainty_basis_replay_authorization_review_template_v1.py",
+        "scripts/validate_low_z_pantheon_w_time_uncertainty_basis_replay_authorization_review_template_v1.py",
+        "scripts/build_low_z_pantheon_w_time_uncertainty_basis_replay_authorization_review_package_v1.py",
+        "scripts/validate_low_z_pantheon_w_time_uncertainty_basis_replay_authorization_review_package_v1.py",
+        "scripts/validate_low_z_pantheon_w_time_uncertainty_basis_replay_authorization_review_response_v1.py",
+        "scripts/import_low_z_pantheon_w_time_uncertainty_basis_replay_authorization_review_response_v1.py",
+        "docs/low_z_pantheon_w_time_uncertainty_basis_replay_run_template_v1.md",
+        "data/source_manifest/low_z_pantheon_w_time_uncertainty_basis_replay_run_template_v1.csv",
+        "data/derived/low_z_pantheon_w_time_uncertainty_basis_authorized_replay_v1_grid.csv",
+        "data/derived/low_z_pantheon_w_time_uncertainty_basis_authorized_replay_v1_summary.csv",
+        "scripts/run_low_z_pantheon_w_time_uncertainty_basis_authorized_replay_v1.py",
+        "scripts/validate_low_z_pantheon_w_time_uncertainty_basis_authorized_replay_v1.py",
+        "docs/low_z_pantheon_w_time_uncertainty_basis_gate_status_ledger_v1.md",
+        "data/derived/low_z_pantheon_w_time_uncertainty_basis_gate_status_ledger_v1.csv",
+        "data/derived/low_z_pantheon_w_time_uncertainty_basis_gate_status_ledger_v1_summary.csv",
+        "scripts/build_low_z_pantheon_w_time_uncertainty_basis_gate_status_ledger_v1.py",
+        "scripts/validate_low_z_pantheon_w_time_uncertainty_basis_gate_status_ledger_v1.py",
+        "docs/low_z_pantheon_observer_time_combined_fast_screen_v1.md",
+        "data/source_manifest/low_z_pantheon_observer_time_combined_fast_screen_v1.csv",
+        "data/derived/low_z_pantheon_observer_time_combined_fast_screen_v1_grid.csv",
+        "data/derived/low_z_pantheon_observer_time_combined_fast_screen_v1_family_summary.csv",
+        "data/derived/low_z_pantheon_observer_time_combined_fast_screen_v1_summary.csv",
+        "scripts/run_low_z_pantheon_observer_time_combined_fast_screen_v1.py",
+        "scripts/validate_low_z_pantheon_observer_time_combined_fast_screen_v1.py",
+        "docs/low_z_pantheon_time_readout_clock_rate_phase_candidate_v1.md",
+        "data/source_manifest/low_z_pantheon_time_readout_clock_rate_phase_candidate_policy_v1.csv",
+        "data/derived/low_z_pantheon_time_readout_clock_rate_phase_candidate_v1.csv",
+        "data/derived/low_z_pantheon_time_readout_clock_rate_phase_candidate_v1_summary.csv",
+        "scripts/build_low_z_pantheon_time_readout_clock_rate_phase_candidate_v1.py",
+        "scripts/validate_low_z_pantheon_time_readout_clock_rate_phase_candidate_v1.py",
+        "docs/low_z_pantheon_clock_rate_phase_fast_screen_v1.md",
+        "data/source_manifest/low_z_pantheon_clock_rate_phase_fast_screen_v1.csv",
+        "data/derived/low_z_pantheon_clock_rate_phase_fast_screen_v1_grid.csv",
+        "data/derived/low_z_pantheon_clock_rate_phase_fast_screen_v1_family_summary.csv",
+        "data/derived/low_z_pantheon_clock_rate_phase_fast_screen_v1_summary.csv",
+        "scripts/run_low_z_pantheon_clock_rate_phase_fast_screen_v1.py",
+        "scripts/validate_low_z_pantheon_clock_rate_phase_fast_screen_v1.py",
+        "docs/low_z_pantheon_clock_rate_phase_rank_control_audit_v1.md",
+        "data/source_manifest/low_z_pantheon_clock_rate_phase_rank_control_audit_v1.csv",
+        "data/derived/low_z_pantheon_clock_rate_phase_rank_control_audit_v1.csv",
+        "data/derived/low_z_pantheon_clock_rate_phase_rank_control_audit_v1_summary.csv",
+        "scripts/build_low_z_pantheon_clock_rate_phase_rank_control_audit_v1.py",
+        "scripts/validate_low_z_pantheon_clock_rate_phase_rank_control_audit_v1.py",
+        "docs/pantheon_time_readout_clock_rate_phase_cc_support_candidate_v1.md",
+        "data/source_manifest/pantheon_time_readout_clock_rate_phase_cc_support_candidate_policy_v1.csv",
+        "data/derived/pantheon_time_readout_clock_rate_phase_cc_support_candidate_v1.csv",
+        "data/derived/pantheon_time_readout_clock_rate_phase_cc_support_candidate_v1_summary.csv",
+        "scripts/build_pantheon_time_readout_clock_rate_phase_cc_support_candidate_v1.py",
+        "scripts/validate_pantheon_time_readout_clock_rate_phase_cc_support_candidate_v1.py",
+        "docs/pantheon_clock_rate_phase_cc_support_fast_screen_v1.md",
+        "data/source_manifest/pantheon_clock_rate_phase_cc_support_fast_screen_v1.csv",
+        "data/derived/pantheon_clock_rate_phase_cc_support_fast_screen_v1_grid.csv",
+        "data/derived/pantheon_clock_rate_phase_cc_support_fast_screen_v1_family_summary.csv",
+        "data/derived/pantheon_clock_rate_phase_cc_support_fast_screen_v1_summary.csv",
+        "scripts/run_pantheon_clock_rate_phase_cc_support_fast_screen_v1.py",
+        "scripts/validate_pantheon_clock_rate_phase_cc_support_fast_screen_v1.py",
+        "docs/pantheon_clock_slope_route_gate_v1.md",
+        "data/source_manifest/pantheon_clock_slope_route_gate_policy_v1.csv",
+        "data/derived/pantheon_clock_slope_route_gate_v1.csv",
+        "scripts/build_pantheon_clock_slope_route_gate_v1.py",
+        "scripts/validate_pantheon_clock_slope_route_gate_v1.py",
+        "docs/pantheon_clock_slope_route_replay_authorization_review_v1.md",
+        "data/source_manifest/pantheon_clock_slope_route_replay_authorization_review_policy_v1.csv",
+        "data/derived/pantheon_clock_slope_route_replay_authorization_review_response_template_v1.csv",
+        "data/derived/pantheon_clock_slope_route_replay_authorization_review_template_v1_summary.csv",
+        "data/derived/pantheon_clock_slope_route_replay_authorization_review_package_v1.zip",
+        "data/derived/pantheon_clock_slope_route_replay_authorization_review_package_v1.zip.sha256",
+        "data/derived/pantheon_clock_slope_route_replay_authorization_review_package_v1_manifest.csv",
+        "data/derived/pantheon_clock_slope_route_replay_authorization_review_package_v1_summary.csv",
+        "scripts/build_pantheon_clock_slope_route_replay_authorization_review_template_v1.py",
+        "scripts/validate_pantheon_clock_slope_route_replay_authorization_review_template_v1.py",
+        "scripts/build_pantheon_clock_slope_route_replay_authorization_review_package_v1.py",
+        "scripts/validate_pantheon_clock_slope_route_replay_authorization_review_package_v1.py",
+        "docs/sdss_bao_time_readout_observable_route_audit_v1.md",
+        "data/source_manifest/sdss_bao_time_readout_observable_route_audit_policy_v1.csv",
+        "data/derived/sdss_bao_time_readout_observable_route_audit_v1.csv",
+        "data/derived/sdss_bao_time_readout_observable_route_audit_v1_summary.csv",
+        "scripts/build_sdss_bao_time_readout_observable_route_audit_v1.py",
+        "scripts/validate_sdss_bao_time_readout_observable_route_audit_v1.py",
+        "docs/paper10_joint_cc_bao_time_route_consistency_audit_v1.md",
+        "data/source_manifest/paper10_joint_cc_bao_time_route_consistency_audit_policy_v1.csv",
+        "data/derived/paper10_joint_cc_bao_time_route_consistency_audit_v1.csv",
+        "data/derived/paper10_joint_cc_bao_time_route_consistency_audit_v1_summary.csv",
+        "scripts/build_paper10_joint_cc_bao_time_route_consistency_audit_v1.py",
+        "scripts/validate_paper10_joint_cc_bao_time_route_consistency_audit_v1.py",
+        "docs/paper10_time_readout_route_synthesis_gate_v1.md",
+        "data/source_manifest/paper10_time_readout_route_synthesis_gate_v1.csv",
+        "data/derived/paper10_time_readout_route_synthesis_gate_v1.csv",
+        "scripts/build_paper10_time_readout_route_synthesis_gate_v1.py",
+        "scripts/validate_paper10_time_readout_route_synthesis_gate_v1.py",
+        "docs/paper10_time_readout_level_slope_route_split_ledger_v1.md",
+        "data/source_manifest/paper10_time_readout_level_slope_route_split_ledger_policy_v1.csv",
+        "data/derived/paper10_time_readout_level_slope_route_split_ledger_v1.csv",
+        "data/derived/paper10_time_readout_level_slope_route_split_ledger_v1_summary.csv",
+        "scripts/build_paper10_time_readout_level_slope_route_split_ledger_v1.py",
+        "scripts/validate_paper10_time_readout_level_slope_route_split_ledger_v1.py",
+        "docs/paper10_time_level_route_nuisance_interface_freeze_plan_v1.md",
+        "data/source_manifest/paper10_time_level_route_nuisance_interface_freeze_plan_v1.csv",
+        "data/derived/paper10_time_level_route_nuisance_interface_freeze_plan_v1_summary.csv",
+        "scripts/validate_paper10_time_level_route_nuisance_interface_freeze_plan_v1.py",
+        "docs/paper10_bao_rd_cancelled_time_level_difference_audit_v1.md",
+        "data/source_manifest/paper10_bao_rd_cancelled_time_level_difference_audit_policy_v1.csv",
+        "data/derived/paper10_bao_rd_cancelled_time_level_difference_audit_v1.csv",
+        "data/derived/paper10_bao_rd_cancelled_time_level_difference_audit_v1_summary.csv",
+        "scripts/build_paper10_bao_rd_cancelled_time_level_difference_audit_v1.py",
+        "scripts/validate_paper10_bao_rd_cancelled_time_level_difference_audit_v1.py",
+        "docs/paper10_time_level_rd_policy_selection_gate_v1.md",
+        "data/source_manifest/paper10_time_level_rd_policy_selection_gate_v1.csv",
+        "data/derived/paper10_time_level_rd_policy_selection_gate_v1_summary.csv",
+        "scripts/validate_paper10_time_level_rd_policy_selection_gate_v1.py",
+        "docs/paper10_external_rd_prior_freeze_protocol_v1.md",
+        "data/source_manifest/paper10_external_rd_prior_freeze_protocol_v1.csv",
+        "data/derived/paper10_external_rd_prior_freeze_response_template_v1.csv",
+        "data/derived/paper10_external_rd_prior_freeze_protocol_v1_summary.csv",
+        "scripts/validate_paper10_external_rd_prior_freeze_protocol_v1.py",
+        "docs/paper10_external_rd_prior_freeze_response_v1.md",
+        "data/derived/paper10_external_rd_prior_freeze_response_v1.csv",
+        "data/derived/paper10_external_rd_prior_freeze_response_v1_summary.csv",
+        "scripts/validate_paper10_external_rd_prior_freeze_response_v1.py",
+        "docs/paper10_bao_rd_marginalization_protocol_v1.md",
+        "data/source_manifest/paper10_bao_rd_marginalization_protocol_v1.csv",
+        "data/derived/paper10_bao_rd_marginalization_protocol_v1_summary.csv",
+        "scripts/validate_paper10_bao_rd_marginalization_protocol_v1.py",
+        "docs/paper10_time_level_endpoint_control_suite_protocol_v1.md",
+        "data/source_manifest/paper10_time_level_endpoint_control_suite_protocol_v1.csv",
+        "data/derived/paper10_time_level_endpoint_control_suite_protocol_v1_summary.csv",
+        "scripts/validate_paper10_time_level_endpoint_control_suite_protocol_v1.py",
+        "docs/paper10_time_level_bao_support_expansion_manifest_v1.md",
+        "data/source_manifest/paper10_time_level_bao_support_expansion_manifest_v1.csv",
+        "data/derived/paper10_time_level_bao_support_expansion_manifest_v1_summary.csv",
+        "scripts/validate_paper10_time_level_bao_support_expansion_manifest_v1.py",
+        "docs/paper10_desi_dr2_bao_source_inventory_v1.md",
+        "data/source_manifest/paper10_desi_dr2_bao_source_inventory_policy_v1.csv",
+        "data/raw/desi_dr2_bao/desi_gaussian_bao_ALL_GCcomb_mean.txt",
+        "data/raw/desi_dr2_bao/desi_gaussian_bao_ALL_GCcomb_cov.txt",
+        "data/derived/paper10_desi_dr2_bao_source_inventory_v1.csv",
+        "data/derived/paper10_desi_dr2_bao_source_inventory_v1_summary.csv",
+        "scripts/build_paper10_desi_dr2_bao_source_inventory_v1.py",
+        "scripts/validate_paper10_desi_dr2_bao_source_inventory_v1.py",
+        "docs/paper10_desi_dr2_radial_bao_time_interface_v1.md",
+        "data/source_manifest/paper10_desi_dr2_radial_bao_time_interface_policy_v1.csv",
+        "data/derived/paper10_desi_dr2_radial_bao_time_interface_v1.csv",
+        "data/derived/paper10_desi_dr2_radial_bao_time_interface_covariance_v1.csv",
+        "data/derived/paper10_desi_dr2_radial_bao_time_interface_v1_summary.csv",
+        "scripts/build_paper10_desi_dr2_radial_bao_time_interface_v1.py",
+        "scripts/validate_paper10_desi_dr2_radial_bao_time_interface_v1.py",
+        "docs/paper10_desi_dr2_radial_bao_cc_match_v1.md",
+        "data/source_manifest/paper10_desi_dr2_radial_bao_cc_match_policy_v1.csv",
+        "data/derived/paper10_desi_dr2_radial_bao_cc_match_v1.csv",
+        "data/derived/paper10_desi_dr2_radial_bao_cc_match_v1_summary.csv",
+        "scripts/build_paper10_desi_dr2_radial_bao_cc_match_v1.py",
+        "scripts/validate_paper10_desi_dr2_radial_bao_cc_match_v1.py",
+        "docs/paper10_desi_dr2_high_z_bao_policy_v1.md",
+        "data/source_manifest/paper10_desi_dr2_high_z_bao_policy_v1.csv",
+        "data/derived/paper10_desi_dr2_high_z_bao_policy_v1_summary.csv",
+        "scripts/validate_paper10_desi_dr2_high_z_bao_policy_v1.py",
+        "docs/paper10_desi_time_level_control_seed_manifest_v1.md",
+        "data/source_manifest/paper10_desi_time_level_control_seed_manifest_v1.csv",
+        "data/derived/paper10_desi_time_level_control_seed_manifest_v1_summary.csv",
+        "scripts/validate_paper10_desi_time_level_control_seed_manifest_v1.py",
+        "docs/paper10_time_level_route_external_rd_readiness_gate_v1.md",
+        "data/source_manifest/paper10_time_level_route_external_rd_readiness_gate_v1.csv",
+        "data/derived/paper10_time_level_route_external_rd_readiness_gate_v1.csv",
+        "data/derived/paper10_time_level_route_external_rd_readiness_gate_v1_summary.csv",
+        "scripts/build_paper10_time_level_route_external_rd_readiness_gate_v1.py",
+        "scripts/validate_paper10_time_level_route_external_rd_readiness_gate_v1.py",
+        "docs/paper10_desi_time_level_endpoint_authorization_review_v1.md",
+        "data/source_manifest/paper10_desi_time_level_endpoint_authorization_review_policy_v1.csv",
+        "data/derived/paper10_desi_time_level_endpoint_authorization_review_response_template_v1.csv",
+        "data/derived/paper10_desi_time_level_endpoint_authorization_review_template_v1_summary.csv",
+        "data/derived/paper10_desi_time_level_endpoint_authorization_review_package_v1.zip",
+        "data/derived/paper10_desi_time_level_endpoint_authorization_review_package_v1.zip.sha256",
+        "data/derived/paper10_desi_time_level_endpoint_authorization_review_package_v1_manifest.csv",
+        "data/derived/paper10_desi_time_level_endpoint_authorization_review_package_v1_summary.csv",
+        "scripts/build_paper10_desi_time_level_endpoint_authorization_review_template_v1.py",
+        "scripts/validate_paper10_desi_time_level_endpoint_authorization_review_template_v1.py",
+        "scripts/build_paper10_desi_time_level_endpoint_authorization_review_package_v1.py",
+        "scripts/validate_paper10_desi_time_level_endpoint_authorization_review_package_v1.py",
+        "scripts/validate_paper10_desi_time_level_endpoint_authorization_review_response_v1.py",
+        "scripts/import_paper10_desi_time_level_endpoint_authorization_review_response_v1.py",
+        "docs/paper10_desi_time_level_endpoint_authorization_review_response_v1.md",
+        "data/derived/paper10_desi_time_level_endpoint_authorization_review_response_v1.csv",
+        "data/derived/paper10_desi_time_level_endpoint_authorization_review_response_v1_summary.csv",
+        "docs/paper10_desi_time_level_endpoint_replay_run_template_v1.md",
+        "data/source_manifest/paper10_desi_time_level_endpoint_replay_run_template_v1.csv",
+        "scripts/validate_paper10_desi_time_level_endpoint_replay_run_template_v1.py",
+        "docs/paper10_desi_time_level_endpoint_authorized_replay_v1.md",
+        "data/derived/paper10_desi_time_level_endpoint_authorized_replay_v1_grid.csv",
+        "data/derived/paper10_desi_time_level_endpoint_authorized_replay_v1_summary.csv",
+        "scripts/run_paper10_desi_time_level_endpoint_authorized_replay_v1.py",
+        "scripts/validate_paper10_desi_time_level_endpoint_authorized_replay_v1.py",
+        "docs/paper10_desi_time_level_negative_control_diagnostic_v1.md",
+        "data/derived/paper10_desi_time_level_negative_control_diagnostic_v1_rows.csv",
+        "data/derived/paper10_desi_time_level_negative_control_diagnostic_v1_branches.csv",
+        "data/derived/paper10_desi_time_level_negative_control_diagnostic_v1_summary.csv",
+        "paper10_submission_source/figures/fig_desi_time_level_negative_control_diagnostic.pdf",
+        "scripts/build_paper10_desi_time_level_negative_control_diagnostic_v1.py",
+        "scripts/validate_paper10_desi_time_level_negative_control_diagnostic_v1.py",
+        "docs/paper10_desi_time_level_negative_control_response_gate_v1.md",
+        "data/source_manifest/paper10_desi_time_level_negative_control_response_gate_v1.csv",
+        "data/derived/paper10_desi_time_level_negative_control_response_gate_v1.csv",
+        "data/derived/paper10_desi_time_level_negative_control_response_gate_v1_summary.csv",
+        "scripts/build_paper10_desi_time_level_negative_control_response_gate_v1.py",
+        "scripts/validate_paper10_desi_time_level_negative_control_response_gate_v1.py",
+        "docs/paper10_desi_time_readout_expansion_manifest_v1.md",
+        "data/source_manifest/paper10_desi_time_readout_expansion_manifest_v1.csv",
+        "data/derived/paper10_desi_time_readout_expansion_manifest_v1_summary.csv",
+        "scripts/validate_paper10_desi_time_readout_expansion_manifest_v1.py",
+        "docs/paper10_desi_high_z_independent_clock_support_audit_v1.md",
+        "data/source_manifest/paper10_desi_high_z_independent_clock_support_audit_policy_v1.csv",
+        "data/derived/paper10_desi_high_z_independent_clock_support_audit_v1.csv",
+        "data/derived/paper10_desi_high_z_independent_clock_support_audit_v1_summary.csv",
+        "scripts/build_paper10_desi_high_z_independent_clock_support_audit_v1.py",
+        "scripts/validate_paper10_desi_high_z_independent_clock_support_audit_v1.py",
+        "docs/paper10_desi_time_readout_shape_observable_gate_v1.md",
+        "data/source_manifest/paper10_desi_time_readout_shape_observable_gate_policy_v1.csv",
+        "data/derived/paper10_desi_time_readout_shape_observable_gate_v1.csv",
+        "data/derived/paper10_desi_time_readout_shape_observable_gate_v1_summary.csv",
+        "scripts/build_paper10_desi_time_readout_shape_observable_gate_v1.py",
+        "scripts/validate_paper10_desi_time_readout_shape_observable_gate_v1.py",
+        "docs/paper10_desi_time_readout_shape_projection_induction_v1.md",
+        "data/source_manifest/paper10_desi_time_readout_shape_projection_induction_policy_v1.csv",
+        "data/derived/paper10_desi_time_readout_shape_projection_induction_v1.csv",
+        "data/derived/paper10_desi_time_readout_shape_projection_induction_v1_summary.csv",
+        "scripts/build_paper10_desi_time_readout_shape_projection_induction_v1.py",
+        "scripts/validate_paper10_desi_time_readout_shape_projection_induction_v1.py",
+        "docs/paper10_desi_ordering_control_suite_v1.md",
+        "data/source_manifest/paper10_desi_ordering_control_suite_policy_v1.csv",
+        "data/derived/paper10_desi_ordering_control_suite_v1.csv",
+        "data/derived/paper10_desi_ordering_control_suite_v1_summary.csv",
+        "scripts/build_paper10_desi_ordering_control_suite_v1.py",
+        "scripts/validate_paper10_desi_ordering_control_suite_v1.py",
+        "docs/paper10_desi_cc_window_stress_binding_v1.md",
+        "data/source_manifest/paper10_desi_cc_window_stress_binding_policy_v1.csv",
+        "data/derived/paper10_desi_cc_window_stress_binding_v1.csv",
+        "data/derived/paper10_desi_cc_window_stress_binding_v1_summary.csv",
+        "scripts/build_paper10_desi_cc_window_stress_binding_v1.py",
+        "scripts/validate_paper10_desi_cc_window_stress_binding_v1.py",
+        "docs/paper10_desi_shape_bound_control_vectors_v1.md",
+        "data/source_manifest/paper10_desi_shape_bound_control_vectors_policy_v1.csv",
+        "data/derived/paper10_desi_shape_bound_control_vectors_v1.csv",
+        "data/derived/paper10_desi_shape_bound_control_vectors_v1_summary.csv",
+        "scripts/build_paper10_desi_shape_bound_control_vectors_v1.py",
+        "scripts/validate_paper10_desi_shape_bound_control_vectors_v1.py",
+        "docs/paper10_desi_multi_clock_support_per_bao_row_audit_v1.md",
+        "data/source_manifest/paper10_desi_multi_clock_support_per_bao_row_audit_policy_v1.csv",
+        "data/derived/paper10_desi_multi_clock_support_per_bao_row_audit_v1.csv",
+        "data/derived/paper10_desi_multi_clock_support_per_bao_row_audit_v1_summary.csv",
+        "scripts/build_paper10_desi_multi_clock_support_per_bao_row_audit_v1.py",
+        "scripts/validate_paper10_desi_multi_clock_support_per_bao_row_audit_v1.py",
+        "docs/paper10_desi_time_readout_shape_independent_review_v1.md",
+        "data/source_manifest/paper10_desi_time_readout_shape_independent_review_policy_v1.csv",
+        "data/derived/paper10_desi_time_readout_shape_independent_review_response_template_v1.csv",
+        "data/derived/paper10_desi_time_readout_shape_independent_review_package_v1.zip",
+        "data/derived/paper10_desi_time_readout_shape_independent_review_package_v1.zip.sha256",
+        "data/derived/paper10_desi_time_readout_shape_independent_review_package_v1_manifest.csv",
+        "data/derived/paper10_desi_time_readout_shape_independent_review_package_v1_summary.csv",
+        "scripts/build_paper10_desi_time_readout_shape_independent_review_package_v1.py",
+        "scripts/validate_paper10_desi_time_readout_shape_independent_review_package_v1.py",
+        "scripts/validate_paper10_desi_time_readout_shape_independent_review_response_v1.py",
+        "scripts/import_paper10_desi_time_readout_shape_independent_review_response_v1.py",
+        "docs/paper10_desi_shape_route_replay_authorization_review_v1.md",
+        "data/source_manifest/paper10_desi_shape_route_replay_authorization_review_policy_v1.csv",
+        "data/derived/paper10_desi_shape_route_replay_authorization_review_response_template_v1.csv",
+        "data/derived/paper10_desi_shape_route_replay_authorization_review_package_v1.zip",
+        "data/derived/paper10_desi_shape_route_replay_authorization_review_package_v1.zip.sha256",
+        "data/derived/paper10_desi_shape_route_replay_authorization_review_package_v1_manifest.csv",
+        "data/derived/paper10_desi_shape_route_replay_authorization_review_package_v1_summary.csv",
+        "data/derived/paper10_desi_shape_route_replay_authorization_review_response_v1.csv",
+        "data/derived/paper10_desi_shape_route_replay_authorization_review_response_v1_summary.csv",
+        "data/derived/paper10_desi_shape_route_replay_authorization_review_completed_summary_v1.csv",
+        "data/derived/paper10_desi_shape_route_replay_authorization_validation_log_v1.txt",
+        "docs/paper10_desi_shape_route_replay_authorization_review_notes_v1.md",
+        "scripts/build_paper10_desi_shape_route_replay_authorization_review_package_v1.py",
+        "scripts/validate_paper10_desi_shape_route_replay_authorization_review_package_v1.py",
+        "scripts/validate_paper10_desi_shape_route_replay_authorization_review_response_v1.py",
+        "scripts/import_paper10_desi_shape_route_replay_authorization_review_response_v1.py",
+        "docs/paper10_desi_shape_route_replay_run_template_v1.md",
+        "data/source_manifest/paper10_desi_shape_route_replay_run_template_v1.csv",
+        "scripts/validate_paper10_desi_shape_route_replay_run_template_v1.py",
+        "data/derived/paper10_desi_shape_route_authorized_replay_v1_grid.csv",
+        "data/derived/paper10_desi_shape_route_authorized_replay_v1_summary.csv",
+        "scripts/run_paper10_desi_shape_route_authorized_replay_v1.py",
+        "scripts/validate_paper10_desi_shape_route_authorized_replay_v1.py",
+        "docs/paper10_desi_shape_route_robustness_stress_v1.md",
+        "data/source_manifest/paper10_desi_shape_route_robustness_stress_policy_v1.csv",
+        "data/derived/paper10_desi_shape_route_robustness_stress_v1.csv",
+        "data/derived/paper10_desi_shape_route_robustness_stress_v1_summary.csv",
+        "paper10_submission_source/figures/fig_desi_shape_route_robustness_stress.pdf",
+        "scripts/build_paper10_desi_shape_route_robustness_stress_v1.py",
+        "scripts/validate_paper10_desi_shape_route_robustness_stress_v1.py",
+        "scripts/build_paper10_desi_shape_route_robustness_figure_v1.py",
+        "scripts/validate_paper10_desi_shape_route_robustness_figure_v1.py",
+        "docs/paper10_desi_shape_row_sensitivity_source_audit_v1.md",
+        "data/source_manifest/paper10_desi_shape_row_sensitivity_source_audit_policy_v1.csv",
+        "data/derived/paper10_desi_shape_row_sensitivity_source_audit_v1.csv",
+        "data/derived/paper10_desi_shape_row_sensitivity_source_audit_v1_summary.csv",
+        "scripts/build_paper10_desi_shape_row_sensitivity_source_audit_v1.py",
+        "scripts/validate_paper10_desi_shape_row_sensitivity_source_audit_v1.py",
+        "docs/paper10_desi_shape_core_source_acquisition_manifest_v1.md",
+        "data/source_manifest/paper10_desi_shape_core_source_acquisition_manifest_policy_v1.csv",
+        "data/derived/paper10_desi_shape_core_source_acquisition_manifest_v1.csv",
+        "data/derived/paper10_desi_shape_core_source_acquisition_manifest_v1_summary.csv",
+        "scripts/build_paper10_desi_shape_core_source_acquisition_manifest_v1.py",
+        "scripts/validate_paper10_desi_shape_core_source_acquisition_manifest_v1.py",
+        "docs/paper10_desi_shape_core_source_support_scan_v1.md",
+        "data/source_manifest/paper10_desi_shape_core_source_support_scan_policy_v1.csv",
+        "data/derived/paper10_desi_shape_core_source_support_scan_v1.csv",
+        "data/derived/paper10_desi_shape_core_source_support_scan_v1_summary.csv",
+        "scripts/build_paper10_desi_shape_core_source_support_scan_v1.py",
+        "scripts/validate_paper10_desi_shape_core_source_support_scan_v1.py",
+        "docs/paper10_desi_shape_row1_confirmatory_source_attachment_v1.md",
+        "data/source_manifest/paper10_desi_shape_row1_confirmatory_source_attachment_policy_v1.csv",
+        "data/derived/paper10_desi_shape_row1_confirmatory_source_attachment_v1.csv",
+        "data/derived/paper10_desi_shape_row1_confirmatory_source_attachment_v1_summary.csv",
+        "scripts/build_paper10_desi_shape_row1_confirmatory_source_attachment_v1.py",
+        "scripts/validate_paper10_desi_shape_row1_confirmatory_source_attachment_v1.py",
+        "docs/paper10_desi_shape_row1_confirmatory_source_review_v1.md",
+        "data/source_manifest/paper10_desi_shape_row1_confirmatory_source_review_policy_v1.csv",
+        "data/derived/paper10_desi_shape_row1_confirmatory_source_review_response_template_v1.csv",
+        "data/derived/paper10_desi_shape_row1_confirmatory_source_review_package_v1.zip",
+        "data/derived/paper10_desi_shape_row1_confirmatory_source_review_package_v1.zip.sha256",
+        "data/derived/paper10_desi_shape_row1_confirmatory_source_review_package_v1_manifest.csv",
+        "data/derived/paper10_desi_shape_row1_confirmatory_source_review_package_v1_summary.csv",
+        "scripts/build_paper10_desi_shape_row1_confirmatory_source_review_package_v1.py",
+        "scripts/validate_paper10_desi_shape_row1_confirmatory_source_review_package_v1.py",
+        "scripts/validate_paper10_desi_shape_row1_confirmatory_source_review_response_v1.py",
+        "scripts/import_paper10_desi_shape_row1_confirmatory_source_review_response_v1.py",
+        "data/derived/paper10_desi_shape_row1_confirmatory_source_review_response_v1.csv",
+        "data/derived/paper10_desi_shape_row1_confirmatory_source_review_response_v1_summary.csv",
+        "data/derived/paper10_desi_shape_row1_confirmatory_source_review_completed_summary_v1.csv",
+        "data/derived/paper10_desi_shape_row1_confirmatory_source_review_validation_log_v1.txt",
+        "docs/paper10_desi_shape_row1_confirmatory_source_review_notes_v1.md",
+        "docs/paper10_desi_shape_row2_moresco2012_source_attachment_v1.md",
+        "data/source_manifest/paper10_desi_shape_row2_moresco2012_source_attachment_policy_v1.csv",
+        "data/derived/paper10_desi_shape_row2_moresco2012_source_attachment_v1.csv",
+        "data/derived/paper10_desi_shape_row2_moresco2012_source_attachment_v1_summary.csv",
+        "scripts/build_paper10_desi_shape_row2_moresco2012_source_attachment_v1.py",
+        "scripts/validate_paper10_desi_shape_row2_moresco2012_source_attachment_v1.py",
+        "docs/paper10_desi_shape_row2_moresco2012_source_attachment_review_v1.md",
+        "data/source_manifest/paper10_desi_shape_row2_moresco2012_source_attachment_review_policy_v1.csv",
+        "data/derived/paper10_desi_shape_row2_moresco2012_source_attachment_review_response_template_v1.csv",
+        "data/derived/paper10_desi_shape_row2_moresco2012_source_attachment_review_package_v1.zip",
+        "data/derived/paper10_desi_shape_row2_moresco2012_source_attachment_review_package_v1.zip.sha256",
+        "data/derived/paper10_desi_shape_row2_moresco2012_source_attachment_review_package_v1_manifest.csv",
+        "data/derived/paper10_desi_shape_row2_moresco2012_source_attachment_review_package_v1_summary.csv",
+        "scripts/build_paper10_desi_shape_row2_moresco2012_source_attachment_review_package_v1.py",
+        "scripts/validate_paper10_desi_shape_row2_moresco2012_source_attachment_review_package_v1.py",
+        "scripts/validate_paper10_desi_shape_row2_moresco2012_source_attachment_review_response_v1.py",
+        "scripts/import_paper10_desi_shape_row2_moresco2012_source_attachment_review_response_v1.py",
+        "data/derived/paper10_desi_shape_row2_moresco2012_source_attachment_review_response_v1.csv",
+        "data/derived/paper10_desi_shape_row2_moresco2012_source_attachment_review_response_v1_summary.csv",
+        "docs/paper10_desi_shape_row2_moresco2012_source_attachment_review_notes_v1.md",
+        "data/derived/paper10_desi_shape_row2_moresco2012_source_attachment_review_validation_log_v1.txt",
+        "docs/paper10_desi_shape_row2_promotion_readiness_gate_v1.md",
+        "data/source_manifest/paper10_desi_shape_row2_promotion_readiness_gate_policy_v1.csv",
+        "data/derived/paper10_desi_shape_row2_promotion_readiness_gate_v1.csv",
+        "data/derived/paper10_desi_shape_row2_promotion_readiness_gate_v1_summary.csv",
+        "scripts/build_paper10_desi_shape_row2_promotion_readiness_gate_v1.py",
+        "scripts/validate_paper10_desi_shape_row2_promotion_readiness_gate_v1.py",
+        "docs/paper10_desi_shape_row2_endpoint_pair_independence_scout_v1.md",
+        "data/source_manifest/paper10_desi_shape_row2_endpoint_pair_independence_scout_policy_v1.csv",
+        "data/derived/paper10_desi_shape_row2_endpoint_pair_independence_scout_v1.csv",
+        "data/derived/paper10_desi_shape_row2_endpoint_pair_independence_scout_v1_summary.csv",
+        "scripts/build_paper10_desi_shape_row2_endpoint_pair_independence_scout_v1.py",
+        "scripts/validate_paper10_desi_shape_row2_endpoint_pair_independence_scout_v1.py",
+        "docs/paper10_desi_shape_row2_left_endpoint_nearmiss_freeze_v1.md",
+        "data/source_manifest/paper10_desi_shape_row2_left_endpoint_nearmiss_freeze_policy_v1.csv",
+        "data/derived/paper10_desi_shape_row2_left_endpoint_nearmiss_freeze_v1.csv",
+        "data/derived/paper10_desi_shape_row2_left_endpoint_nearmiss_freeze_v1_summary.csv",
+        "scripts/build_paper10_desi_shape_row2_left_endpoint_nearmiss_freeze_v1.py",
+        "scripts/validate_paper10_desi_shape_row2_left_endpoint_nearmiss_freeze_v1.py",
+        "docs/paper10_desi_shape_row2_left_endpoint_window_review_v1.md",
+        "data/source_manifest/paper10_desi_shape_row2_left_endpoint_window_review_policy_v1.csv",
+        "data/derived/paper10_desi_shape_row2_left_endpoint_window_review_response_template_v1.csv",
+        "data/derived/paper10_desi_shape_row2_left_endpoint_window_review_package_v1.zip",
+        "data/derived/paper10_desi_shape_row2_left_endpoint_window_review_package_v1.zip.sha256",
+        "data/derived/paper10_desi_shape_row2_left_endpoint_window_review_package_v1_manifest.csv",
+        "data/derived/paper10_desi_shape_row2_left_endpoint_window_review_package_v1_summary.csv",
+        "scripts/build_paper10_desi_shape_row2_left_endpoint_window_review_package_v1.py",
+        "scripts/validate_paper10_desi_shape_row2_left_endpoint_window_review_package_v1.py",
+        "scripts/validate_paper10_desi_shape_row2_left_endpoint_window_review_response_v1.py",
+        "scripts/import_paper10_desi_shape_row2_left_endpoint_window_review_response_v1.py",
+        "data/derived/paper10_desi_shape_row2_left_endpoint_window_review_response_v1.csv",
+        "data/derived/paper10_desi_shape_row2_left_endpoint_window_review_response_v1_summary.csv",
+        "docs/paper10_desi_shape_row2_left_endpoint_window_review_notes_v1.md",
+        "data/derived/paper10_desi_shape_row2_left_endpoint_window_review_validation_log_v1.txt",
+        "docs/paper10_desi_shape_row2_left_endpoint_window_decision_gate_v1.md",
+        "data/source_manifest/paper10_desi_shape_row2_left_endpoint_window_decision_gate_policy_v1.csv",
+        "data/derived/paper10_desi_shape_row2_left_endpoint_window_decision_gate_v1.csv",
+        "data/derived/paper10_desi_shape_row2_left_endpoint_window_decision_gate_v1_summary.csv",
+        "scripts/build_paper10_desi_shape_row2_left_endpoint_window_decision_gate_v1.py",
+        "scripts/validate_paper10_desi_shape_row2_left_endpoint_window_decision_gate_v1.py",
+        "docs/paper10_desi_shape_row2_post_window_review_source_plan_v1.md",
+        "data/source_manifest/paper10_desi_shape_row2_post_window_review_source_plan_policy_v1.csv",
+        "data/derived/paper10_desi_shape_row2_post_window_review_source_plan_v1.csv",
+        "data/derived/paper10_desi_shape_row2_post_window_review_source_plan_v1_summary.csv",
+        "scripts/build_paper10_desi_shape_row2_post_window_review_source_plan_v1.py",
+        "scripts/validate_paper10_desi_shape_row2_post_window_review_source_plan_v1.py",
+        "docs/paper10_desi_shape_row2_left_strict_support_scout_v1.md",
+        "data/source_manifest/paper10_desi_shape_row2_left_strict_support_scout_policy_v1.csv",
+        "data/derived/paper10_desi_shape_row2_left_strict_support_scout_v1.csv",
+        "data/derived/paper10_desi_shape_row2_left_strict_support_scout_v1_summary.csv",
+        "scripts/build_paper10_desi_shape_row2_left_strict_support_scout_v1.py",
+        "scripts/validate_paper10_desi_shape_row2_left_strict_support_scout_v1.py",
+        "docs/paper10_desi_shape_row2_source_native_shape_support_scout_v1.md",
+        "data/source_manifest/paper10_desi_shape_row2_source_native_shape_support_scout_policy_v1.csv",
+        "data/derived/paper10_desi_shape_row2_source_native_shape_support_scout_v1.csv",
+        "data/derived/paper10_desi_shape_row2_source_native_shape_support_scout_v1_summary.csv",
+        "scripts/build_paper10_desi_shape_row2_source_native_shape_support_scout_v1.py",
+        "scripts/validate_paper10_desi_shape_row2_source_native_shape_support_scout_v1.py",
+        "docs/paper10_desi_shape_row2_source_native_shape_support_review_v1.md",
+        "data/source_manifest/paper10_desi_shape_row2_source_native_shape_support_review_policy_v1.csv",
+        "data/derived/paper10_desi_shape_row2_source_native_shape_support_review_response_template_v1.csv",
+        "data/derived/paper10_desi_shape_row2_source_native_shape_support_review_package_v1.zip",
+        "data/derived/paper10_desi_shape_row2_source_native_shape_support_review_package_v1.zip.sha256",
+        "data/derived/paper10_desi_shape_row2_source_native_shape_support_review_package_v1_manifest.csv",
+        "data/derived/paper10_desi_shape_row2_source_native_shape_support_review_package_v1_summary.csv",
+        "scripts/build_paper10_desi_shape_row2_source_native_shape_support_review_package_v1.py",
+        "scripts/validate_paper10_desi_shape_row2_source_native_shape_support_review_package_v1.py",
+        "scripts/validate_paper10_desi_shape_row2_source_native_shape_support_review_response_v1.py",
+        "scripts/import_paper10_desi_shape_row2_source_native_shape_support_review_response_v1.py",
+        "data/derived/paper10_desi_shape_row2_source_native_shape_support_review_response_v1.csv",
+        "data/derived/paper10_desi_shape_row2_source_native_shape_support_review_response_v1_summary.csv",
+        "docs/paper10_desi_shape_row2_source_native_shape_support_review_notes_v1.md",
+        "data/derived/paper10_desi_shape_row2_source_native_shape_support_review_validation_log_v1.txt",
+        "docs/paper10_desi_shape_row2_gate_status_ledger_v1.md",
+        "data/source_manifest/paper10_desi_shape_row2_gate_status_ledger_policy_v1.csv",
+        "data/derived/paper10_desi_shape_row2_gate_status_ledger_v1.csv",
+        "data/derived/paper10_desi_shape_row2_gate_status_ledger_v1_summary.csv",
+        "scripts/build_paper10_desi_shape_row2_gate_status_ledger_v1.py",
+        "scripts/validate_paper10_desi_shape_row2_gate_status_ledger_v1.py",
+        "docs/paper10_desi_shape_row2_promotion_review_v1.md",
+        "data/source_manifest/paper10_desi_shape_row2_promotion_review_policy_v1.csv",
+        "data/derived/paper10_desi_shape_row2_promotion_review_response_template_v1.csv",
+        "data/derived/paper10_desi_shape_row2_promotion_review_package_v1.zip",
+        "data/derived/paper10_desi_shape_row2_promotion_review_package_v1.zip.sha256",
+        "data/derived/paper10_desi_shape_row2_promotion_review_package_v1_manifest.csv",
+        "data/derived/paper10_desi_shape_row2_promotion_review_package_v1_summary.csv",
+        "scripts/build_paper10_desi_shape_row2_promotion_review_package_v1.py",
+        "scripts/validate_paper10_desi_shape_row2_promotion_review_package_v1.py",
+        "scripts/validate_paper10_desi_shape_row2_promotion_review_response_v1.py",
+        "scripts/import_paper10_desi_shape_row2_promotion_review_response_v1.py",
+        "data/derived/paper10_desi_shape_row2_promotion_review_response_v1.csv",
+        "data/derived/paper10_desi_shape_row2_promotion_review_response_v1_summary.csv",
+        "docs/paper10_desi_shape_row2_promotion_review_notes_v1.md",
+        "data/derived/paper10_desi_shape_row2_promotion_review_validation_log_v1.txt",
+        "docs/paper10_desi_shape_row2_replay_authorization_review_v1.md",
+        "data/source_manifest/paper10_desi_shape_row2_replay_authorization_review_policy_v1.csv",
+        "data/derived/paper10_desi_shape_row2_replay_authorization_review_response_template_v1.csv",
+        "data/derived/paper10_desi_shape_row2_replay_authorization_review_package_v1.zip",
+        "data/derived/paper10_desi_shape_row2_replay_authorization_review_package_v1.zip.sha256",
+        "data/derived/paper10_desi_shape_row2_replay_authorization_review_package_v1_manifest.csv",
+        "data/derived/paper10_desi_shape_row2_replay_authorization_review_package_v1_summary.csv",
+        "scripts/build_paper10_desi_shape_row2_replay_authorization_review_package_v1.py",
+        "scripts/validate_paper10_desi_shape_row2_replay_authorization_review_package_v1.py",
+        "scripts/validate_paper10_desi_shape_row2_replay_authorization_review_response_v1.py",
+        "scripts/import_paper10_desi_shape_row2_replay_authorization_review_response_v1.py",
+        "data/derived/paper10_desi_shape_row2_replay_authorization_review_response_v1.csv",
+        "data/derived/paper10_desi_shape_row2_replay_authorization_review_response_v1_summary.csv",
+        "data/derived/paper10_desi_shape_row2_replay_authorization_review_completed_summary_v1.csv",
+        "data/derived/paper10_desi_shape_row2_replay_authorization_review_validation_log_v1.txt",
+        "docs/paper10_desi_shape_row2_replay_authorization_review_notes_v1.md",
+        "data/source_manifest/paper10_desi_shape_row2_authorized_replay_run_v1.csv",
+        "data/derived/paper10_desi_shape_row2_authorized_replay_v1_grid.csv",
+        "data/derived/paper10_desi_shape_row2_authorized_replay_v1_summary.csv",
+        "docs/paper10_desi_shape_row2_authorized_replay_v1.md",
+        "scripts/run_paper10_desi_shape_row2_authorized_replay_v1.py",
+        "scripts/validate_paper10_desi_shape_row2_authorized_replay_v1.py",
+        "docs/paper10_desi_shape_core_support_synthesis_gate_v1.md",
+        "data/source_manifest/paper10_desi_shape_core_support_synthesis_gate_policy_v1.csv",
+        "data/derived/paper10_desi_shape_core_support_synthesis_gate_v1.csv",
+        "data/derived/paper10_desi_shape_core_support_synthesis_gate_v1_summary.csv",
+        "scripts/build_paper10_desi_shape_core_support_synthesis_gate_v1.py",
+        "scripts/validate_paper10_desi_shape_core_support_synthesis_gate_v1.py",
+        "docs/paper10_desi_shape_route_source_synthesis_review_v1.md",
+        "data/source_manifest/paper10_desi_shape_route_source_synthesis_review_policy_v1.csv",
+        "data/derived/paper10_desi_shape_route_source_synthesis_review_response_template_v1.csv",
+        "data/derived/paper10_desi_shape_route_source_synthesis_review_package_v1.zip",
+        "data/derived/paper10_desi_shape_route_source_synthesis_review_package_v1.zip.sha256",
+        "data/derived/paper10_desi_shape_route_source_synthesis_review_package_v1_manifest.csv",
+        "data/derived/paper10_desi_shape_route_source_synthesis_review_package_v1_summary.csv",
+        "scripts/build_paper10_desi_shape_route_source_synthesis_review_package_v1.py",
+        "scripts/validate_paper10_desi_shape_route_source_synthesis_review_package_v1.py",
+        "data/derived/paper10_desi_shape_route_source_synthesis_review_response_v1.csv",
+        "data/derived/paper10_desi_shape_route_source_synthesis_review_response_v1_summary.csv",
+        "data/derived/paper10_desi_shape_route_source_synthesis_review_completed_summary_v1.csv",
+        "data/derived/paper10_desi_shape_route_source_synthesis_review_validation_log_v1.txt",
+        "docs/paper10_desi_shape_route_source_synthesis_review_notes_v1.md",
+        "scripts/import_paper10_desi_shape_route_source_synthesis_review_response_v1.py",
+        "scripts/validate_paper10_desi_shape_route_source_synthesis_review_response_v1.py",
+        "docs/paper10_desi_shape_post_synthesis_gate_authorization_review_v1.md",
+        "data/source_manifest/paper10_desi_shape_post_synthesis_gate_authorization_review_policy_v1.csv",
+        "data/derived/paper10_desi_shape_post_synthesis_gate_authorization_review_response_template_v1.csv",
+        "data/derived/paper10_desi_shape_post_synthesis_gate_authorization_review_package_v1.zip",
+        "data/derived/paper10_desi_shape_post_synthesis_gate_authorization_review_package_v1.zip.sha256",
+        "data/derived/paper10_desi_shape_post_synthesis_gate_authorization_review_package_v1_manifest.csv",
+        "data/derived/paper10_desi_shape_post_synthesis_gate_authorization_review_package_v1_summary.csv",
+        "scripts/build_paper10_desi_shape_post_synthesis_gate_authorization_review_package_v1.py",
+        "scripts/validate_paper10_desi_shape_post_synthesis_gate_authorization_review_package_v1.py",
+        "data/derived/paper10_desi_shape_post_synthesis_gate_authorization_review_response_v1.csv",
+        "data/derived/paper10_desi_shape_post_synthesis_gate_authorization_review_response_v1_summary.csv",
+        "data/derived/paper10_desi_shape_post_synthesis_gate_authorization_review_completed_summary_v1.csv",
+        "data/derived/paper10_desi_shape_post_synthesis_gate_authorization_review_validation_log_v1.txt",
+        "docs/paper10_desi_shape_post_synthesis_gate_authorization_review_notes_v1.md",
+        "scripts/import_paper10_desi_shape_post_synthesis_gate_authorization_review_response_v1.py",
+        "scripts/validate_paper10_desi_shape_post_synthesis_gate_authorization_review_response_v1.py",
+        "docs/paper10_desi_shape_validation_oriented_gate_review_v1.md",
+        "data/source_manifest/paper10_desi_shape_validation_oriented_gate_review_policy_v1.csv",
+        "data/derived/paper10_desi_shape_validation_oriented_gate_review_response_template_v1.csv",
+        "data/derived/paper10_desi_shape_validation_oriented_gate_review_package_v1.zip",
+        "data/derived/paper10_desi_shape_validation_oriented_gate_review_package_v1.zip.sha256",
+        "data/derived/paper10_desi_shape_validation_oriented_gate_review_package_v1_manifest.csv",
+        "data/derived/paper10_desi_shape_validation_oriented_gate_review_package_v1_summary.csv",
+        "scripts/build_paper10_desi_shape_validation_oriented_gate_review_package_v1.py",
+        "scripts/validate_paper10_desi_shape_validation_oriented_gate_review_package_v1.py",
+        "data/derived/paper10_desi_shape_validation_oriented_gate_review_response_v1.csv",
+        "data/derived/paper10_desi_shape_validation_oriented_gate_review_response_v1_summary.csv",
+        "data/derived/paper10_desi_shape_validation_oriented_gate_review_completed_summary_v1.csv",
+        "data/derived/paper10_desi_shape_validation_oriented_gate_review_validation_log_v1.txt",
+        "docs/paper10_desi_shape_validation_oriented_gate_review_notes_v1.md",
+        "scripts/import_paper10_desi_shape_validation_oriented_gate_review_response_v1.py",
+        "scripts/validate_paper10_desi_shape_validation_oriented_gate_review_response_v1.py",
+        "docs/paper10_desi_shape_validation_permission_replay_authorization_review_v1.md",
+        "data/source_manifest/paper10_desi_shape_validation_permission_replay_authorization_review_policy_v1.csv",
+        "data/derived/paper10_desi_shape_validation_permission_replay_authorization_review_response_template_v1.csv",
+        "data/derived/paper10_desi_shape_validation_permission_replay_authorization_review_package_v1.zip",
+        "data/derived/paper10_desi_shape_validation_permission_replay_authorization_review_package_v1.zip.sha256",
+        "data/derived/paper10_desi_shape_validation_permission_replay_authorization_review_package_v1_manifest.csv",
+        "data/derived/paper10_desi_shape_validation_permission_replay_authorization_review_package_v1_summary.csv",
+        "scripts/build_paper10_desi_shape_validation_permission_replay_authorization_review_package_v1.py",
+        "scripts/validate_paper10_desi_shape_validation_permission_replay_authorization_review_package_v1.py",
+        "data/derived/paper10_desi_shape_validation_permission_replay_authorization_review_response_v1.csv",
+        "data/derived/paper10_desi_shape_validation_permission_replay_authorization_review_response_v1_summary.csv",
+        "data/derived/paper10_desi_shape_validation_permission_replay_authorization_review_completed_summary_v1.csv",
+        "data/derived/paper10_desi_shape_validation_permission_replay_authorization_review_validation_log_v1.txt",
+        "docs/paper10_desi_shape_validation_permission_replay_authorization_review_notes_v1.md",
+        "scripts/import_paper10_desi_shape_validation_permission_replay_authorization_review_response_v1.py",
+        "scripts/validate_paper10_desi_shape_validation_permission_replay_authorization_review_response_v1.py",
+        "data/derived/paper10_desi_shape_validation_permission_authorized_replay_v1_grid.csv",
+        "data/derived/paper10_desi_shape_validation_permission_authorized_replay_v1_summary.csv",
+        "scripts/run_paper10_desi_shape_validation_permission_authorized_replay_v1.py",
+        "scripts/validate_paper10_desi_shape_validation_permission_authorized_replay_v1.py",
+        "docs/paper10_desi_clock_support_acquisition_manifest_v1.md",
+        "data/source_manifest/paper10_desi_clock_support_acquisition_manifest_policy_v1.csv",
+        "data/derived/paper10_desi_clock_support_acquisition_manifest_v1.csv",
+        "data/derived/paper10_desi_clock_support_acquisition_manifest_v1_summary.csv",
+        "scripts/build_paper10_desi_clock_support_acquisition_manifest_v1.py",
+        "scripts/validate_paper10_desi_clock_support_acquisition_manifest_v1.py",
+        "docs/paper10_desi_clock_support_source_candidate_scan_v1.md",
+        "data/source_manifest/paper10_desi_clock_support_source_candidate_scan_policy_v1.csv",
+        "data/derived/paper10_desi_clock_support_source_candidate_scan_v1.csv",
+        "data/derived/paper10_desi_clock_support_source_candidate_scan_v1_summary.csv",
+        "scripts/build_paper10_desi_clock_support_source_candidate_scan_v1.py",
+        "scripts/validate_paper10_desi_clock_support_source_candidate_scan_v1.py",
+        "docs/paper10_desi_clock_support_blocker_verdict_v1.md",
+        "data/source_manifest/paper10_desi_clock_support_blocker_verdict_policy_v1.csv",
+        "data/derived/paper10_desi_clock_support_blocker_verdict_v1.csv",
+        "data/derived/paper10_desi_clock_support_blocker_verdict_v1_summary.csv",
+        "scripts/build_paper10_desi_clock_support_blocker_verdict_v1.py",
+        "scripts/validate_paper10_desi_clock_support_blocker_verdict_v1.py",
+        "docs/paper10_desi_row4_clock_reopen_manifest_v1.md",
+        "data/source_manifest/paper10_desi_row4_clock_reopen_manifest_policy_v1.csv",
+        "data/derived/paper10_desi_row4_clock_reopen_manifest_v1.csv",
+        "data/derived/paper10_desi_row4_clock_reopen_manifest_v1_summary.csv",
+        "scripts/build_paper10_desi_row4_clock_reopen_manifest_v1.py",
+        "scripts/validate_paper10_desi_row4_clock_reopen_manifest_v1.py",
+        "docs/paper10_desi_row4_cc_bracket_source_freeze_v1.md",
+        "data/source_manifest/paper10_desi_row4_cc_bracket_source_freeze_policy_v1.csv",
+        "data/derived/paper10_desi_row4_cc_bracket_source_freeze_v1.csv",
+        "data/derived/paper10_desi_row4_cc_bracket_source_freeze_v1_summary.csv",
+        "scripts/build_paper10_desi_row4_cc_bracket_source_freeze_v1.py",
+        "scripts/validate_paper10_desi_row4_cc_bracket_source_freeze_v1.py",
+        "docs/paper10_desi_row4_non_simon_clock_search_v1.md",
+        "data/source_manifest/paper10_desi_row4_non_simon_clock_search_policy_v1.csv",
+        "data/derived/paper10_desi_row4_non_simon_clock_search_v1.csv",
+        "data/derived/paper10_desi_row4_non_simon_clock_search_v1_summary.csv",
+        "scripts/build_paper10_desi_row4_non_simon_clock_search_v1.py",
+        "scripts/validate_paper10_desi_row4_non_simon_clock_search_v1.py",
+        "docs/paper10_desi_row4_window_review_v1.md",
+        "data/source_manifest/paper10_desi_row4_window_review_policy_v1.csv",
+        "data/derived/paper10_desi_row4_window_review_response_template_v1.csv",
+        "data/derived/paper10_desi_row4_window_review_package_v1.zip",
+        "data/derived/paper10_desi_row4_window_review_package_v1.zip.sha256",
+        "data/derived/paper10_desi_row4_window_review_package_v1_manifest.csv",
+        "data/derived/paper10_desi_row4_window_review_package_v1_summary.csv",
+        "scripts/build_paper10_desi_row4_window_review_package_v1.py",
+        "scripts/validate_paper10_desi_row4_window_review_package_v1.py",
+        "scripts/validate_paper10_desi_row4_window_review_response_v1.py",
+        "scripts/import_paper10_desi_row4_window_review_response_v1.py",
+        "docs/paper10_desi_row4_window_decision_gate_v1.md",
+        "data/source_manifest/paper10_desi_row4_window_decision_gate_policy_v1.csv",
+        "data/derived/paper10_desi_row4_window_decision_gate_v1.csv",
+        "data/derived/paper10_desi_row4_window_decision_gate_v1_summary.csv",
+        "scripts/build_paper10_desi_row4_window_decision_gate_v1.py",
+        "scripts/validate_paper10_desi_row4_window_decision_gate_v1.py",
+        "docs/paper10_desi_time_route_closure_status_v1.md",
+        "data/source_manifest/paper10_desi_time_route_closure_status_policy_v1.csv",
+        "data/derived/paper10_desi_time_route_closure_status_v1.csv",
+        "data/derived/paper10_desi_time_route_closure_status_v1_summary.csv",
+        "scripts/build_paper10_desi_time_route_closure_status_v1.py",
+        "scripts/validate_paper10_desi_time_route_closure_status_v1.py",
+        "docs/paper10_desi_row5_high_z_review_v1.md",
+        "data/source_manifest/paper10_desi_row5_high_z_review_policy_v1.csv",
+        "data/derived/paper10_desi_row5_high_z_review_response_template_v1.csv",
+        "data/derived/paper10_desi_row5_high_z_review_package_v1.zip",
+        "data/derived/paper10_desi_row5_high_z_review_package_v1.zip.sha256",
+        "data/derived/paper10_desi_row5_high_z_review_package_v1_manifest.csv",
+        "data/derived/paper10_desi_row5_high_z_review_package_v1_summary.csv",
+        "scripts/build_paper10_desi_row5_high_z_review_package_v1.py",
+        "scripts/validate_paper10_desi_row5_high_z_review_package_v1.py",
+        "scripts/validate_paper10_desi_row5_high_z_review_response_v1.py",
+        "scripts/import_paper10_desi_row5_high_z_review_response_v1.py",
+        "docs/paper10_desi_row5_high_z_decision_gate_v1.md",
+        "data/source_manifest/paper10_desi_row5_high_z_decision_gate_policy_v1.csv",
+        "data/derived/paper10_desi_row5_high_z_decision_gate_v1.csv",
+        "data/derived/paper10_desi_row5_high_z_decision_gate_v1_summary.csv",
+        "scripts/build_paper10_desi_row5_high_z_decision_gate_v1.py",
+        "scripts/validate_paper10_desi_row5_high_z_decision_gate_v1.py",
         "data/derived/void_source_basis_refinement_v2_path_projection_route_ledger.csv",
         "data/derived/void_source_basis_refinement_v2_path_projection_route_ledger_summary.csv",
         "data/derived/void_source_basis_refinement_v2_time_readout_route_ledger.csv",
@@ -1191,10 +1950,120 @@ def test_public_files_exist() -> None:
         "docs/pantheon_void_web_proxy_full_cov_pilot_v1.md",
         "docs/multi_probe_full_cov_scoring_plan_v1.md",
         "docs/general_tau_core_readout_basis.md",
+        "data/derived/joint_existing_artifact_meta_score_v1.csv",
+        "data/derived/joint_existing_artifact_meta_score_v1_summary.csv",
+        "docs/joint_existing_artifact_meta_score_v1.md",
+        "data/source_manifest/joint_multichannel_endpoint_manifest_v1.csv",
+        "data/derived/joint_multichannel_endpoint_candidate_v1.csv",
+        "data/derived/joint_multichannel_endpoint_candidate_v1_summary.csv",
+        "docs/joint_multichannel_endpoint_candidate_v1.md",
+        "data/derived/joint_multichannel_block_score_v1.csv",
+        "data/derived/joint_multichannel_block_score_v1_controls.csv",
+        "data/derived/joint_multichannel_block_score_v1_leave_one_channel.csv",
+        "data/derived/joint_multichannel_block_score_v1_summary.csv",
+        "docs/joint_multichannel_block_score_v1.md",
+        "data/source_manifest/joint_best_justified_kernel_manifest_v1.csv",
+        "data/derived/joint_best_justified_kernel_score_v1.csv",
+        "data/derived/joint_best_justified_kernel_score_v1_controls.csv",
+        "data/derived/joint_best_justified_kernel_score_v1_leave_one_channel.csv",
+        "data/derived/joint_best_justified_kernel_score_v1_summary.csv",
+        "docs/joint_best_justified_kernel_score_v1.md",
+        "data/derived/joint_best_justified_kernel_robustness_v1.csv",
+        "data/derived/joint_best_justified_kernel_robustness_v1_controls.csv",
+        "data/derived/joint_best_justified_kernel_robustness_v1_summary.csv",
+        "docs/joint_best_justified_kernel_robustness_v1.md",
+        "paper10_submission_source/figures/fig_joint_best_justified_kernel_v1.pdf",
+        "data/source_manifest/joint_best_justified_qi_review_requirements_v1.csv",
+        "docs/joint_best_justified_qi_review_package_v1.md",
+        "data/derived/joint_non_lensing_lift_diagnostic_v1.csv",
+        "data/derived/joint_non_lensing_lift_diagnostic_v1_summary.csv",
+        "docs/joint_non_lensing_lift_diagnostic_v1.md",
+        "data/derived/observer_path_strengthening_gate_v1.csv",
+        "data/derived/observer_path_strengthening_gate_v1_summary.csv",
+        "docs/observer_path_strengthening_gate_v1.md",
+        "data/derived/observer_path_metric_product_requirements_package_v1_summary.csv",
+        "data/derived/observer_path_metric_product_requirements_package_v1_manifest.csv",
+        "data/derived/observer_path_metric_product_requirements_review_response_template_v1.csv",
+        "data/derived/observer_path_metric_product_requirements_package_v1.zip",
+        "data/derived/observer_path_metric_product_requirements_package_v1.zip.sha256",
+        "docs/observer_path_metric_product_requirements_package_v1.md",
+        "docs/observer_path_metric_product_requirements_reviewer_instructions_v1.md",
+        "data/derived/observer_path_metric_product_requirements_review_response_v1.csv",
+        "data/derived/observer_path_metric_product_requirements_review_completed_summary_v1.csv",
+        "data/derived/observer_path_metric_product_requirements_review_validation_log_v1.txt",
+        "docs/observer_path_metric_product_requirements_review_notes_v1.md",
+        "data/derived/observer_path_metric_environment_product_v1.csv",
+        "data/derived/observer_path_metric_environment_product_v1_summary.csv",
+        "docs/observer_path_metric_environment_product_v1.md",
+        "data/derived/observer_path_metric_product_acquisition_status_v1.csv",
+        "data/derived/observer_path_metric_product_acquisition_status_v1_summary.csv",
+        "docs/observer_path_metric_product_acquisition_status_v1.md",
+        "data/derived/observer_path_metric_environment_fast_screen_v1_grid.csv",
+        "data/derived/observer_path_metric_environment_fast_screen_v1_family_summary.csv",
+        "data/derived/observer_path_metric_environment_fast_screen_v1_summary.csv",
+        "docs/observer_path_metric_environment_fast_screen_v1.md",
+        "data/derived/observer_path_metric_environment_ordering_diagnostic_v1.csv",
+        "data/derived/observer_path_metric_environment_ordering_diagnostic_v1_pairwise.csv",
+        "data/derived/observer_path_metric_environment_ordering_diagnostic_v1_summary.csv",
+        "docs/observer_path_metric_environment_ordering_diagnostic_v1.md",
+        "data/derived/observer_path_source_native_ordering_kernel_v1.csv",
+        "data/derived/observer_path_source_native_ordering_kernel_v1_summary.csv",
+        "docs/observer_path_source_native_ordering_kernel_v1.md",
+        "data/derived/observer_path_source_native_ordering_fast_screen_v1_grid.csv",
+        "data/derived/observer_path_source_native_ordering_fast_screen_v1_family_summary.csv",
+        "data/derived/observer_path_source_native_ordering_fast_screen_v1_summary.csv",
+        "docs/observer_path_source_native_ordering_fast_screen_v1.md",
+        "data/derived/observer_path_metric_lensing_next_gate_v1.csv",
+        "data/derived/observer_path_metric_lensing_next_gate_v1_summary.csv",
+        "docs/observer_path_metric_lensing_next_gate_v1.md",
         "scripts/run_pantheon_full_cov_pilot_scoring_v1.py",
         "scripts/validate_pantheon_full_cov_pilot_scoring_v1.py",
         "scripts/run_pantheon_void_web_proxy_full_cov_pilot_v1.py",
         "scripts/validate_pantheon_void_web_proxy_full_cov_pilot_v1.py",
+        "scripts/build_joint_existing_artifact_meta_score_v1.py",
+        "scripts/validate_joint_existing_artifact_meta_score_v1.py",
+        "scripts/run_joint_multichannel_endpoint_candidate_v1.py",
+        "scripts/validate_joint_multichannel_endpoint_candidate_v1.py",
+        "scripts/run_joint_multichannel_block_score_v1.py",
+        "scripts/validate_joint_multichannel_block_score_v1.py",
+        "scripts/run_joint_best_justified_kernel_score_v1.py",
+        "scripts/validate_joint_best_justified_kernel_score_v1.py",
+        "scripts/run_joint_best_justified_kernel_robustness_v1.py",
+        "scripts/validate_joint_best_justified_kernel_robustness_v1.py",
+        "scripts/build_joint_best_justified_kernel_figure_v1.py",
+        "scripts/validate_joint_best_justified_qi_review_package_v1.py",
+        "scripts/build_joint_non_lensing_lift_diagnostic_v1.py",
+        "scripts/validate_joint_non_lensing_lift_diagnostic_v1.py",
+        "scripts/build_observer_path_strengthening_gate_v1.py",
+        "scripts/validate_observer_path_strengthening_gate_v1.py",
+        "scripts/build_observer_path_metric_product_requirements_package_v1.py",
+        "scripts/validate_observer_path_metric_product_requirements_package_v1.py",
+        "scripts/import_observer_path_metric_product_requirements_review_response_v1.py",
+        "scripts/validate_observer_path_metric_product_requirements_review_response_v1.py",
+        "scripts/build_observer_path_metric_environment_product_v1.py",
+        "scripts/validate_observer_path_metric_environment_product_v1.py",
+        "scripts/build_observer_path_metric_product_acquisition_status_v1.py",
+        "scripts/validate_observer_path_metric_product_acquisition_status_v1.py",
+        "scripts/run_observer_path_metric_environment_fast_screen_v1.py",
+        "scripts/validate_observer_path_metric_environment_fast_screen_v1.py",
+        "scripts/build_observer_path_metric_environment_ordering_diagnostic_v1.py",
+        "scripts/validate_observer_path_metric_environment_ordering_diagnostic_v1.py",
+        "scripts/build_observer_path_source_native_ordering_kernel_v1.py",
+        "scripts/validate_observer_path_source_native_ordering_kernel_v1.py",
+        "scripts/run_observer_path_source_native_ordering_fast_screen_v1.py",
+        "scripts/validate_observer_path_source_native_ordering_fast_screen_v1.py",
+        "scripts/build_observer_path_metric_lensing_next_gate_v1.py",
+        "scripts/validate_observer_path_metric_lensing_next_gate_v1.py",
+        "data/derived/act_dr6_lensing_path_weight_replay_authorization_review_response_v1.csv",
+        "data/derived/act_dr6_lensing_path_weight_replay_authorization_review_response_v1_summary.csv",
+        "data/derived/act_dr6_lensing_path_weight_authorized_replay_v1_grid.csv",
+        "data/derived/act_dr6_lensing_path_weight_authorized_replay_v1_summary.csv",
+        "data/derived/act_dr6_lensing_path_weight_control_dominance_diagnostic_v1_branches.csv",
+        "data/derived/act_dr6_lensing_path_weight_control_dominance_diagnostic_v1_summary.csv",
+        "scripts/run_act_dr6_lensing_path_weight_authorized_replay_v1.py",
+        "scripts/validate_act_dr6_lensing_path_weight_authorized_replay_v1.py",
+        "scripts/build_act_dr6_lensing_path_weight_control_dominance_diagnostic_v1.py",
+        "scripts/validate_act_dr6_lensing_path_weight_control_dominance_diagnostic_v1.py",
         "scripts/build_figures.py",
         "figures/fig_pantheon_full_cov_pilot_branch_diagnostics.pdf",
         "paper10_submission_source/figures/fig_pantheon_full_cov_pilot_branch_diagnostics.pdf",
@@ -1212,6 +2081,18 @@ def test_manuscript_claim_markers() -> None:
     assert "explains dark energy" in text
     assert "Lambda-like distance behavior" in text
     assert "web/environment-dependent growth or lensing residual" in text
+    assert "convergent and multi-channel" in text
+    assert "multi-channel viability evidence" in text
+    assert "JOINT\\_ENDPOINT\\_CANDIDATE\\_INCONCLUSIVE\\_PREVALIDATION" in text
+    assert "JOINT\\_BLOCK\\_SCORE\\_FRAGILE\\_OR\\_INCONCLUSIVE\\_PREVALIDATION" in text
+    assert "non-lensing lift diagnostic" in text
+    assert "observer/path strengthening gate" in text
+    assert "metric-product requirements package" in text
+    assert "ACCEPT\\_REQUIREMENTS\\_ONLY" in text
+    assert "bounded caveated" in text
+    assert "metric-environment path proxy" in text
+    assert "preauthorization signal that is not yet" in text
+    assert "control-resistant" in text
     forbidden = [
         "we detect Tau Core",
         "we prove Tau Core explains dark energy",
@@ -3203,6 +4084,3809 @@ def test_void_source_basis_refinement_v2_observer_orientation_kernel_v2_authoriz
     assert package["physical_lensing_path_weight_claimed"] == "false"
     assert package["verdict"] == "observer_orientation_kernel_v2_replay_authorization_package_ready_not_completed"
     assert package["claim_boundary"] == "v2_observer_orientation_kernel_v2_replay_authorization_not_validation"
+
+
+def test_void_source_basis_refinement_v2_observer_orientation_kernel_v2_authorized_replay_is_diagnostic_negative() -> None:
+    for command in [
+        ["python", "scripts/validate_void_source_basis_refinement_v2_observer_orientation_kernel_v2_replay_authorization_response.py"],
+        ["python", "scripts/run_void_source_basis_refinement_v2_observer_orientation_kernel_v2_authorized_replay.py"],
+        ["python", "scripts/validate_void_source_basis_refinement_v2_observer_orientation_kernel_v2_authorized_replay.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (
+        ROOT
+        / "data/derived/void_source_basis_refinement_v2_observer_orientation_kernel_v2_replay_authorization_response_v1_summary.csv"
+    ).open(newline="") as f:
+        auth = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/void_source_basis_refinement_v2_observer_orientation_kernel_v2_authorized_replay_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert auth["decision"] == "GO_OBSERVER_ORIENTATION_V2_REPLAY_PERMISSION_ONLY"
+    assert auth["endpoint_replay_allowed"] == "true"
+    assert auth["endpoint_validation_claimed"] == "false"
+    assert summary["status"] == "V2_OBSERVER_ORIENTATION_KERNEL_V2_REPLAY_AUTHORIZED_PERMISSION_ONLY_NOT_VALIDATION"
+    assert summary["active_family"] == "W_path_times_centered_sky_z"
+    assert summary["n_rows"] == "12"
+    assert summary["family_survives_controls"] == "false"
+    assert summary["controls_better_than_candidate_chi2"] == "1"
+    assert summary["candidate_rank_by_chi2_among_candidate_and_controls"] == "2"
+    assert float(summary["delta_chi2_candidate_minus_baseline"]) < 0.0
+    assert float(summary["delta_chi2_candidate_minus_best_control"]) > 0.0
+    assert summary["endpoint_replay_allowed"] == "true"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["physical_lensing_path_weight_claimed"] == "false"
+    assert (
+        summary["verdict"]
+        == "observer_orientation_v2_permission_replay_not_control_resistant_not_validation"
+    )
+    assert (
+        summary["claim_boundary"]
+        == "v2_observer_orientation_kernel_v2_authorized_replay_permission_only_not_validation"
+    )
+
+
+def test_void_source_basis_refinement_v2_observer_basis_fast_screen_finds_review_candidate() -> None:
+    for command in [
+        ["python", "scripts/run_void_source_basis_refinement_v2_observer_basis_fast_screen_v1.py"],
+        ["python", "scripts/validate_void_source_basis_refinement_v2_observer_basis_fast_screen_v1.py"],
+        ["python", "scripts/build_void_source_basis_refinement_v2_observer_basis_candidate_review_package_v1.py"],
+        ["python", "scripts/validate_void_source_basis_refinement_v2_observer_basis_candidate_review_package_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (
+        ROOT / "data/derived/void_source_basis_refinement_v2_observer_basis_fast_screen_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/void_source_basis_refinement_v2_observer_basis_candidate_review_package_v1_summary.csv"
+    ).open(newline="") as f:
+        package = list(csv.DictReader(f))[0]
+    assert summary["status"] == "V2_OBSERVER_BASIS_FAST_SCREEN_PREAUTH_DIAGNOSTIC_NOT_ENDPOINT"
+    assert summary["best_candidate_family"] == "W_path_x_sky_x_x_zcenter"
+    assert summary["surviving_family_count"] == "4"
+    assert float(summary["best_candidate_delta_chi2_minus_baseline"]) < 0.0
+    assert float(summary["best_candidate_delta_chi2_minus_best_global_control"]) < 0.0
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["claim_boundary"] == "v2_observer_basis_fast_screen_not_endpoint_not_validation"
+    assert package["candidate_family"] == "W_path_x_sky_x_x_zcenter"
+    assert package["review_completed"] == "false"
+    assert package["endpoint_replay_allowed"] == "false"
+    assert package["endpoint_validation_claimed"] == "false"
+    assert package["verdict"] == "observer_basis_candidate_review_package_ready_not_completed"
+
+
+def test_void_source_basis_refinement_v2_observer_basis_candidate_review_response_builds_replay_auth_package() -> None:
+    for command in [
+        ["python", "scripts/validate_void_source_basis_refinement_v2_observer_basis_candidate_review_response_v1.py"],
+        ["python", "scripts/build_void_source_basis_refinement_v2_observer_basis_replay_authorization_package_v1.py"],
+        ["python", "scripts/validate_void_source_basis_refinement_v2_observer_basis_replay_authorization_package_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (
+        ROOT / "data/derived/void_source_basis_refinement_v2_observer_basis_candidate_review_response_v1_summary.csv"
+    ).open(newline="") as f:
+        response = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/void_source_basis_refinement_v2_observer_basis_replay_authorization_package_v1_summary.csv"
+    ).open(newline="") as f:
+        package = list(csv.DictReader(f))[0]
+    assert response["decision"] == "ACCEPT_OBSERVER_BASIS_CANDIDATE_FOR_SEPARATE_PERMISSION_ONLY_REPLAY_AUTHORIZATION_PACKAGE"
+    assert response["endpoint_replay_allowed"] == "false"
+    assert response["endpoint_validation_claimed"] == "false"
+    assert response["recommended_next_action"] == "build_separate_permission_only_replay_authorization_package_for_W_path_x_sky_x_x_zcenter"
+    assert package["candidate_family"] == "W_path_x_sky_x_x_zcenter"
+    assert package["review_completed"] == "false"
+    assert package["endpoint_replay_allowed"] == "false"
+    assert package["endpoint_validation_claimed"] == "false"
+    assert package["physical_lensing_path_weight_claimed"] == "false"
+    assert package["verdict"] == "observer_basis_replay_authorization_package_ready_not_completed"
+
+
+def test_void_source_basis_refinement_v2_observer_basis_authorized_replay_survives_controls() -> None:
+    for command in [
+        ["python", "scripts/validate_void_source_basis_refinement_v2_observer_basis_replay_authorization_response_v1.py"],
+        ["python", "scripts/run_void_source_basis_refinement_v2_observer_basis_authorized_replay_v1.py"],
+        ["python", "scripts/validate_void_source_basis_refinement_v2_observer_basis_authorized_replay_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (
+        ROOT / "data/derived/void_source_basis_refinement_v2_observer_basis_replay_authorization_response_v1_summary.csv"
+    ).open(newline="") as f:
+        auth = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/void_source_basis_refinement_v2_observer_basis_authorized_replay_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert auth["decision"] == "GO_OBSERVER_BASIS_REPLAY_PERMISSION_ONLY"
+    assert auth["endpoint_replay_allowed"] == "true"
+    assert auth["endpoint_validation_claimed"] == "false"
+    assert summary["status"] == "V2_OBSERVER_BASIS_REPLAY_AUTHORIZED_PERMISSION_ONLY_NOT_VALIDATION"
+    assert summary["active_family"] == "W_path_x_sky_x_x_zcenter"
+    assert summary["n_rows"] == "12"
+    assert summary["family_survives_controls"] == "true"
+    assert summary["controls_better_than_candidate_chi2"] == "0"
+    assert summary["candidate_rank_by_chi2_among_candidate_and_controls"] == "1"
+    assert float(summary["delta_chi2_candidate_minus_baseline"]) < 0.0
+    assert float(summary["delta_chi2_candidate_minus_best_control"]) < 0.0
+    assert summary["endpoint_replay_allowed"] == "true"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["physical_lensing_path_weight_claimed"] == "false"
+    assert summary["verdict"] == "observer_basis_permission_replay_family_control_survives_not_validation"
+
+
+def test_void_source_basis_refinement_v2_full_kernel_proxy_fast_screen_preserves_claim_boundary() -> None:
+    for command in [
+        ["python", "scripts/run_void_source_basis_refinement_v2_full_kernel_proxy_fast_screen_v1.py"],
+        ["python", "scripts/validate_void_source_basis_refinement_v2_full_kernel_proxy_fast_screen_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (
+        ROOT / "data/derived/void_source_basis_refinement_v2_full_kernel_proxy_fast_screen_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/void_source_basis_refinement_v2_full_kernel_proxy_fast_screen_v1_family_summary.csv"
+    ).open(newline="") as f:
+        families = list(csv.DictReader(f))
+    assert summary["status"] == "V2_FULL_KERNEL_PROXY_FAST_SCREEN_PREAUTH_DIAGNOSTIC_NOT_ENDPOINT"
+    assert summary["n_rows"] == "12"
+    assert summary["best_candidate_family"] == "W_path_x_sky_x_x_zcenter"
+    assert summary["surviving_family_count"] == "2"
+    assert "W_path_x_sky_x_x_zcenter_x_web_centered_x_los_density_mean" in summary["surviving_families"]
+    assert float(summary["best_candidate_delta_chi2_minus_baseline"]) < 0.0
+    assert float(summary["best_candidate_delta_chi2_minus_best_global_control"]) > 0.0
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["physical_lensing_path_weight_claimed"] == "false"
+    assert summary["claim_boundary"] == "v2_full_kernel_proxy_fast_screen_not_endpoint_not_validation"
+    enriched = {
+        row["family_id"]: row
+        for row in families
+        if row["family_id"] == "W_path_x_sky_x_x_zcenter_x_web_centered_x_los_density_mean"
+    }
+    assert enriched
+    assert enriched["W_path_x_sky_x_x_zcenter_x_web_centered_x_los_density_mean"][
+        "survives_family_controls"
+    ] == "true"
+
+
+def test_void_source_basis_refinement_v2_full_kernel_proxy_component_audit_preserves_negative_constraint() -> None:
+    for command in [
+        ["python", "scripts/build_void_source_basis_refinement_v2_full_kernel_proxy_component_audit_v1.py"],
+        ["python", "scripts/validate_void_source_basis_refinement_v2_full_kernel_proxy_component_audit_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (
+        ROOT / "data/derived/void_source_basis_refinement_v2_full_kernel_proxy_component_audit_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/void_source_basis_refinement_v2_full_kernel_proxy_component_audit_v1.csv"
+    ).open(newline="") as f:
+        audit = list(csv.DictReader(f))
+    assert summary["base_family"] == "W_path_x_sky_x_x_zcenter"
+    assert summary["families_stronger_than_base"] == "0"
+    assert "W_path_x_sky_x_x_zcenter_x_web_centered_x_los_density_mean" in summary[
+        "control_surviving_enriched_families"
+    ]
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["physical_lensing_path_weight_claimed"] == "false"
+    assert summary["claim_boundary"] == "v2_full_kernel_proxy_component_audit_not_endpoint_not_validation"
+    assert summary["verdict"] == "extra_proxy_factors_do_not_outperform_base_observer_basis"
+    base_rows = [row for row in audit if row["family_id"] == "W_path_x_sky_x_x_zcenter"]
+    assert len(base_rows) == 1
+    assert base_rows[0]["interpretation"] == "reference_observer_basis_carrier"
+
+
+def test_full_observer_path_kernel_source_requirements_remain_non_scoring() -> None:
+    subprocess.run(
+        ["python", "scripts/validate_full_observer_path_kernel_source_requirements_v1.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    with (ROOT / "data/source_manifest/full_observer_path_kernel_source_requirements_v1.csv").open(
+        newline=""
+    ) as f:
+        rows = list(csv.DictReader(f))
+    assert {row["requirement_id"] for row in rows} == {"R1", "R2", "R3", "R4", "R5", "R6"}
+    assert all(row["endpoint_replay_allowed"] == "false" for row in rows)
+    assert all(row["endpoint_validation_claimed"] == "false" for row in rows)
+    assert all(row["physical_lensing_path_weight_claimed"] == "false" for row in rows)
+    assert any(row["channel"] == "metric_lensing_path" for row in rows)
+    assert any(row["channel"] == "time_readout_phase" for row in rows)
+
+
+def test_low_z_pantheon_los_radial_profile_is_source_side_partial_observable() -> None:
+    for command in [
+        ["python", "scripts/build_low_z_pantheon_los_radial_profile_v1.py"],
+        ["python", "scripts/validate_low_z_pantheon_los_radial_profile_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (ROOT / "data/derived/low_z_pantheon_los_radial_profile_v1_summary.csv").open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["status"] == "LOS_RADIAL_PROFILE_BUILT_SOURCE_SIDE_NOT_SCORING"
+    assert summary["rows"] == "424"
+    assert summary["shell_count"] == "5"
+    assert summary["complete_profile_rows"] == "153"
+    assert summary["partial_path_scope_rows"] == "12"
+    assert summary["partial_path_scope_complete_profile_rows"] == "7"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["physical_lensing_path_weight_claimed"] == "false"
+    assert summary["verdict"] == "los_radial_profile_available_as_partial_source_observable_not_full_path_integral"
+
+
+def test_low_z_pantheon_path_aware_void_geometry_is_source_side_partial_observable() -> None:
+    for command in [
+        ["python", "scripts/build_low_z_pantheon_path_aware_void_geometry_v1.py"],
+        ["python", "scripts/validate_low_z_pantheon_path_aware_void_geometry_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (ROOT / "data/derived/low_z_pantheon_path_aware_void_geometry_v1_summary.csv").open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["status"] == "PATH_AWARE_VOID_GEOMETRY_BUILT_SOURCE_SIDE_NOT_SCORING"
+    assert summary["rows"] == "424"
+    assert summary["path_intersection_rows"] == "180"
+    assert summary["partial_path_scope_rows"] == "12"
+    assert summary["partial_path_scope_intersection_rows"] == "10"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["physical_lensing_path_weight_claimed"] == "false"
+    assert summary["verdict"] == "path_aware_void_geometry_available_as_source_observable_not_full_metric_path"
+
+
+def test_low_z_pantheon_directional_web_anisotropy_is_source_side_partial_observable() -> None:
+    for command in [
+        ["python", "scripts/build_low_z_pantheon_directional_web_anisotropy_v1.py"],
+        ["python", "scripts/validate_low_z_pantheon_directional_web_anisotropy_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (ROOT / "data/derived/low_z_pantheon_directional_web_anisotropy_v1_summary.csv").open(
+        newline=""
+    ) as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["status"] == "DIRECTIONAL_WEB_ANISOTROPY_BUILT_SOURCE_SIDE_NOT_SCORING"
+    assert summary["rows"] == "424"
+    assert summary["nonempty_web_cone_rows"] == "260"
+    assert summary["quadrupole_ready_rows"] == "238"
+    assert summary["partial_path_scope_rows"] == "12"
+    assert summary["partial_path_scope_quadrupole_ready_rows"] == "9"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["physical_lensing_path_weight_claimed"] == "false"
+    assert summary["verdict"] == "directional_web_anisotropy_available_as_partial_source_observable_not_full_path_tensor"
+
+
+def test_low_z_pantheon_metric_lensing_path_route_audit_preserves_r5_blocker() -> None:
+    for command in [
+        ["python", "scripts/build_low_z_pantheon_metric_lensing_path_route_audit_v1.py"],
+        ["python", "scripts/validate_low_z_pantheon_metric_lensing_path_route_audit_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (ROOT / "data/derived/low_z_pantheon_metric_lensing_path_route_audit_v1_summary.csv").open(
+        newline=""
+    ) as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["status"] == "METRIC_LENSING_PATH_ROUTE_AUDIT_BUILT_SOURCE_SIDE_NOT_SCORING"
+    assert summary["rows"] == "424"
+    assert summary["rows_nearest_kids_tile_within_1_deg"] == "5"
+    assert summary["partial_path_scope_rows"] == "12"
+    assert summary["partial_path_scope_nearest_kids_tile_within_1_deg"] == "5"
+    assert summary["metric_lensing_numeric_product_available_for_source"] == "false"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["physical_lensing_path_weight_claimed"] == "false"
+    assert summary["verdict"] == "metric_lensing_routes_available_but_source_aligned_path_weight_missing"
+
+
+def test_low_z_pantheon_time_readout_source_audit_preserves_r6_activation_blocker() -> None:
+    for command in [
+        ["python", "scripts/build_low_z_pantheon_time_readout_source_audit_v1.py"],
+        ["python", "scripts/validate_low_z_pantheon_time_readout_source_audit_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (ROOT / "data/derived/low_z_pantheon_time_readout_source_audit_v1_summary.csv").open(
+        newline=""
+    ) as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["status"] == "TIME_READOUT_SOURCE_AUDIT_BUILT_SOURCE_SIDE_NOT_SCORING"
+    assert summary["rows"] == "424"
+    assert summary["cc_hz_row_count"] == "32"
+    assert summary["low_z_rows_with_cc_hz_support_delta_z_le_0p05"] == "424"
+    assert summary["partial_path_scope_rows"] == "12"
+    assert summary["partial_path_scope_cc_hz_support_delta_z_le_0p05"] == "12"
+    assert summary["cc_hz_product_fetched_frozen"] == "true"
+    assert summary["sdss_bao_rsd_products_fetched_frozen"] == "true"
+    assert summary["cmb_route_cache_available"] == "true"
+    assert summary["delta_clock_scale_frozen"] == "false"
+    assert summary["time_readout_numeric_rule_available"] == "false"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["verdict"] == "time_readout_sources_partially_available_but_delta_clock_rule_missing"
+
+
+def test_low_z_pantheon_time_readout_clock_scale_candidate_does_not_activate_w_time() -> None:
+    for command in [
+        ["python", "scripts/build_low_z_pantheon_time_readout_clock_scale_candidate_v1.py"],
+        ["python", "scripts/validate_low_z_pantheon_time_readout_clock_scale_candidate_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (
+        ROOT / "data/derived/low_z_pantheon_time_readout_clock_scale_candidate_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["status"] == "TIME_READOUT_CLOCK_SCALE_CANDIDATE_BUILT_SOURCE_SIDE_NOT_SCORING"
+    assert summary["cc_hz_row_count"] == "32"
+    assert summary["delta_clock_star_candidate_rule"] == "median_errHz_over_Hz_from_CC_table"
+    assert summary["delta_clock_star_candidate"] == "0.16581626506"
+    assert summary["delta_clock_values_computed"] == "false"
+    assert summary["W_time_values_computed"] == "false"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["verdict"] == "delta_clock_star_candidate_frozen_but_delta_clock_and_w_time_missing"
+
+
+def test_low_z_pantheon_time_readout_redshift_bin_policy_candidate_does_not_activate_w_time() -> None:
+    for command in [
+        ["python", "scripts/build_low_z_pantheon_time_readout_redshift_bin_policy_candidate_v1.py"],
+        ["python", "scripts/validate_low_z_pantheon_time_readout_redshift_bin_policy_candidate_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (
+        ROOT / "data/derived/low_z_pantheon_time_readout_redshift_bin_policy_candidate_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["status"] == "TIME_READOUT_REDSHIFT_BIN_POLICY_CANDIDATE_BUILT_SOURCE_SIDE_NOT_SCORING"
+    assert summary["rows"] == "424"
+    assert summary["cc_hz_row_count"] == "32"
+    assert summary["used_cc_bin_count"] == "3"
+    assert summary["low_z_rows_with_cc_hz_support_delta_z_le_0p05"] == "424"
+    assert summary["delta_clock_star_candidate"] == "0.16581626506"
+    assert summary["delta_clock_values_computed"] == "false"
+    assert summary["W_time_values_computed"] == "false"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["verdict"] == "redshift_bin_policy_candidate_frozen_but_delta_clock_and_w_time_missing"
+
+
+def test_low_z_pantheon_time_readout_delta_clock_uncertainty_candidate_does_not_activate_w_time() -> None:
+    for command in [
+        ["python", "scripts/build_low_z_pantheon_time_readout_delta_clock_uncertainty_candidate_v1.py"],
+        ["python", "scripts/validate_low_z_pantheon_time_readout_delta_clock_uncertainty_candidate_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (
+        ROOT / "data/derived/low_z_pantheon_time_readout_delta_clock_uncertainty_candidate_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["status"] == "TIME_READOUT_DELTA_CLOCK_UNCERTAINTY_CANDIDATE_BUILT_SOURCE_SIDE_NOT_SCORING"
+    assert summary["rows"] == "424"
+    assert summary["cc_hz_row_count"] == "32"
+    assert summary["used_cc_bin_count"] == "3"
+    assert summary["delta_clock_star_candidate"] == "0.16581626506"
+    assert summary["delta_clock_min"] == "0.0476000829881"
+    assert summary["delta_clock_max"] == "0.834341816646"
+    assert summary["W_time_values_computed"] == "false"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["verdict"] == "delta_clock_uncertainty_candidate_frozen_but_w_time_missing"
+
+
+def test_low_z_pantheon_w_time_uncertainty_basis_candidate_is_not_endpoint_authorized() -> None:
+    for command in [
+        ["python", "scripts/build_low_z_pantheon_w_time_uncertainty_basis_candidate_v1.py"],
+        ["python", "scripts/validate_low_z_pantheon_w_time_uncertainty_basis_candidate_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (
+        ROOT / "data/derived/low_z_pantheon_w_time_uncertainty_basis_candidate_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["status"] == "W_TIME_UNCERTAINTY_BASIS_CANDIDATE_BUILT_SOURCE_SIDE_NOT_SCORING"
+    assert summary["rows"] == "424"
+    assert summary["W_time_min"] == "-4.23048519997"
+    assert summary["W_time_max"] == "2.81443932804"
+    assert summary["W_time_values_computed"] == "true"
+    assert summary["W_time_values_status"] == "SOURCE_SIDE_BASIS_CANDIDATE_ONLY_NOT_ENDPOINT"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["verdict"] == "w_time_uncertainty_basis_candidate_frozen_not_endpoint_authorized"
+
+
+def test_low_z_pantheon_w_time_uncertainty_basis_replay_authorization_package_is_not_completed() -> None:
+    for command in [
+        ["python", "scripts/build_low_z_pantheon_w_time_uncertainty_basis_replay_authorization_review_template_v1.py"],
+        ["python", "scripts/validate_low_z_pantheon_w_time_uncertainty_basis_replay_authorization_review_template_v1.py"],
+        ["python", "scripts/build_low_z_pantheon_w_time_uncertainty_basis_replay_authorization_review_package_v1.py"],
+        ["python", "scripts/validate_low_z_pantheon_w_time_uncertainty_basis_replay_authorization_review_package_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (
+        ROOT / "data/derived/low_z_pantheon_w_time_uncertainty_basis_replay_authorization_review_package_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["status"] == "W_TIME_UNCERTAINTY_BASIS_REPLAY_AUTHORIZATION_PACKAGE_BUILT_NOT_COMPLETED"
+    assert summary["zip_sha256"] == "2067b221b0309bb8fcc3a294fcebf5c8fddd6123d7d7d7a151615c992a2fd69f"
+    assert summary["package_file_count"] == "16"
+    assert summary["review_completed"] == "false"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["contains_endpoint_residuals"] == "false"
+    assert summary["contains_endpoint_scores"] == "false"
+    assert summary["verdict"] == "w_time_uncertainty_basis_replay_authorization_package_ready_not_completed"
+
+
+def test_low_z_pantheon_w_time_uncertainty_basis_completed_review_is_permission_only() -> None:
+    completed_summary = (
+        ROOT
+        / "data/derived/low_z_pantheon_w_time_uncertainty_basis_replay_authorization_review_response_v1_summary.csv"
+    )
+    assert completed_summary.exists()
+    with completed_summary.open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["decision"] == "GO_W_TIME_UNCERTAINTY_BASIS_REPLAY_PERMISSION_ONLY"
+    assert summary["endpoint_replay_allowed"] == "true"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["physical_validation_claimed"] == "false"
+
+
+def test_low_z_pantheon_w_time_uncertainty_basis_authorized_replay_is_not_control_resistant() -> None:
+    for command in [
+        ["python", "scripts/run_low_z_pantheon_w_time_uncertainty_basis_authorized_replay_v1.py"],
+        ["python", "scripts/validate_low_z_pantheon_w_time_uncertainty_basis_authorized_replay_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (
+        ROOT / "data/derived/low_z_pantheon_w_time_uncertainty_basis_authorized_replay_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["verdict"] == "w_time_permission_replay_not_control_resistant_not_validation"
+    assert summary["delta_chi2_candidate_minus_baseline"] == "-0.652452012"
+    assert summary["controls_better_than_candidate_chi2"] == "3"
+    assert summary["best_control_branch"] == "rank_reverse"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["physical_validation_claimed"] == "false"
+
+
+def test_low_z_pantheon_w_time_uncertainty_basis_gate_status_is_permission_only_ready() -> None:
+    for command in [
+        ["python", "scripts/build_low_z_pantheon_w_time_uncertainty_basis_gate_status_ledger_v1.py"],
+        ["python", "scripts/validate_low_z_pantheon_w_time_uncertainty_basis_gate_status_ledger_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (
+        ROOT / "data/derived/low_z_pantheon_w_time_uncertainty_basis_gate_status_ledger_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["status"] == "SCORING_READY_PERMISSION_ONLY"
+    assert summary["passed_gate_count"] == "4"
+    assert summary["blocked_gate_count"] == "0"
+    assert summary["completed_review_response_exists"] == "true"
+    assert summary["endpoint_replay_allowed"] == "true"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["physical_validation_claimed"] == "false"
+    assert summary["recommended_next_action"] == "run_authorized_replay"
+
+
+def test_low_z_pantheon_observer_time_combined_fast_screen_preserves_observer_only_lead() -> None:
+    for command in [
+        ["python", "scripts/run_low_z_pantheon_observer_time_combined_fast_screen_v1.py"],
+        ["python", "scripts/validate_low_z_pantheon_observer_time_combined_fast_screen_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (
+        ROOT / "data/derived/low_z_pantheon_observer_time_combined_fast_screen_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/low_z_pantheon_observer_time_combined_fast_screen_v1_family_summary.csv"
+    ).open(newline="") as f:
+        family_rows = {row["family_id"]: row for row in csv.DictReader(f)}
+    assert summary["status"] == "PREAUTH_FAST_SCREEN_COMPLETE_NOT_REPLAY_NOT_VALIDATION"
+    assert summary["best_candidate_family"] == "observer_only"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["physical_validation_claimed"] == "false"
+    assert summary["delta_chi2_candidate_minus_baseline"] == "-0.58072431813"
+    assert family_rows["observer_times_time"]["delta_chi2_candidate_minus_baseline"] == "-0.47793496041"
+    assert family_rows["observer_plus_time"]["delta_chi2_candidate_minus_baseline"] == "-0.42374598383"
+    assert family_rows["time_on_observer_scope"]["delta_chi2_candidate_minus_baseline"] == "-0.03049277409"
+
+
+def test_low_z_pantheon_clock_rate_phase_fast_screen_is_not_control_resistant() -> None:
+    for command in [
+        ["python", "scripts/build_low_z_pantheon_time_readout_clock_rate_phase_candidate_v1.py"],
+        ["python", "scripts/validate_low_z_pantheon_time_readout_clock_rate_phase_candidate_v1.py"],
+        ["python", "scripts/run_low_z_pantheon_clock_rate_phase_fast_screen_v1.py"],
+        ["python", "scripts/validate_low_z_pantheon_clock_rate_phase_fast_screen_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (
+        ROOT / "data/derived/low_z_pantheon_time_readout_clock_rate_phase_candidate_v1_summary.csv"
+    ).open(newline="") as f:
+        candidate_summary = list(csv.DictReader(f))[0]
+    with (ROOT / "data/derived/low_z_pantheon_clock_rate_phase_fast_screen_v1_summary.csv").open(
+        newline=""
+    ) as f:
+        screen_summary = list(csv.DictReader(f))[0]
+    assert candidate_summary["verdict"] == "clock_rate_phase_candidate_frozen_source_side_not_endpoint_authorized"
+    assert candidate_summary["endpoint_replay_allowed"] == "false"
+    assert screen_summary["verdict"] == "clock_rate_phase_fast_screen_not_control_resistant"
+    assert screen_summary["best_candidate_family"] == "clock_phase"
+    assert screen_summary["delta_chi2_candidate_minus_baseline"] == "-0.523771964"
+    assert screen_summary["best_global_control_branch"] == "rank_reverse"
+    assert screen_summary["best_global_control_family"] == "clock_level"
+    assert screen_summary["endpoint_replay_allowed"] == "false"
+    assert screen_summary["endpoint_validation_claimed"] == "false"
+    assert screen_summary["physical_validation_claimed"] == "false"
+
+
+def test_low_z_pantheon_clock_rate_phase_rank_control_audit_explains_blocker() -> None:
+    for command in [
+        ["python", "scripts/build_low_z_pantheon_clock_rate_phase_rank_control_audit_v1.py"],
+        ["python", "scripts/validate_low_z_pantheon_clock_rate_phase_rank_control_audit_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (
+        ROOT / "data/derived/low_z_pantheon_clock_rate_phase_rank_control_audit_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["verdict"] == "low_cc_bin_count_rank_control_dominance_confirmed_not_validation"
+    assert summary["assigned_cc_bin_count"] == "3"
+    assert summary["all_families_rank_control_dominated"] == "true"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["physical_validation_claimed"] == "false"
+
+
+def test_pantheon_clock_rate_phase_cc_support_fast_screen_improves_but_fails_global_control() -> None:
+    for command in [
+        ["python", "scripts/build_pantheon_time_readout_clock_rate_phase_cc_support_candidate_v1.py"],
+        ["python", "scripts/validate_pantheon_time_readout_clock_rate_phase_cc_support_candidate_v1.py"],
+        ["python", "scripts/run_pantheon_clock_rate_phase_cc_support_fast_screen_v1.py"],
+        ["python", "scripts/validate_pantheon_clock_rate_phase_cc_support_fast_screen_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (
+        ROOT / "data/derived/pantheon_time_readout_clock_rate_phase_cc_support_candidate_v1_summary.csv"
+    ).open(newline="") as f:
+        candidate_summary = list(csv.DictReader(f))[0]
+    with (ROOT / "data/derived/pantheon_clock_rate_phase_cc_support_fast_screen_v1_summary.csv").open(
+        newline=""
+    ) as f:
+        screen_summary = list(csv.DictReader(f))[0]
+    family_rows = {
+        row["family_id"]: row
+        for row in csv.DictReader(
+            (ROOT / "data/derived/pantheon_clock_rate_phase_cc_support_fast_screen_v1_family_summary.csv").open(
+                newline=""
+            )
+        )
+    }
+    assert candidate_summary["included_rows"] == "1370"
+    assert candidate_summary["used_cc_bin_count"] == "31"
+    assert screen_summary["verdict"] == "clock_rate_phase_cc_support_fast_screen_not_control_resistant"
+    assert screen_summary["best_candidate_family"] == "clock_slope"
+    assert screen_summary["delta_chi2_candidate_minus_baseline"] == "-1.14287181"
+    assert screen_summary["best_global_control_branch"] == "rank_reverse"
+    assert screen_summary["best_global_control_family"] == "clock_level"
+    assert screen_summary["controls_better_than_candidate_chi2"] == "1"
+    assert family_rows["clock_slope"]["family_survives_local_controls"] == "true"
+    assert screen_summary["endpoint_replay_allowed"] == "false"
+    assert screen_summary["endpoint_validation_claimed"] == "false"
+    assert screen_summary["physical_validation_claimed"] == "false"
+
+
+def test_pantheon_clock_slope_route_gate_freezes_review_candidate_status() -> None:
+    for command in [
+        ["python", "scripts/build_pantheon_clock_slope_route_gate_v1.py"],
+        ["python", "scripts/validate_pantheon_clock_slope_route_gate_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (ROOT / "data/derived/pantheon_clock_slope_route_gate_v1.csv").open(newline="") as f:
+        gate = list(csv.DictReader(f))[0]
+    assert gate["selected_route_candidate_family"] == "clock_slope"
+    assert gate["local_controls_pass"] == "true"
+    assert gate["global_controls_pass"] == "false"
+    assert gate["baseline_improves"] == "true"
+    assert gate["endpoint_replay_allowed"] == "false"
+    assert gate["route_status"] == "CLOCK_SLOPE_REVIEW_CANDIDATE_ENDPOINT_BLOCKED_BY_GLOBAL_CONTROL"
+
+
+def test_pantheon_clock_slope_route_replay_authorization_package_is_not_completed() -> None:
+    for command in [
+        ["python", "scripts/build_pantheon_clock_slope_route_replay_authorization_review_template_v1.py"],
+        ["python", "scripts/validate_pantheon_clock_slope_route_replay_authorization_review_template_v1.py"],
+        ["python", "scripts/build_pantheon_clock_slope_route_replay_authorization_review_package_v1.py"],
+        ["python", "scripts/validate_pantheon_clock_slope_route_replay_authorization_review_package_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (
+        ROOT / "data/derived/pantheon_clock_slope_route_replay_authorization_review_package_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["verdict"] == "clock_slope_route_replay_authorization_package_ready_not_completed"
+    assert summary["review_completed"] == "false"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["contains_endpoint_residuals"] == "false"
+    assert summary["contains_endpoint_scores"] == "false"
+    assert summary["contains_fit_statistics"] == "false"
+
+
+def test_sdss_bao_time_readout_observable_route_audit_is_underresolved_nonreplay() -> None:
+    for command in [
+        ["python", "scripts/build_sdss_bao_time_readout_observable_route_audit_v1.py"],
+        ["python", "scripts/validate_sdss_bao_time_readout_observable_route_audit_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (ROOT / "data/derived/sdss_bao_time_readout_observable_route_audit_v1_summary.csv").open(
+        newline=""
+    ) as f:
+        summary = list(csv.DictReader(f))[0]
+    with (ROOT / "data/derived/sdss_bao_time_readout_observable_route_audit_v1.csv").open(
+        newline=""
+    ) as f:
+        rows = list(csv.DictReader(f))
+    assert len(rows) == 2
+    assert summary["verdict"] == "independent_radial_bao_time_observable_present_but_underresolved_not_replay"
+    assert summary["radial_bao_rows"] == "2"
+    assert summary["redshift_bin_count"] == "2"
+    assert summary["independent_from_pantheon_distance_residuals"] == "true"
+    assert summary["independent_from_cc_clock_level_route"] == "true"
+    assert summary["rd_nuisance_unresolved"] == "true"
+    assert summary["underresolved_for_endpoint_route"] == "true"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert {row["observable"] for row in rows} == {"DH_over_rd"}
+    assert {row["contains_endpoint_scores"] for row in rows} == {"false"}
+    assert {row["contains_residuals"] for row in rows} == {"false"}
+
+
+def test_paper10_joint_cc_bao_time_route_consistency_audit_identifies_level_not_slope() -> None:
+    for command in [
+        ["python", "scripts/build_paper10_joint_cc_bao_time_route_consistency_audit_v1.py"],
+        ["python", "scripts/validate_paper10_joint_cc_bao_time_route_consistency_audit_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (ROOT / "data/derived/paper10_joint_cc_bao_time_route_consistency_audit_v1_summary.csv").open(
+        newline=""
+    ) as f:
+        summary = list(csv.DictReader(f))[0]
+    with (ROOT / "data/derived/paper10_joint_cc_bao_time_route_consistency_audit_v1.csv").open(
+        newline=""
+    ) as f:
+        rows = list(csv.DictReader(f))
+    assert len(rows) == 2
+    assert summary["verdict"] == "radial_bao_aligns_with_cc_level_not_cc_slope_underresolved_not_replay"
+    assert summary["radial_bao_rows"] == "2"
+    assert summary["nearest_cc_rows_used"] == "2"
+    assert summary["bao_cc_level_two_point_alignment"] == "1"
+    assert summary["bao_cc_slope_two_point_alignment"] == "-1"
+    assert summary["rd_nuisance_unresolved"] == "true"
+    assert summary["two_point_underresolved"] == "true"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert {row["contains_endpoint_scores"] for row in rows} == {"false"}
+    assert {row["contains_residuals"] for row in rows} == {"false"}
+
+
+def test_paper10_time_readout_route_synthesis_gate_preserves_blockers() -> None:
+    for command in [
+        ["python", "scripts/build_paper10_joint_cc_bao_time_route_consistency_audit_v1.py"],
+        ["python", "scripts/validate_paper10_joint_cc_bao_time_route_consistency_audit_v1.py"],
+        ["python", "scripts/build_paper10_time_readout_route_synthesis_gate_v1.py"],
+        ["python", "scripts/validate_paper10_time_readout_route_synthesis_gate_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (ROOT / "data/derived/paper10_time_readout_route_synthesis_gate_v1.csv").open(newline="") as f:
+        gate = list(csv.DictReader(f))[0]
+    assert gate["cc_selected_route"] == "clock_slope"
+    assert gate["cc_local_controls_pass"] == "true"
+    assert gate["cc_global_controls_pass"] == "false"
+    assert gate["radial_bao_rows"] == "2"
+    assert gate["radial_bao_independent_from_cc_clock_level_route"] == "true"
+    assert gate["radial_bao_rd_nuisance_unresolved"] == "true"
+    assert gate["radial_bao_underresolved_for_endpoint_route"] == "true"
+    assert (
+        gate["joint_cc_bao_time_route_verdict"]
+        == "radial_bao_aligns_with_cc_level_not_cc_slope_underresolved_not_replay"
+    )
+    assert gate["joint_cc_bao_level_alignment"] == "1"
+    assert gate["joint_cc_bao_slope_alignment"] == "-1"
+    assert (
+        gate["synthesis_status"]
+        == "clock_slope_review_candidate_plus_independent_bao_level_route_underresolved_not_endpoint"
+    )
+    assert gate["endpoint_replay_allowed"] == "false"
+    assert gate["endpoint_validation_claimed"] == "false"
+    assert gate["physical_validation_claimed"] == "false"
+
+
+def test_paper10_time_readout_level_slope_route_split_ledger_preserves_route_boundaries() -> None:
+    for command in [
+        ["python", "scripts/build_paper10_time_readout_level_slope_route_split_ledger_v1.py"],
+        ["python", "scripts/validate_paper10_time_readout_level_slope_route_split_ledger_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (ROOT / "data/derived/paper10_time_readout_level_slope_route_split_ledger_v1.csv").open(
+        newline=""
+    ) as f:
+        rows = list(csv.DictReader(f))
+    with (ROOT / "data/derived/paper10_time_readout_level_slope_route_split_ledger_v1_summary.csv").open(
+        newline=""
+    ) as f:
+        summary = list(csv.DictReader(f))[0]
+    by_route = {row["route_id"]: row for row in rows}
+    assert set(by_route) == {"time_level_route", "time_slope_route"}
+    assert by_route["time_level_route"]["joint_route_alignment"] == "1"
+    assert by_route["time_slope_route"]["joint_route_alignment"] == "-1"
+    assert "rd_nuisance_unresolved" in by_route["time_level_route"]["main_blockers"]
+    assert "two_point_underresolved" in by_route["time_level_route"]["main_blockers"]
+    assert "global_rank_control_blocker" in by_route["time_slope_route"]["main_blockers"]
+    assert "claiming_radial_BAO_as_clock_slope_support" in by_route["time_slope_route"]["forbidden_route"]
+    assert summary["verdict"] == "level_and_slope_time_routes_split_source_side_not_endpoint"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["physical_validation_claimed"] == "false"
+
+
+def test_paper10_time_level_route_nuisance_interface_freeze_plan_blocks_rd_leakage() -> None:
+    subprocess.run(
+        ["python", "scripts/validate_paper10_time_level_route_nuisance_interface_freeze_plan_v1.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    with (ROOT / "data/derived/paper10_time_level_route_nuisance_interface_freeze_plan_v1_summary.csv").open(
+        newline=""
+    ) as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["route_id"] == "time_level_route"
+    assert summary["nuisance_parameter"] == "rd"
+    assert summary["verdict"] == "time_level_route_rd_policy_required_before_endpoint"
+    assert "two_point_directional_level_alignment_only" in summary["allowed_current_use"]
+    assert "no_absolute_H_scale_claim" in summary["allowed_current_use"]
+    assert "freeze_external_rd_prior_or_rd_marginalization_policy" in summary["next_required_source_gate"]
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["physical_validation_claimed"] == "false"
+
+
+def test_paper10_bao_rd_cancelled_time_level_difference_audit_remains_directional_only() -> None:
+    for command in [
+        ["python", "scripts/build_paper10_bao_rd_cancelled_time_level_difference_audit_v1.py"],
+        ["python", "scripts/validate_paper10_bao_rd_cancelled_time_level_difference_audit_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (ROOT / "data/derived/paper10_bao_rd_cancelled_time_level_difference_audit_v1_summary.csv").open(
+        newline=""
+    ) as f:
+        summary = list(csv.DictReader(f))[0]
+    with (ROOT / "data/derived/paper10_bao_rd_cancelled_time_level_difference_audit_v1.csv").open(
+        newline=""
+    ) as f:
+        rows = list(csv.DictReader(f))
+    assert len(rows) == 2
+    assert summary["rd_cancels_in_difference"] == "true"
+    assert summary["differential_direction_sign_agreement"] == "true"
+    assert float(summary["delta_bao_snr"]) < 1.0
+    assert summary["amplitude_interpretation_allowed"] == "false"
+    assert summary["verdict"] == "rd_cancels_direction_agrees_but_bao_delta_low_significance_not_endpoint"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["physical_validation_claimed"] == "false"
+    assert {row["contains_endpoint_scores"] for row in rows} == {"false"}
+    assert {row["contains_residuals"] for row in rows} == {"false"}
+
+
+def test_paper10_time_level_rd_policy_selection_gate_forbids_residual_rd_fit() -> None:
+    subprocess.run(
+        ["python", "scripts/validate_paper10_time_level_rd_policy_selection_gate_v1.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    with (ROOT / "data/source_manifest/paper10_time_level_rd_policy_selection_gate_v1.csv").open(
+        newline=""
+    ) as f:
+        rows = list(csv.DictReader(f))
+    with (ROOT / "data/derived/paper10_time_level_rd_policy_selection_gate_v1_summary.csv").open(
+        newline=""
+    ) as f:
+        summary = list(csv.DictReader(f))[0]
+    by_option = {row["policy_option"]: row for row in rows}
+    assert by_option["rd_cancelled_differential_direction"]["policy_status"] == "ACCEPT_CURRENT_SOURCE_SIDE_ONLY"
+    assert by_option["rd_cancelled_differential_direction"]["endpoint_replay_allowed"] == "false"
+    assert by_option["external_rd_prior"]["policy_status"] == "FUTURE_ROUTE_PENDING_SOURCE_FREEZE"
+    assert by_option["analytic_rd_marginalization"]["policy_status"] == "FUTURE_ROUTE_PENDING_PROTOCOL_FREEZE"
+    assert by_option["fit_rd_from_pantheon_residuals"]["policy_status"] == "FORBIDDEN"
+    assert "fitted_rd_from_pantheon" in by_option["fit_rd_from_pantheon_residuals"]["forbidden_inputs"]
+    assert summary["accepted_current_policy"] == "rd_cancelled_differential_direction"
+    assert summary["current_endpoint_replay_allowed"] == "false"
+    assert summary["verdict"] == "rd_cancelled_direction_only_currently_allowed_external_or_marginalized_rd_pending"
+
+
+def test_paper10_external_rd_prior_freeze_protocol_is_template_only() -> None:
+    subprocess.run(
+        ["python", "scripts/validate_paper10_external_rd_prior_freeze_protocol_v1.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    with (ROOT / "data/derived/paper10_external_rd_prior_freeze_protocol_v1_summary.csv").open(
+        newline=""
+    ) as f:
+        summary = list(csv.DictReader(f))[0]
+    with (ROOT / "data/derived/paper10_external_rd_prior_freeze_response_template_v1.csv").open(
+        newline=""
+    ) as f:
+        template = list(csv.DictReader(f))[0]
+    assert summary["verdict"] == "external_rd_prior_protocol_ready_but_no_numeric_prior_frozen"
+    assert summary["template_ready"] == "true"
+    assert summary["completed_response_present"] == "false"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert template["uses_pantheon_residuals"] == "false"
+    assert template["uses_endpoint_scores"] == "false"
+    assert template["uses_late_time_fit_parameters"] == "false"
+
+
+def test_paper10_external_rd_prior_freeze_response_is_source_side_only() -> None:
+    subprocess.run(
+        ["python", "scripts/validate_paper10_external_rd_prior_freeze_response_v1.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    with (ROOT / "data/derived/paper10_external_rd_prior_freeze_response_v1_summary.csv").open(
+        newline=""
+    ) as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["prior_source_id"] == "Planck2018_base_LCDM_TTTEEE_lowE_lensing_rdrag"
+    assert summary["rd_mpc"] == "147.09"
+    assert summary["sigma_rd_mpc"] == "0.26"
+    assert summary["uses_pantheon_residuals"] == "false"
+    assert summary["uses_endpoint_scores"] == "false"
+    assert summary["uses_late_time_fit_parameters"] == "false"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["physical_validation_claimed"] == "false"
+    assert summary["verdict"] == "planck2018_rd_prior_frozen_as_caveated_external_source_not_endpoint"
+
+
+def test_paper10_bao_rd_marginalization_protocol_is_source_side_only() -> None:
+    subprocess.run(
+        ["python", "scripts/validate_paper10_bao_rd_marginalization_protocol_v1.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    with (ROOT / "data/derived/paper10_bao_rd_marginalization_protocol_v1_summary.csv").open(
+        newline=""
+    ) as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["status"] == "RD_MARGINALIZATION_PROTOCOL_READY_NOT_REPLAY_NOT_VALIDATION"
+    assert summary["route_id"] == "time_level_route"
+    assert summary["nuisance_parameter"] == "beta_rd"
+    assert summary["protocol_blocker_closed"] == "joint_rd_marginalization_protocol_definition"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["physical_validation_claimed"] == "false"
+    assert summary["verdict"] == "rd_marginalization_protocol_frozen_but_endpoint_still_blocked"
+
+
+def test_paper10_time_level_endpoint_control_suite_protocol_is_declaration_only() -> None:
+    subprocess.run(
+        ["python", "scripts/validate_paper10_time_level_endpoint_control_suite_protocol_v1.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    with (ROOT / "data/derived/paper10_time_level_endpoint_control_suite_protocol_v1_summary.csv").open(
+        newline=""
+    ) as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["status"] == "TIME_LEVEL_ENDPOINT_CONTROL_SUITE_PROTOCOL_READY_NOT_REPLAY_NOT_VALIDATION"
+    assert summary["route_id"] == "time_level_route"
+    assert summary["control_family_count"] == "7"
+    assert summary["protocol_blocker_closed"] == "endpoint_control_suite_definition"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["physical_validation_claimed"] == "false"
+    assert summary["verdict"] == "time_level_endpoint_control_suite_declared_but_not_replayed"
+
+
+def test_paper10_time_level_bao_support_expansion_manifest_declares_routes_only() -> None:
+    subprocess.run(
+        ["python", "scripts/validate_paper10_time_level_bao_support_expansion_manifest_v1.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    with (ROOT / "data/derived/paper10_time_level_bao_support_expansion_manifest_v1_summary.csv").open(
+        newline=""
+    ) as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["status"] == "BAO_SUPPORT_EXPANSION_MANIFEST_DECLARED_NOT_REPLAY_NOT_VALIDATION"
+    assert summary["current_radial_bao_rows"] == "2"
+    assert summary["candidate_expansion_route_count"] == "3"
+    assert summary["protocol_target_min_independent_radial_bins"] == "4"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["physical_validation_claimed"] == "false"
+    assert (
+        summary["verdict"]
+        == "bao_support_expansion_routes_declared_but_current_endpoint_still_two_point_blocked"
+    )
+
+
+def test_paper10_desi_dr2_bao_source_inventory_is_source_freeze_only() -> None:
+    for command in [
+        ["python", "scripts/build_paper10_desi_dr2_bao_source_inventory_v1.py"],
+        ["python", "scripts/validate_paper10_desi_dr2_bao_source_inventory_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (ROOT / "data/derived/paper10_desi_dr2_bao_source_inventory_v1_summary.csv").open(
+        newline=""
+    ) as f:
+        summary = list(csv.DictReader(f))[0]
+    with (ROOT / "data/derived/paper10_desi_dr2_bao_source_inventory_v1.csv").open(
+        newline=""
+    ) as f:
+        rows = list(csv.DictReader(f))
+    assert summary["status"] == "DESI_DR2_BAO_SOURCE_INVENTORY_FROZEN_NOT_REPLAY_NOT_VALIDATION"
+    assert summary["mean_row_count"] == "13"
+    assert summary["covariance_dimension"] == "13"
+    assert summary["radial_dh_over_rd_rows"] == "6"
+    assert summary["candidate_bao_support_blocker_status"] == "source_frozen_but_not_integrated_into_endpoint"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["physical_validation_claimed"] == "false"
+    assert summary["verdict"] == "desi_dr2_public_bao_source_frozen_but_time_level_endpoint_not_replayed"
+    assert len(rows) == 13
+    assert len([row for row in rows if row["quantity"] == "DH_over_rs"]) == 6
+    assert {row["endpoint_replay_allowed"] for row in rows} == {"false"}
+    assert {row["endpoint_validation_claimed"] for row in rows} == {"false"}
+    assert {row["physical_validation_claimed"] for row in rows} == {"false"}
+
+
+def test_paper10_desi_dr2_radial_bao_time_interface_is_source_side_only() -> None:
+    for command in [
+        ["python", "scripts/build_paper10_desi_dr2_radial_bao_time_interface_v1.py"],
+        ["python", "scripts/validate_paper10_desi_dr2_radial_bao_time_interface_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (ROOT / "data/derived/paper10_desi_dr2_radial_bao_time_interface_v1_summary.csv").open(
+        newline=""
+    ) as f:
+        summary = list(csv.DictReader(f))[0]
+    with (ROOT / "data/derived/paper10_desi_dr2_radial_bao_time_interface_v1.csv").open(
+        newline=""
+    ) as f:
+        rows = list(csv.DictReader(f))
+    with (ROOT / "data/derived/paper10_desi_dr2_radial_bao_time_interface_covariance_v1.csv").open(
+        newline=""
+    ) as f:
+        cov_rows = list(csv.DictReader(f))
+    assert summary["status"] == "DESI_DR2_RADIAL_BAO_TIME_INTERFACE_FROZEN_NOT_REPLAY_NOT_VALIDATION"
+    assert summary["radial_row_count"] == "6"
+    assert summary["covariance_dimension"] == "6"
+    assert summary["z_min"] == "0.51"
+    assert summary["z_max"] == "2.33"
+    assert summary["beta_rd_nuisance_required"] == "true"
+    assert summary["matched_cc_support_required_before_replay"] == "true"
+    assert summary["control_seed_manifest_required_before_replay"] == "true"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["physical_validation_claimed"] == "false"
+    assert summary["verdict"] == "desi_radial_bao_time_interface_frozen_but_endpoint_replay_still_blocked"
+    assert len(rows) == 6
+    assert len(cov_rows) == 36
+    assert {row["endpoint_replay_allowed"] for row in rows} == {"false"}
+    assert {row["endpoint_replay_allowed"] for row in cov_rows} == {"false"}
+
+
+def test_paper10_desi_dr2_radial_bao_cc_match_is_partial_source_ledger_only() -> None:
+    for command in [
+        ["python", "scripts/build_paper10_desi_dr2_radial_bao_cc_match_v1.py"],
+        ["python", "scripts/validate_paper10_desi_dr2_radial_bao_cc_match_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (ROOT / "data/derived/paper10_desi_dr2_radial_bao_cc_match_v1_summary.csv").open(
+        newline=""
+    ) as f:
+        summary = list(csv.DictReader(f))[0]
+    with (ROOT / "data/derived/paper10_desi_dr2_radial_bao_cc_match_v1.csv").open(
+        newline=""
+    ) as f:
+        rows = list(csv.DictReader(f))
+    assert summary["status"] == "DESI_DR2_RADIAL_BAO_CC_MATCH_LEDGER_FROZEN_NOT_REPLAY_NOT_VALIDATION"
+    assert summary["input_radial_rows"] == "6"
+    assert summary["matched_within_cc_range_rows"] == "5"
+    assert summary["blocked_outside_cc_range_rows"] == "1"
+    assert summary["blocked_z_eff"] == "2.33"
+    assert summary["cc_extrapolation_used"] == "false"
+    assert summary["control_seed_manifest_required_before_replay"] == "true"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["physical_validation_claimed"] == "false"
+    assert summary["verdict"] == "desi_bao_cc_support_partially_matched_high_z_row_blocked_no_replay"
+    assert len(rows) == 6
+    assert len([row for row in rows if row["cc_support_status"] == "MATCHED_WITHIN_CC_RANGE"]) == 5
+    assert len([row for row in rows if row["cc_support_status"] == "BLOCKED_OUTSIDE_CC_RANGE_NO_EXTRAPOLATION"]) == 1
+    assert {row["cc_extrapolation_used"] for row in rows} == {"false"}
+    assert {row["endpoint_replay_allowed"] for row in rows} == {"false"}
+
+
+def test_paper10_desi_time_level_control_seed_manifest_is_frozen_not_replay() -> None:
+    subprocess.run(
+        ["python", "scripts/validate_paper10_desi_time_level_control_seed_manifest_v1.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    with (ROOT / "data/derived/paper10_desi_time_level_control_seed_manifest_v1_summary.csv").open(
+        newline=""
+    ) as f:
+        summary = list(csv.DictReader(f))[0]
+    with (ROOT / "data/source_manifest/paper10_desi_time_level_control_seed_manifest_v1.csv").open(
+        newline=""
+    ) as f:
+        rows = list(csv.DictReader(f))
+    assert summary["status"] == "DESI_TIME_LEVEL_CONTROL_SEED_MANIFEST_FROZEN_NOT_REPLAY_NOT_VALIDATION"
+    assert summary["control_family_count"] == "7"
+    assert summary["deterministic_seed_min"] == "41001"
+    assert summary["deterministic_seed_max"] == "41007"
+    assert summary["transform_scope"] == "first_CC_matched_DESI_5row_scope"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["physical_validation_claimed"] == "false"
+    assert summary["verdict"] == "desi_time_level_control_seed_manifest_frozen_not_replayed"
+    assert len(rows) == 7
+    assert len({row["seed"] for row in rows}) == 7
+    assert {row["endpoint_replay_allowed"] for row in rows} == {"false"}
+    assert {row["endpoint_validation_claimed"] for row in rows} == {"false"}
+    assert {row["physical_validation_claimed"] for row in rows} == {"false"}
+
+
+def test_paper10_time_level_route_external_rd_readiness_gate_closes_only_source_side_blockers() -> None:
+    for command in [
+        ["python", "scripts/build_paper10_time_level_route_external_rd_readiness_gate_v1.py"],
+        ["python", "scripts/validate_paper10_time_level_route_external_rd_readiness_gate_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (ROOT / "data/derived/paper10_time_level_route_external_rd_readiness_gate_v1_summary.csv").open(
+        newline=""
+    ) as f:
+        summary = list(csv.DictReader(f))[0]
+    with (ROOT / "data/derived/paper10_time_level_route_external_rd_readiness_gate_v1.csv").open(
+        newline=""
+    ) as f:
+        rows = list(csv.DictReader(f))
+    by_item = {row["item"]: row for row in rows}
+    assert len(rows) == 11
+    assert (
+        summary["verdict"]
+        == "desi_time_cc_matched_scope_and_controls_frozen_but_endpoint_authorization_missing"
+    )
+    assert summary["rd_prior_source_id"] == "Planck2018_base_LCDM_TTTEEE_lowE_lensing_rdrag"
+    assert summary["rd_mpc"] == "147.09"
+    assert summary["sigma_rd_mpc"] == "0.26"
+    assert summary["desi_dr2_radial_dh_over_rd_rows"] == "6"
+    assert summary["desi_dr2_covariance_dimension"] == "13"
+    assert summary["desi_dr2_time_interface_z_range"] == "0.51;2.33"
+    assert summary["desi_dr2_cc_matched_rows"] == "5"
+    assert summary["desi_dr2_cc_blocked_rows"] == "1"
+    assert summary["desi_dr2_first_cc_matched_endpoint_rows"] == "5"
+    assert summary["desi_time_level_control_family_count"] == "7"
+    assert summary["desi_time_level_control_seed_range"] == "41001;41007"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["physical_validation_claimed"] == "false"
+    assert "external_rd_prior_source_freeze" in summary["closed_source_side_blockers"]
+    assert "joint_rd_marginalization_protocol_definition" in summary["closed_source_side_blockers"]
+    assert "endpoint_control_suite_definition" in summary["closed_source_side_blockers"]
+    assert "bao_support_expansion_manifest_declared" in summary["closed_source_side_blockers"]
+    assert "desi_dr2_public_bao_source_inventory_frozen" in summary["closed_source_side_blockers"]
+    assert "desi_dr2_radial_bao_time_interface_frozen" in summary["closed_source_side_blockers"]
+    assert "desi_dr2_radial_bao_cc_match_ledger_frozen" in summary["closed_source_side_blockers"]
+    assert "desi_dr2_high_z_row_policy_frozen" in summary["closed_source_side_blockers"]
+    assert "desi_time_level_control_seed_manifest_frozen" in summary["closed_source_side_blockers"]
+    assert (
+        "low_significance_current_sdss_bao_difference"
+        in summary["closed_diagnostics_not_active_endpoint_blockers"]
+    )
+    assert summary["open_endpoint_blockers"] == "time_level_endpoint_authorization_review_missing"
+    assert by_item["time_level_endpoint_authorization_review_missing"]["status"] == "BLOCKER_OPEN"
+    assert by_item["low_significance_current_sdss_bao_difference"]["status"] == "CLOSED_DIAGNOSTIC_NOT_DESI_BLOCKER"
+    assert by_item["external_rd_prior_source_freeze"]["status"] == "CLOSED_SOURCE_SIDE"
+    assert by_item["joint_rd_marginalization_protocol_definition"]["status"] == "CLOSED_SOURCE_SIDE"
+    assert by_item["endpoint_control_suite_definition"]["status"] == "CLOSED_SOURCE_SIDE"
+    assert by_item["bao_support_expansion_manifest_declared"]["status"] == "CLOSED_SOURCE_SIDE"
+    assert by_item["desi_dr2_public_bao_source_inventory_frozen"]["status"] == "CLOSED_SOURCE_SIDE"
+    assert by_item["desi_dr2_radial_bao_time_interface_frozen"]["status"] == "CLOSED_SOURCE_SIDE"
+    assert by_item["desi_dr2_radial_bao_cc_match_ledger_frozen"]["status"] == "CLOSED_SOURCE_SIDE"
+    assert by_item["desi_dr2_high_z_row_policy_frozen"]["status"] == "CLOSED_SOURCE_SIDE"
+    assert by_item["desi_time_level_control_seed_manifest_frozen"]["status"] == "CLOSED_SOURCE_SIDE"
+    assert {row["endpoint_replay_allowed"] for row in rows} == {"false"}
+    assert {row["endpoint_validation_claimed"] for row in rows} == {"false"}
+    assert {row["physical_validation_claimed"] for row in rows} == {"false"}
+
+
+def test_paper10_desi_time_level_endpoint_authorization_package_is_blank_not_replay() -> None:
+    for command in [
+        ["python", "scripts/build_paper10_desi_time_level_endpoint_authorization_review_template_v1.py"],
+        ["python", "scripts/validate_paper10_desi_time_level_endpoint_authorization_review_template_v1.py"],
+        ["python", "scripts/build_paper10_desi_time_level_endpoint_authorization_review_package_v1.py"],
+        ["python", "scripts/validate_paper10_desi_time_level_endpoint_authorization_review_package_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (
+        ROOT / "data/derived/paper10_desi_time_level_endpoint_authorization_review_template_v1_summary.csv"
+    ).open(newline="") as f:
+        template_summary = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/paper10_desi_time_level_endpoint_authorization_review_response_template_v1.csv"
+    ).open(newline="") as f:
+        template_rows = list(csv.DictReader(f))
+    with (
+        ROOT / "data/derived/paper10_desi_time_level_endpoint_authorization_review_package_v1_summary.csv"
+    ).open(newline="") as f:
+        package_summary = list(csv.DictReader(f))[0]
+    assert template_summary["status"] == "DESI_TIME_LEVEL_ENDPOINT_AUTHORIZATION_TEMPLATE_READY_NOT_COMPLETED"
+    assert template_summary["desi_first_endpoint_rows"] == "5"
+    assert template_summary["desi_control_family_count"] == "7"
+    assert template_summary["desi_control_seed_range"] == "41001;41007"
+    assert template_summary["review_completed"] == "false"
+    assert template_summary["endpoint_replay_allowed"] == "false"
+    assert template_summary["endpoint_validation_claimed"] == "false"
+    assert template_summary["physical_validation_claimed"] == "false"
+    assert len(template_rows) == 5
+    assert {row["review_completed"] for row in template_rows} == {"false"}
+    assert {row["forbidden_inputs_used"] for row in template_rows} == {"false"}
+    assert {row["endpoint_replay_allowed"] for row in template_rows} == {"false"}
+    assert {row["endpoint_validation_claimed"] for row in template_rows} == {"false"}
+    assert {row["physical_validation_claimed"] for row in template_rows} == {"false"}
+    assert package_summary["status"] == "DESI_TIME_LEVEL_ENDPOINT_AUTHORIZATION_PACKAGE_BUILT_NOT_COMPLETED"
+    assert package_summary["package_file_count"] == "36"
+    assert package_summary["review_completed"] == "false"
+    assert package_summary["endpoint_replay_allowed"] == "false"
+    assert package_summary["endpoint_validation_claimed"] == "false"
+    assert package_summary["contains_endpoint_residuals"] == "false"
+    assert package_summary["contains_endpoint_scores"] == "false"
+    assert package_summary["contains_fit_statistics"] == "false"
+    assert package_summary["physical_validation_claimed"] == "false"
+    assert package_summary["verdict"] == "desi_time_level_endpoint_authorization_package_ready_not_completed"
+
+
+def test_paper10_desi_time_level_endpoint_authorization_response_validator_accepts_permission_only_probe(
+    tmp_path: Path,
+) -> None:
+    template_path = ROOT / "data/derived/paper10_desi_time_level_endpoint_authorization_review_response_template_v1.csv"
+    with template_path.open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    for row in rows:
+        row["review_completed"] = "true"
+        row["reviewer_id_or_role"] = "synthetic_test_reviewer_not_canonical"
+        row["reviewer_response"] = "accept"
+        row["reviewer_rationale"] = (
+            "Synthetic validator probe: frozen five-row scope, controls, and no-leakage "
+            "conditions are acknowledged."
+        )
+        row["endpoint_replay_allowed"] = "true"
+    probe = tmp_path / "desi_time_level_endpoint_authorization_response_probe.csv"
+    summary_out = tmp_path / "desi_time_level_endpoint_authorization_response_probe_summary.csv"
+    with probe.open("w", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=list(rows[0].keys()), lineterminator="\n")
+        writer.writeheader()
+        writer.writerows(rows)
+    subprocess.run(
+        [
+            "python",
+            "scripts/validate_paper10_desi_time_level_endpoint_authorization_review_response_v1.py",
+            str(probe),
+            "--summary-out",
+            str(summary_out),
+        ],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    with summary_out.open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["status"] == "DESI_TIME_LEVEL_ENDPOINT_AUTHORIZATION_ACCEPTED_PERMISSION_ONLY"
+    assert summary["decision"] == "GO_DESI_CC_5ROW_TIME_LEVEL_REPLAY_PERMISSION_ONLY"
+    assert summary["review_completed"] == "true"
+    assert summary["forbidden_inputs_used"] == "false"
+    assert summary["endpoint_replay_allowed"] == "true"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["physical_validation_claimed"] == "false"
+    assert summary["desi_first_endpoint_rows"] == "5"
+    assert summary["desi_control_family_count"] == "7"
+
+
+def test_paper10_desi_time_level_endpoint_authorization_response_is_accepted_permission_only() -> None:
+    subprocess.run(
+        ["python", "scripts/validate_paper10_desi_time_level_endpoint_authorization_review_response_v1.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    with (
+        ROOT / "data/derived/paper10_desi_time_level_endpoint_authorization_review_response_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["status"] == "DESI_TIME_LEVEL_ENDPOINT_AUTHORIZATION_ACCEPTED_PERMISSION_ONLY"
+    assert summary["decision"] == "GO_DESI_CC_5ROW_TIME_LEVEL_REPLAY_PERMISSION_ONLY"
+    assert summary["response_path"] == "data/derived/paper10_desi_time_level_endpoint_authorization_review_response_v1.csv"
+    assert summary["review_completed"] == "true"
+    assert summary["forbidden_inputs_used"] == "false"
+    assert summary["endpoint_replay_allowed"] == "true"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["physical_validation_claimed"] == "false"
+    assert summary["authorization_scope"] == "single_permission_only_desi_cc_5row_time_level_replay_not_validation"
+    assert summary["desi_first_endpoint_rows"] == "5"
+    assert summary["desi_control_family_count"] == "7"
+    assert summary["desi_control_seed_range"] == "41001;41007"
+    assert summary["claim_boundary"] == "paper10_desi_time_level_endpoint_authorization_review_not_validation"
+
+
+def test_paper10_desi_time_level_endpoint_replay_run_template_is_auth_required_not_replay() -> None:
+    subprocess.run(
+        ["python", "scripts/validate_paper10_desi_time_level_endpoint_replay_run_template_v1.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    with (ROOT / "data/source_manifest/paper10_desi_time_level_endpoint_replay_run_template_v1.csv").open(
+        newline=""
+    ) as f:
+        row = list(csv.DictReader(f))[0]
+    assert row["status"] == "DESI_TIME_LEVEL_ENDPOINT_REPLAY_PREPARED_AUTH_REQUIRED_NOT_VALIDATION"
+    assert row["active_route_family"] == "DESI_CC_MATCHED_RADIAL_BAO_TIME_LEVEL"
+    assert row["endpoint_scope"] == "first_CC_matched_DESI_5row_scope"
+    assert row["radial_rows_allowed"] == "0;1;2;3;4"
+    assert row["radial_rows_excluded"] == "5"
+    assert row["endpoint_replay_allowed"] == "false"
+    assert row["endpoint_validation_claimed"] == "false"
+    assert row["physical_validation_claimed"] == "false"
+    assert row["claim_boundary"] == "paper10_desi_time_level_endpoint_replay_template_not_validation"
+    for marker in [
+        "endpoint_scores_before_authorization",
+        "fit_statistics_before_authorization",
+        "posthoc_row_selection",
+        "posthoc_control_selection",
+        "posthoc_cc_extrapolation",
+        "physical_validation_claims",
+    ]:
+        assert marker in row["forbidden_inputs"]
+
+
+def test_paper10_desi_time_level_endpoint_authorized_replay_preserves_negative_control_result() -> None:
+    for command in [
+        ["python", "scripts/run_paper10_desi_time_level_endpoint_authorized_replay_v1.py"],
+        ["python", "scripts/validate_paper10_desi_time_level_endpoint_authorized_replay_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (ROOT / "data/derived/paper10_desi_time_level_endpoint_authorized_replay_v1_summary.csv").open(
+        newline=""
+    ) as f:
+        summary = list(csv.DictReader(f))[0]
+    with (ROOT / "data/derived/paper10_desi_time_level_endpoint_authorized_replay_v1_grid.csv").open(
+        newline=""
+    ) as f:
+        rows = list(csv.DictReader(f))
+    assert summary["status"] == "DESI_TIME_LEVEL_ENDPOINT_AUTHORIZED_REPLAY_PERMISSION_ONLY_NOT_VALIDATION"
+    assert summary["authorization_decision"] == "GO_DESI_CC_5ROW_TIME_LEVEL_REPLAY_PERMISSION_ONLY"
+    assert summary["n_rows"] == "5"
+    assert summary["excluded_radial_rows"] == "5"
+    assert summary["branch_count"] == "8"
+    assert summary["endpoint_replay_allowed"] == "true"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["physical_validation_claimed"] == "false"
+    assert summary["family_survives_controls"] == "false"
+    assert summary["verdict"] == "desi_time_level_permission_replay_not_control_resistant_not_validation"
+    assert summary["best_control_branch"] == "redshift_order_shuffle_control"
+    assert float(summary["candidate_chi2"]) > float(summary["best_control_chi2"])
+    assert {row["endpoint_validation_claimed"] for row in rows} == {"false"}
+    assert {row["physical_validation_claimed"] for row in rows} == {"false"}
+    assert {row["claim_boundary"] for row in rows} == {
+        "paper10_desi_time_level_endpoint_authorized_replay_permission_only_not_validation"
+    }
+
+
+def test_paper10_desi_time_level_negative_control_diagnostic_explains_failure_mode() -> None:
+    for command in [
+        ["python", "scripts/run_paper10_desi_time_level_endpoint_authorized_replay_v1.py"],
+        ["python", "scripts/validate_paper10_desi_time_level_endpoint_authorized_replay_v1.py"],
+        ["python", "scripts/build_paper10_desi_time_level_negative_control_diagnostic_v1.py"],
+        ["python", "scripts/validate_paper10_desi_time_level_negative_control_diagnostic_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (ROOT / "data/derived/paper10_desi_time_level_negative_control_diagnostic_v1_summary.csv").open(
+        newline=""
+    ) as f:
+        summary = list(csv.DictReader(f))[0]
+    with (ROOT / "data/derived/paper10_desi_time_level_negative_control_diagnostic_v1_branches.csv").open(
+        newline=""
+    ) as f:
+        branches = list(csv.DictReader(f))
+    assert summary["status"] == "DESI_TIME_LEVEL_NEGATIVE_CONTROL_DIAGNOSTIC_BUILT_NOT_VALIDATION"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["physical_validation_claimed"] == "false"
+    assert summary["failure_mode"] == "five_row_time_level_constant_beta_endpoint_is_ordering_fragile"
+    assert summary["largest_candidate_diag_pull_radial_index"] == "3"
+    assert int(summary["controls_better_than_candidate_chi2"]) == 4
+    assert summary["verdict"] == (
+        "desi_time_level_negative_control_diagnostic_explains_non_control_resistance_not_validation"
+    )
+    best = min(branches, key=lambda row: float(row["chi2"]))
+    assert best["branch"] == "redshift_order_shuffle_control"
+    assert best["branch_role"] == "control_beats_candidate"
+
+
+def test_paper10_desi_time_level_negative_response_blocks_replay_until_source_expansion() -> None:
+    for command in [
+        ["python", "scripts/build_paper10_desi_time_level_negative_control_diagnostic_v1.py"],
+        ["python", "scripts/validate_paper10_desi_time_level_negative_control_diagnostic_v1.py"],
+        ["python", "scripts/build_paper10_desi_time_level_negative_control_response_gate_v1.py"],
+        ["python", "scripts/validate_paper10_desi_time_level_negative_control_response_gate_v1.py"],
+        ["python", "scripts/validate_paper10_desi_time_readout_expansion_manifest_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (ROOT / "data/derived/paper10_desi_time_level_negative_control_response_gate_v1_summary.csv").open(
+        newline=""
+    ) as f:
+        response = list(csv.DictReader(f))[0]
+    with (ROOT / "data/derived/paper10_desi_time_readout_expansion_manifest_v1_summary.csv").open(
+        newline=""
+    ) as f:
+        expansion = list(csv.DictReader(f))[0]
+    assert response["status"] == "DESI_TIME_LEVEL_NEGATIVE_CONTROL_RESPONSE_GATE_BUILT_NOT_VALIDATION"
+    assert response["endpoint_replay_allowed"] == "false"
+    assert response["next_allowed_action"] == "build_source_side_time_readout_expansion_manifest_only"
+    assert response["verdict"] == (
+        "desi_time_level_negative_control_response_gate_blocks_replay_until_richer_clock_readout_support"
+    )
+    assert expansion["status"] == "DESI_TIME_READOUT_EXPANSION_MANIFEST_VALIDATED_NOT_REPLAY_NOT_VALIDATION"
+    assert expansion["route_count"] == "5"
+    assert expansion["endpoint_ready_route_count"] == "0"
+    assert expansion["next_primary_source_gate"] == "HIGH_Z_INDEPENDENT_CLOCK_SUPPORT"
+    assert expansion["next_parallel_source_gate"] == "TIME_READOUT_SHAPE_OBSERVABLE"
+    assert expansion["endpoint_replay_allowed"] == "false"
+    assert expansion["verdict"] == "desi_time_readout_expansion_manifest_frozen_but_no_replay_ready_route"
+
+
+def test_paper10_desi_high_z_clock_support_keeps_lya_row_as_holdout() -> None:
+    for command in [
+        ["python", "scripts/build_paper10_desi_high_z_independent_clock_support_audit_v1.py"],
+        ["python", "scripts/validate_paper10_desi_high_z_independent_clock_support_audit_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (ROOT / "data/derived/paper10_desi_high_z_independent_clock_support_audit_v1_summary.csv").open(
+        newline=""
+    ) as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["status"] == "DESI_HIGH_Z_INDEPENDENT_CLOCK_SUPPORT_AUDIT_BUILT_NOT_REPLAY_NOT_VALIDATION"
+    assert summary["target_radial_index"] == "5"
+    assert summary["target_z_eff"] == "2.33"
+    assert summary["cc_z_max"] == "1.965"
+    assert summary["target_within_frozen_cc_support"] == "false"
+    assert summary["target_bracketed_without_extrapolation"] == "false"
+    assert summary["endpoint_ready_support_count"] == "0"
+    assert summary["high_z_row_can_enter_replay"] == "false"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["physical_validation_claimed"] == "false"
+    assert summary["verdict"] == "desi_high_z_clock_support_missing_row_remains_holdout_not_validation"
+
+
+def test_paper10_desi_time_readout_shape_gate_freezes_candidate_without_replay() -> None:
+    for command in [
+        ["python", "scripts/build_paper10_desi_time_readout_shape_observable_gate_v1.py"],
+        ["python", "scripts/validate_paper10_desi_time_readout_shape_observable_gate_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (ROOT / "data/derived/paper10_desi_time_readout_shape_observable_gate_v1_summary.csv").open(
+        newline=""
+    ) as f:
+        summary = list(csv.DictReader(f))[0]
+    with (ROOT / "data/derived/paper10_desi_time_readout_shape_observable_gate_v1.csv").open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    assert summary["status"] == "DESI_TIME_READOUT_SHAPE_OBSERVABLE_GATE_BUILT_NOT_REPLAY_NOT_VALIDATION"
+    assert summary["input_cc_matched_rows"] == "5"
+    assert summary["high_z_row_included"] == "false"
+    assert summary["constant_beta_nuisance_removed"] == "true"
+    assert summary["first_difference_rows"] == "4"
+    assert summary["second_difference_rows"] == "3"
+    assert summary["shape_observable_candidate_available"] == "true"
+    assert summary["endpoint_ready_shape_observable"] == "false"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["physical_validation_claimed"] == "false"
+    assert summary["verdict"] == "desi_time_readout_shape_candidate_frozen_but_not_endpoint_ready"
+    assert len(rows) == 7
+    assert {row["constant_beta_nuisance_removed"] for row in rows} == {"true"}
+    assert {row["high_z_row_included"] for row in rows} == {"false"}
+    assert {row["endpoint_replay_allowed"] for row in rows} == {"false"}
+
+
+def test_paper10_desi_time_readout_shape_projection_induction_maps_to_tau_channels() -> None:
+    for command in [
+        ["python", "scripts/build_paper10_desi_time_readout_shape_observable_gate_v1.py"],
+        ["python", "scripts/build_paper10_desi_row5_high_z_source_route_scout_v1.py"],
+        ["python", "scripts/build_paper10_desi_row5_holdout_confirmation_v1.py"],
+        ["python", "scripts/build_paper10_desi_post_review_time_route_priority_v1.py"],
+        ["python", "scripts/build_paper10_desi_time_readout_shape_projection_induction_v1.py"],
+        ["python", "scripts/validate_paper10_desi_time_readout_shape_projection_induction_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (ROOT / "data/derived/paper10_desi_time_readout_shape_projection_induction_v1_summary.csv").open(
+        newline=""
+    ) as f:
+        summary = list(csv.DictReader(f))[0]
+    with (ROOT / "data/derived/paper10_desi_time_readout_shape_projection_induction_v1.csv").open(
+        newline=""
+    ) as f:
+        rows = list(csv.DictReader(f))
+    by_candidate = {row["candidate_id"]: row for row in rows}
+    assert summary["status"] == "DESI_TIME_READOUT_SHAPE_PROJECTION_INDUCTION_MAPPED_NOT_REPLAY_NOT_VALIDATION"
+    assert summary["primary_candidate"] == "CLOCK_SLOPE_SHAPE"
+    assert summary["active_tau_channels"] == "K_time;K_closure;K_null"
+    assert summary["projection_induction_complete"] == "false"
+    assert summary["quotient_survival_gate_status"] == "not_proven_ordering_null_unresolved"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["physical_validation_claimed"] == "false"
+    assert summary["verdict"] == "time_shape_maps_to_K_time_candidate_but_projection_induction_incomplete"
+    assert by_candidate["CLOCK_SLOPE_SHAPE"]["tau_readout_channel"] == "K_time"
+    assert by_candidate["BAO_LEVEL_CONTEXT"]["tau_readout_channel"] == "K_closure"
+    assert by_candidate["ORDERING_NULL_CONTROL"]["tau_readout_channel"] == "K_null"
+
+
+def test_paper10_desi_ordering_control_suite_declares_k_null_blocker() -> None:
+    for command in [
+        ["python", "scripts/build_paper10_desi_time_readout_shape_projection_induction_v1.py"],
+        ["python", "scripts/build_paper10_desi_ordering_control_suite_v1.py"],
+        ["python", "scripts/validate_paper10_desi_ordering_control_suite_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (ROOT / "data/derived/paper10_desi_ordering_control_suite_v1_summary.csv").open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    with (ROOT / "data/derived/paper10_desi_ordering_control_suite_v1.csv").open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    assert summary["status"] == "DESI_ORDERING_CONTROL_SUITE_DECLARED_NOT_REPLAY_NOT_VALIDATION"
+    assert summary["required_control_count"] == "5"
+    assert summary["available_control_count"] == "1"
+    assert summary["shape_bound_control_count"] == "0"
+    assert summary["primary_k_null_blocker"] == "redshift_order_shuffle"
+    assert summary["ordering_control_suite_ready_for_replay"] == "false"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["physical_validation_claimed"] == "false"
+    assert summary["verdict"] == "k_null_ordering_controls_declared_but_not_shape_bound"
+    assert {row["control_channel"] for row in rows} == {"K_null"}
+
+
+def test_paper10_desi_cc_window_stress_binding_closes_unbound_control_without_replay() -> None:
+    for command in [
+        ["python", "scripts/build_paper10_desi_cc_window_stress_binding_v1.py"],
+        ["python", "scripts/validate_paper10_desi_cc_window_stress_binding_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (ROOT / "data/derived/paper10_desi_cc_window_stress_binding_v1_summary.csv").open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["status"] == "DESI_CC_WINDOW_STRESS_BOUND_CAVEATED_NOT_REPLAY_NOT_VALIDATION"
+    assert summary["cc_window_stress_bound_to_shape_route"] == "true"
+    assert summary["cc_window_stress_release_policy"] == "SOURCE_REOPEN_ONLY_NO_REPLAY"
+    assert summary["row_can_enter_replay"] == "false"
+    assert summary["shape_route_replay_ready_after_cc_window_stress"] == "false"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["physical_validation_claimed"] == "false"
+    assert summary["verdict"] == "cc_window_stress_bound_as_caveated_source_control_not_replay_release"
+
+
+def test_paper10_desi_shape_bound_control_vectors_bind_all_controls_without_replay() -> None:
+    for command in [
+        ["python", "scripts/build_paper10_desi_time_readout_shape_projection_induction_v1.py"],
+        ["python", "scripts/build_paper10_desi_ordering_control_suite_v1.py"],
+        ["python", "scripts/build_paper10_desi_cc_window_stress_binding_v1.py"],
+        ["python", "scripts/build_paper10_desi_shape_bound_control_vectors_v1.py"],
+        ["python", "scripts/validate_paper10_desi_shape_bound_control_vectors_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (ROOT / "data/derived/paper10_desi_shape_bound_control_vectors_v1_summary.csv").open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    with (ROOT / "data/derived/paper10_desi_shape_bound_control_vectors_v1.csv").open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    by_family = {row["control_family"]: row for row in rows}
+    assert summary["status"] == "DESI_SHAPE_BOUND_CONTROL_VECTORS_BUILT_NOT_REPLAY_NOT_VALIDATION"
+    assert summary["required_control_count"] == "5"
+    assert summary["shape_bound_control_count"] == "5"
+    assert summary["unbound_control_families"] == "none"
+    assert summary["ordering_control_suite_shape_bound"] == "true"
+    assert summary["ordering_control_suite_ready_for_replay"] == "false"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["physical_validation_claimed"] == "false"
+    assert summary["verdict"] == "shape_route_controls_bound_but_replay_not_authorized"
+    assert by_family["redshift_order_shuffle"]["control_binding_status"] == "bound_source_vector"
+    assert by_family["cc_window_stress"]["control_binding_status"] == "bound_caveated_source_window_stress"
+    assert {row["uses_endpoint_scores"] for row in rows} == {"false"}
+    assert {row["uses_endpoint_residuals"] for row in rows} == {"false"}
+
+
+def test_paper10_desi_multi_clock_support_audit_blocks_endpoint() -> None:
+    for command in [
+        ["python", "scripts/build_paper10_desi_multi_clock_support_per_bao_row_audit_v1.py"],
+        ["python", "scripts/validate_paper10_desi_multi_clock_support_per_bao_row_audit_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (ROOT / "data/derived/paper10_desi_multi_clock_support_per_bao_row_audit_v1_summary.csv").open(
+        newline=""
+    ) as f:
+        summary = list(csv.DictReader(f))[0]
+    with (ROOT / "data/derived/paper10_desi_multi_clock_support_per_bao_row_audit_v1.csv").open(
+        newline=""
+    ) as f:
+        rows = list(csv.DictReader(f))
+    assert summary["status"] == "DESI_MULTI_CLOCK_SUPPORT_PER_BAO_ROW_AUDIT_BUILT_NOT_REPLAY_NOT_VALIDATION"
+    assert summary["authorized_row_count"] == "5"
+    assert summary["strict_multi_clock_pass_count"] == "3"
+    assert summary["relaxed_multi_clock_pass_count"] == "4"
+    assert summary["relaxed_multi_clock_failed_radial_indices"] == "4"
+    assert summary["multi_clock_support_endpoint_ready"] == "false"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["physical_validation_claimed"] == "false"
+    assert summary["verdict"] == "desi_multi_clock_support_incomplete_not_endpoint_ready"
+    assert len(rows) == 5
+    by_index = {row["radial_index"]: row for row in rows}
+    assert by_index["4"]["relaxed_independent_reference_count"] == "1"
+    assert {row["endpoint_replay_allowed"] for row in rows} == {"false"}
+
+
+def test_paper10_desi_shape_independent_review_package_is_not_replay() -> None:
+    for command in [
+        ["python", "scripts/build_paper10_desi_time_readout_shape_projection_induction_v1.py"],
+        ["python", "scripts/build_paper10_desi_ordering_control_suite_v1.py"],
+        ["python", "scripts/build_paper10_desi_cc_window_stress_binding_v1.py"],
+        ["python", "scripts/build_paper10_desi_shape_bound_control_vectors_v1.py"],
+        ["python", "scripts/build_paper10_desi_time_readout_shape_independent_review_package_v1.py"],
+        ["python", "scripts/validate_paper10_desi_time_readout_shape_independent_review_package_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (
+        ROOT / "data/derived/paper10_desi_time_readout_shape_independent_review_package_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/paper10_desi_time_readout_shape_independent_review_response_template_v1.csv"
+    ).open(newline="") as f:
+        template = list(csv.DictReader(f))
+    assert summary["status"] == "DESI_TIME_READOUT_SHAPE_INDEPENDENT_REVIEW_PACKAGE_BUILT_NOT_COMPLETED"
+    assert summary["review_completed"] == "false"
+    assert summary["shape_observable_candidate_available"] == "true"
+    assert summary["endpoint_ready_shape_observable"] == "false"
+    assert summary["multi_clock_support_endpoint_ready"] == "false"
+    assert summary["high_z_row_can_enter_replay"] == "false"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["physical_validation_claimed"] == "false"
+    assert summary["contains_endpoint_residuals"] == "false"
+    assert summary["contains_endpoint_scores"] == "false"
+    assert summary["contains_fit_statistics"] == "false"
+    assert summary["verdict"] == "desi_shape_independent_review_package_ready_not_completed_not_replay"
+    assert len(template) == 4
+    assert {row["review_completed"] for row in template} == {"false"}
+    assert {row["forbidden_inputs_used"] for row in template} == {"false"}
+    assert {row["endpoint_replay_allowed"] for row in template} == {"false"}
+
+
+def test_paper10_desi_shape_route_replay_authorization_package_is_permission_request_only() -> None:
+    for command in [
+        ["python", "scripts/build_paper10_desi_time_readout_shape_projection_induction_v1.py"],
+        ["python", "scripts/build_paper10_desi_ordering_control_suite_v1.py"],
+        ["python", "scripts/build_paper10_desi_cc_window_stress_binding_v1.py"],
+        ["python", "scripts/build_paper10_desi_shape_bound_control_vectors_v1.py"],
+        ["python", "scripts/build_paper10_desi_shape_route_replay_authorization_review_package_v1.py"],
+        ["python", "scripts/validate_paper10_desi_shape_route_replay_authorization_review_package_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (
+        ROOT / "data/derived/paper10_desi_shape_route_replay_authorization_review_package_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/paper10_desi_shape_route_replay_authorization_review_response_template_v1.csv"
+    ).open(newline="") as f:
+        template = list(csv.DictReader(f))
+    assert summary["status"] == "DESI_SHAPE_ROUTE_REPLAY_AUTHORIZATION_PACKAGE_BUILT_NOT_COMPLETED"
+    assert summary["review_completed"] == "false"
+    assert summary["shape_observable_candidate_available"] == "true"
+    assert summary["primary_candidate"] == "CLOCK_SLOPE_SHAPE"
+    assert summary["shape_bound_control_count"] == "5"
+    assert summary["unbound_control_families"] == "none"
+    assert summary["cc_window_stress_release_policy"] == "SOURCE_REOPEN_ONLY_NO_REPLAY"
+    assert summary["multi_clock_support_endpoint_ready"] == "false"
+    assert summary["high_z_row_can_enter_replay"] == "false"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["physical_validation_claimed"] == "false"
+    assert summary["contains_endpoint_residuals"] == "false"
+    assert summary["contains_endpoint_scores"] == "false"
+    assert summary["contains_fit_statistics"] == "false"
+    assert summary["verdict"] == "desi_shape_route_replay_authorization_package_ready_not_completed"
+    assert summary["claim_boundary"] == "paper10_desi_shape_route_replay_authorization_review_not_validation"
+    assert len(template) == 4
+    assert {row["review_completed"] for row in template} == {"false"}
+    assert {row["forbidden_inputs_used"] for row in template} == {"false"}
+    assert {row["endpoint_replay_allowed"] for row in template} == {"false"}
+
+
+def _desi_shape_route_authorization_template_rows() -> list[dict[str, str]]:
+    with (
+        ROOT / "data/derived/paper10_desi_shape_route_replay_authorization_review_response_template_v1.csv"
+    ).open(newline="") as f:
+        return list(csv.DictReader(f))
+
+
+def _write_desi_shape_route_authorization_response(
+    path: Path, rows: list[dict[str, str]], decision: str, forbidden: str = "false"
+) -> None:
+    completed = []
+    responses = {
+        "Q1_shape_route_scope": "yes",
+        "Q2_control_binding": "caveated_yes",
+        "Q3_no_leakage": "yes",
+        "Q4_authorization": decision,
+    }
+    for row in rows:
+        out = dict(row)
+        out["review_completed"] = "true"
+        out["reviewer_id_or_role"] = "external_protocol_reviewer"
+        out["reviewer_response"] = responses[out["question_id"]]
+        out["reviewer_rationale"] = "Reviewer confirms the protocol state under source-side leakage rules."
+        out["forbidden_inputs_used"] = forbidden
+        out["endpoint_replay_allowed"] = (
+            "true"
+            if row["question_id"] == "Q4_authorization"
+            and decision == "GO_DESI_SHAPE_ROUTE_REPLAY_PERMISSION_ONLY"
+            else "false"
+        )
+        out["endpoint_validation_claimed"] = "false"
+        out["physical_validation_claimed"] = "false"
+        completed.append(out)
+    with path.open("w", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=list(completed[0].keys()), lineterminator="\n")
+        writer.writeheader()
+        writer.writerows(completed)
+
+
+def test_paper10_desi_shape_route_replay_authorization_response_accepts_permission_only(
+    tmp_path: Path,
+) -> None:
+    for command in [
+        ["python", "scripts/build_paper10_desi_time_readout_shape_projection_induction_v1.py"],
+        ["python", "scripts/build_paper10_desi_ordering_control_suite_v1.py"],
+        ["python", "scripts/build_paper10_desi_cc_window_stress_binding_v1.py"],
+        ["python", "scripts/build_paper10_desi_shape_bound_control_vectors_v1.py"],
+        ["python", "scripts/build_paper10_desi_shape_route_replay_authorization_review_package_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    response = tmp_path / "shape_route_go.csv"
+    summary = tmp_path / "shape_route_go_summary.csv"
+    _write_desi_shape_route_authorization_response(
+        response,
+        _desi_shape_route_authorization_template_rows(),
+        "GO_DESI_SHAPE_ROUTE_REPLAY_PERMISSION_ONLY",
+    )
+    subprocess.run(
+        [
+            "python",
+            "scripts/validate_paper10_desi_shape_route_replay_authorization_review_response_v1.py",
+            str(response),
+            "--summary-out",
+            str(summary),
+        ],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    with summary.open(newline="") as f:
+        out = list(csv.DictReader(f))[0]
+    assert out["status"] == "DESI_SHAPE_ROUTE_REPLAY_AUTHORIZATION_ACCEPTED_PERMISSION_ONLY"
+    assert out["decision"] == "GO_DESI_SHAPE_ROUTE_REPLAY_PERMISSION_ONLY"
+    assert out["endpoint_replay_allowed"] == "true"
+    assert out["endpoint_validation_claimed"] == "false"
+    assert out["physical_validation_claimed"] == "false"
+    assert out["recommended_next_action"] == "run_one_separate_predeclared_DESI_shape_route_replay_without_validation_claim"
+
+
+def test_paper10_desi_shape_route_replay_authorization_completed_response_is_imported() -> None:
+    response = ROOT / "data/derived/paper10_desi_shape_route_replay_authorization_review_response_v1.csv"
+    summary = ROOT / "data/derived/paper10_desi_shape_route_replay_authorization_review_response_v1_summary.csv"
+    subprocess.run(
+        [
+            "python",
+            "scripts/validate_paper10_desi_shape_route_replay_authorization_review_response_v1.py",
+            str(response),
+            "--summary-out",
+            str(summary),
+        ],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    with summary.open(newline="") as f:
+        out = list(csv.DictReader(f))[0]
+    assert out["status"] == "DESI_SHAPE_ROUTE_REPLAY_AUTHORIZATION_ACCEPTED_PERMISSION_ONLY"
+    assert out["decision"] == "GO_DESI_SHAPE_ROUTE_REPLAY_PERMISSION_ONLY"
+    assert out["forbidden_inputs_used"] == "false"
+    assert out["endpoint_replay_allowed"] == "true"
+    assert out["endpoint_validation_claimed"] == "false"
+    assert out["physical_validation_claimed"] == "false"
+
+
+def test_paper10_desi_shape_route_replay_authorization_response_rejects_leakage(
+    tmp_path: Path,
+) -> None:
+    subprocess.run(
+        ["python", "scripts/build_paper10_desi_shape_route_replay_authorization_review_package_v1.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    response = tmp_path / "shape_route_leakage.csv"
+    summary = tmp_path / "shape_route_leakage_summary.csv"
+    _write_desi_shape_route_authorization_response(
+        response,
+        _desi_shape_route_authorization_template_rows(),
+        "GO_DESI_SHAPE_ROUTE_REPLAY_PERMISSION_ONLY",
+        forbidden="true",
+    )
+    result = subprocess.run(
+        [
+            "python",
+            "scripts/validate_paper10_desi_shape_route_replay_authorization_review_response_v1.py",
+            str(response),
+            "--summary-out",
+            str(summary),
+        ],
+        cwd=ROOT,
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode != 0
+    assert not summary.exists()
+
+
+def test_paper10_desi_shape_route_replay_run_template_is_auth_required_not_replay() -> None:
+    for command in [
+        ["python", "scripts/build_paper10_desi_time_readout_shape_observable_gate_v1.py"],
+        ["python", "scripts/build_paper10_desi_time_readout_shape_projection_induction_v1.py"],
+        ["python", "scripts/build_paper10_desi_cc_window_stress_binding_v1.py"],
+        ["python", "scripts/build_paper10_desi_shape_bound_control_vectors_v1.py"],
+        ["python", "scripts/validate_paper10_desi_shape_route_replay_run_template_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (ROOT / "data/source_manifest/paper10_desi_shape_route_replay_run_template_v1.csv").open(
+        newline=""
+    ) as f:
+        row = list(csv.DictReader(f))[0]
+    assert row["status"] == "DESI_SHAPE_ROUTE_REPLAY_PREPARED_AUTH_REQUIRED_NOT_VALIDATION"
+    assert row["active_route_family"] == "DESI_CC_MATCHED_RADIAL_BAO_TIME_SHAPE"
+    assert row["shape_rows_allowed"] == "0;1;2;3"
+    assert row["curvature_rows_available"] == "0;1;2"
+    assert row["radial_rows_allowed"] == "0;1;2;3;4"
+    assert row["radial_rows_excluded"] == "5"
+    assert row["endpoint_replay_allowed"] == "false"
+    assert row["endpoint_validation_claimed"] == "false"
+    assert row["physical_validation_claimed"] == "false"
+    assert row["claim_boundary"] == "paper10_desi_shape_route_replay_template_not_validation"
+
+
+def test_paper10_desi_shape_route_authorized_replay_runs_permission_only() -> None:
+    for command in [
+        ["python", "scripts/run_paper10_desi_shape_route_authorized_replay_v1.py"],
+        ["python", "scripts/validate_paper10_desi_shape_route_authorized_replay_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (ROOT / "data/derived/paper10_desi_shape_route_authorized_replay_v1_summary.csv").open(
+        newline=""
+    ) as f:
+        summary = list(csv.DictReader(f))[0]
+    with (ROOT / "data/derived/paper10_desi_shape_route_authorized_replay_v1_grid.csv").open(
+        newline=""
+    ) as f:
+        grid = list(csv.DictReader(f))
+    assert summary["status"] == "DESI_SHAPE_ROUTE_AUTHORIZED_REPLAY_PERMISSION_ONLY_NOT_VALIDATION"
+    assert summary["authorization_decision"] == "GO_DESI_SHAPE_ROUTE_REPLAY_PERMISSION_ONLY"
+    assert summary["active_route_family"] == "DESI_CC_MATCHED_RADIAL_BAO_TIME_SHAPE"
+    assert summary["family_survives_controls"] == "true"
+    assert summary["controls_ge_candidate_score"] == "0"
+    assert summary["endpoint_replay_allowed"] == "true"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["physical_validation_claimed"] == "false"
+    assert summary["verdict"] == "desi_shape_route_permission_replay_candidate_exceeds_all_controls_not_validation"
+    assert {row["endpoint_validation_claimed"] for row in grid} == {"false"}
+    assert {row["physical_validation_claimed"] for row in grid} == {"false"}
+
+
+def test_paper10_desi_shape_route_robustness_stress_preserves_claim_boundary() -> None:
+    for command in [
+        ["python", "scripts/build_paper10_desi_shape_route_robustness_stress_v1.py"],
+        ["python", "scripts/validate_paper10_desi_shape_route_robustness_stress_v1.py"],
+        ["python", "scripts/build_paper10_desi_shape_route_robustness_figure_v1.py"],
+        ["python", "scripts/validate_paper10_desi_shape_route_robustness_figure_v1.py"],
+        ["python", "scripts/build_paper10_desi_shape_row_sensitivity_source_audit_v1.py"],
+        ["python", "scripts/validate_paper10_desi_shape_row_sensitivity_source_audit_v1.py"],
+        ["python", "scripts/build_paper10_desi_shape_core_source_acquisition_manifest_v1.py"],
+        ["python", "scripts/validate_paper10_desi_shape_core_source_acquisition_manifest_v1.py"],
+        ["python", "scripts/build_paper10_desi_shape_core_source_support_scan_v1.py"],
+        ["python", "scripts/validate_paper10_desi_shape_core_source_support_scan_v1.py"],
+        ["python", "scripts/build_paper10_desi_shape_row1_confirmatory_source_attachment_v1.py"],
+        ["python", "scripts/validate_paper10_desi_shape_row1_confirmatory_source_attachment_v1.py"],
+        ["python", "scripts/build_paper10_desi_shape_row1_confirmatory_source_review_package_v1.py"],
+        ["python", "scripts/validate_paper10_desi_shape_row1_confirmatory_source_review_package_v1.py"],
+        ["python", "scripts/validate_paper10_desi_shape_row1_confirmatory_source_review_response_v1.py"],
+        ["python", "scripts/build_paper10_desi_shape_row2_moresco2012_source_attachment_v1.py"],
+        ["python", "scripts/validate_paper10_desi_shape_row2_moresco2012_source_attachment_v1.py"],
+        ["python", "scripts/build_paper10_desi_shape_row2_moresco2012_source_attachment_review_package_v1.py"],
+        ["python", "scripts/validate_paper10_desi_shape_row2_moresco2012_source_attachment_review_package_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (ROOT / "data/derived/paper10_desi_shape_route_robustness_stress_v1_summary.csv").open(
+        newline=""
+    ) as f:
+        summary = list(csv.DictReader(f))[0]
+    with (ROOT / "data/derived/paper10_desi_shape_route_robustness_stress_v1.csv").open(
+        newline=""
+    ) as f:
+        rows = list(csv.DictReader(f))
+    assert summary["status"] == "DESI_SHAPE_ROUTE_ROBUSTNESS_STRESS_BUILT_PERMISSION_REPLAY_NOT_VALIDATION"
+    assert summary["candidate_score_rank_among_replay_branches"] == "1"
+    assert summary["best_control_branch"] == "control_leave_shape_row_max"
+    assert summary["verdict"] == "positive_but_narrow_margin_and_row_sensitive_not_validation"
+    assert summary["endpoint_replay_allowed"] == "true"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["physical_validation_claimed"] == "false"
+    assert len([row for row in rows if row["test_family"] == "leave_one"]) == 4
+    assert len([row for row in rows if row["test_family"] == "leave_two"]) == 6
+    assert {row["endpoint_validation_claimed"] for row in rows} == {"false"}
+    assert {row["physical_validation_claimed"] for row in rows} == {"false"}
+    assert (
+        ROOT / "paper10_submission_source/figures/fig_desi_shape_route_robustness_stress.pdf"
+    ).stat().st_size > 0
+    with (ROOT / "data/derived/paper10_desi_shape_row_sensitivity_source_audit_v1_summary.csv").open(
+        newline=""
+    ) as f:
+        source_summary = list(csv.DictReader(f))[0]
+    assert source_summary["core_sensitive_rows"] == "1;2"
+    assert source_summary["caveated_core_sensitive_rows"] == "2"
+    assert source_summary["most_dispensable_row"] == "0"
+    assert source_summary["most_required_row"] == "1"
+    assert source_summary["endpoint_validation_claimed"] == "false"
+    with (
+        ROOT / "data/derived/paper10_desi_shape_core_source_acquisition_manifest_v1_summary.csv"
+    ).open(newline="") as f:
+        acquisition_summary = list(csv.DictReader(f))[0]
+    assert acquisition_summary["p0_targets"] == "DESI_SHAPE_ROW_2_CORE_SUPPORT"
+    assert acquisition_summary["p1_targets"] == "DESI_SHAPE_ROW_1_CORE_SUPPORT"
+    assert acquisition_summary["source_fetch_completed"] == "false"
+    assert acquisition_summary["endpoint_replay_allowed"] == "false"
+    assert acquisition_summary["endpoint_validation_claimed"] == "false"
+    with (ROOT / "data/derived/paper10_desi_shape_core_source_support_scan_v1_summary.csv").open(
+        newline=""
+    ) as f:
+        support_summary = list(csv.DictReader(f))[0]
+    assert support_summary["row2_moresco2012_support_found"] == "true"
+    assert support_summary["row2_support_status"] == "partial_strengthening_in_interval_not_endpoint_pair_replacement"
+    assert support_summary["endpoint_replay_allowed"] == "false"
+    assert support_summary["endpoint_validation_claimed"] == "false"
+    with (
+        ROOT / "data/derived/paper10_desi_shape_row1_confirmatory_source_attachment_v1_summary.csv"
+    ).open(newline="") as f:
+        row1_summary = list(csv.DictReader(f))[0]
+    assert row1_summary["row1_confirmatory_source_count"] == "2"
+    assert row1_summary["row1_endpoint_ready"] == "false"
+    assert row1_summary["endpoint_replay_allowed"] == "false"
+    assert row1_summary["endpoint_validation_claimed"] == "false"
+    with (
+        ROOT / "data/derived/paper10_desi_shape_row1_confirmatory_source_review_package_v1_summary.csv"
+    ).open(newline="") as f:
+        row1_review_summary = list(csv.DictReader(f))[0]
+    assert row1_review_summary["review_completed"] == "false"
+    assert row1_review_summary["row1_confirmatory_source_count"] == "2"
+    assert row1_review_summary["contains_endpoint_residuals"] == "false"
+    assert row1_review_summary["contains_endpoint_scores"] == "false"
+    assert row1_review_summary["endpoint_replay_allowed"] == "false"
+    assert row1_review_summary["endpoint_validation_claimed"] == "false"
+    with (
+        ROOT / "data/derived/paper10_desi_shape_row1_confirmatory_source_review_response_v1_summary.csv"
+    ).open(newline="") as f:
+        row1_response_summary = list(csv.DictReader(f))[0]
+    assert row1_response_summary["row1_confirmatory_source_accepted"] == "true"
+    assert row1_response_summary["row1_endpoint_ready"] == "false"
+    assert row1_response_summary["endpoint_replay_allowed"] == "false"
+    assert row1_response_summary["endpoint_validation_claimed"] == "false"
+    with (
+        ROOT / "data/derived/paper10_desi_shape_row2_moresco2012_source_attachment_v1_summary.csv"
+    ).open(newline="") as f:
+        attachment_summary = list(csv.DictReader(f))[0]
+    assert attachment_summary["attached_source_key"] == "Moresco2012ExpansionRate"
+    assert attachment_summary["row2_source_caveat_reduced"] == "true"
+    assert attachment_summary["endpoint_pair_replacement"] == "false"
+    assert attachment_summary["row2_endpoint_ready"] == "false"
+    assert attachment_summary["endpoint_replay_allowed"] == "false"
+    assert attachment_summary["endpoint_validation_claimed"] == "false"
+    with (
+        ROOT
+        / "data/derived/paper10_desi_shape_row2_moresco2012_source_attachment_review_package_v1_summary.csv"
+    ).open(newline="") as f:
+        review_summary = list(csv.DictReader(f))[0]
+    assert review_summary["review_completed"] == "false"
+    assert review_summary["attached_source_key"] == "Moresco2012ExpansionRate"
+    assert review_summary["endpoint_pair_replacement"] == "false"
+    assert review_summary["row2_endpoint_ready"] == "false"
+    assert review_summary["endpoint_replay_allowed"] == "false"
+    assert review_summary["endpoint_validation_claimed"] == "false"
+    assert (
+        ROOT / "data/derived/paper10_desi_shape_row2_moresco2012_source_attachment_review_package_v1.zip"
+    ).stat().st_size > 0
+
+
+def test_paper10_desi_shape_core_support_synthesis_gate_is_not_validation() -> None:
+    for command in [
+        ["python", "scripts/run_paper10_desi_shape_row2_authorized_replay_v1.py"],
+        ["python", "scripts/validate_paper10_desi_shape_row2_authorized_replay_v1.py"],
+        ["python", "scripts/build_paper10_desi_shape_row1_confirmatory_source_attachment_v1.py"],
+        ["python", "scripts/validate_paper10_desi_shape_row1_confirmatory_source_attachment_v1.py"],
+        ["python", "scripts/build_paper10_desi_shape_core_support_synthesis_gate_v1.py"],
+        ["python", "scripts/validate_paper10_desi_shape_core_support_synthesis_gate_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (
+        ROOT / "data/derived/paper10_desi_shape_core_support_synthesis_gate_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    with (ROOT / "data/derived/paper10_desi_shape_core_support_synthesis_gate_v1.csv").open(
+        newline=""
+    ) as f:
+        rows = list(csv.DictReader(f))
+    assert summary["status"] == "DESI_SHAPE_CORE_SUPPORT_SYNTHESIS_BUILT_SOURCE_STRENGTHENED_NOT_VALIDATION"
+    assert summary["core_rows"] == "1;2"
+    assert summary["most_required_row"] == "1"
+    assert summary["row2_removed_retained_fraction"] == "0.749151602906"
+    assert summary["row2_only_candidate_score"] == "0.415519707291"
+    assert summary["row2_only_best_control_score"] == "1.62654904473"
+    assert summary["route_interpretation"] == "multi_row_narrow_margin_source_sensitive_signal_not_row2_only"
+    assert summary["validation_status"] == "not_endpoint_validation_not_physical_validation_not_falsification"
+    assert summary["endpoint_replay_allowed_by_this_gate"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["physical_validation_claimed"] == "false"
+    assert summary["claim_boundary"] == "paper10_desi_shape_core_support_synthesis_gate_not_validation"
+    assert {row["component_id"] for row in rows} == {
+        "ROUTE_WIDE_REPLAY",
+        "ROW_SENSITIVITY",
+        "CORE_SOURCE_SUPPORT_SCAN",
+        "ROW1_CONFIRMATORY_SOURCE_ATTACHMENT",
+        "ROW2_CAVEAT_REDUCTION",
+        "ROW2_ONLY_PERMISSION_REPLAY",
+    }
+    assert {row["endpoint_replay_allowed_by_this_gate"] for row in rows} == {"false"}
+    assert {row["endpoint_validation_claimed"] for row in rows} == {"false"}
+    assert {row["physical_validation_claimed"] for row in rows} == {"false"}
+
+
+def test_paper10_desi_shape_route_source_synthesis_review_package_is_not_replay() -> None:
+    for command in [
+        ["python", "scripts/run_paper10_desi_shape_row2_authorized_replay_v1.py"],
+        ["python", "scripts/validate_paper10_desi_shape_row2_authorized_replay_v1.py"],
+        ["python", "scripts/build_paper10_desi_shape_core_support_synthesis_gate_v1.py"],
+        ["python", "scripts/validate_paper10_desi_shape_core_support_synthesis_gate_v1.py"],
+        ["python", "scripts/build_paper10_desi_shape_route_source_synthesis_review_package_v1.py"],
+        ["python", "scripts/validate_paper10_desi_shape_route_source_synthesis_review_package_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (
+        ROOT / "data/derived/paper10_desi_shape_route_source_synthesis_review_package_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/paper10_desi_shape_route_source_synthesis_review_response_template_v1.csv"
+    ).open(newline="") as f:
+        template = list(csv.DictReader(f))
+    assert summary["status"] == "DESI_SHAPE_ROUTE_SOURCE_SYNTHESIS_REVIEW_PACKAGE_BUILT_NOT_COMPLETED"
+    assert summary["core_rows"] == "1;2"
+    assert summary["most_required_row"] == "1"
+    assert summary["row1_status"] == "most_required_confirmatory_independent_support_review_accepted_not_endpoint_ready"
+    assert summary["row2_status"] == "caveat_reduced_but_permission_replay_not_control_resistant_not_promotion_ready"
+    assert summary["route_interpretation"] == "multi_row_narrow_margin_source_sensitive_signal_not_row2_only"
+    assert summary["shape_route_promotion_allowed"] == "false"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["physical_validation_claimed"] == "false"
+    assert summary["contains_endpoint_residuals"] == "false"
+    assert summary["contains_fit_statistics"] == "false"
+    assert summary["claim_boundary"] == "paper10_desi_shape_route_source_synthesis_review_not_replay_not_validation"
+    assert len(template) == 4
+    assert {row["review_completed"] for row in template} == {"false"}
+    assert {row["endpoint_replay_allowed"] for row in template} == {"false"}
+    assert {row["endpoint_validation_claimed"] for row in template} == {"false"}
+    assert {row["physical_validation_claimed"] for row in template} == {"false"}
+    assert {row["shape_route_promotion_allowed"] for row in template} == {"false"}
+
+
+def test_paper10_desi_shape_route_source_synthesis_review_response_allows_future_gate_only() -> None:
+    subprocess.run(
+        ["python", "scripts/validate_paper10_desi_shape_route_source_synthesis_review_response_v1.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    with (
+        ROOT / "data/derived/paper10_desi_shape_route_source_synthesis_review_response_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert (
+        summary["status"]
+        == "DESI_SHAPE_ROUTE_SOURCE_SYNTHESIS_REVIEW_ACCEPTED_FOR_FUTURE_GATE_PREPARATION_NOT_REPLAY_NOT_VALIDATION"
+    )
+    assert summary["decision"] == "ACCEPT_AS_SOURCE_SYNTHESIS_SUPPORT_FOR_FUTURE_GATE_PREPARATION_NOT_REPLAY_NOT_VALIDATION"
+    assert summary["accepted_question_count"] == "4"
+    assert summary["future_gate_preparation_allowed"] == "true"
+    assert summary["shape_route_promotion_allowed"] == "false"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["physical_validation_claimed"] == "false"
+    assert summary["forbidden_inputs_used"] == "false"
+    assert summary["claim_boundary"] == "paper10_desi_shape_route_source_synthesis_review_not_replay_not_validation"
+    assert summary["verdict"] == "source_synthesis_supports_future_gate_preparation_not_replay_not_validation"
+
+
+def test_paper10_desi_shape_post_synthesis_gate_authorization_package_is_not_replay() -> None:
+    for command in [
+        ["python", "scripts/build_paper10_desi_shape_post_synthesis_gate_authorization_review_package_v1.py"],
+        ["python", "scripts/validate_paper10_desi_shape_post_synthesis_gate_authorization_review_package_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (
+        ROOT / "data/derived/paper10_desi_shape_post_synthesis_gate_authorization_review_package_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/paper10_desi_shape_post_synthesis_gate_authorization_review_response_template_v1.csv"
+    ).open(newline="") as f:
+        template = list(csv.DictReader(f))
+    assert summary["status"] == "DESI_SHAPE_POST_SYNTHESIS_GATE_AUTHORIZATION_PACKAGE_BUILT_NOT_COMPLETED"
+    assert summary["source_synthesis_future_gate_preparation_allowed"] == "true"
+    assert summary["route_margin"] == "0.01485705264"
+    assert summary["robustness_verdict"] == "positive_but_narrow_margin_and_row_sensitive_not_validation"
+    assert summary["prepare_later_authorization_package_allowed"] == "false"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["physical_validation_claimed"] == "false"
+    assert summary["contains_endpoint_residuals"] == "false"
+    assert summary["contains_fit_statistics"] == "false"
+    assert summary["claim_boundary"] == "paper10_desi_shape_post_synthesis_gate_authorization_review_not_replay_not_validation"
+    assert summary["verdict"] == "post_synthesis_gate_authorization_package_ready_not_completed_not_replay"
+    assert len(template) == 4
+    assert {row["review_completed"] for row in template} == {"false"}
+    assert {row["prepare_later_authorization_package_allowed"] for row in template} == {"false"}
+    assert {row["endpoint_replay_allowed"] for row in template} == {"false"}
+    assert {row["endpoint_validation_claimed"] for row in template} == {"false"}
+    assert {row["physical_validation_claimed"] for row in template} == {"false"}
+
+
+def test_paper10_desi_shape_post_synthesis_gate_authorization_response_allows_package_only() -> None:
+    subprocess.run(
+        ["python", "scripts/validate_paper10_desi_shape_post_synthesis_gate_authorization_review_response_v1.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    with (
+        ROOT / "data/derived/paper10_desi_shape_post_synthesis_gate_authorization_review_response_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert (
+        summary["status"]
+        == "DESI_SHAPE_POST_SYNTHESIS_GATE_AUTHORIZATION_REVIEW_ACCEPTED_FOR_SEPARATE_GATE_PREPARATION_NOT_REPLAY_NOT_VALIDATION"
+    )
+    assert summary["decision"] == "ACCEPT_PREPARE_SEPARATE_VALIDATION_ORIENTED_GATE_PACKAGE_NOT_REPLAY_NOT_VALIDATION"
+    assert summary["accepted_question_count"] == "4"
+    assert summary["source_synthesis_future_gate_preparation_allowed"] == "true"
+    assert summary["prepare_later_authorization_package_allowed"] == "true"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["physical_validation_claimed"] == "false"
+    assert summary["forbidden_inputs_used"] == "false"
+    assert summary["verdict"] == "gate_preparation_authorized_only_current_route_not_validated"
+
+
+def test_paper10_desi_shape_validation_oriented_gate_review_package_is_not_replay() -> None:
+    for command in [
+        ["python", "scripts/build_paper10_desi_shape_validation_oriented_gate_review_package_v1.py"],
+        ["python", "scripts/validate_paper10_desi_shape_validation_oriented_gate_review_package_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (
+        ROOT / "data/derived/paper10_desi_shape_validation_oriented_gate_review_package_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/paper10_desi_shape_validation_oriented_gate_review_response_template_v1.csv"
+    ).open(newline="") as f:
+        template = list(csv.DictReader(f))
+    assert summary["status"] == "DESI_SHAPE_VALIDATION_ORIENTED_GATE_REVIEW_PACKAGE_BUILT_NOT_COMPLETED"
+    assert summary["post_synthesis_prepare_later_authorization_package_allowed"] == "true"
+    assert summary["route_margin"] == "0.01485705264"
+    assert summary["robustness_verdict"] == "positive_but_narrow_margin_and_row_sensitive_not_validation"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["physical_validation_claimed"] == "false"
+    assert summary["contains_endpoint_residuals"] == "false"
+    assert summary["contains_fit_statistics"] == "false"
+    assert summary["claim_boundary"] == "paper10_desi_shape_validation_oriented_gate_review_not_replay_not_validation"
+    assert summary["verdict"] == "validation_oriented_gate_review_package_ready_not_completed_not_replay"
+    assert len(template) == 4
+    assert {row["review_completed"] for row in template} == {"false"}
+    assert {row["endpoint_replay_allowed"] for row in template} == {"false"}
+    assert {row["endpoint_validation_claimed"] for row in template} == {"false"}
+    assert {row["physical_validation_claimed"] for row in template} == {"false"}
+
+
+def test_paper10_desi_shape_validation_oriented_gate_response_prepares_only_future_replay() -> None:
+    subprocess.run(
+        ["python", "scripts/validate_paper10_desi_shape_validation_oriented_gate_review_response_v1.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    with (
+        ROOT / "data/derived/paper10_desi_shape_validation_oriented_gate_review_response_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert (
+        summary["status"]
+        == "DESI_SHAPE_VALIDATION_ORIENTED_GATE_REVIEW_ACCEPTED_FOR_FUTURE_PERMISSION_ONLY_DIAGNOSTIC_NOT_REPLAY_NOT_VALIDATION"
+    )
+    assert summary["decision"] == "GO_DESI_SHAPE_VALIDATION_ORIENTED_PERMISSION_REPLAY_ONLY"
+    assert summary["accepted_question_count"] == "4"
+    assert summary["future_permission_only_replay_preparation_allowed"] == "true"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["physical_validation_claimed"] == "false"
+    assert summary["forbidden_inputs_used"] == "false"
+    assert summary["narrow_margin_caveat_retained"] == "true"
+    assert summary["row_sensitive_caveat_retained"] == "true"
+    assert summary["row2_negative_diagnostic_retained"] == "true"
+    assert (
+        summary["recommended_next_action"]
+        == "prepare_separate_completed_permission_only_replay_authorization_response_before_any_run_keep_endpoint_validation_false"
+    )
+
+
+def test_paper10_desi_shape_validation_permission_replay_authorization_package_is_blank() -> None:
+    for command in [
+        ["python", "scripts/build_paper10_desi_shape_validation_permission_replay_authorization_review_package_v1.py"],
+        ["python", "scripts/validate_paper10_desi_shape_validation_permission_replay_authorization_review_package_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (
+        ROOT
+        / "data/derived/paper10_desi_shape_validation_permission_replay_authorization_review_package_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    with (
+        ROOT
+        / "data/derived/paper10_desi_shape_validation_permission_replay_authorization_review_response_template_v1.csv"
+    ).open(newline="") as f:
+        template = list(csv.DictReader(f))
+    assert summary["status"] == "DESI_SHAPE_VALIDATION_PERMISSION_REPLAY_AUTHORIZATION_PACKAGE_BUILT_NOT_COMPLETED"
+    assert summary["route_margin"] == "0.01485705264"
+    assert summary["robustness_verdict"] == "positive_but_narrow_margin_and_row_sensitive_not_validation"
+    assert summary["narrow_margin_caveat_retained"] == "true"
+    assert summary["row_sensitive_caveat_retained"] == "true"
+    assert summary["row2_negative_diagnostic_retained"] == "true"
+    assert summary["future_permission_only_replay_preparation_allowed"] == "true"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["physical_validation_claimed"] == "false"
+    assert summary["contains_endpoint_residuals"] == "false"
+    assert summary["contains_new_endpoint_scores"] == "false"
+    assert summary["contains_fit_statistics"] == "false"
+    assert summary["verdict"] == "validation_permission_replay_authorization_package_ready_not_completed_not_replay"
+    assert len(template) == 4
+    assert {row["review_completed"] for row in template} == {"false"}
+    assert {row["forbidden_inputs_used"] for row in template} == {"false"}
+    assert {row["endpoint_replay_allowed"] for row in template} == {"false"}
+    assert {row["endpoint_validation_claimed"] for row in template} == {"false"}
+    assert {row["physical_validation_claimed"] for row in template} == {"false"}
+
+
+def test_paper10_desi_shape_validation_permission_response_and_replay_are_permission_only() -> None:
+    for command in [
+        ["python", "scripts/validate_paper10_desi_shape_validation_permission_replay_authorization_review_response_v1.py"],
+        ["python", "scripts/run_paper10_desi_shape_validation_permission_authorized_replay_v1.py"],
+        ["python", "scripts/validate_paper10_desi_shape_validation_permission_authorized_replay_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (
+        ROOT
+        / "data/derived/paper10_desi_shape_validation_permission_replay_authorization_review_response_v1_summary.csv"
+    ).open(newline="") as f:
+        auth = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/paper10_desi_shape_validation_permission_authorized_replay_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert auth["decision"] == "GO_DESI_SHAPE_VALIDATION_PERMISSION_REPLAY_ONLY"
+    assert auth["permission_only_replay_authorized"] == "true"
+    assert auth["endpoint_validation_claimed"] == "false"
+    assert auth["physical_validation_claimed"] == "false"
+    assert summary["status"] == "DESI_SHAPE_VALIDATION_PERMISSION_AUTHORIZED_REPLAY_PERMISSION_ONLY_NOT_VALIDATION"
+    assert summary["candidate_shape_quadratic_score"] == "5.52425578108"
+    assert summary["best_control_branch"] == "control_leave_shape_row_max"
+    assert summary["best_control_shape_quadratic_score"] == "5.50939872844"
+    assert summary["delta_candidate_minus_best_control_score"] == "0.01485705264"
+    assert summary["controls_ge_candidate_score"] == "0"
+    assert summary["family_survives_controls"] == "true"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["physical_validation_claimed"] == "false"
+    assert (
+        summary["verdict"]
+        == "desi_shape_validation_permission_replay_candidate_exceeds_all_controls_not_validation"
+    )
+
+
+def test_joint_existing_artifact_meta_score_is_prevalidation_only() -> None:
+    for command in [
+        ["python", "scripts/build_joint_existing_artifact_meta_score_v1.py"],
+        ["python", "scripts/validate_joint_existing_artifact_meta_score_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (ROOT / "data/derived/joint_existing_artifact_meta_score_v1_summary.csv").open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    with (ROOT / "data/derived/joint_existing_artifact_meta_score_v1.csv").open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    assert summary["verdict"] == "MULTI_CHANNEL_VIABILITY_PATTERN_PRESENT_NOT_VALIDATION"
+    assert summary["channels_audited"] == "7"
+    assert summary["net_meta_weight"] == "2.500"
+    assert summary["joint_endpoint_claimed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["cosmological_validation_claimed"] == "false"
+    assert summary["dark_sector_verdict_allowed"] == "false"
+    assert len(rows) == 7
+    assert {row["claim_boundary"] for row in rows} == {
+        "joint_existing_artifact_meta_score_prevalidation_not_cosmological_validation"
+    }
+
+
+def test_joint_multichannel_endpoint_candidate_is_not_validation() -> None:
+    for command in [
+        ["python", "scripts/run_joint_multichannel_endpoint_candidate_v1.py"],
+        ["python", "scripts/validate_joint_multichannel_endpoint_candidate_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (ROOT / "data/derived/joint_multichannel_endpoint_candidate_v1_summary.csv").open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    with (ROOT / "data/derived/joint_multichannel_endpoint_candidate_v1.csv").open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    assert summary["verdict"] == "JOINT_ENDPOINT_CANDIDATE_INCONCLUSIVE_PREVALIDATION"
+    assert summary["channels_scored"] == "7"
+    assert summary["normalized_joint_score"] == "0.200059110"
+    assert summary["joint_endpoint_claimed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["cosmological_validation_claimed"] == "false"
+    assert len(rows) == 7
+    assert sum(1 for row in rows if float(row["weighted_channel_score"]) > 0) == 3
+    assert sum(1 for row in rows if float(row["weighted_channel_score"]) < 0) == 2
+    assert {row["claim_boundary"] for row in rows} == {
+        "joint_multichannel_endpoint_candidate_preflight_not_validation"
+    }
+
+
+def test_joint_multichannel_block_score_records_fragility() -> None:
+    for command in [
+        ["python", "scripts/run_joint_multichannel_block_score_v1.py"],
+        ["python", "scripts/validate_joint_multichannel_block_score_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (ROOT / "data/derived/joint_multichannel_block_score_v1_summary.csv").open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    with (ROOT / "data/derived/joint_multichannel_block_score_v1_leave_one_channel.csv").open(newline="") as f:
+        loo = list(csv.DictReader(f))
+    assert summary["verdict"] == "JOINT_BLOCK_SCORE_FRAGILE_OR_INCONCLUSIVE_PREVALIDATION"
+    assert summary["block_normalized_score"] == "0.413070369"
+    assert summary["exact_sign_flip_one_sided_p_ge_observed"] == "0.375000000"
+    assert summary["leave_one_positive_count"] == "4"
+    assert summary["joint_likelihood_claimed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["cosmological_validation_claimed"] == "false"
+    dropped = {row["dropped_channel_id"]: row["retains_positive_score"] for row in loo}
+    assert dropped["kids_lensing_cosebis_low_mode"] == "false"
+    assert all(
+        row["claim_boundary"] == "joint_multichannel_block_score_prevalidation_not_joint_likelihood"
+        for row in loo
+    )
+
+
+def test_joint_best_justified_kernel_score_is_prevalidation_only() -> None:
+    for command in [
+        ["python", "scripts/run_joint_best_justified_kernel_score_v1.py"],
+        ["python", "scripts/validate_joint_best_justified_kernel_score_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (ROOT / "data/derived/joint_best_justified_kernel_score_v1_summary.csv").open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    with (ROOT / "data/source_manifest/joint_best_justified_kernel_manifest_v1.csv").open(newline="") as f:
+        manifest = list(csv.DictReader(f))
+    with (ROOT / "data/derived/joint_best_justified_kernel_score_v1_leave_one_channel.csv").open(newline="") as f:
+        loo = list(csv.DictReader(f))
+
+    assert summary["verdict"] == "BEST_JUSTIFIED_JOINT_KERNEL_POSITIVE_PREFLIGHT_NOT_VALIDATION"
+    assert summary["positive_support_channels"] == "3"
+    assert summary["positive_support_channel_order"] == (
+        "kids_lensing_cosebis_low_mode;observer_path_basis_low_z;desi_shape_time_readout"
+    )
+    assert summary["normalized_score"] == "0.713515777"
+    assert summary["exact_sign_flip_one_sided_p_ge_observed"] == "0.125000000"
+    assert summary["leave_one_positive_count"] == "3"
+    assert summary["joint_likelihood_claimed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["cosmological_validation_claimed"] == "false"
+
+    by_channel = {row["channel_id"]: row for row in manifest}
+    assert by_channel["act_kpath_lensing_path"]["positive_support_allowed"] == "false"
+    assert by_channel["act_kpath_lensing_path"]["kernel_role"] == "k_null_diagnostic"
+    assert by_channel["act_kpath_lensing_path"]["Q_i"] == "0.000000000"
+    assert all(row["retains_positive_score"] == "true" for row in loo)
+
+
+def test_joint_best_justified_kernel_robustness_is_prevalidation_only() -> None:
+    for command in [
+        ["python", "scripts/run_joint_best_justified_kernel_robustness_v1.py"],
+        ["python", "scripts/validate_joint_best_justified_kernel_robustness_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (ROOT / "data/derived/joint_best_justified_kernel_robustness_v1_summary.csv").open(newline="") as f:
+        rows = list(csv.DictReader(f))
+
+    scheme_rows = [row for row in rows if row["scheme_id"]]
+    aggregate = next(
+        row for row in rows
+        if row["robustness_id"] == "JOINT_BEST_JUSTIFIED_KERNEL_ROBUSTNESS_V1"
+    )
+
+    assert len(scheme_rows) == 5
+    assert all(row["positive_score"] == "true" for row in scheme_rows)
+    assert all(row["endpoint_validation_claimed"] == "false" for row in scheme_rows)
+    assert all(row["cosmological_validation_claimed"] == "false" for row in scheme_rows)
+    assert all(
+        row["active_channel_order"] == (
+            "kids_lensing_cosebis_low_mode;observer_path_basis_low_z;desi_shape_time_readout"
+        )
+        for row in scheme_rows
+    )
+
+    by_scheme = {row["scheme_id"]: row for row in scheme_rows}
+    assert by_scheme["equal_geometric"]["normalized_score"] == "0.713515777"
+    assert by_scheme["conservative_min_gate"]["normalized_score"] == "0.703534932"
+    assert by_scheme["conservative_min_gate"]["combined_control_one_sided_p_ge_observed"] == "0.993055556"
+
+    assert aggregate["schemes_tested"] == "5"
+    assert aggregate["positive_scheme_count"] == "5"
+    assert aggregate["min_normalized_score"] == "0.703534932"
+    assert aggregate["max_exact_sign_flip_p"] == "0.125000000"
+    assert aggregate["verdict"] == "BEST_JUSTIFIED_KERNEL_ROBUST_POSITIVE_PREFLIGHT_NOT_VALIDATION"
+    assert aggregate["joint_likelihood_claimed"] == "false"
+    assert aggregate["endpoint_validation_claimed"] == "false"
+    assert aggregate["cosmological_validation_claimed"] == "false"
+
+
+def test_joint_best_justified_kernel_figure_is_source_backed() -> None:
+    subprocess.run(
+        ["python", "scripts/build_joint_best_justified_kernel_figure_v1.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    figure = ROOT / "paper10_submission_source/figures/fig_joint_best_justified_kernel_v1.pdf"
+    assert figure.exists()
+    assert figure.stat().st_size > 10_000
+
+
+def test_joint_best_justified_qi_review_package_is_source_side_only() -> None:
+    subprocess.run(
+        ["python", "scripts/validate_joint_best_justified_qi_review_package_v1.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    with (
+        ROOT / "data/source_manifest/joint_best_justified_qi_review_requirements_v1.csv"
+    ).open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    assert {row["endpoint_scoring_allowed"] for row in rows} == {"false"}
+    assert {row["endpoint_validation_claimed"] for row in rows} == {"false"}
+    assert {row["cosmological_validation_claimed"] for row in rows} == {"false"}
+    assert {row["claim_boundary"] for row in rows} == {"qi_review_source_side_only_not_scoring"}
+    assert {row["requirement_id"] for row in rows} == {
+        "QI_REVIEW_01_SOURCE_GATES",
+        "QI_REVIEW_02_KIDS_COSEBIS",
+        "QI_REVIEW_03_OBSERVER_PATH",
+        "QI_REVIEW_04_DESI_SHAPE",
+        "QI_REVIEW_05_ZERO_SUPPORT_BRANCHES",
+        "QI_REVIEW_06_EXPONENT_POLICY",
+        "QI_REVIEW_07_PROMOTION_RULE",
+    }
+
+
+def test_joint_non_lensing_lift_diagnostic_identifies_next_channel() -> None:
+    for command in [
+        ["python", "scripts/build_joint_non_lensing_lift_diagnostic_v1.py"],
+        ["python", "scripts/validate_joint_non_lensing_lift_diagnostic_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (ROOT / "data/derived/joint_non_lensing_lift_diagnostic_v1_summary.csv").open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    with (ROOT / "data/derived/joint_non_lensing_lift_diagnostic_v1.csv").open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    assert summary["non_lensing_weighted_sum"] == "-0.363118958"
+    assert summary["required_lift_to_zero"] == "0.363118958"
+    assert summary["highest_lift_priority_channel"] == "observer_path_basis_low_z"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["cosmological_validation_claimed"] == "false"
+    assert len(rows) == 4
+    assert {row["claim_boundary"] for row in rows} == {
+        "joint_non_lensing_lift_diagnostic_not_validation"
+    }
+
+
+def test_observer_path_strengthening_gate_blocks_full_metric_path() -> None:
+    for command in [
+        ["python", "scripts/build_observer_path_strengthening_gate_v1.py"],
+        ["python", "scripts/validate_observer_path_strengthening_gate_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (ROOT / "data/derived/observer_path_strengthening_gate_v1_summary.csv").open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    with (ROOT / "data/derived/observer_path_strengthening_gate_v1.csv").open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    assert summary["current_observer_family"] == "W_path_x_sky_x_x_zcenter"
+    assert summary["current_family_survives_controls"] == "true"
+    assert summary["metric_path_source_aligned_numeric_count"] == "0"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    route_status = {row["route_id"]: row["route_status"] for row in rows}
+    assert route_status["metric_lensing_path_weight"] == (
+        "BLOCKED_FOR_ENDPOINT_UNTIL_SOURCE_ALIGNED_NUMERIC_PRODUCT"
+    )
+    assert {row["claim_boundary"] for row in rows} == {
+        "observer_path_strengthening_gate_source_side_not_endpoint"
+    }
+
+
+def test_observer_path_metric_product_requirements_package_is_requirements_only() -> None:
+    for command in [
+        ["python", "scripts/build_observer_path_metric_product_requirements_package_v1.py"],
+        ["python", "scripts/validate_observer_path_metric_product_requirements_package_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (
+        ROOT / "data/derived/observer_path_metric_product_requirements_package_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/observer_path_metric_product_requirements_review_response_template_v1.csv"
+    ).open(newline="") as f:
+        template = list(csv.DictReader(f))
+    assert summary["observer_path_scope_rows"] == "12"
+    assert summary["route_audit_rows"] == "424"
+    assert summary["metric_path_source_aligned_numeric_count"] == "0"
+    assert summary["route_audit_numeric_product_count"] == "0"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["physical_lensing_path_weight_claimed"] == "false"
+    assert summary["verdict"] == "METRIC_PATH_PRODUCT_REQUIREMENTS_READY_FOR_EXTERNAL_REVIEW_NOT_ENDPOINT"
+    assert {row["question_id"] for row in template} == {
+        "Q1_product_specificity",
+        "Q2_source_alignment",
+        "Q3_leakage_barrier",
+        "Q4_replay_boundary",
+    }
+    assert {row["claim_boundary"] for row in template} == {
+        "observer_path_metric_product_requirements_not_endpoint_not_validation"
+    }
+
+
+def test_observer_path_metric_product_requirements_review_response_is_requirements_only() -> None:
+    subprocess.run(
+        ["python", "scripts/validate_observer_path_metric_product_requirements_review_response_v1.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    with (
+        ROOT / "data/derived/observer_path_metric_product_requirements_review_completed_summary_v1.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["decision"] == "ACCEPT_REQUIREMENTS_ONLY"
+    assert summary["accepted_requirements_only_rows"] == "4"
+    assert summary["source_aligned_metric_product_count"] == "0"
+    assert summary["endpoint_replay_allowed"].lower() == "false"
+    assert summary["endpoint_validation_claimed"].lower() == "false"
+    assert summary["physical_lensing_path_weight_claimed"].lower() == "false"
+    assert summary["completion_check"] == "pass"
+
+
+def test_observer_path_metric_environment_product_is_caveated_not_physical_lensing() -> None:
+    for command in [
+        ["python", "scripts/build_observer_path_metric_environment_product_v1.py"],
+        ["python", "scripts/validate_observer_path_metric_environment_product_v1.py"],
+        ["python", "scripts/build_observer_path_metric_product_acquisition_status_v1.py"],
+        ["python", "scripts/validate_observer_path_metric_product_acquisition_status_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (ROOT / "data/derived/observer_path_metric_environment_product_v1_summary.csv").open(
+        newline=""
+    ) as f:
+        product = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/observer_path_metric_product_acquisition_status_v1_summary.csv"
+    ).open(newline="") as f:
+        status = list(csv.DictReader(f))[0]
+    assert product["observer_path_scope_rows"] == "12"
+    assert product["metric_environment_product_available_count"] == "12"
+    assert product["nonzero_metric_environment_path_weight_count"] == "12"
+    assert product["physical_lensing_path_weight_claimed"] == "false"
+    assert status["caveated_metric_environment_product_count"] == "12"
+    assert status["physical_kappa_shear_mass_map_product_count"] == "0"
+    assert status["endpoint_replay_allowed"] == "false"
+    assert status["verdict"] == (
+        "CAVEATED_METRIC_ENVIRONMENT_DATA_ACQUIRED_BUT_PHYSICAL_LENSING_PATH_STILL_BLOCKED"
+    )
+
+
+def test_observer_path_metric_environment_fast_screen_preserves_negative_control_result() -> None:
+    for command in [
+        ["python", "scripts/run_observer_path_metric_environment_fast_screen_v1.py"],
+        ["python", "scripts/validate_observer_path_metric_environment_fast_screen_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (ROOT / "data/derived/observer_path_metric_environment_fast_screen_v1_summary.csv").open(
+        newline=""
+    ) as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["best_candidate_family"] == "metric_environment_path"
+    assert summary["best_candidate_delta_chi2_minus_baseline"] == "-0.55793885392"
+    assert summary["best_candidate_survives_controls"] == "false"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["verdict"] == "METRIC_ENVIRONMENT_PREAUTH_SIGNAL_NOT_CONTROL_RESISTANT_NOT_ENDPOINT"
+
+
+def test_observer_path_metric_environment_ordering_diagnostic_preserves_control_failure() -> None:
+    for command in [
+        ["python", "scripts/run_observer_path_metric_environment_fast_screen_v1.py"],
+        ["python", "scripts/build_observer_path_metric_environment_ordering_diagnostic_v1.py"],
+        ["python", "scripts/validate_observer_path_metric_environment_ordering_diagnostic_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (
+        ROOT / "data/derived/observer_path_metric_environment_ordering_diagnostic_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["best_candidate_family"] == "metric_environment_path"
+    assert summary["best_control_branch"] == "rank_reverse"
+    assert summary["delta_chi2_candidate_minus_best_control"] == "0.12520399356"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["contains_distance_residuals"] == "false"
+    assert summary["verdict"] == (
+        "SOURCE_ORDER_NOT_CONTROL_RESISTANT_REQUIRES_SOURCE_NATIVE_REORDERING_NOT_ENDPOINT"
+    )
+
+
+def test_observer_path_source_native_ordering_bank_remains_preauthorization_only() -> None:
+    for command in [
+        ["python", "scripts/build_observer_path_source_native_ordering_kernel_v1.py"],
+        ["python", "scripts/validate_observer_path_source_native_ordering_kernel_v1.py"],
+        ["python", "scripts/run_observer_path_source_native_ordering_fast_screen_v1.py"],
+        ["python", "scripts/validate_observer_path_source_native_ordering_fast_screen_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (
+        ROOT / "data/derived/observer_path_source_native_ordering_fast_screen_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["best_candidate_family"] == "K_order_void_web_los_balanced"
+    assert summary["best_candidate_delta_chi2_minus_baseline"] == "-0.16922377119"
+    assert summary["best_candidate_delta_chi2_minus_best_control"] == "0.07467294067"
+    assert summary["best_candidate_survives_controls"] == "false"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["verdict"] == "SOURCE_NATIVE_ORDERING_PREAUTH_SIGNAL_NOT_CONTROL_RESISTANT_NOT_ENDPOINT"
+
+
+def test_observer_path_metric_lensing_next_gate_blocks_endpoint_replay() -> None:
+    for command in [
+        ["python", "scripts/build_observer_path_metric_lensing_next_gate_v1.py"],
+        ["python", "scripts/validate_observer_path_metric_lensing_next_gate_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (ROOT / "data/derived/observer_path_metric_lensing_next_gate_v1_summary.csv").open(
+        newline=""
+    ) as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["caveated_metric_environment_proxy_available"] == "true"
+    assert summary["act_dr6_source_side_kappa_sampling_available"] == "true"
+    assert summary["act_dr6_source_frozen_path_weight_candidate_available"] == "true"
+    assert summary["act_dr6_low_z_source_rows"] == "424"
+    assert summary["act_dr6_mask_positive_rows"] == "168"
+    assert summary["physical_metric_lensing_path_product_available"] == "false"
+    assert summary["metric_environment_screen_survives_controls"] == "false"
+    assert summary["source_native_ordering_screen_survives_controls"] == "false"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["next_required_action"] == "external_review_and_replay_authorization_for_act_path_weight_candidate"
+    assert summary["verdict"] == "ACT_DR6_PATH_WEIGHT_CANDIDATE_READY_BUT_REVIEW_BLOCKS_REPLAY"
+
+
+def test_paper10_desi_shape_row2_attachment_review_response_validator_blocks_replay_leakage(
+    tmp_path: Path,
+) -> None:
+    for command in [
+        ["python", "scripts/build_paper10_desi_shape_core_source_support_scan_v1.py"],
+        ["python", "scripts/build_paper10_desi_shape_row2_moresco2012_source_attachment_v1.py"],
+        ["python", "scripts/build_paper10_desi_shape_row2_moresco2012_source_attachment_review_package_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+
+    template = (
+        ROOT
+        / "data/derived/paper10_desi_shape_row2_moresco2012_source_attachment_review_response_template_v1.csv"
+    )
+    with template.open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    for row in rows:
+        row["review_completed"] = "true"
+        row["reviewer_id_or_role"] = "test_external_source_reviewer"
+        row["reviewer_response"] = "accept"
+        row["reviewer_rationale"] = "Accepted as caveat-reducing source-side support only."
+
+    accepted = tmp_path / "accepted.csv"
+    with accepted.open("w", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=list(rows[0].keys()), lineterminator="\n")
+        writer.writeheader()
+        writer.writerows(rows)
+    accepted_summary = tmp_path / "accepted_summary.csv"
+    subprocess.run(
+        [
+            "python",
+            "scripts/validate_paper10_desi_shape_row2_moresco2012_source_attachment_review_response_v1.py",
+            str(accepted),
+            "--summary-out",
+            str(accepted_summary),
+        ],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    with accepted_summary.open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["row2_source_caveat_reduced"] == "true"
+    assert summary["endpoint_pair_replacement"] == "false"
+    assert summary["row2_endpoint_ready"] == "false"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+
+    rows[0]["endpoint_replay_allowed"] = "true"
+    bad = tmp_path / "bad.csv"
+    with bad.open("w", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=list(rows[0].keys()), lineterminator="\n")
+        writer.writeheader()
+        writer.writerows(rows)
+    bad_run = subprocess.run(
+        [
+            "python",
+            "scripts/validate_paper10_desi_shape_row2_moresco2012_source_attachment_review_response_v1.py",
+            str(bad),
+            "--summary-out",
+            str(tmp_path / "bad_summary.csv"),
+        ],
+        cwd=ROOT,
+        capture_output=True,
+        text=True,
+    )
+    assert bad_run.returncode != 0
+
+    canonical_response = (
+        ROOT / "data/derived/paper10_desi_shape_row2_moresco2012_source_attachment_review_response_v1.csv"
+    )
+    if canonical_response.exists():
+        subprocess.run(
+            [
+                "python",
+                "scripts/validate_paper10_desi_shape_row2_moresco2012_source_attachment_review_response_v1.py",
+            ],
+            cwd=ROOT,
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+        with (
+            ROOT
+            / "data/derived/paper10_desi_shape_row2_moresco2012_source_attachment_review_response_v1_summary.csv"
+        ).open(newline="") as f:
+            canonical_summary = list(csv.DictReader(f))[0]
+        assert canonical_summary["verdict"] == (
+            "row2_moresco2012_attachment_accepted_as_caveat_reducing_not_endpoint_ready"
+        )
+        assert canonical_summary["endpoint_replay_allowed"] == "false"
+        assert canonical_summary["endpoint_validation_claimed"] == "false"
+        subprocess.run(
+            [
+                "python",
+                "scripts/build_paper10_desi_shape_row2_promotion_readiness_gate_v1.py",
+            ],
+            cwd=ROOT,
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+        subprocess.run(
+            [
+                "python",
+                "scripts/validate_paper10_desi_shape_row2_promotion_readiness_gate_v1.py",
+            ],
+            cwd=ROOT,
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+        subprocess.run(
+            [
+                "python",
+                "scripts/build_paper10_desi_shape_row2_endpoint_pair_independence_scout_v1.py",
+            ],
+            cwd=ROOT,
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+        subprocess.run(
+            [
+                "python",
+                "scripts/validate_paper10_desi_shape_row2_endpoint_pair_independence_scout_v1.py",
+            ],
+            cwd=ROOT,
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+        with (
+            ROOT / "data/derived/paper10_desi_shape_row2_promotion_readiness_gate_v1_summary.csv"
+        ).open(newline="") as f:
+            promotion_summary = list(csv.DictReader(f))[0]
+        assert promotion_summary["row2_source_caveat_reduced"] == "true"
+        assert promotion_summary["endpoint_pair_independence_satisfied"] == "false"
+        assert promotion_summary["row2_promotion_ready"] == "false"
+        assert promotion_summary["shape_route_promotion_allowed"] == "false"
+        assert promotion_summary["endpoint_replay_allowed"] == "false"
+        with (
+            ROOT
+            / "data/derived/paper10_desi_shape_row2_endpoint_pair_independence_scout_v1_summary.csv"
+        ).open(newline="") as f:
+            scout_summary = list(csv.DictReader(f))[0]
+        assert scout_summary["left_strict_independent_count"] == "0"
+        assert scout_summary["right_strict_independent_count"] == "1"
+        assert scout_summary["left_best_independent_candidate"] == "none"
+        assert scout_summary["right_best_independent_candidate"] == "Moresco (2015)"
+        assert scout_summary["endpoint_pair_independence_satisfied"] == "false"
+        assert scout_summary["row2_promotion_ready"] == "false"
+        assert scout_summary["shape_route_promotion_allowed"] == "false"
+        assert scout_summary["endpoint_replay_allowed"] == "false"
+        assert scout_summary["endpoint_validation_claimed"] == "false"
+        subprocess.run(
+            [
+                "python",
+                "scripts/build_paper10_desi_shape_row2_left_endpoint_nearmiss_freeze_v1.py",
+            ],
+            cwd=ROOT,
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+        subprocess.run(
+            [
+                "python",
+                "scripts/validate_paper10_desi_shape_row2_left_endpoint_nearmiss_freeze_v1.py",
+            ],
+            cwd=ROOT,
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+        with (
+            ROOT
+            / "data/derived/paper10_desi_shape_row2_left_endpoint_nearmiss_freeze_v1_summary.csv"
+        ).open(newline="") as f:
+            near_summary = list(csv.DictReader(f))[0]
+        assert near_summary["relaxed_independent_left_candidate_count"] == "2"
+        assert near_summary["strict_independent_left_support_count"] == "0"
+        assert near_summary["closest_relaxed_independent_candidate"] == "Stern et al. (2010)"
+        assert near_summary["closest_relaxed_independent_delta_z"] == "0.054"
+        assert near_summary["left_endpoint_release_allowed"] == "false"
+        assert near_summary["row2_promotion_ready"] == "false"
+        assert near_summary["endpoint_replay_allowed"] == "false"
+        assert near_summary["endpoint_validation_claimed"] == "false"
+        subprocess.run(
+            [
+                "python",
+                "scripts/build_paper10_desi_shape_row2_left_endpoint_window_review_package_v1.py",
+            ],
+            cwd=ROOT,
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+        subprocess.run(
+            [
+                "python",
+                "scripts/validate_paper10_desi_shape_row2_left_endpoint_window_review_package_v1.py",
+            ],
+            cwd=ROOT,
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+        with (
+            ROOT
+            / "data/derived/paper10_desi_shape_row2_left_endpoint_window_review_package_v1_summary.csv"
+        ).open(newline="") as f:
+            review_package_summary = list(csv.DictReader(f))[0]
+        assert review_package_summary["review_completed"] == "false"
+        assert review_package_summary["left_endpoint_release_allowed"] == "false"
+        assert review_package_summary["row2_promotion_ready"] == "false"
+        assert review_package_summary["endpoint_replay_allowed"] == "false"
+        assert review_package_summary["endpoint_validation_claimed"] == "false"
+        assert review_package_summary["contains_endpoint_residuals"] == "false"
+        assert review_package_summary["contains_endpoint_scores"] == "false"
+
+        left_template = (
+            ROOT
+            / "data/derived/paper10_desi_shape_row2_left_endpoint_window_review_response_template_v1.csv"
+        )
+        with left_template.open(newline="") as f:
+            left_rows = list(csv.DictReader(f))
+        for row in left_rows:
+            row["review_completed"] = "true"
+            row["reviewer_id_or_role"] = "test_external_source_reviewer"
+            row["reviewer_rationale"] = "Caveated source-window context only; no endpoint residuals used."
+        by_question = {row["question_id"]: row for row in left_rows}
+        by_question["Q1_STRICT_WINDOW_STATUS"]["reviewer_response"] = "ALLOW_CAVEATED_WINDOW_REVIEW_ROUTE"
+        by_question["Q2_NEARMISS_ELIGIBILITY"]["reviewer_response"] = "ACCEPT_AS_CAVEATED_NEAR_WINDOW_SOURCE"
+        by_question["Q2_NEARMISS_ELIGIBILITY"]["source_reference_or_url"] = "Stern et al. (2010); Moresco et al. (2012)"
+        by_question["Q3_RELEASE_POLICY"]["reviewer_response"] = "SOURCE_REOPEN_ONLY_NO_REPLAY"
+        accepted_left = tmp_path / "accepted_left_endpoint_window.csv"
+        with accepted_left.open("w", newline="") as f:
+            writer = csv.DictWriter(f, fieldnames=list(left_rows[0].keys()), lineterminator="\n")
+            writer.writeheader()
+            writer.writerows(left_rows)
+        accepted_left_summary = tmp_path / "accepted_left_endpoint_window_summary.csv"
+        subprocess.run(
+            [
+                "python",
+                "scripts/validate_paper10_desi_shape_row2_left_endpoint_window_review_response_v1.py",
+                str(accepted_left),
+                "--summary-out",
+                str(accepted_left_summary),
+            ],
+            cwd=ROOT,
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+        with accepted_left_summary.open(newline="") as f:
+            accepted_left_summary_row = list(csv.DictReader(f))[0]
+        assert accepted_left_summary_row["source_reopen_caveated"] == "true"
+        assert accepted_left_summary_row["left_endpoint_release_allowed"] == "false"
+        assert accepted_left_summary_row["row2_promotion_ready"] == "false"
+        assert accepted_left_summary_row["endpoint_replay_allowed"] == "false"
+
+        left_rows[0]["endpoint_replay_allowed"] = "true"
+        bad_left = tmp_path / "bad_left_endpoint_window.csv"
+        with bad_left.open("w", newline="") as f:
+            writer = csv.DictWriter(f, fieldnames=list(left_rows[0].keys()), lineterminator="\n")
+            writer.writeheader()
+            writer.writerows(left_rows)
+        bad_left_run = subprocess.run(
+            [
+                "python",
+                "scripts/validate_paper10_desi_shape_row2_left_endpoint_window_review_response_v1.py",
+                str(bad_left),
+                "--summary-out",
+                str(tmp_path / "bad_left_endpoint_window_summary.csv"),
+            ],
+            cwd=ROOT,
+            capture_output=True,
+            text=True,
+        )
+        assert bad_left_run.returncode != 0
+        subprocess.run(
+            [
+                "python",
+                "scripts/build_paper10_desi_shape_row2_left_endpoint_window_decision_gate_v1.py",
+            ],
+            cwd=ROOT,
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+        subprocess.run(
+            [
+                "python",
+                "scripts/validate_paper10_desi_shape_row2_left_endpoint_window_decision_gate_v1.py",
+            ],
+            cwd=ROOT,
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+        with (
+            ROOT
+            / "data/derived/paper10_desi_shape_row2_left_endpoint_window_decision_gate_v1_summary.csv"
+        ).open(newline="") as f:
+            decision_summary = list(csv.DictReader(f))[0]
+        assert decision_summary["gate_status"] == "ROW2_LEFT_SOURCE_REOPEN_CAVEATED_NO_REPLAY"
+        assert decision_summary["review_completed"] == "true"
+        assert decision_summary["source_reopen_caveated"] == "true"
+        assert decision_summary["left_endpoint_release_allowed"] == "false"
+        assert decision_summary["row2_promotion_ready"] == "false"
+        assert decision_summary["endpoint_replay_allowed"] == "false"
+        assert decision_summary["endpoint_validation_claimed"] == "false"
+        subprocess.run(
+            [
+                "python",
+                "scripts/build_paper10_desi_shape_row2_post_window_review_source_plan_v1.py",
+            ],
+            cwd=ROOT,
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+        subprocess.run(
+            [
+                "python",
+                "scripts/validate_paper10_desi_shape_row2_post_window_review_source_plan_v1.py",
+            ],
+            cwd=ROOT,
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+        with (
+            ROOT
+            / "data/derived/paper10_desi_shape_row2_post_window_review_source_plan_v1_summary.csv"
+        ).open(newline="") as f:
+            source_plan_summary = list(csv.DictReader(f))[0]
+        assert (
+            source_plan_summary["source_plan_status"]
+            == "ROW2_SOURCE_REOPENED_CAVEATED_LEFT_ENDPOINT_STILL_NOT_RELEASED"
+        )
+        assert source_plan_summary["source_reopen_caveated"] == "true"
+        assert source_plan_summary["strict_left_endpoint_support_count"] == "0"
+        assert source_plan_summary["p0_source_target_count"] == "2"
+        assert source_plan_summary["row2_promotion_ready"] == "false"
+        assert source_plan_summary["endpoint_replay_allowed"] == "false"
+        assert source_plan_summary["endpoint_validation_claimed"] == "false"
+        subprocess.run(
+            [
+                "python",
+                "scripts/build_paper10_desi_shape_row2_left_strict_support_scout_v1.py",
+            ],
+            cwd=ROOT,
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+        subprocess.run(
+            [
+                "python",
+                "scripts/validate_paper10_desi_shape_row2_left_strict_support_scout_v1.py",
+            ],
+            cwd=ROOT,
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+        with (
+            ROOT
+            / "data/derived/paper10_desi_shape_row2_left_strict_support_scout_v1_summary.csv"
+        ).open(newline="") as f:
+            strict_scout_summary = list(csv.DictReader(f))[0]
+        assert strict_scout_summary["strict_independent_support_count"] == "0"
+        assert strict_scout_summary["nearest_candidate_reference"] == "Simon et al. (2005)"
+        assert strict_scout_summary["nearest_independent_candidate_reference"] == "Stern et al. (2010)"
+        assert strict_scout_summary["row2_promotion_ready"] == "false"
+        assert strict_scout_summary["endpoint_replay_allowed"] == "false"
+        assert strict_scout_summary["endpoint_validation_claimed"] == "false"
+        subprocess.run(
+            [
+                "python",
+                "scripts/build_paper10_desi_shape_row2_source_native_shape_support_scout_v1.py",
+            ],
+            cwd=ROOT,
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+        subprocess.run(
+            [
+                "python",
+                "scripts/validate_paper10_desi_shape_row2_source_native_shape_support_scout_v1.py",
+            ],
+            cwd=ROOT,
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+        with (
+            ROOT
+            / "data/derived/paper10_desi_shape_row2_source_native_shape_support_scout_v1_summary.csv"
+        ).open(newline="") as f:
+            source_native_summary = list(csv.DictReader(f))[0]
+        assert source_native_summary["source_native_row_count"] == "4"
+        assert source_native_summary["row2_covariance_positive_definite"] == "true"
+        assert source_native_summary["uses_endpoint_scores"] == "false"
+        assert source_native_summary["uses_endpoint_residuals"] == "false"
+        assert source_native_summary["row2_promotion_ready"] == "false"
+        assert source_native_summary["endpoint_replay_allowed"] == "false"
+        assert source_native_summary["endpoint_validation_claimed"] == "false"
+        subprocess.run(
+            [
+                "python",
+                "scripts/build_paper10_desi_shape_row2_source_native_shape_support_review_package_v1.py",
+            ],
+            cwd=ROOT,
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+        subprocess.run(
+            [
+                "python",
+                "scripts/validate_paper10_desi_shape_row2_source_native_shape_support_review_package_v1.py",
+            ],
+            cwd=ROOT,
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+        with (
+            ROOT
+            / "data/derived/paper10_desi_shape_row2_source_native_shape_support_review_package_v1_summary.csv"
+        ).open(newline="") as f:
+            source_native_package_summary = list(csv.DictReader(f))[0]
+        assert source_native_package_summary["review_completed"] == "false"
+        assert source_native_package_summary["source_native_row_count"] == "4"
+        assert source_native_package_summary["row2_covariance_positive_definite"] == "true"
+        assert source_native_package_summary["row2_promotion_ready"] == "false"
+        assert source_native_package_summary["endpoint_replay_allowed"] == "false"
+        assert source_native_package_summary["contains_endpoint_scores"] == "false"
+
+
+def test_paper10_desi_shape_independent_review_response_validator_accepts_caveated_non_replay(
+    tmp_path: Path,
+) -> None:
+    subprocess.run(
+        ["python", "scripts/build_paper10_desi_time_readout_shape_projection_induction_v1.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    subprocess.run(
+        ["python", "scripts/build_paper10_desi_ordering_control_suite_v1.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    subprocess.run(
+        ["python", "scripts/build_paper10_desi_cc_window_stress_binding_v1.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    subprocess.run(
+        ["python", "scripts/build_paper10_desi_shape_bound_control_vectors_v1.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    subprocess.run(
+        ["python", "scripts/build_paper10_desi_time_readout_shape_independent_review_package_v1.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    template_path = ROOT / "data/derived/paper10_desi_time_readout_shape_independent_review_response_template_v1.csv"
+    with template_path.open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    completed = []
+    for row in rows:
+        new_row = dict(row)
+        new_row["review_completed"] = "true"
+        new_row["reviewer_id_or_role"] = "independent_source_side_reviewer"
+        new_row["reviewer_response"] = "caveated_yes" if row["question_id"] in {"Q3_caveat_acceptance", "Q4_next_action_limit"} else "yes"
+        new_row["reviewer_rationale"] = "Source-side fields and blockers reviewed; no endpoint replay or validation is authorized."
+        completed.append(new_row)
+    response = tmp_path / "completed_shape_review.csv"
+    with response.open("w", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=list(completed[0].keys()), lineterminator="\n")
+        writer.writeheader()
+        writer.writerows(completed)
+    summary = tmp_path / "shape_review_summary.csv"
+    subprocess.run(
+        [
+            "python",
+            "scripts/validate_paper10_desi_time_readout_shape_independent_review_response_v1.py",
+            str(response),
+            "--summary-out",
+            str(summary),
+        ],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    with summary.open(newline="") as f:
+        result = list(csv.DictReader(f))[0]
+    assert result["status"] == "DESI_TIME_READOUT_SHAPE_INDEPENDENT_REVIEW_ACCEPTED_CAVEATED_SOURCE_SIDE_NOT_REPLAY"
+    assert result["decision"] == "RETAIN_CAVEATED_SOURCE_SIDE_SHAPE_CANDIDATE_ONLY"
+    assert result["review_completed"] == "true"
+    assert result["endpoint_replay_allowed"] == "false"
+    assert result["endpoint_validation_claimed"] == "false"
+    assert result["physical_validation_claimed"] == "false"
+
+
+def test_paper10_desi_clock_support_acquisition_manifest_freezes_missing_targets() -> None:
+    for command in [
+        ["python", "scripts/build_paper10_desi_clock_support_acquisition_manifest_v1.py"],
+        ["python", "scripts/validate_paper10_desi_clock_support_acquisition_manifest_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (ROOT / "data/derived/paper10_desi_clock_support_acquisition_manifest_v1_summary.csv").open(
+        newline=""
+    ) as f:
+        summary = list(csv.DictReader(f))[0]
+    with (ROOT / "data/derived/paper10_desi_clock_support_acquisition_manifest_v1.csv").open(
+        newline=""
+    ) as f:
+        rows = list(csv.DictReader(f))
+    assert summary["status"] == "DESI_CLOCK_SUPPORT_ACQUISITION_MANIFEST_FROZEN_NOT_FETCHED_NOT_REPLAY_NOT_VALIDATION"
+    assert summary["target_count"] == "2"
+    assert summary["source_fetch_completed"] == "false"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["physical_validation_claimed"] == "false"
+    assert summary["verdict"] == "desi_clock_support_acquisition_targets_frozen_sources_not_attached"
+    by_target = {row["target_id"]: row for row in rows}
+    assert set(by_target) == {
+        "DESI_RADIAL_ROW_4_MULTI_CLOCK_REDUNDANCY",
+        "DESI_RADIAL_ROW_5_HIGH_Z_CLOCK_SUPPORT",
+    }
+    assert by_target["DESI_RADIAL_ROW_4_MULTI_CLOCK_REDUNDANCY"]["radial_index"] == "4"
+    assert by_target["DESI_RADIAL_ROW_4_MULTI_CLOCK_REDUNDANCY"]["target_z_eff"] == "1.484"
+    assert by_target["DESI_RADIAL_ROW_5_HIGH_Z_CLOCK_SUPPORT"]["radial_index"] == "5"
+    assert by_target["DESI_RADIAL_ROW_5_HIGH_Z_CLOCK_SUPPORT"]["target_z_eff"] == "2.33"
+    assert {row["source_fetch_status"] for row in rows} == {"not_fetched"}
+    assert {row["endpoint_replay_allowed"] for row in rows} == {"false"}
+
+
+def test_paper10_desi_clock_support_candidate_scan_does_not_close_gate() -> None:
+    for command in [
+        ["python", "scripts/build_paper10_desi_clock_support_source_candidate_scan_v1.py"],
+        ["python", "scripts/validate_paper10_desi_clock_support_source_candidate_scan_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (ROOT / "data/derived/paper10_desi_clock_support_source_candidate_scan_v1_summary.csv").open(
+        newline=""
+    ) as f:
+        summary = list(csv.DictReader(f))[0]
+    with (ROOT / "data/derived/paper10_desi_clock_support_source_candidate_scan_v1.csv").open(
+        newline=""
+    ) as f:
+        rows = list(csv.DictReader(f))
+    assert summary["status"] == "DESI_CLOCK_SUPPORT_SOURCE_CANDIDATE_SCAN_BUILT_NOT_REPLAY_NOT_VALIDATION"
+    assert summary["candidate_count"] == "6"
+    assert summary["accepted_for_acquisition_target_count"] == "0"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["physical_validation_claimed"] == "false"
+    assert summary["verdict"] == "desi_clock_support_candidate_scan_found_cross_probe_context_but_no_gate_closing_clock_support"
+    assert {row["accepted_for_acquisition_target"] for row in rows} == {"false"}
+    assert {row["control_or_context_only"] for row in rows} == {"true"}
+    by_candidate = {row["candidate_id"]: row for row in rows}
+    assert by_candidate["EBOSS_DR16_QSO_BAO_RSD_Z1P48"]["gate_result"] == "RETAIN_AS_ROW4_CROSS_PROBE_CONTROL_ONLY_NOT_CLOCK_SUPPORT"
+    assert by_candidate["TOMASETTI_2023_VANDELS_CC_Z1P26"]["gate_result"] == "REJECT_FOR_ROW4_OUTSIDE_FROZEN_Z_WINDOW"
+    assert by_candidate["EBOSS_DR16_LYA_BAO_Z2P33"]["gate_result"] == "RETAIN_AS_CROSS_PROBE_CONTROL_ONLY_NOT_CLOCK_SUPPORT"
+
+
+def test_paper10_desi_clock_support_blocker_verdict_keeps_route_blocked() -> None:
+    for command in [
+        ["python", "scripts/build_paper10_desi_clock_support_blocker_verdict_v1.py"],
+        ["python", "scripts/validate_paper10_desi_clock_support_blocker_verdict_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (ROOT / "data/derived/paper10_desi_clock_support_blocker_verdict_v1_summary.csv").open(
+        newline=""
+    ) as f:
+        summary = list(csv.DictReader(f))[0]
+    with (ROOT / "data/derived/paper10_desi_clock_support_blocker_verdict_v1.csv").open(
+        newline=""
+    ) as f:
+        rows = list(csv.DictReader(f))
+    assert summary["status"] == "DESI_CLOCK_SUPPORT_ROUTE_BLOCKED_AFTER_SOURCE_SCAN_NOT_REPLAY_NOT_VALIDATION"
+    assert summary["active_blocker_count"] == "2"
+    assert summary["candidate_scan_accepted_count"] == "0"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["physical_validation_claimed"] == "false"
+    assert summary["verdict"] == "desi_clock_support_route_remains_blocked_pending_independent_clock_sources"
+    by_blocker = {row["blocker_id"]: row for row in rows}
+    assert set(by_blocker) == {
+        "ROW4_INDEPENDENT_CLOCK_REDUNDANCY_MISSING",
+        "ROW5_HIGH_Z_CLOCK_SUPPORT_MISSING",
+    }
+    assert {row["blocker_status"] for row in rows} == {"ACTIVE_BLOCKER"}
+    assert {row["endpoint_replay_allowed"] for row in rows} == {"false"}
+    assert "BAO_RSD_as_clock_support" in by_blocker["ROW4_INDEPENDENT_CLOCK_REDUNDANCY_MISSING"][
+        "disallowed_next_action"
+    ]
+    assert "LyA_BAO_as_clock_support" in by_blocker["ROW5_HIGH_Z_CLOCK_SUPPORT_MISSING"][
+        "disallowed_next_action"
+    ]
+
+
+def test_paper10_desi_row4_cc_bracket_source_freeze_preserves_independence_blocker() -> None:
+    for command in [
+        ["python", "scripts/build_paper10_desi_row4_clock_reopen_manifest_v1.py"],
+        ["python", "scripts/validate_paper10_desi_row4_clock_reopen_manifest_v1.py"],
+        ["python", "scripts/build_paper10_desi_row4_cc_bracket_source_freeze_v1.py"],
+        ["python", "scripts/validate_paper10_desi_row4_cc_bracket_source_freeze_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (ROOT / "data/derived/paper10_desi_row4_cc_bracket_source_freeze_v1_summary.csv").open(
+        newline=""
+    ) as f:
+        summary = list(csv.DictReader(f))[0]
+    with (ROOT / "data/derived/paper10_desi_row4_cc_bracket_source_freeze_v1.csv").open(
+        newline=""
+    ) as f:
+        rows = list(csv.DictReader(f))
+    assert summary["status"] == "ROW4_CC_BRACKET_SOURCE_VALUES_FROZEN_REFERENCE_FAMILY_NOT_INDEPENDENT_NOT_REPLAY"
+    assert summary["frozen_entry_count"] == "2"
+    assert summary["source_values_frozen"] == "true"
+    assert summary["reference_family"] == "Simon_2005"
+    assert summary["independent_reference_family_redundancy_satisfied"] == "false"
+    assert summary["row4_can_enter_replay"] == "false"
+    assert summary["row5_remains_blocked"] == "true"
+    by_entry = {row["entry_id"]: row for row in rows}
+    assert by_entry["SIMON_2005_CC_Z1P43"]["H_z_km_s_Mpc"] == "177"
+    assert by_entry["SIMON_2005_CC_Z1P43"]["sigma_H_km_s_Mpc"] == "18"
+    assert by_entry["SIMON_2005_CC_Z1P53"]["H_z_km_s_Mpc"] == "140"
+    assert by_entry["SIMON_2005_CC_Z1P53"]["sigma_H_km_s_Mpc"] == "14"
+    assert {row["independent_of_current_blocker_reference_family"] for row in rows} == {"false"}
+    assert {row["endpoint_replay_allowed"] for row in rows} == {"false"}
+
+
+def test_paper10_desi_row4_non_simon_clock_search_keeps_blocker() -> None:
+    for command in [
+        ["python", "scripts/build_paper10_desi_row4_cc_bracket_source_freeze_v1.py"],
+        ["python", "scripts/build_paper10_desi_row4_non_simon_clock_search_v1.py"],
+        ["python", "scripts/validate_paper10_desi_row4_non_simon_clock_search_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (ROOT / "data/derived/paper10_desi_row4_non_simon_clock_search_v1_summary.csv").open(
+        newline=""
+    ) as f:
+        summary = list(csv.DictReader(f))[0]
+    with (ROOT / "data/derived/paper10_desi_row4_non_simon_clock_search_v1.csv").open(
+        newline=""
+    ) as f:
+        rows = list(csv.DictReader(f))
+    assert summary["status"] == "ROW4_NON_SIMON_STRICT_WINDOW_SEARCH_NEGATIVE_NOT_REPLAY"
+    assert summary["non_simon_inside_strict_window_count"] == "0"
+    assert summary["accepted_for_row4_release_count"] == "0"
+    assert summary["closest_non_simon_candidate"] == "MORESCO_2015_CC_Z1P363"
+    assert summary["closest_non_simon_delta_z"] == "0.121"
+    assert summary["row4_can_enter_replay"] == "false"
+    assert summary["verdict"] == "row4_non_simon_strict_window_search_negative_blocker_remains"
+    by_candidate = {row["candidate_id"]: row for row in rows}
+    assert by_candidate["MORESCO_2015_CC_Z1P363"]["inside_strict_window"] == "false"
+    assert by_candidate["MORESCO_2015_CC_Z1P363"]["independent_of_current_blocker_reference_family"] == "true"
+    assert by_candidate["SIMON_2005_CC_Z1P43"]["inside_strict_window"] == "true"
+    assert by_candidate["SIMON_2005_CC_Z1P43"]["independent_of_current_blocker_reference_family"] == "false"
+    assert {row["accepted_for_row4_release"] for row in rows} == {"false"}
+    assert {row["endpoint_replay_allowed"] for row in rows} == {"false"}
+
+
+def test_paper10_desi_row4_window_review_package_is_blank_non_replay_handoff() -> None:
+    for command in [
+        ["python", "scripts/build_paper10_desi_row4_non_simon_clock_search_v1.py"],
+        ["python", "scripts/build_paper10_desi_row4_window_review_package_v1.py"],
+        ["python", "scripts/validate_paper10_desi_row4_window_review_package_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (ROOT / "data/derived/paper10_desi_row4_window_review_package_v1_summary.csv").open(
+        newline=""
+    ) as f:
+        summary = list(csv.DictReader(f))[0]
+    with (ROOT / "data/derived/paper10_desi_row4_window_review_response_template_v1.csv").open(
+        newline=""
+    ) as f:
+        template = list(csv.DictReader(f))
+    assert summary["status"] == "DESI_ROW4_WINDOW_REVIEW_PACKAGE_BUILT_NOT_COMPLETED"
+    assert summary["review_completed"] == "false"
+    assert summary["strict_search_verdict"] == "row4_non_simon_strict_window_search_negative_blocker_remains"
+    assert summary["row4_can_enter_replay"] == "false"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["physical_validation_claimed"] == "false"
+    assert summary["contains_endpoint_residuals"] == "false"
+    assert summary["contains_endpoint_scores"] == "false"
+    assert summary["contains_fit_statistics"] == "false"
+    assert len(template) == 3
+    assert {row["review_completed"] for row in template} == {"false"}
+    assert {row["forbidden_inputs_used"] for row in template} == {"false"}
+    assert {row["endpoint_replay_allowed"] for row in template} == {"false"}
+
+
+def test_paper10_desi_row4_window_review_response_positive_still_requires_replay_review(tmp_path: Path) -> None:
+    response = tmp_path / "paper10_desi_row4_window_review_response_v1.csv"
+    summary = tmp_path / "summary.csv"
+    rows = [
+        {
+            "policy_id": "PAPER10_DESI_ROW4_WINDOW_REVIEW_POLICY_V1",
+            "question_id": "Q1_STRICT_WINDOW_STATUS",
+            "question_text": "Should the frozen strict row-4 clock-support window remain |Delta z|<=0.10 after the non-Simon near-miss search?",
+            "required_response": "KEEP_STRICT_WINDOW or ALLOW_CAVEATED_WINDOW_EXTENSION or REJECT_REOPEN",
+            "acceptance_condition": "If KEEP_STRICT_WINDOW, row4 remains blocked. If ALLOW_CAVEATED_WINDOW_EXTENSION, reviewer must justify source-side use of Moresco2015 z=1.363 as caveated row4 support. If REJECT_REOPEN, close row4 source acquisition for this paper version.",
+            "review_completed": "true",
+            "reviewer_id_or_role": "external_source_reviewer",
+            "reviewer_response": "ALLOW_CAVEATED_WINDOW_EXTENSION",
+            "reviewer_rationale": "Near-window source can be carried only as caveated source-side context; no endpoint scores were used.",
+            "source_reference_or_url": "https://doi.org/10.1093/mnrasl/slv037",
+            "forbidden_inputs_used": "false",
+            "endpoint_replay_allowed": "false",
+            "endpoint_validation_claimed": "false",
+            "physical_validation_claimed": "false",
+            "claim_boundary": "paper10_desi_row4_window_review_not_validation",
+        },
+        {
+            "policy_id": "PAPER10_DESI_ROW4_WINDOW_REVIEW_POLICY_V1",
+            "question_id": "Q2_MORESCO_2015_ELIGIBILITY",
+            "question_text": "Can Moresco 2015 z=1.363, H=160+/-33.6, be treated as independent source-side row4 clock context despite |Delta z|=0.121?",
+            "required_response": "ACCEPT_AS_CAVEATED_NEAR_WINDOW_SOURCE or RETAIN_AS_CONTEXT_ONLY or REJECT_SOURCE",
+            "acceptance_condition": "ACCEPT_AS_CAVEATED_NEAR_WINDOW_SOURCE requires explicit reviewer rationale that the redshift separation is source-side acceptable and does not use endpoint residuals. RETAIN_AS_CONTEXT_ONLY keeps blocker active.",
+            "review_completed": "true",
+            "reviewer_id_or_role": "external_source_reviewer",
+            "reviewer_response": "ACCEPT_AS_CAVEATED_NEAR_WINDOW_SOURCE",
+            "reviewer_rationale": "The source is independent of Simon and close enough to reopen only a caveated source ledger.",
+            "source_reference_or_url": "https://doi.org/10.1093/mnrasl/slv037",
+            "forbidden_inputs_used": "false",
+            "endpoint_replay_allowed": "false",
+            "endpoint_validation_claimed": "false",
+            "physical_validation_claimed": "false",
+            "claim_boundary": "paper10_desi_row4_window_review_not_validation",
+        },
+        {
+            "policy_id": "PAPER10_DESI_ROW4_WINDOW_REVIEW_POLICY_V1",
+            "question_id": "Q3_RELEASE_POLICY",
+            "question_text": "If Q2 is accepted, what is the maximum allowed consequence?",
+            "required_response": "SOURCE_REOPEN_ONLY_NO_REPLAY or AUTHORIZE_REPLAY_REVIEW_REQUIRED or NO_RELEASE",
+            "acceptance_condition": "Default accepted consequence is SOURCE_REOPEN_ONLY_NO_REPLAY. Any endpoint replay still requires a separate replay-authorization package after the source window decision is frozen.",
+            "review_completed": "true",
+            "reviewer_id_or_role": "external_source_reviewer",
+            "reviewer_response": "AUTHORIZE_REPLAY_REVIEW_REQUIRED",
+            "reviewer_rationale": "A separate replay authorization is required before endpoint scoring.",
+            "source_reference_or_url": "https://doi.org/10.1093/mnrasl/slv037",
+            "forbidden_inputs_used": "false",
+            "endpoint_replay_allowed": "false",
+            "endpoint_validation_claimed": "false",
+            "physical_validation_claimed": "false",
+            "claim_boundary": "paper10_desi_row4_window_review_not_validation",
+        },
+    ]
+    with response.open("w", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=list(rows[0].keys()), lineterminator="\n")
+        writer.writeheader()
+        writer.writerows(rows)
+    subprocess.run(
+        [
+            "python",
+            "scripts/validate_paper10_desi_row4_window_review_response_v1.py",
+            str(response),
+            "--summary-out",
+            str(summary),
+        ],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    with summary.open(newline="") as f:
+        out = list(csv.DictReader(f))[0]
+    assert out["status"] == "DESI_ROW4_WINDOW_REVIEW_IMPORTED_CAVEATED_SOURCE_REOPEN_NOT_REPLAY"
+    assert out["source_reopen_caveated"] == "true"
+    assert out["replay_review_required_before_endpoint"] == "true"
+    assert out["row4_can_enter_replay"] == "false"
+    assert out["endpoint_replay_allowed"] == "false"
+    assert out["endpoint_validation_claimed"] == "false"
+    assert out["physical_validation_claimed"] == "false"
+
+
+def test_paper10_desi_row4_window_decision_gate_records_caveated_source_reopen_after_review() -> None:
+    for command in [
+        ["python", "scripts/build_paper10_desi_row4_window_review_package_v1.py"],
+        ["python", "scripts/build_paper10_desi_row4_window_decision_gate_v1.py"],
+        ["python", "scripts/validate_paper10_desi_row4_window_decision_gate_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (ROOT / "data/derived/paper10_desi_row4_window_decision_gate_v1_summary.csv").open(
+        newline=""
+    ) as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["status"] == "DESI_ROW4_WINDOW_DECISION_GATE_BUILT_NOT_REPLAY_NOT_VALIDATION"
+    assert summary["gate_status"] == "ROW4_SOURCE_REOPEN_CAVEATED_NO_REPLAY"
+    assert summary["review_completed"] == "true"
+    assert summary["source_reopen_caveated"] == "true"
+    assert summary["row4_can_enter_replay"] == "false"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["physical_validation_claimed"] == "false"
+    assert summary["verdict"] == "row4_source_reopen_caveated_no_replay"
+
+
+def test_paper10_desi_time_route_closure_status_blocks_replay_until_source_blockers_close() -> None:
+    for command in [
+        ["python", "scripts/build_paper10_desi_row4_window_decision_gate_v1.py"],
+        ["python", "scripts/build_paper10_desi_row5_high_z_decision_gate_v1.py"],
+        ["python", "scripts/build_paper10_desi_time_route_closure_status_v1.py"],
+        ["python", "scripts/validate_paper10_desi_time_route_closure_status_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (ROOT / "data/derived/paper10_desi_time_route_closure_status_v1_summary.csv").open(
+        newline=""
+    ) as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["status"] == "DESI_TIME_ROUTE_CLOSURE_STATUS_BUILT_NOT_REPLAY_NOT_VALIDATION"
+    assert summary["closure_status"] == "DESI_TIME_ROUTE_CLOSED_PENDING_SOURCE_BLOCKERS_NOT_REPLAY"
+    assert summary["row4_gate_status"] == "ROW4_SOURCE_REOPEN_CAVEATED_NO_REPLAY"
+    assert summary["row4_status"] == "ROW4_CAVEATED_SOURCE_REOPENED_REPLAY_REVIEW_STILL_REQUIRED"
+    assert summary["row5_gate_status"] == "ROW5_HIGH_Z_BLOCKER_REMAINS_NOT_REPLAY"
+    assert summary["row5_status"] == "ROW5_HIGH_Z_CLOCK_SUPPORT_MISSING"
+    assert summary["negative_control_blocks_replay"] == "true"
+    assert summary["desi_time_route_endpoint_ready"] == "false"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["physical_validation_claimed"] == "false"
+    assert summary["verdict"] == "desi_time_route_closed_pending_row4_or_row5_or_richer_clock_readout_support"
+
+
+def test_paper10_desi_time_route_closure_status_source_ready_still_requires_replay_review(tmp_path: Path) -> None:
+    def copy_one(src: str, dst: Path, updates: dict[str, str]) -> Path:
+        with (ROOT / src).open(newline="") as f:
+            row = list(csv.DictReader(f))[0]
+        row.update(updates)
+        with dst.open("w", newline="") as f:
+            writer = csv.DictWriter(f, fieldnames=list(row.keys()), lineterminator="\n")
+            writer.writeheader()
+            writer.writerow(row)
+        return dst
+
+    row4 = copy_one(
+        "data/derived/paper10_desi_row4_window_decision_gate_v1_summary.csv",
+        tmp_path / "row4.csv",
+        {
+            "gate_status": "ROW4_SOURCE_REOPEN_CAVEATED_REPLAY_REVIEW_REQUIRED_NOT_REPLAY",
+            "review_completed": "true",
+            "source_reopen_caveated": "true",
+            "replay_review_required_before_endpoint": "true",
+            "verdict": "row4_source_reopen_caveated_prepare_replay_review_only",
+        },
+    )
+    row5 = copy_one(
+        "data/derived/paper10_desi_row5_high_z_decision_gate_v1_summary.csv",
+        tmp_path / "row5.csv",
+        {
+            "gate_status": "ROW5_SOURCE_REOPEN_REPLAY_REVIEW_REQUIRED_NOT_REPLAY",
+            "review_completed": "true",
+            "source_reopen": "true",
+            "replay_review_required_before_endpoint": "true",
+            "verdict": "row5_source_reopen_prepare_replay_review_only",
+        },
+    )
+    negative = copy_one(
+        "data/derived/paper10_desi_time_level_negative_control_response_gate_v1_summary.csv",
+        tmp_path / "negative.csv",
+        {
+            "route_status": "DESI_TIME_LEVEL_ROUTE_SOURCE_READY_REPLAY_REVIEW_REQUIRED",
+            "verdict": "desi_time_level_negative_control_response_gate_source_ready_replay_review_required",
+        },
+    )
+    out = tmp_path / "closure.csv"
+    summary = tmp_path / "closure_summary.csv"
+    subprocess.run(
+        [
+            "python",
+            "scripts/build_paper10_desi_time_route_closure_status_v1.py",
+            "--row4",
+            str(row4),
+            "--row5",
+            str(row5),
+            "--negative-control",
+            str(negative),
+            "--out",
+            str(out),
+            "--summary-out",
+            str(summary),
+        ],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    with summary.open(newline="") as f:
+        result = list(csv.DictReader(f))[0]
+    assert result["closure_status"] == "DESI_TIME_ROUTE_SOURCE_READY_BUT_REPLAY_REVIEW_REQUIRED"
+    assert result["row4_status"] == "ROW4_CAVEATED_SOURCE_REOPENED_REPLAY_REVIEW_STILL_REQUIRED"
+    assert result["row5_status"] == "ROW5_SOURCE_REOPENED_REPLAY_REVIEW_STILL_REQUIRED"
+    assert result["negative_control_blocks_replay"] == "false"
+    assert result["desi_time_route_endpoint_ready"] == "false"
+    assert result["endpoint_replay_allowed"] == "false"
+    assert result["endpoint_validation_claimed"] == "false"
+    assert result["physical_validation_claimed"] == "false"
+    assert result["verdict"] == "desi_time_route_source_ready_replay_review_required_not_validation"
+
+
+def test_paper10_desi_row5_high_z_decision_gate_records_blocker_after_review() -> None:
+    for command in [
+        ["python", "scripts/build_paper10_desi_row5_high_z_review_package_v1.py"],
+        ["python", "scripts/build_paper10_desi_row5_high_z_decision_gate_v1.py"],
+        ["python", "scripts/validate_paper10_desi_row5_high_z_decision_gate_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (ROOT / "data/derived/paper10_desi_row5_high_z_decision_gate_v1_summary.csv").open(
+        newline=""
+    ) as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["status"] == "DESI_ROW5_HIGH_Z_DECISION_GATE_BUILT_NOT_REPLAY_NOT_VALIDATION"
+    assert summary["gate_status"] == "ROW5_HIGH_Z_BLOCKER_REMAINS_NOT_REPLAY"
+    assert summary["review_completed"] == "true"
+    assert summary["source_reopen"] == "false"
+    assert summary["row5_can_enter_replay"] == "false"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["physical_validation_claimed"] == "false"
+    assert summary["verdict"] == "row5_high_z_blocker_remains_no_replay"
+
+
+def test_paper10_desi_row5_high_z_source_route_scout_records_no_gate_closing_source() -> None:
+    for command in [
+        ["python", "scripts/build_paper10_desi_row5_high_z_source_route_scout_v1.py"],
+        ["python", "scripts/validate_paper10_desi_row5_high_z_source_route_scout_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (ROOT / "data/derived/paper10_desi_row5_high_z_source_route_scout_v1_summary.csv").open(
+        newline=""
+    ) as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["status"] == "DESI_ROW5_HIGH_Z_SOURCE_ROUTE_SCOUT_BUILT_NOT_REPLAY_NOT_VALIDATION"
+    assert summary["candidate_count"] == "4"
+    assert summary["accepted_for_row5_count"] == "0"
+    assert summary["context_only_count"] == "4"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["physical_validation_claimed"] == "false"
+    assert summary["verdict"] == "row5_high_z_scout_found_context_but_no_gate_closing_source"
+
+
+def test_paper10_desi_row5_holdout_confirmation_records_predeclared_exclusion() -> None:
+    for command in [
+        ["python", "scripts/build_paper10_desi_row5_high_z_source_route_scout_v1.py"],
+        ["python", "scripts/build_paper10_desi_row5_holdout_confirmation_v1.py"],
+        ["python", "scripts/validate_paper10_desi_row5_holdout_confirmation_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (ROOT / "data/derived/paper10_desi_row5_holdout_confirmation_v1_summary.csv").open(
+        newline=""
+    ) as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["status"] == "ROW5_HOLDOUT_CONFIRMED_NOT_REPLAY_NOT_VALIDATION"
+    assert summary["heldout_radial_row"] == "5"
+    assert summary["heldout_z"] == "2.33"
+    assert summary["accepted_for_row5_count"] == "0"
+    assert summary["allowed_radial_rows"] == "0;1;2;3;4"
+    assert summary["excluded_radial_rows"] == "5"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["physical_validation_claimed"] == "false"
+    assert summary["verdict"] == "row5_holdout_confirmed_no_gate_closing_source_not_replay"
+
+
+def test_paper10_desi_post_review_time_route_priority_selects_shape_gate() -> None:
+    for command in [
+        ["python", "scripts/build_paper10_desi_row5_high_z_source_route_scout_v1.py"],
+        ["python", "scripts/build_paper10_desi_row5_holdout_confirmation_v1.py"],
+        ["python", "scripts/build_paper10_desi_post_review_time_route_priority_v1.py"],
+        ["python", "scripts/validate_paper10_desi_post_review_time_route_priority_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (ROOT / "data/derived/paper10_desi_post_review_time_route_priority_v1_summary.csv").open(
+        newline=""
+    ) as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["status"] == "POST_REVIEW_TIME_ROUTE_PRIORITY_BUILT_NOT_REPLAY_NOT_VALIDATION"
+    assert summary["primary_next_gate"] == "TIME_READOUT_SHAPE_OBSERVABLE"
+    assert summary["secondary_required_gate"] == "ORDERING_CONTROL_SUITE"
+    assert summary["row5_role"] == "HIGH_Z_HOLDOUT_FUTURE_REOPEN_ONLY"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["physical_validation_claimed"] == "false"
+    assert summary["verdict"] == "post_review_priority_is_shape_derivation_not_row5_replay"
+
+
+def test_paper10_desi_row5_high_z_review_package_is_blank_non_replay_handoff() -> None:
+    for command in [
+        ["python", "scripts/build_paper10_desi_time_route_closure_status_v1.py"],
+        ["python", "scripts/build_paper10_desi_row5_high_z_review_package_v1.py"],
+        ["python", "scripts/validate_paper10_desi_row5_high_z_review_package_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (ROOT / "data/derived/paper10_desi_row5_high_z_review_package_v1_summary.csv").open(
+        newline=""
+    ) as f:
+        summary = list(csv.DictReader(f))[0]
+    with (ROOT / "data/derived/paper10_desi_row5_high_z_review_response_template_v1.csv").open(
+        newline=""
+    ) as f:
+        template = list(csv.DictReader(f))
+    assert summary["status"] == "DESI_ROW5_HIGH_Z_REVIEW_PACKAGE_BUILT_NOT_COMPLETED"
+    assert summary["review_completed"] == "false"
+    assert summary["row5_high_z_status"] == "desi_high_z_clock_support_missing_row_remains_holdout_not_validation"
+    assert summary["desi_time_route_endpoint_ready"] == "false"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["physical_validation_claimed"] == "false"
+    assert summary["contains_endpoint_residuals"] == "false"
+    assert summary["contains_endpoint_scores"] == "false"
+    assert summary["contains_fit_statistics"] == "false"
+    assert len(template) == 3
+    assert {row["review_completed"] for row in template} == {"false"}
+    assert {row["forbidden_inputs_used"] for row in template} == {"false"}
+    assert {row["endpoint_replay_allowed"] for row in template} == {"false"}
+
+
+def test_paper10_desi_row5_high_z_review_response_positive_still_requires_replay_review(tmp_path: Path) -> None:
+    response = tmp_path / "paper10_desi_row5_high_z_review_response_v1.csv"
+    summary = tmp_path / "summary.csv"
+    rows = [
+        {
+            "policy_id": "PAPER10_DESI_ROW5_HIGH_Z_REVIEW_POLICY_V1",
+            "question_id": "Q1_HIGH_Z_CLOCK_SOURCE",
+            "question_text": "Can the reviewer identify an independent high-z cosmic-clock or chronometer source covering or bracketing z=2.33 without extrapolating the frozen CC table?",
+            "required_response": "ACCEPT_HIGH_Z_CLOCK_SOURCE or NO_HIGH_Z_CLOCK_SOURCE or CAVEATED_CONTEXT_ONLY",
+            "acceptance_condition": "ACCEPT requires a public/citable source-native clock or chronometer value/range at or bracketing z=2.33; BAO/r_d alone is not sufficient. NO or CAVEATED_CONTEXT keeps row5 blocked.",
+            "review_completed": "true",
+            "reviewer_id_or_role": "external_source_reviewer",
+            "reviewer_response": "NO_HIGH_Z_CLOCK_SOURCE",
+            "reviewer_rationale": "No independent high-z chronometer source is attached in this response.",
+            "source_reference_or_url": "NA",
+            "source_redshift_or_range": "NA",
+            "forbidden_inputs_used": "false",
+            "endpoint_replay_allowed": "false",
+            "endpoint_validation_claimed": "false",
+            "physical_validation_claimed": "false",
+            "claim_boundary": "paper10_desi_row5_high_z_review_not_validation",
+        },
+        {
+            "policy_id": "PAPER10_DESI_ROW5_HIGH_Z_REVIEW_POLICY_V1",
+            "question_id": "Q2_SOURCE_NATIVE_TIME_READOUT",
+            "question_text": "If no clock source exists, can a source-native high-z time/readout observable be defined without treating Ly-alpha BAO alone as clock support?",
+            "required_response": "ACCEPT_SOURCE_NATIVE_TIME_READOUT_CANDIDATE or RETAIN_AS_CROSS_PROBE_CONTEXT_ONLY or REJECT_ROUTE",
+            "acceptance_condition": "ACCEPT requires an explicit source-side time/readout observable definition independent of endpoint scores; RETAIN_AS_CROSS_PROBE_CONTEXT_ONLY keeps row5 blocked but preserves Ly-alpha BAO as context.",
+            "review_completed": "true",
+            "reviewer_id_or_role": "external_source_reviewer",
+            "reviewer_response": "ACCEPT_SOURCE_NATIVE_TIME_READOUT_CANDIDATE",
+            "reviewer_rationale": "A source-native high-z time/readout candidate is accepted only as source-side route; Ly-alpha BAO alone is not treated as clock support.",
+            "source_reference_or_url": "https://arxiv.org/abs/2007.08995",
+            "source_redshift_or_range": "z=2.33",
+            "forbidden_inputs_used": "false",
+            "endpoint_replay_allowed": "false",
+            "endpoint_validation_claimed": "false",
+            "physical_validation_claimed": "false",
+            "claim_boundary": "paper10_desi_row5_high_z_review_not_validation",
+        },
+        {
+            "policy_id": "PAPER10_DESI_ROW5_HIGH_Z_REVIEW_POLICY_V1",
+            "question_id": "Q3_RELEASE_POLICY",
+            "question_text": "If Q1 or Q2 is accepted, what is the maximum allowed consequence?",
+            "required_response": "SOURCE_REOPEN_ONLY_NO_REPLAY or AUTHORIZE_REPLAY_REVIEW_REQUIRED or NO_RELEASE",
+            "acceptance_condition": "Any accepted source route can at most reopen source acquisition or require a separate replay-authorization review; this package itself must not authorize endpoint replay.",
+            "review_completed": "true",
+            "reviewer_id_or_role": "external_source_reviewer",
+            "reviewer_response": "AUTHORIZE_REPLAY_REVIEW_REQUIRED",
+            "reviewer_rationale": "A separate replay authorization is required before endpoint scoring.",
+            "source_reference_or_url": "https://arxiv.org/abs/2007.08995",
+            "source_redshift_or_range": "z=2.33",
+            "forbidden_inputs_used": "false",
+            "endpoint_replay_allowed": "false",
+            "endpoint_validation_claimed": "false",
+            "physical_validation_claimed": "false",
+            "claim_boundary": "paper10_desi_row5_high_z_review_not_validation",
+        },
+    ]
+    with response.open("w", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=list(rows[0].keys()), lineterminator="\n")
+        writer.writeheader()
+        writer.writerows(rows)
+    subprocess.run(
+        [
+            "python",
+            "scripts/validate_paper10_desi_row5_high_z_review_response_v1.py",
+            str(response),
+            "--summary-out",
+            str(summary),
+        ],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    with summary.open(newline="") as f:
+        out = list(csv.DictReader(f))[0]
+    assert out["status"] == "DESI_ROW5_HIGH_Z_REVIEW_IMPORTED_SOURCE_REOPEN_NOT_REPLAY"
+    assert out["source_reopen"] == "true"
+    assert out["accepted_clock_source"] == "false"
+    assert out["accepted_source_native_time_readout"] == "true"
+    assert out["replay_review_required_before_endpoint"] == "true"
+    assert out["row5_can_enter_replay"] == "false"
+    assert out["endpoint_replay_allowed"] == "false"
+    assert out["endpoint_validation_claimed"] == "false"
+    assert out["physical_validation_claimed"] == "false"
 
 
 def test_void_source_basis_refinement_v2_time_readout_route_ledger_v1_preserves_blocker() -> None:
@@ -9665,3 +14349,788 @@ def test_kids1000_cosebis_operator_leakage_projection_criterion_is_not_a_proof()
         == "ALTERNATIVE_SUFFICIENT_CONDITION_FROZEN_NOT_PROVEN"
     )
     assert criteria["C5_theorem_status"]["criterion_status"] == "OPEN_NOT_PROVEN"
+
+
+def test_act_dr6_lensing_acquisition_manifest_is_source_side_only() -> None:
+    subprocess.run(
+        ["python", "scripts/build_act_dr6_lensing_product_v1.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    subprocess.run(
+        ["python", "scripts/validate_act_dr6_lensing_product_v1.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    with (ROOT / "data/source_manifest/act_dr6_lensing_product_v1.csv").open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    assert len(rows) == 1
+    row = rows[0]
+    assert row["artifact_id"] == "ACT_DR6_LENSING_PRODUCT_V1"
+    assert row["provider"] == "NASA_LAMBDA_ACT_DR6"
+    assert row["expected_byte_count"] == "1371472486"
+    assert row["endpoint_replay_allowed"] == "false"
+    assert row["endpoint_validation_claimed"] == "false"
+    assert row["physical_lensing_path_weight_claimed"] == "false"
+    assert row["contains_distance_residuals"] == "false"
+    assert row["contains_fit_statistics"] == "false"
+    if row["download_complete"] == "true":
+        assert row["local_byte_count"] == row["expected_byte_count"]
+        assert row["sha256"]
+    else:
+        assert row["metric_lensing_numeric_product_available_for_source"] == "false"
+
+
+def test_act_dr6_lensing_inventory_has_science_and_null_control_variants() -> None:
+    subprocess.run(
+        ["python", "scripts/build_act_dr6_lensing_inventory_v1.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    subprocess.run(
+        ["python", "scripts/validate_act_dr6_lensing_inventory_v1.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    with (ROOT / "data/derived/act_dr6_lensing_inventory_v1_summary.csv").open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    assert len(rows) == 1
+    summary = rows[0]
+    assert summary["status"] == "SOURCE_INVENTORY_BUILT_NOT_ENDPOINT"
+    assert summary["variant_count"] == "13"
+    assert summary["kappa_alm_products"] == "13"
+    assert summary["mask_products"] == "13"
+    assert summary["recommended_science_variant_available"] == "true"
+    assert summary["null_control_variants_available"] == "true"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["physical_lensing_path_weight_claimed"] == "false"
+
+
+def test_act_dr6_lensing_low_z_sampling_pilot_is_source_side_only() -> None:
+    subprocess.run(
+        ["python", "scripts/build_act_dr6_lensing_low_z_sampling_pilot_v1.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    subprocess.run(
+        ["python", "scripts/validate_act_dr6_lensing_low_z_sampling_pilot_v1.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    with (ROOT / "data/derived/act_dr6_lensing_low_z_sampling_pilot_v1_summary.csv").open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    assert len(rows) == 1
+    summary = rows[0]
+    assert summary["status"] == "SOURCE_SIDE_SAMPLING_PILOT_BUILT_NOT_ENDPOINT"
+    assert summary["source_rows"] == "424"
+    assert summary["nside_map"] == "512"
+    assert summary["lmax_out"] == "1024"
+    assert summary["variants_sampled"] == "baseline;curl;diff_f150_f090"
+    assert summary["baseline_sample_finite_count"] == summary["source_rows"]
+    assert summary["curl_sample_finite_count"] == summary["source_rows"]
+    assert summary["diff_f150_f090_sample_finite_count"] == summary["source_rows"]
+    assert int(summary["mask_positive_count"]) + int(summary["mask_zero_count"]) == int(summary["source_rows"])
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["physical_lensing_path_weight_claimed"] == "false"
+    assert summary["contains_distance_residuals"] == "false"
+    assert summary["contains_fit_statistics"] == "false"
+
+
+def test_act_dr6_lensing_path_weight_candidate_is_review_ready_not_endpoint() -> None:
+    for command in [
+        ["python", "scripts/build_act_dr6_lensing_low_z_sampling_pilot_v1.py"],
+        ["python", "scripts/validate_act_dr6_lensing_low_z_sampling_pilot_v1.py"],
+        ["python", "scripts/build_act_dr6_lensing_path_weight_candidate_v1.py"],
+        ["python", "scripts/validate_act_dr6_lensing_path_weight_candidate_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (ROOT / "data/derived/act_dr6_lensing_path_weight_candidate_v1_summary.csv").open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    assert len(rows) == 1
+    summary = rows[0]
+    assert summary["status"] == "SOURCE_SIDE_PATH_WEIGHT_CANDIDATE_BUILT_NOT_ENDPOINT"
+    assert summary["source_rows"] == "424"
+    assert summary["mask_positive_rows"] == "168"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["physical_lensing_path_weight_claimed"] == "false"
+    assert summary["contains_distance_residuals"] == "false"
+    assert summary["contains_fit_statistics"] == "false"
+    assert summary["verdict"] == "act_dr6_source_side_path_weight_candidate_ready_for_review_not_endpoint"
+
+
+def test_act_dr6_lensing_path_weight_authorization_package_is_not_completed() -> None:
+    for command in [
+        ["python", "scripts/build_act_dr6_lensing_path_weight_replay_authorization_review_package_v1.py"],
+        ["python", "scripts/validate_act_dr6_lensing_path_weight_replay_authorization_review_package_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (
+        ROOT / "data/derived/act_dr6_lensing_path_weight_replay_authorization_review_package_v1_summary.csv"
+    ).open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    assert len(rows) == 1
+    summary = rows[0]
+    assert summary["status"] == "ACT_DR6_LENSING_PATH_WEIGHT_REPLAY_AUTHORIZATION_PACKAGE_BUILT_NOT_COMPLETED"
+    assert summary["review_completed"] == "false"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["contains_endpoint_residuals"] == "false"
+    assert summary["contains_endpoint_scores"] == "false"
+    assert summary["contains_fit_statistics"] == "false"
+    assert summary["physical_lensing_path_weight_claimed"] == "false"
+    assert summary["verdict"] == "act_dr6_lensing_path_weight_authorization_package_ready_not_completed"
+
+
+def test_act_dr6_lensing_path_weight_completed_response_validator_is_permission_only(
+    tmp_path: Path,
+) -> None:
+    template = ROOT / "data/derived/act_dr6_lensing_path_weight_replay_authorization_review_response_template_v1.csv"
+    if not template.exists():
+        subprocess.run(
+            ["python", "scripts/build_act_dr6_lensing_path_weight_replay_authorization_review_package_v1.py"],
+            cwd=ROOT,
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+    with template.open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    for row in rows:
+        row["reviewer_answer"] = (
+            "authorize_replay_as_caveated_candidate"
+            if row["question_id"] == "Q5_replay_permission"
+            else "accept_with_caveat"
+        )
+        row["reviewer_notes"] = "pytest smoke response based only on package contents"
+    response = tmp_path / "act_response.csv"
+    with response.open("w", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=list(rows[0].keys()), lineterminator="\n")
+        writer.writeheader()
+        writer.writerows(rows)
+    summary_out = tmp_path / "act_response_summary.csv"
+    subprocess.run(
+        [
+            "python",
+            "scripts/validate_act_dr6_lensing_path_weight_replay_authorization_review_response_v1.py",
+            str(response),
+            "--summary-out",
+            str(summary_out),
+        ],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    with summary_out.open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["review_completed"] == "true"
+    assert summary["permission_only_replay_authorized"] == "true"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["physical_lensing_path_weight_claimed"] == "false"
+    assert summary["verdict"] == "act_dr6_lensing_path_weight_caveated_replay_authorized_not_validation"
+
+
+def test_act_dr6_lensing_path_weight_replay_run_template_requires_authorization() -> None:
+    for command in [
+        ["python", "scripts/build_act_dr6_lensing_path_weight_replay_run_template_v1.py"],
+        ["python", "scripts/validate_act_dr6_lensing_path_weight_replay_run_template_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (ROOT / "data/derived/act_dr6_lensing_path_weight_replay_run_template_v1_summary.csv").open(
+        newline=""
+    ) as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["status"] == "ACT_DR6_LENSING_PATH_WEIGHT_REPLAY_PREPARED_AUTH_REQUIRED_NOT_VALIDATION"
+    assert summary["control_branch_count"] == "6"
+    assert summary["forbidden_input_count"] == "11"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["physical_lensing_path_weight_claimed"] == "false"
+    assert summary["physical_validation_claimed"] == "false"
+    assert summary["verdict"] == "act_dr6_lensing_path_weight_replay_template_ready_auth_required_not_validation"
+
+
+def test_act_dr6_lensing_path_weight_authorized_replay_blocks_without_authorization(
+    tmp_path: Path,
+) -> None:
+    for command in [
+        ["python", "scripts/build_act_dr6_lensing_path_weight_replay_run_template_v1.py"],
+        ["python", "scripts/validate_act_dr6_lensing_path_weight_replay_run_template_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    env = {
+        **os.environ,
+        "ACT_DR6_LENSING_PATH_WEIGHT_AUTH_SUMMARY": str(tmp_path / "missing_authorization_summary.csv"),
+    }
+    result = subprocess.run(
+        ["python", "scripts/run_act_dr6_lensing_path_weight_authorized_replay_v1.py"],
+        cwd=ROOT,
+        check=False,
+        capture_output=True,
+        text=True,
+        env=env,
+    )
+    combined_output = result.stdout + result.stderr
+    assert result.returncode != 0
+    assert "missing required input" in combined_output
+
+
+def test_act_dr6_lensing_path_weight_authorized_replay_is_control_dominated() -> None:
+    subprocess.run(
+        ["python", "scripts/validate_act_dr6_lensing_path_weight_authorized_replay_v1.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    with (ROOT / "data/derived/act_dr6_lensing_path_weight_authorized_replay_v1_summary.csv").open(
+        newline=""
+    ) as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["status"] == "ACT_DR6_LENSING_PATH_WEIGHT_AUTHORIZED_REPLAY_PERMISSION_ONLY_NOT_VALIDATION"
+    assert summary["authorization_verdict"] == "act_dr6_lensing_path_weight_caveated_replay_authorized_not_validation"
+    assert summary["best_control_branch"] == "curl_null"
+    assert summary["controls_better_than_candidate"] == "4"
+    assert summary["family_survives_controls"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["physical_lensing_path_weight_claimed"] == "false"
+    assert (
+        summary["verdict"]
+        == "act_dr6_lensing_path_weight_candidate_not_control_resistant_permission_only_not_validation"
+    )
+
+
+def test_act_dr6_lensing_path_weight_control_dominance_diagnostic_preserves_negative_result() -> None:
+    for command in [
+        ["python", "scripts/build_act_dr6_lensing_path_weight_control_dominance_diagnostic_v1.py"],
+        ["python", "scripts/validate_act_dr6_lensing_path_weight_control_dominance_diagnostic_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (
+        ROOT / "data/derived/act_dr6_lensing_path_weight_control_dominance_diagnostic_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["status"] == "CONTROL_DOMINANCE_DIAGNOSTIC_BUILT_NOT_VALIDATION"
+    assert summary["best_control_branch"] == "curl_null"
+    assert summary["controls_better_than_candidate"] == "4"
+    assert float(summary["candidate_delta_chi2_vs_baseline"]) < 0
+    assert float(summary["candidate_delta_chi2_vs_best_control"]) > 0
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["physical_lensing_path_weight_claimed"] == "false"
+    assert summary["verdict"] == "ACT_PATH_WEIGHT_WEAK_NON_SPECIFIC_SIGNAL_CONTROL_DOMINATED"
+
+
+def test_act_dr6_lensing_path_weight_paper11_control_veto_gate_blocks_family_verdict() -> None:
+    for command in [
+        ["python", "scripts/build_act_dr6_lensing_path_weight_paper11_control_veto_gate_v1.py"],
+        ["python", "scripts/validate_act_dr6_lensing_path_weight_paper11_control_veto_gate_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (
+        ROOT / "data/derived/act_dr6_lensing_path_weight_paper11_control_veto_gate_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["status"] == "PAPER11_STYLE_CONTROL_VETO_GATE_BUILT_NOT_VALIDATION"
+    assert summary["best_control_branch"] == "curl_null"
+    assert summary["controls_better_than_candidate"] == "4"
+    assert summary["family_survives_controls"] == "false"
+    assert summary["m0_or_m1_source_structure_claim_allowed"] == "false"
+    assert summary["m2_dark_sector_inference_allowed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["physical_lensing_path_weight_claimed"] == "false"
+    assert (
+        summary["verdict"]
+        == "PAPER11_CONTROL_VETO_ACT_PATH_WEIGHT_NOT_FAMILY_VERDICT_ELIGIBLE"
+    )
+
+
+def test_act_dr6_lensing_path_weight_source_basis_gate_demotes_current_basis() -> None:
+    for command in [
+        ["python", "scripts/build_act_dr6_lensing_observer_path_source_object_v1.py"],
+        ["python", "scripts/validate_act_dr6_lensing_observer_path_source_object_v1.py"],
+        ["python", "scripts/build_act_dr6_lensing_e_mode_route_v1.py"],
+        ["python", "scripts/validate_act_dr6_lensing_e_mode_route_v1.py"],
+        ["python", "scripts/build_act_dr6_lensing_curl_null_policy_v1.py"],
+        ["python", "scripts/validate_act_dr6_lensing_curl_null_policy_v1.py"],
+        ["python", "scripts/build_act_dr6_lensing_mask_coverage_policy_v1.py"],
+        ["python", "scripts/validate_act_dr6_lensing_mask_coverage_policy_v1.py"],
+        ["python", "scripts/build_act_dr6_lensing_units_normalization_policy_v1.py"],
+        ["python", "scripts/validate_act_dr6_lensing_units_normalization_policy_v1.py"],
+        ["python", "scripts/build_act_dr6_lensing_channel_handoff_policy_v1.py"],
+        ["python", "scripts/validate_act_dr6_lensing_channel_handoff_policy_v1.py"],
+        ["python", "scripts/build_act_dr6_lensing_control_suite_policy_v1.py"],
+        ["python", "scripts/validate_act_dr6_lensing_control_suite_policy_v1.py"],
+        ["python", "scripts/build_act_dr6_lensing_path_weight_source_basis_freeze_or_demote_gate_v1.py"],
+        ["python", "scripts/validate_act_dr6_lensing_path_weight_source_basis_freeze_or_demote_gate_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (
+        ROOT / "data/derived/act_dr6_lensing_path_weight_source_basis_freeze_or_demote_gate_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/act_dr6_lensing_path_weight_source_basis_freeze_or_demote_gate_v1_checklist.csv"
+    ).open(newline="") as f:
+        checklist = list(csv.DictReader(f))
+    assert summary["decision"] == "DEMOTE_CURRENT_UNITLESS_ACT_PATH_WEIGHT_BASIS"
+    assert summary["current_basis_replay_allowed_now"] == "false"
+    assert summary["reopen_allowed_with_new_source_freeze"] == "true"
+    assert summary["source_object_defined_source_side"] == "true"
+    assert summary["e_mode_route_defined_source_side"] == "true"
+    assert summary["curl_null_policy_frozen_source_side"] == "true"
+    assert summary["curl_current_branch_vetoed"] == "true"
+    assert summary["mask_coverage_policy_frozen_source_side"] == "true"
+    assert summary["units_normalization_policy_frozen_source_side"] == "true"
+    assert summary["physical_normalization_blocker_open"] == "true"
+    assert summary["channel_handoff_policy_frozen_source_side"] == "true"
+    assert summary["channel_handoff_source_diagnostic_only"] == "true"
+    assert summary["control_suite_policy_frozen_source_side"] == "true"
+    assert summary["control_suite_replay_disabled"] == "true"
+    assert summary["dark_sector_inference_allowed"] == "false"
+    assert summary["verdict"] == "ACT_SOURCE_BASIS_DEMOTED_REOPEN_ONLY_WITH_NEW_SOURCE_FREEZE"
+    assert {row["current_status"] for row in checklist} >= {
+        "DEFINED_SOURCE_SIDE",
+        "FROZEN_SOURCE_SIDE",
+        "FROZEN_SOURCE_SIDE_VETO_ACTIVE",
+        "PROXY_FROZEN_PHYSICAL_BLOCKER_OPEN",
+        "SOURCE_DIAGNOSTIC_ONLY_NOT_PHYSICAL_K_PATH",
+        "FROZEN_CURRENT_BRANCH_REPLAY_STILL_DISABLED",
+    }
+    assert all(row["required_for_reopen"] == "true" for row in checklist)
+    assert any(
+        row["requirement_id"] == "ACT_REOPEN_01_SOURCE_OBJECT"
+        and row["current_status"] == "DEFINED_SOURCE_SIDE"
+        for row in checklist
+    )
+    assert any(
+        row["requirement_id"] == "ACT_REOPEN_06_CHANNEL_HANDOFF"
+        and row["current_status"] == "SOURCE_DIAGNOSTIC_ONLY_NOT_PHYSICAL_K_PATH"
+        for row in checklist
+    )
+    assert any(
+        row["requirement_id"] == "ACT_REOPEN_07_CONTROL_SUITE"
+        and row["current_status"] == "FROZEN_CURRENT_BRANCH_REPLAY_STILL_DISABLED"
+        for row in checklist
+    )
+    assert any(
+        row["requirement_id"] == "ACT_REOPEN_05_UNITS_AND_NORMALIZATION"
+        and row["current_status"] == "PROXY_FROZEN_PHYSICAL_BLOCKER_OPEN"
+        for row in checklist
+    )
+    assert any(
+        row["requirement_id"] == "ACT_REOPEN_02_E_MODE_ROUTE"
+        and row["current_status"] == "DEFINED_SOURCE_SIDE"
+        for row in checklist
+    )
+    assert any(
+        row["requirement_id"] == "ACT_REOPEN_03_CURL_NULL_POLICY"
+        and row["current_status"] == "FROZEN_SOURCE_SIDE_VETO_ACTIVE"
+        for row in checklist
+    )
+    assert any(
+        row["requirement_id"] == "ACT_REOPEN_04_MASK_AND_COVERAGE_POLICY"
+        and row["current_status"] == "FROZEN_SOURCE_SIDE"
+        for row in checklist
+    )
+
+
+def test_act_dr6_lensing_observer_path_source_object_is_source_side_only() -> None:
+    for command in [
+        ["python", "scripts/build_act_dr6_lensing_observer_path_source_object_v1.py"],
+        ["python", "scripts/validate_act_dr6_lensing_observer_path_source_object_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (
+        ROOT / "data/source_manifest/act_dr6_lensing_observer_path_source_object_v1.csv"
+    ).open(newline="") as f:
+        source_object = list(csv.DictReader(f))[0]
+    assert source_object["status"] == "SOURCE_OBJECT_DEFINED_SOURCE_SIDE_NOT_ENDPOINT"
+    assert source_object["endpoint_replay_allowed"] == "false"
+    assert source_object["physical_lensing_path_weight_claimed"] == "false"
+    assert source_object["dark_sector_inference_allowed"] == "false"
+    assert "convergence reconstruction samples" in source_object["source_object_definition"]
+    assert "not a metric/lensing path integral" in source_object["what_it_is_not"]
+    assert "remaining source-basis requirements" in source_object["claim_boundary"]
+
+
+def test_act_dr6_lensing_e_mode_route_is_source_route_only() -> None:
+    for command in [
+        ["python", "scripts/build_act_dr6_lensing_observer_path_source_object_v1.py"],
+        ["python", "scripts/validate_act_dr6_lensing_observer_path_source_object_v1.py"],
+        ["python", "scripts/build_act_dr6_lensing_e_mode_route_v1.py"],
+        ["python", "scripts/validate_act_dr6_lensing_e_mode_route_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (ROOT / "data/source_manifest/act_dr6_lensing_e_mode_route_v1.csv").open(newline="") as f:
+        route = list(csv.DictReader(f))[0]
+    assert route["status"] == "E_MODE_ROUTE_DEFINED_SOURCE_SIDE_NOT_PHYSICAL_KERNEL"
+    assert route["candidate_variant"] == "baseline"
+    assert route["candidate_variant_role"] == "recommended_science_variant"
+    assert route["baseline_has_kappa_alm_modes"] == "true"
+    assert route["endpoint_replay_allowed"] == "false"
+    assert route["physical_lensing_path_weight_claimed"] == "false"
+    assert "does not prove a physical E/B theorem" in route["what_this_does_not_define"]
+
+
+def test_act_dr6_lensing_curl_null_policy_vetoes_current_branch() -> None:
+    for command in [
+        ["python", "scripts/build_act_dr6_lensing_curl_null_policy_v1.py"],
+        ["python", "scripts/validate_act_dr6_lensing_curl_null_policy_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (ROOT / "data/source_manifest/act_dr6_lensing_curl_null_policy_v1.csv").open(newline="") as f:
+        policy = list(csv.DictReader(f))[0]
+    assert policy["status"] == "CURL_NULL_POLICY_FROZEN_SOURCE_SIDE_NOT_THEOREM"
+    assert policy["curl_is_predeclared_null_control"] == "true"
+    assert policy["observed_control_status"] == "curl_null_best_control"
+    assert policy["curl_as_positive_channel_allowed"] == "false"
+    assert policy["endpoint_replay_allowed"] == "false"
+    assert policy["physical_lensing_path_weight_claimed"] == "false"
+    assert policy["verdict"] == "ACT_REOPEN_03_CURL_NULL_POLICY_FROZEN_AND_CURRENT_BRANCH_VETOED"
+
+
+def test_act_dr6_lensing_mask_coverage_policy_freezes_rows_without_selection() -> None:
+    for command in [
+        ["python", "scripts/build_act_dr6_lensing_mask_coverage_policy_v1.py"],
+        ["python", "scripts/validate_act_dr6_lensing_mask_coverage_policy_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (ROOT / "data/source_manifest/act_dr6_lensing_mask_coverage_policy_v1.csv").open(newline="") as f:
+        policy = list(csv.DictReader(f))[0]
+    assert policy["status"] == "MASK_COVERAGE_POLICY_FROZEN_SOURCE_SIDE_NOT_REPLAY"
+    assert policy["source_rows"] == "424"
+    assert policy["mask_positive_rows"] == "168"
+    assert policy["mask_zero_rows"] == "256"
+    assert policy["outside_mask_policy"] == "assign_zero_weight_keep_rows_in_scope"
+    assert policy["row_selection_policy"] == "no_endpoint_row_drop_or_posthoc_selection"
+    assert policy["endpoint_replay_allowed"] == "false"
+    assert "does not authorize dropping rows" in policy["what_this_does_not_define"]
+
+
+def test_act_dr6_lensing_units_normalization_policy_freezes_proxy_only() -> None:
+    for command in [
+        ["python", "scripts/build_act_dr6_lensing_units_normalization_policy_v1.py"],
+        ["python", "scripts/validate_act_dr6_lensing_units_normalization_policy_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (
+        ROOT / "data/source_manifest/act_dr6_lensing_units_normalization_policy_v1.csv"
+    ).open(newline="") as f:
+        policy = list(csv.DictReader(f))[0]
+    assert policy["status"] == "UNITLESS_PROXY_NORMALIZATION_FROZEN_PHYSICAL_NORMALIZATION_MISSING"
+    assert policy["current_normalization_rule"] == "mask_positive_only_median_center_mad_scale_else_zero"
+    assert policy["normalization_domain"] == "mask_positive_rows_only"
+    assert policy["current_units_status"] == "dimensionless_standardized_proxy"
+    assert policy["physical_units_available"] == "false"
+    assert policy["physical_normalization_allowed_now"] == "false"
+    assert policy["proxy_normalization_allowed_for_source_diagnostics"] == "true"
+    assert policy["endpoint_replay_allowed"] == "false"
+    assert policy["physical_lensing_path_weight_claimed"] == "false"
+    assert "theorem-bounded mapping" in policy["required_for_physical_reopen"]
+    assert "does not define physical path-weight units" in policy["what_this_does_not_define"]
+    assert policy["verdict"] == "ACT_REOPEN_05_UNITS_NORMALIZATION_PROXY_FROZEN_PHYSICAL_BLOCKER_OPEN"
+
+
+def test_act_dr6_lensing_channel_handoff_policy_demotes_to_source_diagnostic() -> None:
+    for command in [
+        ["python", "scripts/build_act_dr6_lensing_observer_path_source_object_v1.py"],
+        ["python", "scripts/build_act_dr6_lensing_e_mode_route_v1.py"],
+        ["python", "scripts/build_act_dr6_lensing_curl_null_policy_v1.py"],
+        ["python", "scripts/build_act_dr6_lensing_units_normalization_policy_v1.py"],
+        ["python", "scripts/build_act_dr6_lensing_channel_handoff_policy_v1.py"],
+        ["python", "scripts/validate_act_dr6_lensing_channel_handoff_policy_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (
+        ROOT / "data/source_manifest/act_dr6_lensing_channel_handoff_policy_v1.csv"
+    ).open(newline="") as f:
+        policy = list(csv.DictReader(f))[0]
+    assert policy["status"] == "CHANNEL_HANDOFF_FROZEN_AS_SOURCE_DIAGNOSTIC_NOT_PHYSICAL_K_PATH"
+    assert policy["candidate_tau_channel_requested"] == "K_path_observer_path"
+    assert policy["current_tau_channel_status"] == "K_path_candidate_source_diagnostic_only"
+    assert policy["positive_k_path_promotion_allowed"] == "false"
+    assert policy["k_closure_handoff_allowed"] == "false"
+    assert policy["k_null_handoff_allowed_for_curl"] == "true"
+    assert policy["source_diagnostic_handoff_allowed"] == "true"
+    assert policy["endpoint_replay_allowed"] == "false"
+    assert policy["family_verdict_allowed"] == "false"
+    assert "physical units are missing" in policy["why_not_positive_k_path"]
+    assert "curl_null as the best control" in policy["why_not_positive_k_path"]
+    assert "no closure equation" in policy["why_not_k_closure"]
+    assert policy["verdict"] == "ACT_REOPEN_06_CHANNEL_HANDOFF_SOURCE_DIAGNOSTIC_ONLY"
+
+
+def test_act_dr6_lensing_control_suite_policy_freezes_current_controls() -> None:
+    for command in [
+        ["python", "scripts/build_act_dr6_lensing_control_suite_policy_v1.py"],
+        ["python", "scripts/validate_act_dr6_lensing_control_suite_policy_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (
+        ROOT / "data/source_manifest/act_dr6_lensing_control_suite_policy_v1.csv"
+    ).open(newline="") as f:
+        controls = list(csv.DictReader(f))
+    with (
+        ROOT / "data/derived/act_dr6_lensing_control_suite_policy_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert {row["control_id"] for row in controls} == {
+        "off",
+        "baseline_only",
+        "curl_null",
+        "diff_f150_f090_null",
+        "wrong_sign",
+        "deterministic_shuffle",
+        "rank_reverse",
+        "source_basis_recenter_stress",
+    }
+    assert {row["control_channel"] for row in controls} == {"K_null"}
+    assert any(
+        row["control_id"] == "curl_null"
+        and row["current_status"] == "FROZEN_SCORED_CONTROL_VETO_ACTIVE"
+        for row in controls
+    )
+    assert any(
+        row["control_id"] == "source_basis_recenter_stress"
+        and row["scored_in_current_replay"] == "false"
+        for row in controls
+    )
+    assert summary["status"] == "CURRENT_CONTROL_SUITE_FROZEN_VALIDATION_REOPEN_STRESS_DECLARED"
+    assert summary["scored_control_count"] == "7"
+    assert summary["declared_control_count"] == "8"
+    assert summary["missing_scored_controls"] == "none"
+    assert summary["curl_veto_active"] == "true"
+    assert summary["current_suite_replay_allowed"] == "false"
+    assert summary["verdict"] == "ACT_REOPEN_07_CONTROL_SUITE_FROZEN_CURRENT_BRANCH_REPLAY_STILL_DISABLED"
+
+
+def test_act_dr6_lensing_reopen_closure_ledger_quarantines_current_branch() -> None:
+    for command in [
+        ["python", "scripts/build_act_dr6_lensing_observer_path_source_object_v1.py"],
+        ["python", "scripts/build_act_dr6_lensing_e_mode_route_v1.py"],
+        ["python", "scripts/build_act_dr6_lensing_curl_null_policy_v1.py"],
+        ["python", "scripts/build_act_dr6_lensing_mask_coverage_policy_v1.py"],
+        ["python", "scripts/build_act_dr6_lensing_units_normalization_policy_v1.py"],
+        ["python", "scripts/build_act_dr6_lensing_channel_handoff_policy_v1.py"],
+        ["python", "scripts/build_act_dr6_lensing_control_suite_policy_v1.py"],
+        ["python", "scripts/build_act_dr6_lensing_path_weight_source_basis_freeze_or_demote_gate_v1.py"],
+        ["python", "scripts/build_act_dr6_lensing_reopen_closure_ledger_v1.py"],
+        ["python", "scripts/validate_act_dr6_lensing_reopen_closure_ledger_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (ROOT / "data/derived/act_dr6_lensing_reopen_closure_ledger_v1.csv").open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    with (
+        ROOT / "data/derived/act_dr6_lensing_reopen_closure_ledger_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert {row["requirement_id"] for row in rows} == {
+        "ACT_REOPEN_01_SOURCE_OBJECT",
+        "ACT_REOPEN_02_E_MODE_ROUTE",
+        "ACT_REOPEN_03_CURL_NULL_POLICY",
+        "ACT_REOPEN_04_MASK_AND_COVERAGE_POLICY",
+        "ACT_REOPEN_05_UNITS_AND_NORMALIZATION",
+        "ACT_REOPEN_06_CHANNEL_HANDOFF",
+        "ACT_REOPEN_07_CONTROL_SUITE",
+    }
+    assert {row["endpoint_replay_allowed"] for row in rows} == {"false"}
+    assert summary["all_reopen_gates_accounted"] == "true"
+    assert summary["all_reopen_gates_closed_or_frozen"] == "true"
+    assert summary["current_branch_control_dominated"] == "true"
+    assert summary["current_branch_endpoint_replay_allowed"] == "false"
+    assert summary["best_control_branch"] == "curl_null"
+    assert summary["verdict"] == "ACT_REOPEN_CLOSED_CURRENT_BRANCH_QUARANTINED_NOT_VALIDATION"
+
+
+def test_act_dr6_lensing_next_source_basis_design_scaffold_blocks_replay() -> None:
+    for command in [
+        ["python", "scripts/build_act_dr6_lensing_next_source_basis_design_scaffold_v1.py"],
+        ["python", "scripts/validate_act_dr6_lensing_next_source_basis_design_scaffold_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (
+        ROOT / "data/source_manifest/act_dr6_lensing_next_source_basis_design_scaffold_v1.csv"
+    ).open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    with (
+        ROOT / "data/derived/act_dr6_lensing_next_source_basis_design_scaffold_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert {row["design_requirement_id"] for row in rows} == {
+        "ACT_NEXT_BASIS_01_PHYSICAL_K_PATH_MAPPING",
+        "ACT_NEXT_BASIS_02_OPERATOR_QUOTIENT_DESCENT",
+        "ACT_NEXT_BASIS_03_MASK_COVERAGE_POPULATION_POLICY",
+        "ACT_NEXT_BASIS_04_SOURCE_BASIS_RECENTER_STRESS",
+        "ACT_NEXT_BASIS_05_CONTROL_SUITE_PRECOMMIT",
+        "ACT_NEXT_BASIS_06_CHANNEL_HANDOFF_DECISION",
+        "ACT_NEXT_BASIS_07_FORBIDDEN_ENDPOINT_FIELDS",
+    }
+    assert {row["endpoint_replay_allowed"] for row in rows} == {"false"}
+    assert {row["endpoint_validation_claimed"] for row in rows} == {"false"}
+    assert summary["requirements_count"] == "7"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["current_branch_status"] == "previous_ACT_branch_quarantined_control_dominated"
+    assert summary["verdict"] == "ACT_NEXT_SOURCE_BASIS_DESIGN_SCAFFOLD_FROZEN_NOT_REPLAY"
+
+
+def test_act_dr6_lensing_caveated_kpath_source_design_requires_review() -> None:
+    for command in [
+        ["python", "scripts/build_act_dr6_lensing_product_v1.py"],
+        ["python", "scripts/build_act_dr6_lensing_path_weight_candidate_v1.py"],
+        ["python", "scripts/build_act_dr6_lensing_path_weight_source_basis_freeze_or_demote_gate_v1.py"],
+        ["python", "scripts/build_act_dr6_lensing_reopen_closure_ledger_v1.py"],
+        ["python", "scripts/build_act_dr6_lensing_next_source_basis_design_scaffold_v1.py"],
+        ["python", "scripts/build_act_dr6_lensing_caveated_kpath_source_design_v1.py"],
+        ["python", "scripts/validate_act_dr6_lensing_caveated_kpath_source_design_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (
+        ROOT / "data/source_manifest/act_dr6_lensing_caveated_kpath_source_design_v1.csv"
+    ).open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    with (
+        ROOT / "data/derived/act_dr6_lensing_caveated_kpath_source_design_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert {row["design_item_id"] for row in rows} == {
+        "CKPATH_01_SOURCE_PRODUCT",
+        "CKPATH_02_PROXY_MAPPING",
+        "CKPATH_03_NULL_QUOTIENT_RULE",
+        "CKPATH_04_COVERAGE_SCOPE",
+        "CKPATH_05_REPLAY_PRECONDITIONS",
+    }
+    assert {row["endpoint_replay_allowed"] for row in rows} == {"false"}
+    assert {row["physical_path_weight_claimed"] for row in rows} == {"false"}
+    assert summary["mapping_status"] == "dimensionless_shape_proxy_only"
+    assert summary["external_review_required_before_replay"] == "true"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert "curl_null" in summary["control_suite_required"]
+    assert summary["verdict"] == "ACT_CAVEATED_KPATH_SOURCE_DESIGN_REVIEW_READY_NOT_REPLAY"
+
+
+def test_act_dr6_lensing_caveated_kpath_source_design_review_package_ready() -> None:
+    for command in [
+        ["python", "scripts/build_act_dr6_lensing_caveated_kpath_source_design_review_package_v1.py"],
+        ["python", "scripts/validate_act_dr6_lensing_caveated_kpath_source_design_review_package_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    package = ROOT / "data/derived/act_dr6_lensing_caveated_kpath_source_design_review_package_v1.zip"
+    assert package.exists()
+    with (
+        ROOT / "data/derived/act_dr6_lensing_caveated_kpath_source_design_review_package_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/act_dr6_lensing_caveated_kpath_source_design_review_response_template_v1.csv"
+    ).open(newline="") as f:
+        template_rows = list(csv.DictReader(f))
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["physical_lensing_path_weight_claimed"] == "false"
+    assert summary["verdict"] == "ACT_CAVEATED_KPATH_SOURCE_DESIGN_REVIEW_PACKAGE_READY"
+    assert {row["review_item"] for row in template_rows} == {
+        "source_product_status",
+        "proxy_mapping_status",
+        "null_control_status",
+        "leakage_status",
+        "overall_verdict",
+    }
+
+
+def test_act_dr6_lensing_caveated_kpath_source_design_review_response_is_narrow() -> None:
+    subprocess.run(
+        ["python", "scripts/validate_act_dr6_lensing_caveated_kpath_source_design_review_response_v1.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    with (
+        ROOT / "data/derived/act_dr6_lensing_caveated_kpath_source_design_review_completed_summary_v1.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["decision"] == "ACCEPT_CAVEATED_KPATH_SOURCE_DESIGN_FOR_REVIEW_ONLY"
+    assert summary["future_permission_only_replay_review_preparation_allowed"] == "true"
+    assert summary["current_replay_authorized_by_this_review"] == "false"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["physical_lensing_path_weight_claimed"] == "false"
+
+
+def test_act_dr6_lensing_caveated_kpath_replay_authorization_package_pending() -> None:
+    for command in [
+        ["python", "scripts/build_act_dr6_lensing_caveated_kpath_replay_authorization_review_package_v1.py"],
+        ["python", "scripts/validate_act_dr6_lensing_caveated_kpath_replay_authorization_review_package_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (
+        ROOT / "data/derived/act_dr6_lensing_caveated_kpath_replay_authorization_review_package_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    with (
+        ROOT / "data/derived/act_dr6_lensing_caveated_kpath_replay_authorization_review_response_template_v1.csv"
+    ).open(newline="") as f:
+        template_rows = list(csv.DictReader(f))
+    assert summary["source_design_review_decision"] == "ACCEPT_CAVEATED_KPATH_SOURCE_DESIGN_FOR_REVIEW_ONLY"
+    assert summary["review_completed"] == "false"
+    assert summary["endpoint_replay_allowed"] == "false"
+    assert summary["future_permission_only_replay_package_authorization_pending"] == "true"
+    assert summary["verdict"] == "ACT_CAVEATED_KPATH_REPLAY_AUTHORIZATION_PACKAGE_READY_NOT_COMPLETED"
+    assert {row["question_id"] for row in template_rows} == {
+        "Q1_source_design_acceptance",
+        "Q2_controls_required",
+        "Q3_old_branch_quarantine",
+        "Q4_forbidden_inputs",
+        "Q5_permission_only_replay",
+    }
+
+
+def test_act_dr6_lensing_caveated_kpath_guarded_replay_package_ready_not_executed() -> None:
+    for command in [
+        ["python", "scripts/validate_act_dr6_lensing_caveated_kpath_replay_authorization_review_response_v1.py"],
+        ["python", "scripts/build_act_dr6_lensing_caveated_kpath_guarded_replay_package_v1.py"],
+        ["python", "scripts/validate_act_dr6_lensing_caveated_kpath_guarded_replay_package_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (
+        ROOT / "data/derived/act_dr6_lensing_caveated_kpath_guarded_replay_package_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["authorization_verdict"] == "ACT_CAVEATED_KPATH_REPLAY_PACKAGE_PREPARATION_ALLOWED_NOT_SCORING"
+    assert summary["endpoint_replay_executed"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["physical_lensing_path_weight_claimed"] == "false"
+    assert summary["verdict"] == "ACT_CAVEATED_KPATH_GUARDED_REPLAY_PACKAGE_READY_NOT_EXECUTED"
+
+
+def test_act_dr6_lensing_caveated_kpath_guarded_replay_preserves_negative_result() -> None:
+    for command in [
+        ["python", "scripts/run_act_dr6_lensing_caveated_kpath_guarded_replay_v1.py"],
+        ["python", "scripts/validate_act_dr6_lensing_caveated_kpath_guarded_replay_v1.py"],
+    ]:
+        subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
+    with (
+        ROOT / "data/derived/act_dr6_lensing_caveated_kpath_guarded_replay_v1_summary.csv"
+    ).open(newline="") as f:
+        summary = list(csv.DictReader(f))[0]
+    assert summary["candidate_best_chi2_act_path"] == "380.575996101"
+    assert summary["baseline_best_chi2_act_path"] == "381.794196616"
+    assert summary["best_control_branch"] == "curl_null"
+    assert summary["controls_better_than_candidate"] == "4"
+    assert summary["family_survives_controls"] == "false"
+    assert summary["endpoint_validation_claimed"] == "false"
+    assert summary["verdict"] == "ACT_CAVEATED_KPATH_GUARDED_REPLAY_CONTROL_DOMINATED_PERMISSION_ONLY_NOT_VALIDATION"

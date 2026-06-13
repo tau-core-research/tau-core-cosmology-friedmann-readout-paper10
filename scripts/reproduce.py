@@ -353,6 +353,1031 @@ def main() -> None:
                                     "scripts/validate_void_source_basis_refinement_v2_observer_orientation_kernel_v2_replay_authorization_package.py",
                                 ]
                             )
+                            observer_orientation_v2_auth_response = (
+                                ROOT
+                                / "data"
+                                / "derived"
+                                / "void_source_basis_refinement_v2_observer_orientation_kernel_v2_replay_authorization_response_v1.csv"
+                            )
+                            if observer_orientation_v2_auth_response.exists():
+                                run(
+                                    [
+                                        "python",
+                                        "scripts/validate_void_source_basis_refinement_v2_observer_orientation_kernel_v2_replay_authorization_response.py",
+                                    ]
+                                )
+                                run(
+                                    [
+                                        "python",
+                                        "scripts/run_void_source_basis_refinement_v2_observer_orientation_kernel_v2_authorized_replay.py",
+                                    ]
+                                )
+                                run(
+                                    [
+                                        "python",
+                                        "scripts/validate_void_source_basis_refinement_v2_observer_orientation_kernel_v2_authorized_replay.py",
+                                    ]
+                                )
+                            run(["python", "scripts/run_void_source_basis_refinement_v2_observer_basis_fast_screen_v1.py"])
+                            run(["python", "scripts/validate_void_source_basis_refinement_v2_observer_basis_fast_screen_v1.py"])
+                            run(
+                                [
+                                    "python",
+                                    "scripts/build_void_source_basis_refinement_v2_observer_basis_candidate_review_package_v1.py",
+                                ]
+                            )
+                            run(
+                                [
+                                    "python",
+                                    "scripts/validate_void_source_basis_refinement_v2_observer_basis_candidate_review_package_v1.py",
+                                ]
+                            )
+                            observer_basis_candidate_review_response = (
+                                ROOT
+                                / "data"
+                                / "derived"
+                                / "void_source_basis_refinement_v2_observer_basis_candidate_review_response_v1.csv"
+                            )
+                            if observer_basis_candidate_review_response.exists():
+                                run(
+                                    [
+                                        "python",
+                                        "scripts/validate_void_source_basis_refinement_v2_observer_basis_candidate_review_response_v1.py",
+                                    ]
+                                )
+                                run(
+                                    [
+                                        "python",
+                                        "scripts/build_void_source_basis_refinement_v2_observer_basis_replay_authorization_package_v1.py",
+                                    ]
+                                )
+                                run(
+                                    [
+                                        "python",
+                                        "scripts/validate_void_source_basis_refinement_v2_observer_basis_replay_authorization_package_v1.py",
+                                    ]
+                                )
+                                observer_basis_replay_auth_response = (
+                                    ROOT
+                                    / "data"
+                                    / "derived"
+                                    / "void_source_basis_refinement_v2_observer_basis_replay_authorization_response_v1.csv"
+                                )
+                                if observer_basis_replay_auth_response.exists():
+                                    run(
+                                        [
+                                            "python",
+                                            "scripts/validate_void_source_basis_refinement_v2_observer_basis_replay_authorization_response_v1.py",
+                                        ]
+                                    )
+                                    run(
+                                        [
+                                            "python",
+                                            "scripts/run_void_source_basis_refinement_v2_observer_basis_authorized_replay_v1.py",
+                                        ]
+                                    )
+                                    run(
+                                        [
+                                            "python",
+                                            "scripts/validate_void_source_basis_refinement_v2_observer_basis_authorized_replay_v1.py",
+                                        ]
+                                    )
+                                    run(
+                                        [
+                                            "python",
+                                            "scripts/run_void_source_basis_refinement_v2_full_kernel_proxy_fast_screen_v1.py",
+                                        ]
+                                    )
+                                    run(
+                                        [
+                                            "python",
+                                            "scripts/validate_void_source_basis_refinement_v2_full_kernel_proxy_fast_screen_v1.py",
+                                        ]
+                                    )
+                                    run(
+                                        [
+                                            "python",
+                                            "scripts/build_void_source_basis_refinement_v2_full_kernel_proxy_component_audit_v1.py",
+                                        ]
+                                    )
+                                    run(
+                                        [
+                                            "python",
+                                            "scripts/validate_void_source_basis_refinement_v2_full_kernel_proxy_component_audit_v1.py",
+                                        ]
+                                    )
+                                    run(["python", "scripts/validate_full_observer_path_kernel_source_requirements_v1.py"])
+                                    run(["python", "scripts/build_low_z_pantheon_los_radial_profile_v1.py"])
+                                    run(["python", "scripts/validate_low_z_pantheon_los_radial_profile_v1.py"])
+                                    run(["python", "scripts/build_low_z_pantheon_path_aware_void_geometry_v1.py"])
+                                    run(["python", "scripts/validate_low_z_pantheon_path_aware_void_geometry_v1.py"])
+                                    run(["python", "scripts/build_low_z_pantheon_directional_web_anisotropy_v1.py"])
+                                    run(["python", "scripts/validate_low_z_pantheon_directional_web_anisotropy_v1.py"])
+                                    run(["python", "scripts/build_low_z_pantheon_metric_lensing_path_route_audit_v1.py"])
+                                    run(["python", "scripts/validate_low_z_pantheon_metric_lensing_path_route_audit_v1.py"])
+                                    run(["python", "scripts/build_low_z_pantheon_time_readout_source_audit_v1.py"])
+                                    run(["python", "scripts/validate_low_z_pantheon_time_readout_source_audit_v1.py"])
+                                    run(["python", "scripts/build_low_z_pantheon_time_readout_clock_scale_candidate_v1.py"])
+                                    run(["python", "scripts/validate_low_z_pantheon_time_readout_clock_scale_candidate_v1.py"])
+                                    run(["python", "scripts/build_low_z_pantheon_time_readout_redshift_bin_policy_candidate_v1.py"])
+                                    run(["python", "scripts/validate_low_z_pantheon_time_readout_redshift_bin_policy_candidate_v1.py"])
+                                    run(["python", "scripts/build_low_z_pantheon_time_readout_delta_clock_uncertainty_candidate_v1.py"])
+                                    run(["python", "scripts/validate_low_z_pantheon_time_readout_delta_clock_uncertainty_candidate_v1.py"])
+                                    run(["python", "scripts/build_low_z_pantheon_w_time_uncertainty_basis_candidate_v1.py"])
+                                    run(["python", "scripts/validate_low_z_pantheon_w_time_uncertainty_basis_candidate_v1.py"])
+                                    run(["python", "scripts/build_low_z_pantheon_w_time_uncertainty_basis_replay_authorization_review_template_v1.py"])
+                                    run(["python", "scripts/validate_low_z_pantheon_w_time_uncertainty_basis_replay_authorization_review_template_v1.py"])
+                                    run(["python", "scripts/build_low_z_pantheon_w_time_uncertainty_basis_replay_authorization_review_package_v1.py"])
+                                    run(["python", "scripts/validate_low_z_pantheon_w_time_uncertainty_basis_replay_authorization_review_package_v1.py"])
+                                    run(["python", "scripts/run_low_z_pantheon_observer_time_combined_fast_screen_v1.py"])
+                                    run(["python", "scripts/validate_low_z_pantheon_observer_time_combined_fast_screen_v1.py"])
+                                    run(["python", "scripts/build_low_z_pantheon_time_readout_clock_rate_phase_candidate_v1.py"])
+                                    run(["python", "scripts/validate_low_z_pantheon_time_readout_clock_rate_phase_candidate_v1.py"])
+                                    run(["python", "scripts/run_low_z_pantheon_clock_rate_phase_fast_screen_v1.py"])
+                                    run(["python", "scripts/validate_low_z_pantheon_clock_rate_phase_fast_screen_v1.py"])
+                                    run(["python", "scripts/build_low_z_pantheon_clock_rate_phase_rank_control_audit_v1.py"])
+                                    run(["python", "scripts/validate_low_z_pantheon_clock_rate_phase_rank_control_audit_v1.py"])
+                                    run(["python", "scripts/build_pantheon_time_readout_clock_rate_phase_cc_support_candidate_v1.py"])
+                                    run(["python", "scripts/validate_pantheon_time_readout_clock_rate_phase_cc_support_candidate_v1.py"])
+                                    run(["python", "scripts/run_pantheon_clock_rate_phase_cc_support_fast_screen_v1.py"])
+                                    run(["python", "scripts/validate_pantheon_clock_rate_phase_cc_support_fast_screen_v1.py"])
+                                    run(["python", "scripts/build_pantheon_clock_slope_route_gate_v1.py"])
+                                    run(["python", "scripts/validate_pantheon_clock_slope_route_gate_v1.py"])
+                                    run(["python", "scripts/build_pantheon_clock_slope_route_replay_authorization_review_template_v1.py"])
+                                    run(["python", "scripts/validate_pantheon_clock_slope_route_replay_authorization_review_template_v1.py"])
+                                    run(["python", "scripts/build_pantheon_clock_slope_route_replay_authorization_review_package_v1.py"])
+                                    run(["python", "scripts/validate_pantheon_clock_slope_route_replay_authorization_review_package_v1.py"])
+                                    run(["python", "scripts/build_sdss_bao_time_readout_observable_route_audit_v1.py"])
+                                    run(["python", "scripts/validate_sdss_bao_time_readout_observable_route_audit_v1.py"])
+                                    run(["python", "scripts/build_paper10_joint_cc_bao_time_route_consistency_audit_v1.py"])
+                                    run(["python", "scripts/validate_paper10_joint_cc_bao_time_route_consistency_audit_v1.py"])
+                                    run(["python", "scripts/build_paper10_time_readout_route_synthesis_gate_v1.py"])
+                                    run(["python", "scripts/validate_paper10_time_readout_route_synthesis_gate_v1.py"])
+                                    run(["python", "scripts/build_paper10_time_readout_level_slope_route_split_ledger_v1.py"])
+                                    run(["python", "scripts/validate_paper10_time_readout_level_slope_route_split_ledger_v1.py"])
+                                    run(["python", "scripts/validate_paper10_time_level_route_nuisance_interface_freeze_plan_v1.py"])
+                                    run(["python", "scripts/build_paper10_bao_rd_cancelled_time_level_difference_audit_v1.py"])
+                                    run(["python", "scripts/validate_paper10_bao_rd_cancelled_time_level_difference_audit_v1.py"])
+                                    run(["python", "scripts/validate_paper10_time_level_rd_policy_selection_gate_v1.py"])
+                                    run(["python", "scripts/validate_paper10_external_rd_prior_freeze_protocol_v1.py"])
+                                    run(["python", "scripts/validate_paper10_external_rd_prior_freeze_response_v1.py"])
+                                    run(["python", "scripts/validate_paper10_bao_rd_marginalization_protocol_v1.py"])
+                                    run(["python", "scripts/validate_paper10_time_level_endpoint_control_suite_protocol_v1.py"])
+                                    run(["python", "scripts/validate_paper10_time_level_bao_support_expansion_manifest_v1.py"])
+                                    run(["python", "scripts/build_paper10_desi_dr2_bao_source_inventory_v1.py"])
+                                    run(["python", "scripts/validate_paper10_desi_dr2_bao_source_inventory_v1.py"])
+                                    run(["python", "scripts/build_paper10_desi_dr2_radial_bao_time_interface_v1.py"])
+                                    run(["python", "scripts/validate_paper10_desi_dr2_radial_bao_time_interface_v1.py"])
+                                    run(["python", "scripts/build_paper10_desi_dr2_radial_bao_cc_match_v1.py"])
+                                    run(["python", "scripts/validate_paper10_desi_dr2_radial_bao_cc_match_v1.py"])
+                                    run(["python", "scripts/validate_paper10_desi_dr2_high_z_bao_policy_v1.py"])
+                                    run(["python", "scripts/validate_paper10_desi_time_level_control_seed_manifest_v1.py"])
+                                    run(["python", "scripts/build_paper10_time_level_route_external_rd_readiness_gate_v1.py"])
+                                    run(["python", "scripts/validate_paper10_time_level_route_external_rd_readiness_gate_v1.py"])
+                                    run(
+                                        [
+                                            "python",
+                                            "scripts/build_paper10_desi_time_level_endpoint_authorization_review_template_v1.py",
+                                        ]
+                                    )
+                                    run(
+                                        [
+                                            "python",
+                                            "scripts/validate_paper10_desi_time_level_endpoint_authorization_review_template_v1.py",
+                                        ]
+                                    )
+                                    run(
+                                        [
+                                            "python",
+                                            "scripts/build_paper10_desi_time_level_endpoint_authorization_review_package_v1.py",
+                                        ]
+                                    )
+                                    run(
+                                        [
+                                            "python",
+                                            "scripts/validate_paper10_desi_time_level_endpoint_authorization_review_package_v1.py",
+                                        ]
+                                    )
+                                    desi_endpoint_auth_response = (
+                                        ROOT
+                                        / "data"
+                                        / "derived"
+                                        / "paper10_desi_time_level_endpoint_authorization_review_response_v1.csv"
+                                    )
+                                    if desi_endpoint_auth_response.exists():
+                                        run(
+                                            [
+                                                "python",
+                                                "scripts/validate_paper10_desi_time_level_endpoint_authorization_review_response_v1.py",
+                                            ]
+                                        )
+                                        run(
+                                            [
+                                                "python",
+                                                "scripts/run_paper10_desi_time_level_endpoint_authorized_replay_v1.py",
+                                            ]
+                                        )
+                                        run(
+                                            [
+                                                "python",
+                                                "scripts/validate_paper10_desi_time_level_endpoint_authorized_replay_v1.py",
+                                            ]
+                                        )
+                                        run(
+                                            [
+                                                "python",
+                                                "scripts/build_paper10_desi_time_level_negative_control_diagnostic_v1.py",
+                                            ]
+                                        )
+                                        run(
+                                            [
+                                                "python",
+                                                "scripts/validate_paper10_desi_time_level_negative_control_diagnostic_v1.py",
+                                            ]
+                                        )
+                                        run(
+                                            [
+                                                "python",
+                                                "scripts/build_paper10_desi_time_level_negative_control_response_gate_v1.py",
+                                            ]
+                                        )
+                                        run(
+                                            [
+                                                "python",
+                                                "scripts/validate_paper10_desi_time_level_negative_control_response_gate_v1.py",
+                                            ]
+                                        )
+                                        run(
+                                            [
+                                                "python",
+                                                "scripts/validate_paper10_desi_time_readout_expansion_manifest_v1.py",
+                                            ]
+                                        )
+                                        run(
+                                            [
+                                                "python",
+                                                "scripts/build_paper10_desi_high_z_independent_clock_support_audit_v1.py",
+                                            ]
+                                        )
+                                        run(
+                                            [
+                                                "python",
+                                                "scripts/validate_paper10_desi_high_z_independent_clock_support_audit_v1.py",
+                                            ]
+                                        )
+                                        run(
+                                            [
+                                                "python",
+                                                "scripts/build_paper10_desi_time_readout_shape_observable_gate_v1.py",
+                                            ]
+                                        )
+                                        run(
+                                            [
+                                                "python",
+                                                "scripts/validate_paper10_desi_time_readout_shape_observable_gate_v1.py",
+                                            ]
+                                        )
+                                        run(
+                                            [
+                                                "python",
+                                                "scripts/build_paper10_desi_time_readout_shape_projection_induction_v1.py",
+                                            ]
+                                        )
+                                        run(
+                                            [
+                                                "python",
+                                                "scripts/validate_paper10_desi_time_readout_shape_projection_induction_v1.py",
+                                            ]
+                                        )
+                                        run(
+                                            [
+                                                "python",
+                                                "scripts/build_paper10_desi_ordering_control_suite_v1.py",
+                                            ]
+                                        )
+                                        run(
+                                            [
+                                                "python",
+                                                "scripts/validate_paper10_desi_ordering_control_suite_v1.py",
+                                            ]
+                                        )
+                                        run(
+                                            [
+                                                "python",
+                                                "scripts/build_paper10_desi_cc_window_stress_binding_v1.py",
+                                            ]
+                                        )
+                                        run(
+                                            [
+                                                "python",
+                                                "scripts/validate_paper10_desi_cc_window_stress_binding_v1.py",
+                                            ]
+                                        )
+                                        run(
+                                            [
+                                                "python",
+                                                "scripts/build_paper10_desi_shape_bound_control_vectors_v1.py",
+                                            ]
+                                        )
+                                        run(
+                                            [
+                                                "python",
+                                                "scripts/validate_paper10_desi_shape_bound_control_vectors_v1.py",
+                                            ]
+                                        )
+                                        run(
+                                            [
+                                                "python",
+                                                "scripts/build_paper10_desi_multi_clock_support_per_bao_row_audit_v1.py",
+                                            ]
+                                        )
+                                        run(
+                                            [
+                                                "python",
+                                                "scripts/validate_paper10_desi_multi_clock_support_per_bao_row_audit_v1.py",
+                                            ]
+                                        )
+                                        run(
+                                            [
+                                                "python",
+                                                "scripts/build_paper10_desi_time_readout_shape_independent_review_package_v1.py",
+                                            ]
+                                        )
+                                        run(
+                                            [
+                                                "python",
+                                                "scripts/validate_paper10_desi_time_readout_shape_independent_review_package_v1.py",
+                                            ]
+                                        )
+                                        run(
+                                            [
+                                                "python",
+                                                "scripts/build_paper10_desi_shape_route_replay_authorization_review_package_v1.py",
+                                            ]
+                                        )
+                                        run(
+                                            [
+                                                "python",
+                                                "scripts/validate_paper10_desi_shape_route_replay_authorization_review_package_v1.py",
+                                            ]
+                                        )
+                                        response = (
+                                            ROOT
+                                            / "data"
+                                            / "derived"
+                                            / "paper10_desi_shape_route_replay_authorization_review_response_v1.csv"
+                                        )
+                                        if response.exists():
+                                            run(
+                                                [
+                                                    "python",
+                                                    "scripts/validate_paper10_desi_shape_route_replay_authorization_review_response_v1.py",
+                                                    str(response),
+                                                ]
+                                            )
+                                        run(
+                                            [
+                                                "python",
+                                                "scripts/validate_paper10_desi_shape_route_replay_run_template_v1.py",
+                                            ]
+                                        )
+                                        if response.exists():
+                                            run(
+                                                [
+                                                    "python",
+                                                    "scripts/run_paper10_desi_shape_route_authorized_replay_v1.py",
+                                                ]
+                                            )
+                                            run(
+                                                [
+                                                    "python",
+                                                    "scripts/validate_paper10_desi_shape_route_authorized_replay_v1.py",
+                                                ]
+                                            )
+                                            run(
+                                                [
+                                                    "python",
+                                                    "scripts/build_paper10_desi_shape_route_robustness_stress_v1.py",
+                                                ]
+                                            )
+                                            run(
+                                                [
+                                                    "python",
+                                                    "scripts/validate_paper10_desi_shape_route_robustness_stress_v1.py",
+                                                ]
+                                            )
+                                            run(
+                                                [
+                                                    "python",
+                                                    "scripts/build_paper10_desi_shape_route_robustness_figure_v1.py",
+                                                ]
+                                            )
+                                            run(
+                                                [
+                                                    "python",
+                                                    "scripts/validate_paper10_desi_shape_route_robustness_figure_v1.py",
+                                                ]
+                                            )
+                                            run(
+                                                [
+                                                    "python",
+                                                    "scripts/build_paper10_desi_shape_row_sensitivity_source_audit_v1.py",
+                                                ]
+                                            )
+                                            run(
+                                                [
+                                                    "python",
+                                                    "scripts/validate_paper10_desi_shape_row_sensitivity_source_audit_v1.py",
+                                                ]
+                                            )
+                                            run(
+                                                [
+                                                    "python",
+                                                    "scripts/build_paper10_desi_shape_core_source_acquisition_manifest_v1.py",
+                                                ]
+                                            )
+                                            run(
+                                                [
+                                                    "python",
+                                                    "scripts/validate_paper10_desi_shape_core_source_acquisition_manifest_v1.py",
+                                                ]
+                                            )
+                                            run(
+                                                [
+                                                    "python",
+                                                    "scripts/build_paper10_desi_shape_core_source_support_scan_v1.py",
+                                                ]
+                                            )
+                                            run(
+                                                [
+                                                    "python",
+                                                    "scripts/validate_paper10_desi_shape_core_source_support_scan_v1.py",
+                                                ]
+                                            )
+                                            run(
+                                                [
+                                                    "python",
+                                                    "scripts/build_paper10_desi_shape_row1_confirmatory_source_attachment_v1.py",
+                                                ]
+                                            )
+                                            run(
+                                                [
+                                                    "python",
+                                                    "scripts/validate_paper10_desi_shape_row1_confirmatory_source_attachment_v1.py",
+                                                ]
+                                            )
+                                            run(
+                                                [
+                                                    "python",
+                                                    "scripts/build_paper10_desi_shape_row1_confirmatory_source_review_package_v1.py",
+                                                ]
+                                            )
+                                            run(
+                                                [
+                                                    "python",
+                                                    "scripts/validate_paper10_desi_shape_row1_confirmatory_source_review_package_v1.py",
+                                                ]
+                                            )
+                                            row1_review_response = (
+                                                ROOT
+                                                / "data/derived/paper10_desi_shape_row1_confirmatory_source_review_response_v1.csv"
+                                            )
+                                            if row1_review_response.exists():
+                                                run(
+                                                    [
+                                                        "python",
+                                                        "scripts/validate_paper10_desi_shape_row1_confirmatory_source_review_response_v1.py",
+                                                    ]
+                                                )
+                                            run(
+                                                [
+                                                    "python",
+                                                    "scripts/build_paper10_desi_shape_row2_moresco2012_source_attachment_v1.py",
+                                                ]
+                                            )
+                                            run(
+                                                [
+                                                    "python",
+                                                    "scripts/validate_paper10_desi_shape_row2_moresco2012_source_attachment_v1.py",
+                                                ]
+                                            )
+                                            run(
+                                                [
+                                                    "python",
+                                                    "scripts/build_paper10_desi_shape_row2_moresco2012_source_attachment_review_package_v1.py",
+                                                ]
+                                            )
+                                            run(
+                                                [
+                                                    "python",
+                                                    "scripts/validate_paper10_desi_shape_row2_moresco2012_source_attachment_review_package_v1.py",
+                                                ]
+                                            )
+                                            row2_attachment_response = (
+                                                ROOT
+                                                / "data"
+                                                / "derived"
+                                                / "paper10_desi_shape_row2_moresco2012_source_attachment_review_response_v1.csv"
+                                            )
+                                            if row2_attachment_response.exists():
+                                                run(
+                                                    [
+                                                        "python",
+                                                        "scripts/validate_paper10_desi_shape_row2_moresco2012_source_attachment_review_response_v1.py",
+                                                    ]
+                                                )
+                                                run(
+                                                    [
+                                                        "python",
+                                                        "scripts/build_paper10_desi_shape_row2_promotion_readiness_gate_v1.py",
+                                                    ]
+                                                )
+                                                run(
+                                                    [
+                                                        "python",
+                                                        "scripts/validate_paper10_desi_shape_row2_promotion_readiness_gate_v1.py",
+                                                    ]
+                                                )
+                                                run(
+                                                    [
+                                                        "python",
+                                                        "scripts/build_paper10_desi_shape_row2_endpoint_pair_independence_scout_v1.py",
+                                                    ]
+                                                )
+                                                run(
+                                                    [
+                                                        "python",
+                                                        "scripts/validate_paper10_desi_shape_row2_endpoint_pair_independence_scout_v1.py",
+                                                    ]
+                                                )
+                                                run(
+                                                    [
+                                                        "python",
+                                                        "scripts/build_paper10_desi_shape_row2_left_endpoint_nearmiss_freeze_v1.py",
+                                                    ]
+                                                )
+                                                run(
+                                                    [
+                                                        "python",
+                                                        "scripts/validate_paper10_desi_shape_row2_left_endpoint_nearmiss_freeze_v1.py",
+                                                    ]
+                                                )
+                                                run(
+                                                    [
+                                                        "python",
+                                                        "scripts/build_paper10_desi_shape_row2_left_endpoint_window_review_package_v1.py",
+                                                    ]
+                                                )
+                                                run(
+                                                    [
+                                                        "python",
+                                                        "scripts/validate_paper10_desi_shape_row2_left_endpoint_window_review_package_v1.py",
+                                                    ]
+                                                )
+                                                row2_left_window_response = (
+                                                    ROOT
+                                                    / "data"
+                                                    / "derived"
+                                                    / "paper10_desi_shape_row2_left_endpoint_window_review_response_v1.csv"
+                                                )
+                                                if row2_left_window_response.exists():
+                                                    run(
+                                                        [
+                                                            "python",
+                                                            "scripts/validate_paper10_desi_shape_row2_left_endpoint_window_review_response_v1.py",
+                                                        ]
+                                                    )
+                                                run(
+                                                    [
+                                                        "python",
+                                                        "scripts/build_paper10_desi_shape_row2_left_endpoint_window_decision_gate_v1.py",
+                                                    ]
+                                                )
+                                                run(
+                                                    [
+                                                        "python",
+                                                        "scripts/validate_paper10_desi_shape_row2_left_endpoint_window_decision_gate_v1.py",
+                                                    ]
+                                                )
+                                                run(
+                                                    [
+                                                        "python",
+                                                        "scripts/build_paper10_desi_shape_row2_post_window_review_source_plan_v1.py",
+                                                    ]
+                                                )
+                                                run(
+                                                    [
+                                                        "python",
+                                                        "scripts/validate_paper10_desi_shape_row2_post_window_review_source_plan_v1.py",
+                                                    ]
+                                                )
+                                                run(
+                                                    [
+                                                        "python",
+                                                        "scripts/build_paper10_desi_shape_row2_left_strict_support_scout_v1.py",
+                                                    ]
+                                                )
+                                                run(
+                                                    [
+                                                        "python",
+                                                        "scripts/validate_paper10_desi_shape_row2_left_strict_support_scout_v1.py",
+                                                    ]
+                                                )
+                                                run(
+                                                    [
+                                                        "python",
+                                                        "scripts/build_paper10_desi_shape_row2_source_native_shape_support_scout_v1.py",
+                                                    ]
+                                                )
+                                                run(
+                                                    [
+                                                        "python",
+                                                        "scripts/validate_paper10_desi_shape_row2_source_native_shape_support_scout_v1.py",
+                                                    ]
+                                                )
+                                                run(
+                                                    [
+                                                        "python",
+                                                        "scripts/build_paper10_desi_shape_row2_source_native_shape_support_review_package_v1.py",
+                                                    ]
+                                                )
+                                                run(
+                                                    [
+                                                        "python",
+                                                        "scripts/validate_paper10_desi_shape_row2_source_native_shape_support_review_package_v1.py",
+                                                    ]
+                                                )
+                                                row2_source_native_shape_response = (
+                                                    ROOT
+                                                    / "data"
+                                                    / "derived"
+                                                    / "paper10_desi_shape_row2_source_native_shape_support_review_response_v1.csv"
+                                                )
+                                                if row2_source_native_shape_response.exists():
+                                                    run(
+                                                        [
+                                                            "python",
+                                                            "scripts/validate_paper10_desi_shape_row2_source_native_shape_support_review_response_v1.py",
+                                                        ]
+                                                    )
+                                                run(
+                                                    [
+                                                        "python",
+                                                        "scripts/build_paper10_desi_shape_row2_gate_status_ledger_v1.py",
+                                                    ]
+                                                )
+                                                run(
+                                                    [
+                                                        "python",
+                                                        "scripts/validate_paper10_desi_shape_row2_gate_status_ledger_v1.py",
+                                                    ]
+                                                )
+                                                run(
+                                                    [
+                                                        "python",
+                                                        "scripts/build_paper10_desi_shape_row2_promotion_review_package_v1.py",
+                                                    ]
+                                                )
+                                                run(
+                                                    [
+                                                        "python",
+                                                        "scripts/validate_paper10_desi_shape_row2_promotion_review_package_v1.py",
+                                                    ]
+                                                )
+                                                row2_promotion_response = (
+                                                    ROOT
+                                                    / "data/derived/paper10_desi_shape_row2_promotion_review_response_v1.csv"
+                                                )
+                                                if row2_promotion_response.exists():
+                                                    run(
+                                                        [
+                                                            "python",
+                                                            "scripts/validate_paper10_desi_shape_row2_promotion_review_response_v1.py",
+                                                        ]
+                                                    )
+                                                    run(
+                                                        [
+                                                            "python",
+                                                            "scripts/build_paper10_desi_shape_row2_gate_status_ledger_v1.py",
+                                                        ]
+                                                    )
+                                                    run(
+                                                        [
+                                                            "python",
+                                                            "scripts/validate_paper10_desi_shape_row2_gate_status_ledger_v1.py",
+                                                        ]
+                                                    )
+                                                    run(
+                                                        [
+                                                            "python",
+                                                            "scripts/build_paper10_desi_shape_row2_replay_authorization_review_package_v1.py",
+                                                        ]
+                                                    )
+                                                    run(
+                                                        [
+                                                            "python",
+                                                            "scripts/validate_paper10_desi_shape_row2_replay_authorization_review_package_v1.py",
+                                                        ]
+                                                    )
+                                                    row2_replay_auth_response = (
+                                                        ROOT
+                                                        / "data/derived/paper10_desi_shape_row2_replay_authorization_review_response_v1.csv"
+                                                    )
+                                                    if row2_replay_auth_response.exists():
+                                                        run(
+                                                            [
+                                                                "python",
+                                                                "scripts/validate_paper10_desi_shape_row2_replay_authorization_review_response_v1.py",
+                                                            ]
+                                                        )
+                                                        run(
+                                                            [
+                                                                "python",
+                                                                "scripts/build_paper10_desi_shape_row2_gate_status_ledger_v1.py",
+                                                            ]
+                                                        )
+                                                        run(
+                                                            [
+                                                                "python",
+                                                                "scripts/validate_paper10_desi_shape_row2_gate_status_ledger_v1.py",
+                                                            ]
+                                                        )
+                                                        if (
+                                                            ROOT
+                                                            / "data/source_manifest/paper10_desi_shape_row2_authorized_replay_run_v1.csv"
+                                                        ).exists():
+                                                            run(
+                                                                [
+                                                                    "python",
+                                                                    "scripts/run_paper10_desi_shape_row2_authorized_replay_v1.py",
+                                                                ]
+                                                            )
+                                                            run(
+                                                                [
+                                                                    "python",
+                                                                    "scripts/validate_paper10_desi_shape_row2_authorized_replay_v1.py",
+                                                                ]
+                                                            )
+                                                            run(
+                                                                [
+                                                                    "python",
+                                                                    "scripts/build_paper10_desi_shape_core_support_synthesis_gate_v1.py",
+                                                                ]
+                                                            )
+                                                            run(
+                                                                [
+                                                                    "python",
+                                                                    "scripts/validate_paper10_desi_shape_core_support_synthesis_gate_v1.py",
+                                                                ]
+                                                            )
+                                                            run(
+                                                                [
+                                                                    "python",
+                                                                    "scripts/build_paper10_desi_shape_route_source_synthesis_review_package_v1.py",
+                                                                ]
+                                                            )
+                                                            run(
+                                                                [
+                                                                    "python",
+                                                                    "scripts/validate_paper10_desi_shape_route_source_synthesis_review_package_v1.py",
+                                                                ]
+                                                            )
+                                                            source_synthesis_response = (
+                                                                ROOT
+                                                                / "data/derived/paper10_desi_shape_route_source_synthesis_review_response_v1.csv"
+                                                            )
+                                                            if source_synthesis_response.exists():
+                                                                run(
+                                                                    [
+                                                                        "python",
+                                                                        "scripts/validate_paper10_desi_shape_route_source_synthesis_review_response_v1.py",
+                                                                    ]
+                                                                )
+                                                                run(
+                                                                    [
+                                                                        "python",
+                                                                        "scripts/build_paper10_desi_shape_post_synthesis_gate_authorization_review_package_v1.py",
+                                                                    ]
+                                                                )
+                                                                run(
+                                                                    [
+                                                                        "python",
+                                                                        "scripts/validate_paper10_desi_shape_post_synthesis_gate_authorization_review_package_v1.py",
+                                                                    ]
+                                                                )
+                                                                post_synthesis_gate_response = (
+                                                                    ROOT
+                                                                    / "data/derived/paper10_desi_shape_post_synthesis_gate_authorization_review_response_v1.csv"
+                                                                )
+                                                                if post_synthesis_gate_response.exists():
+                                                                    run(
+                                                                        [
+                                                                            "python",
+                                                                            "scripts/validate_paper10_desi_shape_post_synthesis_gate_authorization_review_response_v1.py",
+                                                                        ]
+                                                                    )
+                                                                    run(
+                                                                        [
+                                                                            "python",
+                                                                            "scripts/build_paper10_desi_shape_validation_oriented_gate_review_package_v1.py",
+                                                                        ]
+                                                                    )
+                                                                    run(
+                                                                        [
+                                                                            "python",
+                                                                            "scripts/validate_paper10_desi_shape_validation_oriented_gate_review_package_v1.py",
+                                                                        ]
+                                                                    )
+                                                                    validation_oriented_gate_response = (
+                                                                        ROOT
+                                                                        / "data/derived/paper10_desi_shape_validation_oriented_gate_review_response_v1.csv"
+                                                                    )
+                                                                    if validation_oriented_gate_response.exists():
+                                                                        run(
+                                                                            [
+                                                                                "python",
+                                                                                "scripts/validate_paper10_desi_shape_validation_oriented_gate_review_response_v1.py",
+                                                                            ]
+                                                                        )
+                                                                        run(
+                                                                            [
+                                                                                "python",
+                                                                                "scripts/build_paper10_desi_shape_validation_permission_replay_authorization_review_package_v1.py",
+                                                                            ]
+                                                                        )
+                                                                        run(
+                                                                            [
+                                                                                "python",
+                                                                                "scripts/validate_paper10_desi_shape_validation_permission_replay_authorization_review_package_v1.py",
+                                                                            ]
+                                                                        )
+                                                                        validation_permission_response = (
+                                                                            ROOT
+                                                                            / "data/derived/paper10_desi_shape_validation_permission_replay_authorization_review_response_v1.csv"
+                                                                        )
+                                                                        if validation_permission_response.exists():
+                                                                            run(
+                                                                                [
+                                                                                    "python",
+                                                                                    "scripts/validate_paper10_desi_shape_validation_permission_replay_authorization_review_response_v1.py",
+                                                                                ]
+                                                                            )
+                                                                            run(
+                                                                                [
+                                                                                    "python",
+                                                                                    "scripts/run_paper10_desi_shape_validation_permission_authorized_replay_v1.py",
+                                                                                ]
+                                                                            )
+                                                                            run(
+                                                                                [
+                                                                                    "python",
+                                                                                    "scripts/validate_paper10_desi_shape_validation_permission_authorized_replay_v1.py",
+                                                                                ]
+                                                                            )
+                                        run(
+                                            [
+                                                "python",
+                                                "scripts/build_paper10_desi_clock_support_acquisition_manifest_v1.py",
+                                            ]
+                                        )
+                                        run(
+                                            [
+                                                "python",
+                                                "scripts/validate_paper10_desi_clock_support_acquisition_manifest_v1.py",
+                                            ]
+                                        )
+                                        run(
+                                            [
+                                                "python",
+                                                "scripts/build_paper10_desi_clock_support_source_candidate_scan_v1.py",
+                                            ]
+                                        )
+                                        run(
+                                            [
+                                                "python",
+                                                "scripts/validate_paper10_desi_clock_support_source_candidate_scan_v1.py",
+                                            ]
+                                        )
+                                        run(
+                                            [
+                                                "python",
+                                                "scripts/build_paper10_desi_clock_support_blocker_verdict_v1.py",
+                                            ]
+                                        )
+                                        run(
+                                            [
+                                                "python",
+                                                "scripts/validate_paper10_desi_clock_support_blocker_verdict_v1.py",
+                                            ]
+                                        )
+                                        run(
+                                            [
+                                                "python",
+                                                "scripts/validate_paper10_desi_clock_support_blocker_external_review_response_v1.py",
+                                            ]
+                                        )
+                                        run(
+                                            [
+                                                "python",
+                                                "scripts/build_paper10_desi_row4_clock_reopen_manifest_v1.py",
+                                            ]
+                                        )
+                                        run(
+                                            [
+                                                "python",
+                                                "scripts/validate_paper10_desi_row4_clock_reopen_manifest_v1.py",
+                                            ]
+                                        )
+                                        run(
+                                            [
+                                                "python",
+                                                "scripts/build_paper10_desi_row4_cc_bracket_source_freeze_v1.py",
+                                            ]
+                                        )
+                                        run(
+                                            [
+                                                "python",
+                                                "scripts/validate_paper10_desi_row4_cc_bracket_source_freeze_v1.py",
+                                            ]
+                                        )
+                                        run(
+                                            [
+                                                "python",
+                                                "scripts/build_paper10_desi_row4_non_simon_clock_search_v1.py",
+                                            ]
+                                        )
+                                        run(
+                                            [
+                                                "python",
+                                                "scripts/validate_paper10_desi_row4_non_simon_clock_search_v1.py",
+                                            ]
+                                        )
+                                        run(
+                                            [
+                                                "python",
+                                                "scripts/build_paper10_desi_row4_window_review_package_v1.py",
+                                            ]
+                                        )
+                                        run(
+                                            [
+                                                "python",
+                                                "scripts/validate_paper10_desi_row4_window_review_package_v1.py",
+                                            ]
+                                        )
+                                        run(
+                                            [
+                                                "python",
+                                                "scripts/build_paper10_desi_row4_window_decision_gate_v1.py",
+                                            ]
+                                        )
+                                        run(
+                                            [
+                                                "python",
+                                                "scripts/validate_paper10_desi_row4_window_decision_gate_v1.py",
+                                            ]
+                                        )
+                                        run(
+                                            [
+                                                "python",
+                                                "scripts/build_paper10_desi_row5_high_z_review_package_v1.py",
+                                            ]
+                                        )
+                                        run(
+                                            [
+                                                "python",
+                                                "scripts/validate_paper10_desi_row5_high_z_review_package_v1.py",
+                                            ]
+                                        )
+                                        run(
+                                            [
+                                                "python",
+                                                "scripts/build_paper10_desi_row5_high_z_decision_gate_v1.py",
+                                            ]
+                                        )
+                                        run(
+                                            [
+                                                "python",
+                                                "scripts/validate_paper10_desi_row5_high_z_decision_gate_v1.py",
+                                            ]
+                                        )
+                                        run(
+                                            [
+                                                "python",
+                                                "scripts/build_paper10_desi_time_route_closure_status_v1.py",
+                                            ]
+                                        )
+                                        run(
+                                            [
+                                                "python",
+                                                "scripts/validate_paper10_desi_time_route_closure_status_v1.py",
+                                            ]
+                                        )
+                                    run(
+                                        [
+                                            "python",
+                                            "scripts/validate_paper10_desi_time_level_endpoint_replay_run_template_v1.py",
+                                        ]
+                                    )
                 run(["python", "scripts/build_void_source_basis_refinement_v2_path_projection_route_ledger_v1.py"])
                 run(["python", "scripts/validate_void_source_basis_refinement_v2_path_projection_route_ledger_v1.py"])
                 run(["python", "scripts/build_void_source_basis_refinement_v2_time_readout_route_ledger_v1.py"])
@@ -587,6 +1612,88 @@ def main() -> None:
     run(["python", "scripts/validate_kids1000_cosebis_validation_readiness_ledger_v1.py"])
     run(["python", "scripts/build_kids1000_cosebis_tomographic_photoz_closure_status_v1.py"])
     run(["python", "scripts/validate_kids1000_cosebis_tomographic_photoz_closure_status_v1.py"])
+    run(["python", "scripts/build_joint_existing_artifact_meta_score_v1.py"])
+    run(["python", "scripts/validate_joint_existing_artifact_meta_score_v1.py"])
+    run(["python", "scripts/run_joint_multichannel_endpoint_candidate_v1.py"])
+    run(["python", "scripts/validate_joint_multichannel_endpoint_candidate_v1.py"])
+    run(["python", "scripts/run_joint_multichannel_block_score_v1.py"])
+    run(["python", "scripts/validate_joint_multichannel_block_score_v1.py"])
+    run(["python", "scripts/run_joint_best_justified_kernel_score_v1.py"])
+    run(["python", "scripts/validate_joint_best_justified_kernel_score_v1.py"])
+    run(["python", "scripts/run_joint_best_justified_kernel_robustness_v1.py"])
+    run(["python", "scripts/validate_joint_best_justified_kernel_robustness_v1.py"])
+    run(["python", "scripts/build_joint_best_justified_kernel_figure_v1.py"])
+    run(["python", "scripts/validate_joint_best_justified_qi_review_package_v1.py"])
+    run(["python", "scripts/build_joint_non_lensing_lift_diagnostic_v1.py"])
+    run(["python", "scripts/validate_joint_non_lensing_lift_diagnostic_v1.py"])
+    run(["python", "scripts/build_observer_path_strengthening_gate_v1.py"])
+    run(["python", "scripts/validate_observer_path_strengthening_gate_v1.py"])
+    run(["python", "scripts/build_observer_path_metric_product_requirements_package_v1.py"])
+    run(["python", "scripts/validate_observer_path_metric_product_requirements_package_v1.py"])
+    run(["python", "scripts/validate_observer_path_metric_product_requirements_review_response_v1.py"])
+    run(["python", "scripts/build_observer_path_metric_environment_product_v1.py"])
+    run(["python", "scripts/validate_observer_path_metric_environment_product_v1.py"])
+    run(["python", "scripts/build_observer_path_metric_product_acquisition_status_v1.py"])
+    run(["python", "scripts/validate_observer_path_metric_product_acquisition_status_v1.py"])
+    run(["python", "scripts/run_observer_path_metric_environment_fast_screen_v1.py"])
+    run(["python", "scripts/validate_observer_path_metric_environment_fast_screen_v1.py"])
+    run(["python", "scripts/build_observer_path_metric_environment_ordering_diagnostic_v1.py"])
+    run(["python", "scripts/validate_observer_path_metric_environment_ordering_diagnostic_v1.py"])
+    run(["python", "scripts/build_observer_path_source_native_ordering_kernel_v1.py"])
+    run(["python", "scripts/validate_observer_path_source_native_ordering_kernel_v1.py"])
+    run(["python", "scripts/run_observer_path_source_native_ordering_fast_screen_v1.py"])
+    run(["python", "scripts/validate_observer_path_source_native_ordering_fast_screen_v1.py"])
+    run(["python", "scripts/build_observer_path_metric_lensing_next_gate_v1.py"])
+    run(["python", "scripts/validate_observer_path_metric_lensing_next_gate_v1.py"])
+    run(["python", "scripts/build_act_dr6_lensing_product_v1.py"])
+    run(["python", "scripts/validate_act_dr6_lensing_product_v1.py"])
+    run(["python", "scripts/build_act_dr6_lensing_inventory_v1.py"])
+    run(["python", "scripts/validate_act_dr6_lensing_inventory_v1.py"])
+    run(["python", "scripts/build_act_dr6_lensing_low_z_sampling_pilot_v1.py"])
+    run(["python", "scripts/validate_act_dr6_lensing_low_z_sampling_pilot_v1.py"])
+    run(["python", "scripts/build_act_dr6_lensing_path_weight_candidate_v1.py"])
+    run(["python", "scripts/validate_act_dr6_lensing_path_weight_candidate_v1.py"])
+    run(["python", "scripts/build_act_dr6_lensing_observer_path_source_object_v1.py"])
+    run(["python", "scripts/validate_act_dr6_lensing_observer_path_source_object_v1.py"])
+    run(["python", "scripts/build_act_dr6_lensing_e_mode_route_v1.py"])
+    run(["python", "scripts/validate_act_dr6_lensing_e_mode_route_v1.py"])
+    run(["python", "scripts/build_act_dr6_lensing_curl_null_policy_v1.py"])
+    run(["python", "scripts/validate_act_dr6_lensing_curl_null_policy_v1.py"])
+    run(["python", "scripts/build_act_dr6_lensing_mask_coverage_policy_v1.py"])
+    run(["python", "scripts/validate_act_dr6_lensing_mask_coverage_policy_v1.py"])
+    run(["python", "scripts/build_act_dr6_lensing_units_normalization_policy_v1.py"])
+    run(["python", "scripts/validate_act_dr6_lensing_units_normalization_policy_v1.py"])
+    run(["python", "scripts/build_act_dr6_lensing_channel_handoff_policy_v1.py"])
+    run(["python", "scripts/validate_act_dr6_lensing_channel_handoff_policy_v1.py"])
+    run(["python", "scripts/build_act_dr6_lensing_control_suite_policy_v1.py"])
+    run(["python", "scripts/validate_act_dr6_lensing_control_suite_policy_v1.py"])
+    run(["python", "scripts/build_act_dr6_lensing_path_weight_replay_authorization_review_package_v1.py"])
+    run(["python", "scripts/validate_act_dr6_lensing_path_weight_replay_authorization_review_package_v1.py"])
+    run(["python", "scripts/build_act_dr6_lensing_path_weight_replay_run_template_v1.py"])
+    run(["python", "scripts/validate_act_dr6_lensing_path_weight_replay_run_template_v1.py"])
+    if (ROOT / "data/derived/act_dr6_lensing_path_weight_authorized_replay_v1_summary.csv").exists():
+        run(["python", "scripts/build_act_dr6_lensing_path_weight_control_dominance_diagnostic_v1.py"])
+        run(["python", "scripts/validate_act_dr6_lensing_path_weight_control_dominance_diagnostic_v1.py"])
+        run(["python", "scripts/build_act_dr6_lensing_path_weight_paper11_control_veto_gate_v1.py"])
+        run(["python", "scripts/validate_act_dr6_lensing_path_weight_paper11_control_veto_gate_v1.py"])
+        run(["python", "scripts/build_act_dr6_lensing_path_weight_source_basis_freeze_or_demote_gate_v1.py"])
+        run(["python", "scripts/validate_act_dr6_lensing_path_weight_source_basis_freeze_or_demote_gate_v1.py"])
+        run(["python", "scripts/build_act_dr6_lensing_reopen_closure_ledger_v1.py"])
+        run(["python", "scripts/validate_act_dr6_lensing_reopen_closure_ledger_v1.py"])
+        run(["python", "scripts/build_act_dr6_lensing_next_source_basis_design_scaffold_v1.py"])
+        run(["python", "scripts/validate_act_dr6_lensing_next_source_basis_design_scaffold_v1.py"])
+        run(["python", "scripts/build_act_dr6_lensing_caveated_kpath_source_design_v1.py"])
+        run(["python", "scripts/validate_act_dr6_lensing_caveated_kpath_source_design_v1.py"])
+        run(["python", "scripts/build_act_dr6_lensing_caveated_kpath_source_design_review_package_v1.py"])
+        run(["python", "scripts/validate_act_dr6_lensing_caveated_kpath_source_design_review_package_v1.py"])
+        run(["python", "scripts/build_act_dr6_lensing_caveated_kpath_replay_authorization_review_package_v1.py"])
+        run(["python", "scripts/validate_act_dr6_lensing_caveated_kpath_replay_authorization_review_package_v1.py"])
+        if (ROOT / "data/derived/act_dr6_lensing_caveated_kpath_replay_authorization_review_response_v1_summary.csv").exists():
+            run(["python", "scripts/validate_act_dr6_lensing_caveated_kpath_replay_authorization_review_response_v1.py"])
+            run(["python", "scripts/build_act_dr6_lensing_caveated_kpath_guarded_replay_package_v1.py"])
+            run(["python", "scripts/validate_act_dr6_lensing_caveated_kpath_guarded_replay_package_v1.py"])
+            run(["python", "scripts/run_act_dr6_lensing_caveated_kpath_guarded_replay_v1.py"])
+            run(["python", "scripts/validate_act_dr6_lensing_caveated_kpath_guarded_replay_v1.py"])
     run(["python", "scripts/build_figures.py"])
     print("+ tectonic paper10_submission_source/main.tex")
     subprocess.run(["tectonic", PAPER.name], cwd=PAPER.parent, env=env, check=True)
