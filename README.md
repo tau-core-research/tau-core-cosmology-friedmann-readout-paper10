@@ -162,6 +162,19 @@ This package does not compute new endpoint scores. It freezes the review
 questions needed before the protocol support scores `Q_i` can be promoted
 beyond preflight bookkeeping.
 
+A standalone reviewer handoff package is also available for reviewers who do
+not have repository access:
+
+```text
+data/derived/joint_best_justified_qi_review_package_v1.zip
+data/derived/joint_best_justified_qi_review_package_v1.zip.sha256
+```
+
+The zip contains reviewer instructions, the `Q_i` requirements CSV, a fillable
+response template, and the source-side manifest/summary files needed for the
+review. It is a source-side review package only; it is not an endpoint replay
+authorization and not a validation package.
+
 The detailed route-by-route ledgers that were too log-like for the main
 manuscript are preserved in the supplementary source file:
 
@@ -181,6 +194,23 @@ python scripts/reproduce.py
 The reproduction script compiles the manuscript with `tectonic`, validates the
 source-freeze and channel manifests, builds the arXiv source package, and runs
 smoke tests.
+
+To reproduce the current headline preflight artifacts directly:
+
+```bash
+python scripts/run_joint_best_justified_kernel_score_v1.py
+python scripts/run_joint_best_justified_kernel_robustness_v1.py
+python scripts/build_joint_best_justified_kernel_figure_v1.py
+python scripts/validate_joint_best_justified_qi_review_package_v1.py
+```
+
+Then check:
+
+```text
+data/derived/joint_best_justified_kernel_score_v1_summary.csv
+data/derived/joint_best_justified_kernel_robustness_v1_summary.csv
+paper10_submission_source/figures/fig_joint_best_justified_kernel_v1.pdf
+```
 
 ## arXiv Source Package
 

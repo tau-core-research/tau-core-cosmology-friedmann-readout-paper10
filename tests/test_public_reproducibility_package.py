@@ -1975,6 +1975,8 @@ def test_public_files_exist() -> None:
         "paper10_submission_source/figures/fig_joint_best_justified_kernel_v1.pdf",
         "data/source_manifest/joint_best_justified_qi_review_requirements_v1.csv",
         "docs/joint_best_justified_qi_review_package_v1.md",
+        "data/derived/joint_best_justified_qi_review_package_v1.zip",
+        "data/derived/joint_best_justified_qi_review_package_v1.zip.sha256",
         "data/derived/joint_non_lensing_lift_diagnostic_v1.csv",
         "data/derived/joint_non_lensing_lift_diagnostic_v1_summary.csv",
         "docs/joint_non_lensing_lift_diagnostic_v1.md",
@@ -6548,6 +6550,19 @@ def test_joint_best_justified_qi_review_package_is_source_side_only() -> None:
         "QI_REVIEW_06_EXPONENT_POLICY",
         "QI_REVIEW_07_PROMOTION_RULE",
     }
+    package = ROOT / "data/derived/joint_best_justified_qi_review_package_v1.zip"
+    with zipfile.ZipFile(package) as zf:
+        names = set(zf.namelist())
+    required = {
+        "q_i_review_package_v1/README_FOR_REVIEWER.md",
+        "q_i_review_package_v1/REVIEW_INSTRUCTIONS.md",
+        "q_i_review_package_v1/joint_best_justified_qi_review_requirements_v1.csv",
+        "q_i_review_package_v1/joint_best_justified_qi_review_response_template_v1.csv",
+        "q_i_review_package_v1/joint_best_justified_kernel_manifest_v1.csv",
+        "q_i_review_package_v1/joint_best_justified_kernel_score_v1_summary.csv",
+        "q_i_review_package_v1/joint_best_justified_kernel_robustness_v1_summary.csv",
+    }
+    assert required.issubset(names)
 
 
 def test_joint_non_lensing_lift_diagnostic_identifies_next_channel() -> None:
