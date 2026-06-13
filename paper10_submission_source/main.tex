@@ -55,8 +55,9 @@ dark-energy law.
 
 This manuscript opens a cosmology-facing audit lane for Tau Core. It should be
 read as a protocol scaffold, not as a discovery paper. It is downstream of the
-finite-memory cosmology diagnostic in Paper 5~\cite{Paper5FiniteMemory} and
-inherits leakage-prevention discipline from Papers 8 and 9
+finite-memory cosmology diagnostic reproducibility package
+~\cite{Paper5FiniteMemory} and inherits leakage-prevention discipline from the
+Paper 8 and Paper 9 reproducibility packages
 ~\cite{Paper8ForwardReadout,Paper9ProjectionReadout}.
 It also uses the current Tau Core readout-basis discipline only operationally:
 branch channels must be declared and source-frozen before scoring, and the
@@ -303,26 +304,35 @@ summary needed to interpret the numerical results.
 The audit uses six operational source-channel families:
 
 \begin{enumerate}[leftmargin=1.5em]
-\item \textbf{Distance and void/web channels.} Pantheon+, SDSS growth/BAO/RSD,
-void catalogues, web/environment proxies, and CMB-safety checks define the
-minimal distance/growth pipeline.  The present void/web proxy runs are useful
-pipeline tests but are weak, AIC-negative, or control-limited.
+\item \textbf{Distance and void/web channels.} Pantheon+
+~\cite{PantheonPlus2022}, SDSS growth/BAO/RSD
+~\cite{SDSSDR16LSS,duMasdesBourboux2020LyA,Hou2020QSOBAORSD}, void catalogues
+~\cite{VASTSDSSDR7VoidZenodo}, web/environment proxies
+~\cite{SDSSCosmicWebVAC}, and CMB-safety checks
+~\cite{Planck2018Cosmology,PlanckLegacyArchive,NASALAMBDA} define the minimal
+distance/growth pipeline.  The present void/web proxy runs are useful pipeline
+tests but are weak, AIC-negative, or control-limited.
 \item \textbf{Observer/path channels.} Low-redshift observer/path basis functions
 and sky/path controls test whether line-of-sight or observer-frame projection
 information carries residual structure.  The narrow observer/path replay is one
 of the current positive-support channels, but it is not population validation.
-\item \textbf{Time/clock channels.} Cosmic-chronometer and BAO/time-readout
-routes test whether expansion-time readout proxies can be source-grounded.  The
-simple time bases remain control-limited or source-blocked in this release.
-\item \textbf{DESI shape/readout channels.} DESI BAO shape/readout routes provide
-a narrow, row-sensitive positive permission replay.  They enter the
-best-justified joint kernel as positive support, but not as validation.
-\item \textbf{KiDS/COSEBIs lensing channels.} KiDS low-mode COSEBIs provide the
-strongest structured single-channel signal.  Tomographic, operator, and physical
-promotion blockers remain open, so this is endpoint evidence but not validation.
-\item \textbf{ACT lensing/path channels.} ACT \(K_{\rm path}\) products are
-preserved as a controlled negative/diagnostic route: the latest caveated replay
-is control-dominated, with curl-null controls beating the candidate.
+\item \textbf{Time/clock channels.} Cosmic-chronometer
+~\cite{Simon2005Chronometers,Moresco2012ExpansionRate,Moresco2023ChronometersReview}
+and BAO/time-readout routes test whether expansion-time readout proxies can be
+source-grounded.  The simple time bases remain control-limited or source-blocked
+in this release.
+\item \textbf{DESI shape/readout channels.} DESI BAO shape/readout routes
+~\cite{DESIDR2BAO2025,DESIDR2Products2025} provide a narrow, row-sensitive
+positive permission replay.  They enter the best-justified joint kernel as
+positive support, but not as validation.
+\item \textbf{KiDS/COSEBIs lensing channels.} KiDS low-mode COSEBIs
+~\cite{KiDS1000Lensing} provide the strongest structured single-channel signal.
+Tomographic, operator, and physical promotion blockers remain open, so this is
+endpoint evidence but not validation.
+\item \textbf{ACT lensing/path channels.} ACT \(K_{\rm path}\) products from the
+NASA LAMBDA CMB archive~\cite{NASALAMBDA} are preserved as a controlled
+negative/diagnostic route: the latest caveated replay is control-dominated, with
+curl-null controls beating the candidate.
 \end{enumerate}
 
 This source-channel summary is the basis for the later joint-preflight layer.
