@@ -228,6 +228,7 @@ docs/joint_block_diagonal_independence_review_package_v1.md
 scripts/build_joint_block_diagonal_independence_review_package_v1.py
 scripts/validate_joint_block_diagonal_independence_review_package_v1.py
 scripts/validate_joint_block_diagonal_independence_review_response_v1.py
+scripts/import_joint_block_diagonal_independence_review_response_v1.py
 ```
 
 Its current status is
@@ -239,6 +240,16 @@ either the blank template state or a fully completed reviewer response. A
 positive response can only permit a future protocol-shell preparation path; it
 still leaves scoring disabled unless a separately reviewed source-side
 covariance/independence rationale is supplied.
+
+When a reviewer returns the completed CSV or a zip containing it, import it with:
+
+```bash
+python scripts/import_joint_block_diagonal_independence_review_response_v1.py /path/to/completed_response.csv
+```
+
+The importer refuses blank templates, partial responses, forbidden endpoint
+inputs, endpoint-score permissions, and validation claims before replacing the
+canonical response artifact.
 
 The matched-control requirements are now specified in:
 
