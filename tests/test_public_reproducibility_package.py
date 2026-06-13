@@ -2081,20 +2081,18 @@ def test_manuscript_claim_markers() -> None:
     assert "A source-frozen Friedmann-readout audit protocol" in text
     assert "does not claim that Tau Core" in text
     assert "explains dark energy" in text
-    assert "Lambda-like distance behavior" in text
+    assert "Lambda-like distance readout" in text
     assert "web/environment-dependent growth or lensing residual" in text
-    assert "convergent and multi-channel" in text
-    assert "multi-channel viability evidence" in text
-    assert "JOINT\\_ENDPOINT\\_CANDIDATE\\_INCONCLUSIVE\\_PREVALIDATION" in text
-    assert "JOINT\\_BLOCK\\_SCORE\\_FRAGILE\\_OR\\_INCONCLUSIVE\\_PREVALIDATION" in text
-    assert "non-lensing lift diagnostic" in text
-    assert "observer/path strengthening gate" in text
-    assert "metric-product requirements package" in text
-    assert "ACCEPT\\_REQUIREMENTS\\_ONLY" in text
-    assert "bounded caveated" in text
-    assert "metric-environment path proxy" in text
-    assert "preauthorization signal that is not yet" in text
-    assert "control-resistant" in text
+    assert "source-frozen, control-aware viability audit" in text
+    assert "reproducible multi-channel viability" in text
+    assert "BEST\\_JUSTIFIED\\_JOINT\\_KERNEL\\_POSITIVE" in text
+    assert "PREFLIGHT\\_NOT\\_VALIDATION" in text
+    assert "Low-redshift observer/path basis functions" in text
+    assert "narrow observer/path replay" in text
+    assert "DESI shape/readout route" in text
+    assert "KiDS/COSEBIs low-mode route" in text
+    assert "ACT lensing/path route" in text
+    assert "control-dominated diagnostic" in text
     forbidden = [
         "we detect Tau Core",
         "we prove Tau Core explains dark energy",

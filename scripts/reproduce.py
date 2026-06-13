@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import os
+import csv
 import subprocess
 from pathlib import Path
 
@@ -13,6 +14,14 @@ PAPER = ROOT / "paper10_submission_source" / "main.tex"
 def run(cmd: list[str], cwd: Path = ROOT) -> None:
     print("+", " ".join(cmd))
     subprocess.run(cmd, cwd=cwd, check=True)
+
+
+def read_one_csv(path: Path) -> dict[str, str]:
+    with path.open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    if len(rows) != 1:
+        raise RuntimeError(f"{path.relative_to(ROOT)} must contain exactly one row")
+    return rows[0]
 
 
 def main() -> None:
@@ -1067,18 +1076,40 @@ def main() -> None:
                                                             "scripts/validate_paper10_desi_shape_row2_gate_status_ledger_v1.py",
                                                         ]
                                                     )
-                                                    run(
-                                                        [
-                                                            "python",
-                                                            "scripts/build_paper10_desi_shape_row2_replay_authorization_review_package_v1.py",
-                                                        ]
-                                                    )
-                                                    run(
-                                                        [
-                                                            "python",
-                                                            "scripts/validate_paper10_desi_shape_row2_replay_authorization_review_package_v1.py",
-                                                        ]
-                                                    )
+                                                    row2_gate_status = read_one_csv(
+                                                        ROOT
+                                                        / "data/derived/paper10_desi_shape_row2_gate_status_ledger_v1_summary.csv"
+                                                    )["status"]
+                                                    if (
+                                                        row2_gate_status
+                                                        == "ROW2_SEPARATE_REPLAY_AUTH_REVIEW_ALLOWED_NOT_REPLAY"
+                                                    ):
+                                                        run(
+                                                            [
+                                                                "python",
+                                                                "scripts/build_paper10_desi_shape_row2_replay_authorization_review_package_v1.py",
+                                                            ]
+                                                        )
+                                                        run(
+                                                            [
+                                                                "python",
+                                                                "scripts/validate_paper10_desi_shape_row2_replay_authorization_review_package_v1.py",
+                                                            ]
+                                                        )
+                                                    elif (
+                                                        row2_gate_status
+                                                        == "ROW2_PERMISSION_ONLY_REPLAY_AUTHORIZED_NOT_VALIDATION"
+                                                    ):
+                                                        print(
+                                                            "Row2 replay authorization package validation skipped "
+                                                            "because the completed authorization response has already "
+                                                            "advanced the gate to permission-only replay."
+                                                        )
+                                                    else:
+                                                        print(
+                                                            "Row2 replay authorization package build skipped "
+                                                            f"because gate status is {row2_gate_status}"
+                                                        )
                                                     row2_replay_auth_response = (
                                                         ROOT
                                                         / "data/derived/paper10_desi_shape_row2_replay_authorization_review_response_v1.csv"
