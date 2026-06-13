@@ -1,0 +1,40 @@
+Validation log: V2 observer-basis replay authorization review
+
+Input package:
+void_source_basis_refinement_v2_observer_basis_replay_authorization_package_v1.zip
+
+Input package SHA-256:
+5680879a5ef938507d1729f6afc6143c303a9e0919f61b9f362b33d1292a1442
+
+Package access:
+PASS - ZIP was present and readable.
+
+Instruction check:
+PASS - Package asks only whether one narrow 12-row replay may be run for W_path_x_sky_x_x_zcenter.
+
+Prior candidate-review check:
+PASS - Candidate review summary decision accepted W_path_x_sky_x_x_zcenter only for separate permission-only replay authorization package preparation.
+
+Fast-screen candidate check:
+PASS - Fast-screen summary lists best_candidate_family=W_path_x_sky_x_x_zcenter.
+
+Family-control check:
+PASS - Family summary row for W_path_x_sky_x_x_zcenter has survives_family_controls=true and controls_better_than_candidate_chi2=0.
+
+Forbidden boundary check:
+PASS - forbidden_inputs_used=false.
+
+Replay permission flag check:
+PASS - completed response sets endpoint_replay_allowed=true only for permission-only replay.
+
+Validation claim check:
+PASS - endpoint_validation_claimed=false.
+
+Physical claim check:
+PASS - physical_lensing_path_weight_claimed=false.
+
+Decision:
+GO_OBSERVER_BASIS_REPLAY_PERMISSION_ONLY
+
+Completion status:
+PASS

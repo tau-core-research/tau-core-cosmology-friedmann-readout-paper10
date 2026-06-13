@@ -1,0 +1,21 @@
+paper10_desi_shape_row2_replay_authorization_review_validation_log_v1
+
+input_package=/mnt/data/4f7f23e1-620d-4729-a2e3-a591a8290df8.zip
+input_package_sha256=0bd8b1e5d4b39b5edad83f8dfbdc999720bc85a81dc377249573851fce68e8ad
+manifest_byte_sha256_check=pass
+manifest_errors=[]
+
+completed_response_checks:
+- row_count=5
+- review_completed_all=True
+- forbidden_inputs_used_all_false=True
+- endpoint_replay_allowed_all_true=True
+- endpoint_validation_claimed_all_false=True
+- physical_validation_claimed_all_false=True
+- row2_promotion_ready_all_false=True
+- shape_route_promotion_allowed_all_false=True
+- endpoint_pair_independence_satisfied_all_false=True
+- claim_boundary_all_expected=True
+
+completion_check=pass
+verdict=GO_DESI_SHAPE_ROW2_REPLAY_PERMISSION_ONLY

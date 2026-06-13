@@ -14,4 +14,5 @@ paper10_submission_source/*.xdv
 paper10_submission_source/*.fls
 paper10_submission_source/*.fdb_latexmk
 data/raw/weak_lensing/kids1000_path_masks/full_route_cache_v1/*.fits.gz
+data/raw/weak_lensing/act_dr6_lensing/
 data/local/

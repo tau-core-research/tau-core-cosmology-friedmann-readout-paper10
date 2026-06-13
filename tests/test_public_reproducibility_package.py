@@ -4511,7 +4511,7 @@ def test_low_z_pantheon_w_time_uncertainty_basis_replay_authorization_package_is
     ).open(newline="") as f:
         summary = list(csv.DictReader(f))[0]
     assert summary["status"] == "W_TIME_UNCERTAINTY_BASIS_REPLAY_AUTHORIZATION_PACKAGE_BUILT_NOT_COMPLETED"
-    assert summary["zip_sha256"] == "2067b221b0309bb8fcc3a294fcebf5c8fddd6123d7d7d7a151615c992a2fd69f"
+    assert summary["zip_sha256"] == "7ce60ff2781c10a98555a1c17e1a58e9b33d12d5deb2e7d1a2201252ca0ff18c"
     assert summary["package_file_count"] == "16"
     assert summary["review_completed"] == "false"
     assert summary["endpoint_replay_allowed"] == "false"

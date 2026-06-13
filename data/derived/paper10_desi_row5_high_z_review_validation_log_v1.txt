@@ -1,0 +1,1 @@
+No separate validation log was included in the completed reviewer ZIP.

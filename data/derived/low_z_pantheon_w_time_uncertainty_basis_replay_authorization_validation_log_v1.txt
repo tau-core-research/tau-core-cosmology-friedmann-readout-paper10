@@ -1,0 +1,52 @@
+Validation log: Low-z Pantheon+ W-time uncertainty-basis replay authorization review
+
+Input package:
+low_z_pantheon_w_time_uncertainty_basis_replay_authorization_review_package_v1.zip
+
+Input package SHA-256:
+2067b221b0309bb8fcc3a294fcebf5c8fddd6123d7d7d7a151615c992a2fd69f
+
+Package access:
+PASS - ZIP was present and readable after fetching the real file contents.
+
+Template validator:
+PASS - validate_low_z_pantheon_w_time_uncertainty_basis_replay_authorization_review_template_v1.py accepted the uncompleted template state.
+
+Source-side basis precondition:
+PASS - status=W_TIME_UNCERTAINTY_BASIS_CANDIDATE_BUILT_SOURCE_SIDE_NOT_SCORING.
+
+W_time values status:
+PASS - W_time_values_status=SOURCE_SIDE_BASIS_CANDIDATE_ONLY_NOT_ENDPOINT.
+
+Basis row count:
+PASS - basis_rows=424.
+
+Initial endpoint replay flag:
+PASS - candidate summary endpoint_replay_allowed=false.
+
+Initial endpoint validation flag:
+PASS - candidate summary endpoint_validation_claimed=false.
+
+Initial physical claim flag:
+PASS - candidate summary physical_lensing_path_weight_claimed=false.
+
+Completed response check:
+PASS - four review rows completed.
+
+Forbidden input check:
+PASS - forbidden_inputs_used=false for all completed rows.
+
+Replay permission check:
+PASS - endpoint_replay_allowed=true only for one permission-only replay authorization.
+
+Validation claim check:
+PASS - endpoint_validation_claimed=false for all completed rows.
+
+Physical validation claim check:
+PASS - physical_validation_claimed=false for all completed rows.
+
+Decision:
+GO_W_TIME_UNCERTAINTY_BASIS_REPLAY_PERMISSION_ONLY
+
+Completion status:
+PASS

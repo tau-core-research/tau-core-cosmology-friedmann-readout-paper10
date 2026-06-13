@@ -1,0 +1,35 @@
+Paper10 DESI shape-route source-synthesis review validation log v1
+created_utc=2026-06-12T13:58:28.937766+00:00
+package_path=/mnt/data/paper10_desi_shape_route_source_synthesis_review_package_v1.zip
+package_sha256=a7c71dc3d5e9d5adeb3ce3313177dba0f757d80465b3e3834ff4c48ddd4f56f9
+
+Manifest checks:
+- data/source_manifest/paper10_desi_shape_route_source_synthesis_review_policy_v1.csv: exists=True; bytes=2118/2118; byte_ok=True; sha256_ok=True
+- docs/paper10_desi_shape_route_source_synthesis_review_v1.md: exists=True; bytes=2036/2036; byte_ok=True; sha256_ok=True
+- data/derived/paper10_desi_shape_route_source_synthesis_review_response_template_v1.csv: exists=True; bytes=3339/3339; byte_ok=True; sha256_ok=True
+- data/derived/paper10_desi_shape_core_support_synthesis_gate_v1.csv: exists=True; bytes=2444/2444; byte_ok=True; sha256_ok=True
+- data/derived/paper10_desi_shape_core_support_synthesis_gate_v1_summary.csv: exists=True; bytes=1136/1136; byte_ok=True; sha256_ok=True
+- docs/paper10_desi_shape_core_support_synthesis_gate_v1.md: exists=True; bytes=2343/2343; byte_ok=True; sha256_ok=True
+- data/derived/paper10_desi_shape_row_sensitivity_source_audit_v1_summary.csv: exists=True; bytes=777/777; byte_ok=True; sha256_ok=True
+- data/derived/paper10_desi_shape_core_source_support_scan_v1_summary.csv: exists=True; bytes=753/753; byte_ok=True; sha256_ok=True
+- data/derived/paper10_desi_shape_row1_confirmatory_source_review_response_v1_summary.csv: exists=True; bytes=1392/1392; byte_ok=True; sha256_ok=True
+- docs/paper10_desi_shape_row1_confirmatory_source_review_notes_v1.md: exists=True; bytes=995/995; byte_ok=True; sha256_ok=True
+- data/derived/paper10_desi_shape_row2_moresco2012_source_attachment_review_response_v1_summary.csv: exists=True; bytes=1297/1297; byte_ok=True; sha256_ok=True
+- docs/paper10_desi_shape_row2_moresco2012_source_attachment_review_notes_v1.md: exists=True; bytes=1054/1054; byte_ok=True; sha256_ok=True
+- data/derived/paper10_desi_shape_row2_source_native_shape_support_review_response_v1_summary.csv: exists=True; bytes=1316/1316; byte_ok=True; sha256_ok=True
+- docs/paper10_desi_shape_row2_source_native_shape_support_review_notes_v1.md: exists=True; bytes=1424/1424; byte_ok=True; sha256_ok=True
+- data/derived/paper10_desi_shape_row2_authorized_replay_v1_summary.csv: exists=True; bytes=883/883; byte_ok=True; sha256_ok=True
+
+Completion checks:
+- manifest_byte_sha256_check: pass
+- question_count_is_4: pass
+- review_completed_all_true: pass
+- forbidden_inputs_used_all_false: pass
+- shape_route_promotion_allowed_all_false: pass
+- endpoint_replay_allowed_all_false: pass
+- endpoint_validation_claimed_all_false: pass
+- physical_validation_claimed_all_false: pass
+- responses_nonempty: pass
+
+overall_completion_check=pass
+decision=ACCEPT_AS_SOURCE_SYNTHESIS_SUPPORT_FOR_FUTURE_GATE_PREPARATION_NOT_REPLAY_NOT_VALIDATION

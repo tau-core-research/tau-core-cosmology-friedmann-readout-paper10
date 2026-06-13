@@ -1,0 +1,8 @@
+requirement_id,required_for_reopen,current_status,description,forbidden_inputs
+ACT_REOPEN_01_SOURCE_OBJECT,true,DEFINED_SOURCE_SIDE,Define the ACT observer/path source object beyond a unitless sampled vector.,"distance_residuals,fit_statistics,family_winner,endpoint_score"
+ACT_REOPEN_02_E_MODE_ROUTE,true,DEFINED_SOURCE_SIDE,Derive why the baseline kappa/E-mode route is the physical candidate channel.,"distance_residuals,fit_statistics,control_performance"
+ACT_REOPEN_03_CURL_NULL_POLICY,true,FROZEN_SOURCE_SIDE_VETO_ACTIVE,Freeze why curl is a null/gauge/control branch and how curl dominance vetoes promotion.,"endpoint_score,residual_shape,family_winner"
+ACT_REOPEN_04_MASK_AND_COVERAGE_POLICY,true,FROZEN_SOURCE_SIDE,"Freeze outside-mask, active-row, coverage, and selection policies before replay.","distance_residuals,fit_statistics"
+ACT_REOPEN_05_UNITS_AND_NORMALIZATION,true,PROXY_FROZEN_PHYSICAL_BLOCKER_OPEN,Freeze the unitless median/MAD proxy and keep source-native or theorem-bounded physical normalization as an open blocker.,"endpoint_score,best_fit_amplitude"
+ACT_REOPEN_06_CHANNEL_HANDOFF,true,SOURCE_DIAGNOSTIC_ONLY_NOT_PHYSICAL_K_PATH,"Declare the current baseline route as K_path-candidate source diagnostic only, with curl retained as K_null control.","endpoint_score,family_winner"
+ACT_REOPEN_07_CONTROL_SUITE,true,FROZEN_CURRENT_BRANCH_REPLAY_STILL_DISABLED,"Freeze current controls including curl, frequency difference, shuffle, sign, rank, and source-basis recentering as future-only stress.",posthoc_control_selection

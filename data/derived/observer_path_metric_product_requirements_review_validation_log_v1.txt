@@ -1,0 +1,18 @@
+observer_path_metric_product_requirements review validation log v1
+
+zip_exists: True
+zip_size_bytes: 20232
+package_sha256: b8cbada6999144c24b9139d96a80fa6b30ff61f1a3f5291d9ad055a3de852429
+template_rows: 4
+response_rows: 4
+all_review_completed: True
+all_accepted_requirements_only: True
+forbidden_inputs_used_all_false: True
+endpoint_replay_allowed_all_false: True
+endpoint_validation_claimed_all_false: True
+physical_lensing_path_weight_claimed_all_false: True
+low_z_audit_rows: 424
+source_aligned_metric_product_count: 0
+route_audit_numeric_kappa_shear_count: 0
+mass_map_integral_count: 0
+completion_check: pass

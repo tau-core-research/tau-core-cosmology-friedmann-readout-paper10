@@ -1,0 +1,31 @@
+observer_basis_candidate_review_validation_log_v1
+outer_zip=/mnt/data/void_source_basis_refinement_v2_observer_basis_candidate_review_package_v1.zip
+outer_zip_size=4392
+outer_zip_sha256=a07f7356228ca21daa457978db9b8f54ab620cb872a0a0a22ec18151b0eb6bf7
+
+package_inventory:
+       576  2ce16501782d48b4a35b7bdb6f67ca1ca42e18270ec805f5a633360fb3dd78db  data/source_manifest/void_source_basis_refinement_v2_observer_basis_candidate_review_policy_v1.csv
+      1303  1f66c898b6b45914ade593b6236d32c0becb4962fa4b07b6b20e1a45d7e4097a  data/derived/void_source_basis_refinement_v2_observer_basis_fast_screen_v1_summary.csv
+      4987  f7897e758ff3bf927753cb9f0da0f657840cdbcaa2f3649bd7eb8cd097e4ab63  data/derived/void_source_basis_refinement_v2_observer_basis_fast_screen_v1_family_summary.csv
+       958  63fd070ce6125cb4d9c30f361c0eb2c563440a264da7104d44543f081e49aba0  docs/void_source_basis_refinement_v2_observer_basis_candidate_review_v1.md
+      1147  30ba07bc4217ec060ce90c58410e51df4ca6ea109d50a9ad4633a34c6817c9f7  data/derived/void_source_basis_refinement_v2_observer_basis_candidate_review_response_template_v1.csv
+
+checks:
+  PASS  outer_zip_exists: void_source_basis_refinement_v2_observer_basis_candidate_review_package_v1.zip size=4392
+  PASS  package_file_count: 5 files
+  PASS  policy_flags_false: {'endpoint_replay_allowed': 'false', 'endpoint_validation_claimed': 'false', 'physical_lensing_path_weight_claimed': 'false'}
+  PASS  candidate_matches_policy_summary: policy=W_path_x_sky_x_x_zcenter; summary_best=W_path_x_sky_x_x_zcenter
+  PASS  candidate_present_in_family_summary: family row found=True
+  PASS  candidate_improves_baseline: candidate=4.55094910859; baseline=5.13167342672; delta=-0.58072431813
+  PASS  candidate_survives_local_controls: candidate=4.55094910859; best_control=4.63878177658; delta_control=-0.08783266799; controls_better=0; survives=true
+  PASS  summary_flags_false: {'endpoint_replay_allowed': 'false', 'endpoint_validation_claimed': 'false', 'physical_lensing_path_weight_claimed': 'false'}
+  PASS  candidate_in_surviving_families: W_path_x_centered_sky_yz_plus;W_path_x_sky_x_x_zcenter;W_path_x_sky_yz_plus;W_path_x_sky_z
+  PASS  claim_boundary_not_validation: policy=v2_observer_basis_candidate_review_not_validation; summary=v2_observer_basis_fast_screen_not_endpoint_not_validation
+
+completed_response_checks:
+  PASS  review_completed_all_rows
+  PASS  forbidden_and_endpoint_flags_false_all_rows
+  PASS  claim_boundary_all_rows
+  PASS  responses_and_rationales_filled
+
+final_decision=ACCEPT_OBSERVER_BASIS_CANDIDATE_FOR_SEPARATE_PERMISSION_ONLY_REPLAY_AUTHORIZATION_PACKAGE

@@ -1,0 +1,5 @@
+question_id,question,candidate_family,reviewer_response,reviewer_rationale,review_completed,forbidden_inputs_used,endpoint_replay_allowed,endpoint_validation_claimed,physical_lensing_path_weight_claimed,claim_boundary
+Q1_candidate_predeclared,Was W_path_x_sky_x_x_zcenter present in the predeclared fast-screen basis before this review?,W_path_x_sky_x_x_zcenter,,,false,false,false,false,false,v2_observer_basis_candidate_review_not_validation
+Q2_source_side_inputs,"Are the candidate inputs restricted to source-side W_path, sky_x, and centered zHD, without endpoint residuals?",W_path_x_sky_x_x_zcenter,,,false,false,false,false,false,v2_observer_basis_candidate_review_not_validation
+Q3_control_result,Does the candidate improve baseline and survive its local controls in the diagnostic screen?,W_path_x_sky_x_x_zcenter,,,false,false,false,false,false,v2_observer_basis_candidate_review_not_validation
+Q4_next_action,"May this candidate proceed only to a separate permission-only replay authorization package, with no validation claim?",W_path_x_sky_x_x_zcenter,,,false,false,false,false,false,v2_observer_basis_candidate_review_not_validation

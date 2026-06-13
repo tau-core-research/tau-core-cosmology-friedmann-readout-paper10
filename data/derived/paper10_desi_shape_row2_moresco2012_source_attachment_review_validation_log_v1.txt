@@ -1,0 +1,12 @@
+package_sha256=5229ef8cc97a6ca5de94fce880505ef02753158c84cd6772e68a45e2a23acc07
+manifest_check=pass
+row_count_is_4=pass
+all_review_completed_true=pass
+all_forbidden_inputs_false=pass
+all_endpoint_pair_replacement_false=pass
+all_row2_endpoint_ready_false=pass
+all_endpoint_replay_false=pass
+all_endpoint_validation_false=pass
+all_physical_validation_false=pass
+manifest_byte_sha256_pass=pass
+completion_check=pass

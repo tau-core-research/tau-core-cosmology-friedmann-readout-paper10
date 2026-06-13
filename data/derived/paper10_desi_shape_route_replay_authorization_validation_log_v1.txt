@@ -1,0 +1,15 @@
+paper10_desi_shape_route_replay_authorization validation log v1
+created_utc=2026-06-12T09:37:25.563458+00:00
+package=/mnt/data/paper10_desi_shape_route_replay_authorization_review_package_v1.zip
+manifest_check=pass
+manifest_rows=23
+response_rows=4
+q1_response=yes
+q2_response=caveated_yes
+q3_response=yes
+q4_response=GO_DESI_SHAPE_ROUTE_REPLAY_PERMISSION_ONLY
+forbidden_inputs_used_any=false
+endpoint_replay_allowed=true
+endpoint_validation_claimed=false
+physical_validation_claimed=false
+completion_check=pass

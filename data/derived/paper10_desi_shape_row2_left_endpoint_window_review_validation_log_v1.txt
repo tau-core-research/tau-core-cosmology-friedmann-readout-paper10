@@ -1,0 +1,17 @@
+paper10_desi_shape_row2_left_endpoint_window_review_validation_log_v1
+
+input_zip=/mnt/data/99237e27-f55d-4357-b6f8-08dea95519cf.zip
+input_zip_byte_count=9923
+input_zip_sha256=bea5e03193895643398a20d2603eebe0b41fa57e54a0efbe63f1f87178fdb574
+
+manifest_byte_sha256_check=pass
+response_row_count=3
+review_completed_all=True
+forbidden_inputs_used_any=False
+endpoint_replay_allowed_any=False
+endpoint_validation_claimed_any=False
+physical_validation_claimed_any=False
+
+expected_decision=ALLOW_CAVEATED_LEFT_ENDPOINT_SOURCE_WINDOW_ROUTE_NO_REPLAY
+completion_check=pass
+issues=[]

@@ -1,0 +1,14 @@
+paper10_desi_shape_validation_permission_replay_authorization_review_validation_log_v1
+source_zip=/mnt/data/b4b54fb5-eef5-4275-bbee-a6a94e3aa7fb.zip
+source_zip_sha256=03dd33a4968f710adf0490fe9d8e9e1e2c4298455202aab4af795905dbb3579d
+manifest_pass=True
+response_rows=4
+q4_decision=GO_DESI_SHAPE_VALIDATION_PERMISSION_REPLAY_ONLY
+forbidden_inputs_used_all=[False]
+endpoint_replay_allowed_all=[False]
+endpoint_validation_claimed_all=[False]
+physical_validation_claimed_all=[False]
+narrow_margin_caveat_retained_all=[True]
+row_sensitive_caveat_retained_all=[True]
+row2_negative_diagnostic_retained_all=[True]
+completion_check=pass

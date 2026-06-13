@@ -1,0 +1,15 @@
+input_zip_exists: True
+input_zip_sha256: 08778cd2c08bbeb4c73c019bb8c643526ce136441ac8649c800565ddbc7366be
+manifest_file_count: 13
+manifest_byte_sha256_pass: True
+response_row_count_is_4: True
+all_review_completed_true: True
+all_forbidden_inputs_false: True
+all_endpoint_replay_false: True
+all_endpoint_validation_false: True
+all_physical_validation_false: True
+q1_accepts_combined_source_caveat_reduction: True
+q2_accepts_blocker_remains: True
+q3_accepts_separate_replay_auth_review_only: True
+q4_accepts_boundary: True
+completion_check: pass

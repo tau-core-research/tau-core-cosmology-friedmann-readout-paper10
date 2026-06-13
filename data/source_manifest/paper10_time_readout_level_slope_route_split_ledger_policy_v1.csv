@@ -1,0 +1,2 @@
+gate_id,status,endpoint_replay_allowed,endpoint_validation_claimed,physical_validation_claimed,claim_boundary,notes
+PAPER10_TIME_READOUT_LEVEL_SLOPE_ROUTE_SPLIT_LEDGER_V1,SOURCE_SIDE_ROUTE_SPLIT_LEDGER_NOT_REPLAY_NOT_VALIDATION,false,false,false,paper10_time_readout_level_slope_route_split_ledger_not_validation,"Separates expansion-level and clock-slope W_time routes after the joint CC+BAO audit; no endpoint scores are allowed."

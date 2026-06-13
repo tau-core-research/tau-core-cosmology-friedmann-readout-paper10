@@ -1,0 +1,6 @@
+review_item,question,response,notes
+source_product_status,Is the ACT baseline kappa source product acceptable as a caveated path-proxy source object?,,
+proxy_mapping_status,"Is the median/MAD shape mapping acceptable only as dimensionless proxy shape, not physical amplitude?",,
+null_control_status,Are curl and frequency-difference products retained as K_null controls?,,
+leakage_status,"Were endpoint scores, residuals, fit statistics, fitted amplitudes, or winner labels used?",,
+overall_verdict,Choose one allowed verdict from the instruction file.,,
