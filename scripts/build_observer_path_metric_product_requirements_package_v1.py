@@ -239,7 +239,11 @@ Claim boundary: `{CLAIM_BOUNDARY}`.
     package_files = [REQ, GATE, GATE_SUMMARY, ROUTE_AUDIT, DOC, INSTRUCTIONS, TEMPLATE]
     with zipfile.ZipFile(PACKAGE, "w", compression=zipfile.ZIP_DEFLATED) as zf:
         for path in package_files:
-            zf.write(path, path.relative_to(ROOT).as_posix())
+            arcname = path.relative_to(ROOT).as_posix()
+            info = zipfile.ZipInfo(arcname)
+            info.date_time = (2026, 1, 1, 0, 0, 0)
+            info.compress_type = zipfile.ZIP_DEFLATED
+            zf.writestr(info, path.read_bytes())
     digest = sha256(PACKAGE)
     SHA.write_text(f"{digest}  {PACKAGE.name}\n")
     write_csv(

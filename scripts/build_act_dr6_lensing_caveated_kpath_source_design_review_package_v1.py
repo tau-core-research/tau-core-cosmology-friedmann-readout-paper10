@@ -120,7 +120,11 @@ def main() -> None:
     package_files = FILES + [instructions, TEMPLATE]
     with zipfile.ZipFile(PACKAGE, "w", compression=zipfile.ZIP_DEFLATED) as zf:
         for path in package_files:
-            zf.write(path, path.relative_to(ROOT).as_posix())
+            arcname = path.relative_to(ROOT).as_posix()
+            info = zipfile.ZipInfo(arcname)
+            info.date_time = (2026, 1, 1, 0, 0, 0)
+            info.compress_type = zipfile.ZIP_DEFLATED
+            zf.writestr(info, path.read_bytes())
 
     manifest_rows = [
         {

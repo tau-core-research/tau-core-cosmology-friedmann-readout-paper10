@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import csv
+from datetime import datetime, timezone
 from pathlib import Path
 
 import matplotlib.pyplot as plt
@@ -11,6 +12,7 @@ ROOT = Path(__file__).resolve().parents[1]
 MANIFEST_IN = ROOT / "data/source_manifest/joint_best_justified_kernel_manifest_v1.csv"
 ROBUSTNESS_IN = ROOT / "data/derived/joint_best_justified_kernel_robustness_v1_summary.csv"
 FIGURE_OUT = ROOT / "paper10_submission_source/figures/fig_joint_best_justified_kernel_v1.pdf"
+PDF_DATE = datetime(2026, 1, 1, tzinfo=timezone.utc)
 
 
 def read_rows(path: Path) -> list[dict[str, str]]:
@@ -140,7 +142,14 @@ def main() -> None:
     )
     fig.tight_layout(rect=(0, 0.045, 1, 0.91))
     FIGURE_OUT.parent.mkdir(parents=True, exist_ok=True)
-    fig.savefig(FIGURE_OUT, metadata={"Title": "Best-justified joint kernel prevalidation figure"})
+    fig.savefig(
+        FIGURE_OUT,
+        metadata={
+            "Title": "Best-justified joint kernel prevalidation figure",
+            "CreationDate": PDF_DATE,
+            "ModDate": PDF_DATE,
+        },
+    )
     plt.close(fig)
     print(f"built {FIGURE_OUT.relative_to(ROOT)}")
 

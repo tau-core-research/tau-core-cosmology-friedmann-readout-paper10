@@ -195,6 +195,12 @@ The reproduction script compiles the manuscript with `tectonic`, validates the
 source-freeze and channel manifests, builds the arXiv source package, and runs
 smoke tests.
 
+For release verification, prefer the command above or the focused public
+reproducibility tests. The full `python -m pytest -q` suite is a developer
+regeneration path as well as a validator: it may rebuild reviewer packages,
+figures, and checksum ledgers before validation. Those regenerated artifacts are
+kept claim-bounded, but they should be reviewed before being committed.
+
 To reproduce the current headline preflight artifacts directly:
 
 ```bash

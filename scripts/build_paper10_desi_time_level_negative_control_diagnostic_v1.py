@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import csv
+from datetime import datetime, timezone
 from pathlib import Path
 
 import matplotlib.pyplot as plt
@@ -18,6 +19,7 @@ BRANCH_OUT = ROOT / "data/derived/paper10_desi_time_level_negative_control_diagn
 SUMMARY_OUT = ROOT / "data/derived/paper10_desi_time_level_negative_control_diagnostic_v1_summary.csv"
 FIGURE_OUT = ROOT / "paper10_submission_source/figures/fig_desi_time_level_negative_control_diagnostic.pdf"
 CLAIM_BOUNDARY = "paper10_desi_time_level_negative_control_diagnostic_not_validation"
+PDF_DATE = datetime(2026, 1, 1, tzinfo=timezone.utc)
 
 
 def read_rows(path: Path) -> list[dict[str, str]]:
@@ -203,7 +205,14 @@ def main() -> None:
     ax1.set_yscale("log")
     ax1.grid(True, axis="y", alpha=0.25)
     ax1.legend(fontsize=7, frameon=False)
-    fig.savefig(FIGURE_OUT)
+    fig.savefig(
+        FIGURE_OUT,
+        metadata={
+            "Title": "DESI time-level negative-control diagnostic",
+            "CreationDate": PDF_DATE,
+            "ModDate": PDF_DATE,
+        },
+    )
 
 
 if __name__ == "__main__":

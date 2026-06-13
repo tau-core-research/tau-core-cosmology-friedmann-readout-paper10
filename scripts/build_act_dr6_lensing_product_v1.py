@@ -50,13 +50,37 @@ def write_csv(path: Path, rows: list[dict[str, str]]) -> None:
         writer.writerows(rows)
 
 
+def previous_row(path: Path) -> dict[str, str] | None:
+    if not path.exists():
+        return None
+    with path.open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    if len(rows) != 1:
+        return None
+    return rows[0]
+
+
 def main() -> None:
     meta = head_metadata()
     exists = TARBALL.exists()
     byte_count = TARBALL.stat().st_size if exists else 0
     complete = exists and byte_count == EXPECTED_BYTES
-    acquired_at = datetime.now(timezone.utc).replace(microsecond=0).isoformat()
     checksum = sha256_file(TARBALL) if complete else ""
+    acquired_at = datetime.now(timezone.utc).replace(microsecond=0).isoformat()
+    prior = previous_row(OUT)
+    if prior is not None:
+        stable_fields = {
+            "head_status_code": meta["status_code"],
+            "head_content_length": meta["content_length"],
+            "head_content_type": meta["content_type"],
+            "head_last_modified": meta["last_modified"],
+            "head_etag": meta["etag"],
+            "local_byte_count": str(byte_count),
+            "download_complete": str(complete).lower(),
+            "sha256": checksum,
+        }
+        if all(prior.get(key) == value for key, value in stable_fields.items()):
+            acquired_at = prior.get("acquired_or_checked_at_utc", acquired_at)
     row = {
         "artifact_id": "ACT_DR6_LENSING_PRODUCT_V1",
         "provider": "NASA_LAMBDA_ACT_DR6",

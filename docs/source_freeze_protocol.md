@@ -36,7 +36,8 @@ Each row declares:
 
 - the source block,
 - the public provider,
-- the official access URL or `TBD`,
+- the official access URL, or `not yet assigned` for rows that are still
+  protocol placeholders rather than source-frozen endpoint inputs,
 - the current freeze status,
 - the planned local artifact path,
 - forbidden endpoint fields,

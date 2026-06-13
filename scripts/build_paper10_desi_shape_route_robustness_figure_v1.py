@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import csv
+from datetime import datetime, timezone
 from pathlib import Path
 
 import matplotlib.pyplot as plt
@@ -11,6 +12,7 @@ ROOT = Path(__file__).resolve().parents[1]
 ROWS_IN = ROOT / "data/derived/paper10_desi_shape_route_robustness_stress_v1.csv"
 SUMMARY_IN = ROOT / "data/derived/paper10_desi_shape_route_robustness_stress_v1_summary.csv"
 FIGURE_OUT = ROOT / "paper10_submission_source/figures/fig_desi_shape_route_robustness_stress.pdf"
+PDF_DATE = datetime(2026, 1, 1, tzinfo=timezone.utc)
 
 
 def read_rows(path: Path) -> list[dict[str, str]]:
@@ -91,7 +93,14 @@ def main() -> None:
         )
     fig.tight_layout()
     FIGURE_OUT.parent.mkdir(parents=True, exist_ok=True)
-    fig.savefig(FIGURE_OUT, metadata={"Title": "DESI shape-route robustness stress"})
+    fig.savefig(
+        FIGURE_OUT,
+        metadata={
+            "Title": "DESI shape-route robustness stress",
+            "CreationDate": PDF_DATE,
+            "ModDate": PDF_DATE,
+        },
+    )
     plt.close(fig)
     print(f"built {FIGURE_OUT.relative_to(ROOT)}")
 
