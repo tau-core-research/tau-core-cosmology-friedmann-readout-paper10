@@ -1,0 +1,28 @@
+joint_best_justified_qi_review_validation_log_v1
+
+input_zip=/mnt/data/1008c9c5-d53f-48a0-a0eb-647693dd87e9.zip
+input_zip_sha256=a862592fd51eb0181145a20bb2d709b3f4bfdef6282a4e011227f5075baaeb9a
+
+package_validator=pass
+package_validator_stdout=joint best-justified Q_i review package v1 valid
+
+response_validator=pass
+response_validator_stdout=JOINT_BEST_JUSTIFIED_QI_REVIEW_RESPONSE_V1_VALIDATED decision=QI_REVIEW_ACCEPTED_OR_CAVEATED_SOURCE_SIDE_NOT_VALIDATION
+
+completed_response_rows=7
+accept_source_side_count=2
+accept_with_caveats_source_side_count=5
+reject_count=0
+needs_more_context_count=0
+
+forbidden_inputs_used=false
+endpoint_scores_allowed=false
+endpoint_validation_claimed=false
+cosmological_validation_claimed=false
+future_gate_preparation_allowed=true
+claim_boundary=qi_review_response_source_side_only_not_scoring
+
+response_sha256=c26a1e0a7976deebfe2f23faf5fd33e9f3159600abee67729ad69246f9067418
+summary_sha256=a625c55ba7bdb8602c6fd729d8bb5681b0644ee363d7678077cf927b9860f5be
+
+Note: Python startup emitted an unrelated artifact_tool spreadsheet warmup warning in stderr, but both package and response validators exited with return code 0.

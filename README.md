@@ -155,9 +155,12 @@ is prepared in:
 ```text
 data/source_manifest/joint_best_justified_qi_review_requirements_v1.csv
 data/derived/joint_best_justified_qi_review_response_template_v1.csv
+data/derived/joint_best_justified_qi_review_response_v1.csv
 data/derived/joint_best_justified_qi_review_response_v1_summary.csv
+data/derived/joint_best_justified_qi_review_validation_log_v1.txt
 docs/joint_best_justified_qi_review_package_v1.md
 docs/joint_best_justified_qi_review_response_gate_v1.md
+docs/joint_best_justified_qi_review_notes_v1.md
 scripts/validate_joint_best_justified_qi_review_package_v1.py
 scripts/validate_joint_best_justified_qi_review_response_v1.py
 ```
@@ -169,7 +172,11 @@ template state or a fully completed source-side reviewer response. It rejects
 partial responses, forbidden endpoint inputs, endpoint-score permissions, and
 validation claims. A completed positive response can only support future gate
 preparation; it still cannot authorize a joint likelihood or cosmological
-validation.
+validation. The current completed response is
+`QI_REVIEW_ACCEPTED_OR_CAVEATED_SOURCE_SIDE_NOT_VALIDATION`: the active
+support factors are accepted only with caveats, zero-support branches remain
+excluded, and validation-facing promotion remains blocked until a separate
+covariance-aware joint likelihood or likelihood surrogate exists.
 
 A standalone reviewer handoff package is also available for reviewers who do
 not have repository access:

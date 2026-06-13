@@ -9,7 +9,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 REQUIREMENTS = ROOT / "data/source_manifest/joint_best_justified_qi_review_requirements_v1.csv"
-DEFAULT_RESPONSE = ROOT / "data/derived/joint_best_justified_qi_review_response_template_v1.csv"
+DEFAULT_RESPONSE = ROOT / "data/derived/joint_best_justified_qi_review_response_v1.csv"
 DEFAULT_SUMMARY = ROOT / "data/derived/joint_best_justified_qi_review_response_v1_summary.csv"
 DOC = ROOT / "docs/joint_best_justified_qi_review_response_gate_v1.md"
 
