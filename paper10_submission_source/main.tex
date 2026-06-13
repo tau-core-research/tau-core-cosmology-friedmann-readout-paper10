@@ -1009,7 +1009,14 @@ limitations from shared sky/mask overlap, redshift-kernel overlap, shared
 cosmology and nuisance parameters, calibration correlations, and missing
 population-level cross-probe covariance.  Thus the covariance-product route
 remains unavailable, while the independence-precondition route is closed only
-for a later separately authorized scoring package.
+for a later separately authorized scoring package.  That separate
+scoring-authorization response has now been completed.  It authorizes only the
+preparation of a guarded permission-only joint replay package, with candidate
+and controls bound to the same block-diagonal statistic, the same covariance
+blocks, and the same caveats.  It still forbids direct scoring and makes no
+endpoint or cosmological validation claim.  A further guarded replay
+authorization package has therefore been prepared as a handoff artifact; it must
+be completed before any run-template or executable replay is allowed.
 The
 matched-control families have also been frozen as requirements: shuffled-channel,
 wrong-channel, sign-flip, block-drop, null/readout, leakage, shared-statistic,
@@ -1125,6 +1132,12 @@ The completed review accepts the latter route only as a caveated future scoring
 precondition.  It does not authorize scoring; the next required artifact is a
 separate scoring-authorization package that binds the block-diagonal statistic,
 the covariance blocks, all stated caveats, and the matched-control suite.
+That scoring-authorization response is now completed and authorizes only
+preparation of a guarded permission-only replay package; it does not authorize
+direct scoring.  The newly prepared guarded replay authorization package carries
+the same-statistic, same-covariance-block, same-caveat, and matched-control
+requirements forward, and still requires a separate run-template gate before any
+executable replay.
 The matched-control suite is likewise specified but not implemented: the
 control families are now named, while their execution is blocked until the same
 covariance/statistic is available for candidate and controls.

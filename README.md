@@ -335,27 +335,54 @@ product route remains unavailable, and executable scoring remains blocked until
 a separate scoring authorization package binds the same statistic, covariance
 blocks, caveats, and matched controls.
 
-That separate scoring-authorization review package is now prepared, but not
-completed:
+That separate scoring-authorization review package has now been completed:
 
 ```text
 data/source_manifest/joint_block_diagonal_scoring_authorization_review_policy_v1.csv
 data/derived/joint_block_diagonal_scoring_authorization_review_response_template_v1.csv
+data/derived/joint_block_diagonal_scoring_authorization_review_response_v1.csv
+data/derived/joint_block_diagonal_scoring_authorization_review_response_v1_summary.csv
+data/derived/joint_block_diagonal_scoring_authorization_review_completed_summary_v1.csv
+data/derived/joint_block_diagonal_scoring_authorization_review_validation_log_v1.txt
 data/derived/joint_block_diagonal_scoring_authorization_review_package_v1.zip
 data/derived/joint_block_diagonal_scoring_authorization_review_package_v1.zip.sha256
 data/derived/joint_block_diagonal_scoring_authorization_review_package_v1_manifest.csv
 data/derived/joint_block_diagonal_scoring_authorization_review_package_v1_summary.csv
 docs/joint_block_diagonal_scoring_authorization_review_package_v1.md
+docs/joint_block_diagonal_scoring_authorization_review_notes_v1.md
 scripts/build_joint_block_diagonal_scoring_authorization_review_package_v1.py
 scripts/validate_joint_block_diagonal_scoring_authorization_review_package_v1.py
+scripts/validate_joint_block_diagonal_scoring_authorization_review_response_v1.py
+scripts/import_joint_block_diagonal_scoring_authorization_review_response_v1.py
 ```
 
-The package asks whether a later permission-only joint replay package may be
-prepared under the caveated block-diagonal precondition. It does not score and
-does not claim endpoint or cosmological validation. A copy is available at:
+The completed response authorizes preparation of a separate guarded
+permission-only joint replay package under the caveated block-diagonal
+precondition. It does not authorize direct scoring and does not claim endpoint
+or cosmological validation.
+
+That next guarded permission-replay authorization package is prepared, but not
+completed:
 
 ```text
-/Users/jolcsak/Downloads/joint_block_diagonal_scoring_authorization_review_package_v1.zip
+data/source_manifest/joint_guarded_permission_replay_authorization_policy_v1.csv
+data/derived/joint_guarded_permission_replay_authorization_response_template_v1.csv
+data/derived/joint_guarded_permission_replay_authorization_package_v1.zip
+data/derived/joint_guarded_permission_replay_authorization_package_v1.zip.sha256
+data/derived/joint_guarded_permission_replay_authorization_package_v1_manifest.csv
+data/derived/joint_guarded_permission_replay_authorization_package_v1_summary.csv
+docs/joint_guarded_permission_replay_authorization_package_v1.md
+scripts/build_joint_guarded_permission_replay_authorization_package_v1.py
+scripts/validate_joint_guarded_permission_replay_authorization_package_v1.py
+```
+
+The package asks whether a run-template package may be prepared with candidate
+and controls bound to the same block-diagonal statistic, the same covariance
+blocks, and the same caveats. It still does not execute replay/scoring. A copy
+is available at:
+
+```text
+/Users/jolcsak/Downloads/joint_guarded_permission_replay_authorization_package_v1.zip
 ```
 
 The matched-control requirements are now specified in:
