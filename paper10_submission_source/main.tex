@@ -974,7 +974,14 @@ that boundary explicitly.  Its verdict is
 the \(Q_i\) review, active-channel freeze, preflight signal, and
 forbidden-field discipline pass, but scoring remains blocked by the missing
 joint covariance model, single likelihood-surrogate statistic, and matched
-control suite under the same statistic.
+control suite under the same statistic.  The first of these blockers is now
+narrowed by the covariance-model requirements gate
+\texttt{JOINT\_COVARIANCE\_MODEL\_REQUIREMENTS\_GATE\_V1}.  Its verdict,
+\texttt{JOINT\_COVARIANCE\_MODEL\_REQUIREMENTS\_PARTIAL\_BLOCKS\_READY\_CROSS\_PROBE\_BLOCKED},
+records that KiDS/COSEBIs has source-native full-covariance support, while the
+observer/path and DESI shape/readout blocks have only narrow caveated surrogate
+covariance support.  Cross-probe covariance, or an independently reviewed
+block-diagonal independence attestation, is still missing.
 
 \begin{table}[t]
 \centering
@@ -1072,7 +1079,10 @@ controls.  The present release freezes this as a requirements gate rather than
 running it: the \(Q_i\) source-side review and active-channel ledger are accepted
 only as caveated preconditions, while scoring remains blocked until a joint
 covariance model, a single likelihood-surrogate statistic, and matched controls
-are specified.  A future source-complete case or channel family that fails those
+are specified.  The current covariance gate narrows the first blocker: the
+individual active blocks are partially covariance-supported, but the
+cross-probe covariance/independence condition is not yet closed.  A future
+source-complete case or channel family that fails those
 predeclared tests should be retained as a true negative rather than reinterpreted
 as hidden support.  Until that gate is passed, Paper 10 should be read as a
 reproducible multi-channel viability and audit-discipline result, not as a

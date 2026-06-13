@@ -196,6 +196,24 @@ forbidden-field discipline pass, but endpoint scoring remains blocked by three
 hard requirements: a joint covariance model, a single likelihood-surrogate
 statistic, and a matched control suite under the same statistic.
 
+The first hard blocker is narrowed by the covariance-model requirements gate:
+
+```text
+data/source_manifest/joint_covariance_model_policy_v1.csv
+data/derived/joint_covariance_model_requirements_gate_v1.csv
+data/derived/joint_covariance_model_requirements_gate_v1_summary.csv
+docs/joint_covariance_model_requirements_gate_v1.md
+scripts/build_joint_covariance_model_requirements_gate_v1.py
+scripts/validate_joint_covariance_model_requirements_gate_v1.py
+```
+
+Its verdict is
+`JOINT_COVARIANCE_MODEL_REQUIREMENTS_PARTIAL_BLOCKS_READY_CROSS_PROBE_BLOCKED`.
+KiDS/COSEBIs has source-native full-covariance support; the observer/path and
+DESI shape/readout blocks have only narrow, caveated surrogate covariance
+support. Cross-probe covariance or a reviewed block-diagonal independence
+attestation remains missing, so endpoint scoring is still disabled.
+
 A standalone reviewer handoff package is also available for reviewers who do
 not have repository access:
 
