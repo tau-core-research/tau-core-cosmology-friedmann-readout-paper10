@@ -1137,7 +1137,15 @@ preparation of a guarded permission-only replay package; it does not authorize
 direct scoring.  The newly prepared guarded replay authorization package carries
 the same-statistic, same-covariance-block, same-caveat, and matched-control
 requirements forward, and still requires a separate run-template gate before any
-executable replay.
+executable replay.  The completed guarded-permission response now authorizes
+only that run-template preparation step:
+\texttt{AUTHORIZE\_GUARDED\_PERMISSION\_REPLAY\_PACKAGE\_PREPARATION\_ONLY\_NOT\_EXECUTION\_NOT\_SCORING\_NOT\_VALIDATION}.
+It does not authorize direct execution, endpoint scoring, endpoint validation,
+or cosmological validation.  The resulting run-template is frozen as
+\texttt{JOINT\_GUARDED\_REPLAY\_RUN\_TEMPLATE\_READY\_NOT\_EXECUTED}; it binds
+candidate and controls to the same block-diagonal statistic, the same frozen
+block weights, the same covariance/caveat discipline, and the same matched
+control suite, but it remains a template rather than a replay.
 The matched-control suite is likewise specified but not implemented: the
 control families are now named, while their execution is blocked until the same
 covariance/statistic is available for candidate and controls.

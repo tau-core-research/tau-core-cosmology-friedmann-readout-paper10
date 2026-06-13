@@ -16,6 +16,7 @@ CANONICAL_SUMMARY = ROOT / "data/derived/joint_guarded_permission_replay_authori
 VALIDATOR = ROOT / "scripts/validate_joint_guarded_permission_replay_authorization_response_v1.py"
 EXPECTED_TEMPLATE_NAME = "joint_guarded_permission_replay_authorization_response_template_v1.csv"
 EXPECTED_RESPONSE_NAME = "joint_guarded_permission_replay_authorization_response_v1.csv"
+EXPECTED_REVIEW_RESPONSE_NAME = "joint_guarded_permission_replay_authorization_review_response_v1.csv"
 EXPECTED_REVIEW_ID = "JOINT_GUARDED_PERMISSION_REPLAY_AUTHORIZATION_PACKAGE_V1"
 
 
@@ -74,6 +75,8 @@ def find_response_in_zip(zip_path: Path, tmp_dir: Path) -> Path:
     with zipfile.ZipFile(zip_path) as zf:
         names = [name for name in zf.namelist() if name.lower().endswith(".csv")]
         candidate_names = [name for name in names if Path(name).name == EXPECTED_RESPONSE_NAME]
+        if not candidate_names:
+            candidate_names = [name for name in names if Path(name).name == EXPECTED_REVIEW_RESPONSE_NAME]
         if not candidate_names:
             candidate_names = [name for name in names if Path(name).name == EXPECTED_TEMPLATE_NAME]
         if not candidate_names and len(names) == 1:
@@ -136,11 +139,16 @@ def main() -> None:
                 base = Path(name).name
                 if base in {
                     "joint_guarded_permission_replay_authorization_completed_summary_v1.csv",
+                    "joint_guarded_permission_replay_authorization_review_completed_summary_v1.csv",
                     "joint_guarded_permission_replay_authorization_validation_log_v1.txt",
+                    "joint_guarded_permission_replay_authorization_review_validation_log_v1.txt",
                 }:
                     zf.extract(name, tmp)
                     shutil.copy2(tmp / name, ROOT / "data/derived" / base)
-                elif base == "joint_guarded_permission_replay_authorization_notes_v1.md":
+                elif base in {
+                    "joint_guarded_permission_replay_authorization_notes_v1.md",
+                    "joint_guarded_permission_replay_authorization_review_notes_v1.md",
+                }:
                     zf.extract(name, tmp)
                     shutil.copy2(tmp / name, ROOT / "docs" / base)
 

@@ -361,8 +361,8 @@ permission-only joint replay package under the caveated block-diagonal
 precondition. It does not authorize direct scoring and does not claim endpoint
 or cosmological validation.
 
-That next guarded permission-replay authorization package is prepared, but not
-completed:
+That next guarded permission-replay authorization package is prepared and now
+has a completed external response:
 
 ```text
 data/source_manifest/joint_guarded_permission_replay_authorization_policy_v1.csv
@@ -371,7 +371,12 @@ data/derived/joint_guarded_permission_replay_authorization_package_v1.zip
 data/derived/joint_guarded_permission_replay_authorization_package_v1.zip.sha256
 data/derived/joint_guarded_permission_replay_authorization_package_v1_manifest.csv
 data/derived/joint_guarded_permission_replay_authorization_package_v1_summary.csv
+data/derived/joint_guarded_permission_replay_authorization_response_v1.csv
+data/derived/joint_guarded_permission_replay_authorization_response_v1_summary.csv
+data/derived/joint_guarded_permission_replay_authorization_review_completed_summary_v1.csv
+data/derived/joint_guarded_permission_replay_authorization_review_validation_log_v1.txt
 docs/joint_guarded_permission_replay_authorization_package_v1.md
+docs/joint_guarded_permission_replay_authorization_review_notes_v1.md
 scripts/build_joint_guarded_permission_replay_authorization_package_v1.py
 scripts/validate_joint_guarded_permission_replay_authorization_package_v1.py
 scripts/validate_joint_guarded_permission_replay_authorization_response_v1.py
@@ -397,6 +402,30 @@ python scripts/import_joint_guarded_permission_replay_authorization_response_v1.
 The importer refuses incomplete rows, forbidden endpoint inputs, direct
 execution permission, endpoint-validation claims, and cosmological-validation
 claims.
+
+The completed response decision is:
+
+```text
+AUTHORIZE_GUARDED_PERMISSION_REPLAY_PACKAGE_PREPARATION_ONLY_NOT_EXECUTION_NOT_SCORING_NOT_VALIDATION
+```
+
+This authorizes only a separate guarded run-template gate.  That template is
+now frozen at:
+
+```text
+data/source_manifest/joint_guarded_replay_run_template_v1.csv
+data/derived/joint_guarded_replay_run_template_v1_summary.csv
+docs/joint_guarded_replay_run_template_v1.md
+scripts/build_joint_guarded_replay_run_template_v1.py
+scripts/validate_joint_guarded_replay_run_template_v1.py
+```
+
+It fixes the active block order, shared block-diagonal statistic, same
+block-weight rule, same covariance/caveat discipline, and eight matched-control
+families.  Its status is
+`JOINT_GUARDED_REPLAY_RUN_TEMPLATE_READY_NOT_EXECUTED`; direct execution,
+endpoint scoring, endpoint validation, and cosmological validation all remain
+false.
 
 The matched-control requirements are now specified in:
 

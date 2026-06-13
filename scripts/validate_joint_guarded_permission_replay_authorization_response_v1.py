@@ -16,11 +16,37 @@ PACKAGE_ID = "JOINT_GUARDED_PERMISSION_REPLAY_AUTHORIZATION_PACKAGE_V1"
 CLAIM_BOUNDARY = "joint_guarded_permission_replay_authorization_not_scoring_not_validation"
 
 EXPECTED_QUESTIONS = {
-    "JGPR_Q1_PERMISSION_SCOPE": {"authorize_guarded_replay_package", "reject"},
-    "JGPR_Q2_SAME_STATISTIC": {"accept_same_statistic_binding", "reject"},
-    "JGPR_Q3_CAVEATS": {"accept_caveats", "reject"},
-    "JGPR_Q4_NEXT_ACTION": {"accept_run_template_first", "reject"},
+    "JGPR_Q1_PERMISSION_SCOPE": {
+        "authorize_guarded_replay_package",
+        "authorize_guarded_replay_package_preparation_only",
+        "reject",
+    },
+    "JGPR_Q2_SAME_STATISTIC": {
+        "accept_same_statistic_binding",
+        "accept_same_frozen_block_diagonal_statistic_and_block_weights_required",
+        "reject",
+    },
+    "JGPR_Q3_CAVEATS": {
+        "accept_caveats",
+        "accept_caveats_must_remain_attached",
+        "reject",
+    },
+    "JGPR_Q4_NEXT_ACTION": {
+        "accept_run_template_first",
+        "accept_guarded_run_template_first_no_direct_execution",
+        "reject",
+    },
 }
+ACCEPTED_Q1 = {
+    "authorize_guarded_replay_package",
+    "authorize_guarded_replay_package_preparation_only",
+}
+ACCEPTED_Q2 = {
+    "accept_same_statistic_binding",
+    "accept_same_frozen_block_diagonal_statistic_and_block_weights_required",
+}
+ACCEPTED_Q3 = {"accept_caveats", "accept_caveats_must_remain_attached"}
+ACCEPTED_Q4 = {"accept_run_template_first", "accept_guarded_run_template_first_no_direct_execution"}
 FORBIDDEN_INPUTS = {
     "endpoint_residuals",
     "new_endpoint_scores",
@@ -187,14 +213,14 @@ def main() -> None:
     else:
         require(guarded_rows == len(EXPECTED_QUESTIONS), "all completed rows must authorize guarded package preparation")
         require(separate_template_rows == len(EXPECTED_QUESTIONS), "all rows must require separate run template")
-        require(responses["JGPR_Q1_PERMISSION_SCOPE"] == "authorize_guarded_replay_package", "Q1 must authorize guarded package")
-        require(responses["JGPR_Q2_SAME_STATISTIC"] == "accept_same_statistic_binding", "Q2 must bind same statistic")
-        require(responses["JGPR_Q3_CAVEATS"] == "accept_caveats", "Q3 must accept caveats")
-        require(responses["JGPR_Q4_NEXT_ACTION"] == "accept_run_template_first", "Q4 must require run template first")
-        decision = "AUTHORIZE_JOINT_GUARDED_REPLAY_RUN_TEMPLATE_PACKAGE_NOT_SCORING_NOT_VALIDATION"
-        response_status = "completed_guarded_package_authorization"
+        require(responses["JGPR_Q1_PERMISSION_SCOPE"] in ACCEPTED_Q1, "Q1 must authorize guarded package preparation")
+        require(responses["JGPR_Q2_SAME_STATISTIC"] in ACCEPTED_Q2, "Q2 must bind same statistic and weights")
+        require(responses["JGPR_Q3_CAVEATS"] in ACCEPTED_Q3, "Q3 must keep caveats attached")
+        require(responses["JGPR_Q4_NEXT_ACTION"] in ACCEPTED_Q4, "Q4 must require run template first")
+        decision = "AUTHORIZE_GUARDED_PERMISSION_REPLAY_PACKAGE_PREPARATION_ONLY_NOT_EXECUTION_NOT_SCORING_NOT_VALIDATION"
+        response_status = "completed_permission_only_package_preparation_authorization"
         guarded_package_authorized = "true"
-        next_action = "build_joint_guarded_replay_run_template_package_without_execution"
+        next_action = "build_separate_guarded_replay_run_template_and_validator_before_any_executable_replay"
 
     doc_text = DOC.read_text()
     for marker in ["not scoring", "guarded", "same block-diagonal statistic", CLAIM_BOUNDARY]:
