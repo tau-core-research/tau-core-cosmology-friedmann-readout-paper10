@@ -295,6 +295,26 @@ artifacts present in the repository; the remaining blockers are no longer
 missing channel artifacts, but covariance/independence closure and the single
 joint-statistic protocol itself.
 
+A block-diagonal likelihood-surrogate protocol shell is now recorded in:
+
+```text
+data/derived/joint_block_diagonal_likelihood_surrogate_protocol_shell_v1.csv
+data/derived/joint_block_diagonal_likelihood_surrogate_protocol_shell_v1_summary.csv
+docs/joint_block_diagonal_likelihood_surrogate_protocol_shell_v1.md
+scripts/build_joint_block_diagonal_likelihood_surrogate_protocol_shell_v1.py
+scripts/validate_joint_block_diagonal_likelihood_surrogate_protocol_shell_v1.py
+```
+
+Its verdict is
+`JOINT_BLOCK_DIAGONAL_PROTOCOL_SHELL_DRAFT_WAITING_FOR_REVIEW_NOT_SCORING`.
+The shell declares only the future algebraic form
+`Q_joint^BD = sum_i r_i^T C_i^{-1} r_i` and the rule that candidate and
+matched controls must use the same row scopes, covariance blocks, nuisance
+rules, and statistic. It does not read endpoint residuals, invert new
+covariances, compute scores, or authorize replay. It remains non-executable
+until the block-diagonal independence review is completed and a separate
+single-statistic scoring authorization is supplied.
+
 A standalone reviewer handoff package is also available for reviewers who do
 not have repository access:
 
