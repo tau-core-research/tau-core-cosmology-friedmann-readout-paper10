@@ -259,9 +259,12 @@ data/derived/joint_cross_probe_covariance_closure_review_package_v1.zip
 data/derived/joint_cross_probe_covariance_closure_review_package_v1.zip.sha256
 data/derived/joint_cross_probe_covariance_closure_review_package_v1_manifest.csv
 data/derived/joint_cross_probe_covariance_closure_review_package_v1_summary.csv
+data/derived/joint_cross_probe_covariance_closure_review_response_v1_summary.csv
 docs/joint_cross_probe_covariance_closure_review_package_v1.md
 scripts/build_joint_cross_probe_covariance_closure_review_package_v1.py
 scripts/validate_joint_cross_probe_covariance_closure_review_package_v1.py
+scripts/validate_joint_cross_probe_covariance_closure_review_response_v1.py
+scripts/import_joint_cross_probe_covariance_closure_review_response_v1.py
 ```
 
 This package asks the reviewer to close, caveat, or keep open the
@@ -271,6 +274,17 @@ or a source-side block-diagonal independence rationale. It contains no endpoint
 residuals, no new endpoint scores, and no fit statistics. Even a positive
 response would still require a separate scoring authorization before any
 executable joint replay.
+
+When a reviewer returns the completed CSV or a zip containing it, import it
+with:
+
+```bash
+python scripts/import_joint_cross_probe_covariance_closure_review_response_v1.py /path/to/completed_response.csv
+```
+
+The importer refuses incomplete responses, forbidden endpoint inputs,
+endpoint-score permissions, endpoint-validation claims, and cosmological
+validation claims before replacing the canonical response artifact.
 
 The matched-control requirements are now specified in:
 
