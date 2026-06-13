@@ -983,7 +983,11 @@ observer/path and DESI shape/readout blocks have only narrow caveated surrogate
 covariance support.  Cross-probe covariance, or an independently reviewed
 block-diagonal independence attestation, is still missing.  A reviewer handoff
 package for the block-diagonal independence question has been prepared, but it
-is incomplete and explicitly does not authorize scoring or validation.
+is incomplete and explicitly does not authorize scoring or validation.  The
+matched-control families have also been frozen as requirements: shuffled-channel,
+wrong-channel, sign-flip, block-drop, null/readout, leakage, shared-statistic,
+and covariance-binding controls must all be run under the same future joint
+statistic, but none is yet implemented as validation-facing scoring.
 
 \begin{table}[t]
 \centering
@@ -1086,7 +1090,10 @@ individual active blocks are partially covariance-supported, but the
 cross-probe covariance/independence condition is not yet closed.  A future
 block-diagonal independence review package has been prepared only as a handoff
 artifact; it keeps scoring disabled until reviewed source-side rationale exists.
-source-complete case or channel family that fails those
+The matched-control suite is likewise specified but not implemented: the
+control families are now named, while their execution is blocked until the same
+covariance/statistic is available for candidate and controls.
+A future source-complete case or channel family that fails those
 predeclared tests should be retained as a true negative rather than reinterpreted
 as hidden support.  Until that gate is passed, Paper 10 should be read as a
 reproducible multi-channel viability and audit-discipline result, not as a

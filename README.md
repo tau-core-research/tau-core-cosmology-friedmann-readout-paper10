@@ -240,6 +240,24 @@ positive response can only permit a future protocol-shell preparation path; it
 still leaves scoring disabled unless a separately reviewed source-side
 covariance/independence rationale is supplied.
 
+The matched-control requirements are now specified in:
+
+```text
+data/source_manifest/joint_matched_control_suite_requirements_policy_v1.csv
+data/derived/joint_matched_control_suite_requirements_gate_v1.csv
+data/derived/joint_matched_control_suite_requirements_gate_v1_summary.csv
+docs/joint_matched_control_suite_requirements_gate_v1.md
+scripts/build_joint_matched_control_suite_requirements_gate_v1.py
+scripts/validate_joint_matched_control_suite_requirements_gate_v1.py
+```
+
+Its verdict is
+`JOINT_MATCHED_CONTROL_SUITE_REQUIREMENTS_FROZEN_IMPLEMENTATION_BLOCKED`.
+The gate names the required shuffled-channel, wrong-channel, sign-flip,
+block-drop, null/readout, leakage, shared-statistic, and covariance-binding
+controls. It does not run them. All controls remain blocked until the
+covariance/independence review and single joint statistic are closed.
+
 A standalone reviewer handoff package is also available for reviewers who do
 not have repository access:
 
