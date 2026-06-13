@@ -1,0 +1,8 @@
+review_id,reviewer_verdict,requirement_id,response,forbidden_inputs_used,endpoint_scores_allowed,endpoint_validation_claimed,cosmological_validation_claimed,reviewer_notes
+QI_REVIEW_RESPONSE_01,,QI_REVIEW_01_SOURCE_GATES,,false,false,false,false,
+QI_REVIEW_RESPONSE_02,,QI_REVIEW_02_KIDS_COSEBIS,,false,false,false,false,
+QI_REVIEW_RESPONSE_03,,QI_REVIEW_03_OBSERVER_PATH,,false,false,false,false,
+QI_REVIEW_RESPONSE_04,,QI_REVIEW_04_DESI_SHAPE,,false,false,false,false,
+QI_REVIEW_RESPONSE_05,,QI_REVIEW_05_ZERO_SUPPORT_BRANCHES,,false,false,false,false,
+QI_REVIEW_RESPONSE_06,,QI_REVIEW_06_EXPONENT_POLICY,,false,false,false,false,
+QI_REVIEW_RESPONSE_07,,QI_REVIEW_07_PROMOTION_RULE,,false,false,false,false,

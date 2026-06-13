@@ -154,13 +154,22 @@ is prepared in:
 
 ```text
 data/source_manifest/joint_best_justified_qi_review_requirements_v1.csv
+data/derived/joint_best_justified_qi_review_response_template_v1.csv
+data/derived/joint_best_justified_qi_review_response_v1_summary.csv
 docs/joint_best_justified_qi_review_package_v1.md
+docs/joint_best_justified_qi_review_response_gate_v1.md
 scripts/validate_joint_best_justified_qi_review_package_v1.py
+scripts/validate_joint_best_justified_qi_review_response_v1.py
 ```
 
 This package does not compute new endpoint scores. It freezes the review
 questions needed before the protocol support scores `Q_i` can be promoted
-beyond preflight bookkeeping.
+beyond preflight bookkeeping. The response gate validates either the blank
+template state or a fully completed source-side reviewer response. It rejects
+partial responses, forbidden endpoint inputs, endpoint-score permissions, and
+validation claims. A completed positive response can only support future gate
+preparation; it still cannot authorize a joint likelihood or cosmological
+validation.
 
 A standalone reviewer handoff package is also available for reviewers who do
 not have repository access:
@@ -208,6 +217,7 @@ python scripts/run_joint_best_justified_kernel_score_v1.py
 python scripts/run_joint_best_justified_kernel_robustness_v1.py
 python scripts/build_joint_best_justified_kernel_figure_v1.py
 python scripts/validate_joint_best_justified_qi_review_package_v1.py
+python scripts/validate_joint_best_justified_qi_review_response_v1.py
 ```
 
 Then check:

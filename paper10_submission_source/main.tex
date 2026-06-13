@@ -956,7 +956,12 @@ this purpose:
 It freezes the questions a reviewer must answer before the protocol support
 scores in Eq.~\eqref{eq:channel-quality} can be promoted beyond preflight
 bookkeeping.  It computes no endpoint score and keeps all validation flags
-false.
+false.  A separate response-gate validator now checks either the blank template
+state or a fully completed source-side reviewer response.  The validator rejects
+partial responses, forbidden endpoint inputs, endpoint-score permissions,
+endpoint validation claims, and cosmological validation claims.  Thus even a
+positive completed \(Q_i\) response would only support future gate preparation;
+it would not authorize a joint likelihood or a validation claim.
 
 \begin{table}[t]
 \centering
