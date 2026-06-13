@@ -440,12 +440,30 @@ data/derived/joint_guarded_replay_run_template_authorization_package_v1_summary.
 docs/joint_guarded_replay_run_template_authorization_package_v1.md
 scripts/build_joint_guarded_replay_run_template_authorization_package_v1.py
 scripts/validate_joint_guarded_replay_run_template_authorization_package_v1.py
+scripts/validate_joint_guarded_replay_run_template_authorization_response_v1.py
+scripts/import_joint_guarded_replay_run_template_authorization_response_v1.py
 ```
 
 This package is blank and reviewer-not-completed.  It asks only whether the
 frozen template may be used as the basis for a later executable
 permission-only replay.  It still does not execute replay, does not produce
 endpoint scores, and does not claim endpoint or cosmological validation.
+The reviewer-facing instructions are also copied to:
+
+```text
+/Users/jolcsak/Downloads/joint_guarded_replay_run_template_authorization_reviewer_instructions_v1.md
+```
+
+When a completed response returns, it must be imported through:
+
+```bash
+python scripts/import_joint_guarded_replay_run_template_authorization_response_v1.py \
+  /path/to/completed_response.csv-or-zip
+```
+
+The importer refuses incomplete rows, forbidden endpoint inputs, direct
+execution permission, endpoint scoring, endpoint-validation claims, and
+cosmological-validation claims.
 
 The matched-control requirements are now specified in:
 
