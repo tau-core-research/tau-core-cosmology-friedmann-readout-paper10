@@ -286,6 +286,24 @@ The importer refuses incomplete responses, forbidden endpoint inputs,
 endpoint-score permissions, endpoint-validation claims, and cosmological
 validation claims before replacing the canonical response artifact.
 
+For a reviewer without repository access, use the standalone handoff package:
+
+```text
+data/derived/joint_cross_probe_covariance_closure_reviewer_handoff_package_v1.zip
+data/derived/joint_cross_probe_covariance_closure_reviewer_handoff_package_v1.zip.sha256
+data/derived/joint_cross_probe_covariance_closure_reviewer_handoff_package_v1_manifest.csv
+data/derived/joint_cross_probe_covariance_closure_reviewer_handoff_package_v1_summary.csv
+data/derived/REVIEWER_README_JOINT_CROSS_PROBE_COVARIANCE_CLOSURE_V1.md
+scripts/build_joint_cross_probe_covariance_closure_reviewer_handoff_package_v1.py
+scripts/validate_joint_cross_probe_covariance_closure_reviewer_handoff_package_v1.py
+```
+
+The same zip is copied for convenience to:
+
+```text
+/Users/jolcsak/Downloads/joint_cross_probe_covariance_closure_reviewer_handoff_package_v1.zip
+```
+
 The matched-control requirements are now specified in:
 
 ```text
