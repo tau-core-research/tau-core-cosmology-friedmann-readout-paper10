@@ -1093,6 +1093,12 @@ artifact; it keeps scoring disabled until reviewed source-side rationale exists.
 The matched-control suite is likewise specified but not implemented: the
 control families are now named, while their execution is blocked until the same
 covariance/statistic is available for candidate and controls.
+An implementation scaffold now also records, for each required control family,
+the future builder, validator, output artifact, freeze inputs, and minimum
+control-count rule.  This scaffold is not a replay and creates no control
+vectors, residuals, likelihoods, fit statistics, or endpoint scores; its verdict
+is
+\texttt{JOINT\_MATCHED\_CONTROL\_SUITE\_IMPLEMENTATION\_SCAFFOLD\_FROZEN\_NOT\_RUN}.
 A future source-complete case or channel family that fails those
 predeclared tests should be retained as a true negative rather than reinterpreted
 as hidden support.  Until that gate is passed, Paper 10 should be read as a

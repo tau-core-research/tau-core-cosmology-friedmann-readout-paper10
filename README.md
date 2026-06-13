@@ -258,6 +258,23 @@ block-drop, null/readout, leakage, shared-statistic, and covariance-binding
 controls. It does not run them. All controls remain blocked until the
 covariance/independence review and single joint statistic are closed.
 
+The matched-control implementation scaffold is now specified in:
+
+```text
+data/derived/joint_matched_control_suite_implementation_scaffold_v1.csv
+data/derived/joint_matched_control_suite_implementation_scaffold_v1_summary.csv
+docs/joint_matched_control_suite_implementation_scaffold_v1.md
+scripts/build_joint_matched_control_suite_implementation_scaffold_v1.py
+scripts/validate_joint_matched_control_suite_implementation_scaffold_v1.py
+```
+
+Its verdict is
+`JOINT_MATCHED_CONTROL_SUITE_IMPLEMENTATION_SCAFFOLD_FROZEN_NOT_RUN`.
+The scaffold declares future builder names, validators, output artifacts,
+freeze inputs, and minimum control-count rules for the eight families. It still
+does not create control vectors, residuals, likelihoods, fit statistics, or
+endpoint scores.
+
 A standalone reviewer handoff package is also available for reviewers who do
 not have repository access:
 
