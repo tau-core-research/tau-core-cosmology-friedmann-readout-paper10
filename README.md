@@ -374,6 +374,8 @@ data/derived/joint_guarded_permission_replay_authorization_package_v1_summary.cs
 docs/joint_guarded_permission_replay_authorization_package_v1.md
 scripts/build_joint_guarded_permission_replay_authorization_package_v1.py
 scripts/validate_joint_guarded_permission_replay_authorization_package_v1.py
+scripts/validate_joint_guarded_permission_replay_authorization_response_v1.py
+scripts/import_joint_guarded_permission_replay_authorization_response_v1.py
 ```
 
 The package asks whether a run-template package may be prepared with candidate
@@ -384,6 +386,17 @@ is available at:
 ```text
 /Users/jolcsak/Downloads/joint_guarded_permission_replay_authorization_package_v1.zip
 ```
+
+When a completed reviewer response returns, it must be imported through:
+
+```bash
+python scripts/import_joint_guarded_permission_replay_authorization_response_v1.py \
+  /path/to/completed_response.zip
+```
+
+The importer refuses incomplete rows, forbidden endpoint inputs, direct
+execution permission, endpoint-validation claims, and cosmological-validation
+claims.
 
 The matched-control requirements are now specified in:
 
