@@ -1002,6 +1002,14 @@ block-diagonal independence rationale with explicit caveats.  It contains no
 endpoint residuals, no new endpoint scores, and no fit statistics; even a
 positive closure response would still require a separate scoring authorization
 before any executable joint replay.
+The completed response does not identify a source-native cross-probe covariance
+product, but it does accept the block-diagonal independence route as a caveated
+future scoring precondition.  The response explicitly carries forward the
+limitations from shared sky/mask overlap, redshift-kernel overlap, shared
+cosmology and nuisance parameters, calibration correlations, and missing
+population-level cross-probe covariance.  Thus the covariance-product route
+remains unavailable, while the independence-precondition route is closed only
+for a later separately authorized scoring package.
 The
 matched-control families have also been frozen as requirements: shuffled-channel,
 wrong-channel, sign-flip, block-drop, null/readout, leakage, shared-statistic,
@@ -1113,6 +1121,10 @@ A dedicated cross-probe covariance-closure review package now turns that
 remaining condition into a reviewer-facing source-side question: either provide
 a named cross-probe covariance product, or accept a caveated block-diagonal
 independence rationale; otherwise the blocker remains open.
+The completed review accepts the latter route only as a caveated future scoring
+precondition.  It does not authorize scoring; the next required artifact is a
+separate scoring-authorization package that binds the block-diagonal statistic,
+the covariance blocks, all stated caveats, and the matched-control suite.
 The matched-control suite is likewise specified but not implemented: the
 control families are now named, while their execution is blocked until the same
 covariance/statistic is available for candidate and controls.

@@ -15,7 +15,6 @@ Two closure routes remain possible:
 
 Current verdict:
 
-`JOINT_CROSS_PROBE_COVARIANCE_SOURCE_REQUIREMENTS_FROZEN_BLOCKED_NOT_SCORING`
+`JOINT_CROSS_PROBE_CAVEATED_INDEPENDENCE_PRECONDITION_CLOSED_SCORING_AUTH_REQUIRED`
 
-The blocker remains open because no source-frozen cross-probe covariance
-product and no completed independence rationale is currently available.
+The covariance-product route remains unavailable. The reviewer has accepted a caveated block-diagonal independence precondition, but a separate scoring authorization package must still bind the statistic, covariance blocks, caveats, and matched controls before any replay.

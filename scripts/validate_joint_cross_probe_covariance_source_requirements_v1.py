@@ -10,7 +10,10 @@ OUT = ROOT / "data/derived/joint_cross_probe_covariance_source_requirements_v1.c
 SUMMARY = ROOT / "data/derived/joint_cross_probe_covariance_source_requirements_v1_summary.csv"
 DOC = ROOT / "docs/joint_cross_probe_covariance_source_requirements_v1.md"
 CLAIM_BOUNDARY = "joint_cross_probe_covariance_source_requirements_not_scoring_not_validation"
-EXPECTED_VERDICT = "JOINT_CROSS_PROBE_COVARIANCE_SOURCE_REQUIREMENTS_FROZEN_BLOCKED_NOT_SCORING"
+ALLOWED_VERDICTS = {
+    "JOINT_CROSS_PROBE_COVARIANCE_SOURCE_REQUIREMENTS_FROZEN_BLOCKED_NOT_SCORING",
+    "JOINT_CROSS_PROBE_CAVEATED_INDEPENDENCE_PRECONDITION_CLOSED_SCORING_AUTH_REQUIRED",
+}
 
 
 def read_rows(path: Path) -> list[dict[str, str]]:
@@ -49,17 +52,16 @@ def main() -> None:
             raise SystemExit(f"claim boundary mismatch for {row['requirement_id']}")
         if row["endpoint_scoring_allowed"] != "false":
             raise SystemExit(f"scoring must remain false for {row['requirement_id']}")
-    if summary["verdict"] != EXPECTED_VERDICT:
+    if summary["verdict"] not in ALLOWED_VERDICTS:
         raise SystemExit(f"unexpected verdict: {summary['verdict']}")
-    for field in [
-        "covariance_product_route_ready",
-        "independence_rationale_route_ready",
-        "endpoint_scoring_allowed",
-        "endpoint_validation_claimed",
-        "cosmological_validation_claimed",
-    ]:
+    for field in ["covariance_product_route_ready", "endpoint_scoring_allowed", "endpoint_validation_claimed", "cosmological_validation_claimed"]:
         if summary[field] != "false":
             raise SystemExit(f"summary {field} must be false")
+    if summary["verdict"] == "JOINT_CROSS_PROBE_CAVEATED_INDEPENDENCE_PRECONDITION_CLOSED_SCORING_AUTH_REQUIRED":
+        if summary["independence_rationale_route_ready"] != "true":
+            raise SystemExit("independence route must be ready for caveated-closed verdict")
+    elif summary["independence_rationale_route_ready"] != "false":
+        raise SystemExit("independence route must be false for blocked verdict")
     if int(summary["open_or_partial_blockers"]) < 1:
         raise SystemExit("expected open blockers")
     if summary["claim_boundary"] != CLAIM_BOUNDARY:
@@ -69,7 +71,7 @@ def main() -> None:
         "not scoring",
         "source-frozen cross-probe covariance",
         "block-diagonal independence",
-        EXPECTED_VERDICT,
+        summary["verdict"],
     ]:
         if marker not in text:
             raise SystemExit(f"doc missing marker: {marker}")

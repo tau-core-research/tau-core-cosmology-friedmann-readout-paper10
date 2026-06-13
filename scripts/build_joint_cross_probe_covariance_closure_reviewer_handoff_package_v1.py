@@ -25,9 +25,15 @@ PACKAGE_FILES = [
     "data/derived/joint_cross_probe_covariance_closure_review_package_v1_summary.csv",
     "data/derived/joint_cross_probe_covariance_closure_review_response_template_v1.csv",
     "data/derived/joint_cross_probe_covariance_closure_review_response_v1_summary.csv",
+    "data/source_manifest/joint_cross_probe_covariance_source_requirements_policy_v1.csv",
+    "data/derived/joint_cross_probe_covariance_source_requirements_v1.csv",
+    "data/derived/joint_cross_probe_covariance_source_requirements_v1_summary.csv",
+    "docs/joint_cross_probe_covariance_source_requirements_v1.md",
     "docs/joint_cross_probe_covariance_closure_review_package_v1.md",
     "scripts/validate_joint_cross_probe_covariance_closure_review_response_v1.py",
     "scripts/import_joint_cross_probe_covariance_closure_review_response_v1.py",
+    "scripts/build_joint_cross_probe_covariance_source_requirements_v1.py",
+    "scripts/validate_joint_cross_probe_covariance_source_requirements_v1.py",
 ]
 
 

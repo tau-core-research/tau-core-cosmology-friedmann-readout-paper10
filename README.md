@@ -260,7 +260,10 @@ data/derived/joint_cross_probe_covariance_closure_review_package_v1.zip.sha256
 data/derived/joint_cross_probe_covariance_closure_review_package_v1_manifest.csv
 data/derived/joint_cross_probe_covariance_closure_review_package_v1_summary.csv
 data/derived/joint_cross_probe_covariance_closure_review_response_v1_summary.csv
+data/derived/joint_cross_probe_covariance_closure_review_completed_summary_v1.csv
+data/derived/joint_cross_probe_covariance_closure_review_validation_log_v1.txt
 docs/joint_cross_probe_covariance_closure_review_package_v1.md
+docs/joint_cross_probe_covariance_closure_review_notes_v1.md
 scripts/build_joint_cross_probe_covariance_closure_review_package_v1.py
 scripts/validate_joint_cross_probe_covariance_closure_review_package_v1.py
 scripts/validate_joint_cross_probe_covariance_closure_review_response_v1.py
@@ -271,9 +274,15 @@ This package asks the reviewer to close, caveat, or keep open the
 cross-probe covariance/independence condition. It allows two source-side
 routes only: a named source-native/source-frozen cross-probe covariance product,
 or a source-side block-diagonal independence rationale. It contains no endpoint
-residuals, no new endpoint scores, and no fit statistics. Even a positive
-response would still require a separate scoring authorization before any
-executable joint replay.
+residuals, no new endpoint scores, and no fit statistics.
+
+The completed response now records
+`JOINT_BLOCK_DIAGONAL_INDEPENDENCE_PRECONDITION_CAVEATED_CLOSED_NOT_SCORING`.
+No source-native cross-probe covariance product is available. The reviewer
+accepts a caveated block-diagonal independence precondition only for a later
+separately authorized scoring package. Shared sky/mask, redshift-kernel,
+cosmology/nuisance, calibration, and non-population covariance caveats must be
+carried forward.
 
 When a reviewer returns the completed CSV or a zip containing it, import it
 with:
@@ -316,13 +325,38 @@ scripts/validate_joint_cross_probe_covariance_source_requirements_v1.py
 ```
 
 The current verdict is
-`JOINT_CROSS_PROBE_COVARIANCE_SOURCE_REQUIREMENTS_FROZEN_BLOCKED_NOT_SCORING`.
+`JOINT_CROSS_PROBE_CAVEATED_INDEPENDENCE_PRECONDITION_CLOSED_SCORING_AUTH_REQUIRED`.
 It records eight source-side requirements: active block scope, cross-probe
 covariance product, shared sky/mask overlap, redshift-kernel overlap,
 shared cosmology/nuisance terms, block-diagonal caveats, same-statistic
-candidate/control binding, and forbidden-field discipline. Only the
-forbidden-field discipline currently passes; the covariance and independence
-routes remain blocked.
+candidate/control binding, and forbidden-field discipline. The forbidden-field
+discipline and caveated independence route now pass. The cross-probe covariance
+product route remains unavailable, and executable scoring remains blocked until
+a separate scoring authorization package binds the same statistic, covariance
+blocks, caveats, and matched controls.
+
+That separate scoring-authorization review package is now prepared, but not
+completed:
+
+```text
+data/source_manifest/joint_block_diagonal_scoring_authorization_review_policy_v1.csv
+data/derived/joint_block_diagonal_scoring_authorization_review_response_template_v1.csv
+data/derived/joint_block_diagonal_scoring_authorization_review_package_v1.zip
+data/derived/joint_block_diagonal_scoring_authorization_review_package_v1.zip.sha256
+data/derived/joint_block_diagonal_scoring_authorization_review_package_v1_manifest.csv
+data/derived/joint_block_diagonal_scoring_authorization_review_package_v1_summary.csv
+docs/joint_block_diagonal_scoring_authorization_review_package_v1.md
+scripts/build_joint_block_diagonal_scoring_authorization_review_package_v1.py
+scripts/validate_joint_block_diagonal_scoring_authorization_review_package_v1.py
+```
+
+The package asks whether a later permission-only joint replay package may be
+prepared under the caveated block-diagonal precondition. It does not score and
+does not claim endpoint or cosmological validation. A copy is available at:
+
+```text
+/Users/jolcsak/Downloads/joint_block_diagonal_scoring_authorization_review_package_v1.zip
+```
 
 The matched-control requirements are now specified in:
 

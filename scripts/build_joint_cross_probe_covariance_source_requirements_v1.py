@@ -44,8 +44,24 @@ def main() -> None:
     closure = read_one(CLOSURE_SUMMARY)
     if cov["cross_probe_covariance_defined"] != "false":
         raise SystemExit("cross-probe covariance already defined; requirements gate should be revised")
-    if closure["decision"] != "JOINT_CROSS_PROBE_COVARIANCE_CLOSURE_RESPONSE_TEMPLATE_READY_NOT_COMPLETED":
-        raise SystemExit("closure review response is no longer blank; import/close path should run first")
+    closure_decision = closure["decision"]
+    independence_precondition_closed = (
+        closure_decision == "JOINT_BLOCK_DIAGONAL_INDEPENDENCE_PRECONDITION_CAVEATED_CLOSED_NOT_SCORING"
+    )
+    blank_or_open = closure_decision in {
+        "JOINT_CROSS_PROBE_COVARIANCE_CLOSURE_RESPONSE_TEMPLATE_READY_NOT_COMPLETED",
+        "JOINT_CROSS_PROBE_COVARIANCE_INDEPENDENCE_REMAINS_OPEN_NOT_SCORING",
+    }
+    if not (independence_precondition_closed or blank_or_open):
+        raise SystemExit(f"unsupported closure review decision for source requirements: {closure_decision}")
+    active_scope_status = "pass" if independence_precondition_closed else "partial"
+    caveat_status = "caveated_carry_forward" if independence_precondition_closed else "open"
+    caveat_blocks = "false" if independence_precondition_closed else "true"
+    same_stat_status = (
+        "blocked_until_separate_scoring_authorization"
+        if independence_precondition_closed
+        else "blocked_until_covariance_closure"
+    )
 
     rows = [
         {
@@ -53,9 +69,9 @@ def main() -> None:
             "route": "both",
             "requirement": "Freeze the exact active block vector order and row scopes for KiDS/COSEBIs, observer/path low-z, and DESI shape/readout.",
             "acceptable_source_evidence": "source manifests or completed review ledgers defining rows, masks, redshift windows, and channel identities without endpoint scores",
-            "current_status": "partial",
+            "current_status": active_scope_status,
             "current_evidence": cov["active_channel_order"],
-            "blocks_scoring": "true",
+            "blocks_scoring": "false" if independence_precondition_closed else "true",
             "endpoint_scoring_allowed": "false",
             "claim_boundary": CLAIM_BOUNDARY,
         },
@@ -75,9 +91,9 @@ def main() -> None:
             "route": "both",
             "requirement": "Quantify or bound shared-sky, mask, and line-of-sight overlap between the active blocks.",
             "acceptable_source_evidence": "survey footprints, sky masks, object/field overlap ledgers, or published overlap/independence statements",
-            "current_status": "open",
-            "current_evidence": "active blocks have heterogeneous sky support; no unified overlap bound frozen",
-            "blocks_scoring": "true",
+            "current_status": caveat_status,
+            "current_evidence": "reviewer requires shared-sky/mask/line-of-sight limitations to be carried as caveats",
+            "blocks_scoring": caveat_blocks,
             "endpoint_scoring_allowed": "false",
             "claim_boundary": CLAIM_BOUNDARY,
         },
@@ -86,9 +102,9 @@ def main() -> None:
             "route": "both",
             "requirement": "Quantify or bound redshift/kernel overlap between lensing, low-z observer/path, and DESI shape/readout sensitivities.",
             "acceptable_source_evidence": "source redshift distributions, BAO/CC redshift rows, low-z masks, kernel support summaries, or source-side non-overlap rationale",
-            "current_status": "open",
-            "current_evidence": "component redshift scopes exist, but no cross-probe overlap covariance statement is frozen",
-            "blocks_scoring": "true",
+            "current_status": caveat_status,
+            "current_evidence": "reviewer requires redshift/kernel overlap limitations to be carried as caveats",
+            "blocks_scoring": caveat_blocks,
             "endpoint_scoring_allowed": "false",
             "claim_boundary": CLAIM_BOUNDARY,
         },
@@ -97,9 +113,9 @@ def main() -> None:
             "route": "both",
             "requirement": "Identify shared cosmological, calibration, photo-z, distance-ladder, BAO, lensing, and nuisance parameters that could correlate blocks.",
             "acceptable_source_evidence": "published nuisance covariance, explicit nuisance marginalization policy, or source-side argument that shared parameters are not used in the limited statistic",
-            "current_status": "open",
-            "current_evidence": "no single nuisance binding across all active blocks is frozen",
-            "blocks_scoring": "true",
+            "current_status": caveat_status,
+            "current_evidence": "reviewer requires shared cosmology/nuisance/calibration limitations to be carried as caveats",
+            "blocks_scoring": caveat_blocks,
             "endpoint_scoring_allowed": "false",
             "claim_boundary": CLAIM_BOUNDARY,
         },
@@ -108,9 +124,9 @@ def main() -> None:
             "route": "independence_rationale",
             "requirement": "If using block diagonal covariance, explicitly freeze caveats and the approximation domain.",
             "acceptable_source_evidence": "reviewer-accepted rationale naming shared-sky, redshift, nuisance, calibration, and population covariance limitations",
-            "current_status": "not_closed",
+            "current_status": "pass_caveated" if independence_precondition_closed else "not_closed",
             "current_evidence": closure["decision"],
-            "blocks_scoring": "true",
+            "blocks_scoring": "false" if independence_precondition_closed else "true",
             "endpoint_scoring_allowed": "false",
             "claim_boundary": CLAIM_BOUNDARY,
         },
@@ -119,8 +135,8 @@ def main() -> None:
             "route": "both",
             "requirement": "Bind candidate and matched controls to the same covariance/statistic before any replay.",
             "acceptable_source_evidence": "frozen scoring authorization package after covariance closure; no endpoint residual leakage",
-            "current_status": "blocked_until_covariance_closure",
-            "current_evidence": "matched control suite exists as requirements only",
+            "current_status": same_stat_status,
+            "current_evidence": "matched control suite exists as requirements only; separate scoring authorization is still required",
             "blocks_scoring": "true",
             "endpoint_scoring_allowed": "false",
             "claim_boundary": CLAIM_BOUNDARY,
@@ -140,7 +156,18 @@ def main() -> None:
     write_csv(POLICY, rows)
     write_csv(OUT, rows)
     open_blockers = sum(1 for row in rows if row["blocks_scoring"] == "true")
-    pass_count = sum(1 for row in rows if row["current_status"] == "pass")
+    pass_count = sum(1 for row in rows if row["current_status"] in {"pass", "pass_caveated"})
+    independence_route_ready = str(independence_precondition_closed).lower()
+    verdict = (
+        "JOINT_CROSS_PROBE_CAVEATED_INDEPENDENCE_PRECONDITION_CLOSED_SCORING_AUTH_REQUIRED"
+        if independence_precondition_closed
+        else "JOINT_CROSS_PROBE_COVARIANCE_SOURCE_REQUIREMENTS_FROZEN_BLOCKED_NOT_SCORING"
+    )
+    next_action = (
+        "build_separate_scoring_authorization_package_with_caveats_and_same_statistic_controls"
+        if independence_precondition_closed
+        else "obtain_completed_closure_review_or_source_cross_probe_covariance_product"
+    )
     write_csv(
         SUMMARY,
         [
@@ -150,12 +177,12 @@ def main() -> None:
                 "pass_count": str(pass_count),
                 "open_or_partial_blockers": str(open_blockers),
                 "covariance_product_route_ready": "false",
-                "independence_rationale_route_ready": "false",
+                "independence_rationale_route_ready": independence_route_ready,
                 "endpoint_scoring_allowed": "false",
                 "endpoint_validation_claimed": "false",
                 "cosmological_validation_claimed": "false",
-                "verdict": "JOINT_CROSS_PROBE_COVARIANCE_SOURCE_REQUIREMENTS_FROZEN_BLOCKED_NOT_SCORING",
-                "next_required_action": "obtain_completed_closure_review_or_source_cross_probe_covariance_product",
+                "verdict": verdict,
+                "next_required_action": next_action,
                 "claim_boundary": CLAIM_BOUNDARY,
             }
         ],
@@ -180,17 +207,26 @@ def main() -> None:
                 "",
                 "Current verdict:",
                 "",
-                "`JOINT_CROSS_PROBE_COVARIANCE_SOURCE_REQUIREMENTS_FROZEN_BLOCKED_NOT_SCORING`",
+                f"`{verdict}`",
                 "",
-                "The blocker remains open because no source-frozen cross-probe covariance",
-                "product and no completed independence rationale is currently available.",
+                (
+                    "The covariance-product route remains unavailable. The reviewer has "
+                    "accepted a caveated block-diagonal independence precondition, but a "
+                    "separate scoring authorization package must still bind the statistic, "
+                    "covariance blocks, caveats, and matched controls before any replay."
+                    if independence_precondition_closed
+                    else (
+                        "The blocker remains open because no source-frozen cross-probe covariance "
+                        "product and no completed independence rationale is currently available."
+                    )
+                ),
                 "",
             ]
         )
     )
     print(
         "JOINT_CROSS_PROBE_COVARIANCE_SOURCE_REQUIREMENTS_V1_BUILT "
-        "verdict=JOINT_CROSS_PROBE_COVARIANCE_SOURCE_REQUIREMENTS_FROZEN_BLOCKED_NOT_SCORING"
+        f"verdict={verdict}"
     )
 
 
