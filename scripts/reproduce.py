@@ -1698,6 +1698,8 @@ def main() -> None:
     ])
     run(["python", "scripts/build_joint_guarded_replay_run_template_v1.py"])
     run(["python", "scripts/validate_joint_guarded_replay_run_template_v1.py"])
+    run(["python", "scripts/build_joint_guarded_replay_run_template_authorization_package_v1.py"])
+    run(["python", "scripts/validate_joint_guarded_replay_run_template_authorization_package_v1.py"])
     run(["python", "scripts/build_joint_non_lensing_lift_diagnostic_v1.py"])
     run(["python", "scripts/validate_joint_non_lensing_lift_diagnostic_v1.py"])
     run(["python", "scripts/build_observer_path_strengthening_gate_v1.py"])

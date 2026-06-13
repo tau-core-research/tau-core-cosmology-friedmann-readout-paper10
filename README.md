@@ -427,6 +427,26 @@ families.  Its status is
 endpoint scoring, endpoint validation, and cosmological validation all remain
 false.
 
+A further external reviewer package has been prepared for this run-template
+itself:
+
+```text
+data/source_manifest/joint_guarded_replay_run_template_authorization_policy_v1.csv
+data/derived/joint_guarded_replay_run_template_authorization_response_template_v1.csv
+data/derived/joint_guarded_replay_run_template_authorization_package_v1.zip
+data/derived/joint_guarded_replay_run_template_authorization_package_v1.zip.sha256
+data/derived/joint_guarded_replay_run_template_authorization_package_v1_manifest.csv
+data/derived/joint_guarded_replay_run_template_authorization_package_v1_summary.csv
+docs/joint_guarded_replay_run_template_authorization_package_v1.md
+scripts/build_joint_guarded_replay_run_template_authorization_package_v1.py
+scripts/validate_joint_guarded_replay_run_template_authorization_package_v1.py
+```
+
+This package is blank and reviewer-not-completed.  It asks only whether the
+frozen template may be used as the basis for a later executable
+permission-only replay.  It still does not execute replay, does not produce
+endpoint scores, and does not claim endpoint or cosmological validation.
+
 The matched-control requirements are now specified in:
 
 ```text
