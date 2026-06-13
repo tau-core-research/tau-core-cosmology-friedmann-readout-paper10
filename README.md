@@ -304,6 +304,26 @@ The same zip is copied for convenience to:
 /Users/jolcsak/Downloads/joint_cross_probe_covariance_closure_reviewer_handoff_package_v1.zip
 ```
 
+The source-side requirements behind this blocker are frozen in:
+
+```text
+data/source_manifest/joint_cross_probe_covariance_source_requirements_policy_v1.csv
+data/derived/joint_cross_probe_covariance_source_requirements_v1.csv
+data/derived/joint_cross_probe_covariance_source_requirements_v1_summary.csv
+docs/joint_cross_probe_covariance_source_requirements_v1.md
+scripts/build_joint_cross_probe_covariance_source_requirements_v1.py
+scripts/validate_joint_cross_probe_covariance_source_requirements_v1.py
+```
+
+The current verdict is
+`JOINT_CROSS_PROBE_COVARIANCE_SOURCE_REQUIREMENTS_FROZEN_BLOCKED_NOT_SCORING`.
+It records eight source-side requirements: active block scope, cross-probe
+covariance product, shared sky/mask overlap, redshift-kernel overlap,
+shared cosmology/nuisance terms, block-diagonal caveats, same-statistic
+candidate/control binding, and forbidden-field discipline. Only the
+forbidden-field discipline currently passes; the covariance and independence
+routes remain blocked.
+
 The matched-control requirements are now specified in:
 
 ```text

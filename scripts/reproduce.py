@@ -1674,6 +1674,8 @@ def main() -> None:
     run(["python", "scripts/build_joint_cross_probe_covariance_closure_review_package_v1.py"])
     run(["python", "scripts/validate_joint_cross_probe_covariance_closure_review_package_v1.py"])
     run(["python", "scripts/validate_joint_cross_probe_covariance_closure_review_response_v1.py"])
+    run(["python", "scripts/build_joint_cross_probe_covariance_source_requirements_v1.py"])
+    run(["python", "scripts/validate_joint_cross_probe_covariance_source_requirements_v1.py"])
     run(["python", "scripts/build_joint_cross_probe_covariance_closure_reviewer_handoff_package_v1.py"])
     run(["python", "scripts/validate_joint_cross_probe_covariance_closure_reviewer_handoff_package_v1.py"])
     run(["python", "scripts/build_joint_non_lensing_lift_diagnostic_v1.py"])
