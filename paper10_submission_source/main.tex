@@ -995,6 +995,13 @@ scopes, covariance blocks, nuisance rules, and statistic.  It does not read
 endpoint residuals, invert new covariance matrices, compute scores, or
 authorize replay; its current verdict is
 \texttt{JOINT\_BLOCK\_DIAGONAL\_PROTOCOL\_SHELL\_FROZEN\_COVARIANCE\_STILL\_OPEN\_NOT\_SCORING}.
+A follow-up cross-probe covariance-closure review package has therefore been
+frozen.  It asks only whether the missing condition can be closed by a named
+source-native/source-frozen cross-probe covariance product, or by a source-side
+block-diagonal independence rationale with explicit caveats.  It contains no
+endpoint residuals, no new endpoint scores, and no fit statistics; even a
+positive closure response would still require a separate scoring authorization
+before any executable joint replay.
 The
 matched-control families have also been frozen as requirements: shuffled-channel,
 wrong-channel, sign-flip, block-drop, null/readout, leakage, shared-statistic,
@@ -1102,6 +1109,10 @@ individual active blocks are partially covariance-supported, but the
 cross-probe covariance/independence condition is not yet closed.  A future
 block-diagonal independence review package has been prepared only as a handoff
 artifact; it keeps scoring disabled until reviewed source-side rationale exists.
+A dedicated cross-probe covariance-closure review package now turns that
+remaining condition into a reviewer-facing source-side question: either provide
+a named cross-probe covariance product, or accept a caveated block-diagonal
+independence rationale; otherwise the blocker remains open.
 The matched-control suite is likewise specified but not implemented: the
 control families are now named, while their execution is blocked until the same
 covariance/statistic is available for candidate and controls.
