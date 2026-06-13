@@ -1102,7 +1102,9 @@ is
 We also freeze a single-statistic binding-prerequisites ledger: the active
 channel order, row-scope artifacts, score-source artifacts, covariance objects,
 and nuisance/amplitude rules that any future joint statistic must bind are now
-named, but the statistic itself is not defined and no replay is run.
+named.  All three active channels have explicit row-scope and score-source
+artifacts present in the repository, but the statistic itself is not defined and
+no replay is run.
 A future source-complete case or channel family that fails those
 predeclared tests should be retained as a true negative rather than reinterpreted
 as hidden support.  Until that gate is passed, Paper 10 should be read as a

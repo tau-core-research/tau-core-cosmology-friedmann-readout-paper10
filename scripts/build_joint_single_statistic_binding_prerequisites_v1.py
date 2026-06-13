@@ -23,8 +23,8 @@ CHANNEL_BINDINGS = {
         "nuisance_or_amplitude_rule": "source-frozen low-mode carrier; diagnostic endpoint amplitude preserved as existing artifact only",
     },
     "observer_path_basis_low_z": {
-        "row_scope_artifact": "data/derived/observer_path_basis_authorized_replay_v1_summary.csv",
-        "score_source_artifact": "data/derived/observer_basis_authorized_replay_v1_summary.csv",
+        "row_scope_artifact": "data/derived/void_source_basis_refinement_v2_observer_basis_authorized_replay_v1_summary.csv",
+        "score_source_artifact": "data/derived/void_source_basis_refinement_v2_observer_basis_authorized_replay_v1_summary.csv",
         "covariance_artifact": "narrow 12-row permission replay covariance surrogate",
         "nuisance_or_amplitude_rule": "permission-only observer/path basis amplitude; no population validation",
     },

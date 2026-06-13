@@ -290,6 +290,10 @@ score-source artifact, covariance object, and nuisance/amplitude rule that a
 future single joint statistic must bind. It does not define that statistic and
 does not run any replay. Its verdict is
 `JOINT_SINGLE_STATISTIC_BINDING_PREREQUISITES_FROZEN_PROTOCOL_BLOCKED`.
+All three active channels now have explicit row-scope and score-source
+artifacts present in the repository; the remaining blockers are no longer
+missing channel artifacts, but covariance/independence closure and the single
+joint-statistic protocol itself.
 
 A standalone reviewer handoff package is also available for reviewers who do
 not have repository access:

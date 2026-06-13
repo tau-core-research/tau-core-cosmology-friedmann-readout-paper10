@@ -12,8 +12,8 @@ It does not define the statistic and does not run a replay.
 Summary:
 
 - active channels: `kids_lensing_cosebis_low_mode;observer_path_basis_low_z;desi_shape_time_readout`
-- row-scope artifacts present: `2/3`
-- score-source artifacts present: `2/3`
+- row-scope artifacts present: `3/3`
+- score-source artifacts present: `3/3`
 - single statistic defined: `false`
 - covariance/independence closed: `false`
 - scoring allowed: `false`
