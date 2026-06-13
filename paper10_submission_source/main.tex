@@ -967,7 +967,14 @@ external response has now been imported with verdict
 It accepts the active \(Q_i\) factors only as caveated source-side support,
 keeps zero-support branches excluded, and leaves validation-facing promotion
 blocked until a separate covariance-aware joint likelihood or likelihood
-surrogate is defined.
+surrogate is defined.  The follow-up requirements gate
+\texttt{JOINT\_LIKELIHOOD\_SURROGATE\_REQUIREMENTS\_GATE\_V1} now freezes
+that boundary explicitly.  Its verdict is
+\texttt{JOINT\_LIKELIHOOD\_SURROGATE\_REQUIREMENTS\_FROZEN\_SCORING\_BLOCKED}:
+the \(Q_i\) review, active-channel freeze, preflight signal, and
+forbidden-field discipline pass, but scoring remains blocked by the missing
+joint covariance model, single likelihood-surrogate statistic, and matched
+control suite under the same statistic.
 
 \begin{table}[t]
 \centering
@@ -1061,7 +1068,11 @@ The next validation-facing step is now precise.  The protocol requires
 source-native review of the channel-quality factors \(Q_i\), followed by a
 single predeclared covariance-aware joint likelihood or likelihood surrogate
 with shuffled-channel, wrong-channel, sign-flip, block-drop, and null/readout
-controls.  A future source-complete case or channel family that fails those
+controls.  The present release freezes this as a requirements gate rather than
+running it: the \(Q_i\) source-side review and active-channel ledger are accepted
+only as caveated preconditions, while scoring remains blocked until a joint
+covariance model, a single likelihood-surrogate statistic, and matched controls
+are specified.  A future source-complete case or channel family that fails those
 predeclared tests should be retained as a true negative rather than reinterpreted
 as hidden support.  Until that gate is passed, Paper 10 should be read as a
 reproducible multi-channel viability and audit-discipline result, not as a

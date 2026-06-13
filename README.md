@@ -178,6 +178,24 @@ support factors are accepted only with caveats, zero-support branches remain
 excluded, and validation-facing promotion remains blocked until a separate
 covariance-aware joint likelihood or likelihood surrogate exists.
 
+The corresponding likelihood-surrogate requirements gate is now frozen in:
+
+```text
+data/source_manifest/joint_likelihood_surrogate_requirements_policy_v1.csv
+data/derived/joint_likelihood_surrogate_requirements_gate_v1.csv
+data/derived/joint_likelihood_surrogate_requirements_gate_v1_summary.csv
+docs/joint_likelihood_surrogate_requirements_gate_v1.md
+scripts/build_joint_likelihood_surrogate_requirements_gate_v1.py
+scripts/validate_joint_likelihood_surrogate_requirements_gate_v1.py
+```
+
+Its current verdict is
+`JOINT_LIKELIHOOD_SURROGATE_REQUIREMENTS_FROZEN_SCORING_BLOCKED`. It records
+that the Q_i source-side review, active-channel freeze, preflight signal, and
+forbidden-field discipline pass, but endpoint scoring remains blocked by three
+hard requirements: a joint covariance model, a single likelihood-surrogate
+statistic, and a matched control suite under the same statistic.
+
 A standalone reviewer handoff package is also available for reviewers who do
 not have repository access:
 

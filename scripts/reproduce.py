@@ -1656,6 +1656,8 @@ def main() -> None:
     run(["python", "scripts/build_joint_best_justified_kernel_figure_v1.py"])
     run(["python", "scripts/validate_joint_best_justified_qi_review_package_v1.py"])
     run(["python", "scripts/validate_joint_best_justified_qi_review_response_v1.py"])
+    run(["python", "scripts/build_joint_likelihood_surrogate_requirements_gate_v1.py"])
+    run(["python", "scripts/validate_joint_likelihood_surrogate_requirements_gate_v1.py"])
     run(["python", "scripts/build_joint_non_lensing_lift_diagnostic_v1.py"])
     run(["python", "scripts/validate_joint_non_lensing_lift_diagnostic_v1.py"])
     run(["python", "scripts/build_observer_path_strengthening_gate_v1.py"])
