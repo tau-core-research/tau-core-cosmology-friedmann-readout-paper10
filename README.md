@@ -223,16 +223,22 @@ data/derived/joint_block_diagonal_independence_review_package_v1.zip
 data/derived/joint_block_diagonal_independence_review_package_v1.zip.sha256
 data/derived/joint_block_diagonal_independence_review_package_v1_manifest.csv
 data/derived/joint_block_diagonal_independence_review_package_v1_summary.csv
+data/derived/joint_block_diagonal_independence_review_response_v1_summary.csv
 docs/joint_block_diagonal_independence_review_package_v1.md
 scripts/build_joint_block_diagonal_independence_review_package_v1.py
 scripts/validate_joint_block_diagonal_independence_review_package_v1.py
+scripts/validate_joint_block_diagonal_independence_review_response_v1.py
 ```
 
 Its current status is
 `JOINT_BLOCK_DIAGONAL_INDEPENDENCE_REVIEW_PACKAGE_READY_NOT_COMPLETED`. This is
 a reviewer package only: it asks whether a block-diagonal surrogate may be
 prepared as a future protocol shell and keeps endpoint scoring, endpoint
-validation, and cosmological validation disabled.
+validation, and cosmological validation disabled. The response validator accepts
+either the blank template state or a fully completed reviewer response. A
+positive response can only permit a future protocol-shell preparation path; it
+still leaves scoring disabled unless a separately reviewed source-side
+covariance/independence rationale is supplied.
 
 A standalone reviewer handoff package is also available for reviewers who do
 not have repository access:
