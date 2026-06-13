@@ -65,6 +65,12 @@ def find_response_in_zip(zip_path: Path, tmp_dir: Path) -> Path:
     with zipfile.ZipFile(zip_path) as zf:
         names = [name for name in zf.namelist() if name.lower().endswith(".csv")]
         candidate_names = [name for name in names if Path(name).name == EXPECTED_NAME]
+        if not candidate_names:
+            candidate_names = [
+                name
+                for name in names
+                if Path(name).name == "joint_block_diagonal_independence_review_response_v1.csv"
+            ]
         if not candidate_names and len(names) == 1:
             candidate_names = names
         if len(candidate_names) != 1:
@@ -118,7 +124,7 @@ def main() -> None:
 
         CANONICAL_RESPONSE.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(response, CANONICAL_RESPONSE)
-        shutil.copy2(tmp_summary, CANONICAL_SUMMARY)
+        run_validator(CANONICAL_RESPONSE, CANONICAL_SUMMARY)
 
     print(
         "JOINT_BLOCK_DIAGONAL_INDEPENDENCE_REVIEW_RESPONSE_IMPORTED "

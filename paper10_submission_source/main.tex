@@ -981,11 +981,12 @@ narrowed by the covariance-model requirements gate
 records that KiDS/COSEBIs has source-native full-covariance support, while the
 observer/path and DESI shape/readout blocks have only narrow caveated surrogate
 covariance support.  Cross-probe covariance, or an independently reviewed
-block-diagonal independence attestation, is still missing.  A reviewer handoff
-package for the block-diagonal independence question has been prepared, but it
-is incomplete and explicitly does not authorize scoring or validation.  A
-separate block-diagonal likelihood-surrogate protocol shell has therefore been
-frozen only as a non-executable algebraic draft:
+block-diagonal independence attestation, is still missing.  A completed
+external review accepts the active block scope and allows a block-diagonal
+surrogate only as a future protocol shell; it keeps cross-probe independence
+open and explicitly does not authorize scoring or validation.  A separate
+block-diagonal likelihood-surrogate protocol shell has therefore been frozen
+only as a non-executable algebraic draft:
 \[
   Q_{\rm joint}^{\rm BD}=\sum_i r_i^T C_i^{-1} r_i .
 \]
@@ -993,7 +994,7 @@ It records that candidate and matched controls would have to use the same row
 scopes, covariance blocks, nuisance rules, and statistic.  It does not read
 endpoint residuals, invert new covariance matrices, compute scores, or
 authorize replay; its current verdict is
-\texttt{JOINT\_BLOCK\_DIAGONAL\_PROTOCOL\_SHELL\_DRAFT\_WAITING\_FOR\_REVIEW\_NOT\_SCORING}.
+\texttt{JOINT\_BLOCK\_DIAGONAL\_PROTOCOL\_SHELL\_FROZEN\_COVARIANCE\_STILL\_OPEN\_NOT\_SCORING}.
 The
 matched-control families have also been frozen as requirements: shuffled-channel,
 wrong-channel, sign-flip, block-drop, null/readout, leakage, shared-statistic,

@@ -8,7 +8,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_RESPONSE = ROOT / "data/derived/joint_block_diagonal_independence_review_response_template_v1.csv"
+DEFAULT_RESPONSE = ROOT / "data/derived/joint_block_diagonal_independence_review_response_v1.csv"
 DEFAULT_SUMMARY = ROOT / "data/derived/joint_block_diagonal_independence_review_response_v1_summary.csv"
 PACKAGE_SUMMARY = ROOT / "data/derived/joint_block_diagonal_independence_review_package_v1_summary.csv"
 DOC = ROOT / "docs/joint_block_diagonal_independence_review_package_v1.md"

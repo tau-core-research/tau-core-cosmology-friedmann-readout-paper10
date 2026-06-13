@@ -23,10 +23,10 @@ all matched controls.
 Current machine state:
 
 - active channels: `kids_lensing_cosebis_low_mode;observer_path_basis_low_z;desi_shape_time_readout`
-- block-diagonal review status: `not_completed`
-- protocol shell allowed by review: `false`
+- block-diagonal review status: `completed_caveated_protocol_shell_allowed`
+- protocol shell allowed by review: `true`
 - cross-probe covariance defined: `false`
 - cross-probe independence closed: `false`
 - executable now: `false`
 - endpoint scoring allowed: `false`
-- verdict: `JOINT_BLOCK_DIAGONAL_PROTOCOL_SHELL_DRAFT_WAITING_FOR_REVIEW_NOT_SCORING`
+- verdict: `JOINT_BLOCK_DIAGONAL_PROTOCOL_SHELL_FROZEN_COVARIANCE_STILL_OPEN_NOT_SCORING`

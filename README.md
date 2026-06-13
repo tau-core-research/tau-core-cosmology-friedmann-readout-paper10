@@ -231,15 +231,14 @@ scripts/validate_joint_block_diagonal_independence_review_response_v1.py
 scripts/import_joint_block_diagonal_independence_review_response_v1.py
 ```
 
-Its current status is
-`JOINT_BLOCK_DIAGONAL_INDEPENDENCE_REVIEW_PACKAGE_READY_NOT_COMPLETED`. This is
-a reviewer package only: it asks whether a block-diagonal surrogate may be
-prepared as a future protocol shell and keeps endpoint scoring, endpoint
-validation, and cosmological validation disabled. The response validator accepts
-either the blank template state or a fully completed reviewer response. A
-positive response can only permit a future protocol-shell preparation path; it
-still leaves scoring disabled unless a separately reviewed source-side
-covariance/independence rationale is supplied.
+Its completed response is
+`JOINT_BLOCK_DIAGONAL_PROTOCOL_SHELL_ALLOWED_CROSS_PROBE_OPEN_NOT_SCORING`.
+The external reviewer accepts the active block scope and allows a
+block-diagonal surrogate only as a future protocol shell. Cross-probe
+independence remains open, and endpoint scoring, endpoint validation, and
+cosmological validation remain disabled. A separate source-side
+covariance/independence rationale is still required before any executable
+single-statistic replay.
 
 When a reviewer returns the completed CSV or a zip containing it, import it with:
 
@@ -317,14 +316,14 @@ scripts/validate_joint_block_diagonal_likelihood_surrogate_protocol_shell_v1.py
 ```
 
 Its verdict is
-`JOINT_BLOCK_DIAGONAL_PROTOCOL_SHELL_DRAFT_WAITING_FOR_REVIEW_NOT_SCORING`.
+`JOINT_BLOCK_DIAGONAL_PROTOCOL_SHELL_FROZEN_COVARIANCE_STILL_OPEN_NOT_SCORING`.
 The shell declares only the future algebraic form
 `Q_joint^BD = sum_i r_i^T C_i^{-1} r_i` and the rule that candidate and
 matched controls must use the same row scopes, covariance blocks, nuisance
 rules, and statistic. It does not read endpoint residuals, invert new
 covariances, compute scores, or authorize replay. It remains non-executable
-until the block-diagonal independence review is completed and a separate
-single-statistic scoring authorization is supplied.
+until cross-probe covariance or independence is separately closed and a
+separate single-statistic scoring authorization is supplied.
 
 A standalone reviewer handoff package is also available for reviewers who do
 not have repository access:
