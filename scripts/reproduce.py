@@ -1667,6 +1667,8 @@ def main() -> None:
     run(["python", "scripts/validate_joint_matched_control_suite_requirements_gate_v1.py"])
     run(["python", "scripts/build_joint_matched_control_suite_implementation_scaffold_v1.py"])
     run(["python", "scripts/validate_joint_matched_control_suite_implementation_scaffold_v1.py"])
+    run(["python", "scripts/build_joint_single_statistic_binding_prerequisites_v1.py"])
+    run(["python", "scripts/validate_joint_single_statistic_binding_prerequisites_v1.py"])
     run(["python", "scripts/build_joint_non_lensing_lift_diagnostic_v1.py"])
     run(["python", "scripts/validate_joint_non_lensing_lift_diagnostic_v1.py"])
     run(["python", "scripts/build_observer_path_strengthening_gate_v1.py"])

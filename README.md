@@ -275,6 +275,22 @@ freeze inputs, and minimum control-count rules for the eight families. It still
 does not create control vectors, residuals, likelihoods, fit statistics, or
 endpoint scores.
 
+The single-statistic binding prerequisites are recorded in:
+
+```text
+data/derived/joint_single_statistic_binding_prerequisites_v1.csv
+data/derived/joint_single_statistic_binding_prerequisites_v1_summary.csv
+docs/joint_single_statistic_binding_prerequisites_v1.md
+scripts/build_joint_single_statistic_binding_prerequisites_v1.py
+scripts/validate_joint_single_statistic_binding_prerequisites_v1.py
+```
+
+This ledger freezes the active-channel order, row-scope artifact,
+score-source artifact, covariance object, and nuisance/amplitude rule that a
+future single joint statistic must bind. It does not define that statistic and
+does not run any replay. Its verdict is
+`JOINT_SINGLE_STATISTIC_BINDING_PREREQUISITES_FROZEN_PROTOCOL_BLOCKED`.
+
 A standalone reviewer handoff package is also available for reviewers who do
 not have repository access:
 
