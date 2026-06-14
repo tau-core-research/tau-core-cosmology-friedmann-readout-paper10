@@ -1778,6 +1778,8 @@ def main() -> None:
             run(["python", "scripts/validate_joint_matched_control_distribution_readiness_v1.py"])
             run(["python", "scripts/build_joint_numeric_zi_distribution_build_authorization_package_v1.py"])
             run(["python", "scripts/validate_joint_numeric_zi_distribution_build_authorization_package_v1.py"])
+            run(["python", "scripts/build_joint_numeric_zi_distribution_build_blocker_status_v1.py"])
+            run(["python", "scripts/validate_joint_numeric_zi_distribution_build_blocker_status_v1.py"])
         run(["python", "scripts/build_joint_post_replay_validation_roadmap_v1.py"])
         run(["python", "scripts/validate_joint_post_replay_validation_roadmap_v1.py"])
     run(["python", "scripts/build_joint_non_lensing_lift_diagnostic_v1.py"])

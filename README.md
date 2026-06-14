@@ -6475,6 +6475,24 @@ protocol and currently exposed matched-control distributions. It is prepared
 but not completed; it does not authorize `T_joint`, endpoint scoring, or
 validation.
 
+The current numeric `z_i` distribution-build blocker status is recorded in:
+
+```text
+data/derived/joint_numeric_zi_distribution_build_blocker_status_v1.csv
+data/derived/joint_numeric_zi_distribution_build_blocker_status_v1_summary.csv
+docs/joint_numeric_zi_distribution_build_blocker_status_v1.md
+scripts/build_joint_numeric_zi_distribution_build_blocker_status_v1.py
+scripts/validate_joint_numeric_zi_distribution_build_blocker_status_v1.py
+```
+
+Current blocker:
+
+`numeric_zi_distribution_build_authorization_response_missing`
+
+The next required action is to obtain and validate a completed reviewer
+response. Until then, no `z_i`, `T_joint`, endpoint scoring, or validation is
+authorized.
+
 The current same-statistic execution blocker ledger is recorded in:
 
 ```text
