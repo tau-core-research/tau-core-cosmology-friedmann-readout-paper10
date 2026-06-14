@@ -1121,6 +1121,18 @@ block-diagonal covariance route and matched-control readiness boundary.  The
 package itself is not a replay: direct scoring remains forbidden and no
 permission-only replay is allowed until a completed reviewer response is
 imported.
+A completed same-statistic authorization response now permits only preparation
+of a guarded permission-only package under this symbolic statistic.  A further
+same-statistic execution authorization response then permits exactly one
+permission-only execution while keeping endpoint validation, cosmological
+validation, and physical-validation claims false.  The resulting guarded replay
+has status
+\texttt{JOINT\_GUARDED\_REPLAY\_PERMISSION\_ONLY\_COMPLETE\_NOT\_VALIDATION}.
+It contains three active blocks; all three are positive or caveated-positive in
+their local diagnostic sense: KiDS/COSEBIs low mode is caveated, the
+observer/path low-\(z\) block beats its best local control, and the DESI
+shape/time-readout block exceeds its best local control.  This is a
+permission-only diagnostic replay, not a validation result.
 Finally, a consolidated post-replay roadmap records the only permitted order of
 promotion: close the KiDS physical-promotion chain, close covariance by either
 a source-native cross-probe product or a reviewed caveated block-diagonal
@@ -1212,6 +1224,16 @@ but only in the protocol-score sense.  Its recorded status remains
 \end{gathered}
 \]
 
+After the same-statistic reviewer chain was completed, one permission-only
+joint replay was also run under the shared symbolic-statistic boundary.  The
+replay remains diagnostic and non-validating, but it is internally consistent:
+all three active blocks are positive or caveated-positive under their local
+permission-only definitions.  The replay summary records three active blocks
+and three positive-or-caveated support blocks, with validation flags kept false.
+This strengthens the paper's internal preflight picture, but it does not change
+the claim boundary: it is not endpoint validation, not cosmological validation,
+and not physical proof.
+
 The interpretation is therefore deliberately narrow.  The current data products
 show that several Tau-Core-style readout/projection channels can be made
 operational and that the strongest source-supported channels form a nonempty
@@ -1267,7 +1289,15 @@ The execution plan is frozen as
 \texttt{JOINT\_GUARDED\_REPLAY\_EXECUTION\_PLAN\_READY\_NOT\_RUN}; the present
 runner and output validator are now prepared, but the replay is still blocked
 until a separate execution authorization response is completed and imported.
-The current blocker is \texttt{execution\_authorization\_response\_missing}.
+The same-statistic execution authorization response has now also been imported.
+It authorizes only one permission-only execution under the shared symbolic
+statistic and matched-control boundary:
+\texttt{AUTHORIZE\_SAME\_STATISTIC\_PERMISSION\_ONLY\_EXECUTION\_NOT\_VALIDATION}.
+That replay has been run once and validated as
+\texttt{JOINT\_GUARDED\_REPLAY\_PERMISSION\_ONLY\_COMPLETE\_NOT\_VALIDATION}.
+The current same-statistic blocker ledger therefore records
+\texttt{permission\_only\_replay\_completed\_not\_validation}: preserve the
+outputs, but do not promote them without a separate validation protocol.
 The matched-control suite is likewise specified but not implemented: the
 control families are now named, while their execution is blocked until the same
 covariance/statistic is available for candidate and controls.

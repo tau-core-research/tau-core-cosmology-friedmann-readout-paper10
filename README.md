@@ -6283,6 +6283,37 @@ The importer rejects incomplete templates and responses that use forbidden
 inputs or claim endpoint, cosmological, or physical validation. A positive
 response may only authorize one permission-only execution.
 
+The completed same-statistic execution response has now been imported and
+authorizes one permission-only execution:
+
+```text
+data/derived/joint_same_statistic_execution_authorization_response_v1.csv
+data/derived/joint_same_statistic_execution_authorization_response_v1_summary.csv
+```
+
+Decision:
+
+`AUTHORIZE_SAME_STATISTIC_PERMISSION_ONLY_EXECUTION_NOT_VALIDATION`
+
+The permission-only replay has been run and validated under the same-statistic
+boundary:
+
+```text
+data/derived/joint_guarded_replay_permission_only_grid_v1.csv
+data/derived/joint_guarded_replay_permission_only_summary_v1.csv
+docs/joint_guarded_replay_permission_only_v1.md
+```
+
+The replay records three active blocks, with all three positive or caveated
+positive under their local permission-only diagnostics:
+
+- KiDS/COSEBIs low mode: caveated support.
+- observer/path low-z: candidate beats the best control.
+- DESI shape/time readout: candidate exceeds the best control.
+
+This is still not endpoint validation, not cosmological validation, and not
+physical validation.
+
 The current same-statistic execution blocker ledger is recorded in:
 
 ```text
@@ -6293,9 +6324,9 @@ scripts/build_joint_same_statistic_execution_blocker_status_v1.py
 scripts/validate_joint_same_statistic_execution_blocker_status_v1.py
 ```
 
-Current blocker:
+Current blocker/status:
 
-`same_statistic_execution_authorization_response_missing`
+`permission_only_replay_completed_not_validation`
 
 The consolidated post-replay validation roadmap is recorded in:
 
