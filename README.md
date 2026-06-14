@@ -6571,6 +6571,42 @@ under the frozen shell `T_joint = sum_i q_i z_i`. It still does not authorize
 new endpoint scores, endpoint validation, cosmological validation, or physical
 validation.
 
+A completed numeric `T_joint` reviewer response can be imported and validated
+with:
+
+```bash
+python scripts/import_joint_numeric_t_joint_authorization_response_v1.py \
+  /path/to/completed_reviewer_response.csv
+python scripts/build_joint_numeric_t_joint_blocker_status_v1.py
+python scripts/validate_joint_numeric_t_joint_blocker_status_v1.py
+```
+
+The accepting reviewer responses are exact-string gated. The short internal
+tokens are:
+`authorize_numeric_t_joint_once`,
+`accept_frozen_numeric_inputs`,
+`accept_caveated_covariance_boundary`, and
+`accept_numeric_t_joint_no_validation`.
+The accepted external-reviewer aliases are:
+`AUTHORIZE_NUMERIC_T_JOINT_LEDGER_ONLY_NOT_ENDPOINT_SCORING`,
+`ACCEPT_FROZEN_QI_ZI_INPUTS_NO_RETUNING`,
+`ACCEPT_CAVEATED_COVARIANCE_BOUNDARY`, and
+`ACCEPT_NUMERIC_TJOINT_NO_VALIDATION`.
+
+The current numeric `T_joint` blocker status is recorded in:
+
+```text
+data/derived/joint_numeric_t_joint_blocker_status_v1.csv
+data/derived/joint_numeric_t_joint_blocker_status_v1_summary.csv
+docs/joint_numeric_t_joint_blocker_status_v1.md
+scripts/build_joint_numeric_t_joint_blocker_status_v1.py
+scripts/validate_joint_numeric_t_joint_blocker_status_v1.py
+```
+
+Current blocker:
+
+`numeric_t_joint_authorization_response_missing`
+
 The current same-statistic execution blocker ledger is recorded in:
 
 ```text
