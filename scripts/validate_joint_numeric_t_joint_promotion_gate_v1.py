@@ -10,12 +10,11 @@ OUT = ROOT / "data/derived/joint_numeric_t_joint_promotion_gate_v1.csv"
 SUMMARY = ROOT / "data/derived/joint_numeric_t_joint_promotion_gate_v1_summary.csv"
 DOC = ROOT / "docs/joint_numeric_t_joint_promotion_gate_v1.md"
 CLAIM_BOUNDARY = "joint_numeric_t_joint_promotion_gate_not_scoring_not_validation"
-VERDICT = "NUMERIC_T_JOINT_PROMOTION_BLOCKED_SYMBOLIC_PREREQS_PARTIAL_PASS"
+VERDICT = "NUMERIC_T_JOINT_LEDGER_BUILT_PROMOTION_STILL_BLOCKED_FOR_ENDPOINT_SCORING"
 EXPECTED_BLOCKED = {
-    "NTJ_05_NUMERIC_CHANNEL_ZI_BINDING",
-    "NTJ_06_NUMERIC_CONTROL_EXECUTION_BINDING",
-    "NTJ_07_CROSS_PROBE_COVARIANCE_CLOSURE",
-    "NTJ_08_NO_VALIDATION_AUTHORIZATION_YET",
+    "NTJ_07_NUMERIC_CONTROL_EXECUTION_BINDING",
+    "NTJ_08_CROSS_PROBE_COVARIANCE_CLOSURE",
+    "NTJ_09_NO_ENDPOINT_SCORING_AUTHORIZATION_YET",
 }
 
 
@@ -41,11 +40,14 @@ def require(condition: bool, message: str) -> None:
 def main() -> None:
     rows = read_rows(OUT)
     summary = read_one(SUMMARY)
-    require(len(rows) == 8, "expected eight numeric-promotion criteria")
-    require(summary["criteria_total"] == "8", "summary total mismatch")
-    require(summary["criteria_passed"] == "4", "expected four passed symbolic prerequisites")
-    require(summary["criteria_blocked"] == "4", "expected four blocked numeric criteria")
+    require(len(rows) == 9, "expected nine numeric-promotion criteria")
+    require(summary["criteria_total"] == "9", "summary total mismatch")
+    require(summary["criteria_passed"] == "6", "expected six passed prerequisites including numeric ledgers")
+    require(summary["criteria_blocked"] == "3", "expected three blocked endpoint-scoring criteria")
     require(summary["numeric_t_joint_promotion_ready"] == "false", "numeric promotion must remain blocked")
+    require(summary["numeric_zi_defined"] == "true", "numeric z_i ledger must be defined")
+    require(summary["numeric_t_joint_ledger_built"] == "true", "numeric T_joint ledger must be built")
+    require(float(summary["numeric_t_joint"]) > 0, "numeric T_joint must be positive in current ledger")
     require(summary["same_statistic_control_numeric_ready"] == "false", "numeric controls must remain blocked")
     require(summary["cross_probe_covariance_closed"] == "false", "covariance must remain open")
     require(summary["verdict"] == VERDICT, "unexpected verdict")
@@ -74,6 +76,7 @@ def main() -> None:
     text = DOC.read_text()
     for marker in [
         "numeric-promotion gate",
+        "numeric T_joint ledger built",
         "not scoring",
         "not validation",
         VERDICT,

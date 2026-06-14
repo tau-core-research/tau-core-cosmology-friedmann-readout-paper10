@@ -11,8 +11,10 @@ or validation package can be prepared.
 
 Current result:
 
-- criteria passed: `4/8`
+- criteria passed: `6/9`
+- numeric T_joint ledger built: `true`
+- numeric T_joint: `4.142466300799e+00`
 - numeric T_joint promotion ready: `false`
 - cross-probe covariance closed: `false`
 - same-statistic numeric controls ready: `false`
-- verdict: `NUMERIC_T_JOINT_PROMOTION_BLOCKED_SYMBOLIC_PREREQS_PARTIAL_PASS`
+- verdict: `NUMERIC_T_JOINT_LEDGER_BUILT_PROMOTION_STILL_BLOCKED_FOR_ENDPOINT_SCORING`

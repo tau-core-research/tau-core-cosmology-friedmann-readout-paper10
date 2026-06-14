@@ -10,6 +10,9 @@ SHELL = ROOT / "data/derived/joint_single_statistic_protocol_shell_v1_summary.cs
 BINDING = ROOT / "data/derived/joint_symbolic_statistic_binding_status_v1_summary.csv"
 COVERAGE = ROOT / "data/derived/joint_same_statistic_control_coverage_status_v1_summary.csv"
 COVARIANCE = ROOT / "data/derived/joint_covariance_resolution_plan_v1_summary.csv"
+ZI_LEDGER = ROOT / "data/derived/joint_numeric_zi_distribution_ledger_v1_summary.csv"
+TJOINT_LEDGER = ROOT / "data/derived/joint_numeric_t_joint_ledger_v1_summary.csv"
+TJOINT_BLOCKER = ROOT / "data/derived/joint_numeric_t_joint_blocker_status_v1_summary.csv"
 OUT = ROOT / "data/derived/joint_numeric_t_joint_promotion_gate_v1.csv"
 SUMMARY = ROOT / "data/derived/joint_numeric_t_joint_promotion_gate_v1_summary.csv"
 DOC = ROOT / "docs/joint_numeric_t_joint_promotion_gate_v1.md"
@@ -17,13 +20,17 @@ CLAIM_BOUNDARY = "joint_numeric_t_joint_promotion_gate_not_scoring_not_validatio
 
 
 def read_one(path: Path) -> dict[str, str]:
-    if not path.exists():
-        raise SystemExit(f"missing required artifact: {path.relative_to(ROOT)}")
-    with path.open(newline="") as f:
-        rows = list(csv.DictReader(f))
+    rows = read_rows(path)
     if len(rows) != 1:
         raise SystemExit(f"{path.relative_to(ROOT)} must contain exactly one row")
     return rows[0]
+
+
+def read_rows(path: Path) -> list[dict[str, str]]:
+    if not path.exists():
+        raise SystemExit(f"missing required artifact: {path.relative_to(ROOT)}")
+    with path.open(newline="") as f:
+        return list(csv.DictReader(f))
 
 
 def write_csv(path: Path, rows: list[dict[str, str]]) -> None:
@@ -62,6 +69,13 @@ def main() -> None:
     binding = read_one(BINDING)
     coverage = read_one(COVERAGE)
     covariance = read_one(COVARIANCE)
+    zi_rows = read_rows(ZI_LEDGER)
+    zi_aggregate = [row for row in zi_rows if row.get("channel_id") == "all_channels"]
+    if len(zi_aggregate) != 1:
+        raise SystemExit("numeric z_i ledger summary must contain one all_channels aggregate row")
+    zi_ledger = zi_aggregate[0]
+    tjoint_ledger = read_one(TJOINT_LEDGER)
+    tjoint_blocker = read_one(TJOINT_BLOCKER)
 
     if shell["symbolic_joint_statistic"] != "T_joint = sum_i q_i z_i":
         raise SystemExit("unexpected symbolic joint statistic")
@@ -69,6 +83,14 @@ def main() -> None:
         raise SystemExit("symbolic binding must pass before numeric promotion gate")
     if coverage["verdict"] != "SAME_STATISTIC_CONTROL_COVERAGE_SYMBOLIC_PROGRESS_NUMERIC_BLOCKED":
         raise SystemExit("control coverage status must be current")
+    if zi_ledger["numeric_z_i_defined"] != "true":
+        raise SystemExit("numeric z_i ledger must define all channel z_i values")
+    if tjoint_ledger["numeric_t_joint_allowed"] != "true":
+        raise SystemExit("numeric T_joint ledger must be authorized")
+    if tjoint_ledger["computes_endpoint_score_now"] != "false":
+        raise SystemExit("numeric T_joint ledger must not compute endpoint score")
+    if tjoint_blocker["current_blocker"] != "numeric_t_joint_ledger_built_endpoint_scoring_authorization_missing":
+        raise SystemExit("numeric T_joint blocker status is not current")
 
     rows = [
         gate_row(
@@ -102,26 +124,32 @@ def main() -> None:
         gate_row(
             "NTJ_05_NUMERIC_CHANNEL_ZI_BINDING",
             "Numeric z_i definitions and input artifacts are executable for every active channel.",
-            "blocked",
-            "symbolic_channel_statistic_only",
+            "pass",
+            "joint_numeric_zi_distribution_ledger_v1_summary.csv; numeric_z_i_defined=true",
         ),
         gate_row(
-            "NTJ_06_NUMERIC_CONTROL_EXECUTION_BINDING",
+            "NTJ_06_NUMERIC_T_JOINT_LEDGER_BUILT",
+            "The frozen numeric T_joint ledger has been built once from q_i and z_i.",
+            "pass",
+            f"T_joint={tjoint_ledger['numeric_t_joint']}; computes_endpoint_score_now=false",
+        ),
+        gate_row(
+            "NTJ_07_NUMERIC_CONTROL_EXECUTION_BINDING",
             "Matched controls are executable under the same numeric T_joint.",
             "blocked",
             "sign_flip_and_block_drop_are_symbolic_only; shuffled/wrong/scope controls not numeric",
         ),
         gate_row(
-            "NTJ_07_CROSS_PROBE_COVARIANCE_CLOSURE",
+            "NTJ_08_CROSS_PROBE_COVARIANCE_CLOSURE",
             "Cross-probe covariance or reviewed surrogate is closed for candidate and controls together.",
             "blocked",
             f"cross_probe_covariance_defined={covariance['cross_probe_covariance_defined']}",
         ),
         gate_row(
-            "NTJ_08_NO_VALIDATION_AUTHORIZATION_YET",
+            "NTJ_09_NO_ENDPOINT_SCORING_AUTHORIZATION_YET",
             "A separate validation authorization package is required after numeric binding.",
             "blocked",
-            "no_numeric_validation_authorization_package",
+            tjoint_blocker["current_blocker"],
         ),
     ]
 
@@ -137,13 +165,16 @@ def main() -> None:
         "cross_probe_covariance_closed": covariance["cross_probe_covariance_defined"],
         "same_statistic_control_symbolic_complete_families": coverage["symbolic_complete_families"],
         "same_statistic_control_numeric_ready": "false",
+        "numeric_zi_defined": zi_ledger["numeric_z_i_defined"],
+        "numeric_t_joint_ledger_built": "true",
+        "numeric_t_joint": tjoint_ledger["numeric_t_joint"],
         "computes_numeric_statistic_now": "false",
         "endpoint_scoring_allowed": "false",
         "endpoint_validation_claimed": "false",
         "cosmological_validation_claimed": "false",
         "physical_validation_claimed": "false",
-        "next_required_action": "bind_numeric_channel_z_i_and_covariance_then_promote_controls_under_same_T_joint",
-        "verdict": "NUMERIC_T_JOINT_PROMOTION_BLOCKED_SYMBOLIC_PREREQS_PARTIAL_PASS",
+        "next_required_action": "prepare_or_build_same_numeric_T_joint_control_suite_and_separate_endpoint_scoring_authorization",
+        "verdict": "NUMERIC_T_JOINT_LEDGER_BUILT_PROMOTION_STILL_BLOCKED_FOR_ENDPOINT_SCORING",
         "claim_boundary": CLAIM_BOUNDARY,
     }
     write_csv(OUT, rows)
@@ -166,6 +197,8 @@ def main() -> None:
                 "Current result:",
                 "",
                 f"- criteria passed: `{summary['criteria_passed']}/{summary['criteria_total']}`",
+                f"- numeric T_joint ledger built: `{summary['numeric_t_joint_ledger_built']}`",
+                f"- numeric T_joint: `{summary['numeric_t_joint']}`",
                 f"- numeric T_joint promotion ready: `{summary['numeric_t_joint_promotion_ready']}`",
                 f"- cross-probe covariance closed: `{summary['cross_probe_covariance_closed']}`",
                 f"- same-statistic numeric controls ready: `{summary['same_statistic_control_numeric_ready']}`",
