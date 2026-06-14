@@ -2166,6 +2166,13 @@ the DESI route has \(6\) matched controls, a best-control margin fraction
 and cannot be used to justify a channel-distinguishability penalty or
 \(T_{\rm joint}\) rescoring.
 
+The candidate/control symmetry gate then closes the bookkeeping loop.  The
+route-tag scaffold is symmetric because it depends only on frozen channel
+descriptors and is available for all \(26\) numeric controls as well as the
+candidate.  However, it is constant across rows and therefore not a nontrivial
+row-level penalty.  The recorded verdict is
+\(\texttt{SYMMETRY\_SCAFFOLD\_AVAILABLE\_BUT\_NO\_NONTRIVIAL\_PENALTY}\).
+
 \bibliographystyle{plain}
 \bibliography{refs}
 \end{document}
