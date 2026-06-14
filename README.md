@@ -6314,6 +6314,25 @@ positive under their local permission-only diagnostics:
 This is still not endpoint validation, not cosmological validation, and not
 physical validation.
 
+The same-statistic binding status is now split into symbolic and executable
+levels:
+
+```text
+data/derived/joint_symbolic_statistic_binding_status_v1.csv
+data/derived/joint_symbolic_statistic_binding_status_v1_summary.csv
+docs/joint_symbolic_statistic_binding_status_v1.md
+scripts/build_joint_symbolic_statistic_binding_status_v1.py
+scripts/validate_joint_symbolic_statistic_binding_status_v1.py
+```
+
+Verdict:
+
+`SYMBOLIC_SAME_STATISTIC_BINDING_PASSED_NUMERIC_VALIDATION_BINDING_BLOCKED`
+
+This records that the symbolic shared-statistic condition has passed, while a
+numeric executable validation statistic and cross-probe covariance closure
+remain blocked.
+
 The current same-statistic execution blocker ledger is recorded in:
 
 ```text
