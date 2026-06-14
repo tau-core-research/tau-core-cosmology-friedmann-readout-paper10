@@ -8,8 +8,8 @@ This ledger records whether the numeric channel-level `z_i`
 distribution build is authorized. At this stage, the authorization
 package is ready but no completed reviewer response is present.
 
-Current blocker: `numeric_zi_distribution_build_authorization_response_missing`.
-Next required action: `obtain_completed_reviewer_response_then_import_and_validate`.
+Current blocker: `numeric_zi_distribution_build_authorized_but_not_run`.
+Next required action: `run_numeric_zi_distribution_build_only_after_separate_script_and_validation_guard`.
 
 No `z_i`, `T_joint`, endpoint scoring, cosmological validation, or
 physical validation is authorized by this artifact.

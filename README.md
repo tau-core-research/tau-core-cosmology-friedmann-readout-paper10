@@ -6507,11 +6507,17 @@ Accepted responses only authorize a numeric channel-level `z_i` distribution
 ledger. They do not authorize `T_joint`, endpoint scoring, cosmological
 validation, or physical validation.
 
-The accepting reviewer responses are exact-string gated:
+The accepting reviewer responses are exact-string gated. The short internal
+tokens are:
 `authorize_distribution_build`,
 `accept_caveated_distribution_boundary`,
 `accept_frozen_center_scale_rule`, and
 `accept_no_t_joint_promotion`.
+The accepted external-reviewer aliases are:
+`AUTHORIZE_NUMERIC_ZI_DISTRIBUTION_BUILD_ONLY_NOT_TJOINT`,
+`ACCEPT_CAVEATED_DISTRIBUTION_BOUNDARY`,
+`ACCEPT_FROZEN_MEDIAN_MAD_CONTROL_ONLY_RULE`, and
+`ACCEPT_NO_TJOINT_PROMOTION_DISTRIBUTION_LEDGER_ONLY`.
 
 The current same-statistic execution blocker ledger is recorded in:
 

@@ -14,10 +14,22 @@ PACKAGE_SUMMARY = ROOT / "data/derived/joint_numeric_zi_distribution_build_autho
 PACKAGE_ID = "JOINT_NUMERIC_ZI_DISTRIBUTION_BUILD_AUTHORIZATION_PACKAGE_V1"
 CLAIM_BOUNDARY = "joint_numeric_zi_distribution_build_authorization_not_scoring_not_validation"
 EXPECTED = {
-    "NZD_Q1_SCOPE": "authorize_distribution_build",
-    "NZD_Q2_CAVEATS": "accept_caveated_distribution_boundary",
-    "NZD_Q3_FROZEN_RULE": "accept_frozen_center_scale_rule",
-    "NZD_Q4_NO_PROMOTION": "accept_no_t_joint_promotion",
+    "NZD_Q1_SCOPE": {
+        "authorize_distribution_build",
+        "AUTHORIZE_NUMERIC_ZI_DISTRIBUTION_BUILD_ONLY_NOT_TJOINT",
+    },
+    "NZD_Q2_CAVEATS": {
+        "accept_caveated_distribution_boundary",
+        "ACCEPT_CAVEATED_DISTRIBUTION_BOUNDARY",
+    },
+    "NZD_Q3_FROZEN_RULE": {
+        "accept_frozen_center_scale_rule",
+        "ACCEPT_FROZEN_MEDIAN_MAD_CONTROL_ONLY_RULE",
+    },
+    "NZD_Q4_NO_PROMOTION": {
+        "accept_no_t_joint_promotion",
+        "ACCEPT_NO_TJOINT_PROMOTION_DISTRIBUTION_LEDGER_ONLY",
+    },
 }
 
 
@@ -117,7 +129,7 @@ def main() -> None:
         if value == "reject":
             accepted = False
             rejected += 1
-        elif value != EXPECTED[qid]:
+        elif value not in EXPECTED[qid]:
             raise SystemExit(f"{qid}: unsupported reviewer_response {value}")
 
     if accepted:
