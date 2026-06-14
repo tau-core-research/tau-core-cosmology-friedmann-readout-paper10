@@ -15,6 +15,7 @@ EXPECTED_BLOCKERS = {
     "control_suite_authorization_response_incomplete",
     "control_suite_authorization_rejected_or_incomplete",
     "control_suite_authorized_numeric_control_build_missing",
+    "control_suite_built_endpoint_scoring_authorization_missing",
 }
 
 
@@ -43,6 +44,7 @@ def main() -> None:
     require(DOC.exists(), "missing doc")
     for item, label in [(row, "row"), (summary, "summary")]:
         require(item["claim_boundary"] == CLAIM_BOUNDARY, f"{label}: claim boundary mismatch")
+        require(item["numeric_control_suite_exists"] in {"true", "false"}, f"{label}: bad numeric_control_suite_exists")
         require(item["control_suite_authorization_allowed"] in {"true", "false"}, f"{label}: bad control_suite_authorization_allowed")
         require(item["current_blocker"] in EXPECTED_BLOCKERS, f"{label}: unexpected blocker")
         require(float(item["frozen_numeric_t_joint"]) > 0.0, f"{label}: bad frozen T_joint")

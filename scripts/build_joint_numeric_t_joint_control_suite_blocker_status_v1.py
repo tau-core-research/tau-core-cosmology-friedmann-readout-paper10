@@ -9,6 +9,7 @@ ROOT = Path(__file__).resolve().parents[1]
 PACKAGE_SUMMARY = ROOT / "data/derived/joint_numeric_t_joint_control_suite_authorization_package_v1_summary.csv"
 RESPONSE_SUMMARY = ROOT / "data/derived/joint_numeric_t_joint_control_suite_authorization_response_v1_summary.csv"
 PROMOTION = ROOT / "data/derived/joint_numeric_t_joint_promotion_gate_v1_summary.csv"
+CONTROL_SUITE = ROOT / "data/derived/joint_numeric_t_joint_control_suite_v1_summary.csv"
 OUT = ROOT / "data/derived/joint_numeric_t_joint_control_suite_blocker_status_v1.csv"
 SUMMARY = ROOT / "data/derived/joint_numeric_t_joint_control_suite_blocker_status_v1_summary.csv"
 DOC = ROOT / "docs/joint_numeric_t_joint_control_suite_blocker_status_v1.md"
@@ -55,11 +56,15 @@ def main() -> None:
             raise SystemExit(f"unsafe package field: {field}")
 
     response_exists = RESPONSE_SUMMARY.exists()
+    control_suite_exists = CONTROL_SUITE.exists()
     if response_exists:
         response = read_one(RESPONSE_SUMMARY)
         review_completed = response.get("review_completed", "false")
         control_suite_allowed = response.get("control_suite_authorization_allowed", "false")
-        if review_completed == "true" and control_suite_allowed == "true":
+        if review_completed == "true" and control_suite_allowed == "true" and control_suite_exists:
+            current_blocker = "control_suite_built_endpoint_scoring_authorization_missing"
+            next_action = "prepare_separate_endpoint_scoring_authorization_or_control_suite_review_before_any_validation_claim"
+        elif review_completed == "true" and control_suite_allowed == "true":
             current_blocker = "control_suite_authorized_numeric_control_build_missing"
             next_action = "build_numeric_same_t_joint_control_suite_without_endpoint_scoring"
         elif review_completed == "true":
@@ -79,6 +84,7 @@ def main() -> None:
         "status": "JOINT_NUMERIC_T_JOINT_CONTROL_SUITE_BLOCKED_NOT_SCORING_NOT_VALIDATION",
         "authorization_package_status": package["status"],
         "authorization_response_exists": str(response_exists).lower(),
+        "numeric_control_suite_exists": str(control_suite_exists).lower(),
         "review_completed": review_completed,
         "control_suite_authorization_allowed": control_suite_allowed,
         "frozen_numeric_t_joint": package["frozen_numeric_t_joint"],
@@ -98,6 +104,7 @@ def main() -> None:
                 "status_id": row["status_id"],
                 "status": row["status"],
                 "authorization_response_exists": row["authorization_response_exists"],
+                "numeric_control_suite_exists": row["numeric_control_suite_exists"],
                 "review_completed": row["review_completed"],
                 "control_suite_authorization_allowed": row["control_suite_authorization_allowed"],
                 "frozen_numeric_t_joint": row["frozen_numeric_t_joint"],
@@ -111,7 +118,9 @@ def main() -> None:
                     "control_suite_blocked_waiting_for_reviewer_response"
                     if not response_exists
                     else (
-                        "control_suite_authorized_waiting_for_numeric_control_build"
+                        "control_suite_built_waiting_for_endpoint_authorization"
+                        if control_suite_allowed == "true" and control_suite_exists
+                        else "control_suite_authorized_waiting_for_numeric_control_build"
                         if control_suite_allowed == "true"
                         else "control_suite_response_present_requires_followup"
                     )

@@ -2070,10 +2070,16 @@ The completed authorization response accepts this narrow control-suite build
 scope while keeping endpoint scoring and validation false.  The current
 control-suite blocker ledger therefore records
 \[
-\texttt{control\_suite\_authorized\_numeric\_control\_build\_missing},
+\texttt{control\_suite\_built\_endpoint\_scoring\_authorization\_missing},
 \]
-so the next artifact may build the numeric same-\(T_{\rm joint}\)
-matched-control suite, but still not an endpoint score or validation result.
+after the numeric same-\(T_{\rm joint}\) matched-control suite is built.  The
+suite contains 26 numeric controls across sign-flip, block-drop,
+shuffled-channel, matched-index, and null-readout families, plus one
+scope/forbidden-input guard row.  None of the 26 numeric controls reaches or
+exceeds the candidate value \(T_{\rm joint}=4.142466300799\).  This is a
+prevalidation control-suite ledger only: it is not an endpoint score,
+likelihood ratio, \(p\)-value, cosmological validation, or physical-validation
+claim.
 
 \bibliographystyle{plain}
 \bibliography{refs}
