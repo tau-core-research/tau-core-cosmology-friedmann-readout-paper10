@@ -684,6 +684,10 @@ docs/joint_row_level_numeric_penalty_blocker_status_v1.md
 scripts/build_joint_row_level_numeric_penalty_blocker_status_v1.py
 scripts/validate_joint_row_level_numeric_penalty_blocker_status_v1.py
 scripts/run_joint_row_level_numeric_penalty_values_guarded_v1.py
+data/derived/joint_row_level_numeric_penalty_preflight_v1.csv
+data/derived/joint_row_level_numeric_penalty_preflight_v1_summary.csv
+docs/joint_row_level_numeric_penalty_preflight_v1.md
+scripts/check_joint_row_level_numeric_penalty_preflight_v1.py
 ```
 
 The package status is
@@ -716,6 +720,15 @@ python scripts/run_joint_row_level_numeric_penalty_values_guarded_v1.py
 In the current repository state this command must exit blocked. It is only a
 guard; even after reviewer authorization it will not compute values itself, but
 will require a separate numeric penalty value package.
+
+A one-command preflight verifies the whole boundary:
+
+```bash
+python scripts/check_joint_row_level_numeric_penalty_preflight_v1.py
+```
+
+The current expected verdict is
+`PREFLIGHT_PASS_NUMERIC_PENALTY_CORRECTLY_BLOCKED`.
 
 A block-diagonal likelihood-surrogate protocol shell is now recorded in:
 
