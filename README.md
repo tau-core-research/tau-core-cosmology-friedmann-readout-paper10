@@ -6437,6 +6437,24 @@ control scale is unavailable or zero, the channel remains blocked rather than
 being rescued by a fitted normalization. This artifact still does not compute
 `z_i`, `T_joint`, endpoint scoring, or validation.
 
+The matched-control distribution readiness audit is recorded in:
+
+```text
+data/derived/joint_matched_control_distribution_readiness_v1.csv
+data/derived/joint_matched_control_distribution_readiness_v1_summary.csv
+docs/joint_matched_control_distribution_readiness_v1.md
+scripts/build_joint_matched_control_distribution_readiness_v1.py
+scripts/validate_joint_matched_control_distribution_readiness_v1.py
+```
+
+This audit checks whether the repository currently exposes the raw
+matched-control distributions needed by the frozen median/MAD rule. The
+current status is partial: the observer/path channel is ready for a future
+distribution build, the DESI shape/time channel is caveated-ready with a small
+control set, and the KiDS channel remains blocked because the current package
+exposes top-null and family-summary artifacts rather than the full raw
+matched-control distribution. No center, scale, `z_i`, or `T_joint` is computed.
+
 The current same-statistic execution blocker ledger is recorded in:
 
 ```text
