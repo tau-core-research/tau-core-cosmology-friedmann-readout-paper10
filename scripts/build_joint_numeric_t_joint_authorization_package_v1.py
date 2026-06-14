@@ -16,6 +16,7 @@ COV = ROOT / "data/derived/joint_cross_probe_covariance_closure_review_response_
 POLICY = ROOT / "data/source_manifest/joint_numeric_t_joint_authorization_policy_v1.csv"
 TEMPLATE = ROOT / "data/derived/joint_numeric_t_joint_authorization_response_template_v1.csv"
 DOC = ROOT / "docs/joint_numeric_t_joint_authorization_package_v1.md"
+INSTRUCTIONS = ROOT / "docs/joint_numeric_t_joint_authorization_reviewer_instructions_v1.md"
 MANIFEST = ROOT / "data/derived/joint_numeric_t_joint_authorization_package_v1_manifest.csv"
 SUMMARY = ROOT / "data/derived/joint_numeric_t_joint_authorization_package_v1_summary.csv"
 PACKAGE = ROOT / "data/derived/joint_numeric_t_joint_authorization_package_v1.zip"
@@ -193,7 +194,7 @@ def main() -> None:
         )
         + "\n"
     )
-    inputs = [POLICY, TEMPLATE, DOC, ZI_LEDGER, ZI_LEDGER_ROWS, ZI_BLOCKER, SHELL, COV]
+    inputs = [POLICY, TEMPLATE, DOC, INSTRUCTIONS, ZI_LEDGER, ZI_LEDGER_ROWS, ZI_BLOCKER, SHELL, COV]
     manifest = [manifest_row(path) for path in inputs]
     write_rows(MANIFEST, manifest)
     package_rows = manifest + [manifest_row(MANIFEST)]

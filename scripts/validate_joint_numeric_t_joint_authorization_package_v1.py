@@ -14,6 +14,7 @@ MANIFEST = ROOT / "data/derived/joint_numeric_t_joint_authorization_package_v1_m
 SUMMARY = ROOT / "data/derived/joint_numeric_t_joint_authorization_package_v1_summary.csv"
 TEMPLATE = ROOT / "data/derived/joint_numeric_t_joint_authorization_response_template_v1.csv"
 DOC = ROOT / "docs/joint_numeric_t_joint_authorization_package_v1.md"
+INSTRUCTIONS = ROOT / "docs/joint_numeric_t_joint_authorization_reviewer_instructions_v1.md"
 CLAIM_BOUNDARY = "joint_numeric_t_joint_authorization_not_endpoint_scoring_not_validation"
 
 
@@ -111,6 +112,16 @@ def main() -> None:
     text = DOC.read_text()
     for marker in ["T_joint = sum_i q_i z_i", "does not authorize new endpoint scores", CLAIM_BOUNDARY]:
         require(marker in text, f"doc missing marker: {marker}")
+    instructions = INSTRUCTIONS.read_text()
+    for marker in [
+        "AUTHORIZE_NUMERIC_T_JOINT_LEDGER_ONLY_NOT_ENDPOINT_SCORING",
+        "ACCEPT_FROZEN_QI_ZI_INPUTS_NO_RETUNING",
+        "ACCEPT_CAVEATED_COVARIANCE_BOUNDARY",
+        "ACCEPT_NUMERIC_TJOINT_NO_VALIDATION",
+    ]:
+        require(marker in instructions, f"instructions missing marker: {marker}")
+    with zipfile.ZipFile(PACKAGE) as zf:
+        require(str(INSTRUCTIONS.relative_to(ROOT)) in set(zf.namelist()), "zip missing reviewer instructions")
     print(f"JOINT_NUMERIC_T_JOINT_AUTHORIZATION_PACKAGE_V1_VALIDATED sha256={summary['zip_sha256']}")
 
 
