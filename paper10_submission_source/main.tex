@@ -1355,6 +1355,13 @@ alignment as a blocker, permits a later residual-blind \(\lambda_{\rm row}\)
 policy package, and keeps \(T_{\rm joint}\) rescoring and endpoint replay
 forbidden.  The blocker verdict is
 \texttt{PENALTY\_USE\_ROUTE\_PLANNING\_ALLOWED\_RESCORING\_STILL\_BLOCKED}.
+A cross-channel control-alignment design package has been prepared for the
+first open blocker.  It records the control-count imbalance
+\(1008:25:6\) across the KiDS, observer/path, and DESI channels, proposes a
+deterministic min-count index alignment after sorting controls by
+\(({\rm family},{\rm id})\), and exposes only \(6\) possible aligned control
+triples if accepted.  No aligned joint control values are computed in this
+package.
 Separately, the earlier same-statistic guarded-replay chain packages this
 boundary for external review.  It asks only whether a later guarded permission-only replay
 package may use the symbolic \(T_{\rm joint}\) shell under the caveated

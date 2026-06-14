@@ -7035,6 +7035,30 @@ The allowed next work is route planning only:
 2. build a separate residual-blind `lambda_row` policy package;
 3. only after both pass, consider a separate rescoring authorization package.
 
+Cross-channel control alignment design package:
+
+```bash
+python scripts/build_joint_row_level_cross_channel_control_alignment_review_package_v1.py
+python scripts/validate_joint_row_level_cross_channel_control_alignment_review_package_v1.py
+```
+
+```text
+data/derived/joint_row_level_cross_channel_control_alignment_review_package_v1.zip
+data/derived/joint_row_level_cross_channel_control_alignment_review_package_v1.zip.sha256
+data/derived/joint_row_level_cross_channel_control_alignment_review_response_template_v1.csv
+```
+
+Current package SHA-256:
+
+```text
+077268b34bbac09b1a11ee3a5121eaec62f3afbe657a81fb6133e60b54e398e4
+```
+
+This is only an alignment-design review package. It records the current
+control-count imbalance and proposes a deterministic min-count index alignment
+for review. It does not compute aligned joint control values, choose
+`lambda_row`, rescore `T_joint`, or authorize validation.
+
 ## Scope
 
 This is a protocol scaffold and branch-opening paper package. The next
