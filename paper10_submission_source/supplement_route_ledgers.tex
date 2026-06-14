@@ -2173,6 +2173,14 @@ candidate.  However, it is constant across rows and therefore not a nontrivial
 row-level penalty.  The recorded verdict is
 \(\texttt{SYMMETRY\_SCAFFOLD\_AVAILABLE\_BUT\_NO\_NONTRIVIAL\_PENALTY}\).
 
+The row-level source-availability audit gives the operational reason.  The
+observer-path route has a frozen low-\(z\) source row scope, and the DESI
+shape/time route has a local source-native shape vector.  These are not,
+however, the same row space: one is a supernova low-\(z\) observer/path scope
+and the other is a DESI BAO shape scope.  Candidate/control-symmetric per-row
+feature export is therefore incomplete, and the recorded verdict is
+\(\texttt{ROW\_LEVEL\_SOURCE\_FEATURES\_INCOMPLETE\_NO\_PENALTY}\).
+
 \bibliographystyle{plain}
 \bibliography{refs}
 \end{document}
