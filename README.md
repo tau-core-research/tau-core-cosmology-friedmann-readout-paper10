@@ -6455,6 +6455,26 @@ null-control distribution but only as endpoint-score-not-validation material,
 and the DESI shape/time channel is caveated-ready with a small control set. No
 center, scale, `z_i`, or `T_joint` is computed.
 
+The numeric `z_i` distribution-build authorization package is recorded in:
+
+```text
+data/source_manifest/joint_numeric_zi_distribution_build_authorization_policy_v1.csv
+data/derived/joint_numeric_zi_distribution_build_authorization_response_template_v1.csv
+data/derived/joint_numeric_zi_distribution_build_authorization_package_v1.zip
+data/derived/joint_numeric_zi_distribution_build_authorization_package_v1.zip.sha256
+data/derived/joint_numeric_zi_distribution_build_authorization_package_v1_manifest.csv
+data/derived/joint_numeric_zi_distribution_build_authorization_package_v1_summary.csv
+docs/joint_numeric_zi_distribution_build_authorization_package_v1.md
+scripts/build_joint_numeric_zi_distribution_build_authorization_package_v1.py
+scripts/validate_joint_numeric_zi_distribution_build_authorization_package_v1.py
+```
+
+This package asks an external reviewer whether a numeric channel-level `z_i`
+distribution build may be prepared from the frozen signed standardization
+protocol and currently exposed matched-control distributions. It is prepared
+but not completed; it does not authorize `T_joint`, endpoint scoring, or
+validation.
+
 The current same-statistic execution blocker ledger is recorded in:
 
 ```text
