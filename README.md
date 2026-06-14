@@ -6167,6 +6167,22 @@ statistic/covariance gates. Verdict:
 
 `MATCHED_CONTROL_RESOLUTION_PLAN_FROZEN_IMPLEMENTATION_BLOCKED_NOT_SCORING`
 
+The matched-control implementation-readiness ledger is recorded in:
+
+```text
+data/derived/joint_matched_control_implementation_readiness_v1.csv
+data/derived/joint_matched_control_implementation_readiness_v1_summary.csv
+docs/joint_matched_control_implementation_readiness_v1.md
+scripts/build_joint_matched_control_implementation_readiness_v1.py
+scripts/validate_joint_matched_control_implementation_readiness_v1.py
+```
+
+It separates design readiness from executable validation. Six control families
+have source-side implementation scaffolds but remain blocked by the missing
+single-statistic/covariance binding; two families remain upstream-blocked. The
+verdict is
+`MATCHED_CONTROL_IMPLEMENTATION_READINESS_HAS_DESIGNS_BUT_PROTOCOL_BINDING_BLOCKED`.
+
 The consolidated post-replay validation roadmap is recorded in:
 
 `data/derived/joint_post_replay_validation_roadmap_v1_summary.csv`

@@ -1102,6 +1102,12 @@ controls, scope/leakage controls, shared-statistic binding, and covariance
 binding.  Six families are planned but not implemented; two remain blocked by
 the upstream statistic/covariance gates.  Thus the control route is now
 specified, but still not executable as validation-facing scoring.
+An implementation-readiness ledger then separates design availability from
+executable validation.  Six control families have source-side implementation
+scaffolds, but they remain blocked by the missing single-statistic and
+covariance binding; the remaining two families are upstream-blocked.  This is
+still not scoring and not validation.  Its verdict is that matched-control
+designs exist, but protocol binding remains blocked.
 Finally, a consolidated post-replay roadmap records the only permitted order of
 promotion: close the KiDS physical-promotion chain, close covariance by either
 a source-native cross-probe product or a reviewed caveated block-diagonal
