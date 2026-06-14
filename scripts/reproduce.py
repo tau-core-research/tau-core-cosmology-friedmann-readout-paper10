@@ -1728,6 +1728,8 @@ def main() -> None:
         run(["python", "scripts/validate_joint_permission_replay_promotion_readiness_gate_v1.py"])
         run(["python", "scripts/build_joint_kids_caveated_block_resolution_plan_v1.py"])
         run(["python", "scripts/validate_joint_kids_caveated_block_resolution_plan_v1.py"])
+        run(["python", "scripts/build_joint_covariance_resolution_plan_v1.py"])
+        run(["python", "scripts/validate_joint_covariance_resolution_plan_v1.py"])
     run(["python", "scripts/build_joint_non_lensing_lift_diagnostic_v1.py"])
     run(["python", "scripts/validate_joint_non_lensing_lift_diagnostic_v1.py"])
     run(["python", "scripts/build_observer_path_strengthening_gate_v1.py"])

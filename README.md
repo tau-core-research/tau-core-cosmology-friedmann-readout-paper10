@@ -6030,6 +6030,22 @@ This plan computes no new scores and makes no validation claim. Verdict:
 
 `KIDS_JOINT_BLOCK_HAS_SIGNAL_BUT_CAVEAT_RESOLUTION_REQUIRES_PHYSICAL_PROMOTION_PROOFS`
 
+The covariance blocker is also expanded into a concrete route plan:
+
+`data/derived/joint_covariance_resolution_plan_v1_summary.csv`
+
+Allowed routes:
+
+1. source-native/source-frozen cross-probe covariance product,
+2. caveated block-diagonal surrogate,
+3. same-statistic matched-control binding under the chosen covariance route.
+
+The fastest currently documented route is the caveated block-diagonal surrogate
+plus same-statistic controls, but this remains non-validation and non-scoring.
+Verdict:
+
+`COVARIANCE_RESOLUTION_ROUTES_FROZEN_CROSS_PROBE_STILL_OPEN_NOT_SCORING`
+
 ## Scope
 
 This is a protocol scaffold and branch-opening paper package. The next
