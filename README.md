@@ -598,6 +598,22 @@ This closes the source-feature input blocker for a future row-level penalty,
 but it still does not define or run that penalty, authorize endpoint replay,
 claim validation, or permit `T_joint` rescoring.
 
+The corresponding non-scoring row-level penalty protocol shell is recorded in:
+
+```text
+data/derived/joint_row_level_penalty_protocol_shell_v1.csv
+data/derived/joint_row_level_penalty_protocol_shell_v1_summary.csv
+docs/joint_row_level_penalty_protocol_shell_v1.md
+scripts/build_joint_row_level_penalty_protocol_shell_v1.py
+scripts/validate_joint_row_level_penalty_protocol_shell_v1.py
+```
+
+It records `source_feature_inputs_complete=true`, but keeps
+`penalty_formula_defined=false`, `penalty_computed=false`, and
+`numeric_t_joint_rescoring_allowed=false`. The next required action is to
+freeze channel-local normalization and a candidate/control-symmetric transform
+before any scoring.
+
 A block-diagonal likelihood-surrogate protocol shell is now recorded in:
 
 ```text
