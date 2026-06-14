@@ -15,6 +15,7 @@ SUMMARY = ROOT / "data/derived/joint_numeric_t_joint_authorization_package_v1_su
 TEMPLATE = ROOT / "data/derived/joint_numeric_t_joint_authorization_response_template_v1.csv"
 DOC = ROOT / "docs/joint_numeric_t_joint_authorization_package_v1.md"
 INSTRUCTIONS = ROOT / "docs/joint_numeric_t_joint_authorization_reviewer_instructions_v1.md"
+EXTERNAL_MESSAGE = ROOT / "docs/joint_numeric_t_joint_authorization_external_reviewer_message_v1.md"
 CLAIM_BOUNDARY = "joint_numeric_t_joint_authorization_not_endpoint_scoring_not_validation"
 
 
@@ -122,6 +123,14 @@ def main() -> None:
         require(marker in instructions, f"instructions missing marker: {marker}")
     with zipfile.ZipFile(PACKAGE) as zf:
         require(str(INSTRUCTIONS.relative_to(ROOT)) in set(zf.namelist()), "zip missing reviewer instructions")
+        require(str(EXTERNAL_MESSAGE.relative_to(ROOT)) in set(zf.namelist()), "zip missing external reviewer message")
+    external_message = EXTERNAL_MESSAGE.read_text()
+    for marker in [
+        "You do not need repository access",
+        "AUTHORIZE_NUMERIC_T_JOINT_LEDGER_ONLY_NOT_ENDPOINT_SCORING",
+        "not evidence for cosmological or physical",
+    ]:
+        require(marker in external_message, f"external reviewer message missing marker: {marker}")
     print(f"JOINT_NUMERIC_T_JOINT_AUTHORIZATION_PACKAGE_V1_VALIDATED sha256={summary['zip_sha256']}")
 
 
