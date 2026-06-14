@@ -1049,7 +1049,17 @@ attempt records the uniform limit and the domain decomposition, but leaves mask
 quotient triviality, null projection/control routing, single-operator
 consistency, and gauge descent unproved.  Its verdict is
 \texttt{OPERATOR\_LEAKAGE\_CLOSURE\_ATTEMPT\_NARROWS\_PROOF\_BUT\_THEOREM\_REMAINS\_OPEN}.
-A separate covariance-resolution plan then freezes the second blocker.  The
+A parallel gauge/quotient descent closure attempt makes the second proof gate
+equally explicit.  Its target is representative independence: source
+representatives related by tile relabeling, source-basis recentering,
+admissible normalization changes, or gauge/null transformations must produce
+the same physical quotient class under the future survey-native operator.  The
+uniform mask-offset limit is available as a source-side check, but
+normalization invariance, tile-relabeling invariance, pure-mask control
+compatibility, and the single-operator dependency remain open.  Its verdict is
+\texttt{GAUGE\_QUOTIENT\_DESCENT\_CLOSURE\_ATTEMPT\_NARROWS\_PROOF\_BUT\_THEOREM\_REMAINS\_OPEN}.
+A separate covariance-resolution plan then freezes the joint-promotion
+covariance blocker.  The
 preferred route remains a source-native or source-frozen cross-probe covariance
 product, but no such product is currently available.  The fastest documented
 route is therefore a caveated block-diagonal surrogate, provided that the

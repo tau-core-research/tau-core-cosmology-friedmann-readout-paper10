@@ -6050,6 +6050,25 @@ current verdict is
 It computes no new score, uses no KiDS data-vector values, and leaves the KiDS
 block caveated.
 
+The parallel gauge/quotient descent blocker is narrowed here:
+
+```text
+data/derived/kids1000_cosebis_gauge_quotient_descent_closure_attempt_v1.csv
+data/derived/kids1000_cosebis_gauge_quotient_descent_closure_attempt_v1_summary.csv
+docs/kids1000_cosebis_gauge_quotient_descent_closure_attempt_v1.md
+scripts/build_kids1000_cosebis_gauge_quotient_descent_closure_attempt_v1.py
+scripts/validate_kids1000_cosebis_gauge_quotient_descent_closure_attempt_v1.py
+```
+
+This artifact states the minimal descent target: source representatives related
+by tile relabeling, source-basis recentering, admissible normalization changes,
+or gauge/null transformations must produce the same physical quotient class
+under the future survey-native operator. It preserves the uniform mask-offset
+limit but leaves normalization invariance, tile-relabeling invariance,
+pure-mask control compatibility, and the single-operator dependency open. The
+verdict is
+`GAUGE_QUOTIENT_DESCENT_CLOSURE_ATTEMPT_NARROWS_PROOF_BUT_THEOREM_REMAINS_OPEN`.
+
 The covariance blocker is also expanded into a concrete route plan:
 
 `data/derived/joint_covariance_resolution_plan_v1_summary.csv`
