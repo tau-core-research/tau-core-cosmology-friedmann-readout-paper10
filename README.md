@@ -5963,6 +5963,38 @@ That question belongs to a separate source-frozen `M0/M1/M2` decision protocol:
 no-dark Tau readout versus Tau base-substrate response versus a standard
 dark-sector benchmark.
 
+## Joint guarded replay status
+
+The joint guarded replay execution authorization response has been imported and
+validated:
+
+`data/derived/joint_guarded_replay_execution_authorization_response_v1_summary.csv`
+
+It authorizes exactly one permission-only guarded replay while keeping endpoint
+validation, cosmological validation, and physical validation false. The replay
+has now been run and validated:
+
+`data/derived/joint_guarded_replay_permission_only_summary_v1.csv`
+
+The active-block ledger is:
+
+`data/derived/joint_guarded_replay_permission_only_grid_v1.csv`
+
+Summary:
+
+- active blocks: `3`
+- positive or caveated support blocks: `3`
+- KiDS/COSEBIs low-mode: caveated low-tail support
+- observer/path low-z: candidate beats the best control in the permission-only
+  statistic
+- DESI shape/readout: candidate exceeds controls in the source-native shape
+  score
+
+This is a permission-only joint replay, not endpoint validation, not
+cosmological validation, and not physical proof. The claim boundary is:
+
+`joint_guarded_replay_permission_only_not_validation`
+
 ## Scope
 
 This is a protocol scaffold and branch-opening paper package. The next

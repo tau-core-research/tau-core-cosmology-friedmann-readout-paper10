@@ -65,12 +65,17 @@ def main() -> None:
                 "guarded_runner_and_execution_authorization_not_yet_prepared",
                 "execution_authorization_response_missing",
                 "execution_authorized_but_runner_not_yet_run",
+                "permission_only_replay_completed_not_validation",
                 "reviewer_rejected_run_template_authorization",
             },
             "unexpected post-response blocker",
         )
     require(
-        summary["verdict"] == "joint_guarded_replay_execution_blocked_until_completed_authorization_response",
+        summary["verdict"]
+        in {
+            "joint_guarded_replay_execution_blocked_until_completed_authorization_response",
+            "joint_guarded_replay_permission_only_complete_not_validation",
+        },
         "unexpected summary verdict",
     )
     text = DOC.read_text()

@@ -14,6 +14,7 @@ AUTH_PACKAGE_SUMMARY = ROOT / "data/derived/joint_guarded_replay_run_template_au
 AUTH_RESPONSE_SUMMARY = ROOT / "data/derived/joint_guarded_replay_run_template_authorization_response_v1_summary.csv"
 EXECUTION_PLAN_SUMMARY = ROOT / "data/derived/joint_guarded_replay_execution_plan_v1_summary.csv"
 EXECUTION_AUTH_RESPONSE = ROOT / "data/derived/joint_guarded_replay_execution_authorization_response_v1_summary.csv"
+PERMISSION_REPLAY_SUMMARY = ROOT / "data/derived/joint_guarded_replay_permission_only_summary_v1.csv"
 CLAIM_BOUNDARY = "joint_guarded_replay_execution_blocker_status_not_execution_not_scoring_not_validation"
 
 
@@ -84,6 +85,11 @@ def main() -> None:
                         if exec_auth.get("decision") == "AUTHORIZE_JOINT_GUARDED_REPLAY_PERMISSION_ONLY_EXECUTION_NOT_VALIDATION":
                             blocker = "execution_authorized_but_runner_not_yet_run"
                             next_action = "run_guarded_permission_only_replay_once_and_validate_outputs"
+                            if PERMISSION_REPLAY_SUMMARY.exists():
+                                replay = read_one(PERMISSION_REPLAY_SUMMARY)
+                                if replay.get("status") == "JOINT_GUARDED_REPLAY_PERMISSION_ONLY_COMPLETE_NOT_VALIDATION":
+                                    blocker = "permission_only_replay_completed_not_validation"
+                                    next_action = "preserve_outputs_and_do_not_promote_to_validation_without_new_protocol"
         elif response_decision == "JOINT_GUARDED_REPLAY_RUN_TEMPLATE_AUTHORIZATION_REJECTED_NOT_EXECUTION_NOT_SCORING":
             blocker = "reviewer_rejected_run_template_authorization"
             next_action = "revise_template_or_keep_joint_guarded_replay_blocked"
@@ -121,7 +127,9 @@ def main() -> None:
                 "endpoint_scoring_allowed": "false",
                 "endpoint_validation_claimed": "false",
                 "cosmological_validation_claimed": "false",
-                "verdict": "joint_guarded_replay_execution_blocked_until_completed_authorization_response",
+                "verdict": "joint_guarded_replay_permission_only_complete_not_validation"
+                if row["current_blocker"] == "permission_only_replay_completed_not_validation"
+                else "joint_guarded_replay_execution_blocked_until_completed_authorization_response",
                 "claim_boundary": CLAIM_BOUNDARY,
             }
         ],
@@ -138,8 +146,8 @@ def main() -> None:
                 f"Current blocker: `{row['current_blocker']}`.",
                 f"Next required action: `{row['next_required_action']}`.",
                 "",
-                "The replay remains blocked unless a completed external reviewer response is imported",
-                "and validates the execution authorization gate.",
+                "This ledger remains non-validation even after a permission-only replay.",
+                "Endpoint scoring and cosmological validation require a separate protocol.",
                 "",
                 f"Claim boundary: `{CLAIM_BOUNDARY}`.",
                 "",
