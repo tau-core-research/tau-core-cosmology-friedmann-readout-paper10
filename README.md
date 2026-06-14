@@ -7120,6 +7120,27 @@ data/derived/joint_row_level_lambda_policy_blocker_status_v1_summary.csv
 docs/joint_row_level_lambda_policy_blocker_status_v1.md
 ```
 
+Both open blockers can also be sent together to a reviewer without repository
+access:
+
+```bash
+python scripts/build_joint_row_level_open_blocker_reviewer_handoff_v1.py
+python scripts/validate_joint_row_level_open_blocker_reviewer_handoff_v1.py
+```
+
+```text
+data/derived/joint_row_level_open_blocker_reviewer_handoff_v1.zip
+data/derived/joint_row_level_open_blocker_reviewer_handoff_v1.zip.sha256
+data/derived/joint_row_level_open_blocker_reviewer_handoff_v1_summary.csv
+docs/joint_row_level_open_blocker_reviewer_handoff_v1.md
+```
+
+Current handoff SHA-256:
+
+```text
+c7734f99b77ebe35fedb2752cc723390e07f2d0b0fafe152fe4d86fec16ebb5e
+```
+
 ## Scope
 
 This is a protocol scaffold and branch-opening paper package. The next
