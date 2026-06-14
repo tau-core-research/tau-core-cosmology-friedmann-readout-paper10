@@ -1349,6 +1349,12 @@ does not choose \(\lambda_{\rm row}\), does not align controls, does not rescore
 whether a later residual-blind use-policy route may be planned, with
 cross-channel controls and any numeric \(\lambda_{\rm row}\) still requiring
 separate acceptance.
+The completed use-authorization review permits this route planning only.  It
+accepts the numeric values as a precondition, requires cross-channel control
+alignment as a blocker, permits a later residual-blind \(\lambda_{\rm row}\)
+policy package, and keeps \(T_{\rm joint}\) rescoring and endpoint replay
+forbidden.  The blocker verdict is
+\texttt{PENALTY\_USE\_ROUTE\_PLANNING\_ALLOWED\_RESCORING\_STILL\_BLOCKED}.
 Separately, the earlier same-statistic guarded-replay chain packages this
 boundary for external review.  It asks only whether a later guarded permission-only replay
 package may use the symbolic \(T_{\rm joint}\) shell under the caveated

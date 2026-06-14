@@ -7013,6 +7013,28 @@ This package still does not authorize `lambda_row`, cross-channel control
 alignment, `T_joint` rescoring, endpoint replay, or validation. It only asks
 whether a later residual-blind use-policy route may be planned.
 
+Completed use-authorization review:
+
+```bash
+python scripts/import_joint_row_level_penalty_use_authorization_review_response_v1.py \
+  /path/to/joint_row_level_penalty_use_authorization_completed_review_response_v1.zip
+python scripts/validate_joint_row_level_penalty_use_authorization_review_response_v1.py
+python scripts/build_joint_row_level_penalty_use_authorization_blocker_status_v1.py
+python scripts/validate_joint_row_level_penalty_use_authorization_blocker_status_v1.py
+```
+
+Current use-authorization verdict:
+
+```text
+PENALTY_USE_ROUTE_PLANNING_ALLOWED_RESCORING_STILL_BLOCKED
+```
+
+The allowed next work is route planning only:
+
+1. build a residual-blind cross-channel control alignment package;
+2. build a separate residual-blind `lambda_row` policy package;
+3. only after both pass, consider a separate rescoring authorization package.
+
 ## Scope
 
 This is a protocol scaffold and branch-opening paper package. The next
