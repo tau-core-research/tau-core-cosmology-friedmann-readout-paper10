@@ -9,3 +9,7 @@ where 0/26 numeric controls beat or equal the candidate?
 
 This is not itself endpoint scoring, a p-value, a likelihood ratio,
 or cosmological/physical validation.
+
+If accepted, please set
+`endpoint_scoring_authorization_package_preparation_allowed=true`
+on all rows, while keeping direct scoring and all validation fields false.

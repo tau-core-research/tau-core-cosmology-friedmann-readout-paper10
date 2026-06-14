@@ -9,4 +9,12 @@ If accepted, use these exact response tokens:
 - `ACCEPT_PREPARE_SEPARATE_ENDPOINT_AUTHORIZATION_PACKAGE`
 - `ACCEPT_CAVEAT_PRESERVATION`
 
-Keep all direct scoring and validation fields false.
+If and only if all four rows are accepted, set
+`endpoint_scoring_authorization_package_preparation_allowed=true`
+on every row. This authorizes preparation of a later package only.
+
+Keep all direct scoring and validation fields false:
+`endpoint_scoring_allowed=false`,
+`endpoint_validation_claimed=false`,
+`cosmological_validation_claimed=false`, and
+`physical_validation_claimed=false`.
