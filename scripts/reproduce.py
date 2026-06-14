@@ -1764,6 +1764,8 @@ def main() -> None:
             run(["python", "scripts/validate_joint_symbolic_statistic_binding_status_v1.py"])
             run(["python", "scripts/build_joint_control_sign_flip_symbolic_v1.py"])
             run(["python", "scripts/validate_joint_control_sign_flip_symbolic_v1.py"])
+            run(["python", "scripts/build_joint_control_block_drop_symbolic_v1.py"])
+            run(["python", "scripts/validate_joint_control_block_drop_symbolic_v1.py"])
         run(["python", "scripts/build_joint_post_replay_validation_roadmap_v1.py"])
         run(["python", "scripts/validate_joint_post_replay_validation_roadmap_v1.py"])
     run(["python", "scripts/build_joint_non_lensing_lift_diagnostic_v1.py"])

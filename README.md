@@ -6348,6 +6348,22 @@ It enumerates all seven nontrivial sign-flip controls for the three active
 channels under the shared symbolic statistic. It does not compute a numeric
 statistic and does not authorize scoring or validation.
 
+The second same-statistic matched-control artifact is now available as a
+symbolic, non-scoring block-drop / leave-one-probe enumeration:
+
+```text
+data/derived/joint_control_block_drop_symbolic_v1.csv
+data/derived/joint_control_block_drop_symbolic_v1_summary.csv
+docs/joint_control_block_drop_symbolic_v1.md
+scripts/build_joint_control_block_drop_symbolic_v1.py
+scripts/validate_joint_control_block_drop_symbolic_v1.py
+```
+
+It enumerates all seven nontrivial block-drop controls for the three active
+channels under the shared symbolic statistic, including leave-one,
+all-but-one, and all-drop/null controls. It does not compute a numeric
+statistic and does not authorize scoring or validation.
+
 The current same-statistic execution blocker ledger is recorded in:
 
 ```text
