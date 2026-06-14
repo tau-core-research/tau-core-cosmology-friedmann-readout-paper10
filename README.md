@@ -6030,6 +6030,26 @@ This plan computes no new scores and makes no validation claim. Verdict:
 
 `KIDS_JOINT_BLOCK_HAS_SIGNAL_BUT_CAVEAT_RESOLUTION_REQUIRES_PHYSICAL_PROMOTION_PROOFS`
 
+The rank-1 KiDS proof blocker is narrowed further here:
+
+```text
+data/derived/kids1000_cosebis_operator_leakage_closure_attempt_v1.csv
+data/derived/kids1000_cosebis_operator_leakage_closure_attempt_v1_summary.csv
+docs/kids1000_cosebis_operator_leakage_closure_attempt_v1.md
+scripts/build_kids1000_cosebis_operator_leakage_closure_attempt_v1.py
+scripts/validate_kids1000_cosebis_operator_leakage_closure_attempt_v1.py
+```
+
+This artifact states the minimal operator-level closure target: every
+admissible mask-only direction must either vanish in the physical quotient or
+be routed to the frozen null-control family under the same statistic and
+covariance discipline, while the same operator also recovers the uniform
+pure-mask null limit and descends through gauge/quotient representations. The
+current verdict is
+`OPERATOR_LEAKAGE_CLOSURE_ATTEMPT_NARROWS_PROOF_BUT_THEOREM_REMAINS_OPEN`.
+It computes no new score, uses no KiDS data-vector values, and leaves the KiDS
+block caveated.
+
 The covariance blocker is also expanded into a concrete route plan:
 
 `data/derived/joint_covariance_resolution_plan_v1_summary.csv`
