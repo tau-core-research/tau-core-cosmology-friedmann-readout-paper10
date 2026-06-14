@@ -2028,6 +2028,39 @@ be read as a scoring-pipeline diagnostic, not as cosmological validation.}
 \label{fig:pantheon-pilot-diagnostics}
 \end{figure}
 
+\section{Numeric joint-ledger gate}
+
+After the channel-level \(z_i\) distribution ledger was built, a separate
+reviewer authorization package was prepared for the only allowed next
+operation: combining the already frozen \(z_i\) values under the already frozen
+symbolic shell \(T_{\rm joint}=\sum_i q_i z_i\).  The completed response
+authorized only this numeric joint ledger and explicitly kept endpoint scoring,
+endpoint validation, cosmological validation, and physical-validation claims
+false.
+
+The resulting ledger is:
+\[
+T_{\rm joint}=4.142466300799 .
+\]
+Its three channel contributions are:
+\[
+\begin{array}{ll}
+\text{KiDS/COSEBIs low mode:} & 2.492514715023,\\
+\text{observer/path low-}z\text{:} & 0.880047098292,\\
+\text{DESI shape/time readout:} & 0.769904487484 .
+\end{array}
+\]
+This is the first numerical realization of the shared statistic in this
+repository, but it remains a ledger rather than an endpoint.  No null
+distribution, likelihood ratio, \(p\)-value, or validation statistic is
+attached to it.  The next blocker is therefore recorded as
+\[
+\begin{gathered}
+\texttt{numeric\_t\_joint\_ledger\_built\_}\\
+\texttt{endpoint\_scoring\_authorization\_missing}.
+\end{gathered}
+\]
+
 \bibliographystyle{plain}
 \bibliography{refs}
 \end{document}

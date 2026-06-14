@@ -1114,6 +1114,43 @@ signed standardized response.  This is deliberately not executable: the single
 joint statistic is not yet defined for scoring, and the same covariance route
 and matched-control suite must be frozen for candidate and controls together
 before any numerical \(T_{\rm joint}\) can be used.
+A later numeric-standardization chain now materializes the channel-level part
+of this shell without crossing into endpoint scoring.  The signed
+median/MAD rule is frozen from matched controls only; candidate values do not
+define their own center or scale.  Under this rule the three active channels
+give
+\[
+  z_{\rm KiDS}=3.348919354,\qquad
+  z_{\rm path}=1.218797645,\qquad
+  z_{\rm DESI}=1.106851383 .
+\]
+After a separate reviewer authorization, these already frozen channel values
+are combined once under the same symbolic shell, giving the numeric joint
+ledger
+\[
+  T_{\rm joint}
+  =
+  0.744274332\,z_{\rm KiDS}
+  +0.722061699\,z_{\rm path}
+  +0.695580725\,z_{\rm DESI}
+  =
+  4.142466301 .
+\]
+The contribution ledger is
+\[
+  2.492514715
+  +0.880047098
+  +0.769904487 .
+\]
+This is a numeric joint ledger only.  It is not an endpoint score, not a
+cosmological validation statistic, and not a physical-validation claim.  The
+current blocker after this ledger is
+\[
+\begin{gathered}
+\texttt{numeric\_t\_joint\_ledger\_built\_}\\
+\texttt{endpoint\_scoring\_authorization\_missing}.
+\end{gathered}
+\]
 A same-statistic replay authorization package then packages this boundary for
 external review.  It asks only whether a later guarded permission-only replay
 package may use the symbolic \(T_{\rm joint}\) shell under the caveated
@@ -1234,6 +1271,20 @@ This strengthens the paper's internal preflight picture, but it does not change
 the claim boundary: it is not endpoint validation, not cosmological validation,
 and not physical proof.
 
+The subsequent numeric joint-ledger gate makes this preflight picture more
+compact but not stronger in claim class.  The three frozen standardized channel
+values combine to
+\[
+  T_{\rm joint}=4.142466301 ,
+\]
+with positive contributions from all three active channels.  This is useful
+because the active blocks do not cancel when expressed under a single
+predeclared signed-standardization rule.  However, it is still not a \(p\)-value,
+not a likelihood ratio, and not a validation endpoint.  A future step would
+have to compare this same statistic against predeclared shuffled-channel,
+wrong-channel, sign-flip, block-drop, null/readout, leakage, and covariance-
+binding controls before any endpoint-scoring language could be used.
+
 The interpretation is therefore deliberately narrow.  The current data products
 show that several Tau-Core-style readout/projection channels can be made
 operational and that the strongest source-supported channels form a nonempty
@@ -1311,8 +1362,9 @@ We also freeze a single-statistic binding-prerequisites ledger: the active
 channel order, row-scope artifacts, score-source artifacts, covariance objects,
 and nuisance/amplitude rules that any future joint statistic must bind are now
 named.  All three active channels have explicit row-scope and score-source
-artifacts present in the repository, but the statistic itself is not defined and
-no replay is run.
+artifacts present in the repository.  The numeric joint ledger is now defined,
+but endpoint scoring remains blocked until a separate same-statistic control
+and authorization package is completed.
 A future source-complete case or channel family that fails those
 predeclared tests should be retained as a true negative rather than reinterpreted
 as hidden support.  Until that gate is passed, Paper 10 should be read as a
