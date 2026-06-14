@@ -1720,6 +1720,12 @@ def main() -> None:
             "scripts/validate_joint_guarded_replay_execution_authorization_response_v1.py",
             str(response),
         ])
+        run(["python", "scripts/run_joint_guarded_replay_permission_only_v1.py"])
+        run(["python", "scripts/validate_joint_guarded_replay_permission_only_v1.py"])
+        run(["python", "scripts/build_joint_guarded_replay_execution_blocker_status_v1.py"])
+        run(["python", "scripts/validate_joint_guarded_replay_execution_blocker_status_v1.py"])
+        run(["python", "scripts/build_joint_permission_replay_promotion_readiness_gate_v1.py"])
+        run(["python", "scripts/validate_joint_permission_replay_promotion_readiness_gate_v1.py"])
     run(["python", "scripts/build_joint_non_lensing_lift_diagnostic_v1.py"])
     run(["python", "scripts/validate_joint_non_lensing_lift_diagnostic_v1.py"])
     run(["python", "scripts/build_observer_path_strengthening_gate_v1.py"])

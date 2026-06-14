@@ -5995,6 +5995,24 @@ cosmological validation, and not physical proof. The claim boundary is:
 
 `joint_guarded_replay_permission_only_not_validation`
 
+The post-replay promotion-readiness gate is recorded in:
+
+`data/derived/joint_permission_replay_promotion_readiness_gate_v1_summary.csv`
+
+It preserves the positive permission-only signal while blocking promotion:
+
+- clean control-resistant blocks: `2`
+- caveated support blocks: `1`
+- negative blocks: `0`
+- hard blockers open: `3`
+- promotion ready for validation protocol: `false`
+
+The blockers are: the caveated KiDS/COSEBIs support block, incomplete
+cross-probe covariance or surrogate closure, and the missing same-statistic
+matched-control implementation. Verdict:
+
+`JOINT_PERMISSION_REPLAY_POSITIVE_BUT_PROMOTION_BLOCKED_NOT_VALIDATION`
+
 ## Scope
 
 This is a protocol scaffold and branch-opening paper package. The next
