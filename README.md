@@ -6519,6 +6519,39 @@ The accepted external-reviewer aliases are:
 `ACCEPT_FROZEN_MEDIAN_MAD_CONTROL_ONLY_RULE`, and
 `ACCEPT_NO_TJOINT_PROMOTION_DISTRIBUTION_LEDGER_ONLY`.
 
+Once authorized, the channel-level numeric `z_i` distribution ledger is built
+with:
+
+```bash
+python scripts/build_joint_numeric_zi_distribution_ledger_v1.py
+python scripts/validate_joint_numeric_zi_distribution_ledger_v1.py
+python scripts/build_joint_numeric_zi_distribution_build_blocker_status_v1.py
+python scripts/validate_joint_numeric_zi_distribution_build_blocker_status_v1.py
+```
+
+This produces:
+
+```text
+data/derived/joint_numeric_zi_distribution_ledger_v1.csv
+data/derived/joint_numeric_zi_distribution_ledger_v1_summary.csv
+docs/joint_numeric_zi_distribution_ledger_v1.md
+```
+
+The ledger computes per-channel `z_i` values only. It does not sum them into
+`T_joint` and does not authorize endpoint scoring or validation.
+
+Current channel-level ledger result:
+
+```text
+kids_lensing_cosebis_low_mode : z_i = 3.348919353870e+00
+observer_path_basis_low_z     : z_i = 1.218797645009e+00
+desi_shape_time_readout       : z_i = 1.106851383042e+00
+```
+
+These are distribution-standardized channel values under the frozen
+median/MAD rule. They are not a joint statistic and should not be quoted as
+endpoint, cosmological, or physical validation.
+
 The current same-statistic execution blocker ledger is recorded in:
 
 ```text

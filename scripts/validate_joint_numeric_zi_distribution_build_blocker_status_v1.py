@@ -54,6 +54,7 @@ def main() -> None:
             "numeric_zi_distribution_build_authorization_response_missing",
             "numeric_zi_distribution_build_authorized_but_not_run",
             "numeric_zi_distribution_build_authorization_rejected_or_incomplete",
+            "numeric_zi_distribution_ledger_built_numeric_t_joint_authorization_missing",
         },
         "unexpected blocker",
     )
