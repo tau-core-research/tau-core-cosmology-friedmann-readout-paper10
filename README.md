@@ -6493,6 +6493,26 @@ The next required action is to obtain and validate a completed reviewer
 response. Until then, no `z_i`, `T_joint`, endpoint scoring, or validation is
 authorized.
 
+A completed reviewer response can be imported and validated with:
+
+```bash
+python scripts/import_joint_numeric_zi_distribution_build_authorization_response_v1.py \
+  /path/to/completed_reviewer_response.csv
+python scripts/build_joint_numeric_zi_distribution_build_blocker_status_v1.py
+python scripts/validate_joint_numeric_zi_distribution_build_blocker_status_v1.py
+```
+
+The importer also accepts a zip containing exactly one matching response CSV.
+Accepted responses only authorize a numeric channel-level `z_i` distribution
+ledger. They do not authorize `T_joint`, endpoint scoring, cosmological
+validation, or physical validation.
+
+The accepting reviewer responses are exact-string gated:
+`authorize_distribution_build`,
+`accept_caveated_distribution_boundary`,
+`accept_frozen_center_scale_rule`, and
+`accept_no_t_joint_promotion`.
+
 The current same-statistic execution blocker ledger is recorded in:
 
 ```text
