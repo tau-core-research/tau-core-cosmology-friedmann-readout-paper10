@@ -1244,6 +1244,18 @@ common export.  This closes the observer-path leakage-review blocker for the
 feature-export layer, but it still does not authorize endpoint replay,
 validation, a channel penalty, or \(T_{\rm joint}\) rescoring.  The remaining
 feature-export blocker is the missing KiDS source-native row feature.
+The next export pass removes that pure missing-feature marker in the narrow
+source-feature sense.  The KiDS/COSEBIs candidate side is now represented by
+the already source-frozen 300-row mapping/theory shell, producing 1205
+candidate-side feature rows after row features and vector-summary features are
+expanded.  The available KiDS null controls, however, are exported only as
+residual-blind vector-summary statistics, giving 5040 control-summary feature
+rows but no row-level control vectors in the same 300-row basis.  Thus the
+common export now contains 6631 rows across DESI, observer/path, and KiDS, but
+it still explicitly records
+\texttt{kids\_row\_level\_controls\_exported=false}.  The result is therefore
+an audit-strengthening export, not a channel-penalty closure and not
+\(T_{\rm joint}\) rescoring authorization.
 Separately, the earlier same-statistic guarded-replay chain packages this
 boundary for external review.  It asks only whether a later guarded permission-only replay
 package may use the symbolic \(T_{\rm joint}\) shell under the caveated

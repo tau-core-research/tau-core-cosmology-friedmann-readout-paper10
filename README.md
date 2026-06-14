@@ -576,6 +576,23 @@ artifacts present in the repository; the remaining blockers are no longer
 missing channel artifacts, but covariance/independence closure and the single
 joint-statistic protocol itself.
 
+The current residual-blind common source-feature export is recorded in:
+
+```text
+data/derived/joint_common_source_feature_export_v4.csv
+data/derived/joint_common_source_feature_export_v4_summary.csv
+docs/joint_common_source_feature_export_v4.md
+scripts/build_joint_common_source_feature_export_v4.py
+scripts/validate_joint_common_source_feature_export_v4.py
+```
+
+This export contains 6631 feature rows across DESI, observer/path, and
+KiDS/COSEBIs. It replaces the earlier pure KiDS missing-feature marker with
+source-frozen KiDS candidate row features plus residual-blind null-control
+summary features. It still explicitly records
+`kids_row_level_controls_exported=false`, so it does not authorize a
+row-level penalty, endpoint replay, validation, or `T_joint` rescoring.
+
 A block-diagonal likelihood-surrogate protocol shell is now recorded in:
 
 ```text
