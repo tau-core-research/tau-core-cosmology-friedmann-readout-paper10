@@ -6225,7 +6225,34 @@ scripts/validate_joint_same_statistic_replay_authorization_response_v1.py
 
 The importer rejects incomplete templates and responses that allow direct
 scoring, endpoint validation, cosmological validation, forbidden inputs, or
-post-score control feedback. No canonical response is present in this release.
+post-score control feedback. The completed canonical response is now recorded
+in:
+
+```text
+data/derived/joint_same_statistic_replay_authorization_response_v1.csv
+data/derived/joint_same_statistic_replay_authorization_response_v1_summary.csv
+```
+
+Its decision is:
+
+`AUTHORIZE_SAME_STATISTIC_GUARDED_PERMISSION_REPLAY_PACKAGE_NOT_SCORING_NOT_VALIDATION`
+
+The resulting same-statistic guarded permission package is recorded in:
+
+```text
+data/source_manifest/joint_same_statistic_guarded_permission_replay_policy_v1.csv
+data/derived/joint_same_statistic_guarded_permission_replay_package_v1.zip
+data/derived/joint_same_statistic_guarded_permission_replay_package_v1_summary.csv
+data/derived/joint_same_statistic_guarded_permission_replay_package_v1_manifest.csv
+docs/joint_same_statistic_guarded_permission_replay_package_v1.md
+scripts/build_joint_same_statistic_guarded_permission_replay_package_v1.py
+scripts/validate_joint_same_statistic_guarded_permission_replay_package_v1.py
+```
+
+This package freezes the same symbolic statistic and matched-control boundary
+for a later replay gate. It is still not execution, not scoring, not endpoint
+validation, and not cosmological validation:
+`direct_execution_allowed=false` and `endpoint_scoring_allowed=false`.
 
 The consolidated post-replay validation roadmap is recorded in:
 
