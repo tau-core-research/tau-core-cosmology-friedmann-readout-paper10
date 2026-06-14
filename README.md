@@ -6271,6 +6271,18 @@ This is an external reviewer handoff for one possible permission-only
 execution. It is not pre-authorized and does not execute anything:
 `review_completed=false` and `permission_only_execution_allowed=false`.
 
+Completed reviewer responses for this execution package must be imported
+through:
+
+```text
+scripts/import_joint_same_statistic_execution_authorization_response_v1.py
+scripts/validate_joint_same_statistic_execution_authorization_response_v1.py
+```
+
+The importer rejects incomplete templates and responses that use forbidden
+inputs or claim endpoint, cosmological, or physical validation. A positive
+response may only authorize one permission-only execution.
+
 The consolidated post-replay validation roadmap is recorded in:
 
 `data/derived/joint_post_replay_validation_roadmap_v1_summary.csv`
