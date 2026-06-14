@@ -1225,6 +1225,13 @@ observer-path route has a frozen source row scope and the DESI route has a
 source-native shape vector, but the two routes do not yet expose a common
 row-indexed feature space.  Therefore a cross-channel row-level penalty would
 be artificial at this stage.
+We therefore introduce a common source-feature export as a bookkeeping layer
+only.  It provides a residual-blind, candidate/control-symmetric schema across
+the active channels, with \(99\) exported feature rows.  At present the DESI
+shape/time route is the only channel with a complete nontrivial source-feature
+vector in this common layer; the observer-path and KiDS channels remain
+scope-only or missing-feature exports.  Consequently the export is useful for
+future protocol development but still forbids \(T_{\rm joint}\) rescoring.
 Separately, the earlier same-statistic guarded-replay chain packages this
 boundary for external review.  It asks only whether a later guarded permission-only replay
 package may use the symbolic \(T_{\rm joint}\) shell under the caveated

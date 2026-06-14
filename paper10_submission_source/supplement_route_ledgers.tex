@@ -2181,6 +2181,14 @@ and the other is a DESI BAO shape scope.  Candidate/control-symmetric per-row
 feature export is therefore incomplete, and the recorded verdict is
 \(\texttt{ROW\_LEVEL\_SOURCE\_FEATURES\_INCOMPLETE\_NO\_PENALTY}\).
 
+The common source-feature export records the same state in a machine-readable
+schema.  It exports \(99\) residual-blind feature rows across the three active
+channels and applies the same schema to candidates and controls.  The DESI
+shape/time route has a complete source-native shape-vector export, while the
+observer-path route is only scope-complete and the KiDS channel is represented
+by an explicit missing-feature marker.  The recorded verdict is
+\(\texttt{COMMON\_SCHEMA\_BUILT\_FEATURE\_EXPORT\_INCOMPLETE\_NO\_RESCORING}\).
+
 \bibliographystyle{plain}
 \bibliography{refs}
 \end{document}
