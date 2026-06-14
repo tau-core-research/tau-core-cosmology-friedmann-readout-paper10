@@ -1277,10 +1277,26 @@ updated shell records \texttt{source\_feature\_inputs\_complete=true},
 block-weight binding shell then binds the normalized transform to the caveated
 block-diagonal route with an equal-channel preweight shell, recording
 \texttt{covariance\_or\_block\_weight\_binding\_frozen=true} in the v3
-protocol shell.  This still does not define a penalty formula.  The remaining
-open requirement is a symbolic row-level penalty formula in a separate
-non-scoring gate; until that is reviewed, the row-level source features cannot
-change any score.
+protocol shell.  A further non-scoring symbolic formula shell freezes
+\[
+  P_i(a)=\omega_i\,{\rm mean}_{r,f}\,z_{i,a,r,f}^2,\qquad
+  P_{\rm row}(a)=\sum_i P_i(a),
+\]
+and the possible future score shell
+\[
+  T_{\rm joint}^{\rm penalized}(a)
+  =
+  T_{\rm joint}(a)+\lambda_{\rm row}P_{\rm row}(a),
+\]
+where \(z_{i,a,r,f}\) is the already frozen normalized source feature for
+channel \(i\), candidate/control alternative \(a\), row \(r\), and feature
+\(f\).  This is only a symbolic shell: \(\lambda_{\rm row}\) has no numeric
+value, no penalty values are written, and no score is changed.  The v4 protocol
+therefore records \texttt{penalty\_formula\_defined=true} but keeps
+\texttt{penalty\_computed=false},
+\texttt{numeric\_penalty\_values\_written=false}, and
+\texttt{numeric\_t\_joint\_rescoring\_allowed=false}.  The remaining open
+requirement is a separate numeric-penalty computation authorization gate.
 Separately, the earlier same-statistic guarded-replay chain packages this
 boundary for external review.  It asks only whether a later guarded permission-only replay
 package may use the symbolic \(T_{\rm joint}\) shell under the caveated

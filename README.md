@@ -616,6 +616,16 @@ data/derived/joint_row_level_penalty_protocol_shell_v3_summary.csv
 docs/joint_row_level_penalty_protocol_shell_v3.md
 scripts/build_joint_row_level_penalty_protocol_shell_v3.py
 scripts/validate_joint_row_level_penalty_protocol_shell_v3.py
+data/derived/joint_symbolic_row_level_penalty_formula_shell_v1.csv
+data/derived/joint_symbolic_row_level_penalty_formula_shell_v1_summary.csv
+docs/joint_symbolic_row_level_penalty_formula_shell_v1.md
+scripts/build_joint_symbolic_row_level_penalty_formula_shell_v1.py
+scripts/validate_joint_symbolic_row_level_penalty_formula_shell_v1.py
+data/derived/joint_row_level_penalty_protocol_shell_v4.csv
+data/derived/joint_row_level_penalty_protocol_shell_v4_summary.csv
+docs/joint_row_level_penalty_protocol_shell_v4.md
+scripts/build_joint_row_level_penalty_protocol_shell_v4.py
+scripts/validate_joint_row_level_penalty_protocol_shell_v4.py
 data/derived/joint_channel_local_source_normalization_rule_v1.csv
 data/derived/joint_channel_local_source_normalization_rule_v1_summary.csv
 data/derived/joint_candidate_control_symmetric_normalized_feature_transform_v1.csv.gz
@@ -637,6 +647,22 @@ preweight shell. It still keeps
 now the symbolic row-level penalty formula itself, which must be defined in a
 separate non-scoring gate before any numeric penalty or score change can be
 proposed.
+
+The v4 shell freezes that symbolic formula without computing it:
+
+```text
+P_i(a) = omega_i * mean_{r,f}(z_{i,a,r,f}^2)
+P_row(a) = sum_i P_i(a)
+T_joint_penalized(a) = T_joint(a) + lambda_row * P_row(a)
+```
+
+Here `z_{i,a,r,f}` is the already frozen normalized source feature for channel
+`i`, candidate/control alternative `a`, row `r`, and feature `f`. The coefficient
+`lambda_row` remains symbolic only: no numeric value is chosen, fitted, inferred,
+or applied. The v4 shell records `penalty_formula_defined=true`, but still keeps
+`penalty_computed=false`, `numeric_penalty_values_written=false`, and
+`numeric_t_joint_rescoring_allowed=false`. The next blocker is now a separate
+numeric-penalty computation authorization review package.
 
 A block-diagonal likelihood-surrogate protocol shell is now recorded in:
 
