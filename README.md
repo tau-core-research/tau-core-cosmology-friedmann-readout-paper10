@@ -579,19 +579,24 @@ joint-statistic protocol itself.
 The current residual-blind common source-feature export is recorded in:
 
 ```text
-data/derived/joint_common_source_feature_export_v4.csv
-data/derived/joint_common_source_feature_export_v4_summary.csv
-docs/joint_common_source_feature_export_v4.md
-scripts/build_joint_common_source_feature_export_v4.py
-scripts/validate_joint_common_source_feature_export_v4.py
+data/derived/joint_common_source_feature_export_v5.csv
+data/derived/joint_common_source_feature_export_v5_summary.csv
+docs/joint_common_source_feature_export_v5.md
+scripts/build_joint_common_source_feature_export_v5.py
+scripts/validate_joint_common_source_feature_export_v5.py
+data/derived/kids1000_cosebis_null_control_row_vectors_v1.csv.gz
+data/derived/kids1000_cosebis_null_control_row_vectors_v1_summary.csv
+scripts/build_kids1000_cosebis_null_control_row_vectors_v1.py
+scripts/validate_kids1000_cosebis_null_control_row_vectors_v1.py
 ```
 
-This export contains 6631 feature rows across DESI, observer/path, and
-KiDS/COSEBIs. It replaces the earlier pure KiDS missing-feature marker with
-source-frozen KiDS candidate row features plus residual-blind null-control
-summary features. It still explicitly records
-`kids_row_level_controls_exported=false`, so it does not authorize a
-row-level penalty, endpoint replay, validation, or `T_joint` rescoring.
+This export contains 6635 feature rows across DESI, observer/path, and
+KiDS/COSEBIs, plus a compressed 302400-row KiDS null-control row-vector
+artifact. It replaces the earlier KiDS summary-only caveat with source-frozen
+KiDS candidate row features and row-level null-control input availability.
+This closes the source-feature input blocker for a future row-level penalty,
+but it still does not define or run that penalty, authorize endpoint replay,
+claim validation, or permit `T_joint` rescoring.
 
 A block-diagonal likelihood-surrogate protocol shell is now recorded in:
 
