@@ -601,18 +601,28 @@ claim validation, or permit `T_joint` rescoring.
 The corresponding non-scoring row-level penalty protocol shell is recorded in:
 
 ```text
-data/derived/joint_row_level_penalty_protocol_shell_v1.csv
-data/derived/joint_row_level_penalty_protocol_shell_v1_summary.csv
-docs/joint_row_level_penalty_protocol_shell_v1.md
-scripts/build_joint_row_level_penalty_protocol_shell_v1.py
-scripts/validate_joint_row_level_penalty_protocol_shell_v1.py
+data/derived/joint_row_level_penalty_protocol_shell_v2.csv
+data/derived/joint_row_level_penalty_protocol_shell_v2_summary.csv
+docs/joint_row_level_penalty_protocol_shell_v2.md
+scripts/build_joint_row_level_penalty_protocol_shell_v2.py
+scripts/validate_joint_row_level_penalty_protocol_shell_v2.py
+data/derived/joint_channel_local_source_normalization_rule_v1.csv
+data/derived/joint_channel_local_source_normalization_rule_v1_summary.csv
+data/derived/joint_candidate_control_symmetric_normalized_feature_transform_v1.csv.gz
+data/derived/joint_candidate_control_symmetric_normalized_feature_transform_v1_summary.csv
+scripts/build_joint_channel_local_source_normalization_rule_v1.py
+scripts/validate_joint_channel_local_source_normalization_rule_v1.py
+scripts/build_joint_candidate_control_symmetric_normalized_feature_transform_v1.py
+scripts/validate_joint_candidate_control_symmetric_normalized_feature_transform_v1.py
 ```
 
-It records `source_feature_inputs_complete=true`, but keeps
+It records `source_feature_inputs_complete=true`,
+`channel_local_normalization_frozen=true`, and
+`candidate_control_symmetric_transform_built=true`, but keeps
 `penalty_formula_defined=false`, `penalty_computed=false`, and
-`numeric_t_joint_rescoring_allowed=false`. The next required action is to
-freeze channel-local normalization and a candidate/control-symmetric transform
-before any scoring.
+`numeric_t_joint_rescoring_allowed=false`. The only remaining protocol blocker
+before a penalty formula can even be proposed is covariance or block-weight
+binding; no score is changed here.
 
 A block-diagonal likelihood-surrogate protocol shell is now recorded in:
 

@@ -1266,14 +1266,16 @@ for a future row-level penalty is complete.  This still does not define the
 penalty, compute it, authorize endpoint replay, or reopen \(T_{\rm joint}\)
 rescoring; it only removes the previous KiDS row-control availability blocker.
 A row-level penalty protocol shell is therefore frozen as the next non-scoring
-object.  It records \texttt{source\_feature\_inputs\_complete=true}, but keeps
+object.  After a channel-local source-only normalization rule and a
+candidate/control-symmetric normalized feature transform are frozen, the
+updated shell records \texttt{source\_feature\_inputs\_complete=true},
+\texttt{channel\_local\_normalization\_frozen=true}, and
+\texttt{candidate\_control\_symmetric\_transform\_built=true}, but keeps
 \texttt{penalty\_formula\_defined=false},
 \texttt{penalty\_computed=false}, and
-\texttt{numeric\_t\_joint\_rescoring\_allowed=false}.  The open requirements
-are a channel-local source-only normalization, a candidate/control-symmetric
-transform, and a covariance or block-weight binding.  Until those are frozen in
-a separate reviewed gate, the row-level source features cannot change any
-score.
+\texttt{numeric\_t\_joint\_rescoring\_allowed=false}.  The remaining open
+requirement is covariance or block-weight binding.  Until that is frozen in a
+separate reviewed gate, the row-level source features cannot change any score.
 Separately, the earlier same-statistic guarded-replay chain packages this
 boundary for external review.  It asks only whether a later guarded permission-only replay
 package may use the symbolic \(T_{\rm joint}\) shell under the caveated
