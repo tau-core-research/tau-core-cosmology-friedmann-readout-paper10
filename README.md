@@ -6970,6 +6970,26 @@ This is not `lambda_row`, not `T_joint` rescoring, not endpoint scoring, and
 not validation. Control alternatives remain channel-local because no
 residual-blind cross-channel control alignment artifact is authorized yet.
 
+Completed value review:
+
+```bash
+python scripts/import_joint_row_level_numeric_penalty_value_review_response_v1.py \
+  /path/to/joint_row_level_numeric_penalty_value_review_completed_response_v1.zip
+python scripts/validate_joint_row_level_numeric_penalty_value_review_response_v1.py
+python scripts/build_joint_row_level_numeric_penalty_value_review_blocker_status_v1.py
+python scripts/validate_joint_row_level_numeric_penalty_value_review_blocker_status_v1.py
+```
+
+Current value-review verdict:
+
+```text
+NUMERIC_PENALTY_VALUES_ACCEPTED_FOR_RECORD_ONLY_NEXT_USE_BLOCKED
+```
+
+The numeric values are accepted for the record only. Cross-channel control
+alignment, `lambda_row`, `T_joint` rescoring, endpoint scoring, and validation
+remain blocked pending a separate authorization route.
+
 ## Scope
 
 This is a protocol scaffold and branch-opening paper package. The next

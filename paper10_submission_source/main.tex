@@ -1338,6 +1338,11 @@ It asks only for reproduction and boundary review of the numeric \(P_i\) and
 candidate \(P_{\rm row}\) values; it still does not request cross-channel
 control alignment, numeric \(\lambda_{\rm row}\), \(T_{\rm joint}\) rescoring,
 or validation permission.
+The completed value review accepts the reported numeric penalty values and
+reproduces the candidate \(P_{\rm row}\), but keeps cross-channel control
+alignment, numeric \(\lambda_{\rm row}\), \(T_{\rm joint}\) rescoring, endpoint
+scoring, and validation all forbidden.  The resulting blocker verdict is
+\texttt{NUMERIC\_PENALTY\_VALUES\_ACCEPTED\_FOR\_RECORD\_ONLY\_NEXT\_USE\_BLOCKED}.
 Separately, the earlier same-statistic guarded-replay chain packages this
 boundary for external review.  It asks only whether a later guarded permission-only replay
 package may use the symbolic \(T_{\rm joint}\) shell under the caveated
