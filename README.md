@@ -6939,6 +6939,25 @@ data/derived/joint_row_level_numeric_penalty_values_v1_summary.csv
 docs/joint_row_level_numeric_penalty_values_v1.md
 ```
 
+Reviewer handoff package:
+
+```bash
+python scripts/build_joint_row_level_numeric_penalty_value_review_package_v1.py
+python scripts/validate_joint_row_level_numeric_penalty_value_review_package_v1.py
+```
+
+```text
+data/derived/joint_row_level_numeric_penalty_value_review_package_v1.zip
+data/derived/joint_row_level_numeric_penalty_value_review_package_v1.zip.sha256
+data/derived/joint_row_level_numeric_penalty_value_review_response_template_v1.csv
+```
+
+Current package SHA-256:
+
+```text
+7878efb9e08cd4721b8fef04b0f9998cbdf82f447b1eb7aad1ca565f8750ed3c
+```
+
 Current result:
 
 ```text
