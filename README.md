@@ -678,6 +678,11 @@ scripts/build_joint_row_level_numeric_penalty_authorization_review_package_v1.py
 scripts/validate_joint_row_level_numeric_penalty_authorization_review_package_v1.py
 scripts/validate_joint_row_level_numeric_penalty_authorization_review_response_v1.py
 scripts/import_joint_row_level_numeric_penalty_authorization_review_response_v1.py
+data/derived/joint_row_level_numeric_penalty_blocker_status_v1.csv
+data/derived/joint_row_level_numeric_penalty_blocker_status_v1_summary.csv
+docs/joint_row_level_numeric_penalty_blocker_status_v1.md
+scripts/build_joint_row_level_numeric_penalty_blocker_status_v1.py
+scripts/validate_joint_row_level_numeric_penalty_blocker_status_v1.py
 ```
 
 The package status is
@@ -696,6 +701,10 @@ python scripts/import_joint_row_level_numeric_penalty_authorization_review_respo
 
 The importer refuses incomplete templates, any `forbidden_inputs_used=true`,
 numeric `lambda_row` authorization, or direct `T_joint` rescoring authorization.
+The current machine-readable blocker status is
+`NUMERIC_PENALTY_VALUES_BLOCKED_WAITING_FOR_REVIEW_RESPONSE`: the reviewer
+package is ready, but no completed response has been imported, so no numeric
+`P_i(a)` or `P_row(a)` values may be computed.
 
 A block-diagonal likelihood-surrogate protocol shell is now recorded in:
 
