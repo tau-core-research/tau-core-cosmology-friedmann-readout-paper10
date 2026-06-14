@@ -1068,6 +1068,13 @@ object into COSEBIs response units, compatible with the
 standard-lensing/no-Tau-source null limit and with the still-open leakage and
 gauge/quotient gates.  Its verdict is
 \texttt{RESPONSE\_UNIT\_NORMALIZATION\_CLOSURE\_ATTEMPT\_NARROWS\_PROOF\_BUT\_UNITS\_REMAIN\_OPEN}.
+A standard-lensing null-amplitude closure attempt then narrows the fourth KiDS
+proof gate.  It keeps source-replayed null controls as control limits only:
+having null controls is not the same as proving a physical no-Tau-source
+theorem.  The zero-Tau-source amplitude statement is specified but not derived.
+The theorem remains blocked by operator null safety, response-unit
+normalization, leakage control, and gauge/quotient descent.  Its verdict is
+\texttt{STANDARD\_LENSING\_NULL\_AMPLITUDE\_CLOSURE\_ATTEMPT\_NARROWS\_PROOF\_BUT\_THEOREM\_REMAINS\_OPEN}.
 A separate covariance-resolution plan then freezes the joint-promotion
 covariance blocker.  The
 preferred route remains a source-native or source-frozen cross-probe covariance
@@ -1077,7 +1084,7 @@ shared-sky, redshift-kernel, nuisance, calibration, and population-covariance
 caveats are carried forward and candidate/control replay uses the same
 statistic and covariance discipline.  This covariance plan also computes no new
 score and keeps scoring and validation flags false.
-A matched-control resolution plan freezes the third blocker.  It requires eight
+A matched-control resolution plan freezes the joint matched-control blocker.  It requires eight
 control families under the same future joint statistic and the same covariance
 route as the candidate: shuffled channel labels, wrong-channel/wrong-family
 controls, sign flips, leave-one-probe or block-drop controls, null/readout

@@ -6088,6 +6088,24 @@ units, compatible with the standard-lensing/no-Tau-source null limit and with
 the still-open leakage and gauge/quotient gates. The verdict is
 `RESPONSE_UNIT_NORMALIZATION_CLOSURE_ATTEMPT_NARROWS_PROOF_BUT_UNITS_REMAIN_OPEN`.
 
+The standard-lensing null-amplitude blocker is narrowed here:
+
+```text
+data/derived/kids1000_cosebis_standard_lensing_null_amplitude_closure_attempt_v1.csv
+data/derived/kids1000_cosebis_standard_lensing_null_amplitude_closure_attempt_v1_summary.csv
+docs/kids1000_cosebis_standard_lensing_null_amplitude_closure_attempt_v1.md
+scripts/build_kids1000_cosebis_standard_lensing_null_amplitude_closure_attempt_v1.py
+scripts/validate_kids1000_cosebis_standard_lensing_null_amplitude_closure_attempt_v1.py
+```
+
+This artifact preserves the distinction between having source-replayed null
+controls and proving a physical no-Tau-source theorem. Null controls are
+available only as control limits; the zero-Tau-source amplitude statement is
+specified but not derived. The physical theorem remains blocked by operator
+null safety, response-unit normalization, leakage control, and gauge/quotient
+descent. The verdict is
+`STANDARD_LENSING_NULL_AMPLITUDE_CLOSURE_ATTEMPT_NARROWS_PROOF_BUT_THEOREM_REMAINS_OPEN`.
+
 The covariance blocker is also expanded into a concrete route plan:
 
 `data/derived/joint_covariance_resolution_plan_v1_summary.csv`
