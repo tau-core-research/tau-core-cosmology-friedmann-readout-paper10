@@ -7059,6 +7059,29 @@ control-count imbalance and proposes a deterministic min-count index alignment
 for review. It does not compute aligned joint control values, choose
 `lambda_row`, rescore `T_joint`, or authorize validation.
 
+Residual-blind `lambda_row` policy review package:
+
+```bash
+python scripts/build_joint_row_level_lambda_policy_review_package_v1.py
+python scripts/validate_joint_row_level_lambda_policy_review_package_v1.py
+```
+
+```text
+data/derived/joint_row_level_lambda_policy_review_package_v1.zip
+data/derived/joint_row_level_lambda_policy_review_package_v1.zip.sha256
+data/derived/joint_row_level_lambda_policy_review_response_template_v1.csv
+```
+
+Current package SHA-256:
+
+```text
+0908e1a41ce7ac76e31b7974e04554007ca7bbf36a1709ff2ed9dc574e839395
+```
+
+This package is policy-only. It records that any future `lambda_row` must be
+dimensionless and residual-blind. It does not choose a numeric `lambda_row`,
+rescore `T_joint`, or authorize validation.
+
 ## Scope
 
 This is a protocol scaffold and branch-opening paper package. The next

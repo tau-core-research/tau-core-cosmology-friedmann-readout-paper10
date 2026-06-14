@@ -1362,6 +1362,13 @@ deterministic min-count index alignment after sorting controls by
 \(({\rm family},{\rm id})\), and exposes only \(6\) possible aligned control
 triples if accepted.  No aligned joint control values are computed in this
 package.
+For the second open blocker, a residual-blind \(\lambda_{\rm row}\) policy
+review package has also been prepared.  It fixes only the policy boundary:
+since both \(T_{\rm joint}\) and \(P_{\rm row}\) are dimensionless, any future
+\(\lambda_{\rm row}\) must be dimensionless and predeclared without endpoint
+residuals, endpoint scores, fit-improvement feedback, posterior chains, or
+post-score control ranks.  This package contains no numeric
+\(\lambda_{\rm row}\) and no \(T_{\rm joint}\) rescoring.
 Separately, the earlier same-statistic guarded-replay chain packages this
 boundary for external review.  It asks only whether a later guarded permission-only replay
 package may use the symbolic \(T_{\rm joint}\) shell under the caveated
