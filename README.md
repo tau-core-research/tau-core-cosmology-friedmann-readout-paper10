@@ -6449,11 +6449,11 @@ scripts/validate_joint_matched_control_distribution_readiness_v1.py
 
 This audit checks whether the repository currently exposes the raw
 matched-control distributions needed by the frozen median/MAD rule. The
-current status is partial: the observer/path channel is ready for a future
-distribution build, the DESI shape/time channel is caveated-ready with a small
-control set, and the KiDS channel remains blocked because the current package
-exposes top-null and family-summary artifacts rather than the full raw
-matched-control distribution. No center, scale, `z_i`, or `T_joint` is computed.
+current status is available but caveated: the observer/path channel is ready
+for a future distribution build, the KiDS channel exposes the full 1008-row
+null-control distribution but only as endpoint-score-not-validation material,
+and the DESI shape/time channel is caveated-ready with a small control set. No
+center, scale, `z_i`, or `T_joint` is computed.
 
 The current same-statistic execution blocker ledger is recorded in:
 

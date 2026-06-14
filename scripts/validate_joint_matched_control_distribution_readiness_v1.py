@@ -10,7 +10,7 @@ OUT = ROOT / "data/derived/joint_matched_control_distribution_readiness_v1.csv"
 SUMMARY = ROOT / "data/derived/joint_matched_control_distribution_readiness_v1_summary.csv"
 DOC = ROOT / "docs/joint_matched_control_distribution_readiness_v1.md"
 CLAIM_BOUNDARY = "joint_matched_control_distribution_readiness_not_scoring_not_validation"
-VERDICT = "MATCHED_CONTROL_DISTRIBUTIONS_PARTIAL_KIDS_BLOCKED"
+VERDICT = "MATCHED_CONTROL_DISTRIBUTIONS_AVAILABLE_CAVEATED_NOT_ZI"
 
 
 def read_rows(path: Path) -> list[dict[str, str]]:
@@ -37,9 +37,9 @@ def main() -> None:
     summary = read_one(SUMMARY)
     require(len(rows) == 3, "expected three channels")
     require(summary["ready_channels"] == "1", "expected one ready channel")
-    require(summary["caveated_ready_channels"] == "1", "expected one caveated-ready channel")
-    require(summary["blocked_channels"] == "1", "expected one blocked channel")
-    require(summary["all_channels_ready_for_numeric_zi"] == "false", "all channels must not be ready")
+    require(summary["caveated_ready_channels"] == "2", "expected two caveated-ready channels")
+    require(summary["blocked_channels"] == "0", "expected no blocked channels")
+    require(summary["all_channels_ready_for_numeric_zi"] == "true", "all channels should have distributions available")
     require(summary["center_scale_computable_now"] == "false", "center/scale must not be computable")
     require(summary["numeric_z_i_defined_channels"] == "0", "z_i must not be defined")
     require(summary["verdict"] == VERDICT, "unexpected verdict")
@@ -54,8 +54,9 @@ def main() -> None:
         require(summary[field] == "false", f"summary {field} must remain false")
     by_channel = {row["channel_id"]: row for row in rows}
     require(
-        by_channel["kids_lensing_cosebis_low_mode"]["readiness_status"] == "BLOCKED_NEEDS_FULL_CONTROL_EXPORT",
-        "KiDS must remain blocked",
+        by_channel["kids_lensing_cosebis_low_mode"]["readiness_status"]
+        == "CAVEATED_READY_ENDPOINT_SCORE_NOT_VALIDATION",
+        "KiDS readiness mismatch",
     )
     require(
         by_channel["observer_path_basis_low_z"]["readiness_status"] == "READY_FOR_FUTURE_ZI_DISTRIBUTION_BUILD",
@@ -79,10 +80,11 @@ def main() -> None:
             require(row[field] == "false", f"{row['channel_id']} {field} must remain false")
     text = DOC.read_text()
     for marker in [
-        "partial",
+        "available but caveated",
         "not scoring",
         "not validation",
-        "KiDS channel remains blocked",
+        "KiDS and DESI channels remain caveated",
+        "does not compute centers",
         VERDICT,
         CLAIM_BOUNDARY,
     ]:

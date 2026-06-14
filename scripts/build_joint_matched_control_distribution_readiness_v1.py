@@ -16,12 +16,12 @@ CLAIM_BOUNDARY = "joint_matched_control_distribution_readiness_not_scoring_not_v
 CHANNELS = [
     {
         "channel_id": "kids_lensing_cosebis_low_mode",
-        "control_source_artifact": "data/derived/kids1000_cosebis_endpoint_scoring_diagnostics_v1_top_nulls.csv",
+        "control_source_artifact": "data/derived/kids1000_cosebis_endpoint_scoring_v1_null_controls.csv",
         "control_value_field": "delta_chi2_vs_baseline",
         "candidate_field": "candidate_delta_chi2_vs_baseline",
-        "raw_control_distribution_status": "PARTIAL_TOP_NULLS_ONLY",
-        "readiness_status": "BLOCKED_NEEDS_FULL_CONTROL_EXPORT",
-        "caveat": "family summary reports 1008 controls, but the current repo artifact exposes only top-null rows plus family aggregates",
+        "raw_control_distribution_status": "FULL_NULL_CONTROL_DISTRIBUTION_AVAILABLE",
+        "readiness_status": "CAVEATED_READY_ENDPOINT_SCORE_NOT_VALIDATION",
+        "caveat": "full 1008-row KiDS null-control distribution is available, but it is endpoint-score-not-validation and must not be promoted without numeric z_i authorization",
     },
     {
         "channel_id": "observer_path_basis_low_z",
@@ -118,7 +118,7 @@ def main() -> None:
         "ready_channels": str(ready),
         "caveated_ready_channels": str(caveated),
         "blocked_channels": str(blocked),
-        "all_channels_ready_for_numeric_zi": "false",
+        "all_channels_ready_for_numeric_zi": str(blocked == 0).lower(),
         "center_scale_computable_now": "false",
         "numeric_z_i_defined_channels": "0",
         "computes_numeric_statistic_now": "false",
@@ -126,8 +126,8 @@ def main() -> None:
         "endpoint_validation_claimed": "false",
         "cosmological_validation_claimed": "false",
         "physical_validation_claimed": "false",
-        "next_required_action": "export_or_rebuild_full_kids_matched_control_distribution_then_authorize_numeric_zi_distribution_build",
-        "verdict": "MATCHED_CONTROL_DISTRIBUTIONS_PARTIAL_KIDS_BLOCKED",
+        "next_required_action": "prepare_numeric_zi_distribution_build_authorization_under_frozen_signed_standardization_protocol",
+        "verdict": "MATCHED_CONTROL_DISTRIBUTIONS_AVAILABLE_CAVEATED_NOT_ZI",
         "claim_boundary": CLAIM_BOUNDARY,
     }
     write_csv(OUT, rows)
@@ -139,7 +139,7 @@ def main() -> None:
                 "# Joint matched-control distribution readiness v1",
                 "",
                 "**Doc class:** matched-control distribution readiness audit",
-                "**Status:** partial; not scoring; not validation",
+                "**Status:** available but caveated; not scoring; not validation",
                 f"**Claim boundary:** `{CLAIM_BOUNDARY}`",
                 "",
                 "The frozen signed `z_i` protocol requires matched-control distributions",
@@ -153,9 +153,11 @@ def main() -> None:
                 f"- blocked channels: `{summary['blocked_channels']}`",
                 f"- verdict: `{summary['verdict']}`",
                 "",
-                "The KiDS channel remains blocked because the current repository exposes",
-                "top-null and family-summary artifacts, not the full raw matched-control",
-                "distribution needed by the frozen median/MAD rule.",
+                "The KiDS and DESI channels remain caveated because their available",
+                "control distributions come from endpoint-score or small-N permission",
+                "contexts. They are available for a future authorized `z_i` distribution",
+                "build, but this artifact still does not compute centers, scales, `z_i`,",
+                "or `T_joint`.",
                 "",
             ]
         )
