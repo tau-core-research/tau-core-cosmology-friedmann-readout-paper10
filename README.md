@@ -6183,6 +6183,22 @@ single-statistic/covariance binding; two families remain upstream-blocked. The
 verdict is
 `MATCHED_CONTROL_IMPLEMENTATION_READINESS_HAS_DESIGNS_BUT_PROTOCOL_BINDING_BLOCKED`.
 
+The symbolic single-statistic protocol shell is recorded in:
+
+```text
+data/derived/joint_single_statistic_protocol_shell_v1.csv
+data/derived/joint_single_statistic_protocol_shell_v1_summary.csv
+docs/joint_single_statistic_protocol_shell_v1.md
+scripts/build_joint_single_statistic_protocol_shell_v1.py
+scripts/validate_joint_single_statistic_protocol_shell_v1.py
+```
+
+It freezes the future shared statistic form as `T_joint = sum_i q_i z_i`, where
+each channel contributes a signed standardized response. This is only a
+symbolic shell: `single_joint_statistic_defined=false`, `protocol_executable=false`,
+and no endpoint scoring is allowed until the covariance route and matched
+controls are frozen together.
+
 The consolidated post-replay validation roadmap is recorded in:
 
 `data/derived/joint_post_replay_validation_roadmap_v1_summary.csv`
