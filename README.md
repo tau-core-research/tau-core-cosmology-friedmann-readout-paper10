@@ -6654,6 +6654,88 @@ current blocker after this ledger is:
 
 `numeric_t_joint_ledger_built_endpoint_scoring_authorization_missing`
 
+The numeric same-statistic control suite around this frozen `T_joint` is now
+recorded in:
+
+```text
+data/derived/joint_numeric_t_joint_control_suite_v1.csv
+data/derived/joint_numeric_t_joint_control_suite_v1_summary.csv
+docs/joint_numeric_t_joint_control_suite_v1.md
+scripts/build_joint_numeric_t_joint_control_suite_v1.py
+scripts/validate_joint_numeric_t_joint_control_suite_v1.py
+```
+
+It uses the same frozen statistic, signs, row scope, and standardization logic
+for candidate and controls. The current prevalidation result is:
+
+```text
+candidate T_joint = 4.142466300799e+00
+numeric controls  = 26
+controls beating or equaling candidate = 0
+```
+
+This is a control-suite precondition only. It is not endpoint scoring, not a
+p-value, not a likelihood ratio, and not cosmological or physical validation.
+
+The current external handoff package asks only whether this `0/26`
+prevalidation control-suite result is sufficient to prepare a separate
+permission-only endpoint-scoring authorization package:
+
+```text
+data/derived/joint_numeric_t_joint_control_suite_review_package_v1.zip
+data/derived/joint_numeric_t_joint_control_suite_review_package_v1.zip.sha256
+data/derived/joint_numeric_t_joint_control_suite_review_package_v1_summary.csv
+data/derived/joint_numeric_t_joint_control_suite_review_response_template_v1.csv
+docs/joint_numeric_t_joint_control_suite_review_external_message_v1.md
+docs/joint_numeric_t_joint_control_suite_review_instructions_v1.md
+scripts/validate_joint_numeric_t_joint_control_suite_review_package_v1.py
+scripts/import_joint_numeric_t_joint_control_suite_review_response_v1.py
+```
+
+Current package checksum:
+
+```text
+70de8881d432a1ec7ae69825462821fee45afe13b539afb88cb6a659e025abba
+```
+
+The reviewer does not need repository access. If accepted, all four response
+rows must set:
+
+```text
+endpoint_scoring_authorization_package_preparation_allowed=true
+endpoint_scoring_allowed=false
+endpoint_validation_claimed=false
+cosmological_validation_claimed=false
+physical_validation_claimed=false
+```
+
+The completed response can be imported with:
+
+```bash
+python scripts/import_joint_numeric_t_joint_control_suite_review_response_v1.py \
+  /path/to/completed_reviewer_response.csv
+python scripts/build_joint_numeric_t_joint_endpoint_scoring_authorization_blocker_status_v1.py
+python scripts/validate_joint_numeric_t_joint_endpoint_scoring_authorization_blocker_status_v1.py
+```
+
+The current endpoint-authorization blocker ledger is recorded in:
+
+```text
+data/derived/joint_numeric_t_joint_endpoint_scoring_authorization_blocker_status_v1.csv
+data/derived/joint_numeric_t_joint_endpoint_scoring_authorization_blocker_status_v1_summary.csv
+docs/joint_numeric_t_joint_endpoint_scoring_authorization_blocker_status_v1.md
+scripts/build_joint_numeric_t_joint_endpoint_scoring_authorization_blocker_status_v1.py
+scripts/validate_joint_numeric_t_joint_endpoint_scoring_authorization_blocker_status_v1.py
+```
+
+Current blocker:
+
+`control_suite_review_response_missing`
+
+Until that response is imported and validated, no endpoint-scoring
+authorization package can be built, and no endpoint scoring or validation is
+authorized.
+
 The current same-statistic execution blocker ledger is recorded in:
 
 ```text
