@@ -6397,6 +6397,21 @@ execution under the same `T_joint`, cross-probe covariance closure, and a
 separate validation authorization package. It does not compute the statistic
 and does not authorize endpoint scoring.
 
+The channel-level numeric `z_i` binding audit is recorded in:
+
+```text
+data/derived/joint_numeric_channel_zi_binding_audit_v1.csv
+data/derived/joint_numeric_channel_zi_binding_audit_v1_summary.csv
+docs/joint_numeric_channel_zi_binding_audit_v1.md
+scripts/build_joint_numeric_channel_zi_binding_audit_v1.py
+scripts/validate_joint_numeric_channel_zi_binding_audit_v1.py
+```
+
+This audit identifies candidate numeric source fields for all three active
+channels, but it deliberately leaves `z_i` undefined. The remaining blocker is
+a shared signed-standardization rule that must apply to candidate and controls
+before numeric `T_joint` scoring can be considered.
+
 The current same-statistic execution blocker ledger is recorded in:
 
 ```text
