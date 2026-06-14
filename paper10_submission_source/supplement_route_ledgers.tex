@@ -2148,6 +2148,15 @@ but leaves three requirements open or caveated: a residual-blind source-native
 distance/overlap metric, a small-\(N\) balance rule for the DESI route, and
 candidate/control symmetry for the penalty rule.  The resulting verdict is
 \(\texttt{PENALTY\_NOT\_ADMISSIBLE\_YET\_REQUIREMENTS\_FROZEN}\).
+A residual-blind route-tag scaffold partially addresses the distance/overlap
+requirement at bookkeeping level.  The observer-path route is tagged as
+observer/path, low-\(z\), sky-direction, \(z\)-center, metric-environment, and
+permission-replay.  The DESI shape/time route is tagged as DESI-BAO,
+time-readout, clock-slope-shape, radial-BAO, adjacent-first-difference, and
+permission-replay.  Only the generic permission-replay tag is shared, giving a
+Jaccard distance of \(0.909\).  This supports source-route distinction, but
+remains a caveated tag metric and does not authorize penalty scoring or
+\(T_{\rm joint}\) rescoring.
 
 \bibliographystyle{plain}
 \bibliography{refs}

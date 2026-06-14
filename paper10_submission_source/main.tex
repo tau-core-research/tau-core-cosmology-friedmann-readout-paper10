@@ -1203,6 +1203,11 @@ distance/overlap metric between the two source spaces, a small-\(N\) balance
 rule for the six-control DESI route, and candidate/control symmetry for any
 future penalty.  Consequently no penalty, reweighting, or rescoring is applied
 in the present paper.
+A first residual-blind route-tag overlap scaffold can nevertheless be built:
+the two routes share only the generic \(\texttt{permission\_replay}\) tag,
+giving a caveated Jaccard distance of \(0.909\).  This supports the
+source-route distinction, but it is still route-level bookkeeping rather than
+a source-native penalty metric, so it does not change the endpoint score.
 Separately, the earlier same-statistic guarded-replay chain packages this
 boundary for external review.  It asks only whether a later guarded permission-only replay
 package may use the symbolic \(T_{\rm joint}\) shell under the caveated
