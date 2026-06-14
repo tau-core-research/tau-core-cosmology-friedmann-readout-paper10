@@ -1297,19 +1297,19 @@ therefore records \texttt{penalty\_formula\_defined=true} but keeps
 \texttt{numeric\_penalty\_values\_written=false}, and
 \texttt{numeric\_t\_joint\_rescoring\_allowed=false}.  The remaining open
 requirement is a separate numeric-penalty computation authorization gate.  A
-review package for that gate has been prepared, with status
-\texttt{JOINT\_ROW\_LEVEL\_NUMERIC\_PENALTY\_AUTHORIZATION\_REVIEW\_PACKAGE\_READY\_NOT\_COMPLETED}.
-It contains no endpoint residuals, no new endpoint scores, no fit statistics,
-no numeric penalty values, and no numeric \(\lambda_{\rm row}\).  A completed
-reviewer response is required before any numeric \(P_i(a)\) or
-\(P_{\rm row}(a)\) values may be computed, and even that would not by itself
-authorize \(T_{\rm joint}\) rescoring.  A machine preflight now checks this
-entire boundary.  Its current verdict is
-\texttt{PREFLIGHT\_PASS\_NUMERIC\_PENALTY\_CORRECTLY\_BLOCKED}: all five
-guard checks pass, no completed reviewer response is imported, numeric penalty
-computation remains disallowed, and the guarded runner exits blocked as
-expected.  Thus the row-level penalty chain is ready as an audited protocol
-object, but not executable as a scoring object.
+review package for that gate has been completed and imported.  It contains no
+endpoint residuals, no new endpoint scores, no fit statistics, no numeric
+penalty values, and no numeric \(\lambda_{\rm row}\).  The completed response
+authorizes only a separate numeric penalty-value package for \(P_i(a)\) and
+\(P_{\rm row}(a)\).  It does not authorize numeric \(\lambda_{\rm row}\),
+endpoint replay, endpoint validation, or \(T_{\rm joint}\) rescoring.  A machine
+preflight now checks this boundary.  Its current verdict is
+\texttt{PREFLIGHT\_PASS\_READY\_FOR\_SEPARATE\_NUMERIC\_PENALTY\_PACKAGE\_NOT\_RESCORING}:
+all five guard checks pass, the completed reviewer response is imported,
+numeric penalty-value computation is allowed only as a separate package, and
+the guarded runner exits ready without computing values.  Thus the row-level
+penalty chain is ready for a numeric value package, but still not executable as
+a \(T_{\rm joint}\)-rescoring object.
 Separately, the earlier same-statistic guarded-replay chain packages this
 boundary for external review.  It asks only whether a later guarded permission-only replay
 package may use the symbolic \(T_{\rm joint}\) shell under the caveated

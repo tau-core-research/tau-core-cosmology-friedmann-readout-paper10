@@ -5,12 +5,14 @@
 **Claim boundary:** `joint_row_level_numeric_penalty_preflight_not_scoring_not_validation`.
 
 This preflight checks the symbolic formula, v4 protocol shell,
-authorization package, blocker status, and guarded runner. In the
-current repository state the correct outcome is that the guarded
-runner blocks numeric penalty-value computation.
+authorization package, blocker status, and guarded runner. Before
+review authorization the correct outcome is a blocked guard. After
+review authorization the correct outcome is readiness for a separate
+numeric penalty-value package, still without `lambda_row` or
+`T_joint` rescoring.
 
 - checks passed: `5/5`
-- review response imported: `false`
-- numeric penalty computation allowed: `false`
-- verdict: `PREFLIGHT_PASS_NUMERIC_PENALTY_CORRECTLY_BLOCKED`
-- next action: `import_completed_reviewer_response_before_numeric_penalty_values`
+- review response imported: `true`
+- numeric penalty computation allowed: `true`
+- verdict: `PREFLIGHT_PASS_READY_FOR_SEPARATE_NUMERIC_PENALTY_PACKAGE_NOT_RESCORING`
+- next action: `build_separate_numeric_penalty_value_package_without_lambda_or_rescoring`

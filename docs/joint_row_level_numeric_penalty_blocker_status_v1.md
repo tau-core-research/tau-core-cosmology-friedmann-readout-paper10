@@ -9,9 +9,9 @@ advance to numeric penalty-value computation. It never authorizes
 `lambda_row`, `T_joint` rescoring, endpoint replay, or validation.
 
 - review package ready: `true`
-- review response imported: `false`
-- numeric penalty computation allowed: `false`
+- review response imported: `true`
+- numeric penalty computation allowed: `true`
 - `lambda_row` numeric value allowed: `false`
 - `T_joint` rescoring allowed: `false`
-- verdict: `NUMERIC_PENALTY_VALUES_BLOCKED_WAITING_FOR_REVIEW_RESPONSE`
-- next action: `import_completed_reviewer_response_before_numeric_penalty_values`
+- verdict: `NUMERIC_PENALTY_VALUES_READY_FOR_SEPARATE_PACKAGE_NOT_RESCORING`
+- next action: `build_separate_numeric_penalty_value_package_without_lambda_or_rescoring`

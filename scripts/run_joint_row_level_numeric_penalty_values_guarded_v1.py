@@ -60,7 +60,7 @@ def main() -> None:
     ]:
         require_false(auth, field, "authorization")
 
-    raise SystemExit(
+    print(
         "READY_FOR_SEPARATE_NUMERIC_PACKAGE: authorization is present, but this guard "
         "does not compute values. Build a separate numeric penalty value package next. "
         f"claim_boundary={CLAIM_BOUNDARY}"

@@ -690,12 +690,12 @@ docs/joint_row_level_numeric_penalty_preflight_v1.md
 scripts/check_joint_row_level_numeric_penalty_preflight_v1.py
 ```
 
-The package status is
-`JOINT_ROW_LEVEL_NUMERIC_PENALTY_AUTHORIZATION_REVIEW_PACKAGE_READY_NOT_COMPLETED`.
-It contains no endpoint residuals, no new endpoint scores, no fit statistics,
-no numeric penalty values, and no numeric `lambda_row`. A completed reviewer
-response is required before any numeric `P_i(a)` or `P_row(a)` values may be
-computed, and even that would not by itself authorize `T_joint` rescoring.
+The package was completed and imported. It contains no endpoint residuals, no
+new endpoint scores, no fit statistics, no numeric penalty values, and no
+numeric `lambda_row`. The completed reviewer response authorizes only a
+separate numeric penalty-value package for `P_i(a)` and `P_row(a)`. It does not
+authorize numeric `lambda_row`, endpoint replay, endpoint validation, or
+`T_joint` rescoring.
 
 When the completed reviewer response is returned, validate/import it with:
 
@@ -707,9 +707,9 @@ python scripts/import_joint_row_level_numeric_penalty_authorization_review_respo
 The importer refuses incomplete templates, any `forbidden_inputs_used=true`,
 numeric `lambda_row` authorization, or direct `T_joint` rescoring authorization.
 The current machine-readable blocker status is
-`NUMERIC_PENALTY_VALUES_BLOCKED_WAITING_FOR_REVIEW_RESPONSE`: the reviewer
-package is ready, but no completed response has been imported, so no numeric
-`P_i(a)` or `P_row(a)` values may be computed.
+`NUMERIC_PENALTY_VALUES_READY_FOR_SEPARATE_PACKAGE_NOT_RESCORING`: the reviewer
+response has been imported, and the next allowed action is a separate numeric
+penalty-value package without `lambda_row` and without `T_joint` rescoring.
 
 The guarded runner enforces this boundary:
 
@@ -717,9 +717,9 @@ The guarded runner enforces this boundary:
 python scripts/run_joint_row_level_numeric_penalty_values_guarded_v1.py
 ```
 
-In the current repository state this command must exit blocked. It is only a
-guard; even after reviewer authorization it will not compute values itself, but
-will require a separate numeric penalty value package.
+In the current repository state this command must exit ready-for-separate-package.
+It is only a guard: it does not compute values itself, and it still requires a
+separate numeric penalty value package.
 
 A one-command preflight verifies the whole boundary:
 
@@ -728,7 +728,7 @@ python scripts/check_joint_row_level_numeric_penalty_preflight_v1.py
 ```
 
 The current expected verdict is
-`PREFLIGHT_PASS_NUMERIC_PENALTY_CORRECTLY_BLOCKED`.
+`PREFLIGHT_PASS_READY_FOR_SEPARATE_NUMERIC_PENALTY_PACKAGE_NOT_RESCORING`.
 
 A block-diagonal likelihood-surrogate protocol shell is now recorded in:
 

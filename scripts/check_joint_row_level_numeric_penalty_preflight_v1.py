@@ -71,8 +71,14 @@ def main() -> None:
     guard_output = (guard.stdout or guard.stderr or "").strip().replace("\n", " | ")
     blocker = read_one(BLOCKER_SUMMARY)
     expected_blocked = blocker["numeric_penalty_computation_allowed"] == "false"
-    guard_status = "PASS_EXPECTED_BLOCKED" if expected_blocked and guard.returncode != 0 else "FAIL"
-    all_passed = all_passed and guard_status == "PASS_EXPECTED_BLOCKED"
+    expected_ready = blocker["numeric_penalty_computation_allowed"] == "true"
+    if expected_blocked and guard.returncode != 0:
+        guard_status = "PASS_EXPECTED_BLOCKED"
+    elif expected_ready and guard.returncode == 0:
+        guard_status = "PASS_READY_FOR_SEPARATE_NUMERIC_PACKAGE"
+    else:
+        guard_status = "FAIL"
+    all_passed = all_passed and guard_status.startswith("PASS")
     rows.append(
         {
             "preflight_id": "JOINT_ROW_LEVEL_NUMERIC_PENALTY_PREFLIGHT_V1",
@@ -84,11 +90,12 @@ def main() -> None:
         }
     )
 
-    verdict = (
-        "PREFLIGHT_PASS_NUMERIC_PENALTY_CORRECTLY_BLOCKED"
-        if all_passed and expected_blocked
-        else "PREFLIGHT_FAIL_REVIEW_REQUIRED_BEFORE_NUMERIC_VALUES"
-    )
+    if all_passed and expected_blocked:
+        verdict = "PREFLIGHT_PASS_NUMERIC_PENALTY_CORRECTLY_BLOCKED"
+    elif all_passed and expected_ready:
+        verdict = "PREFLIGHT_PASS_READY_FOR_SEPARATE_NUMERIC_PENALTY_PACKAGE_NOT_RESCORING"
+    else:
+        verdict = "PREFLIGHT_FAIL_REVIEW_OR_GUARD_STATE_MISMATCH"
     summary = {
         "preflight_id": "JOINT_ROW_LEVEL_NUMERIC_PENALTY_PREFLIGHT_V1",
         "checks_total": str(len(rows)),
@@ -115,9 +122,11 @@ def main() -> None:
                 f"**Claim boundary:** `{CLAIM_BOUNDARY}`.",
                 "",
                 "This preflight checks the symbolic formula, v4 protocol shell,",
-                "authorization package, blocker status, and guarded runner. In the",
-                "current repository state the correct outcome is that the guarded",
-                "runner blocks numeric penalty-value computation.",
+                "authorization package, blocker status, and guarded runner. Before",
+                "review authorization the correct outcome is a blocked guard. After",
+                "review authorization the correct outcome is readiness for a separate",
+                "numeric penalty-value package, still without `lambda_row` or",
+                "`T_joint` rescoring.",
                 "",
                 f"- checks passed: `{summary['checks_passed']}/{summary['checks_total']}`",
                 f"- review response imported: `{summary['review_response_imported']}`",
