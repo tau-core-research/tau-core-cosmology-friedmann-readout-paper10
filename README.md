@@ -6608,6 +6608,22 @@ Current blocker:
 
 `numeric_t_joint_authorization_response_missing`
 
+If a completed reviewer response later authorizes the numeric joint ledger,
+the guarded build path is:
+
+```bash
+python scripts/import_joint_numeric_t_joint_authorization_response_v1.py \
+  /path/to/completed_reviewer_response.csv
+python scripts/build_joint_numeric_t_joint_ledger_v1.py
+python scripts/validate_joint_numeric_t_joint_ledger_v1.py
+python scripts/build_joint_numeric_t_joint_blocker_status_v1.py
+python scripts/validate_joint_numeric_t_joint_blocker_status_v1.py
+```
+
+The guarded builder refuses to run without the imported authorization summary.
+The resulting `T_joint`, if authorized, remains a numeric joint ledger only,
+not endpoint scoring or validation.
+
 The current same-statistic execution blocker ledger is recorded in:
 
 ```text

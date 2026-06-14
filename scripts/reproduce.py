@@ -1789,6 +1789,8 @@ def main() -> None:
                     numeric_t_joint_response = ROOT / "data" / "derived" / "joint_numeric_t_joint_authorization_response_v1.csv"
                     if numeric_t_joint_response.exists():
                         run(["python", "scripts/validate_joint_numeric_t_joint_authorization_response_v1.py"])
+                        run(["python", "scripts/build_joint_numeric_t_joint_ledger_v1.py"])
+                        run(["python", "scripts/validate_joint_numeric_t_joint_ledger_v1.py"])
                     run(["python", "scripts/build_joint_numeric_t_joint_blocker_status_v1.py"])
                     run(["python", "scripts/validate_joint_numeric_t_joint_blocker_status_v1.py"])
             run(["python", "scripts/build_joint_numeric_zi_distribution_build_blocker_status_v1.py"])
