@@ -1303,7 +1303,13 @@ It contains no endpoint residuals, no new endpoint scores, no fit statistics,
 no numeric penalty values, and no numeric \(\lambda_{\rm row}\).  A completed
 reviewer response is required before any numeric \(P_i(a)\) or
 \(P_{\rm row}(a)\) values may be computed, and even that would not by itself
-authorize \(T_{\rm joint}\) rescoring.
+authorize \(T_{\rm joint}\) rescoring.  A machine preflight now checks this
+entire boundary.  Its current verdict is
+\texttt{PREFLIGHT\_PASS\_NUMERIC\_PENALTY\_CORRECTLY\_BLOCKED}: all five
+guard checks pass, no completed reviewer response is imported, numeric penalty
+computation remains disallowed, and the guarded runner exits blocked as
+expected.  Thus the row-level penalty chain is ready as an audited protocol
+object, but not executable as a scoring object.
 Separately, the earlier same-statistic guarded-replay chain packages this
 boundary for external review.  It asks only whether a later guarded permission-only replay
 package may use the symbolic \(T_{\rm joint}\) shell under the caveated
