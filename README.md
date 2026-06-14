@@ -6067,6 +6067,22 @@ statistic/covariance gates. Verdict:
 
 `MATCHED_CONTROL_RESOLUTION_PLAN_FROZEN_IMPLEMENTATION_BLOCKED_NOT_SCORING`
 
+The consolidated post-replay validation roadmap is recorded in:
+
+`data/derived/joint_post_replay_validation_roadmap_v1_summary.csv`
+
+It freezes the only allowed promotion order:
+
+1. close the KiDS/COSEBIs physical-promotion proof chain,
+2. close covariance through a source-native product or reviewed caveated
+   block-diagonal surrogate,
+3. implement all same-statistic matched controls,
+4. only then prepare a separate validation-protocol authorization package.
+
+Current verdict:
+
+`JOINT_POST_REPLAY_ROADMAP_FROZEN_VALIDATION_NOT_READY`
+
 ## Scope
 
 This is a protocol scaffold and branch-opening paper package. The next
