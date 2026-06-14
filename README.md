@@ -6624,6 +6624,36 @@ The guarded builder refuses to run without the imported authorization summary.
 The resulting `T_joint`, if authorized, remains a numeric joint ledger only,
 not endpoint scoring or validation.
 
+The authorized numeric `T_joint` ledger is now recorded in:
+
+```text
+data/derived/joint_numeric_t_joint_ledger_v1.csv
+data/derived/joint_numeric_t_joint_ledger_v1_summary.csv
+docs/joint_numeric_t_joint_ledger_v1.md
+scripts/build_joint_numeric_t_joint_ledger_v1.py
+scripts/validate_joint_numeric_t_joint_ledger_v1.py
+```
+
+Current numeric joint ledger:
+
+```text
+T_joint = 4.142466300799e+00
+```
+
+Channel contributions:
+
+```text
+kids_lensing_cosebis_low_mode : 2.492514715023e+00
+observer_path_basis_low_z     : 8.800470982924e-01
+desi_shape_time_readout       : 7.699044874836e-01
+```
+
+This remains a caveated numeric joint ledger only. It is not an endpoint score,
+not a cosmological validation claim, and not a physical validation claim. The
+current blocker after this ledger is:
+
+`numeric_t_joint_ledger_built_endpoint_scoring_authorization_missing`
+
 The current same-statistic execution blocker ledger is recorded in:
 
 ```text
