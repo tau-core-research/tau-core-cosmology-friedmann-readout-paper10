@@ -2084,6 +2084,38 @@ A follow-up external review package is prepared for this control-suite ledger.
 It asks only whether the authors may prepare a separate endpoint-scoring
 authorization package from the \(0/26\) control result while preserving all
 caveats.  It does not authorize endpoint scoring directly.
+The completed control-suite review accepted exactly that narrow next step:
+preparation of a separate endpoint-scoring authorization package, not endpoint
+scoring itself.  After a second completed external response, one
+permission-only endpoint-scoring replay was authorized and run under the exact
+frozen \(T_{\rm joint}\) statistic and the same 26 numeric controls.  The
+result is:
+\[
+\begin{array}{ll}
+T_{\rm joint}^{\rm candidate} &= 4.142466300799,\\
+\text{numeric controls} &= 26,\\
+\text{controls beating/equal candidate} &= 0,\\
+\text{candidate rank among candidate+controls} &= 1.
+\end{array}
+\]
+The best control is the shuffled-channel control
+\(\texttt{channel\_shuffle\_002}\), with
+\[
+T_{\rm joint}^{\rm candidate}
+-
+T_{\rm joint}^{\rm best\,control}
+=
+2.964446052\times 10^{-3}.
+\]
+Family-level margins show where the signal is robust and where it is thin.
+The minimum candidate-minus-control margins are \(0.769904487\) for
+block-drop controls, \(1.539808975\) for sign-flip controls,
+\(3.596872729\) for matched-index controls, \(4.142466301\) for the null
+readout, but only \(2.964446052\times10^{-3}\) for shuffled-channel controls.
+Thus the permission-only endpoint diagnostic is positive against all frozen
+numeric controls, while the channel-label assignment remains the narrowest
+control direction.  This is not a likelihood ratio, not a validation \(p\)-value,
+and not cosmological or physical validation.
 
 \bibliographystyle{plain}
 \bibliography{refs}

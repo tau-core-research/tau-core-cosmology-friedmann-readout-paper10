@@ -1157,8 +1157,30 @@ be built from the frozen \(q_i\), \(z_i\), sign, row-scope, and standardization
 ledgers.  The package keeps endpoint scoring, cosmological validation, and
 physical validation explicitly false; it is a control-suite handoff, not an
 endpoint-scoring authorization.
-A same-statistic replay authorization package then packages this boundary for
-external review.  It asks only whether a later guarded permission-only replay
+A completed control-suite review then permitted preparation of a separate
+endpoint-scoring authorization package, and a completed endpoint-scoring
+authorization response permitted exactly one permission-only diagnostic replay
+using the frozen \(T_{\rm joint}\) statistic and the same 26 numeric controls.
+The resulting permission-only endpoint-scoring ledger reports
+\[
+  \text{controls beating or equaling the candidate}=0/26,
+  \qquad
+  \operatorname{rank}(T_{\rm joint})=1
+\]
+among the candidate plus controls.  The candidate therefore exceeds all
+predeclared numeric controls under this frozen statistic.  The margin is
+nevertheless narrow in the shuffled-channel family: the closest control is
+\texttt{channel\_shuffle\_002}, with
+\[
+  T_{\rm joint}-T_{\rm shuffle}=2.964446052\times 10^{-3}.
+\]
+By contrast, the minimum margins are much larger for the block-drop,
+sign-flip, matched-index, and null-readout families.  Thus the claim-safe
+reading is a positive permission-only endpoint diagnostic with a thin
+channel-assignment margin, not cosmological validation and not a physical
+proof.
+Separately, the earlier same-statistic guarded-replay chain packages this
+boundary for external review.  It asks only whether a later guarded permission-only replay
 package may use the symbolic \(T_{\rm joint}\) shell under the caveated
 block-diagonal covariance route and matched-control readiness boundary.  The
 package itself is not a replay: direct scoring remains forbidden and no
