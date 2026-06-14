@@ -1746,6 +1746,8 @@ def main() -> None:
         run(["python", "scripts/validate_joint_matched_control_implementation_readiness_v1.py"])
         run(["python", "scripts/build_joint_single_statistic_protocol_shell_v1.py"])
         run(["python", "scripts/validate_joint_single_statistic_protocol_shell_v1.py"])
+        run(["python", "scripts/build_joint_same_statistic_replay_authorization_package_v1.py"])
+        run(["python", "scripts/validate_joint_same_statistic_replay_authorization_package_v1.py"])
         run(["python", "scripts/build_joint_post_replay_validation_roadmap_v1.py"])
         run(["python", "scripts/validate_joint_post_replay_validation_roadmap_v1.py"])
     run(["python", "scripts/build_joint_non_lensing_lift_diagnostic_v1.py"])

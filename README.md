@@ -6199,6 +6199,23 @@ symbolic shell: `single_joint_statistic_defined=false`, `protocol_executable=fal
 and no endpoint scoring is allowed until the covariance route and matched
 controls are frozen together.
 
+The same-statistic replay authorization package is recorded in:
+
+```text
+data/derived/joint_same_statistic_replay_authorization_package_v1.zip
+data/derived/joint_same_statistic_replay_authorization_package_v1_summary.csv
+data/derived/joint_same_statistic_replay_authorization_response_template_v1.csv
+docs/joint_same_statistic_replay_authorization_package_v1.md
+scripts/build_joint_same_statistic_replay_authorization_package_v1.py
+scripts/validate_joint_same_statistic_replay_authorization_package_v1.py
+```
+
+This is a reviewer handoff package, not a replay. It asks whether a later
+guarded permission-only replay package may use the symbolic `T_joint` shell
+under the caveated block-diagonal covariance route and matched-control
+readiness boundary. Direct scoring remains forbidden:
+`permission_only_replay_package_allowed=false` and `direct_scoring_allowed=false`.
+
 The consolidated post-replay validation roadmap is recorded in:
 
 `data/derived/joint_post_replay_validation_roadmap_v1_summary.csv`
