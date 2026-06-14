@@ -476,9 +476,30 @@ scripts/validate_joint_guarded_replay_execution_blocker_status_v1.py
 ```
 
 At this stage the blocker is
-`completed_run_template_authorization_response_missing`.  Thus the joint
-guarded replay remains blocked until the completed external response is
-imported and validated.
+`guarded_runner_and_execution_authorization_not_yet_prepared`.  The completed
+run-template authorization response has been imported and authorizes only
+preparation of a separate execution plan:
+
+```text
+data/derived/joint_guarded_replay_run_template_authorization_response_v1.csv
+data/derived/joint_guarded_replay_run_template_authorization_response_v1_summary.csv
+data/derived/joint_guarded_replay_run_template_authorization_review_completed_summary_v1.csv
+data/derived/joint_guarded_replay_run_template_authorization_review_validation_log_v1.txt
+docs/joint_guarded_replay_run_template_authorization_review_notes_v1.md
+```
+
+The execution plan is now frozen at:
+
+```text
+data/source_manifest/joint_guarded_replay_execution_plan_v1.csv
+data/derived/joint_guarded_replay_execution_plan_v1_summary.csv
+docs/joint_guarded_replay_execution_plan_v1.md
+scripts/build_joint_guarded_replay_execution_plan_v1.py
+scripts/validate_joint_guarded_replay_execution_plan_v1.py
+```
+
+It is still plan-only.  The runner does not exist yet, and a separate execution
+authorization gate is still required before any permission-only replay can run.
 
 The matched-control requirements are now specified in:
 

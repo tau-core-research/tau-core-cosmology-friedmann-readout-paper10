@@ -49,6 +49,16 @@ def main() -> None:
             row["next_required_action"] == "obtain_completed_external_reviewer_response_then_import_and_validate",
             "missing-response next action mismatch",
         )
+    if row["authorization_response_exists"] == "true":
+        require(
+            row["current_blocker"]
+            in {
+                "execution_plan_builder_not_yet_prepared",
+                "guarded_runner_and_execution_authorization_not_yet_prepared",
+                "reviewer_rejected_run_template_authorization",
+            },
+            "unexpected post-response blocker",
+        )
     require(
         summary["verdict"] == "joint_guarded_replay_execution_blocked_until_completed_authorization_response",
         "unexpected summary verdict",

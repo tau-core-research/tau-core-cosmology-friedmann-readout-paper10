@@ -1707,6 +1707,8 @@ def main() -> None:
             "scripts/validate_joint_guarded_replay_run_template_authorization_response_v1.py",
             str(response),
         ])
+        run(["python", "scripts/build_joint_guarded_replay_execution_plan_v1.py"])
+        run(["python", "scripts/validate_joint_guarded_replay_execution_plan_v1.py"])
     run(["python", "scripts/build_joint_guarded_replay_execution_blocker_status_v1.py"])
     run(["python", "scripts/validate_joint_guarded_replay_execution_blocker_status_v1.py"])
     run(["python", "scripts/build_joint_non_lensing_lift_diagnostic_v1.py"])

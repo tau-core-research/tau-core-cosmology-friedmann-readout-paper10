@@ -12,6 +12,7 @@ DOC = ROOT / "docs/joint_guarded_replay_execution_blocker_status_v1.md"
 RUN_TEMPLATE_SUMMARY = ROOT / "data/derived/joint_guarded_replay_run_template_v1_summary.csv"
 AUTH_PACKAGE_SUMMARY = ROOT / "data/derived/joint_guarded_replay_run_template_authorization_package_v1_summary.csv"
 AUTH_RESPONSE_SUMMARY = ROOT / "data/derived/joint_guarded_replay_run_template_authorization_response_v1_summary.csv"
+EXECUTION_PLAN_SUMMARY = ROOT / "data/derived/joint_guarded_replay_execution_plan_v1_summary.csv"
 CLAIM_BOUNDARY = "joint_guarded_replay_execution_blocker_status_not_execution_not_scoring_not_validation"
 
 
@@ -67,6 +68,11 @@ def main() -> None:
         if response_decision == "AUTHORIZE_JOINT_GUARDED_REPLAY_EXECUTION_PLAN_PREPARATION_ONLY_NOT_EXECUTION_NOT_SCORING_NOT_VALIDATION":
             blocker = "execution_plan_builder_not_yet_prepared"
             next_action = "build_separate_executable_replay_plan_and_validator_without_running"
+            if EXECUTION_PLAN_SUMMARY.exists():
+                plan = read_one(EXECUTION_PLAN_SUMMARY)
+                if plan["status"] == "JOINT_GUARDED_REPLAY_EXECUTION_PLAN_READY_NOT_RUN":
+                    blocker = "guarded_runner_and_execution_authorization_not_yet_prepared"
+                    next_action = "build_guarded_permission_only_runner_and_validator_then_get_separate_execution_authorization"
         elif response_decision == "JOINT_GUARDED_REPLAY_RUN_TEMPLATE_AUTHORIZATION_REJECTED_NOT_EXECUTION_NOT_SCORING":
             blocker = "reviewer_rejected_run_template_authorization"
             next_action = "revise_template_or_keep_joint_guarded_replay_blocked"

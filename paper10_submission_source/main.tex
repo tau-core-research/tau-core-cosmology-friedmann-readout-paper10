@@ -1151,10 +1151,12 @@ review.  That package is still blank and reviewer-not-completed; it asks only
 whether the frozen template may be used as the basis for a later executable
 permission-only replay, and it still creates no endpoint scores or validation
 claim.
-The present execution blocker is therefore administrative/protocolic rather
-than numerical: the completed run-template authorization response is missing.
-Until that response is imported and validated, the joint guarded replay remains
-blocked.
+The completed run-template authorization response has now been imported.  It
+authorizes only preparation of a separate execution plan, not execution itself.
+The execution plan is frozen as
+\texttt{JOINT\_GUARDED\_REPLAY\_EXECUTION\_PLAN\_READY\_NOT\_RUN}; the present
+blocker is now the absence of a guarded runner and separate execution
+authorization.
 The matched-control suite is likewise specified but not implemented: the
 control families are now named, while their execution is blocked until the same
 covariance/statistic is available for candidate and controls.
