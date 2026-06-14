@@ -6,10 +6,10 @@
 
 Candidate numeric `T_joint`: `4.142466300799e+00`.
 Control-suite result: `0/26` controls beat or equal the candidate.
-Review response exists: `false`.
-Current blocker: `control_suite_review_response_missing`.
-Readiness: `BLOCKED_BEFORE_ENDPOINT_AUTHORIZATION_PACKAGE`.
-Next required action: `send_control_suite_review_zip_to_reviewer_then_import_completed_response`.
+Review response exists: `true`.
+Current blocker: `endpoint_scoring_authorization_response_missing`.
+Readiness: `READY_TO_BUILD_ENDPOINT_AUTHORIZATION_PACKAGE_NOT_SCORING`.
+Next required action: `build_endpoint_scoring_authorization_package_without_running_scoring`.
 
 This audit does not authorize endpoint scoring, endpoint validation,
 cosmological validation, or physical validation.

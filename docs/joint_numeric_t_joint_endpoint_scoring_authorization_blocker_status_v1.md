@@ -6,8 +6,8 @@
 
 Candidate numeric `T_joint`: `4.142466300799e+00`.
 Control-suite result: `0/26` controls beat or equal the candidate.
-Current blocker: `control_suite_review_response_missing`.
-Next required action: `send_control_suite_review_zip_to_reviewer_then_import_completed_response`.
+Current blocker: `endpoint_scoring_authorization_response_missing`.
+Next required action: `send_endpoint_authorization_zip_to_reviewer_then_import_completed_response`.
 
 This artifact does not authorize endpoint scoring, endpoint validation,
 cosmological validation, or physical validation.
