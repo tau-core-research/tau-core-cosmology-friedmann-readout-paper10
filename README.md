@@ -6283,6 +6283,20 @@ The importer rejects incomplete templates and responses that use forbidden
 inputs or claim endpoint, cosmological, or physical validation. A positive
 response may only authorize one permission-only execution.
 
+The current same-statistic execution blocker ledger is recorded in:
+
+```text
+data/derived/joint_same_statistic_execution_blocker_status_v1.csv
+data/derived/joint_same_statistic_execution_blocker_status_v1_summary.csv
+docs/joint_same_statistic_execution_blocker_status_v1.md
+scripts/build_joint_same_statistic_execution_blocker_status_v1.py
+scripts/validate_joint_same_statistic_execution_blocker_status_v1.py
+```
+
+Current blocker:
+
+`same_statistic_execution_authorization_response_missing`
+
 The consolidated post-replay validation roadmap is recorded in:
 
 `data/derived/joint_post_replay_validation_roadmap_v1_summary.csv`

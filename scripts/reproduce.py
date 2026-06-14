@@ -1758,6 +1758,8 @@ def main() -> None:
             execution_response = ROOT / "data" / "derived" / "joint_same_statistic_execution_authorization_response_v1.csv"
             if execution_response.exists():
                 run(["python", "scripts/validate_joint_same_statistic_execution_authorization_response_v1.py"])
+            run(["python", "scripts/build_joint_same_statistic_execution_blocker_status_v1.py"])
+            run(["python", "scripts/validate_joint_same_statistic_execution_blocker_status_v1.py"])
         run(["python", "scripts/build_joint_post_replay_validation_roadmap_v1.py"])
         run(["python", "scripts/validate_joint_post_replay_validation_roadmap_v1.py"])
     run(["python", "scripts/build_joint_non_lensing_lift_diagnostic_v1.py"])
