@@ -6990,6 +6990,29 @@ The numeric values are accepted for the record only. Cross-channel control
 alignment, `lambda_row`, `T_joint` rescoring, endpoint scoring, and validation
 remain blocked pending a separate authorization route.
 
+Next-use authorization review package:
+
+```bash
+python scripts/build_joint_row_level_penalty_use_authorization_review_package_v1.py
+python scripts/validate_joint_row_level_penalty_use_authorization_review_package_v1.py
+```
+
+```text
+data/derived/joint_row_level_penalty_use_authorization_review_package_v1.zip
+data/derived/joint_row_level_penalty_use_authorization_review_package_v1.zip.sha256
+data/derived/joint_row_level_penalty_use_authorization_review_response_template_v1.csv
+```
+
+Current package SHA-256:
+
+```text
+b77bae01b2d09b5be254164bcfcc04f5bb0ba36aa05003defa4efdc2a975ad85
+```
+
+This package still does not authorize `lambda_row`, cross-channel control
+alignment, `T_joint` rescoring, endpoint replay, or validation. It only asks
+whether a later residual-blind use-policy route may be planned.
+
 ## Scope
 
 This is a protocol scaffold and branch-opening paper package. The next

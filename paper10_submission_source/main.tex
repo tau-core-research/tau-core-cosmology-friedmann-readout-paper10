@@ -1343,6 +1343,12 @@ reproduces the candidate \(P_{\rm row}\), but keeps cross-channel control
 alignment, numeric \(\lambda_{\rm row}\), \(T_{\rm joint}\) rescoring, endpoint
 scoring, and validation all forbidden.  The resulting blocker verdict is
 \texttt{NUMERIC\_PENALTY\_VALUES\_ACCEPTED\_FOR\_RECORD\_ONLY\_NEXT\_USE\_BLOCKED}.
+A further use-authorization review package has therefore been prepared.  It
+does not choose \(\lambda_{\rm row}\), does not align controls, does not rescore
+\(T_{\rm joint}\), and does not authorize endpoint replay.  It asks only
+whether a later residual-blind use-policy route may be planned, with
+cross-channel controls and any numeric \(\lambda_{\rm row}\) still requiring
+separate acceptance.
 Separately, the earlier same-statistic guarded-replay chain packages this
 boundary for external review.  It asks only whether a later guarded permission-only replay
 package may use the symbolic \(T_{\rm joint}\) shell under the caveated
