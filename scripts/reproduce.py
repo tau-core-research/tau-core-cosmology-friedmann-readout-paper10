@@ -1784,6 +1784,8 @@ def main() -> None:
                 numeric_zi_ledger = ROOT / "data" / "derived" / "joint_numeric_zi_distribution_ledger_v1.csv"
                 if numeric_zi_ledger.exists():
                     run(["python", "scripts/validate_joint_numeric_zi_distribution_ledger_v1.py"])
+                    run(["python", "scripts/build_joint_numeric_t_joint_authorization_package_v1.py"])
+                    run(["python", "scripts/validate_joint_numeric_t_joint_authorization_package_v1.py"])
             run(["python", "scripts/build_joint_numeric_zi_distribution_build_blocker_status_v1.py"])
             run(["python", "scripts/validate_joint_numeric_zi_distribution_build_blocker_status_v1.py"])
         run(["python", "scripts/build_joint_post_replay_validation_roadmap_v1.py"])

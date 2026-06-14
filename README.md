@@ -6552,6 +6552,25 @@ These are distribution-standardized channel values under the frozen
 median/MAD rule. They are not a joint statistic and should not be quoted as
 endpoint, cosmological, or physical validation.
 
+The next separate authorization package for numeric `T_joint` is recorded in:
+
+```text
+data/source_manifest/joint_numeric_t_joint_authorization_policy_v1.csv
+data/derived/joint_numeric_t_joint_authorization_response_template_v1.csv
+data/derived/joint_numeric_t_joint_authorization_package_v1.zip
+data/derived/joint_numeric_t_joint_authorization_package_v1.zip.sha256
+data/derived/joint_numeric_t_joint_authorization_package_v1_manifest.csv
+data/derived/joint_numeric_t_joint_authorization_package_v1_summary.csv
+docs/joint_numeric_t_joint_authorization_package_v1.md
+scripts/build_joint_numeric_t_joint_authorization_package_v1.py
+scripts/validate_joint_numeric_t_joint_authorization_package_v1.py
+```
+
+This package asks only whether the existing `z_i` ledger may be combined once
+under the frozen shell `T_joint = sum_i q_i z_i`. It still does not authorize
+new endpoint scores, endpoint validation, cosmological validation, or physical
+validation.
+
 The current same-statistic execution blocker ledger is recorded in:
 
 ```text
