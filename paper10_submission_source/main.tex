@@ -1196,6 +1196,13 @@ this particular exchange after the shared signed median/MAD standardization.
 The next robustness question is therefore whether a source-side
 channel-distinguishability or orthogonality penalty can be justified without
 using endpoint residuals.
+A requirements gate for such a penalty was therefore frozen rather than
+applied.  It closes only the source-route distinctness requirement.  Three
+requirements remain open or caveated: a residual-blind source-native
+distance/overlap metric between the two source spaces, a small-\(N\) balance
+rule for the six-control DESI route, and candidate/control symmetry for any
+future penalty.  Consequently no penalty, reweighting, or rescoring is applied
+in the present paper.
 Separately, the earlier same-statistic guarded-replay chain packages this
 boundary for external review.  It asks only whether a later guarded permission-only replay
 package may use the symbolic \(T_{\rm joint}\) shell under the caveated
