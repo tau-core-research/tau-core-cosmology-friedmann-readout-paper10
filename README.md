@@ -6364,6 +6364,23 @@ channels under the shared symbolic statistic, including leave-one,
 all-but-one, and all-drop/null controls. It does not compute a numeric
 statistic and does not authorize scoring or validation.
 
+The current same-statistic matched-control coverage status is recorded in:
+
+```text
+data/derived/joint_same_statistic_control_coverage_status_v1.csv
+data/derived/joint_same_statistic_control_coverage_status_v1_summary.csv
+docs/joint_same_statistic_control_coverage_status_v1.md
+scripts/build_joint_same_statistic_control_coverage_status_v1.py
+scripts/validate_joint_same_statistic_control_coverage_status_v1.py
+```
+
+This ledger records two symbolically complete control families, one
+symbolically partial null-control family, and three design-ready but
+numeric-blocked control families. It preserves the current boundary:
+same-statistic control coverage has progressed, but numeric `T_joint`,
+cross-probe covariance closure, endpoint scoring, and validation remain
+blocked.
+
 The current same-statistic execution blocker ledger is recorded in:
 
 ```text
