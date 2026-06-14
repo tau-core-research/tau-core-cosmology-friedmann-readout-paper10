@@ -6106,6 +6106,24 @@ null safety, response-unit normalization, leakage control, and gauge/quotient
 descent. The verdict is
 `STANDARD_LENSING_NULL_AMPLITUDE_CLOSURE_ATTEMPT_NARROWS_PROOF_BUT_THEOREM_REMAINS_OPEN`.
 
+The survey-native operator theorem blocker is then synthesized here:
+
+```text
+data/derived/kids1000_cosebis_survey_native_operator_theorem_closure_attempt_v1.csv
+data/derived/kids1000_cosebis_survey_native_operator_theorem_closure_attempt_v1_summary.csv
+docs/kids1000_cosebis_survey_native_operator_theorem_closure_attempt_v1.md
+scripts/build_kids1000_cosebis_survey_native_operator_theorem_closure_attempt_v1.py
+scripts/validate_kids1000_cosebis_survey_native_operator_theorem_closure_attempt_v1.py
+```
+
+This artifact is the B1 synthesis gate. It records that a factorized
+source-side operator skeleton exists, but that a physical survey-native
+operator theorem requires one and the same operator to pass leakage,
+gauge/quotient descent, response-unit normalization, and standard-lensing
+null-amplitude conditions. Since those B2--B5 conditions remain open, the KiDS
+block cannot yet be promoted to clean joint support. The verdict is
+`SURVEY_NATIVE_OPERATOR_THEOREM_SYNTHESIS_HAS_SOURCE_SKELETON_BUT_PROOF_CHAIN_REMAINS_OPEN`.
+
 The covariance blocker is also expanded into a concrete route plan:
 
 `data/derived/joint_covariance_resolution_plan_v1_summary.csv`
