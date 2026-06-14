@@ -6412,6 +6412,31 @@ channels, but it deliberately leaves `z_i` undefined. The remaining blocker is
 a shared signed-standardization rule that must apply to candidate and controls
 before numeric `T_joint` scoring can be considered.
 
+The shared signed `z_i` standardization protocol is recorded in:
+
+```text
+data/derived/joint_signed_zi_standardization_protocol_v1.csv
+data/derived/joint_signed_zi_standardization_protocol_v1_summary.csv
+docs/joint_signed_zi_standardization_protocol_v1.md
+scripts/build_joint_signed_zi_standardization_protocol_v1.py
+scripts/validate_joint_signed_zi_standardization_protocol_v1.py
+```
+
+The protocol freezes the support-positive sign convention and the future
+standardization rule:
+
+```text
+e_i = sign_i * native_value
+center_i = median(e_i over matched controls only)
+scale_i = MAD1.4826(e_i over matched controls only)
+z_i = (e_i - center_i) / scale_i
+```
+
+Candidate values are not allowed to define the center or scale. If the matched
+control scale is unavailable or zero, the channel remains blocked rather than
+being rescued by a fitted normalization. This artifact still does not compute
+`z_i`, `T_joint`, endpoint scoring, or validation.
+
 The current same-statistic execution blocker ledger is recorded in:
 
 ```text

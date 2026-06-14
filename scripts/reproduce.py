@@ -1772,6 +1772,8 @@ def main() -> None:
             run(["python", "scripts/validate_joint_numeric_t_joint_promotion_gate_v1.py"])
             run(["python", "scripts/build_joint_numeric_channel_zi_binding_audit_v1.py"])
             run(["python", "scripts/validate_joint_numeric_channel_zi_binding_audit_v1.py"])
+            run(["python", "scripts/build_joint_signed_zi_standardization_protocol_v1.py"])
+            run(["python", "scripts/validate_joint_signed_zi_standardization_protocol_v1.py"])
         run(["python", "scripts/build_joint_post_replay_validation_roadmap_v1.py"])
         run(["python", "scripts/validate_joint_post_replay_validation_roadmap_v1.py"])
     run(["python", "scripts/build_joint_non_lensing_lift_diagnostic_v1.py"])
