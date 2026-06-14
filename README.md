@@ -6381,6 +6381,22 @@ same-statistic control coverage has progressed, but numeric `T_joint`,
 cross-probe covariance closure, endpoint scoring, and validation remain
 blocked.
 
+The numeric `T_joint` promotion gate is recorded in:
+
+```text
+data/derived/joint_numeric_t_joint_promotion_gate_v1.csv
+data/derived/joint_numeric_t_joint_promotion_gate_v1_summary.csv
+docs/joint_numeric_t_joint_promotion_gate_v1.md
+scripts/build_joint_numeric_t_joint_promotion_gate_v1.py
+scripts/validate_joint_numeric_t_joint_promotion_gate_v1.py
+```
+
+This gate records four passed symbolic prerequisites and four remaining
+numeric blockers: numeric channel `z_i` binding, numeric matched-control
+execution under the same `T_joint`, cross-probe covariance closure, and a
+separate validation authorization package. It does not compute the statistic
+and does not authorize endpoint scoring.
+
 The current same-statistic execution blocker ledger is recorded in:
 
 ```text
