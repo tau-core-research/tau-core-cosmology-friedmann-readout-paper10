@@ -676,6 +676,8 @@ data/derived/joint_row_level_numeric_penalty_authorization_review_package_v1_sum
 docs/joint_row_level_numeric_penalty_authorization_review_package_v1.md
 scripts/build_joint_row_level_numeric_penalty_authorization_review_package_v1.py
 scripts/validate_joint_row_level_numeric_penalty_authorization_review_package_v1.py
+scripts/validate_joint_row_level_numeric_penalty_authorization_review_response_v1.py
+scripts/import_joint_row_level_numeric_penalty_authorization_review_response_v1.py
 ```
 
 The package status is
@@ -684,6 +686,16 @@ It contains no endpoint residuals, no new endpoint scores, no fit statistics,
 no numeric penalty values, and no numeric `lambda_row`. A completed reviewer
 response is required before any numeric `P_i(a)` or `P_row(a)` values may be
 computed, and even that would not by itself authorize `T_joint` rescoring.
+
+When the completed reviewer response is returned, validate/import it with:
+
+```bash
+python scripts/validate_joint_row_level_numeric_penalty_authorization_review_response_v1.py /path/to/completed_response.csv --summary-out /tmp/joint_rnp_response_summary.csv
+python scripts/import_joint_row_level_numeric_penalty_authorization_review_response_v1.py /path/to/completed_response.csv
+```
+
+The importer refuses incomplete templates, any `forbidden_inputs_used=true`,
+numeric `lambda_row` authorization, or direct `T_joint` rescoring authorization.
 
 A block-diagonal likelihood-surrogate protocol shell is now recorded in:
 
