@@ -6920,6 +6920,37 @@ Current verdict:
 
 `JOINT_POST_REPLAY_ROADMAP_FROZEN_VALIDATION_NOT_READY`
 
+## Row-level numeric penalty value package
+
+The reviewer-authorized row-level penalty route has advanced only to a
+separate numeric value package:
+
+```bash
+python scripts/build_joint_row_level_numeric_penalty_values_v1.py
+python scripts/validate_joint_row_level_numeric_penalty_values_v1.py
+```
+
+Outputs:
+
+```text
+data/derived/joint_row_level_numeric_penalty_values_v1.csv
+data/derived/joint_row_level_numeric_penalty_values_joint_v1.csv
+data/derived/joint_row_level_numeric_penalty_values_v1_summary.csv
+docs/joint_row_level_numeric_penalty_values_v1.md
+```
+
+Current result:
+
+```text
+channel_rows=1042
+complete_joint_penalty_rows=1
+P_row_candidate=0.0702783215662
+```
+
+This is not `lambda_row`, not `T_joint` rescoring, not endpoint scoring, and
+not validation. Control alternatives remain channel-local because no
+residual-blind cross-channel control alignment artifact is authorized yet.
+
 ## Scope
 
 This is a protocol scaffold and branch-opening paper package. The next

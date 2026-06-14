@@ -1310,6 +1310,27 @@ numeric penalty-value computation is allowed only as a separate package, and
 the guarded runner exits ready without computing values.  Thus the row-level
 penalty chain is ready for a numeric value package, but still not executable as
 a \(T_{\rm joint}\)-rescoring object.
+A separate numeric value package was then built under exactly this boundary.
+It computes channel-local values
+\[
+  P_i(a)=\omega_i\,{\rm mean}_{r,f}\,z_{i,a,r,f}^2
+\]
+for \(1042\) candidate/control alternatives from the frozen normalized
+source-feature transform and equal block weights.  Because only the candidate
+alternative is presently aligned across all three active channels, the package
+writes one complete joint candidate value,
+\[
+  P_{\rm row}^{\rm cand}=0.0702783215662 .
+\]
+The control alternatives remain channel-local penalty values; the package does
+not invent a residual-blind cross-channel control alignment.  Consequently this
+artifact is a numeric diagnostic package only:
+\texttt{lambda\_row\_numeric\_value\_defined=false},
+\texttt{t\_joint\_rescoring\_allowed=false}, and
+\texttt{endpoint\_validation\_claimed=false}.  The next gate is review of the
+numeric values and of any proposed cross-channel control alignment before any
+numeric \(\lambda_{\rm row}\), penalized \(T_{\rm joint}\), or endpoint replay
+can be considered.
 Separately, the earlier same-statistic guarded-replay chain packages this
 boundary for external review.  It asks only whether a later guarded permission-only replay
 package may use the symbolic \(T_{\rm joint}\) shell under the caveated
