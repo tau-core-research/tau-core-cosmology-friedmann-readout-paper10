@@ -1753,6 +1753,8 @@ def main() -> None:
             run(["python", "scripts/validate_joint_same_statistic_replay_authorization_response_v1.py"])
             run(["python", "scripts/build_joint_same_statistic_guarded_permission_replay_package_v1.py"])
             run(["python", "scripts/validate_joint_same_statistic_guarded_permission_replay_package_v1.py"])
+            run(["python", "scripts/build_joint_same_statistic_execution_authorization_package_v1.py"])
+            run(["python", "scripts/validate_joint_same_statistic_execution_authorization_package_v1.py"])
         run(["python", "scripts/build_joint_post_replay_validation_roadmap_v1.py"])
         run(["python", "scripts/validate_joint_post_replay_validation_roadmap_v1.py"])
     run(["python", "scripts/build_joint_non_lensing_lift_diagnostic_v1.py"])

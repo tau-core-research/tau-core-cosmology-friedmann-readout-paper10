@@ -6254,6 +6254,23 @@ for a later replay gate. It is still not execution, not scoring, not endpoint
 validation, and not cosmological validation:
 `direct_execution_allowed=false` and `endpoint_scoring_allowed=false`.
 
+The next same-statistic execution authorization handoff is recorded in:
+
+```text
+data/source_manifest/joint_same_statistic_execution_authorization_policy_v1.csv
+data/derived/joint_same_statistic_execution_authorization_response_template_v1.csv
+data/derived/joint_same_statistic_execution_authorization_package_v1.zip
+data/derived/joint_same_statistic_execution_authorization_package_v1_summary.csv
+data/derived/joint_same_statistic_execution_authorization_package_v1_manifest.csv
+docs/joint_same_statistic_execution_authorization_package_v1.md
+scripts/build_joint_same_statistic_execution_authorization_package_v1.py
+scripts/validate_joint_same_statistic_execution_authorization_package_v1.py
+```
+
+This is an external reviewer handoff for one possible permission-only
+execution. It is not pre-authorized and does not execute anything:
+`review_completed=false` and `permission_only_execution_allowed=false`.
+
 The consolidated post-replay validation roadmap is recorded in:
 
 `data/derived/joint_post_replay_validation_roadmap_v1_summary.csv`
