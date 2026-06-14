@@ -664,6 +664,27 @@ or applied. The v4 shell records `penalty_formula_defined=true`, but still keeps
 `numeric_t_joint_rescoring_allowed=false`. The next blocker is now a separate
 numeric-penalty computation authorization review package.
 
+That authorization package is prepared, but not completed:
+
+```text
+data/source_manifest/joint_row_level_numeric_penalty_authorization_review_policy_v1.csv
+data/derived/joint_row_level_numeric_penalty_authorization_review_response_template_v1.csv
+data/derived/joint_row_level_numeric_penalty_authorization_review_package_v1.zip
+data/derived/joint_row_level_numeric_penalty_authorization_review_package_v1.zip.sha256
+data/derived/joint_row_level_numeric_penalty_authorization_review_package_v1_manifest.csv
+data/derived/joint_row_level_numeric_penalty_authorization_review_package_v1_summary.csv
+docs/joint_row_level_numeric_penalty_authorization_review_package_v1.md
+scripts/build_joint_row_level_numeric_penalty_authorization_review_package_v1.py
+scripts/validate_joint_row_level_numeric_penalty_authorization_review_package_v1.py
+```
+
+The package status is
+`JOINT_ROW_LEVEL_NUMERIC_PENALTY_AUTHORIZATION_REVIEW_PACKAGE_READY_NOT_COMPLETED`.
+It contains no endpoint residuals, no new endpoint scores, no fit statistics,
+no numeric penalty values, and no numeric `lambda_row`. A completed reviewer
+response is required before any numeric `P_i(a)` or `P_row(a)` values may be
+computed, and even that would not by itself authorize `T_joint` rescoring.
+
 A block-diagonal likelihood-surrogate protocol shell is now recorded in:
 
 ```text

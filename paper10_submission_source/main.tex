@@ -1296,7 +1296,14 @@ therefore records \texttt{penalty\_formula\_defined=true} but keeps
 \texttt{penalty\_computed=false},
 \texttt{numeric\_penalty\_values\_written=false}, and
 \texttt{numeric\_t\_joint\_rescoring\_allowed=false}.  The remaining open
-requirement is a separate numeric-penalty computation authorization gate.
+requirement is a separate numeric-penalty computation authorization gate.  A
+review package for that gate has been prepared, with status
+\texttt{JOINT\_ROW\_LEVEL\_NUMERIC\_PENALTY\_AUTHORIZATION\_REVIEW\_PACKAGE\_READY\_NOT\_COMPLETED}.
+It contains no endpoint residuals, no new endpoint scores, no fit statistics,
+no numeric penalty values, and no numeric \(\lambda_{\rm row}\).  A completed
+reviewer response is required before any numeric \(P_i(a)\) or
+\(P_{\rm row}(a)\) values may be computed, and even that would not by itself
+authorize \(T_{\rm joint}\) rescoring.
 Separately, the earlier same-statistic guarded-replay chain packages this
 boundary for external review.  It asks only whether a later guarded permission-only replay
 package may use the symbolic \(T_{\rm joint}\) shell under the caveated
