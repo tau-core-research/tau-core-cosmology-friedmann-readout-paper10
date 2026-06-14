@@ -1369,6 +1369,14 @@ since both \(T_{\rm joint}\) and \(P_{\rm row}\) are dimensionless, any future
 residuals, endpoint scores, fit-improvement feedback, posterior chains, or
 post-score control ranks.  This package contains no numeric
 \(\lambda_{\rm row}\) and no \(T_{\rm joint}\) rescoring.
+Both open-blocker packages now have machine import and validation routes for
+completed reviewer responses.  In the current manuscript state, however, their
+blocker artifacts remain in the waiting state:
+\texttt{CROSS\_CHANNEL\_ALIGNMENT\_DESIGN\_WAITING\_FOR\_REVIEW\_RESPONSE}
+and
+\texttt{LAMBDA\_POLICY\_WAITING\_FOR\_REVIEW\_RESPONSE}.  Thus no aligned
+control values, no numeric \(\lambda_{\rm row}\), and no penalized
+\(T_{\rm joint}\) score are claimed here.
 Separately, the earlier same-statistic guarded-replay chain packages this
 boundary for external review.  It asks only whether a later guarded permission-only replay
 package may use the symbolic \(T_{\rm joint}\) shell under the caveated

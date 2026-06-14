@@ -7059,6 +7059,25 @@ control-count imbalance and proposes a deterministic min-count index alignment
 for review. It does not compute aligned joint control values, choose
 `lambda_row`, rescore `T_joint`, or authorize validation.
 
+Completed alignment-design review responses are imported and checked with:
+
+```bash
+python scripts/import_joint_row_level_cross_channel_control_alignment_review_response_v1.py \
+  /path/to/joint_row_level_cross_channel_control_alignment_completed_review_response_v1.zip
+python scripts/validate_joint_row_level_cross_channel_control_alignment_review_response_v1.py
+python scripts/build_joint_row_level_cross_channel_control_alignment_blocker_status_v1.py
+python scripts/validate_joint_row_level_cross_channel_control_alignment_blocker_status_v1.py
+```
+
+The current blocker status is intentionally waiting for a completed reviewer
+response:
+
+```text
+data/derived/joint_row_level_cross_channel_control_alignment_blocker_status_v1.csv
+data/derived/joint_row_level_cross_channel_control_alignment_blocker_status_v1_summary.csv
+docs/joint_row_level_cross_channel_control_alignment_blocker_status_v1.md
+```
+
 Residual-blind `lambda_row` policy review package:
 
 ```bash
@@ -7081,6 +7100,25 @@ Current package SHA-256:
 This package is policy-only. It records that any future `lambda_row` must be
 dimensionless and residual-blind. It does not choose a numeric `lambda_row`,
 rescore `T_joint`, or authorize validation.
+
+Completed lambda-policy review responses are imported and checked with:
+
+```bash
+python scripts/import_joint_row_level_lambda_policy_review_response_v1.py \
+  /path/to/joint_row_level_lambda_policy_completed_review_response_v1.zip
+python scripts/validate_joint_row_level_lambda_policy_review_response_v1.py
+python scripts/build_joint_row_level_lambda_policy_blocker_status_v1.py
+python scripts/validate_joint_row_level_lambda_policy_blocker_status_v1.py
+```
+
+The current blocker status is intentionally waiting for a completed reviewer
+response:
+
+```text
+data/derived/joint_row_level_lambda_policy_blocker_status_v1.csv
+data/derived/joint_row_level_lambda_policy_blocker_status_v1_summary.csv
+docs/joint_row_level_lambda_policy_blocker_status_v1.md
+```
 
 ## Scope
 
