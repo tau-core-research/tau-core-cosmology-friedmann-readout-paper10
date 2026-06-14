@@ -1273,9 +1273,14 @@ updated shell records \texttt{source\_feature\_inputs\_complete=true},
 \texttt{candidate\_control\_symmetric\_transform\_built=true}, but keeps
 \texttt{penalty\_formula\_defined=false},
 \texttt{penalty\_computed=false}, and
-\texttt{numeric\_t\_joint\_rescoring\_allowed=false}.  The remaining open
-requirement is covariance or block-weight binding.  Until that is frozen in a
-separate reviewed gate, the row-level source features cannot change any score.
+\texttt{numeric\_t\_joint\_rescoring\_allowed=false}.  A subsequent
+block-weight binding shell then binds the normalized transform to the caveated
+block-diagonal route with an equal-channel preweight shell, recording
+\texttt{covariance\_or\_block\_weight\_binding\_frozen=true} in the v3
+protocol shell.  This still does not define a penalty formula.  The remaining
+open requirement is a symbolic row-level penalty formula in a separate
+non-scoring gate; until that is reviewed, the row-level source features cannot
+change any score.
 Separately, the earlier same-statistic guarded-replay chain packages this
 boundary for external review.  It asks only whether a later guarded permission-only replay
 package may use the symbolic \(T_{\rm joint}\) shell under the caveated
