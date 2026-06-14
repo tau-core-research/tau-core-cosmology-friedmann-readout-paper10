@@ -1732,6 +1732,8 @@ def main() -> None:
         run(["python", "scripts/validate_kids1000_cosebis_operator_leakage_closure_attempt_v1.py"])
         run(["python", "scripts/build_kids1000_cosebis_gauge_quotient_descent_closure_attempt_v1.py"])
         run(["python", "scripts/validate_kids1000_cosebis_gauge_quotient_descent_closure_attempt_v1.py"])
+        run(["python", "scripts/build_kids1000_cosebis_response_unit_normalization_closure_attempt_v1.py"])
+        run(["python", "scripts/validate_kids1000_cosebis_response_unit_normalization_closure_attempt_v1.py"])
         run(["python", "scripts/build_joint_covariance_resolution_plan_v1.py"])
         run(["python", "scripts/validate_joint_covariance_resolution_plan_v1.py"])
         run(["python", "scripts/build_joint_matched_control_resolution_plan_v1.py"])

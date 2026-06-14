@@ -6069,6 +6069,25 @@ pure-mask control compatibility, and the single-operator dependency open. The
 verdict is
 `GAUGE_QUOTIENT_DESCENT_CLOSURE_ATTEMPT_NARROWS_PROOF_BUT_THEOREM_REMAINS_OPEN`.
 
+The response-unit normalization blocker is narrowed here:
+
+```text
+data/derived/kids1000_cosebis_response_unit_normalization_closure_attempt_v1.csv
+data/derived/kids1000_cosebis_response_unit_normalization_closure_attempt_v1_summary.csv
+docs/kids1000_cosebis_response_unit_normalization_closure_attempt_v1.md
+scripts/build_kids1000_cosebis_response_unit_normalization_closure_attempt_v1.py
+scripts/validate_kids1000_cosebis_response_unit_normalization_closure_attempt_v1.py
+```
+
+This artifact separates three facts that must not be conflated: the retained
+300-row COSEBIs codomain is available, the current source-side kernel is
+dimensionless, and the covariance metric is available for later scoring but is
+not a response-unit derivation. The missing theorem is a source-side or
+theory-side map from the dimensionless `A_src K_i` object into COSEBIs response
+units, compatible with the standard-lensing/no-Tau-source null limit and with
+the still-open leakage and gauge/quotient gates. The verdict is
+`RESPONSE_UNIT_NORMALIZATION_CLOSURE_ATTEMPT_NARROWS_PROOF_BUT_UNITS_REMAIN_OPEN`.
+
 The covariance blocker is also expanded into a concrete route plan:
 
 `data/derived/joint_covariance_resolution_plan_v1_summary.csv`
