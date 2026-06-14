@@ -6013,6 +6013,23 @@ matched-control implementation. Verdict:
 
 `JOINT_PERMISSION_REPLAY_POSITIVE_BUT_PROMOTION_BLOCKED_NOT_VALIDATION`
 
+The first blocker is now expanded into a concrete KiDS caveat-resolution plan:
+
+`data/derived/joint_kids_caveated_block_resolution_plan_v1_summary.csv`
+
+It preserves the KiDS low-tail signal but keeps the block caveated until the
+physical-promotion proof chain is closed. Frozen order:
+
+1. operator leakage theorem,
+2. gauge quotient descent,
+3. response unit normalization,
+4. standard-lensing null-amplitude theorem,
+5. survey-native operator theorem.
+
+This plan computes no new scores and makes no validation claim. Verdict:
+
+`KIDS_JOINT_BLOCK_HAS_SIGNAL_BUT_CAVEAT_RESOLUTION_REQUIRES_PHYSICAL_PROMOTION_PROOFS`
+
 ## Scope
 
 This is a protocol scaffold and branch-opening paper package. The next
