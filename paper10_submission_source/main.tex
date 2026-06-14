@@ -1047,6 +1047,14 @@ shared-sky, redshift-kernel, nuisance, calibration, and population-covariance
 caveats are carried forward and candidate/control replay uses the same
 statistic and covariance discipline.  This covariance plan also computes no new
 score and keeps scoring and validation flags false.
+A matched-control resolution plan freezes the third blocker.  It requires eight
+control families under the same future joint statistic and the same covariance
+route as the candidate: shuffled channel labels, wrong-channel/wrong-family
+controls, sign flips, leave-one-probe or block-drop controls, null/readout
+controls, scope/leakage controls, shared-statistic binding, and covariance
+binding.  Six families are planned but not implemented; two remain blocked by
+the upstream statistic/covariance gates.  Thus the control route is now
+specified, but still not executable as validation-facing scoring.
 The
 matched-control families have also been frozen as requirements: shuffled-channel,
 wrong-channel, sign-flip, block-drop, null/readout, leakage, shared-statistic,

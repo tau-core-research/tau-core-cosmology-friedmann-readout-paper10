@@ -6046,6 +6046,27 @@ Verdict:
 
 `COVARIANCE_RESOLUTION_ROUTES_FROZEN_CROSS_PROBE_STILL_OPEN_NOT_SCORING`
 
+The matched-control blocker is expanded here:
+
+`data/derived/joint_matched_control_resolution_plan_v1_summary.csv`
+
+It freezes eight required control families under the same future statistic and
+same covariance route as the candidate:
+
+1. `shuffled_channel_labels`
+2. `wrong_channel_or_wrong_family_controls`
+3. `sign_flip_controls`
+4. `leave_one_probe_or_block_drop`
+5. `null_readout_controls`
+6. `scope_and_forbidden_input_controls`
+7. `single_statistic_binding`
+8. `covariance_binding`
+
+Six are planned but not implemented; two remain blocked by upstream
+statistic/covariance gates. Verdict:
+
+`MATCHED_CONTROL_RESOLUTION_PLAN_FROZEN_IMPLEMENTATION_BLOCKED_NOT_SCORING`
+
 ## Scope
 
 This is a protocol scaffold and branch-opening paper package. The next
