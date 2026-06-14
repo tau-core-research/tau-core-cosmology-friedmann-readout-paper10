@@ -11,6 +11,11 @@ PROMOTION_SUMMARY = ROOT / "data/derived/joint_permission_replay_promotion_readi
 KIDS_REPLAY_SUMMARY = ROOT / "data/derived/kids1000_cosebis_authorized_endpoint_replay_v1_summary.csv"
 KIDS_PHYSICAL_LEDGER = ROOT / "data/derived/kids1000_cosebis_physical_promotion_blocker_ledger_v1.csv"
 KIDS_DEP_ORDER = ROOT / "data/derived/kids1000_cosebis_physical_promotion_dependency_order_v1.csv"
+B1_SYNTHESIS = ROOT / "data/derived/kids1000_cosebis_survey_native_operator_theorem_closure_attempt_v1_summary.csv"
+LEAKAGE_CLOSURE = ROOT / "data/derived/kids1000_cosebis_operator_leakage_closure_attempt_v1_summary.csv"
+GAUGE_CLOSURE = ROOT / "data/derived/kids1000_cosebis_gauge_quotient_descent_closure_attempt_v1_summary.csv"
+UNIT_CLOSURE = ROOT / "data/derived/kids1000_cosebis_response_unit_normalization_closure_attempt_v1_summary.csv"
+NULL_CLOSURE = ROOT / "data/derived/kids1000_cosebis_standard_lensing_null_amplitude_closure_attempt_v1_summary.csv"
 OUT = ROOT / "data/derived/joint_kids_caveated_block_resolution_plan_v1.csv"
 SUMMARY = ROOT / "data/derived/joint_kids_caveated_block_resolution_plan_v1_summary.csv"
 DOC = ROOT / "docs/joint_kids_caveated_block_resolution_plan_v1.md"
@@ -41,12 +46,31 @@ def write_csv(path: Path, rows: list[dict[str, str]]) -> None:
         writer.writerows(rows)
 
 
+def rel(path: Path) -> str:
+    return str(path.relative_to(ROOT))
+
+
 def main() -> None:
     grid = read_rows(REPLAY_GRID)
     promotion = read_one(PROMOTION_SUMMARY)
     kids_replay = read_one(KIDS_REPLAY_SUMMARY)
     ledger_rows = read_rows(KIDS_PHYSICAL_LEDGER)
     dep_rows = read_rows(KIDS_DEP_ORDER)
+    b1_synthesis = read_one(B1_SYNTHESIS)
+    closure_by_blocker = {
+        "B2_operator_leakage_theorem_open": read_one(LEAKAGE_CLOSURE),
+        "B3_gauge_quotient_descent_open": read_one(GAUGE_CLOSURE),
+        "B4_response_unit_normalization_open": read_one(UNIT_CLOSURE),
+        "B5_standard_lensing_null_amplitude_theorem_open": read_one(NULL_CLOSURE),
+        "B1_survey_native_operator_theorem_open": b1_synthesis,
+    }
+    artifact_by_blocker = {
+        "B2_operator_leakage_theorem_open": LEAKAGE_CLOSURE,
+        "B3_gauge_quotient_descent_open": GAUGE_CLOSURE,
+        "B4_response_unit_normalization_open": UNIT_CLOSURE,
+        "B5_standard_lensing_null_amplitude_theorem_open": NULL_CLOSURE,
+        "B1_survey_native_operator_theorem_open": B1_SYNTHESIS,
+    }
 
     kids_block = [row for row in grid if row["block_id"] == "kids_lensing_cosebis_low_mode"]
     if len(kids_block) != 1:
@@ -70,6 +94,7 @@ def main() -> None:
         if blocker_id not in open_ledger:
             raise SystemExit(f"dependency order references missing open blocker: {blocker_id}")
         ledger = open_ledger[blocker_id]
+        closure = closure_by_blocker[blocker_id]
         rows.append(
             {
                 "plan_id": "JOINT_KIDS_CAVEATED_BLOCK_RESOLUTION_PLAN_V1",
@@ -81,7 +106,8 @@ def main() -> None:
                 "why_required_for_joint_promotion": ledger["promotion_implication"],
                 "dimension_check": ledger["dimension_check"],
                 "known_limit_check": ledger["known_limit_check"],
-                "source_artifact": ledger["source_artifact"],
+                "source_artifact": rel(artifact_by_blocker[blocker_id]),
+                "latest_closure_verdict": closure["verdict"],
                 "computes_new_scores": "false",
                 "endpoint_scoring_allowed": "false",
                 "endpoint_validation_claimed": "false",
@@ -101,6 +127,9 @@ def main() -> None:
         "open_resolution_steps": str(len(rows)),
         "next_primary_proof_gate": rows[0]["blocker_id"],
         "next_parallel_proof_gate": rows[1]["blocker_id"],
+        "b1_synthesis_verdict": b1_synthesis["verdict"],
+        "b1_operator_skeleton_constructed": b1_synthesis["operator_skeleton_constructed"],
+        "b1_operator_theorem_proven": b1_synthesis["operator_theorem_proven"],
         "can_promote_kids_block_to_clean_joint_support": "false",
         "endpoint_scoring_allowed": "false",
         "endpoint_validation_claimed": "false",
@@ -142,6 +171,9 @@ def main() -> None:
                 f"- open resolution steps: `{summary['open_resolution_steps']}`",
                 f"- next primary proof gate: `{summary['next_primary_proof_gate']}`",
                 f"- next parallel proof gate: `{summary['next_parallel_proof_gate']}`",
+                f"- B1 synthesis verdict: `{summary['b1_synthesis_verdict']}`",
+                f"- B1 operator skeleton constructed: `{summary['b1_operator_skeleton_constructed']}`",
+                f"- B1 operator theorem proven: `{summary['b1_operator_theorem_proven']}`",
                 f"- verdict: `{summary['verdict']}`",
                 "",
                 "Interpretation: the KiDS block can motivate further work, but it cannot",

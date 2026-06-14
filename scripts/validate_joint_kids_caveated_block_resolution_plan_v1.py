@@ -46,9 +46,22 @@ def main() -> None:
     require(summary["open_resolution_steps"] == "5", "summary step count mismatch")
     require(summary["current_joint_block_status"] == "caveated", "KiDS block must remain caveated")
     require(summary["can_promote_kids_block_to_clean_joint_support"] == "false", "KiDS block must not be promoted")
+    require(
+        summary["b1_synthesis_verdict"]
+        == "SURVEY_NATIVE_OPERATOR_THEOREM_SYNTHESIS_HAS_SOURCE_SKELETON_BUT_PROOF_CHAIN_REMAINS_OPEN",
+        "B1 synthesis verdict mismatch",
+    )
+    require(summary["b1_operator_skeleton_constructed"] == "true", "B1 skeleton should be present")
+    require(summary["b1_operator_theorem_proven"] == "false", "B1 theorem must remain open")
     require(summary["claim_boundary"] == CLAIM_BOUNDARY, "summary claim boundary mismatch")
+    require(
+        rows[-1]["source_artifact"]
+        == "data/derived/kids1000_cosebis_survey_native_operator_theorem_closure_attempt_v1_summary.csv",
+        "B1 row must cite the theorem synthesis artifact",
+    )
     for row in rows:
         require(row["claim_boundary"] == CLAIM_BOUNDARY, "row claim boundary mismatch")
+        require(row["latest_closure_verdict"], "row missing latest closure verdict")
         for field in [
             "computes_new_scores",
             "endpoint_scoring_allowed",

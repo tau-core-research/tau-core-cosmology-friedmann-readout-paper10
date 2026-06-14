@@ -6030,6 +6030,12 @@ This plan computes no new scores and makes no validation claim. Verdict:
 
 `KIDS_JOINT_BLOCK_HAS_SIGNAL_BUT_CAVEAT_RESOLUTION_REQUIRES_PHYSICAL_PROMOTION_PROOFS`
 
+The plan is now post-synthesis aware: each resolution row cites the latest
+closure-attempt summary for its blocker, and the B1 row cites the survey-native
+operator theorem synthesis artifact rather than only the earlier source-side
+skeleton. The B1 state is therefore explicit: `operator_skeleton_constructed=true`
+but `operator_theorem_proven=false`.
+
 The rank-1 KiDS proof blocker is narrowed further here:
 
 ```text

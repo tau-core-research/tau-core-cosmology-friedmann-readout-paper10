@@ -26,6 +26,9 @@ Summary:
 - open resolution steps: `5`
 - next primary proof gate: `B2_operator_leakage_theorem_open`
 - next parallel proof gate: `B3_gauge_quotient_descent_open`
+- B1 synthesis verdict: `SURVEY_NATIVE_OPERATOR_THEOREM_SYNTHESIS_HAS_SOURCE_SKELETON_BUT_PROOF_CHAIN_REMAINS_OPEN`
+- B1 operator skeleton constructed: `true`
+- B1 operator theorem proven: `false`
 - verdict: `KIDS_JOINT_BLOCK_HAS_SIGNAL_BUT_CAVEAT_RESOLUTION_REQUIRES_PHYSICAL_PROMOTION_PROOFS`
 
 Interpretation: the KiDS block can motivate further work, but it cannot
