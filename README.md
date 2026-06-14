@@ -465,6 +465,21 @@ The importer refuses incomplete rows, forbidden endpoint inputs, direct
 execution permission, endpoint scoring, endpoint-validation claims, and
 cosmological-validation claims.
 
+The current execution blocker is recorded in:
+
+```text
+data/derived/joint_guarded_replay_execution_blocker_status_v1.csv
+data/derived/joint_guarded_replay_execution_blocker_status_v1_summary.csv
+docs/joint_guarded_replay_execution_blocker_status_v1.md
+scripts/build_joint_guarded_replay_execution_blocker_status_v1.py
+scripts/validate_joint_guarded_replay_execution_blocker_status_v1.py
+```
+
+At this stage the blocker is
+`completed_run_template_authorization_response_missing`.  Thus the joint
+guarded replay remains blocked until the completed external response is
+imported and validated.
+
 The matched-control requirements are now specified in:
 
 ```text
