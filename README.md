@@ -6216,6 +6216,17 @@ under the caveated block-diagonal covariance route and matched-control
 readiness boundary. Direct scoring remains forbidden:
 `permission_only_replay_package_allowed=false` and `direct_scoring_allowed=false`.
 
+Completed reviewer responses for this package must be imported through:
+
+```text
+scripts/import_joint_same_statistic_replay_authorization_response_v1.py
+scripts/validate_joint_same_statistic_replay_authorization_response_v1.py
+```
+
+The importer rejects incomplete templates and responses that allow direct
+scoring, endpoint validation, cosmological validation, forbidden inputs, or
+post-score control feedback. No canonical response is present in this release.
+
 The consolidated post-replay validation roadmap is recorded in:
 
 `data/derived/joint_post_replay_validation_roadmap_v1_summary.csv`
