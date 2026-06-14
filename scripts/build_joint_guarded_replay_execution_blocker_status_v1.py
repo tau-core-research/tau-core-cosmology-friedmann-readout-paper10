@@ -13,6 +13,7 @@ RUN_TEMPLATE_SUMMARY = ROOT / "data/derived/joint_guarded_replay_run_template_v1
 AUTH_PACKAGE_SUMMARY = ROOT / "data/derived/joint_guarded_replay_run_template_authorization_package_v1_summary.csv"
 AUTH_RESPONSE_SUMMARY = ROOT / "data/derived/joint_guarded_replay_run_template_authorization_response_v1_summary.csv"
 EXECUTION_PLAN_SUMMARY = ROOT / "data/derived/joint_guarded_replay_execution_plan_v1_summary.csv"
+EXECUTION_AUTH_RESPONSE = ROOT / "data/derived/joint_guarded_replay_execution_authorization_response_v1_summary.csv"
 CLAIM_BOUNDARY = "joint_guarded_replay_execution_blocker_status_not_execution_not_scoring_not_validation"
 
 
@@ -57,6 +58,7 @@ def main() -> None:
     response_decision = "missing"
     response_status = "missing"
     response_allows_next = "false"
+    execution_response_exists = "false"
     blocker = "completed_run_template_authorization_response_missing"
     next_action = "obtain_completed_external_reviewer_response_then_import_and_validate"
 
@@ -73,6 +75,15 @@ def main() -> None:
                 if plan["status"] == "JOINT_GUARDED_REPLAY_EXECUTION_PLAN_READY_NOT_RUN":
                     blocker = "guarded_runner_and_execution_authorization_not_yet_prepared"
                     next_action = "build_guarded_permission_only_runner_and_validator_then_get_separate_execution_authorization"
+                    if plan["runner_exists"] == "true":
+                        blocker = "execution_authorization_response_missing"
+                        next_action = "obtain_completed_external_execution_authorization_response_then_import_and_validate"
+                    if EXECUTION_AUTH_RESPONSE.exists():
+                        execution_response_exists = "true"
+                        exec_auth = read_one(EXECUTION_AUTH_RESPONSE)
+                        if exec_auth.get("decision") == "AUTHORIZE_JOINT_GUARDED_REPLAY_PERMISSION_ONLY_EXECUTION_NOT_VALIDATION":
+                            blocker = "execution_authorized_but_runner_not_yet_run"
+                            next_action = "run_guarded_permission_only_replay_once_and_validate_outputs"
         elif response_decision == "JOINT_GUARDED_REPLAY_RUN_TEMPLATE_AUTHORIZATION_REJECTED_NOT_EXECUTION_NOT_SCORING":
             blocker = "reviewer_rejected_run_template_authorization"
             next_action = "revise_template_or_keep_joint_guarded_replay_blocked"
@@ -83,6 +94,7 @@ def main() -> None:
         "run_template_status": run_template["status"],
         "authorization_package_status": auth_package["status"],
         "authorization_response_exists": "true" if response_exists else "false",
+        "execution_authorization_response_exists": execution_response_exists,
         "authorization_response_decision": response_decision,
         "authorization_response_status": response_status,
         "template_authorized_for_later_permission_replay": response_allows_next,
@@ -102,6 +114,7 @@ def main() -> None:
                 "run_id": row["run_id"],
                 "status": row["status"],
                 "authorization_response_exists": row["authorization_response_exists"],
+                "execution_authorization_response_exists": row["execution_authorization_response_exists"],
                 "current_blocker": row["current_blocker"],
                 "next_required_action": row["next_required_action"],
                 "direct_execution_allowed": "false",
@@ -126,7 +139,7 @@ def main() -> None:
                 f"Next required action: `{row['next_required_action']}`.",
                 "",
                 "The replay remains blocked unless a completed external reviewer response is imported",
-                "and validates the run-template authorization gate.",
+                "and validates the execution authorization gate.",
                 "",
                 f"Claim boundary: `{CLAIM_BOUNDARY}`.",
                 "",

@@ -43,6 +43,14 @@ def main() -> None:
         require(row[field] == "false", f"{field} must remain false")
         require(summary[field] == "false", f"summary {field} must remain false")
     require(row["authorization_response_exists"] in {"true", "false"}, "bad response existence flag")
+    require(
+        row["execution_authorization_response_exists"] in {"true", "false"},
+        "bad execution response existence flag",
+    )
+    require(
+        summary["execution_authorization_response_exists"] == row["execution_authorization_response_exists"],
+        "summary execution response existence mismatch",
+    )
     if row["authorization_response_exists"] == "false":
         require(row["current_blocker"] == "completed_run_template_authorization_response_missing", "missing-response blocker mismatch")
         require(
@@ -55,6 +63,8 @@ def main() -> None:
             in {
                 "execution_plan_builder_not_yet_prepared",
                 "guarded_runner_and_execution_authorization_not_yet_prepared",
+                "execution_authorization_response_missing",
+                "execution_authorized_but_runner_not_yet_run",
                 "reviewer_rejected_run_template_authorization",
             },
             "unexpected post-response blocker",

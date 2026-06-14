@@ -1155,8 +1155,9 @@ The completed run-template authorization response has now been imported.  It
 authorizes only preparation of a separate execution plan, not execution itself.
 The execution plan is frozen as
 \texttt{JOINT\_GUARDED\_REPLAY\_EXECUTION\_PLAN\_READY\_NOT\_RUN}; the present
-blocker is now the absence of a guarded runner and separate execution
-authorization.
+runner and output validator are now prepared, but the replay is still blocked
+until a separate execution authorization response is completed and imported.
+The current blocker is \texttt{execution\_authorization\_response\_missing}.
 The matched-control suite is likewise specified but not implemented: the
 control families are now named, while their execution is blocked until the same
 covariance/statistic is available for candidate and controls.

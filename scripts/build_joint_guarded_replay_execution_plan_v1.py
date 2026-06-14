@@ -13,6 +13,8 @@ TEMPLATE = ROOT / "data/source_manifest/joint_guarded_replay_run_template_v1.csv
 TEMPLATE_AUTH_RESPONSE = ROOT / "data/derived/joint_guarded_replay_run_template_authorization_response_v1_summary.csv"
 BLOCKER = ROOT / "data/derived/joint_guarded_replay_execution_blocker_status_v1_summary.csv"
 CLAIM_BOUNDARY = "joint_guarded_replay_execution_plan_not_run_not_scoring_not_validation"
+RUNNER = ROOT / "scripts/run_joint_guarded_replay_permission_only_v1.py"
+RUNNER_VALIDATOR = ROOT / "scripts/validate_joint_guarded_replay_permission_only_v1.py"
 
 
 def read_one(path: Path) -> dict[str, str]:
@@ -48,6 +50,7 @@ def main() -> None:
     if blocker["current_blocker"] not in {
         "execution_plan_builder_not_yet_prepared",
         "guarded_runner_and_execution_authorization_not_yet_prepared",
+        "execution_authorization_response_missing",
     }:
         raise SystemExit("execution blocker is not at an execution-plan-compatible stage")
     for row, label in [(template, "template"), (auth, "authorization_response")]:
@@ -64,6 +67,7 @@ def main() -> None:
         "data/derived/joint_guarded_replay_permission_only_summary_v1.csv",
         "docs/joint_guarded_replay_permission_only_v1.md",
     ]
+    runner_exists = RUNNER.exists() and RUNNER_VALIDATOR.exists()
     row = {
         "run_id": "JOINT_GUARDED_REPLAY_EXECUTION_PLAN_V1",
         "status": "JOINT_GUARDED_REPLAY_EXECUTION_PLAN_READY_NOT_RUN",
@@ -78,7 +82,7 @@ def main() -> None:
         "future_validator_script": "scripts/validate_joint_guarded_replay_permission_only_v1.py",
         "future_outputs": ";".join(future_outputs),
         "execution_plan_only": "true",
-        "runner_exists": "false",
+        "runner_exists": "true" if runner_exists else "false",
         "direct_execution_allowed": "false",
         "endpoint_scoring_allowed": "false",
         "endpoint_validation_claimed": "false",
@@ -98,7 +102,7 @@ def main() -> None:
                 "required_caveat_count": str(len(caveats)),
                 "forbidden_input_count": str(len(forbidden)),
                 "execution_plan_only": "true",
-                "runner_exists": "false",
+                "runner_exists": "true" if runner_exists else "false",
                 "direct_execution_allowed": "false",
                 "endpoint_scoring_allowed": "false",
                 "endpoint_validation_claimed": "false",

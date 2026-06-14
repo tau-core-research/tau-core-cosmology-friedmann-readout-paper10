@@ -55,8 +55,8 @@ def main() -> None:
     require(summary["claim_boundary"] == CLAIM_BOUNDARY, "summary claim boundary mismatch")
     require(plan["execution_plan_only"] == "true", "plan must remain plan-only")
     require(summary["execution_plan_only"] == "true", "summary must remain plan-only")
-    require(plan["runner_exists"] == "false", "runner must not exist yet")
-    require(summary["runner_exists"] == "false", "summary runner flag mismatch")
+    require(plan["runner_exists"] in {"true", "false"}, "bad runner flag")
+    require(summary["runner_exists"] == plan["runner_exists"], "summary runner flag mismatch")
     for row, label in [(plan, "plan"), (summary, "summary")]:
         for key in [
             "direct_execution_allowed",

@@ -500,6 +500,26 @@ scripts/validate_joint_guarded_replay_execution_plan_v1.py
 
 It is still plan-only.  The runner does not exist yet, and a separate execution
 authorization gate is still required before any permission-only replay can run.
+The runner and output validator are now prepared, but the replay is still
+blocked until the separate execution authorization response is completed:
+
+```text
+scripts/run_joint_guarded_replay_permission_only_v1.py
+scripts/validate_joint_guarded_replay_permission_only_v1.py
+data/source_manifest/joint_guarded_replay_execution_authorization_policy_v1.csv
+data/derived/joint_guarded_replay_execution_authorization_response_template_v1.csv
+data/derived/joint_guarded_replay_execution_authorization_package_v1.zip
+data/derived/joint_guarded_replay_execution_authorization_package_v1.zip.sha256
+data/derived/joint_guarded_replay_execution_authorization_package_v1_manifest.csv
+data/derived/joint_guarded_replay_execution_authorization_package_v1_summary.csv
+docs/joint_guarded_replay_execution_authorization_package_v1.md
+scripts/build_joint_guarded_replay_execution_authorization_package_v1.py
+scripts/validate_joint_guarded_replay_execution_authorization_package_v1.py
+scripts/import_joint_guarded_replay_execution_authorization_response_v1.py
+scripts/validate_joint_guarded_replay_execution_authorization_response_v1.py
+```
+
+The current blocker is now `execution_authorization_response_missing`.
 
 The matched-control requirements are now specified in:
 
