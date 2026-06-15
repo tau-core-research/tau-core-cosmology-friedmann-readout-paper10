@@ -7110,6 +7110,28 @@ The package has also been copied for reviewer handoff to:
 It contains no aligned joint-control values, no numeric `lambda_row`, no
 `T_joint` rescoring, no endpoint scoring, and no validation claim.
 
+Completed aligned-control value authorization responses are imported and checked with:
+
+```bash
+python scripts/import_joint_row_level_aligned_control_value_authorization_response_v1.py \
+  /path/to/joint_row_level_aligned_control_value_authorization_completed_response_v1.zip
+python scripts/validate_joint_row_level_aligned_control_value_authorization_response_v1.py
+python scripts/build_joint_row_level_aligned_control_value_authorization_blocker_status_v1.py
+python scripts/validate_joint_row_level_aligned_control_value_authorization_blocker_status_v1.py
+```
+
+The current status before importing a completed response is:
+
+```text
+ALIGNED_CONTROL_VALUE_AUTHORIZATION_WAITING_FOR_REVIEW_RESPONSE
+```
+
+```text
+data/derived/joint_row_level_aligned_control_value_authorization_blocker_status_v1.csv
+data/derived/joint_row_level_aligned_control_value_authorization_blocker_status_v1_summary.csv
+docs/joint_row_level_aligned_control_value_authorization_blocker_status_v1.md
+```
+
 ```text
 data/derived/joint_row_level_cross_channel_control_alignment_blocker_status_v1.csv
 data/derived/joint_row_level_cross_channel_control_alignment_blocker_status_v1_summary.csv
@@ -7192,6 +7214,28 @@ The package has also been copied for reviewer handoff to:
 
 ```text
 /Users/jolcsak/Downloads/joint_row_level_numeric_lambda_review_package_v1.zip
+```
+
+Completed numeric `lambda_row` review responses are imported and checked with:
+
+```bash
+python scripts/import_joint_row_level_numeric_lambda_review_response_v1.py \
+  /path/to/joint_row_level_numeric_lambda_completed_response_v1.zip
+python scripts/validate_joint_row_level_numeric_lambda_review_response_v1.py
+python scripts/build_joint_row_level_numeric_lambda_blocker_status_v1.py
+python scripts/validate_joint_row_level_numeric_lambda_blocker_status_v1.py
+```
+
+The current status before importing a completed response is:
+
+```text
+NUMERIC_LAMBDA_WAITING_FOR_REVIEW_RESPONSE
+```
+
+```text
+data/derived/joint_row_level_numeric_lambda_blocker_status_v1.csv
+data/derived/joint_row_level_numeric_lambda_blocker_status_v1_summary.csv
+docs/joint_row_level_numeric_lambda_blocker_status_v1.md
 ```
 
 Both post-open-blocker value-gate packages can also be sent together to a
