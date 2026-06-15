@@ -1454,6 +1454,17 @@ this sweep is \(3.596872728842\).  Leave-one-control-out checks likewise keep
 the candidate ranked first in all six omissions.  These checks strengthen the
 preflight status of the row-level penalty route, but they still do not broaden
 the control universe or constitute validation.
+A follow-up control-expansion audit explains why the present strict control
+scope remains at six.  Under the frozen all-channel index-alignment rule, every
+row-level control must have a source-frozen counterpart in the DESI
+shape/time-readout, KiDS/COSEBIs low-mode, and observer/path low-\(z\) blocks.
+The available row-level control counts are \(6\), \(1008\), and \(25\),
+respectively, so the strict all-channel ceiling is \(6\).  Therefore there are
+no additional strict aligned controls available without either constructing
+more source-side DESI shape/time controls or freezing a new relaxed alignment
+rule, such as a reviewed cyclic-reuse or Cartesian-product rule.  This audit
+prevents overreading the six-control robustness result as a full control-suite
+validation.
 Separately, the earlier same-statistic guarded-replay chain packages this
 boundary for external review.  It asks only whether a later guarded permission-only replay
 package may use the symbolic \(T_{\rm joint}\) shell under the caveated

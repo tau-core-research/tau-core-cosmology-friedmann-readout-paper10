@@ -7364,6 +7364,36 @@ data/derived/joint_row_level_penalized_t_joint_robustness_v1_summary.csv
 docs/joint_row_level_penalized_t_joint_robustness_v1.md
 ```
 
+The strict row-level control expansion audit is:
+
+```bash
+python scripts/build_joint_row_level_control_expansion_audit_v1.py
+```
+
+It shows that the present strict all-channel alignment rule cannot add more
+controls without either new source-side DESI shape/time controls or a separately
+frozen relaxed alignment rule:
+
+```text
+desi_shape_time_readout controls = 6
+kids_lensing_cosebis_low_mode controls = 1008
+observer_path_basis_low_z controls = 25
+strict all-channel alignment ceiling = 6
+additional strict controls available now = 0
+```
+
+The verdict is:
+
+```text
+STRICT_ROW_LEVEL_CONTROL_EXPANSION_BLOCKED_BY_DESI_SHAPE_TIME_COUNT
+```
+
+```text
+data/derived/joint_row_level_control_expansion_audit_v1.csv
+data/derived/joint_row_level_control_expansion_audit_v1_summary.csv
+docs/joint_row_level_control_expansion_audit_v1.md
+```
+
 The earlier numeric-lambda package has also been copied for reviewer handoff to:
 
 ```text
