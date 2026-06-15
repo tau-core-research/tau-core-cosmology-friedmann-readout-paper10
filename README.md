@@ -7227,6 +7227,32 @@ data/derived/joint_row_level_numeric_lambda_review_response_template_v1.csv
 docs/joint_row_level_numeric_lambda_review_package_v1.md
 ```
 
+Row-level scoring readiness is tracked separately with:
+
+```bash
+python scripts/build_joint_row_level_scoring_readiness_v1.py
+python scripts/validate_joint_row_level_scoring_readiness_v1.py
+```
+
+The current readiness ledger records that aligned-control values are available
+(`6` aligned rows, mean `P_row_control=0.109794891058`) and that the numeric
+`lambda_row` review package is ready, but no completed numeric-lambda response
+has been imported. Therefore row-level scoring is still not ready:
+
+```text
+ROW_LEVEL_SCORING_NOT_READY_NUMERIC_LAMBDA_RESPONSE_MISSING
+```
+
+The ledger is non-scoring and non-validation:
+
+```text
+data/derived/joint_row_level_scoring_readiness_v1.csv
+data/derived/joint_row_level_scoring_readiness_v1_summary.csv
+docs/joint_row_level_scoring_readiness_v1.md
+scripts/build_joint_row_level_scoring_readiness_v1.py
+scripts/validate_joint_row_level_scoring_readiness_v1.py
+```
+
 The package has also been copied for reviewer handoff to:
 
 ```text
