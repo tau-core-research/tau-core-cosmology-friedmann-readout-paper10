@@ -7194,6 +7194,28 @@ The package has also been copied for reviewer handoff to:
 /Users/jolcsak/Downloads/joint_row_level_numeric_lambda_review_package_v1.zip
 ```
 
+Both post-open-blocker value-gate packages can also be sent together to a
+reviewer without repository access:
+
+```bash
+python scripts/build_joint_row_level_value_gate_reviewer_handoff_v1.py
+python scripts/validate_joint_row_level_value_gate_reviewer_handoff_v1.py
+```
+
+Reviewer handoff:
+
+```text
+data/derived/joint_row_level_value_gate_reviewer_handoff_v1.zip
+data/derived/joint_row_level_value_gate_reviewer_handoff_v1.zip.sha256
+data/derived/joint_row_level_value_gate_reviewer_handoff_v1_summary.csv
+docs/joint_row_level_value_gate_reviewer_handoff_v1.md
+/Users/jolcsak/Downloads/joint_row_level_value_gate_reviewer_handoff_v1.zip
+```
+
+This handoff remains non-scoring and non-validation. It asks only for review of
+the aligned-control value computation gate and the numeric `lambda_row=1`
+record-only candidate.
+
 ```text
 data/derived/joint_row_level_lambda_policy_blocker_status_v1.csv
 data/derived/joint_row_level_lambda_policy_blocker_status_v1_summary.csv
