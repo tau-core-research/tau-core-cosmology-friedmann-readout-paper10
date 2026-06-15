@@ -7120,15 +7120,16 @@ python scripts/build_joint_row_level_aligned_control_value_authorization_blocker
 python scripts/validate_joint_row_level_aligned_control_value_authorization_blocker_status_v1.py
 ```
 
-The current status before importing a completed response is:
+The current status after importing the completed positive response and running
+the guarded value computation is:
 
 ```text
-ALIGNED_CONTROL_VALUE_AUTHORIZATION_WAITING_FOR_REVIEW_RESPONSE
+ALIGNED_CONTROL_VALUES_COMPUTED_RESCORING_STILL_BLOCKED
 ```
 
-After a completed positive response is imported and the blocker status changes
-to `ALIGNED_CONTROL_VALUE_COMPUTATION_AUTHORIZED_VALUES_STILL_UNCOMPUTED`, the
-guarded non-scoring value artifact is built and checked with:
+The imported response authorizes only the aligned-control value computation. It
+does not authorize numeric `lambda_row`, `T_joint` rescoring, endpoint scoring,
+or validation. The guarded non-scoring value artifact is built and checked with:
 
 ```bash
 python scripts/build_joint_row_level_aligned_control_values_guarded_v1.py
@@ -7136,8 +7137,8 @@ python scripts/validate_joint_row_level_aligned_control_values_v1.py
 ```
 
 Before that response exists, the builder must stop with a missing authorization
-summary. The guarded artifact, if later authorized, still does not choose
-`lambda_row`, rescore `T_joint`, run endpoint scoring, or claim validation.
+summary. The guarded artifact still does not choose `lambda_row`, rescore
+`T_joint`, run endpoint scoring, or claim validation.
 
 ```text
 data/derived/joint_row_level_aligned_control_value_authorization_blocker_status_v1.csv

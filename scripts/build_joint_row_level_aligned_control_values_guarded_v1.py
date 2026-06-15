@@ -71,7 +71,11 @@ def check_authorization() -> tuple[dict[str, str], dict[str, str]]:
     require(auth["endpoint_scoring_allowed"] == "false", "endpoint scoring must remain forbidden")
     require(auth["endpoint_validation_claimed"] == "false", "endpoint validation must remain false")
     require(
-        blocker["verdict"] == "ALIGNED_CONTROL_VALUE_COMPUTATION_AUTHORIZED_VALUES_STILL_UNCOMPUTED",
+        blocker["verdict"]
+        in {
+            "ALIGNED_CONTROL_VALUE_COMPUTATION_AUTHORIZED_VALUES_STILL_UNCOMPUTED",
+            "ALIGNED_CONTROL_VALUES_COMPUTED_RESCORING_STILL_BLOCKED",
+        },
         f"unexpected aligned-control blocker verdict: {blocker['verdict']}",
     )
     return auth, blocker

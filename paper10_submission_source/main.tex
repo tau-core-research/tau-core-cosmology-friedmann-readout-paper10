@@ -1397,12 +1397,13 @@ The two post-open-blocker packages are also bundled as a reviewer handoff for
 readers without repository access; this handoff is explicitly non-scoring and
 non-validation.
 Machine import and blocker-status routes have been added for both response
-types.  In the current manuscript state, both remain waiting for completed
-review responses; no aligned values or numeric-\(\lambda\)-driven rescoring has
-run.
-A guarded aligned-control value computation script is prepared for the
-post-review state, but it is intentionally blocked until a completed positive
-authorization response is imported.
+types.  The aligned-control value authorization response has now been imported
+and permits only the guarded value-computation step.  The resulting
+non-scoring aligned-control artifact contains six deterministically aligned
+control rows with mean \(P_{\rm row}^{\rm control}=0.109794891058\).  It still
+does not choose a numeric \(\lambda_{\rm row}\), rescore \(T_{\rm joint}\), run
+endpoint scoring, or claim validation.  Numeric-\(\lambda\)-driven rescoring
+therefore remains blocked.
 Separately, the earlier same-statistic guarded-replay chain packages this
 boundary for external review.  It asks only whether a later guarded permission-only replay
 package may use the symbolic \(T_{\rm joint}\) shell under the caveated

@@ -15,6 +15,10 @@ CANONICAL_RESPONSE = ROOT / "data/derived/joint_row_level_aligned_control_value_
 CANONICAL_SUMMARY = ROOT / "data/derived/joint_row_level_aligned_control_value_authorization_response_v1_summary.csv"
 VALIDATOR = ROOT / "scripts/validate_joint_row_level_aligned_control_value_authorization_response_v1.py"
 EXPECTED_RESPONSE_NAME = "joint_row_level_aligned_control_value_authorization_response_v1.csv"
+RESPONSE_NAME_ALIASES = {
+    EXPECTED_RESPONSE_NAME,
+    "joint_row_level_aligned_control_value_authorization_review_response_v1.csv",
+}
 
 
 def parse_args() -> argparse.Namespace:
@@ -37,9 +41,9 @@ def read_rows(path: Path) -> list[dict[str, str]]:
 
 def find_response_in_zip(zip_path: Path, tmp_dir: Path) -> Path:
     with zipfile.ZipFile(zip_path) as zf:
-        names = [name for name in zf.namelist() if Path(name).name == EXPECTED_RESPONSE_NAME]
+        names = [name for name in zf.namelist() if Path(name).name in RESPONSE_NAME_ALIASES]
         if len(names) != 1:
-            raise SystemExit(f"zip must contain exactly one {EXPECTED_RESPONSE_NAME}; found {zf.namelist()}")
+            raise SystemExit(f"zip must contain exactly one aligned-control response CSV; found {zf.namelist()}")
         zf.extract(names[0], tmp_dir)
         return tmp_dir / names[0]
 
@@ -88,7 +92,9 @@ def main() -> None:
                     base = Path(name).name
                     if base in {
                         "joint_row_level_aligned_control_value_authorization_completed_summary_v1.csv",
+                        "joint_row_level_aligned_control_value_authorization_review_completed_summary_v1.csv",
                         "joint_row_level_aligned_control_value_authorization_validation_log_v1.txt",
+                        "joint_row_level_aligned_control_value_authorization_review_validation_log_v1.txt",
                     }:
                         zf.extract(name, tmp)
                         shutil.copy2(tmp / name, ROOT / "data/derived" / base)
