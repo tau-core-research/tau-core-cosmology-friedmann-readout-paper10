@@ -1379,6 +1379,13 @@ and
 \texttt{LAMBDA\_POLICY\_ACCEPTED\_NUMERIC\_VALUE\_STILL\_BLOCKED}.  Thus no
 aligned control values, no numeric \(\lambda_{\rm row}\), and no penalized
 \(T_{\rm joint}\) score are claimed here.
+Following that boundary, a separate aligned-control value authorization package
+has now been prepared.  It is downstream of the accepted alignment design but
+still contains no aligned joint-control values.  It asks only whether a later
+script may compute those values from the deterministic min-count rule and the
+already frozen channel-local penalty values.  It does not authorize
+\(\lambda_{\rm row}\), \(T_{\rm joint}\) rescoring, endpoint scoring, or
+validation.
 Separately, the earlier same-statistic guarded-replay chain packages this
 boundary for external review.  It asks only whether a later guarded permission-only replay
 package may use the symbolic \(T_{\rm joint}\) shell under the caveated

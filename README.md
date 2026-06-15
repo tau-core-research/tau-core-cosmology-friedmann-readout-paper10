@@ -7083,6 +7083,33 @@ to be prepared. It still does not authorize aligned values inside the design
 review itself, numeric `lambda_row`, `T_joint` rescoring, endpoint scoring, or
 validation.
 
+Separate aligned-control value authorization package:
+
+```bash
+python scripts/build_joint_row_level_aligned_control_value_authorization_review_package_v1.py
+python scripts/validate_joint_row_level_aligned_control_value_authorization_review_package_v1.py
+```
+
+The prepared package is a value-computation authorization handoff only:
+
+```text
+data/derived/joint_row_level_aligned_control_value_authorization_review_package_v1.zip
+data/derived/joint_row_level_aligned_control_value_authorization_review_package_v1.zip.sha256
+data/derived/joint_row_level_aligned_control_value_authorization_review_package_v1_manifest.csv
+data/derived/joint_row_level_aligned_control_value_authorization_review_package_v1_summary.csv
+data/derived/joint_row_level_aligned_control_value_authorization_response_template_v1.csv
+docs/joint_row_level_aligned_control_value_authorization_review_package_v1.md
+```
+
+The package has also been copied for reviewer handoff to:
+
+```text
+/Users/jolcsak/Downloads/joint_row_level_aligned_control_value_authorization_review_package_v1.zip
+```
+
+It contains no aligned joint-control values, no numeric `lambda_row`, no
+`T_joint` rescoring, no endpoint scoring, and no validation claim.
+
 ```text
 data/derived/joint_row_level_cross_channel_control_alignment_blocker_status_v1.csv
 data/derived/joint_row_level_cross_channel_control_alignment_blocker_status_v1_summary.csv
