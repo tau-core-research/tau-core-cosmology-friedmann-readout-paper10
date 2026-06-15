@@ -7253,6 +7253,34 @@ scripts/build_joint_row_level_scoring_readiness_v1.py
 scripts/validate_joint_row_level_scoring_readiness_v1.py
 ```
 
+After importing the completed numeric-lambda response, the readiness blocker
+moves to the next gate:
+
+```text
+ROW_LEVEL_SCORING_NOT_READY_T_JOINT_RESCORING_AUTHORIZATION_MISSING
+```
+
+The corresponding reviewer package is:
+
+```bash
+python scripts/build_joint_row_level_t_joint_rescoring_authorization_review_package_v1.py
+python scripts/validate_joint_row_level_t_joint_rescoring_authorization_review_package_v1.py
+```
+
+This package asks only whether a later guarded, record-only
+`T_joint_penalized = T_joint + lambda_row * P_row` ledger may be computed. It
+does not contain penalized values, endpoint scores, fit statistics, or
+validation claims.
+
+```text
+data/derived/joint_row_level_t_joint_rescoring_authorization_review_package_v1.zip
+data/derived/joint_row_level_t_joint_rescoring_authorization_review_package_v1.zip.sha256
+data/derived/joint_row_level_t_joint_rescoring_authorization_review_package_v1_manifest.csv
+data/derived/joint_row_level_t_joint_rescoring_authorization_review_package_v1_summary.csv
+data/derived/joint_row_level_t_joint_rescoring_authorization_response_template_v1.csv
+docs/joint_row_level_t_joint_rescoring_authorization_review_package_v1.md
+```
+
 The package has also been copied for reviewer handoff to:
 
 ```text

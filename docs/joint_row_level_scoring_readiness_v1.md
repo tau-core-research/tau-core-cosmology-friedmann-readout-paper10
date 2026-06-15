@@ -12,11 +12,12 @@ authorize endpoint scoring.
 - aligned control rows: `6`
 - mean aligned control `P_row`: `0.109794891058`
 - numeric lambda package ready: `true`
-- numeric lambda response imported: `false`
-- numeric lambda ready: `false`
-- verdict: `ROW_LEVEL_SCORING_NOT_READY_NUMERIC_LAMBDA_RESPONSE_MISSING`
-- next action: `send_or_import_completed_numeric_lambda_review_response_before_any_rescoring`
+- numeric lambda response imported: `true`
+- numeric lambda ready: `true`
+- verdict: `ROW_LEVEL_SCORING_NOT_READY_T_JOINT_RESCORING_AUTHORIZATION_MISSING`
+- next action: `prepare_separate_T_joint_rescoring_authorization_before_any_scoring`
 
-The current blocker is the missing completed numeric-lambda review
-response. Even after that response, a separate rescoring authorization
-gate remains required before any penalized `T_joint` result.
+The current blocker is the separate rescoring authorization gate.
+The numeric lambda is now only a recorded value; it has not been
+applied to `T_joint`. A separate authorization remains required
+before any penalized `T_joint` result or endpoint score.

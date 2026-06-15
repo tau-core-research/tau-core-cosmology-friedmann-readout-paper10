@@ -1405,10 +1405,13 @@ does not choose a numeric \(\lambda_{\rm row}\), rescore \(T_{\rm joint}\), run
 endpoint scoring, or claim validation.  Numeric-\(\lambda\)-driven rescoring
 therefore remains blocked.
 A row-level scoring-readiness ledger records this state explicitly:
-aligned-control values are ready, the numeric-\(\lambda_{\rm row}\) package is
-ready for review, but no completed numeric-\(\lambda_{\rm row}\) response has
-been imported.  The current readiness verdict is
-\texttt{ROW\_LEVEL\_SCORING\_NOT\_READY\_NUMERIC\_LAMBDA\_RESPONSE\_MISSING}.
+aligned-control values are ready, and the completed numeric-\(\lambda_{\rm row}\)
+response records \(\lambda_{\rm row}=1.0\), still without applying it to
+\(T_{\rm joint}\).  The current readiness verdict is
+\texttt{ROW\_LEVEL\_SCORING\_NOT\_READY\_T\_JOINT\_RESCORING\_AUTHORIZATION\_MISSING}.
+The next prepared reviewer package therefore asks only
+whether a later guarded record-only \(T_{\rm joint}+\lambda_{\rm row}P_{\rm row}\)
+ledger may be computed; it does not authorize endpoint scoring or validation.
 Separately, the earlier same-statistic guarded-replay chain packages this
 boundary for external review.  It asks only whether a later guarded permission-only replay
 package may use the symbolic \(T_{\rm joint}\) shell under the caveated

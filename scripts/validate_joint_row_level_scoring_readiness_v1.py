@@ -36,14 +36,15 @@ def main() -> None:
     require(summary["t_joint_rescoring_authorized"] == "false", "rescoring must remain false")
     require(summary["aligned_control_values_ready"] == "true", "aligned-control values should be ready in this state")
     require(summary["numeric_lambda_package_ready"] == "true", "numeric-lambda package should be ready")
-    require(summary["numeric_lambda_ready"] == "false", "numeric lambda must not be ready before completed response")
+    require(summary["numeric_lambda_ready"] == "true", "numeric lambda should now be recorded")
+    require(summary["lambda_row_numeric_value"] == "1.0", "expected lambda_row=1.0")
     require(
-        summary["verdict"] == "ROW_LEVEL_SCORING_NOT_READY_NUMERIC_LAMBDA_RESPONSE_MISSING",
+        summary["verdict"] == "ROW_LEVEL_SCORING_NOT_READY_T_JOINT_RESCORING_AUTHORIZATION_MISSING",
         "unexpected readiness verdict",
     )
     statuses = {row["gate_id"]: row["status"] for row in rows}
     require(statuses["JRSR_GATE_1_ALIGNED_CONTROL_VALUES"] == "SATISFIED", "aligned-control gate should be satisfied")
-    require(statuses["JRSR_GATE_2_NUMERIC_LAMBDA"] == "BLOCKED", "numeric-lambda gate should be blocked")
+    require(statuses["JRSR_GATE_2_NUMERIC_LAMBDA"] == "SATISFIED", "numeric-lambda gate should be satisfied")
     require(statuses["JRSR_GATE_3_T_JOINT_RESCORING_AUTHORIZATION"] == "BLOCKED", "rescoring gate must be blocked")
     require(statuses["JRSR_GATE_4_ENDPOINT_SCORING"] == "BLOCKED", "endpoint scoring gate must be blocked")
     for row in rows:
@@ -54,7 +55,7 @@ def main() -> None:
     for marker in [
         CLAIM_BOUNDARY,
         "not scoring; not validation",
-        "missing completed numeric-lambda review",
+        "separate rescoring authorization gate",
         "separate rescoring authorization",
     ]:
         require(marker in text, f"doc missing marker: {marker}")

@@ -103,16 +103,15 @@ def main() -> None:
     ]
     write_csv(OUT, gates)
 
-    verdict = (
-        "ROW_LEVEL_SCORING_NOT_READY_NUMERIC_LAMBDA_RESPONSE_MISSING"
-        if aligned_values_ready and not lambda_ready
-        else "ROW_LEVEL_SCORING_NOT_READY"
-    )
-    next_action = (
-        "send_or_import_completed_numeric_lambda_review_response_before_any_rescoring"
-        if aligned_values_ready and not lambda_ready
-        else "resolve_blocked_readiness_gates"
-    )
+    if aligned_values_ready and lambda_ready:
+        verdict = "ROW_LEVEL_SCORING_NOT_READY_T_JOINT_RESCORING_AUTHORIZATION_MISSING"
+        next_action = "prepare_separate_T_joint_rescoring_authorization_before_any_scoring"
+    elif aligned_values_ready and not lambda_ready:
+        verdict = "ROW_LEVEL_SCORING_NOT_READY_NUMERIC_LAMBDA_RESPONSE_MISSING"
+        next_action = "send_or_import_completed_numeric_lambda_review_response_before_any_rescoring"
+    else:
+        verdict = "ROW_LEVEL_SCORING_NOT_READY"
+        next_action = "resolve_blocked_readiness_gates"
     summary = {
         "readiness_id": "JOINT_ROW_LEVEL_SCORING_READINESS_V1",
         "aligned_control_values_ready": str(aligned_values_ready).lower(),
@@ -153,9 +152,10 @@ def main() -> None:
                 f"- verdict: `{summary['verdict']}`",
                 f"- next action: `{summary['next_required_action']}`",
                 "",
-                "The current blocker is the missing completed numeric-lambda review",
-                "response. Even after that response, a separate rescoring authorization",
-                "gate remains required before any penalized `T_joint` result.",
+                "The current blocker is the separate rescoring authorization gate.",
+                "The numeric lambda is now only a recorded value; it has not been",
+                "applied to `T_joint`. A separate authorization remains required",
+                "before any penalized `T_joint` result or endpoint score.",
                 "",
             ]
         )
