@@ -7126,10 +7126,26 @@ The current status before importing a completed response is:
 ALIGNED_CONTROL_VALUE_AUTHORIZATION_WAITING_FOR_REVIEW_RESPONSE
 ```
 
+After a completed positive response is imported and the blocker status changes
+to `ALIGNED_CONTROL_VALUE_COMPUTATION_AUTHORIZED_VALUES_STILL_UNCOMPUTED`, the
+guarded non-scoring value artifact is built and checked with:
+
+```bash
+python scripts/build_joint_row_level_aligned_control_values_guarded_v1.py
+python scripts/validate_joint_row_level_aligned_control_values_v1.py
+```
+
+Before that response exists, the builder must stop with a missing authorization
+summary. The guarded artifact, if later authorized, still does not choose
+`lambda_row`, rescore `T_joint`, run endpoint scoring, or claim validation.
+
 ```text
 data/derived/joint_row_level_aligned_control_value_authorization_blocker_status_v1.csv
 data/derived/joint_row_level_aligned_control_value_authorization_blocker_status_v1_summary.csv
 docs/joint_row_level_aligned_control_value_authorization_blocker_status_v1.md
+data/derived/joint_row_level_aligned_control_values_v1.csv
+data/derived/joint_row_level_aligned_control_values_v1_summary.csv
+docs/joint_row_level_aligned_control_values_v1.md
 ```
 
 ```text
