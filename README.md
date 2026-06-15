@@ -7162,6 +7162,38 @@ The accepted policy allows only a later residual-blind numeric-lambda package
 to be prepared. It still does not authorize a numeric `lambda_row`, `T_joint`
 rescoring, endpoint scoring, or validation.
 
+Separate numeric `lambda_row` review package:
+
+```bash
+python scripts/build_joint_row_level_numeric_lambda_review_package_v1.py
+python scripts/validate_joint_row_level_numeric_lambda_review_package_v1.py
+```
+
+The prepared package proposes only a record-only dimensionless unit-weight
+candidate:
+
+```text
+lambda_row = 1
+```
+
+It is not fitted from endpoint residuals or scores, is not applied to
+`T_joint`, and does not authorize endpoint scoring or validation.
+
+```text
+data/derived/joint_row_level_numeric_lambda_review_package_v1.zip
+data/derived/joint_row_level_numeric_lambda_review_package_v1.zip.sha256
+data/derived/joint_row_level_numeric_lambda_review_package_v1_manifest.csv
+data/derived/joint_row_level_numeric_lambda_review_package_v1_summary.csv
+data/derived/joint_row_level_numeric_lambda_review_response_template_v1.csv
+docs/joint_row_level_numeric_lambda_review_package_v1.md
+```
+
+The package has also been copied for reviewer handoff to:
+
+```text
+/Users/jolcsak/Downloads/joint_row_level_numeric_lambda_review_package_v1.zip
+```
+
 ```text
 data/derived/joint_row_level_lambda_policy_blocker_status_v1.csv
 data/derived/joint_row_level_lambda_policy_blocker_status_v1_summary.csv

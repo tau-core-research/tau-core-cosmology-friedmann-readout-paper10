@@ -1386,6 +1386,13 @@ script may compute those values from the deterministic min-count rule and the
 already frozen channel-local penalty values.  It does not authorize
 \(\lambda_{\rm row}\), \(T_{\rm joint}\) rescoring, endpoint scoring, or
 validation.
+In parallel, a separate numeric-\(\lambda_{\rm row}\) review package has also
+been prepared under the accepted residual-blind lambda policy.  It proposes the
+dimensionless unit-weight candidate \(\lambda_{\rm row}=1\), because both
+\(T_{\rm joint}\) and \(P_{\rm row}\) are dimensionless.  This is a record-only
+review candidate: it is not fitted from endpoint residuals or scores, is not
+applied to \(T_{\rm joint}\), and does not authorize endpoint scoring or
+validation.
 Separately, the earlier same-statistic guarded-replay chain packages this
 boundary for external review.  It asks only whether a later guarded permission-only replay
 package may use the symbolic \(T_{\rm joint}\) shell under the caveated
