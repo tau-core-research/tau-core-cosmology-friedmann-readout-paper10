@@ -7341,6 +7341,29 @@ data/derived/joint_row_level_penalized_t_joint_endpoint_scoring_v1_summary.csv
 docs/joint_row_level_penalized_t_joint_endpoint_scoring_v1.md
 ```
 
+The aligned-control robustness check is built with:
+
+```bash
+python scripts/build_joint_row_level_penalized_t_joint_robustness_v1.py
+```
+
+It keeps the same six-control scope and adds no new data. The result is:
+
+```text
+lambda values tested = 0 | 0.5 | 1 | 2
+lambda sensitivity failures = 0
+leave-one-control-out failures = 0
+worst lambda-sweep minimum margin = 3.596872728842
+base median margin = 4.057429292068
+```
+
+```text
+data/derived/joint_row_level_penalized_t_joint_lambda_sensitivity_v1.csv
+data/derived/joint_row_level_penalized_t_joint_leave_one_control_out_v1.csv
+data/derived/joint_row_level_penalized_t_joint_robustness_v1_summary.csv
+docs/joint_row_level_penalized_t_joint_robustness_v1.md
+```
+
 The earlier numeric-lambda package has also been copied for reviewer handoff to:
 
 ```text

@@ -1447,6 +1447,13 @@ penalized statistic.  The best aligned control has
 margin of \(3.635632898848\).  This is a guarded row-level aligned-control
 preflight result, not endpoint validation; the control scope is deliberately
 restricted to the six controls with source-frozen row-level penalties.
+A minimal robustness check within this same restricted control scope preserves
+the result.  For \(\lambda_{\rm row}\in\{0,0.5,1,2\}\), no aligned control beats
+or equals the candidate; the worst minimum candidate-minus-control margin over
+this sweep is \(3.596872728842\).  Leave-one-control-out checks likewise keep
+the candidate ranked first in all six omissions.  These checks strengthen the
+preflight status of the row-level penalty route, but they still do not broaden
+the control universe or constitute validation.
 Separately, the earlier same-statistic guarded-replay chain packages this
 boundary for external review.  It asks only whether a later guarded permission-only replay
 package may use the symbolic \(T_{\rm joint}\) shell under the caveated
