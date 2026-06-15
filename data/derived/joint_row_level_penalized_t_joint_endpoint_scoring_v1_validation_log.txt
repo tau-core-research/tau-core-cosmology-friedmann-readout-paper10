@@ -1,0 +1,2 @@
+PASSED
+Penalized endpoint scoring is complete under completed authorization; not validation.

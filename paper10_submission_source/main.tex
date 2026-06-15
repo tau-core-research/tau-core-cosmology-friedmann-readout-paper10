@@ -1427,6 +1427,26 @@ T_{\rm joint}+\lambda_{\rm row}P_{\rm row},
 and one guarded endpoint-scoring replay under the frozen protocol.  The package
 itself contains no endpoint residuals, no new endpoint scores, no fit
 statistics, and no validation claim.
+The completed consolidated response authorizes that guarded replay.  Under this
+frozen scope the candidate row-level penalty is
+\[
+P_{\rm row}^{\rm cand}=0.07027832156615,
+\]
+with \(\lambda_{\rm row}=1\), so that
+\[
+T_{\rm joint}^{\rm penalized}
+  =
+  4.142466300799+0.07027832156615
+  =
+  4.212744622365.
+\]
+Against the six deterministically aligned row-level controls for which frozen
+\(P_{\rm row}\) values exist, no aligned control beats or equals the candidate
+penalized statistic.  The best aligned control has
+\(T_{\rm joint}^{\rm penalized}=0.5771117235168\), giving a candidate-minus-best
+margin of \(3.635632898848\).  This is a guarded row-level aligned-control
+preflight result, not endpoint validation; the control scope is deliberately
+restricted to the six controls with source-frozen row-level penalties.
 Separately, the earlier same-statistic guarded-replay chain packages this
 boundary for external review.  It asks only whether a later guarded permission-only replay
 package may use the symbolic \(T_{\rm joint}\) shell under the caveated

@@ -7309,7 +7309,39 @@ Reviewer handoff copy:
 /Users/jolcsak/Downloads/joint_row_level_penalized_t_joint_endpoint_authorization_review_package_v1.zip
 ```
 
-The package has also been copied for reviewer handoff to:
+The completed consolidated response has now been imported and authorizes one
+guarded penalized endpoint-scoring replay without validation claims. The replay
+is run with:
+
+```bash
+python scripts/import_joint_row_level_penalized_t_joint_endpoint_authorization_review_response_v1.py \
+  /path/to/joint_row_level_penalized_t_joint_endpoint_authorization_completed_review_response_v1.zip
+python scripts/run_joint_row_level_penalized_t_joint_endpoint_scoring_v1.py
+python scripts/validate_joint_row_level_penalized_t_joint_endpoint_scoring_v1.py
+```
+
+The guarded result is:
+
+```text
+T_joint = 4.142466300799
+lambda_row = 1.0
+P_row(candidate) = 0.07027832156615
+T_joint_penalized(candidate) = 4.212744622365
+aligned controls beating/equal candidate = 0 / 6
+```
+
+This is a row-level aligned-control preflight result, not validation. The
+control universe is deliberately restricted to the six deterministically
+aligned controls with frozen `P_row` values.
+
+```text
+data/derived/joint_row_level_penalized_t_joint_endpoint_authorization_review_completed_summary_v1.csv
+data/derived/joint_row_level_penalized_t_joint_endpoint_scoring_v1.csv
+data/derived/joint_row_level_penalized_t_joint_endpoint_scoring_v1_summary.csv
+docs/joint_row_level_penalized_t_joint_endpoint_scoring_v1.md
+```
+
+The earlier numeric-lambda package has also been copied for reviewer handoff to:
 
 ```text
 /Users/jolcsak/Downloads/joint_row_level_numeric_lambda_review_package_v1.zip
