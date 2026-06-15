@@ -1,0 +1,784 @@
+% Retained internal gate ledger removed from the main paper narrative.
+% This file is not included by main.tex; it preserves source-audit history.
+
+\section{Detailed internal gate ledger retained for source audit}
+
+The present evidence is intentionally classified as pre-validation.  A future
+result would count as a validation-facing cosmological endpoint only if all of
+the following conditions are satisfied before the final score is inspected:
+
+\begin{enumerate}[leftmargin=1.5em]
+\item \textbf{Source-native channel support.}  Each active channel must have a
+source-native observable, transform rule, normalization rule, dimensional audit,
+and forbidden-field ledger.  Protocol support scores \(Q_i\) must be frozen by
+source-side review rather than inferred from endpoint improvement.
+\item \textbf{Single joint likelihood.}  The combined statistic must be a
+single predeclared multi-probe likelihood or likelihood surrogate with the
+covariance treatment specified in advance.  The current best-justified joint
+kernel is a support-weighted preflight score, not such a likelihood.
+\item \textbf{Covariance-aware controls.}  The endpoint must be tested against
+shuffled-channel, wrong-channel, sign-flip, block-drop, and null/readout
+controls using the same covariance and row-selection rules as the candidate.
+\item \textbf{Holdout or replay discipline.}  Any channel promoted after a
+diagnostic pass must be replayed under a frozen manifest.  A branch that becomes
+control-dominated, such as the present ACT \(K_{\rm path}\) route, must remain
+available as a negative/control artifact rather than being removed from the
+record.
+\item \textbf{Known-limit checks.}  The final model family must preserve the
+appropriate LCDM, GR/Newtonian, CMB-safety, and early-universe limits in the
+regime where the relevant channel is inactive or quotient-trivial.
+\end{enumerate}
+
+Table~\ref{tab:paper10-status-ledger} gives the current status of the main
+channel families against this validation boundary.  The table is meant to make
+the falsifiability and promotion rules explicit: a source-complete future
+endpoint that fails these tests should be retained as a true negative, not
+reinterpreted as a hidden positive signal.
+
+The repository now prepares the first source-side \(Q_i\) review package for
+this purpose:
+\url{joint_best_justified_qi_review_requirements_v1.csv}.
+It freezes the questions a reviewer must answer before the protocol support
+scores in Eq.~\eqref{eq:channel-quality} can be promoted beyond preflight
+bookkeeping.  It computes no endpoint score and keeps all validation flags
+false.  A separate response-gate validator now checks either the blank template
+state or a fully completed source-side reviewer response.  The validator rejects
+partial responses, forbidden endpoint inputs, endpoint-score permissions,
+endpoint validation claims, and cosmological validation claims.  Thus even a
+positive completed \(Q_i\) response would only support future gate preparation;
+it would not authorize a joint likelihood or a validation claim.  A completed
+external response has now been imported with verdict
+\texttt{QI\_REVIEW\_ACCEPTED\_OR\_CAVEATED\_SOURCE\_SIDE\_NOT\_VALIDATION}.
+It accepts the active \(Q_i\) factors only as caveated source-side support,
+keeps zero-support branches excluded, and leaves validation-facing promotion
+blocked until a separate covariance-aware joint likelihood or likelihood
+surrogate is defined.  The follow-up requirements gate
+\texttt{JOINT\_LIKELIHOOD\_SURROGATE\_REQUIREMENTS\_GATE\_V1} now freezes
+that boundary explicitly.  Its verdict is
+\texttt{JOINT\_LIKELIHOOD\_SURROGATE\_REQUIREMENTS\_FROZEN\_SCORING\_BLOCKED}:
+the \(Q_i\) review, active-channel freeze, preflight signal, and
+forbidden-field discipline pass, but scoring remains blocked by the missing
+joint covariance model, single likelihood-surrogate statistic, and matched
+control suite under the same statistic.  The first of these blockers is now
+narrowed by the covariance-model requirements gate
+\texttt{JOINT\_COVARIANCE\_MODEL\_REQUIREMENTS\_GATE\_V1}.  Its verdict,
+\texttt{JOINT\_COVARIANCE\_MODEL\_REQUIREMENTS\_PARTIAL\_BLOCKS\_READY\_CROSS\_PROBE\_BLOCKED},
+records that KiDS/COSEBIs has source-native full-covariance support, while the
+observer/path and DESI shape/readout blocks have only narrow caveated surrogate
+covariance support.  Cross-probe covariance, or an independently reviewed
+block-diagonal independence attestation, is still missing.  A completed
+external review accepts the active block scope and allows a block-diagonal
+surrogate only as a future protocol shell; it keeps cross-probe independence
+open and explicitly does not authorize scoring or validation.  A separate
+block-diagonal likelihood-surrogate protocol shell has therefore been frozen
+only as a non-executable algebraic draft:
+\[
+  Q_{\rm joint}^{\rm BD}=\sum_i r_i^T C_i^{-1} r_i .
+\]
+It records that candidate and matched controls would have to use the same row
+scopes, covariance blocks, nuisance rules, and statistic.  It does not read
+endpoint residuals, invert new covariance matrices, compute scores, or
+authorize replay; its current verdict is
+\texttt{JOINT\_BLOCK\_DIAGONAL\_PROTOCOL\_SHELL\_FROZEN\_COVARIANCE\_STILL\_OPEN\_NOT\_SCORING}.
+A follow-up cross-probe covariance-closure review package has therefore been
+frozen.  It asks only whether the missing condition can be closed by a named
+source-native/source-frozen cross-probe covariance product, or by a source-side
+block-diagonal independence rationale with explicit caveats.  It contains no
+endpoint residuals, no new endpoint scores, and no fit statistics; even a
+positive closure response would still require a separate scoring authorization
+before any executable joint replay.
+The completed response does not identify a source-native cross-probe covariance
+product, but it does accept the block-diagonal independence route as a caveated
+future scoring precondition.  The response explicitly carries forward the
+limitations from shared sky/mask overlap, redshift-kernel overlap, shared
+cosmology and nuisance parameters, calibration correlations, and missing
+population-level cross-probe covariance.  Thus the covariance-product route
+remains unavailable, while the independence-precondition route is closed only
+for a later separately authorized scoring package.  That separate
+scoring-authorization response has now been completed.  It authorizes only the
+preparation of a guarded permission-only joint replay package, with candidate
+and controls bound to the same block-diagonal statistic, the same covariance
+blocks, and the same caveats.  It still forbids direct scoring and makes no
+endpoint or cosmological validation claim.  A further execution-authorization
+response has now also been imported and validated, allowing exactly one guarded
+permission-only replay while keeping endpoint validation, cosmological
+validation, and physical validation false.  The replay records three active
+blocks.  KiDS/COSEBIs remains a caveated low-tail support block
+(\(\Delta\chi^2\simeq-183.6\), control margin \(2.97\times10^{-3}\)); the
+observer/path low-\(z\) block is control-resistant in this permission-only
+statistic (\(\Delta\chi^2\simeq-0.581\), control margin \(-0.0878\)); and the
+DESI shape/readout block remains positive under its source-native shape score
+(\(5.52\), control margin \(0.0149\)).  This is therefore a guarded
+permission-only replay signal, not a joint endpoint validation and not evidence
+for a cosmological model.  A post-replay promotion-readiness gate records the
+same boundary explicitly: two blocks are clean control-resistant, one block
+remains caveated, and promotion is blocked by three hard conditions--the
+caveated KiDS/COSEBIs support block, the absence of a source-native
+cross-probe covariance product or stronger reviewed surrogate, and the missing
+same-statistic matched-control implementation.  Its verdict is
+\texttt{JOINT\_PERMISSION\_REPLAY\_POSITIVE\_BUT\_PROMOTION\_BLOCKED\_NOT\_VALIDATION}.
+A dedicated KiDS caveat-resolution plan then freezes the first blocker more
+sharply.  The KiDS block is caveated because the low-tail signal has not yet
+been promoted to a physical COSEBIs response theorem.  The required proof order
+is: operator leakage theorem, gauge quotient descent, response-unit
+normalization, standard-lensing null-amplitude theorem, and finally the
+survey-native operator theorem.  The plan makes no new score and no validation
+claim; it only turns the caveat into an ordered proof programme.  The plan now
+cites the latest closure-attempt summary for each blocker, including the B1
+survey-native operator synthesis artifact: the source skeleton is present, but
+the physical operator theorem remains open.
+A first operator-leakage closure attempt then narrows the rank-1 blocker
+without closing it.  The minimal target theorem is that every admissible
+mask-only direction must either vanish in the physical quotient or be routed to
+the frozen null-control family under the same statistic and covariance
+discipline; the same operator must also recover the uniform pure-mask null
+limit and descend through gauge/quotient representations.  The current closure
+attempt records the uniform limit and the domain decomposition, but leaves mask
+quotient triviality, null projection/control routing, single-operator
+consistency, and gauge descent unproved.  Its verdict is
+\texttt{OPERATOR\_LEAKAGE\_CLOSURE\_ATTEMPT\_NARROWS\_PROOF\_BUT\_THEOREM\_REMAINS\_OPEN}.
+A parallel gauge/quotient descent closure attempt makes the second proof gate
+equally explicit.  Its target is representative independence: source
+representatives related by tile relabeling, source-basis recentering,
+admissible normalization changes, or gauge/null transformations must produce
+the same physical quotient class under the future survey-native operator.  The
+uniform mask-offset limit is available as a source-side check, but
+normalization invariance, tile-relabeling invariance, pure-mask control
+compatibility, and the single-operator dependency remain open.  Its verdict is
+\texttt{GAUGE\_QUOTIENT\_DESCENT\_CLOSURE\_ATTEMPT\_NARROWS\_PROOF\_BUT\_THEOREM\_REMAINS\_OPEN}.
+A response-unit normalization closure attempt then narrows the third KiDS proof
+gate.  It separates codomain readiness from physical normalization: the
+retained 300-row COSEBIs codomain is available, the current source-side kernel
+is dimensionless, and the covariance metric is available for later scoring, but
+none of these derives the physical response-unit map.  The missing object is a
+source-side or theorem-side map from the dimensionless \(A_{\rm src}K_i\)
+object into COSEBIs response units, compatible with the
+standard-lensing/no-Tau-source null limit and with the still-open leakage and
+gauge/quotient gates.  Its verdict is
+\texttt{RESPONSE\_UNIT\_NORMALIZATION\_CLOSURE\_ATTEMPT\_NARROWS\_PROOF\_BUT\_UNITS\_REMAIN\_OPEN}.
+A standard-lensing null-amplitude closure attempt then narrows the fourth KiDS
+proof gate.  It keeps source-replayed null controls as control limits only:
+having null controls is not the same as proving a physical no-Tau-source
+theorem.  The zero-Tau-source amplitude statement is specified but not derived.
+The theorem remains blocked by operator null safety, response-unit
+normalization, leakage control, and gauge/quotient descent.  Its verdict is
+\texttt{STANDARD\_LENSING\_NULL\_AMPLITUDE\_CLOSURE\_ATTEMPT\_NARROWS\_PROOF\_BUT\_THEOREM\_REMAINS\_OPEN}.
+A final survey-native operator synthesis gate then makes the B1 dependency
+explicit.  A factorized source-side operator skeleton exists, but a physical
+survey-native operator theorem would require one and the same operator to pass
+leakage, quotient descent, response-unit normalization, and standard-lensing
+null-amplitude conditions.  Because those B2--B5 gates remain open, the KiDS
+block cannot yet be promoted to clean joint support.  Its human-readable
+verdict is: source skeleton present, physical operator proof chain still open.
+A separate covariance-resolution plan then freezes the joint-promotion
+covariance blocker.  The
+preferred route remains a source-native or source-frozen cross-probe covariance
+product, but no such product is currently available.  The fastest documented
+route is therefore a caveated block-diagonal surrogate, provided that the
+shared-sky, redshift-kernel, nuisance, calibration, and population-covariance
+caveats are carried forward and candidate/control replay uses the same
+statistic and covariance discipline.  This covariance plan also computes no new
+score and keeps scoring and validation flags false.
+A matched-control resolution plan freezes the joint matched-control blocker.  It requires eight
+control families under the same future joint statistic and the same covariance
+route as the candidate: shuffled channel labels, wrong-channel/wrong-family
+controls, sign flips, leave-one-probe or block-drop controls, null/readout
+controls, scope/leakage controls, shared-statistic binding, and covariance
+binding.  Six families are planned but not implemented; two remain blocked by
+the upstream statistic/covariance gates.  Thus the control route is now
+specified, but still not executable as validation-facing scoring.
+An implementation-readiness ledger then separates design availability from
+executable validation.  Six control families have source-side implementation
+scaffolds, but they remain blocked by the missing single-statistic and
+covariance binding; the remaining two families are upstream-blocked.  This is
+still not scoring and not validation.  Its verdict is that matched-control
+designs exist, but protocol binding remains blocked.
+A symbolic single-statistic protocol shell then freezes the future shared form
+\(T_{\rm joint}=\sum_i q_i z_i\), where each active channel contributes a
+signed standardized response.  This is deliberately not executable: the single
+joint statistic is not yet defined for scoring, and the same covariance route
+and matched-control suite must be frozen for candidate and controls together
+before any numerical \(T_{\rm joint}\) can be used.
+A later numeric-standardization chain now materializes the channel-level part
+of this shell without crossing into endpoint scoring.  The signed
+median/MAD rule is frozen from matched controls only; candidate values do not
+define their own center or scale.  Under this rule the three active channels
+give
+\[
+  z_{\rm KiDS}=3.348919354,\qquad
+  z_{\rm path}=1.218797645,\qquad
+  z_{\rm DESI}=1.106851383 .
+\]
+After a separate reviewer authorization, these already frozen channel values
+are combined once under the same symbolic shell, giving the numeric joint
+ledger
+\[
+  T_{\rm joint}
+  =
+  0.744274332\,z_{\rm KiDS}
+  +0.722061699\,z_{\rm path}
+  +0.695580725\,z_{\rm DESI}
+  =
+  4.142466301 .
+\]
+The contribution ledger is
+\[
+  2.492514715
+  +0.880047098
+  +0.769904487 .
+\]
+This is a numeric joint ledger only.  It is not an endpoint score, not a
+cosmological validation statistic, and not a physical-validation claim.  The
+current blocker after this ledger is
+\[
+\begin{gathered}
+\texttt{numeric\_t\_joint\_ledger\_built\_}\\
+\texttt{endpoint\_scoring\_authorization\_missing}.
+\end{gathered}
+\]
+A follow-up control-suite authorization package has therefore been prepared.
+It asks only whether a numeric same-\(T_{\rm joint}\) matched-control suite may
+be built from the frozen \(q_i\), \(z_i\), sign, row-scope, and standardization
+ledgers.  The package keeps endpoint scoring, cosmological validation, and
+physical validation explicitly false; it is a control-suite handoff, not an
+endpoint-scoring authorization.
+A completed control-suite review then permitted preparation of a separate
+endpoint-scoring authorization package, and a completed endpoint-scoring
+authorization response permitted exactly one permission-only diagnostic replay
+using the frozen \(T_{\rm joint}\) statistic and the same 26 numeric controls.
+The resulting permission-only endpoint-scoring ledger reports
+\[
+  \text{controls beating or equaling the candidate}=0/26,
+  \qquad
+  \operatorname{rank}(T_{\rm joint})=1
+\]
+among the candidate plus controls.  The candidate therefore exceeds all
+predeclared numeric controls under this frozen statistic.  The margin is
+nevertheless narrow in the shuffled-channel family: the closest control is
+\texttt{channel\_shuffle\_002}, with
+\[
+  T_{\rm joint}-T_{\rm shuffle}=2.964446052\times 10^{-3}.
+\]
+By contrast, the minimum margins are much larger for the block-drop,
+sign-flip, matched-index, and null-readout families.  Thus the claim-safe
+reading is a positive permission-only endpoint diagnostic with a thin
+channel-assignment margin, not cosmological validation and not a physical
+proof.
+An immediate decomposition of the closest shuffled control shows why this
+margin is thin.  The control \texttt{channel\_shuffle\_002} leaves the
+KiDS/COSEBIs channel fixed and swaps only the observer-path low-\(z\) and
+DESI shape/time \(z_i\) assignments.  Those two lower-amplitude channels have
+similar frozen weights and similar positive \(z_i\) values, so the two
+contribution changes nearly cancel.  The narrow margin is therefore a
+channel-assignment sensitivity diagnostic, not evidence that the shuffled
+control has an independently justified physical route.
+This does not mean that the two channels have the same source basis: the
+observer-path channel and the DESI shape/time channel use different score
+artifacts, different control artifacts, and different control populations
+\((396\) versus \(6\) matched controls).  It means only that the present
+one-number statistic \(T_{\rm joint}=\sum_i q_i z_i\) is weakly sensitive to
+this particular exchange after the shared signed median/MAD standardization.
+The next robustness question is therefore whether a source-side
+channel-distinguishability or orthogonality penalty can be justified without
+using endpoint residuals.
+A requirements gate for such a penalty was therefore frozen rather than
+applied.  It closes only the source-route distinctness requirement.  Three
+requirements remain open or caveated: a residual-blind source-native
+distance/overlap metric between the two source spaces, a small-\(N\) balance
+rule for the six-control DESI route, and candidate/control symmetry for any
+future penalty.  Consequently no penalty, reweighting, or rescoring is applied
+in the present paper.
+A first residual-blind route-tag overlap scaffold can nevertheless be built:
+the two routes share only the generic \(\texttt{permission\_replay}\) tag,
+giving a caveated Jaccard distance of \(0.909\).  This supports the
+source-route distinction, but it is still route-level bookkeeping rather than
+a source-native penalty metric, so it does not change the endpoint score.
+The DESI small-\(N\) balance audit gives the same conclusion from the DESI
+side.  The DESI shape/time route still exceeds all frozen local controls, but
+only with a best-control margin equal to \(2.689\times10^{-3}\) of the
+candidate score, and the strongest leave-one stress retains \(0.997\) of the
+full candidate score.  Thus the DESI block remains caveated positive support,
+not population-grade support for a channel penalty.
+Finally, a candidate/control symmetry gate shows that the route-tag scaffold
+is formally symmetric: the same route-distance value is available for the
+candidate and for all controls because it depends only on frozen channel
+descriptors.  However, this also means that the scaffold is not yet a
+nontrivial row-level penalty.  The final status is therefore: symmetry
+scaffold available, no penalty, no rescoring.
+A follow-up source-availability audit makes the obstruction explicit.  The
+observer-path route has a frozen source row scope and the DESI route has a
+source-native shape vector, but the two routes do not yet expose a common
+row-indexed feature space.  Therefore a cross-channel row-level penalty would
+be artificial at this stage.
+We therefore introduce a common source-feature export as a bookkeeping layer
+only.  It provides a residual-blind, candidate/control-symmetric schema across
+the active channels, with \(99\) exported feature rows.  At present the DESI
+shape/time route is the only channel with a complete nontrivial source-feature
+vector in this common layer; the observer-path and KiDS channels remain
+scope-only or missing-feature exports.  Consequently the export is useful for
+future protocol development but still forbids \(T_{\rm joint}\) rescoring.
+A second export pass promotes the already frozen R5 observer-path source
+vectors into the same schema.  This raises the common export to \(387\)
+feature rows and adds five observer-path source features on the selected
+12-row low-\(z\) scope.  The promotion remains caveated because the R6 leakage
+review is still open, and KiDS still has no common source-feature vector.
+Thus the common export is stronger, but still not penalty-complete.
+After importing the completed R6 source-side reviewer response, the
+observer-path source features are accepted for caveated source-side use in the
+common export.  This closes the observer-path leakage-review blocker for the
+feature-export layer, but it still does not authorize endpoint replay,
+validation, a channel penalty, or \(T_{\rm joint}\) rescoring.  The remaining
+feature-export blocker is the missing KiDS source-native row feature.
+The next export pass removes that pure missing-feature marker in the narrow
+source-feature sense.  The KiDS/COSEBIs candidate side is now represented by
+the already source-frozen 300-row mapping/theory shell, producing 1205
+candidate-side feature rows after row features and vector-summary features are
+expanded.  The available KiDS null controls, however, are exported only as
+residual-blind vector-summary statistics, giving 5040 control-summary feature
+rows but no row-level control vectors in the same 300-row basis.  Thus the
+common export now contains 6631 rows across DESI, observer/path, and KiDS, but
+it still explicitly records
+\texttt{kids\_row\_level\_controls\_exported=false}.  The result is therefore
+an audit-strengthening export, not a channel-penalty closure and not
+\(T_{\rm joint}\) rescoring authorization.
+That last source-feature obstruction is then narrowed by a dedicated KiDS
+row-level null-control expansion.  The 1008 predeclared KiDS null controls are
+expanded into the same 300-row COSEBIs basis as the candidate and stored as a
+compressed source-side artifact.  A fifth common export records this artifact
+without copying the full table into the joint ledger: all three active channels
+now expose nontrivial source-feature inputs, and the source-feature input gate
+for a future row-level penalty is complete.  This still does not define the
+penalty, compute it, authorize endpoint replay, or reopen \(T_{\rm joint}\)
+rescoring; it only removes the previous KiDS row-control availability blocker.
+A row-level penalty protocol shell is therefore frozen as the next non-scoring
+object.  After a channel-local source-only normalization rule and a
+candidate/control-symmetric normalized feature transform are frozen, the
+updated shell records \texttt{source\_feature\_inputs\_complete=true},
+\texttt{channel\_local\_normalization\_frozen=true}, and
+\texttt{candidate\_control\_symmetric\_transform\_built=true}, but keeps
+\texttt{penalty\_formula\_defined=false},
+\texttt{penalty\_computed=false}, and
+\texttt{numeric\_t\_joint\_rescoring\_allowed=false}.  A subsequent
+block-weight binding shell then binds the normalized transform to the caveated
+block-diagonal route with an equal-channel preweight shell, recording
+\texttt{covariance\_or\_block\_weight\_binding\_frozen=true} in the v3
+protocol shell.  A further non-scoring symbolic formula shell freezes
+\[
+  P_i(a)=\omega_i\,{\rm mean}_{r,f}\,z_{i,a,r,f}^2,\qquad
+  P_{\rm row}(a)=\sum_i P_i(a),
+\]
+and the possible future score shell
+\[
+  T_{\rm joint}^{\rm penalized}(a)
+  =
+  T_{\rm joint}(a)+\lambda_{\rm row}P_{\rm row}(a),
+\]
+where \(z_{i,a,r,f}\) is the already frozen normalized source feature for
+channel \(i\), candidate/control alternative \(a\), row \(r\), and feature
+\(f\).  This is only a symbolic shell: \(\lambda_{\rm row}\) has no numeric
+value, no penalty values are written, and no score is changed.  The v4 protocol
+therefore records \texttt{penalty\_formula\_defined=true} but keeps
+\texttt{penalty\_computed=false},
+\texttt{numeric\_penalty\_values\_written=false}, and
+\texttt{numeric\_t\_joint\_rescoring\_allowed=false}.  The remaining open
+requirement is a separate numeric-penalty computation authorization gate.  A
+review package for that gate has been completed and imported.  It contains no
+endpoint residuals, no new endpoint scores, no fit statistics, no numeric
+penalty values, and no numeric \(\lambda_{\rm row}\).  The completed response
+authorizes only a separate numeric penalty-value package for \(P_i(a)\) and
+\(P_{\rm row}(a)\).  It does not authorize numeric \(\lambda_{\rm row}\),
+endpoint replay, endpoint validation, or \(T_{\rm joint}\) rescoring.  A machine
+preflight now checks this boundary.  Its current verdict is
+\texttt{PREFLIGHT\_PASS\_READY\_FOR\_SEPARATE\_NUMERIC\_PENALTY\_PACKAGE\_NOT\_RESCORING}:
+all five guard checks pass, the completed reviewer response is imported,
+numeric penalty-value computation is allowed only as a separate package, and
+the guarded runner exits ready without computing values.  Thus the row-level
+penalty chain is ready for a numeric value package, but still not executable as
+a \(T_{\rm joint}\)-rescoring object.
+A separate numeric value package was then built under exactly this boundary.
+It computes channel-local values
+\[
+  P_i(a)=\omega_i\,{\rm mean}_{r,f}\,z_{i,a,r,f}^2
+\]
+for \(1042\) candidate/control alternatives from the frozen normalized
+source-feature transform and equal block weights.  Because only the candidate
+alternative is presently aligned across all three active channels, the package
+writes one complete joint candidate value,
+\[
+  P_{\rm row}^{\rm cand}=0.0702783215662 .
+\]
+The control alternatives remain channel-local penalty values; the package does
+not invent a residual-blind cross-channel control alignment.  Consequently this
+artifact is a numeric diagnostic package only:
+\texttt{lambda\_row\_numeric\_value\_defined=false},
+\texttt{t\_joint\_rescoring\_allowed=false}, and
+\texttt{endpoint\_validation\_claimed=false}.  The next gate is review of the
+numeric values and of any proposed cross-channel control alignment before any
+numeric \(\lambda_{\rm row}\), penalized \(T_{\rm joint}\), or endpoint replay
+can be considered.
+A reviewer handoff package for this value layer has been prepared with
+SHA-256 digest
+\texttt{7878efb9e08cd4721b8fef04b0f9998cbdf82f447b1eb7aad1ca565f8750ed3c}.
+It asks only for reproduction and boundary review of the numeric \(P_i\) and
+candidate \(P_{\rm row}\) values; it still does not request cross-channel
+control alignment, numeric \(\lambda_{\rm row}\), \(T_{\rm joint}\) rescoring,
+or validation permission.
+The completed value review accepts the reported numeric penalty values and
+reproduces the candidate \(P_{\rm row}\), but keeps cross-channel control
+alignment, numeric \(\lambda_{\rm row}\), \(T_{\rm joint}\) rescoring, endpoint
+scoring, and validation all forbidden.  The resulting blocker verdict is
+\texttt{NUMERIC\_PENALTY\_VALUES\_ACCEPTED\_FOR\_RECORD\_ONLY\_NEXT\_USE\_BLOCKED}.
+A further use-authorization review package has therefore been prepared.  It
+does not choose \(\lambda_{\rm row}\), does not align controls, does not rescore
+\(T_{\rm joint}\), and does not authorize endpoint replay.  It asks only
+whether a later residual-blind use-policy route may be planned, with
+cross-channel controls and any numeric \(\lambda_{\rm row}\) still requiring
+separate acceptance.
+The completed use-authorization review permits this route planning only.  It
+accepts the numeric values as a precondition, requires cross-channel control
+alignment as a blocker, permits a later residual-blind \(\lambda_{\rm row}\)
+policy package, and keeps \(T_{\rm joint}\) rescoring and endpoint replay
+forbidden.  The blocker verdict is
+\texttt{PENALTY\_USE\_ROUTE\_PLANNING\_ALLOWED\_RESCORING\_STILL\_BLOCKED}.
+A cross-channel control-alignment design package has been prepared for the
+first open blocker.  It records the control-count imbalance
+\(1008:25:6\) across the KiDS, observer/path, and DESI channels, proposes a
+deterministic min-count index alignment after sorting controls by
+\(({\rm family},{\rm id})\), and exposes only \(6\) possible aligned control
+triples if accepted.  No aligned joint control values are computed in this
+package.
+For the second open blocker, a residual-blind \(\lambda_{\rm row}\) policy
+review package has also been prepared.  It fixes only the policy boundary:
+since both \(T_{\rm joint}\) and \(P_{\rm row}\) are dimensionless, any future
+\(\lambda_{\rm row}\) must be dimensionless and predeclared without endpoint
+residuals, endpoint scores, fit-improvement feedback, posterior chains, or
+post-score control ranks.  This package contains no numeric
+\(\lambda_{\rm row}\) and no \(T_{\rm joint}\) rescoring.
+Both open-blocker packages now have machine import and validation routes for
+completed reviewer responses.  The completed open-blocker review accepts the
+cross-channel alignment design and the dimensionless residual-blind
+\(\lambda_{\rm row}\) policy, but explicitly keeps the next numerical gates
+closed.  The blocker artifacts therefore now read
+\texttt{CROSS\_CHANNEL\_ALIGNMENT\_DESIGN\_ACCEPTED\_VALUES\_STILL\_BLOCKED}
+and
+\texttt{LAMBDA\_POLICY\_ACCEPTED\_NUMERIC\_VALUE\_STILL\_BLOCKED}.  Thus no
+aligned control values, no numeric \(\lambda_{\rm row}\), and no penalized
+\(T_{\rm joint}\) score are claimed here.
+Following that boundary, a separate aligned-control value authorization package
+has now been prepared.  It is downstream of the accepted alignment design but
+still contains no aligned joint-control values.  It asks only whether a later
+script may compute those values from the deterministic min-count rule and the
+already frozen channel-local penalty values.  It does not authorize
+\(\lambda_{\rm row}\), \(T_{\rm joint}\) rescoring, endpoint scoring, or
+validation.
+In parallel, a separate numeric-\(\lambda_{\rm row}\) review package has also
+been prepared under the accepted residual-blind lambda policy.  It proposes the
+dimensionless unit-weight candidate \(\lambda_{\rm row}=1\), because both
+\(T_{\rm joint}\) and \(P_{\rm row}\) are dimensionless.  This is a record-only
+review candidate: it is not fitted from endpoint residuals or scores, is not
+applied to \(T_{\rm joint}\), and does not authorize endpoint scoring or
+validation.
+The two post-open-blocker packages are also bundled as a reviewer handoff for
+readers without repository access; this handoff is explicitly non-scoring and
+non-validation.
+Machine import and blocker-status routes have been added for both response
+types.  The aligned-control value authorization response has now been imported
+and permits only the guarded value-computation step.  The resulting
+non-scoring aligned-control artifact contains six deterministically aligned
+control rows with mean \(P_{\rm row}^{\rm control}=0.109794891058\).  It still
+does not choose a numeric \(\lambda_{\rm row}\), rescore \(T_{\rm joint}\), run
+endpoint scoring, or claim validation.  Numeric-\(\lambda\)-driven rescoring
+therefore remains blocked.
+A row-level scoring-readiness ledger records this state explicitly:
+aligned-control values are ready, and the completed numeric-\(\lambda_{\rm row}\)
+response records \(\lambda_{\rm row}=1.0\), still without applying it to
+\(T_{\rm joint}\).  The current readiness verdict is
+\texttt{ROW\_LEVEL\_SCORING\_NOT\_READY\_T\_JOINT\_RESCORING\_AUTHORIZATION\_MISSING}.
+The next prepared reviewer package therefore asks only
+whether a later guarded record-only \(T_{\rm joint}+\lambda_{\rm row}P_{\rm row}\)
+ledger may be computed; it does not authorize endpoint scoring or validation.
+Because this split into many small authorization packages makes the workflow
+hard to audit, we also prepare a consolidated row-level endpoint authorization
+package.  This package bundles the already frozen base \(T_{\rm joint}\)
+ledger, the symbolic row-level penalty shell, the aligned control values, and
+the completed \(\lambda_{\rm row}=1.0\) response into one external-review
+artifact.  A completed positive response may authorize both a record-only
+penalized ledger,
+\[
+T_{\rm joint}^{\rm penalized}
+  =
+T_{\rm joint}+\lambda_{\rm row}P_{\rm row},
+\]
+and one guarded endpoint-scoring replay under the frozen protocol.  The package
+itself contains no endpoint residuals, no new endpoint scores, no fit
+statistics, and no validation claim.
+The completed consolidated response authorizes that guarded replay.  Under this
+frozen scope the candidate row-level penalty is
+\[
+P_{\rm row}^{\rm cand}=0.07027832156615,
+\]
+with \(\lambda_{\rm row}=1\), so that
+\[
+T_{\rm joint}^{\rm penalized}
+  =
+  4.142466300799+0.07027832156615
+  =
+  4.212744622365.
+\]
+Against the six deterministically aligned row-level controls for which frozen
+\(P_{\rm row}\) values exist, no aligned control beats or equals the candidate
+penalized statistic.  The best aligned control has
+\(T_{\rm joint}^{\rm penalized}=0.5771117235168\), giving a candidate-minus-best
+margin of \(3.635632898848\).  This is a guarded row-level aligned-control
+preflight result, not endpoint validation; the control scope is deliberately
+restricted to the six controls with source-frozen row-level penalties.
+A minimal robustness check within this same restricted control scope preserves
+the result.  For \(\lambda_{\rm row}\in\{0,0.5,1,2\}\), no aligned control beats
+or equals the candidate; the worst minimum candidate-minus-control margin over
+this sweep is \(3.596872728842\).  Leave-one-control-out checks likewise keep
+the candidate ranked first in all six omissions.  These checks strengthen the
+preflight status of the row-level penalty route, but they still do not broaden
+the control universe or constitute validation.
+A follow-up control-expansion audit explains why the present strict control
+scope remains at six.  Under the frozen all-channel index-alignment rule, every
+row-level control must have a source-frozen counterpart in the DESI
+shape/time-readout, KiDS/COSEBIs low-mode, and observer/path low-\(z\) blocks.
+The available row-level control counts are \(6\), \(1008\), and \(25\),
+respectively, so the strict all-channel ceiling is \(6\).  Therefore there are
+no additional strict aligned controls available without either constructing
+more source-side DESI shape/time controls or freezing a new relaxed alignment
+rule, such as a reviewed cyclic-reuse or Cartesian-product rule.  This audit
+prevents overreading the six-control robustness result as a full control-suite
+validation.
+As a fast stress test, we also tried a deterministic cyclic-reuse relaxation:
+the six DESI shape/time controls are reused over the 25 observer/path controls,
+while the first 25 source-sorted KiDS controls are paired in order.  Because no
+per-control relaxed \(T_{\rm joint}\) statistic is authorized for this
+construction, this test isolates the row-level penalty contribution by using
+the same frozen base \(T_{\rm joint}\) on both candidate and relaxed controls.
+The relaxed stress test is caveated-negative: \(17/25\) relaxed controls have
+\(P_{\rm row}\) greater than or equal to the candidate penalty, with median
+candidate-minus-control penalized margin \(-0.02562861332923\).  This result is
+useful because it shows that relaxed control expansion is not an automatic
+signal amplifier.  The claim-bearing row-level result should therefore remain
+the strict six-control replay until additional source-side DESI controls or a
+separately justified relaxed-alignment rule is available.
+Separately, the earlier same-statistic guarded-replay chain packages this
+boundary for external review.  It asks only whether a later guarded permission-only replay
+package may use the symbolic \(T_{\rm joint}\) shell under the caveated
+block-diagonal covariance route and matched-control readiness boundary.  The
+package itself is not a replay: direct scoring remains forbidden and no
+permission-only replay is allowed until a completed reviewer response is
+imported.
+A completed same-statistic authorization response now permits only preparation
+of a guarded permission-only package under this symbolic statistic.  A further
+same-statistic execution authorization response then permits exactly one
+permission-only execution while keeping endpoint validation, cosmological
+validation, and physical-validation claims false.  The resulting guarded replay
+has status
+\texttt{JOINT\_GUARDED\_REPLAY\_PERMISSION\_ONLY\_COMPLETE\_NOT\_VALIDATION}.
+It contains three active blocks; all three are positive or caveated-positive in
+their local diagnostic sense: KiDS/COSEBIs low mode is caveated, the
+observer/path low-\(z\) block beats its best local control, and the DESI
+shape/time-readout block exceeds its best local control.  This is a
+permission-only diagnostic replay, not a validation result.
+Finally, a consolidated post-replay roadmap records the only permitted order of
+promotion: close the KiDS physical-promotion chain, close covariance by either
+a source-native cross-probe product or a reviewed caveated block-diagonal
+surrogate, implement the same-statistic matched controls, and only then prepare
+a separate validation-protocol authorization package.  This roadmap has verdict
+\texttt{JOINT\_POST\_REPLAY\_ROADMAP\_FROZEN\_VALIDATION\_NOT\_READY}.
+The
+matched-control families have also been frozen as requirements: shuffled-channel,
+wrong-channel, sign-flip, block-drop, null/readout, leakage, shared-statistic,
+and covariance-binding controls must all be run under the same future joint
+statistic, but none is yet implemented as validation-facing scoring.
+
+\begin{table}[t]
+\centering
+\small
+\caption{Current Paper 10 status ledger.  ``Positive'' means positive within
+the current prevalidation protocol, not cosmological validation.  Branches with
+zero positive joint support remain part of the record as controls, diagnostics,
+or negative current proxies.}
+\label{tab:paper10-status-ledger}
+\begin{tabular}{p{0.23\linewidth}p{0.23\linewidth}p{0.38\linewidth}}
+\toprule
+Channel family & Current status & Validation blocker or next gate \\
+\midrule
+KiDS/COSEBIs low-mode & Strongest caveated positive support &
+Tomographic/operator-level blockers; covariant source-native mode-response
+operator still open. \\
+Observer/path low-\(z\) & Narrow positive support &
+Twelve-object permission replay; needs population-scale source-native path and
+metric/environment observables. \\
+DESI shape/readout & Narrow positive support &
+Small row-sensitive margin; needs validation-oriented replay with frozen
+source-native \(Q_i\). \\
+Void/web distance and growth & Weak/negative current proxy &
+Current proxy basis is AIC-negative or control-limited; requires stronger
+source-native void/web basis. \\
+Time/clock basis & Diagnostic/control-limited &
+Simple chronometer/uncertainty proxies fail controls or remain source-blocked;
+requires independent time/readout evidence. \\
+ACT \(K_{\rm path}\) & Control-dominated diagnostic &
+Curl-null control dominates; physical \(K_{\rm path}\) units and quotient
+descent remain open. \\
+Best-justified joint kernel & Positive robust preflight &
+Needs source-native \(Q_i\) review and covariance-aware joint likelihood before
+validation language. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+
+\section{Conclusion}
+
+This paper defines and exercises a source-frozen Friedmann-readout audit
+protocol for a Tau-Core-inspired cosmological residual hypothesis.  It does not
+report cosmological validation, a dark-energy explanation, a modified-gravity
+law, or a dark-sector decision.  Its main contribution is operational: it shows
+how late-time projection/readout channels can be separated, frozen before
+scoring, tested against controls, preserved when negative, and combined only at
+a weaker joint-preflight level.
+
+The source-by-source record is mixed.  The distance-side void/web and simple
+time/clock proxies remain weak, control-limited, or AIC-negative in their current
+forms.  The ACT lensing/path route is deliberately preserved as a negative or
+control-dominated diagnostic: it improves weakly over a baseline in some guarded
+replays, but null/control branches, especially the curl branch, outperform it.
+By contrast, the KiDS/COSEBIs low-mode route, the low-redshift observer/path
+route, and the DESI shape/readout route provide the current positive-support
+channels.  Each remains caveated: none is promoted to physical validation, and
+each requires stronger source-native grounding before it can enter a validation-
+facing joint likelihood.
+
+The best-justified joint-kernel pass summarizes this status without allowing
+negative or control-dominated branches to rescue the score.  Positive support is
+assigned only to the three currently source-supported channels, using the
+residual-blind rule
+\[
+  Q_i=\prod_a (g_i^a)^{1/7}.
+\]
+The resulting normalized preflight score is
+\(\widehat S_{\rm bj}=0.713515777\), with exact sign-flip
+\(p=0.125000000\) and combined-control \(p=0.164682540\).  A robustness stress
+over five source-side weighting rules keeps all variants positive, with minimum
+score \(0.703534932\).  This is the strongest current joint result in the paper,
+but only in the protocol-score sense.  Its recorded status remains
+\[
+\begin{gathered}
+\texttt{BEST\_JUSTIFIED\_KERNEL\_ROBUST\_POSITIVE}\\
+\texttt{PREFLIGHT\_NOT\_VALIDATION}
+\end{gathered}
+\]
+
+After the same-statistic reviewer chain was completed, one permission-only
+joint replay was also run under the shared symbolic-statistic boundary.  The
+replay remains diagnostic and non-validating, but it is internally consistent:
+all three active blocks are positive or caveated-positive under their local
+permission-only definitions.  The replay summary records three active blocks
+and three positive-or-caveated support blocks, with validation flags kept false.
+This strengthens the paper's internal preflight picture, but it does not change
+the claim boundary: it is not endpoint validation, not cosmological validation,
+and not physical proof.
+
+The subsequent numeric joint-ledger gate makes this preflight picture more
+compact but not stronger in claim class.  The three frozen standardized channel
+values combine to
+\[
+  T_{\rm joint}=4.142466301 ,
+\]
+with positive contributions from all three active channels.  This is useful
+because the active blocks do not cancel when expressed under a single
+predeclared signed-standardization rule.  However, it is still not a \(p\)-value,
+not a likelihood ratio, and not a validation endpoint.  A future step would
+have to compare this same statistic against predeclared shuffled-channel,
+wrong-channel, sign-flip, block-drop, null/readout, leakage, and covariance-
+binding controls before any endpoint-scoring language could be used.
+
+The interpretation is therefore deliberately narrow.  The current data products
+show that several Tau-Core-style readout/projection channels can be made
+operational and that the strongest source-supported channels form a nonempty
+joint pattern.  They do not show that Tau Core explains late-time acceleration,
+that a new gravitational law has been detected, or that the present kernel is a
+cosmological endpoint.  The detailed route ledgers, including weak and negative
+branches, are preserved in the supplementary source file so that the main text
+can state the evidence hierarchy without becoming a fit log.
+
+The next validation-facing step is now precise.  The protocol requires
+source-native review of the channel-quality factors \(Q_i\), followed by a
+single predeclared covariance-aware joint likelihood or likelihood surrogate
+with shuffled-channel, wrong-channel, sign-flip, block-drop, and null/readout
+controls.  The present release freezes this as a requirements gate rather than
+running it: the \(Q_i\) source-side review and active-channel ledger are accepted
+only as caveated preconditions, while scoring remains blocked until a joint
+covariance model, a single likelihood-surrogate statistic, and matched controls
+are specified.  The current covariance gate narrows the first blocker: the
+individual active blocks are partially covariance-supported, but the
+cross-probe covariance/independence condition is not yet closed.  A future
+block-diagonal independence review package has been prepared only as a handoff
+artifact; it keeps scoring disabled until reviewed source-side rationale exists.
+A dedicated cross-probe covariance-closure review package now turns that
+remaining condition into a reviewer-facing source-side question: either provide
+a named cross-probe covariance product, or accept a caveated block-diagonal
+independence rationale; otherwise the blocker remains open.
+The completed review accepts the latter route only as a caveated future scoring
+precondition.  It does not authorize scoring; the next required artifact is a
+separate scoring-authorization package that binds the block-diagonal statistic,
+the covariance blocks, all stated caveats, and the matched-control suite.
+That scoring-authorization response is now completed and authorizes only
+preparation of a guarded permission-only replay package; it does not authorize
+direct scoring.  The newly prepared guarded replay authorization package carries
+the same-statistic, same-covariance-block, same-caveat, and matched-control
+requirements forward, and still requires a separate run-template gate before any
+executable replay.  The completed guarded-permission response now authorizes
+only that run-template preparation step:
+\texttt{AUTHORIZE\_GUARDED\_PERMISSION\_REPLAY\_PACKAGE\_PREPARATION\_ONLY\_NOT\_EXECUTION\_NOT\_SCORING\_NOT\_VALIDATION}.
+It does not authorize direct execution, endpoint scoring, endpoint validation,
+or cosmological validation.  The resulting run-template is frozen as
+\texttt{JOINT\_GUARDED\_REPLAY\_RUN\_TEMPLATE\_READY\_NOT\_EXECUTED}; it binds
+candidate and controls to the same block-diagonal statistic, the same frozen
+block weights, the same covariance/caveat discipline, and the same matched
+control suite, but it remains a template rather than a replay.
+A further run-template authorization package has now been prepared for external
+review.  That package is still blank and reviewer-not-completed; it asks only
+whether the frozen template may be used as the basis for a later executable
+permission-only replay, and it still creates no endpoint scores or validation
+claim.
+The completed run-template authorization response has now been imported.  It
+authorizes only preparation of a separate execution plan, not execution itself.
+The execution plan is frozen as
+\texttt{JOINT\_GUARDED\_REPLAY\_EXECUTION\_PLAN\_READY\_NOT\_RUN}; the present
+runner and output validator are now prepared, but the replay is still blocked
+until a separate execution authorization response is completed and imported.
+The same-statistic execution authorization response has now also been imported.
+It authorizes only one permission-only execution under the shared symbolic
+statistic and matched-control boundary:
+\texttt{AUTHORIZE\_SAME\_STATISTIC\_PERMISSION\_ONLY\_EXECUTION\_NOT\_VALIDATION}.
+That replay has been run once and validated as
+\texttt{JOINT\_GUARDED\_REPLAY\_PERMISSION\_ONLY\_COMPLETE\_NOT\_VALIDATION}.
+The current same-statistic blocker ledger therefore records
+\texttt{permission\_only\_replay\_completed\_not\_validation}: preserve the
+outputs, but do not promote them without a separate validation protocol.
+The matched-control suite is likewise specified but not implemented: the
+control families are now named, while their execution is blocked until the same
+covariance/statistic is available for candidate and controls.
+An implementation scaffold now also records, for each required control family,
+the future builder, validator, output artifact, freeze inputs, and minimum
+control-count rule.  This scaffold is not a replay and creates no control
+vectors, residuals, likelihoods, fit statistics, or endpoint scores; its verdict
+is
+\texttt{JOINT\_MATCHED\_CONTROL\_SUITE\_IMPLEMENTATION\_SCAFFOLD\_FROZEN\_NOT\_RUN}.
+We also freeze a single-statistic binding-prerequisites ledger: the active
+channel order, row-scope artifacts, score-source artifacts, covariance objects,
+and nuisance/amplitude rules that any future joint statistic must bind are now
+named.  All three active channels have explicit row-scope and score-source
+artifacts present in the repository.  The numeric joint ledger is now defined,
+but endpoint scoring remains blocked until a separate same-statistic control
+and authorization package is completed.
+A future source-complete case or channel family that fails those
+predeclared tests should be retained as a true negative rather than reinterpreted
+as hidden support.  Until that gate is passed, Paper 10 should be read as a
+reproducible multi-channel viability and audit-discipline result, not as a
+validated cosmological model.
