@@ -1,0 +1,2 @@
+PASSED
+Consolidated authorization package is ready, not completed, not scoring, and not validation.

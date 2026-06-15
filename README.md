@@ -7101,7 +7101,7 @@ data/derived/joint_row_level_aligned_control_value_authorization_response_templa
 docs/joint_row_level_aligned_control_value_authorization_review_package_v1.md
 ```
 
-The package has also been copied for reviewer handoff to:
+The earlier numeric-lambda package has also been copied for reviewer handoff to:
 
 ```text
 /Users/jolcsak/Downloads/joint_row_level_aligned_control_value_authorization_review_package_v1.zip
@@ -7279,6 +7279,34 @@ data/derived/joint_row_level_t_joint_rescoring_authorization_review_package_v1_m
 data/derived/joint_row_level_t_joint_rescoring_authorization_review_package_v1_summary.csv
 data/derived/joint_row_level_t_joint_rescoring_authorization_response_template_v1.csv
 docs/joint_row_level_t_joint_rescoring_authorization_review_package_v1.md
+```
+
+To reduce reviewer churn, a consolidated replacement authorization package is
+now also available.  It bundles the already imported base `T_joint` ledger,
+the frozen symbolic row-level penalty shell, aligned control values, and
+`lambda_row=1.0` into one review artifact.  If accepted, this single package
+may authorize both the record-only penalized `T_joint` ledger and one guarded
+endpoint-scoring replay under the frozen protocol.  It still does not compute
+scores, does not contain endpoint residuals, and does not claim validation.
+
+```bash
+python scripts/build_joint_row_level_penalized_t_joint_endpoint_authorization_review_package_v1.py
+python scripts/validate_joint_row_level_penalized_t_joint_endpoint_authorization_review_package_v1.py
+```
+
+```text
+data/derived/joint_row_level_penalized_t_joint_endpoint_authorization_review_package_v1.zip
+data/derived/joint_row_level_penalized_t_joint_endpoint_authorization_review_package_v1.zip.sha256
+data/derived/joint_row_level_penalized_t_joint_endpoint_authorization_review_package_v1_manifest.csv
+data/derived/joint_row_level_penalized_t_joint_endpoint_authorization_review_package_v1_summary.csv
+data/derived/joint_row_level_penalized_t_joint_endpoint_authorization_response_template_v1.csv
+docs/joint_row_level_penalized_t_joint_endpoint_authorization_review_package_v1.md
+```
+
+Reviewer handoff copy:
+
+```text
+/Users/jolcsak/Downloads/joint_row_level_penalized_t_joint_endpoint_authorization_review_package_v1.zip
 ```
 
 The package has also been copied for reviewer handoff to:

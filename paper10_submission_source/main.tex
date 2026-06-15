@@ -1412,6 +1412,21 @@ response records \(\lambda_{\rm row}=1.0\), still without applying it to
 The next prepared reviewer package therefore asks only
 whether a later guarded record-only \(T_{\rm joint}+\lambda_{\rm row}P_{\rm row}\)
 ledger may be computed; it does not authorize endpoint scoring or validation.
+Because this split into many small authorization packages makes the workflow
+hard to audit, we also prepare a consolidated row-level endpoint authorization
+package.  This package bundles the already frozen base \(T_{\rm joint}\)
+ledger, the symbolic row-level penalty shell, the aligned control values, and
+the completed \(\lambda_{\rm row}=1.0\) response into one external-review
+artifact.  A completed positive response may authorize both a record-only
+penalized ledger,
+\[
+T_{\rm joint}^{\rm penalized}
+  =
+T_{\rm joint}+\lambda_{\rm row}P_{\rm row},
+\]
+and one guarded endpoint-scoring replay under the frozen protocol.  The package
+itself contains no endpoint residuals, no new endpoint scores, no fit
+statistics, and no validation claim.
 Separately, the earlier same-statistic guarded-replay chain packages this
 boundary for external review.  It asks only whether a later guarded permission-only replay
 package may use the symbolic \(T_{\rm joint}\) shell under the caveated
