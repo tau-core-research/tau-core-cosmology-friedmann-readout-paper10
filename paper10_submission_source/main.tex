@@ -1465,6 +1465,19 @@ more source-side DESI shape/time controls or freezing a new relaxed alignment
 rule, such as a reviewed cyclic-reuse or Cartesian-product rule.  This audit
 prevents overreading the six-control robustness result as a full control-suite
 validation.
+As a fast stress test, we also tried a deterministic cyclic-reuse relaxation:
+the six DESI shape/time controls are reused over the 25 observer/path controls,
+while the first 25 source-sorted KiDS controls are paired in order.  Because no
+per-control relaxed \(T_{\rm joint}\) statistic is authorized for this
+construction, this test isolates the row-level penalty contribution by using
+the same frozen base \(T_{\rm joint}\) on both candidate and relaxed controls.
+The relaxed stress test is caveated-negative: \(17/25\) relaxed controls have
+\(P_{\rm row}\) greater than or equal to the candidate penalty, with median
+candidate-minus-control penalized margin \(-0.02562861332923\).  This result is
+useful because it shows that relaxed control expansion is not an automatic
+signal amplifier.  The claim-bearing row-level result should therefore remain
+the strict six-control replay until additional source-side DESI controls or a
+separately justified relaxed-alignment rule is available.
 Separately, the earlier same-statistic guarded-replay chain packages this
 boundary for external review.  It asks only whether a later guarded permission-only replay
 package may use the symbolic \(T_{\rm joint}\) shell under the caveated

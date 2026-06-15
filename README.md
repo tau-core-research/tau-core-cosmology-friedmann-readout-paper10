@@ -7394,6 +7394,34 @@ data/derived/joint_row_level_control_expansion_audit_v1_summary.csv
 docs/joint_row_level_control_expansion_audit_v1.md
 ```
 
+A fast relaxed cyclic stress test was also run:
+
+```bash
+python scripts/run_joint_row_level_relaxed_cyclic_penalized_stress_v1.py
+```
+
+This is not a strict endpoint replay. It cyclically reuses the six DESI
+shape/time controls over the 25 observer/path controls and isolates only the
+row-level penalty term, because no per-control relaxed `T_joint` statistic is
+authorized for that construction. The result is caveated:
+
+```text
+relaxed controls = 25
+controls with P_row >= candidate P_row = 17 / 25
+median candidate-minus-control penalized margin = -0.02562861332923
+verdict = RELAXED_CYCLIC_STRESS_CAVEATED_CONTROLS_EXCEED_CANDIDATE_NOT_VALIDATION
+```
+
+This negative/caveated stress test supports keeping the strict six-control
+result as the claim-bearing row-level replay until a better source-side DESI
+control expansion or a separately justified relaxed alignment rule is frozen.
+
+```text
+data/derived/joint_row_level_relaxed_cyclic_penalized_stress_v1.csv
+data/derived/joint_row_level_relaxed_cyclic_penalized_stress_v1_summary.csv
+docs/joint_row_level_relaxed_cyclic_penalized_stress_v1.md
+```
+
 The earlier numeric-lambda package has also been copied for reviewer handoff to:
 
 ```text
