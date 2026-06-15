@@ -7070,7 +7070,18 @@ python scripts/validate_joint_row_level_cross_channel_control_alignment_blocker_
 ```
 
 The current blocker status is intentionally waiting for a completed reviewer
-response:
+response unless a completed response has been imported. After importing
+`joint_row_level_open_blocker_completed_review_response_v1.zip`, the current
+status is:
+
+```text
+CROSS_CHANNEL_ALIGNMENT_DESIGN_ACCEPTED_VALUES_STILL_BLOCKED
+```
+
+The accepted design allows only the next separate aligned-control value package
+to be prepared. It still does not authorize aligned values inside the design
+review itself, numeric `lambda_row`, `T_joint` rescoring, endpoint scoring, or
+validation.
 
 ```text
 data/derived/joint_row_level_cross_channel_control_alignment_blocker_status_v1.csv
@@ -7112,7 +7123,17 @@ python scripts/validate_joint_row_level_lambda_policy_blocker_status_v1.py
 ```
 
 The current blocker status is intentionally waiting for a completed reviewer
-response:
+response unless a completed response has been imported. After importing
+`joint_row_level_open_blocker_completed_review_response_v1.zip`, the current
+status is:
+
+```text
+LAMBDA_POLICY_ACCEPTED_NUMERIC_VALUE_STILL_BLOCKED
+```
+
+The accepted policy allows only a later residual-blind numeric-lambda package
+to be prepared. It still does not authorize a numeric `lambda_row`, `T_joint`
+rescoring, endpoint scoring, or validation.
 
 ```text
 data/derived/joint_row_level_lambda_policy_blocker_status_v1.csv
