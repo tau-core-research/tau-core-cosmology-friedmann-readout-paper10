@@ -113,6 +113,22 @@ shape/readout as positive-support channels. It gives normalized score
 `BEST_JUSTIFIED_JOINT_KERNEL_POSITIVE_PREFLIGHT_NOT_VALIDATION`. This is not a
 joint cosmological likelihood and not validation.
 
+The current Tau Core theory update adds the same source-factored
+non-double-counting discipline used in the galaxy readout papers:
+
+```text
+K_i(s0) = Ktilde_i(M_tau^stab)
+t_obs^cosmo = R_time^{obs,cosmo}(M_tau^stab, OI_cosmo, o_path^cosmo)
+one protected source coordinate -> one quotient contribution
+```
+
+For Paper 10 this means every joint-kernel row must maintain a source-support
+ledger `SourceSupp(K_i)`. If two channels reuse the same source/proxy
+coordinate, the future joint kernel must merge them into one shared quotient
+term, justify an independent source-side split, or demote one channel to
+diagnostic/control status. A positive preflight score is therefore not enough
+to claim independent physical correction channels.
+
 The source-side weighting robustness stress for that same frozen channel
 ledger is recorded in:
 

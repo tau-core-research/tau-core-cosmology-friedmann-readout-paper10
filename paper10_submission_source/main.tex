@@ -423,6 +423,24 @@ degrees of freedom.  This is why the CC and radial-BAO time/readout routes are
 kept as source-side route candidates until a joint interface and nuisance
 policy is frozen.
 
+A further refinement is the source-factored internal-time rule.  A stabilized
+source class \(M_\tau^{\rm stab}\) is read through branch kernels, while
+observer time is an internal path-conditioned ordering readout:
+\[
+K_i(s_0)=\widetilde K_i(M_\tau^{\rm stab}),\qquad
+t_{\rm obs}^{\rm cosmo}
+=R_{\rm time}^{\rm obs,cosmo}
+(M_\tau^{\rm stab},OI_{\rm cosmo},o_{\rm path}^{\rm cosmo}).
+\]
+The cosmology-sector label is part of the claim boundary: this time/readout
+object is not automatically the same as a galaxy rotation observer-time,
+lensing time-delay, or quantum detector protocol order.
+Thus void, web, observer/path, time/readout, shape, and lensing channels are
+not automatically independent add-ons.  Each proposed component must declare a
+source support \({\rm SourceSupp}(\Delta K_i)\); overlapping supports must be
+merged, split by independent source evidence, or retained as
+diagnostic/control channels.
+
 The generalized Tau Core readout structure can be stated schematically as
 \begin{equation}
 \begin{aligned}
@@ -562,6 +580,19 @@ quantities such as coverage, provenance strength, independence from other
 channels, leakage safety, null-control availability, dimensional admissibility,
 and projection relevance.  Endpoint residuals, fit improvements, posterior
 chains, and post-score control ranks are forbidden inputs to \(Q_i\).
+
+The admissible set \(\mathcal A\) also carries a support ledger.  For every
+candidate term the source-only manifest must record
+\[
+{\rm SourceSupp}(K_i)\subseteq\{P_1,\ldots,P_n\}.
+\]
+If two proposed channels reuse the same proxy coordinate or have
+source-dependent supports without a predeclared split, the joint kernel must
+replace them by one shared quotient term or demote one channel to a
+diagnostic/control role.  This is the cosmology version of the same
+non-double-counting rule used in the galaxy projection papers: one protected
+source coordinate may contribute one quotient term, not several independent
+positive weights.
 
 Equation~\eqref{eq:joint-kernel} is therefore not a curve-fitting ansatz.  It
 is the operational form of the Tau Core expectation that a four-dimensional
@@ -758,7 +789,8 @@ survival.  Control-dominated or negative-proxy branches remain in the ledger but
 receive \(Q_i=0\).  The table is a prevalidation audit summary, not a joint
 cosmological likelihood.}
 \label{tab:best-justified-joint-kernel}
-\begin{tabular}{p{0.27\linewidth}p{0.22\linewidth}p{0.14\linewidth}p{0.26\linewidth}}
+\setlength{\tabcolsep}{3.5pt}
+\begin{tabular}{p{0.24\linewidth}p{0.19\linewidth}p{0.16\linewidth}p{0.29\linewidth}}
 \toprule
 Channel & Current role & \(Q_i\) & Reason for role \\
 \midrule
@@ -768,12 +800,15 @@ Observer/path low-\(z\) & positive support & 0.722061699 &
 Narrow permission replay survives local controls; not population validation. \\
 DESI shape/readout & positive support & 0.695580725 &
 Frozen controls survive with a small, row-sensitive margin. \\
-ACT \(K_{\rm path}\) & \(K_{\rm null}\)-diagnostic & 0 &
+ACT \(K_{\rm path}\) &
+\begin{tabular}[t]{@{}l@{}}\(K_{\rm null}\)-\\diagnostic\end{tabular} & 0 &
 Guarded replay is control-dominated; curl null is the best current control. \\
-Distance shell, void/web, sky-\(z\), time basis & negative/control/diagnostic & 0 &
+Distance shell, void/web, sky-\(z\), time basis &
+\begin{tabular}[t]{@{}l@{}}negative/control/\\diagnostic\end{tabular} & 0 &
 Current proxy branches are model-selection negative, control-limited, or diagnostic only. \\
 \midrule
-Best-justified preflight & three active channels & \(\widehat S_{\rm bj}=0.713515777\) &
+Best-justified preflight & three active channels &
+\begin{tabular}[t]{@{}l@{}}\(\widehat S_{\rm bj}\)\\\(=0.713515777\)\end{tabular} &
 Exact sign-flip \(p=0.125000000\); combined-control \(p=0.164682540\). \\
 \bottomrule
 \end{tabular}
@@ -1256,6 +1291,14 @@ sensitivity.  The relaxed cyclic row-level stress is caveated-negative, with
 This demonstrates that the present pipeline is not a universal signal
 amplifier and that the strict six-control row-level result must not be
 overread as population validation.
+
+The source-factored update narrows the interpretation of this result.  The
+positive joint kernel is not evidence that multiple independent physical
+corrections have been detected.  It is evidence that, under the current frozen
+source-support ledger, a small set of non-overlapping or guarded readout
+coordinates gives a coherent preflight statistic.  Any future improvement must
+show stronger source-native supports or an explicit shared-coordinate kernel,
+not simply stack more observer/path, time, or shape proxies.
 
 The next validation-facing step is now precise: freeze source-native channel
 support scores, build a single covariance-aware joint likelihood or likelihood
