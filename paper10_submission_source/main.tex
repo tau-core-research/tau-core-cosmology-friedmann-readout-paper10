@@ -611,6 +611,22 @@ already recorded branch outcomes.  They do not yet implement a single
 covariance-aware likelihood for \(K_{\rm joint}^{\tau}\), and they do not
 derive the physical support weights \(Q_i\) from first principles.
 
+\paragraph{Kernel-audit verdict.}
+The current Paper~10 kernel audit has three levels.  At the branch level,
+individual void/web, observer/path, time/readout, shape/readout, and
+lensing/path kernels are retained only at the status supported by their
+source-side route: positive-support, caveated control, diagnostic, blocked, or
+negative.  At the joint level, only non-overlapping positive-support channels
+may receive positive weight in \(K_{\rm joint}^{\tau}\); control-dominated
+branches such as the current ACT \(K_{\rm path}\) route must remain
+\(K_{\rm null}\)-style diagnostics.  At the validation level, none of these
+objects is yet a cosmological likelihood or a physical dark-energy model.  The
+present audit tests whether a source-frozen multi-readout kernel can be
+declared without endpoint leakage; it does not claim that the resulting
+preflight score validates Tau Core cosmology.  A validation-grade kernel still
+requires source-native channel supports, cross-probe covariance,
+shared-support deduplication, and endpoint controls under one frozen statistic.
+
 \subsection{Best-justified source-side weighting rule}
 
 The phrase ``best justified'' is used here in a restricted protocol sense.  It
