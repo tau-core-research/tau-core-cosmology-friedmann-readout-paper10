@@ -113,6 +113,17 @@ shape/readout as positive-support channels. It gives normalized score
 `BEST_JUSTIFIED_JOINT_KERNEL_POSITIVE_PREFLIGHT_NOT_VALIDATION`. This is not a
 joint cosmological likelihood and not validation.
 
+The current joint-kernel blocker worklist is:
+
+```text
+docs/joint_shared_support_covariance_worklist_v1.md
+data/derived/joint_shared_support_covariance_worklist_v1.csv
+```
+
+It records the shared-support, cross-probe covariance, and aligned-control
+tasks that must be completed before the best-justified joint kernel can be
+rerun with a stronger prevalidation interpretation.
+
 The current Tau Core theory update adds the same source-factored
 non-double-counting discipline used in the galaxy readout papers:
 
