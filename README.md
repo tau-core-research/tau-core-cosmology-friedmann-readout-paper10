@@ -140,6 +140,19 @@ term, justify an independent source-side split, or demote one channel to
 diagnostic/control status. A positive preflight score is therefore not enough
 to claim independent physical correction channels.
 
+The current paper-level kernel status map is:
+
+```text
+docs/kernel_record_status_audit_v1.md
+```
+
+It maps the declared cosmology channels, best-justified joint kernel, strict
+row-level replay, relaxed stress test, and full-kernel proxy screen onto the
+shared `KernelRecord_tau^S` discipline.  Its verdict is that Paper 10 is a
+source-frozen cosmology prevalidation audit with positive strict preflight
+ledgers and preserved caveated-negative controls, not a validation-grade joint
+likelihood.
+
 The source-side weighting robustness stress for that same frozen channel
 ledger is recorded in:
 
