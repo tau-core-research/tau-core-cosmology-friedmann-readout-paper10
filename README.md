@@ -17,6 +17,12 @@ The current answer is intentionally cautious. Some source channels are
 suggestive, some are weak, and some are preserved negatives. The joint layer is
 positive in sign but fragile and not a validation result.
 
+Terminology note: when this repository refers to cosmological morphology,
+void/web morphology, or morphology-aware time/readout projection, these are
+source-frozen projected handles on an intrinsic Tau-side **morphological
+body**, not a claim that the observed 4D density or web map is the full
+Tau-side object.
+
 ## Main Claim
 
 The repository defines a reproducible audit protocol:
