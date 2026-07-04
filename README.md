@@ -853,6 +853,23 @@ data/derived/joint_best_justified_kernel_robustness_v1_summary.csv
 paper10_submission_source/figures/fig_joint_best_justified_kernel_v1.pdf
 ```
 
+## Required v1.1 Audit Upgrade
+
+The current release is a source-frozen prevalidation audit, not a
+raw-generator replay. A stronger v1.1 package should add:
+
+- raw-generator replay from seed, parent/source generator, feature matrix,
+  train/holdout split, noise model, covariance rule, and solver specification;
+- sensitivity sweeps over thresholds, ridge `lambda`, SNR/error levels,
+  feature dimensions, source weights, and held-out split choices;
+- mock-catalog injection with realistic masks, covariance, selection effects,
+  and known injected residual components;
+- an independent implementation that rebuilds the protocol from the frozen
+  specification and checks whether the same candidate/control pattern appears.
+
+These are promotion requirements only. They do not turn the current Paper 10
+result into cosmological validation.
+
 ## arXiv Source Package
 
 `arxiv_submission_source.zip` is generated from `paper10_submission_source/`

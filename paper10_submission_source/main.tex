@@ -1270,6 +1270,39 @@ The current claim-safe status is:
 \end{gathered}
 \]
 
+\section{Required v1.1 audit upgrade path}
+
+The present package is intentionally a source-frozen prevalidation audit, not a
+raw-generator replay or validation-grade cosmology pipeline.  The next
+methodological upgrade should therefore be treated as a v1.1 audit requirement,
+not as an optional polish step.  Four additions are required before the positive
+preflight statistics can be promoted to a stronger reproducibility tier:
+
+\begin{enumerate}
+\item \textbf{Raw-generator replay.}  Any synthetic, surrogate, or
+source-generated channel must be replayable from the random seed, parent/source
+generator, feature matrix, train/holdout split, noise model, covariance rule,
+and solver specification.  Recomputing a frozen summary table is not enough for
+the next tier.
+\item \textbf{Sensitivity sweep.}  Thresholds, ridge \(\lambda\), assumed
+SNR/error levels, feature dimensions, source weights, and held-out split choices
+must be swept under predeclared ranges.  The target is not to maximize the score,
+but to learn whether the support sign survives reasonable source-side
+perturbations.
+\item \textbf{Mock-catalog injection.}  Before a real-data validation claim, the
+same channel grammar should be tested on realistic mock catalogs with survey
+masks, selection effects, covariance, and known injected residual components.
+This is the first serious step from a synthetic or ledger-level audit into a
+realistic cosmological setting.
+\item \textbf{Independent implementation.}  A second implementation should
+rebuild the protocol from the frozen specification and check whether the same
+candidate/control pattern appears without reusing the original scripts.
+\end{enumerate}
+
+These upgrades would not by themselves validate Tau Core cosmology.  They would
+only move the branch from a reproducible preflight ledger toward an
+audit-grade, mock-tested, independently replayable protocol.
+
 \section{Conclusion}
 
 This paper defines and exercises a source-frozen Friedmann-readout audit
@@ -1324,12 +1357,14 @@ not simply stack more observer/path, time, or shape proxies.
 The next validation-facing step is now precise: freeze source-native channel
 support scores, build a single covariance-aware joint likelihood or likelihood
 surrogate, implement the full matched-control suite under that same statistic,
-and expand the strict aligned-control population.  The largest remaining
-blocker is the absence of a validation-grade cross-probe covariance treatment.
-A future source-complete case or channel family that fails those predeclared
-tests should be retained as a true negative rather than reinterpreted as hidden
-support.  Until that gate is passed, Paper 10 should be read as a reproducible multi-channel viability
-and audit-discipline result, not as a validated cosmological model.
+expand the strict aligned-control population, and add the v1.1 raw-generator,
+sensitivity, mock-injection, and independent-implementation checks described
+above.  The largest remaining blocker is the absence of a validation-grade
+cross-probe covariance treatment.  A future source-complete case or channel
+family that fails those predeclared tests should be retained as a true negative
+rather than reinterpreted as hidden support.  Until that gate is passed, Paper
+10 should be read as a reproducible multi-channel viability and audit-discipline
+result, not as a validated cosmological model.
 
 
 \bibliographystyle{plain}
