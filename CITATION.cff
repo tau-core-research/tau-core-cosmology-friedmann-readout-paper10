@@ -4,8 +4,8 @@ title: "A source-frozen Friedmann-readout audit protocol for late-time cosmology
 authors:
   - family-names: "Olcsak"
     given-names: "Jozsef"
-version: "0.1.0"
-date-released: "2026-06-08"
+version: "v0.1.0"
+date-released: "2026-08-22"
 repository-code: "https://github.com/tau-core-research/tau-core-cosmology-friedmann-readout-paper10"
 license: "MIT"
 keywords:
@@ -15,4 +15,3 @@ keywords:
   - readout
   - Tau Core
   - reproducibility
-
