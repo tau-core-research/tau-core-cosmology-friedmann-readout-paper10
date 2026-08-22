@@ -1707,11 +1707,25 @@ def main() -> None:
             "scripts/validate_joint_guarded_replay_run_template_authorization_response_v1.py",
             str(response),
         ])
-        run(["python", "scripts/build_joint_guarded_replay_execution_plan_v1.py"])
+        execution_plan = (
+            ROOT
+            / "data"
+            / "derived"
+            / "joint_guarded_replay_execution_plan_v1_summary.csv"
+        )
+        if not execution_plan.exists():
+            run(["python", "scripts/build_joint_guarded_replay_execution_plan_v1.py"])
         run(["python", "scripts/validate_joint_guarded_replay_execution_plan_v1.py"])
     run(["python", "scripts/build_joint_guarded_replay_execution_blocker_status_v1.py"])
     run(["python", "scripts/validate_joint_guarded_replay_execution_blocker_status_v1.py"])
-    run(["python", "scripts/build_joint_guarded_replay_execution_authorization_package_v1.py"])
+    execution_auth_package = (
+        ROOT
+        / "data"
+        / "derived"
+        / "joint_guarded_replay_execution_authorization_package_v1_summary.csv"
+    )
+    if not execution_auth_package.exists():
+        run(["python", "scripts/build_joint_guarded_replay_execution_authorization_package_v1.py"])
     run(["python", "scripts/validate_joint_guarded_replay_execution_authorization_package_v1.py"])
     response = ROOT / "data" / "derived" / "joint_guarded_replay_execution_authorization_response_v1.csv"
     if response.exists():
@@ -1720,7 +1734,11 @@ def main() -> None:
             "scripts/validate_joint_guarded_replay_execution_authorization_response_v1.py",
             str(response),
         ])
-        run(["python", "scripts/run_joint_guarded_replay_permission_only_v1.py"])
+        permission_replay = (
+            ROOT / "data" / "derived" / "joint_guarded_replay_permission_only_summary_v1.csv"
+        )
+        if not permission_replay.exists():
+            run(["python", "scripts/run_joint_guarded_replay_permission_only_v1.py"])
         run(["python", "scripts/validate_joint_guarded_replay_permission_only_v1.py"])
         run(["python", "scripts/build_joint_guarded_replay_execution_blocker_status_v1.py"])
         run(["python", "scripts/validate_joint_guarded_replay_execution_blocker_status_v1.py"])

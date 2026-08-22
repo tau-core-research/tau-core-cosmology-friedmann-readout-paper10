@@ -6,8 +6,31 @@ import subprocess
 import zipfile
 from pathlib import Path
 
+import pytest
+
 
 ROOT = Path(__file__).resolve().parents[1]
+ACT_DR6_ROOT = ROOT / "data/raw/weak_lensing/act_dr6_lensing"
+ACT_DR6_TARBALL = ACT_DR6_ROOT / "dr6_lensing_release.tar.gz"
+ACT_DR6_MAP_ROOT = ACT_DR6_ROOT / "extracted_sampling_v1/maps"
+ACT_DR6_SAMPLING_PRODUCTS = (
+    ACT_DR6_MAP_ROOT / "baseline/kappa_alm_data_act_dr6_lensing_v1_baseline.fits",
+    ACT_DR6_MAP_ROOT / "curl/kappa_alm_data_act_dr6_lensing_v1_curl.fits",
+    ACT_DR6_MAP_ROOT
+    / "diff_f150_f090/kappa_alm_data_act_dr6_lensing_v1_diff_f150_f090.fits",
+    ACT_DR6_MAP_ROOT / "baseline/mask_act_dr6_lensing_v1_healpix_nside_4096_baseline.fits",
+)
+
+
+def require_act_dr6_tarball() -> None:
+    if not ACT_DR6_TARBALL.exists():
+        pytest.skip("optional 1.37 GB ACT DR6 lensing archive is not included")
+
+
+def require_act_dr6_sampling_products() -> None:
+    missing = [path for path in ACT_DR6_SAMPLING_PRODUCTS if not path.exists()]
+    if missing:
+        pytest.skip("optional extracted ACT DR6 sampling products are not included")
 
 
 def test_public_files_exist() -> None:
@@ -14399,6 +14422,7 @@ def test_act_dr6_lensing_acquisition_manifest_is_source_side_only() -> None:
 
 
 def test_act_dr6_lensing_inventory_has_science_and_null_control_variants() -> None:
+    require_act_dr6_tarball()
     subprocess.run(
         ["python", "scripts/build_act_dr6_lensing_inventory_v1.py"],
         cwd=ROOT,
@@ -14429,6 +14453,7 @@ def test_act_dr6_lensing_inventory_has_science_and_null_control_variants() -> No
 
 
 def test_act_dr6_lensing_low_z_sampling_pilot_is_source_side_only() -> None:
+    require_act_dr6_sampling_products()
     subprocess.run(
         ["python", "scripts/build_act_dr6_lensing_low_z_sampling_pilot_v1.py"],
         cwd=ROOT,
@@ -14464,6 +14489,7 @@ def test_act_dr6_lensing_low_z_sampling_pilot_is_source_side_only() -> None:
 
 
 def test_act_dr6_lensing_path_weight_candidate_is_review_ready_not_endpoint() -> None:
+    require_act_dr6_sampling_products()
     for command in [
         ["python", "scripts/build_act_dr6_lensing_low_z_sampling_pilot_v1.py"],
         ["python", "scripts/validate_act_dr6_lensing_low_z_sampling_pilot_v1.py"],

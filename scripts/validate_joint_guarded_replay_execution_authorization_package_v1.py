@@ -34,6 +34,10 @@ def sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def sha256_bytes(payload: bytes) -> str:
+    return hashlib.sha256(payload).hexdigest()
+
+
 def require(condition: bool, message: str) -> None:
     if not condition:
         raise SystemExit(message)
@@ -63,25 +67,30 @@ def main() -> None:
     require({row["forbidden_inputs_used"] for row in template} == {"false"}, "template forbidden flag mismatch")
     require({row["permission_only_execution_allowed"] for row in template} == {"false"}, "template execution flag mismatch")
     require({row["claim_boundary"] for row in template} == {CLAIM_BOUNDARY}, "template claim boundary mismatch")
+    manifest_name = str(MANIFEST.relative_to(ROOT))
     with zipfile.ZipFile(PACKAGE) as zf:
         names = set(zf.namelist())
-    require(str(MANIFEST.relative_to(ROOT)) in names, "zip must include manifest")
-    for row in manifest:
-        path = ROOT / row["package_path"]
-        require(path.exists(), f"manifest path missing: {row['package_path']}")
-        require(row["package_path"] in names, f"zip missing {row['package_path']}")
-        require(row["sha256"] == sha256(path), f"manifest checksum mismatch: {row['package_path']}")
-        require(row["claim_boundary"] == CLAIM_BOUNDARY, "manifest claim boundary mismatch")
-        for field in [
-            "contains_endpoint_residuals",
-            "contains_new_endpoint_scores",
-            "contains_fit_statistics",
-            "permission_only_execution_allowed",
-            "endpoint_validation_claimed",
-            "cosmological_validation_claimed",
-            "physical_validation_claimed",
-        ]:
-            require(row[field] == "false", f"manifest {field} must be false")
+        require(manifest_name in names, "zip must include manifest")
+        require(zf.read(manifest_name) == MANIFEST.read_bytes(), "archived manifest mismatch")
+        for row in manifest:
+            path = ROOT / row["package_path"]
+            require(path.exists(), f"manifest path missing: {row['package_path']}")
+            require(row["package_path"] in names, f"zip missing {row['package_path']}")
+            require(
+                row["sha256"] == sha256_bytes(zf.read(row["package_path"])),
+                f"archived checksum mismatch: {row['package_path']}",
+            )
+            require(row["claim_boundary"] == CLAIM_BOUNDARY, "manifest claim boundary mismatch")
+            for field in [
+                "contains_endpoint_residuals",
+                "contains_new_endpoint_scores",
+                "contains_fit_statistics",
+                "permission_only_execution_allowed",
+                "endpoint_validation_claimed",
+                "cosmological_validation_claimed",
+                "physical_validation_claimed",
+            ]:
+                require(row[field] == "false", f"manifest {field} must be false")
     print(
         "JOINT_GUARDED_REPLAY_EXECUTION_AUTHORIZATION_PACKAGE_V1_VALIDATED "
         f"sha256={summary['zip_sha256']}"
