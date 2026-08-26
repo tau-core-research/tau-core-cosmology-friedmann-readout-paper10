@@ -17,7 +17,7 @@
 \title{A source-frozen Friedmann-readout audit protocol for late-time cosmology:\\
 a prevalidation study}
 \author{Jozsef Olcsak}
-\date{Draft protocol scaffold, 2026-06-08\\Last revised: 2026-08-22}
+\date{Draft protocol scaffold, 2026-06-08\\Last revised: 2026-08-26}
 
 \begin{document}
 \maketitle
@@ -1311,6 +1311,28 @@ candidate/control pattern appears without reusing the original scripts.
 These upgrades would not by themselves validate Tau Core cosmology.  They would
 only move the branch from a reproducible preflight ledger toward an
 audit-grade, mock-tested, independently replayable protocol.
+
+\section{Full-4D joint-score boundary}
+
+The protocol-support statistics reported above are not the fixed physical
+full-4D Tau score.  In the later source-frozen descent, the scoreable
+Tau-over-standard object is
+\[
+ E_K=(K_{HH}-K_{\rm std})-C K_{VV}^{-1}C^\dagger,
+ \qquad
+ E_g={1\over\mathcal A_*}(A_O^{(4)-1})^*E_KA_O^{(4)-1}.
+\]
+The terminal prediction must then be generated from the same frozen tensor,
+\[
+ \mu_\tau=\bigoplus_a \mathcal T_a[E_g],
+\]
+after quotienting only exact linear duplicates and retaining the full
+cross-terminal covariance.  A nonzero mixed block (C) alone is insufficient:
+a graph-normal auxiliary completion can have $C\neq0$ while $E_K=0$.
+Consequently none of the present preflight values is reinterpreted or
+recomputed by this result.  A physical joint score remains blocked until a
+nonzero source-frozen $E_g$ and its co-registered terminal images are supplied
+independently of the cosmological endpoints.
 
 \section{Conclusion}
 

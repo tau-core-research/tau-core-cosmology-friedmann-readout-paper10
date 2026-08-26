@@ -819,6 +819,14 @@ paper10_submission_source/supplement_route_ledgers.tex
 The main manuscript keeps the narrative, status ledgers, best-justified joint
 kernel, and validation boundary; the supplement preserves the full audit trail.
 
+## Full-4D Joint-Score Boundary
+
+The protocol-support and joint-preflight values are not the fixed physical
+Tau score. A future eligible test requires one source-frozen
+`E_K = (K_HH - K_std) - C K_VV^-1 C^dagger`, a common coframe push, exact
+duplicate quotienting, and full cross-terminal covariance. Existing Paper 10
+values are unchanged.
+
 ## Reproduce
 
 ```bash

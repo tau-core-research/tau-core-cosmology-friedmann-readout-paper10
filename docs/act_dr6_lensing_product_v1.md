@@ -11,8 +11,8 @@ The LAMBDA product page describes ACT DR6 gravitational-lensing convergence maps
 - download page: `https://lambda.gsfc.nasa.gov/product/act/actadv_dr6_lensing_maps_get.html`
 - tarball URL: `https://lambda.gsfc.nasa.gov/data/suborbital/ACT/ACT_dr6/dr6_lensing_release.tar.gz`
 - expected bytes: `1371472486`
-- local bytes: `1371472486`
-- complete: `true`
-- verdict: `act_dr6_lensing_product_acquired_source_side_not_endpoint`
+- local bytes: `0`
+- complete: `false`
+- verdict: `act_dr6_lensing_product_not_yet_complete`
 
 The artifact does not compute kappa/shear values at Pantheon rows, does not build a path integral, and does not authorize endpoint replay.
