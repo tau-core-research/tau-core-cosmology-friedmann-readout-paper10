@@ -37,6 +37,15 @@ source-frozen projection/readout channels
 The current evidence is best described as
 `multi-channel viability evidence, not cosmological validation`.
 
+## Upstream ECTR Constraint
+
+The theory hub now supplies a conditional expansion classifier
+`H_O=Gamma/E_Q` when a source-frozen Q filter and metric coframe are locked to
+one Legendre--Riesz source spectrum and the occupied R1 access rate is
+positive. Paper 10 treats this only as a future upstream freeze condition.
+Observed `H(z)>0` may not be used to select the lock or the sign of `Gamma`,
+and none of the existing endpoint scores is reinterpreted by the theorem.
+
 ## Does Not Claim
 
 - It does not claim that Tau Core explains dark energy.
@@ -46,6 +55,8 @@ The current evidence is best described as
 - It does not use CMB maps as direct evidence for a Tau Core effect.
 - It does not contain a completed perturbation-level or covariant Tau Core
   cosmology derivation.
+- It does not claim that every Tau universe expands or that the ECTR source
+  packet is occupied by our universe.
 
 ## Included Data
 
@@ -7578,3 +7589,14 @@ cosmic-web, observer/path, time/readout, growth, lensing, and CMB products
 under the frozen audit ladder. A dark-sector decision should only be attempted
 after both the no-dark channel basis and the candidate base-substrate response
 basis are frozen without endpoint leakage.
+
+<!-- BEGIN OBSERVER UPDATE 20260914 -->
+## Observer realization update (2026-09-14)
+
+No cosmological expansion law, occupied stress tensor, dark-sector replacement or offspring-universe transition is established by these observer calculations.
+
+The manuscript distinguishes inherited BRAC contact, conditional coherent-state
+selection and interacting local covariance from physical observer identification,
+preparation and stable resolution. Those physical claims remain open. No
+empirical score was changed. The [dependency and source-result ledger](data/derived/observer_update_2026_09_14.json) records the assumptions and controls.
+<!-- END OBSERVER UPDATE 20260914 -->

@@ -15173,3 +15173,12 @@ def test_act_dr6_lensing_caveated_kpath_guarded_replay_preserves_negative_result
     assert summary["family_survives_controls"] == "false"
     assert summary["endpoint_validation_claimed"] == "false"
     assert summary["verdict"] == "ACT_CAVEATED_KPATH_GUARDED_REPLAY_CONTROL_DOMINATED_PERMISSION_ONLY_NOT_VALIDATION"
+
+
+def test_ectr_is_upstream_constraint_not_endpoint_reinterpretation() -> None:
+    text = (ROOT / "paper10_submission_source/main.tex").read_text()
+    assert "Expansion-conditioned source constraint for future endpoints" in text
+    assert "eq:p10-ectr-classifier" in text
+    assert "no current Paper-10 score" in text
+    assert "Measured $H_O>0$ alone" in text
+    assert "cannot establish the upstream class" in text
