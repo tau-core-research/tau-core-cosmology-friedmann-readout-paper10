@@ -367,7 +367,7 @@ scripts/validate_joint_cross_probe_covariance_closure_reviewer_handoff_package_v
 The same zip is copied for convenience to:
 
 ```text
-/Users/jolcsak/Downloads/joint_cross_probe_covariance_closure_reviewer_handoff_package_v1.zip
+data/derived/joint_cross_probe_covariance_closure_reviewer_handoff_package_v1.zip
 ```
 
 The source-side requirements behind this blocker are frozen in:
@@ -446,7 +446,7 @@ blocks, and the same caveats. It still does not execute replay/scoring. A copy
 is available at:
 
 ```text
-/Users/jolcsak/Downloads/joint_guarded_permission_replay_authorization_package_v1.zip
+data/derived/joint_guarded_permission_replay_authorization_package_v1.zip
 ```
 
 When a completed reviewer response returns, it must be imported through:
@@ -508,7 +508,7 @@ endpoint scores, and does not claim endpoint or cosmological validation.
 The reviewer-facing instructions are also copied to:
 
 ```text
-/Users/jolcsak/Downloads/joint_guarded_replay_run_template_authorization_reviewer_instructions_v1.md
+docs/joint_guarded_replay_run_template_authorization_reviewer_instructions_v1.md
 ```
 
 When a completed response returns, it must be imported through:
@@ -7186,7 +7186,7 @@ docs/joint_row_level_aligned_control_value_authorization_review_package_v1.md
 The earlier numeric-lambda package has also been copied for reviewer handoff to:
 
 ```text
-/Users/jolcsak/Downloads/joint_row_level_aligned_control_value_authorization_review_package_v1.zip
+data/derived/joint_row_level_aligned_control_value_authorization_review_package_v1.zip
 ```
 
 It contains no aligned joint-control values, no numeric `lambda_row`, no
@@ -7388,7 +7388,7 @@ docs/joint_row_level_penalized_t_joint_endpoint_authorization_review_package_v1.
 Reviewer handoff copy:
 
 ```text
-/Users/jolcsak/Downloads/joint_row_level_penalized_t_joint_endpoint_authorization_review_package_v1.zip
+data/derived/joint_row_level_penalized_t_joint_endpoint_authorization_review_package_v1.zip
 ```
 
 The completed consolidated response has now been imported and authorizes one
@@ -7507,7 +7507,7 @@ docs/joint_row_level_relaxed_cyclic_penalized_stress_v1.md
 The earlier numeric-lambda package has also been copied for reviewer handoff to:
 
 ```text
-/Users/jolcsak/Downloads/joint_row_level_numeric_lambda_review_package_v1.zip
+data/derived/joint_row_level_numeric_lambda_review_package_v1.zip
 ```
 
 Completed numeric `lambda_row` review responses are imported and checked with:
@@ -7547,7 +7547,7 @@ data/derived/joint_row_level_value_gate_reviewer_handoff_v1.zip
 data/derived/joint_row_level_value_gate_reviewer_handoff_v1.zip.sha256
 data/derived/joint_row_level_value_gate_reviewer_handoff_v1_summary.csv
 docs/joint_row_level_value_gate_reviewer_handoff_v1.md
-/Users/jolcsak/Downloads/joint_row_level_value_gate_reviewer_handoff_v1.zip
+data/derived/joint_row_level_value_gate_reviewer_handoff_v1.zip
 ```
 
 This handoff remains non-scoring and non-validation. It asks only for review of

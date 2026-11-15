@@ -6,12 +6,13 @@
 \usepackage{enumitem}
 \usepackage{xcolor}
 \usepackage{graphicx}
+\setlength{\emergencystretch}{3em}
 
 \hypersetup{colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue}
 
 \title{Supplementary route ledgers for Paper 10}
 \author{Jozsef Olcsak}
-\date{Supplementary audit source}
+\date{Supplementary audit source --- Last revised: 14 November 2026}
 
 \begin{document}
 \maketitle
@@ -57,14 +58,12 @@ products~\cite{DESIDR2BAO2025,DESIDR2Products2025}, Planck products
 \end{table}
 
 The repository also contains a source-freeze manifest:
-\[
-\texttt{data/source\_manifest/paper10\_source\_freeze\_manifest.csv}.
-\]
+\begin{center}\texttt{data/\allowbreak{}source\_\allowbreak{}manifest/\allowbreak{}paper10\_\allowbreak{}source\_\allowbreak{}freeze\_\allowbreak{}manifest.csv}.\end{center}
 It records candidate public source families, whether the source has merely been
 selected or remains blocked, the planned local artifact path, and the endpoint
 fields forbidden during source selection. In the current manifest, the first
 source-selection audit has identified candidate public source routes for all
-required blocks, but no source row is yet \texttt{FETCHED\_FROZEN}. This is the
+required blocks, but no source row is yet \texttt{FETCHED\_\allowbreak{}FROZEN}. This is the
 key distinction: source-family selection is not endpoint readiness. These
 blocks cannot be used for endpoint scoring until the public source product,
 version, transformation rule, and checksum policy are frozen.
@@ -85,7 +84,7 @@ This is the cosmological analogue of the matched-vs-wrong and non-overlap
 ledger discipline used in Papers 8 and 9.
 
 In the current scaffold, the validation script
-\(\texttt{scripts/validate\_source\_freeze.py}\) checks that the manifest covers
+\texttt{scripts/\allowbreak{}validate\_\allowbreak{}source\_\allowbreak{}freeze.py} checks that the manifest covers
 the required blocks and explicitly forbids endpoint leakage fields such as
 distance residuals, growth residuals, lensing residuals, fit-improvement flags,
 and post-hoc environment labels. Passing this script is not a data result; it is
@@ -93,19 +92,19 @@ a precondition for a later real-data pilot.
 
 The repository further includes a compact provenance cache of the official
 source landing pages. The acquisition script
-\(\texttt{scripts/acquire\_source\_pages.py}\) records the landing-page payloads,
+\texttt{scripts/\allowbreak{}acquire\_\allowbreak{}source\_\allowbreak{}pages.py} records the landing-page payloads,
 byte counts, and SHA-256 hashes, while
-\(\texttt{scripts/validate\_cached\_source\_pages.py}\) verifies the committed
+\texttt{scripts/\allowbreak{}validate\_\allowbreak{}cached\_\allowbreak{}source\_\allowbreak{}pages.py} verifies the committed
 cache during reproduction. These cached pages are not raw survey products and
 are not used to compute cosmological observables; they only make the source
 routes auditable without requiring live network access during reproduction.
 
 A second preflight artifact,
-\(\texttt{data/source\_manifest/paper10\_product\_freeze\_plan.csv}\),
+\texttt{data/\allowbreak{}source\_\allowbreak{}manifest/\allowbreak{}paper10\_\allowbreak{}product\_\allowbreak{}freeze\_\allowbreak{}plan.csv},
 declares the product role, planned local path, transformation-rule identifier,
 covariance policy, mask or selection policy, and forbidden endpoint fields for
 each source family. In this scaffold every product row has
-\(\texttt{endpoint\_allowed=false}\). Thus the protocol now specifies the next
+\texttt{endpoint\_\allowbreak{}allowed=false}. Thus the protocol now specifies the next
 data-acquisition step, but still does not contain endpoint data or a
 measurement result.
 
@@ -359,7 +358,7 @@ footprint overlap first, then path/depth support, web/environment support,
 normalization, mapping-vector construction, and null controls. Thus later
 normalization or null-control steps cannot bypass the missing footprint
 support.
-For the first blocker, a \texttt{F\_overlap} shell declares the future accepted schema:
+For the first blocker, a \texttt{F\_\allowbreak{}overlap} shell declares the future accepted schema:
 one source-frozen support row per COSEBIs target-row by route-tile domain entry
 over the full $300\times196=58{,}800$ domain. The shell accepts official
 footprint geometry or source-native full-mask overlap derivations, but computes
@@ -367,7 +366,7 @@ no overlap values in this paper.
 The corresponding availability audit preserves the current negative state: the
 route script and the three-mask subset are present, but neither an accepted
 official footprint geometry product nor a full 196-mask source-native product
-set is available. Therefore \texttt{F\_overlap} remains unresolved.
+set is available. Therefore \texttt{F\_\allowbreak{}overlap} remains unresolved.
 The full-mask acquisition manifest makes this explicit at tile level: three
 mask products are locally present and 193 remain missing.
 These missing products are split into ten future acquisition batches, with
@@ -464,7 +463,7 @@ replaced by a non-degenerate, source-frozen full-route or official-geometry
 mapping before endpoint scoring.
 We therefore add a non-degenerate mapping promotion gate. It freezes six
 conditions before any endpoint promotion is allowed: endpoint-grade
-\texttt{F\_overlap}, source-preflight readiness, endpoint-family geometry, a
+\texttt{F\_\allowbreak{}overlap}, source-preflight readiness, endpoint-family geometry, a
 frozen 300-row theory vector, null controls after mapping, and leakage guards.
 The earlier positive partial-control branch remains rank one and is preserved
 as a negative diagnostic result. It is not used as the endpoint family. Instead
@@ -546,7 +545,7 @@ evidence is attached.
 We also add a source-side photo-\(z\)/tomographic evidence ledger. It accepts
 the checksum-frozen KiDS lensing tarball, cached KiDS DR4 lensing-page
 photo-\(z\)/SOM-gold documentation markers, and the source-native
-\texttt{NZ\_SOURCE} five-bin inventory, but it keeps independent external
+\texttt{NZ\_\allowbreak{}SOURCE} five-bin inventory, but it keeps independent external
 photo-\(z\) or tomographic calibration open. This ledger computes no new score
 and does not authorize endpoint replay.
 Finally, we freeze a source-side acquisition plan for the missing H1 evidence:
@@ -572,23 +571,23 @@ A completed source-side reviewer response was then imported and validated. The
 response accepts the R4 leakage review as caveated source-side evidence, marks
 the independent reviewer attestation, R4 leakage review, and H1 external
 photo-\(z\)/tomographic-calibration evidence gates as source-side complete, and
-explicitly keeps \texttt{endpoint\_replay\_allowed=false} and
-\texttt{endpoint\_validation\_claimed=false}. A separate closure ledger records
+explicitly keeps \texttt{endpoint\_\allowbreak{}replay\_\allowbreak{}allowed=false} and
+\texttt{endpoint\_\allowbreak{}validation\_\allowbreak{}claimed=false}. A separate closure ledger records
 this current post-reviewer source-side state. The ledger does not rewrite the
 earlier prerequisite artifacts, does not compute new endpoint scores, and does
 not authorize endpoint replay; any future endpoint replay requires a separate
 explicit human authorization gate.
 A separate endpoint-replay authorization response was then validated. It gives
-\texttt{GO\_SOURCE\_SIDE\_REPLAY\_PERMISSION\_ONLY} for one predeclared replay
+\texttt{GO\_\allowbreak{}SOURCE\_\allowbreak{}SIDE\_\allowbreak{}REPLAY\_\allowbreak{}PERMISSION\_\allowbreak{}ONLY} for one predeclared replay
 under the existing frozen source-side state, while keeping
-\texttt{forbidden\_inputs\_used=false} and
-\texttt{endpoint\_validation\_claimed=false}. This changes the replay permission
+\texttt{forbidden\_\allowbreak{}inputs\_\allowbreak{}used=false} and
+\texttt{endpoint\_\allowbreak{}validation\_\allowbreak{}claimed=false}. This changes the replay permission
 state only; it does not promote the KiDS endpoint to validation.
 Under this permission-only gate the endpoint replay reproduces the frozen
 COSEBIs result: \(\Delta\chi^2=-183.6152665217\), \(\Delta{\rm AIC}=-181.6152665217\),
 candidate rank \(3/1009\) against the predeclared null controls, and plus-one
 tail fraction \(0.002973240832507\). The replay summary keeps
-\texttt{endpoint\_validation\_claimed=false}, so the claim-safe reading remains a
+\texttt{endpoint\_\allowbreak{}validation\_\allowbreak{}claimed=false}, so the claim-safe reading remains a
 low-tail endpoint signal, not KiDS validation.
 A post-replay tomographic-control disambiguation ledger then classifies the
 three tomographic controls that beat the candidate in the stricter
@@ -597,7 +596,7 @@ non-global relabel or pair-shuffle controls, one is only a conditional
 source-systematic candidate requiring independent photo-\(z\) or tomographic
 support, and none is accepted as a physical alternative. This ledger computes
 no new endpoint score and keeps
-\texttt{endpoint\_validation\_claimed=false}. The resulting status is therefore
+\texttt{endpoint\_\allowbreak{}validation\_\allowbreak{}claimed=false}. The resulting status is therefore
 that the tomographic controls block validation but do not refute the low-tail
 endpoint signal.
 A source-frozen tomographic holdout replay gives the next diagnostic check. For
@@ -610,7 +609,7 @@ tomographic controls remains slightly better in the same replay. Thus the
 holdout replay preserves the low-tail signal diagnostically, but it does not
 remove the tomographic-control caveat and does not constitute KiDS validation.
 A final narrow source-evidence gate audits this remaining holdout-beating
-control, \texttt{seeded\_auto\_cross\_shuffle\_702759}. The mapping is not
+control, \texttt{seeded\_\allowbreak{}auto\_\allowbreak{}cross\_\allowbreak{}shuffle\_\allowbreak{}702759}. The mapping is not
 induced by a single global source-bin relabel: its auto-pair map would imply
 \(1\mapsto2\) and \(2\mapsto3\), so a global relabel would send
 \(1\text{--}2\) to \(2\text{--}3\), while the observed control sends
@@ -621,21 +620,21 @@ the endpoint signal, although the broader tomographic-control caveat continues
 to block validation.
 A validation-readiness ledger then summarizes the current state without
 computing any new score. The allowed current claim is
-\texttt{diagnostic\_low\_tail\_signal\_with\_reduced\_tomographic\_control\_concern\_not\_validation}.
+\texttt{diagnostic\_\allowbreak{}low\_\allowbreak{}tail\_\allowbreak{}signal\_\allowbreak{}with\_\allowbreak{}reduced\_\allowbreak{}tomographic\_\allowbreak{}control\_\allowbreak{}concern\_\allowbreak{}not\_\allowbreak{}validation}.
 The signal has survived the narrow follow-up checks performed so far, and the
 most dangerous tomographic control is not accepted as a physical alternative.
-Nevertheless, \texttt{validation\_ready=false}: the tomographic caveat remains
+Nevertheless, \texttt{validation\_\allowbreak{}ready=false}: the tomographic caveat remains
 active, and physical promotion remains blocked by open
 operator/amplitude/normalization requirements.
 We then add a narrower tomographic/photo-\(z\) closure-status ledger. This
 ledger uses the completed external photo-\(z\) reviewer response and records
-\texttt{h1\_independent\_evidence\_complete=true} and
-\texttt{r4\_leakage\_review\_complete=true} for the source-side photo-\(z\)
+\texttt{h1\_\allowbreak{}independent\_\allowbreak{}evidence\_\allowbreak{}complete=true} and
+\texttt{r4\_\allowbreak{}leakage\_\allowbreak{}review\_\allowbreak{}complete=true} for the source-side photo-\(z\)
 route. It therefore reduces the photo-\(z\)/tomographic source-side concern.
 However, it computes no new score and does not change the validation boundary:
 the source-bin holdout remains diagnostic, the best holdout-beating control is
 still not promoted to a physical alternative, and
-\texttt{validation\_ready=false} until the physical-promotion blockers are
+\texttt{validation\_\allowbreak{}ready=false} until the physical-promotion blockers are
 closed.
 We also freeze a physical-promotion dependency-order ledger. This ledger does
 not prove the missing theorems; it only orders them. The next primary proof gate
@@ -650,7 +649,7 @@ no-endpoint-feedback guard is satisfied. The open exit conditions are:
 non-uniform leakage projection, pure-mask quotient/control, and single-operator
 coupling between the mode-response spectrum and null descent. The resulting
 verdict is
-\texttt{B2\_operator\_leakage\_exit\_conditions\_frozen\_but\_theorem\_open}.
+\texttt{B2\_\allowbreak{}operator\_\allowbreak{}leakage\_\allowbreak{}exit\_\allowbreak{}conditions\_\allowbreak{}frozen\_\allowbreak{}but\_\allowbreak{}theorem\_\allowbreak{}open}.
 For the first of these open steps, we freeze a sufficient non-uniform leakage
 projection criterion. If \(V_{\rm source}\) is decomposed into candidate
 physical, mask-only, and control/null subspaces, then a future operator \(O\)
@@ -658,7 +657,7 @@ must either satisfy \(\Pi_{\rm phys} O m=0\) for every mask-only direction \(m\)
 modulo quotient-null directions, or route \(O(V_{\rm mask})\) into a
 predeclared null-control family. This criterion is not yet proven for the KiDS
 operator; its current verdict is
-\texttt{nonuniform\_leakage\_projection\_criterion\_frozen\_but\_not\_proven}.
+\texttt{nonuniform\_\allowbreak{}leakage\_\allowbreak{}projection\_\allowbreak{}criterion\_\allowbreak{}frozen\_\allowbreak{}but\_\allowbreak{}not\_\allowbreak{}proven}.
 The component split itself is now declared only as bookkeeping:
 \(V_{\rm phys,cand}\) denotes the source-frozen low-mode candidate response
 shell, \(V_{\rm mask}\) denotes the pure-mask/depth/path basis, and
@@ -931,7 +930,7 @@ and fitted Tau parameters. This verifies that the frozen scope and scoring
 grammar can produce numerical inputs without crossing into endpoint scoring.
 
 The repository also includes the first numerical Pantheon+ pilot scoring run,
-marked throughout as \(\texttt{PILOT\_SCORING\_NOT\_VALIDATION}\). This run is
+marked throughout as \texttt{PILOT\_\allowbreak{}SCORING\_\allowbreak{}NOT\_\allowbreak{}VALIDATION}. This run is
 a diagonal-covariance smoke test of the frozen scoring grammar, not a
 covariance-complete cosmological likelihood. It uses the diagonal of the
 retained STAT+SYS covariance submatrix, analytic intercept marginalization, and
@@ -952,7 +951,7 @@ of Tau Core cosmology, and not a replacement for a full-covariance analysis.
 The next pilot layer repeats the same frozen branch grammar with the retained
 Pantheon+ STAT+SYS covariance submatrix, using Cholesky solves and no
 eigenvalue-floor regularization. This full-covariance run is marked as
-\(\texttt{FULL\_COV\_PILOT\_SCORING\_NOT\_VALIDATION}\). On the same 1371-row
+\texttt{FULL\_\allowbreak{}COV\_\allowbreak{}PILOT\_\allowbreak{}SCORING\_\allowbreak{}NOT\_\allowbreak{}VALIDATION}. On the same 1371-row
 scope, the Tau late-activation shell again has a slightly lower
 \(\chi^2\) than the flat-\(\Lambda\)CDM branch,
 \[
@@ -1020,7 +1019,7 @@ basis functions before any new replay claim.  Its strongest family is
 \]
 which is then sent through a separate reviewer authorization and replayed only
 after the reviewer returns
-\texttt{GO\_OBSERVER\_BASIS\_REPLAY\_PERMISSION\_ONLY}.  The resulting
+\texttt{GO\_\allowbreak{}OBSERVER\_\allowbreak{}BASIS\_\allowbreak{}REPLAY\_\allowbreak{}PERMISSION\_\allowbreak{}ONLY}.  The resulting
 permission-only replay gives
 \[
   \Delta\chi^2_{\rm obsbasis-\Lambda CDM}=-0.58072431813,\qquad
@@ -1186,7 +1185,7 @@ permission-only replay.  The result is diagnostic: the candidate basis improves
 slightly over the baseline
 \((\Delta\chi^2_{\rm cand-baseline}=-0.652452012)\), but it is not
 control-resistant.  Three controls outperform the candidate, with
-\texttt{rank\_reverse} the best control.  We therefore retain this branch as evidence
+\texttt{rank\_\allowbreak{}reverse} the best control.  We therefore retain this branch as evidence
 that a simple CC-uncertainty time/readout basis is insufficient by itself, not
 as validation of a time/readout channel.
 This negative diagnostic is also structurally informative.  In Tau Core
@@ -1266,9 +1265,7 @@ promising but still non-replay diagnostic.  It narrows the viable
 time/readout direction toward a source-justified clock-slope route, but it does
 not yet establish a control-resistant Tau Core \(W_{\rm time}\) kernel.
 We freeze this as a route gate rather than as an endpoint.  The route status is
-\[
-  \texttt{CLOCK\_SLOPE\_REVIEW\_CANDIDATE\_ENDPOINT\_BLOCKED\_BY\_GLOBAL\_CONTROL}.
-\]
+\begin{center}\texttt{CLOCK\_\allowbreak{}SLOPE\_\allowbreak{}REVIEW\_\allowbreak{}CANDIDATE\_\allowbreak{}ENDPOINT\_\allowbreak{}BLOCKED\_\allowbreak{}BY\_\allowbreak{}GLOBAL\_\allowbreak{}CONTROL}.\end{center}
 The allowed next step is a reviewer-gated clock-slope-only candidate.  The
 source-side reason is that the slope tracks a rate of expansion readout,
 \(d\log H/d\log(1+z)\), whereas the clock-level branch is closer to a
@@ -1293,18 +1290,16 @@ rows, at \(z_{\rm eff}=0.700\) and \(0.845\).  This route is independent of
 Pantheon distance residuals and independent of the CC clock-level route, but it
 is underresolved and does not solve the \(r_d\) nuisance.  We therefore record
 it only as source-side route discovery:
-\[
-  \texttt{independent\_radial\_bao\_time\_observable\_present\_but\_underresolved\_not\_replay}.
-\]
+\begin{center}\texttt{independent\_\allowbreak{}radial\_\allowbreak{}bao\_\allowbreak{}time\_\allowbreak{}observable\_\allowbreak{}present\_\allowbreak{}but\_\allowbreak{}underresolved\_\allowbreak{}not\_\allowbreak{}replay}.\end{center}
 It does not authorize replay and does not validate a Tau Core time/readout
 kernel.
 We then run a joint CC+BAO consistency audit using only source-side quantities:
 the two radial BAO points and the nearest CC support values.  This audit is
 useful precisely because it prevents an overclaim.  In the current two-point
 comparison, radial BAO aligns with the CC \(\log H\) level route
-(\(\texttt{bao\_cc\_level\_two\_point\_alignment}=1\)) and anti-aligns with the
+(\(\texttt{bao\_\allowbreak{}cc\_\allowbreak{}level\_\allowbreak{}two\_\allowbreak{}point\_\allowbreak{}alignment}=1\)) and anti-aligns with the
 CC clock-slope route
-(\(\texttt{bao\_cc\_slope\_two\_point\_alignment}=-1\)).  Thus radial BAO
+(\(\texttt{bao\_\allowbreak{}cc\_\allowbreak{}slope\_\allowbreak{}two\_\allowbreak{}point\_\allowbreak{}alignment}=-1\)).  Thus radial BAO
 currently supports an independent expansion-level time/readout observable, not
 the current CC clock-slope route.  The machine-readable verdict records this
 as a BAO-level alignment, a non-slope alignment, and an underresolved non-replay
@@ -1339,7 +1334,7 @@ the two-point difference,
 the constant \(r_d\) term cancels.  The resulting source-side check has the
 same sign as the nearest-CC \(\log H\) difference, but the BAO differential
 signal is very low significance
-(\(\texttt{delta\_bao\_snr}=0.0997626410319\)).  We therefore record this only
+(\(\texttt{delta\_\allowbreak{}bao\_\allowbreak{}snr}=0.0997626410319\)).  We therefore record this only
 as a directional route-discipline result, not as amplitude evidence, endpoint
 replay, or validation.
 The associated \(r_d\)-policy selection gate therefore accepts only the
@@ -1427,10 +1422,10 @@ remain false until a completed authorization response is validated.
 The corresponding replay-run grammar is also frozen as a template: it fixes the
 five allowed DESI radial rows, the excluded high-\(z\) row, the seven control
 families, and the forbidden inputs, while keeping
-\({\tt endpoint\_replay\_allowed=false}\).
+\texttt{endpoint\_\allowbreak{}replay\_\allowbreak{}allowed=\allowbreak{}false}.
 The completed external authorization response has now been imported and
 validated with decision
-\({\tt GO\_DESI\_CC\_5ROW\_TIME\_LEVEL\_REPLAY\_PERMISSION\_ONLY}\).  This
+\texttt{GO\_\allowbreak{}DESI\_\allowbreak{}CC\_\allowbreak{}5ROW\_\allowbreak{}TIME\_\allowbreak{}LEVEL\_\allowbreak{}REPLAY\_\allowbreak{}PERMISSION\_\allowbreak{}ONLY}.  This
 authorizes preparation of one guarded replay under the frozen scope and
 controls, but still does not produce an endpoint score and keeps both endpoint
 validation and physical-validation claims false.
@@ -1479,7 +1474,7 @@ because it identifies a frozen candidate shape for future time/readout work, but
 it remains below endpoint status: it still uses only the five nearest-neighbor
 chronometer matches, and the high-\(z\) Ly-\(\alpha\) row remains unsupported by
 an independent clock route.  The recorded verdict is therefore
-\({\tt desi\_time\_readout\_shape\_candidate\_frozen\_but\_not\_endpoint\_ready}\).
+\texttt{desi\_\allowbreak{}time\_\allowbreak{}readout\_\allowbreak{}shape\_\allowbreak{}candidate\_\allowbreak{}frozen\_\allowbreak{}but\_\allowbreak{}not\_\allowbreak{}endpoint\_\allowbreak{}ready}.
 We also map this frozen shape observable onto the current Tau Core general
 readout-basis language.  In that ledger, the adjacent-difference clock-slope
 and curvature shapes are classified as \(K_{\rm time}\) candidates, radial BAO
@@ -1489,7 +1484,7 @@ mapping does not complete projection induction: activation is source-candidate
 only, quotient survival is not proven against the ordering null, closure
 stability remains partial, and 4D readout survival is not endpoint-authorized.
 The recorded claim boundary is therefore
-\({\tt time\_shape\_maps\_to\_K\_time\_candidate\_but\_projection\_induction\_incomplete}\),
+\texttt{time\_\allowbreak{}shape\_\allowbreak{}maps\_\allowbreak{}to\_\allowbreak{}K\_\allowbreak{}time\_\allowbreak{}candidate\_\allowbreak{}but\_\allowbreak{}projection\_\allowbreak{}induction\_\allowbreak{}incomplete},
 not a time-projection validation claim.
 We also freeze the corresponding \(K_{\rm null}\) ordering-control suite.  A
 future shape-route replay must preserve five controls:
@@ -1498,7 +1493,7 @@ wrong-time-basis controls, and \(r_d\)-prior or marginalization stress.  At the
 present stage only the redshift-order shuffle is already available from the
 negative-control diagnostic, and no control is yet bound to the shape route.
 The suite verdict is
-\({\tt k\_null\_ordering\_controls\_declared\_but\_not\_shape\_bound}\), so the
+\texttt{k\_\allowbreak{}null\_\allowbreak{}ordering\_\allowbreak{}controls\_\allowbreak{}declared\_\allowbreak{}but\_\allowbreak{}not\_\allowbreak{}shape\_\allowbreak{}bound}, so the
 quotient-survival gate remains open.
 A first shape-bound control-vector ledger then binds these controls without
 endpoint scores or endpoint residuals.  Redshift-order shuffle is bound as a
@@ -1538,7 +1533,7 @@ approval into permission-only replay status; it still requires validation and
 physical-validation flags to remain false, and rejects any response that uses
 forbidden endpoint fields.
 The completed external response gives
-\({\tt GO\_DESI\_SHAPE\_ROUTE\_REPLAY\_PERMISSION\_ONLY}\). This authorizes
+\texttt{GO\_\allowbreak{}DESI\_\allowbreak{}SHAPE\_\allowbreak{}ROUTE\_\allowbreak{}REPLAY\_\allowbreak{}PERMISSION\_\allowbreak{}ONLY}. This authorizes
 one separate predeclared DESI shape-route replay, but it does not claim endpoint
 validation or physical validation.
 The corresponding replay-run template freezes the same five-row radial scope,
@@ -1547,7 +1542,7 @@ families. It remains authorization-required and keeps endpoint replay disabled;
 it is a run grammar, not a replay result.
 With that authorization in place, the permission-only shape-route replay reports
 a source-native quadratic shape score of \(5.52425578108\) for the frozen
-\({\tt CLOCK\_SLOPE\_SHAPE}\) candidate. The strongest frozen control is the
+\texttt{CLOCK\_\allowbreak{}SLOPE\_\allowbreak{}SHAPE} candidate. The strongest frozen control is the
 leave-shape-row control with score \(5.50939872844\), so the candidate exceeds
 all controls but only by a narrow margin of \(0.01485705264\). We therefore
 record this as a positive permission-only replay signal with weak
@@ -1557,7 +1552,7 @@ remains ranked first by the frozen shape score, but the fractional margin over
 the strongest control is only \(0.00268942156713\), and the strongest
 leave-one-row stress retains \(0.997310578432\) of the full candidate score.
 The stress verdict is therefore
-\({\tt positive\_but\_narrow\_margin\_and\_row\_sensitive\_not\_validation}\):
+\texttt{positive\_\allowbreak{}but\_\allowbreak{}narrow\_\allowbreak{}margin\_\allowbreak{}and\_\allowbreak{}row\_\allowbreak{}sensitive\_\allowbreak{}not\_\allowbreak{}validation}:
 the replay signal survives the frozen controls, but the DESI shape route is
 still narrow-margin and row-sensitive.
 The row-ablation view gives the more useful interpretation.  Dropping shape row
@@ -1577,8 +1572,8 @@ not as a validation table.
 \begin{table}[t]
 \centering
 \caption{DESI shape-route permission replay and internal robustness stress.
-All rows keep \texttt{endpoint\_validation\_claimed=false} and
-\texttt{physical\_validation\_claimed=false}.}
+All rows keep \texttt{endpoint\_\allowbreak{}validation\_\allowbreak{}claimed=false} and
+\texttt{physical\_\allowbreak{}validation\_\allowbreak{}claimed=false}.}
 \label{tab:desi-shape-route-robustness}
 \footnotesize
 \begin{tabular}{p{0.28\linewidth}p{0.22\linewidth}p{0.42\linewidth}}
@@ -1586,7 +1581,7 @@ All rows keep \texttt{endpoint\_validation\_claimed=false} and
 Quantity & Value & Claim-safe reading\\
 \midrule
 Frozen candidate score & \(5.52425578108\) & Candidate
-\({\tt CLOCK\_SLOPE\_SHAPE}\) is rank \(1\) by the frozen quadratic shape
+\texttt{CLOCK\_\allowbreak{}SLOPE\_\allowbreak{}SHAPE} is rank \(1\) by the frozen quadratic shape
 score\\
 Best frozen control score & \(5.50939872844\) & Strongest control is the
 leave-shape-row stress; the candidate-control margin is only
@@ -1630,9 +1625,9 @@ The next concrete source-side action is therefore independent clock or shape
 support for rows 1 and 2, especially row 2, before any promotion of the DESI
 shape route.
 A dedicated shape-core acquisition manifest freezes this into a narrow work
-order: \({\tt DESI\_SHAPE\_ROW\_2\_CORE\_SUPPORT}\) is the \(P0\) target because
+order: \texttt{DESI\_\allowbreak{}SHAPE\_\allowbreak{}ROW\_\allowbreak{}2\_\allowbreak{}CORE\_\allowbreak{}SUPPORT} is the \(P0\) target because
 it is core-sensitive and single-reference caveated, while
-\({\tt DESI\_SHAPE\_ROW\_1\_CORE\_SUPPORT}\) is the \(P1\) confirmatory target
+\texttt{DESI\_\allowbreak{}SHAPE\_\allowbreak{}ROW\_\allowbreak{}1\_\allowbreak{}CORE\_\allowbreak{}SUPPORT} is the \(P1\) confirmatory target
 because row 1 is the most required row. This manifest does not fetch sources,
 does not authorize replay, and does not claim validation.
 A scan of the already frozen cosmic-chronometer table then finds one existing
@@ -1654,8 +1649,8 @@ explicitly keeping endpoint replay, endpoint validation, physical validation,
 and route promotion false.
 The Row2 Moresco point is therefore attached only as a reviewed source-side
 support ledger:
-the source key is \({\tt Moresco2012ExpansionRate}\), the attachment verdict is
-\({\tt row2\_moresco2012\_in\_interval\_support\_attached\_partial\_not\_endpoint\_ready}\),
+the source key is \texttt{Moresco2012ExpansionRate}, the attachment verdict is
+\texttt{row2\_\allowbreak{}moresco2012\_\allowbreak{}in\_\allowbreak{}interval\_\allowbreak{}support\_\allowbreak{}attached\_\allowbreak{}partial\_\allowbreak{}not\_\allowbreak{}endpoint\_\allowbreak{}ready},
 and the replay and validation flags remain false. In other words, the row-2
 source caveat is reduced, but the route still requires endpoint-pair
 independence or external review before any promotion.
@@ -1665,20 +1660,20 @@ caveat-reducing in-interval support, and it explicitly forbids endpoint replay,
 endpoint validation, physical validation, and endpoint-pair replacement.
 The completed reviewer response accepts the attachment only in that narrow
 source-side sense. The machine verdict is
-\({\tt row2\_moresco2012\_attachment\_accepted\_as\_caveat\_reducing\_not\_endpoint\_ready}\);
+\texttt{row2\_\allowbreak{}moresco2012\_\allowbreak{}attachment\_\allowbreak{}accepted\_\allowbreak{}as\_\allowbreak{}caveat\_\allowbreak{}reducing\_\allowbreak{}not\_\allowbreak{}endpoint\_\allowbreak{}ready};
 all replay and validation flags remain false. Thus row 2 is better supported
 than before, but the DESI shape route still requires endpoint-pair independence
 or a separate replay/promotion gate before any stronger status can be claimed.
 A promotion-readiness ledger then freezes this exact status:
-\({\tt row2\_caveat\_reduced\_but\_endpoint\_pair\_independence\_blocker\_remains}\).
+\texttt{row2\_\allowbreak{}caveat\_\allowbreak{}reduced\_\allowbreak{}but\_\allowbreak{}endpoint\_\allowbreak{}pair\_\allowbreak{}independence\_\allowbreak{}blocker\_\allowbreak{}remains}.
 Consequently, row 2 is strengthened but
-\({\tt row2\_promotion\_ready=false}\), and the shape route is not promoted by
+\texttt{row2\_\allowbreak{}promotion\_\allowbreak{}ready=\allowbreak{}false}, and the shape route is not promoted by
 this source-side review.
 We then run a focused endpoint-pair independence scout against the already
 frozen cosmic-chronometer table.  The scout finds one strict independent
 right-endpoint candidate, Moresco (2015), but no strict independent
 left-endpoint support.  Its machine verdict is
-\({\tt row2\_endpoint\_pair\_independence\_not\_satisfied\_in\_frozen\_CC\_table}\).
+\texttt{row2\_\allowbreak{}endpoint\_\allowbreak{}pair\_\allowbreak{}independence\_\allowbreak{}not\_\allowbreak{}satisfied\_\allowbreak{}in\_\allowbreak{}frozen\_\allowbreak{}CC\_\allowbreak{}table}.
 Thus the Moresco (2012) attachment remains a caveat reducer rather than an
 endpoint-pair replacement: row 2 is still not promotion-ready, and the next
 source-side task is independent left-endpoint clock support or a source-native
@@ -1689,37 +1684,37 @@ two independent relaxed-window candidates exist, Stern et al. (2010) at
 misses the frozen strict endpoint window only narrowly,
 \(|0.88-0.934|=0.054\) for a strict window of \(0.05\), but it is still outside
 the predeclared gate.  The machine verdict is
-\({\tt row2\_left\_endpoint\_has\_relaxed\_independent\_nearmisses\_but\_no\_strict\_support}\).
+\texttt{row2\_\allowbreak{}left\_\allowbreak{}endpoint\_\allowbreak{}has\_\allowbreak{}relaxed\_\allowbreak{}independent\_\allowbreak{}nearmisses\_\allowbreak{}but\_\allowbreak{}no\_\allowbreak{}strict\_\allowbreak{}support}.
 This motivates a separate source-window review or a source-native shape-support
 search; it does not release the left endpoint and does not authorize replay.
 A repository-independent source-window review package is therefore prepared for
 exactly this question.  It is intentionally blank and asks only whether the
 relaxed near-miss sources may be retained as caveated source-window context.  It
 contains no endpoint residuals, endpoint scores, or fit statistics, and it keeps
-\({\tt left\_endpoint\_release\_allowed=false}\),
-\({\tt row2\_promotion\_ready=false}\), and replay disabled until a completed
+\texttt{left\_\allowbreak{}endpoint\_\allowbreak{}release\_\allowbreak{}allowed=\allowbreak{}false},
+\texttt{row2\_\allowbreak{}promotion\_\allowbreak{}ready=\allowbreak{}false}, and replay disabled until a completed
 response is separately validated.
 The completed-response validator is deliberately conservative: even the
 strongest allowed positive response can only record
-\({\tt source\_reopen\_caveated=true}\).  It still keeps
-\({\tt left\_endpoint\_release\_allowed=false}\),
-\({\tt row2\_promotion\_ready=false}\), and all replay/validation flags false;
+\texttt{source\_\allowbreak{}reopen\_\allowbreak{}caveated=\allowbreak{}true}.  It still keeps
+\texttt{left\_\allowbreak{}endpoint\_\allowbreak{}release\_\allowbreak{}allowed=\allowbreak{}false},
+\texttt{row2\_\allowbreak{}promotion\_\allowbreak{}ready=\allowbreak{}false}, and all replay/validation flags false;
 any completed response that attempts to set replay or validation flags is
 rejected before canonical artifacts are modified.
 The companion decision gate resolves the current machine state.  Since no
 completed response has been imported it would record pending status.  The
 completed reviewer response is now imported and validates the strongest allowed
 source-side outcome:
-\({\tt ROW2\_LEFT\_SOURCE\_REOPEN\_CAVEATED\_NO\_REPLAY}\), with verdict
-\({\tt row2\_left\_source\_reopen\_caveated\_no\_replay}\).  This reopens the
+\texttt{ROW2\_\allowbreak{}LEFT\_\allowbreak{}SOURCE\_\allowbreak{}REOPEN\_\allowbreak{}CAVEATED\_\allowbreak{}NO\_\allowbreak{}REPLAY}, with verdict
+\texttt{row2\_\allowbreak{}left\_\allowbreak{}source\_\allowbreak{}reopen\_\allowbreak{}caveated\_\allowbreak{}no\_\allowbreak{}replay}.  This reopens the
 left-endpoint route only as caveated source context.  It still keeps
-\({\tt left\_endpoint\_release\_allowed=false}\),
-\({\tt row2\_promotion\_ready=false}\),
-\({\tt shape\_route\_promotion\_allowed=false}\), and all replay/validation
+\texttt{left\_\allowbreak{}endpoint\_\allowbreak{}release\_\allowbreak{}allowed=\allowbreak{}false},
+\texttt{row2\_\allowbreak{}promotion\_\allowbreak{}ready=\allowbreak{}false},
+\texttt{shape\_\allowbreak{}route\_\allowbreak{}promotion\_\allowbreak{}allowed=\allowbreak{}false}, and all replay/validation
 flags false.
 The post-window-review source plan then freezes the only allowed next source
 targets.  Its status is
-\({\tt ROW2\_SOURCE\_REOPENED\_CAVEATED\_LEFT\_ENDPOINT\_STILL\_NOT\_RELEASED}\):
+\texttt{ROW2\_\allowbreak{}SOURCE\_\allowbreak{}REOPENED\_\allowbreak{}CAVEATED\_\allowbreak{}LEFT\_\allowbreak{}ENDPOINT\_\allowbreak{}STILL\_\allowbreak{}NOT\_\allowbreak{}RELEASED}:
 the source route is reopened only in a caveated source-side sense, with strict
 left-endpoint support still at zero.  The two P0 targets are independent strict
 left-endpoint support inside the frozen window, or source-native shape support
@@ -1731,7 +1726,7 @@ left endpoint is the existing same-family Simon et al. (2005) point at
 \(z=0.9\); the nearest independent candidate is Stern et al. (2010) at
 \(z=0.88\), with \(|\Delta z|=0.054\), just outside the strict \(0.05\)
 window.  The verdict is
-\({\tt row2\_left\_strict\_support\_absent\_in\_frozen\_cc\_table}\).  Thus
+\texttt{row2\_\allowbreak{}left\_\allowbreak{}strict\_\allowbreak{}support\_\allowbreak{}absent\_\allowbreak{}in\_\allowbreak{}frozen\_\allowbreak{}cc\_\allowbreak{}table}.  Thus
 the strict-left P0 route remains genuinely open and no replay or promotion is
 authorized.
 The complementary source-native shape-support scout finds that the row-2
@@ -1742,21 +1737,21 @@ positive-definite covariance subblock.  It freezes the source-native vector
 \(\Delta\log({\rm DH}/r_s)=-0.218701863111\), and
 \(\Delta\log[({\rm DM}/{\rm DH})]=0.464983774095\).  This is positive
 source-side support for the shape route, but it still uses no endpoint residuals
-or scores and keeps \({\tt row2\_promotion\_ready=false}\).
+or scores and keeps \texttt{row2\_\allowbreak{}promotion\_\allowbreak{}ready=\allowbreak{}false}.
 The corresponding external review package is built as a blank source-side-only
 package.  It asks whether this DESI DR2 source-native BAO vector may be accepted
 as caveat-reducing row-2 support.  It contains the frozen source rows,
 covariance source files, inventory, scout artifacts, and response template, but
 no endpoint residuals, endpoint scores, or fit statistics.  Its package verdict
 is
-\({\tt row2\_source\_native\_shape\_support\_review\_package\_ready\_not\_completed}\).
+\texttt{row2\_\allowbreak{}source\_\allowbreak{}native\_\allowbreak{}shape\_\allowbreak{}support\_\allowbreak{}review\_\allowbreak{}package\_\allowbreak{}ready\_\allowbreak{}not\_\allowbreak{}completed}.
 The completed external response accepts the vector as caveat-reducing
 source-native shape context:
-\({\tt row2\_source\_native\_shape\_support\_accepted\_as\_caveat\_reducing\_not\_endpoint\_ready}\).
+\texttt{row2\_\allowbreak{}source\_\allowbreak{}native\_\allowbreak{}shape\_\allowbreak{}support\_\allowbreak{}accepted\_\allowbreak{}as\_\allowbreak{}caveat\_\allowbreak{}reducing\_\allowbreak{}not\_\allowbreak{}endpoint\_\allowbreak{}ready}.
 This reduces the row-2 source caveat, but it does not make Row2 endpoint-ready,
 does not promote the route, and does not authorize replay.
 The Row2 gate-status ledger freezes the combined state as
-\({\tt ROW2\_ENDPOINT\_REPLAY\_BLOCKED\_PROMOTION\_NOT\_READY}\):
+\texttt{ROW2\_\allowbreak{}ENDPOINT\_\allowbreak{}REPLAY\_\allowbreak{}BLOCKED\_\allowbreak{}PROMOTION\_\allowbreak{}NOT\_\allowbreak{}READY}:
 the source-native shape context has passed review and both source-side caveats
 are reduced, but Row2 remains non-promotion-ready and endpoint replay remains
 forbidden.
@@ -1765,28 +1760,28 @@ whether a separate future replay-authorization package may be prepared.  It is
 not replay authorization, not endpoint validation, and not a route-success
 claim.
 The completed promotion-review response accepts only this narrow handoff:
-\({\tt row2\_promotion\_review\_accepts\_preparing\_separate\_replay\_authorization\_not\_direct\_replay}\).
+\texttt{row2\_\allowbreak{}promotion\_\allowbreak{}review\_\allowbreak{}accepts\_\allowbreak{}preparing\_\allowbreak{}separate\_\allowbreak{}replay\_\allowbreak{}authorization\_\allowbreak{}not\_\allowbreak{}direct\_\allowbreak{}replay}.
 The Row2 gate-status ledger is therefore updated to
-\({\tt ROW2\_SEPARATE\_REPLAY\_AUTH\_REVIEW\_ALLOWED\_NOT\_REPLAY}\).
-This still keeps \({\tt endpoint\_replay\_allowed=false}\); it only allows a
+\texttt{ROW2\_\allowbreak{}SEPARATE\_\allowbreak{}REPLAY\_\allowbreak{}AUTH\_\allowbreak{}REVIEW\_\allowbreak{}ALLOWED\_\allowbreak{}NOT\_\allowbreak{}REPLAY}.
+This still keeps \texttt{endpoint\_\allowbreak{}replay\_\allowbreak{}allowed=\allowbreak{}false}; it only allows a
 separate replay-authorization package to be prepared.  That package is now built
 as a permission-only reviewer handoff asking whether one frozen Row2 replay may
 later be run.  It contains no endpoint residuals, endpoint scores, or fit
 statistics, and it does not authorize validation or physical interpretation.
 The completed replay-authorization response accepts this narrow scope with the
 verdict
-\({\tt GO\_DESI\_SHAPE\_ROW2\_REPLAY\_PERMISSION\_ONLY}\).  The ledger therefore
+\texttt{GO\_\allowbreak{}DESI\_\allowbreak{}SHAPE\_\allowbreak{}ROW2\_\allowbreak{}REPLAY\_\allowbreak{}PERMISSION\_\allowbreak{}ONLY}.  The ledger therefore
 records
-\({\tt ROW2\_PERMISSION\_ONLY\_REPLAY\_AUTHORIZED\_NOT\_VALIDATION}\):
-\({\tt endpoint\_replay\_allowed=true}\) only for one frozen Row2 diagnostic
-replay, while \({\tt endpoint\_validation\_claimed=false}\),
-\({\tt physical\_validation\_claimed=false}\), and
-\({\tt shape\_route\_promotion\_allowed=false}\) remain fixed.
+\texttt{ROW2\_\allowbreak{}PERMISSION\_\allowbreak{}ONLY\_\allowbreak{}REPLAY\_\allowbreak{}AUTHORIZED\_\allowbreak{}NOT\_\allowbreak{}VALIDATION}:
+\texttt{endpoint\_\allowbreak{}replay\_\allowbreak{}allowed=\allowbreak{}true} only for one frozen Row2 diagnostic
+replay, while \texttt{endpoint\_\allowbreak{}validation\_\allowbreak{}claimed=\allowbreak{}false},
+\texttt{physical\_\allowbreak{}validation\_\allowbreak{}claimed=\allowbreak{}false}, and
+\texttt{shape\_\allowbreak{}route\_\allowbreak{}promotion\_\allowbreak{}allowed=\allowbreak{}false} remain fixed.
 The authorized Row2-only replay has now been run as an isolated diagnostic.  It
 does not survive the local controls:
-\({\tt row2\_permission\_replay\_candidate\_not\_control\_resistant\_not\_validation}\).
+\texttt{row2\_\allowbreak{}permission\_\allowbreak{}replay\_\allowbreak{}candidate\_\allowbreak{}not\_\allowbreak{}control\_\allowbreak{}resistant\_\allowbreak{}not\_\allowbreak{}validation}.
 The frozen candidate score is \(0.415519707291\), while the strongest local
-control, \({\tt control\_redshift\_order\_shuffle\_ROW2}\), scores
+control, \texttt{control\_\allowbreak{}redshift\_\allowbreak{}order\_\allowbreak{}shuffle\_\allowbreak{}ROW2}, scores
 \(1.62654904473\).  This negative local result is retained: it says that Row2
 alone does not carry the full DESI shape-route signal, not that the full route
 is validated or falsified.
@@ -1799,7 +1794,7 @@ A final shape-core support synthesis gate freezes this interpretation in one
 non-scoring ledger.  It combines the route-wide robustness stress, the
 row-sensitivity audit, the core source-support scan, the Row2 source-side
 reviews, and the isolated Row2 permission replay.  Its status is
-\({\tt DESI\_SHAPE\_CORE\_SUPPORT\_SYNTHESIS\_BUILT\_SOURCE\_STRENGTHENED\_NOT\_VALIDATION}\).
+\texttt{DESI\_\allowbreak{}SHAPE\_\allowbreak{}CORE\_\allowbreak{}SUPPORT\_\allowbreak{}SYNTHESIS\_\allowbreak{}BUILT\_\allowbreak{}SOURCE\_\allowbreak{}STRENGTHENED\_\allowbreak{}NOT\_\allowbreak{}VALIDATION}.
 The gate records rows 1 and 2 as the core rows, Row1 as the most required row,
 with confirmatory independent source support externally accepted, and Row2 as
 caveat-reduced but not promotion-ready.  It also records the Row2 permission
@@ -1811,7 +1806,7 @@ the frozen full shape-route permission replay gives the same candidate score
 \(5.52425578108\), the same strongest control score \(5.50939872844\), and the
 same narrow margin \(0.01485705264\).  The replay therefore remains positive in
 the permission-only sense, but the synthesis gate keeps
-\({\tt endpoint\_replay\_allowed\_by\_this\_gate=false}\).  The next allowed
+\texttt{endpoint\_\allowbreak{}replay\_\allowbreak{}allowed\_\allowbreak{}by\_\allowbreak{}this\_\allowbreak{}gate=\allowbreak{}false}.  The next allowed
 scientific step is not another stronger replay claim, but a route-level
 source-synthesis review that asks whether the Row1 and Row2 source-side support
 is jointly sufficient to motivate any later validation-oriented gate.
@@ -1819,25 +1814,25 @@ That reviewer handoff is now prepared as a repository-independent package.  It
 contains the policy, response template, synthesis-gate ledger, Row1 source
 review response, Row2 source-side review responses, and the isolated Row2
 diagnostic context.  Its checksum is
-\({\tt a7c71dc3d5e9d5adeb3ce3313177dba0f757d80465b3e3834ff4c48ddd4f56f9}\).
+\texttt{a7c71dc3\allowbreak{}d5e9d5ad\allowbreak{}eb3ce331\allowbreak{}3177dba0\allowbreak{}f757d804\allowbreak{}65b3e383\allowbreak{}4ff4c48d\allowbreak{}dd4f56f9}.
 The package status is
-\({\tt DESI\_SHAPE\_ROUTE\_SOURCE\_SYNTHESIS\_REVIEW\_PACKAGE\_BUILT\_NOT\_COMPLETED}\).
+\texttt{DESI\_\allowbreak{}SHAPE\_\allowbreak{}ROUTE\_\allowbreak{}SOURCE\_\allowbreak{}SYNTHESIS\_\allowbreak{}REVIEW\_\allowbreak{}PACKAGE\_\allowbreak{}BUILT\_\allowbreak{}NOT\_\allowbreak{}COMPLETED}.
 It is a source-side review handoff only: the response template keeps
-\({\tt endpoint\_replay\_allowed=false}\),
-\({\tt endpoint\_validation\_claimed=false}\),
-\({\tt physical\_validation\_claimed=false}\), and
-\({\tt shape\_route\_promotion\_allowed=false}\).  A completed response may at
+\texttt{endpoint\_\allowbreak{}replay\_\allowbreak{}allowed=\allowbreak{}false},
+\texttt{endpoint\_\allowbreak{}validation\_\allowbreak{}claimed=\allowbreak{}false},
+\texttt{physical\_\allowbreak{}validation\_\allowbreak{}claimed=\allowbreak{}false}, and
+\texttt{shape\_\allowbreak{}route\_\allowbreak{}promotion\_\allowbreak{}allowed=\allowbreak{}false}.  A completed response may at
 most support preparation of a future separate gate; it cannot by itself
 authorize replay or validation.
 The completed source-synthesis response accepts exactly this limited reading:
-\({\tt ACCEPT\_AS\_SOURCE\_SYNTHESIS\_SUPPORT\_FOR\_FUTURE\_GATE\_PREPARATION\_NOT\_REPLAY\_NOT\_VALIDATION}\).
+\texttt{ACCEPT\_\allowbreak{}AS\_\allowbreak{}SOURCE\_\allowbreak{}SYNTHESIS\_\allowbreak{}SUPPORT\_\allowbreak{}FOR\_\allowbreak{}FUTURE\_\allowbreak{}GATE\_\allowbreak{}PREPARATION\_\allowbreak{}NOT\_\allowbreak{}REPLAY\_\allowbreak{}NOT\_\allowbreak{}VALIDATION}.
 All four review questions are accepted, with
-\({\tt forbidden\_inputs\_used=false}\).  The response records
-\({\tt future\_gate\_preparation\_allowed=true}\), but keeps
-\({\tt shape\_route\_promotion\_allowed=false}\),
-\({\tt endpoint\_replay\_allowed=false}\),
-\({\tt endpoint\_validation\_claimed=false}\), and
-\({\tt physical\_validation\_claimed=false}\).  The practical consequence is
+\texttt{forbidden\_\allowbreak{}inputs\_\allowbreak{}used=\allowbreak{}false}.  The response records
+\texttt{future\_\allowbreak{}gate\_\allowbreak{}preparation\_\allowbreak{}allowed=\allowbreak{}true}, but keeps
+\texttt{shape\_\allowbreak{}route\_\allowbreak{}promotion\_\allowbreak{}allowed=\allowbreak{}false},
+\texttt{endpoint\_\allowbreak{}replay\_\allowbreak{}allowed=\allowbreak{}false},
+\texttt{endpoint\_\allowbreak{}validation\_\allowbreak{}claimed=\allowbreak{}false}, and
+\texttt{physical\_\allowbreak{}validation\_\allowbreak{}claimed=\allowbreak{}false}.  The practical consequence is
 therefore narrow: the source state is strong enough to prepare a separate
 authorization gate, but the present paper still treats the DESI shape route as
 a source-strengthened, narrow-margin diagnostic rather than validation.
@@ -1845,7 +1840,7 @@ A post-synthesis gate-authorization package is therefore prepared as the next
 handoff.  Its role is only to ask whether a later replay-authorization package
 may be prepared under the accepted source-synthesis state.  The package checksum
 is
-\({\tt 4a125b1cc20e54d93de131e68c6798ae6ec2de74030abf5855d590ad190aecfd}\).
+\texttt{4a125b1c\allowbreak{}c20e54d9\allowbreak{}3de131e6\allowbreak{}8c6798ae\allowbreak{}6ec2de74\allowbreak{}030abf58\allowbreak{}55d590ad\allowbreak{}190aecfd}.
 It explicitly preserves the narrow-margin replay status
 \((0.01485705264)\), the row-sensitive robustness verdict, and the rule that no
 current replay, endpoint validation, physical validation, or route promotion is
@@ -1853,56 +1848,56 @@ authorized.  Thus the gate sequence is deliberately staged: source synthesis
 may motivate preparing a later authorization package, but the present package
 does not itself open that replay.
 The completed post-synthesis gate response accepts this preparation step with
-\({\tt ACCEPT\_PREPARE\_SEPARATE\_VALIDATION\_ORIENTED\_GATE\_PACKAGE\_NOT\_REPLAY\_NOT\_VALIDATION}\).
-It sets \({\tt prepare\_later\_authorization\_package\_allowed=true}\), while
-keeping \({\tt endpoint\_replay\_allowed=false}\),
-\({\tt endpoint\_validation\_claimed=false}\), and
-\({\tt physical\_validation\_claimed=false}\).  This changes only the project
+\texttt{ACCEPT\_\allowbreak{}PREPARE\_\allowbreak{}SEPARATE\_\allowbreak{}VALIDATION\_\allowbreak{}ORIENTED\_\allowbreak{}GATE\_\allowbreak{}PACKAGE\_\allowbreak{}NOT\_\allowbreak{}REPLAY\_\allowbreak{}NOT\_\allowbreak{}VALIDATION}.
+It sets \texttt{prepare\_\allowbreak{}later\_\allowbreak{}authorization\_\allowbreak{}package\_\allowbreak{}allowed=\allowbreak{}true}, while
+keeping \texttt{endpoint\_\allowbreak{}replay\_\allowbreak{}allowed=\allowbreak{}false},
+\texttt{endpoint\_\allowbreak{}validation\_\allowbreak{}claimed=\allowbreak{}false}, and
+\texttt{physical\_\allowbreak{}validation\_\allowbreak{}claimed=\allowbreak{}false}.  This changes only the project
 workflow: a separate validation-oriented gate package may now be prepared, but
 the current DESI shape-route result is still not promoted to validation.
 That separate gate package is now built as a blank reviewer handoff.  It asks
 whether a future completed response may authorize one frozen permission-only
 DESI shape-route replay diagnostic under the caveat-aware scope.  Its checksum
 is
-\({\tt 26fddf67c46cd82585ecc185abee13e0c309ba8c9c3c6b657b4d8d4bcbf8ec52}\).
-The package itself still keeps \({\tt endpoint\_replay\_allowed=false}\),
-\({\tt endpoint\_validation\_claimed=false}\), and
-\({\tt physical\_validation\_claimed=false}\).  A future completed response
+\texttt{26fddf67\allowbreak{}c46cd825\allowbreak{}85ecc185\allowbreak{}abee13e0\allowbreak{}c309ba8c\allowbreak{}9c3c6b65\allowbreak{}7b4d8d4b\allowbreak{}cbf8ec52}.
+The package itself still keeps \texttt{endpoint\_\allowbreak{}replay\_\allowbreak{}allowed=\allowbreak{}false},
+\texttt{endpoint\_\allowbreak{}validation\_\allowbreak{}claimed=\allowbreak{}false}, and
+\texttt{physical\_\allowbreak{}validation\_\allowbreak{}claimed=\allowbreak{}false}.  A future completed response
 would therefore be required before any new replay can be run.
 The completed validation-oriented gate response is now imported with decision
-\({\tt GO\_DESI\_SHAPE\_VALIDATION\_ORIENTED\_PERMISSION\_REPLAY\_ONLY}\).
+\texttt{GO\_\allowbreak{}DESI\_\allowbreak{}SHAPE\_\allowbreak{}VALIDATION\_\allowbreak{}ORIENTED\_\allowbreak{}PERMISSION\_\allowbreak{}REPLAY\_\allowbreak{}ONLY}.
 This accepts preparation for a future permission-only diagnostic replay, but it
 still keeps
-\({\tt endpoint\_replay\_allowed=false}\),
-\({\tt endpoint\_validation\_claimed=false}\),
-\({\tt physical\_validation\_claimed=false}\), and
-\({\tt forbidden\_inputs\_used=false}\).  It also explicitly retains the
+\texttt{endpoint\_\allowbreak{}replay\_\allowbreak{}allowed=\allowbreak{}false},
+\texttt{endpoint\_\allowbreak{}validation\_\allowbreak{}claimed=\allowbreak{}false},
+\texttt{physical\_\allowbreak{}validation\_\allowbreak{}claimed=\allowbreak{}false}, and
+\texttt{forbidden\_\allowbreak{}inputs\_\allowbreak{}used=\allowbreak{}false}.  It also explicitly retains the
 narrow-margin caveat, the row-sensitive robustness caveat, and the Row2
 negative-diagnostic caveat.  Consequently the scientific status is unchanged:
 the shape route is worth a later permission-only diagnostic authorization, but a
 separate completed replay-authorization response is required before any new run.
 That final permission-only replay authorization package is now prepared as a
 blank reviewer handoff with checksum
-\({\tt 03dd33a4968f710adf0490fe9d8e9e1e2c4298455202aab4af795905dbb3579d}\).
+\texttt{03dd33a4\allowbreak{}968f710a\allowbreak{}df0490fe\allowbreak{}9d8e9e1e\allowbreak{}2c429845\allowbreak{}5202aab4\allowbreak{}af795905\allowbreak{}dbb3579d}.
 It asks only whether one future frozen DESI shape-route permission-only
 diagnostic replay may be authorized.  The package itself still keeps
-\({\tt endpoint\_replay\_allowed=false}\),
-\({\tt endpoint\_validation\_claimed=false}\), and
-\({\tt physical\_validation\_claimed=false}\) until a completed reviewer
+\texttt{endpoint\_\allowbreak{}replay\_\allowbreak{}allowed=\allowbreak{}false},
+\texttt{endpoint\_\allowbreak{}validation\_\allowbreak{}claimed=\allowbreak{}false}, and
+\texttt{physical\_\allowbreak{}validation\_\allowbreak{}claimed=\allowbreak{}false} until a completed reviewer
 response is validated.
 The completed validation-permission authorization response then accepts exactly
 one frozen permission-only diagnostic replay with decision
-\({\tt GO\_DESI\_SHAPE\_VALIDATION\_PERMISSION\_REPLAY\_ONLY}\), while
-retaining \({\tt endpoint\_validation\_claimed=false}\),
-\({\tt physical\_validation\_claimed=false}\), the narrow-margin caveat, the
+\texttt{GO\_\allowbreak{}DESI\_\allowbreak{}SHAPE\_\allowbreak{}VALIDATION\_\allowbreak{}PERMISSION\_\allowbreak{}REPLAY\_\allowbreak{}ONLY}, while
+retaining \texttt{endpoint\_\allowbreak{}validation\_\allowbreak{}claimed=\allowbreak{}false},
+\texttt{physical\_\allowbreak{}validation\_\allowbreak{}claimed=\allowbreak{}false}, the narrow-margin caveat, the
 row-sensitive caveat, and the Row2 negative-diagnostic caveat.  That replay has
 now been run as a separate artifact.  The candidate score is
-\({\tt 5.52425578108}\), the best frozen control is
-\({\tt control\_leave\_shape\_row\_max}\) with score
-\({\tt 5.50939872844}\), and the margin is
-\({\tt 0.01485705264}\).  Thus the candidate remains ahead of all frozen
+\texttt{5.52425578108}, the best frozen control is
+\texttt{control\_\allowbreak{}leave\_\allowbreak{}shape\_\allowbreak{}row\_\allowbreak{}max} with score
+\texttt{5.50939872844}, and the margin is
+\texttt{0.01485705264}.  Thus the candidate remains ahead of all frozen
 controls, but only by a narrow, row-sensitive margin.  The recorded verdict is
-\({\tt desi\_shape\_validation\_permission\_replay\_candidate\_exceeds\_all\_controls\_not\_validation}\).
+\texttt{desi\_\allowbreak{}shape\_\allowbreak{}validation\_\allowbreak{}permission\_\allowbreak{}replay\_\allowbreak{}candidate\_\allowbreak{}exceeds\_\allowbreak{}all\_\allowbreak{}controls\_\allowbreak{}not\_\allowbreak{}validation}.
 Finally, the DESI clock-support acquisition manifest freezes the two concrete
 missing source targets before any further source search.  The first is radial row
 4 at \(z_{\rm eff}=1.484\), where relaxed-window clock support exists but comes
@@ -1969,8 +1964,8 @@ alone as clock support.  Its validator allows a positive reviewer response only
 as source-side reopening or as a request for a separate replay-authorization
 review; it keeps row-5 endpoint replay disabled.  A corresponding row-5
 decision gate resolves the state into
-\({\tt ROW5\_HIGH\_Z\_REVIEW\_PENDING\_NOT\_REPLAY}\),
-\({\tt ROW5\_HIGH\_Z\_BLOCKER\_REMAINS\_NOT\_REPLAY}\), or source-reopen
+\texttt{ROW5\_\allowbreak{}HIGH\_\allowbreak{}Z\_\allowbreak{}REVIEW\_\allowbreak{}PENDING\_\allowbreak{}NOT\_\allowbreak{}REPLAY},
+\texttt{ROW5\_\allowbreak{}HIGH\_\allowbreak{}Z\_\allowbreak{}BLOCKER\_\allowbreak{}REMAINS\_\allowbreak{}NOT\_\allowbreak{}REPLAY}, or source-reopen
 status, but never into endpoint validation.
 The completed row-5 review finds no independent high-\(z\) clock or
 source-native time/readout observable covering \(z=2.33\); Ly-\(\alpha\) BAO is
@@ -2056,8 +2051,8 @@ distribution, likelihood ratio, \(p\)-value, or validation statistic is
 attached to it.  The next blocker is therefore recorded as
 \[
 \begin{gathered}
-\texttt{numeric\_t\_joint\_ledger\_built\_}\\
-\texttt{endpoint\_scoring\_authorization\_missing}.
+\texttt{numeric\_\allowbreak{}t\_\allowbreak{}joint\_\allowbreak{}ledger\_\allowbreak{}built\_\allowbreak{}}\\
+\texttt{endpoint\_\allowbreak{}scoring\_\allowbreak{}authorization\_\allowbreak{}missing}.
 \end{gathered}
 \]
 A separate numeric-control-suite authorization package is now prepared as the
@@ -2069,9 +2064,7 @@ suite may be built as the next prevalidation artifact.
 The completed authorization response accepts this narrow control-suite build
 scope while keeping endpoint scoring and validation false.  The current
 control-suite blocker ledger therefore records
-\[
-\texttt{control\_suite\_built\_endpoint\_scoring\_authorization\_missing},
-\]
+\begin{center}\texttt{control\_\allowbreak{}suite\_\allowbreak{}built\_\allowbreak{}endpoint\_\allowbreak{}scoring\_\allowbreak{}authorization\_\allowbreak{}missing},\end{center}
 after the numeric same-\(T_{\rm joint}\) matched-control suite is built.  The
 suite contains 26 numeric controls across sign-flip, block-drop,
 shuffled-channel, matched-index, and null-readout families, plus one
@@ -2099,7 +2092,7 @@ T_{\rm joint}^{\rm candidate} &= 4.142466300799,\\
 \end{array}
 \]
 The best control is the shuffled-channel control
-\(\texttt{channel\_shuffle\_002}\), with
+\texttt{channel\_\allowbreak{}shuffle\_\allowbreak{}002}, with
 \[
 T_{\rm joint}^{\rm candidate}
 -
@@ -2117,7 +2110,7 @@ numeric controls, while the channel-label assignment remains the narrowest
 control direction.  This is not a likelihood ratio, not a validation \(p\)-value,
 and not cosmological or physical validation.
 The closest shuffled-control decomposition makes this caveat concrete.
-For \(\texttt{channel\_shuffle\_002}\), the KiDS/COSEBIs channel remains fixed,
+For \texttt{channel\_\allowbreak{}shuffle\_\allowbreak{}002}, the KiDS/COSEBIs channel remains fixed,
 while the observer-path low-\(z\) and DESI shape/time channels exchange their
 assigned \(z_i\) values.  The contribution changes are
 \[
@@ -2147,7 +2140,7 @@ keeps rescoring forbidden.  It marks source-route distinctness as satisfied,
 but leaves three requirements open or caveated: a residual-blind source-native
 distance/overlap metric, a small-\(N\) balance rule for the DESI route, and
 candidate/control symmetry for the penalty rule.  The resulting verdict is
-\(\texttt{PENALTY\_NOT\_ADMISSIBLE\_YET\_REQUIREMENTS\_FROZEN}\).
+\texttt{PENALTY\_\allowbreak{}NOT\_\allowbreak{}ADMISSIBLE\_\allowbreak{}YET\_\allowbreak{}REQUIREMENTS\_\allowbreak{}FROZEN}.
 A residual-blind route-tag scaffold partially addresses the distance/overlap
 requirement at bookkeeping level.  The observer-path route is tagged as
 observer/path, low-\(z\), sky-direction, \(z\)-center, metric-environment, and
@@ -2171,7 +2164,7 @@ route-tag scaffold is symmetric because it depends only on frozen channel
 descriptors and is available for all \(26\) numeric controls as well as the
 candidate.  However, it is constant across rows and therefore not a nontrivial
 row-level penalty.  The recorded verdict is
-\(\texttt{SYMMETRY\_SCAFFOLD\_AVAILABLE\_BUT\_NO\_NONTRIVIAL\_PENALTY}\).
+\texttt{SYMMETRY\_\allowbreak{}SCAFFOLD\_\allowbreak{}AVAILABLE\_\allowbreak{}BUT\_\allowbreak{}NO\_\allowbreak{}NONTRIVIAL\_\allowbreak{}PENALTY}.
 
 The row-level source-availability audit gives the operational reason.  The
 observer-path route has a frozen low-\(z\) source row scope, and the DESI
@@ -2179,7 +2172,7 @@ shape/time route has a local source-native shape vector.  These are not,
 however, the same row space: one is a supernova low-\(z\) observer/path scope
 and the other is a DESI BAO shape scope.  Candidate/control-symmetric per-row
 feature export is therefore incomplete, and the recorded verdict is
-\(\texttt{ROW\_LEVEL\_SOURCE\_FEATURES\_INCOMPLETE\_NO\_PENALTY}\).
+\texttt{ROW\_\allowbreak{}LEVEL\_\allowbreak{}SOURCE\_\allowbreak{}FEATURES\_\allowbreak{}INCOMPLETE\_\allowbreak{}NO\_\allowbreak{}PENALTY}.
 
 The common source-feature export records the same state in a machine-readable
 schema.  It exports \(99\) residual-blind feature rows across the three active
@@ -2187,7 +2180,7 @@ channels and applies the same schema to candidates and controls.  The DESI
 shape/time route has a complete source-native shape-vector export, while the
 observer-path route is only scope-complete and the KiDS channel is represented
 by an explicit missing-feature marker.  The recorded verdict is
-\(\texttt{COMMON\_SCHEMA\_BUILT\_FEATURE\_EXPORT\_INCOMPLETE\_NO\_RESCORING}\).
+\texttt{COMMON\_\allowbreak{}SCHEMA\_\allowbreak{}BUILT\_\allowbreak{}FEATURE\_\allowbreak{}EXPORT\_\allowbreak{}INCOMPLETE\_\allowbreak{}NO\_\allowbreak{}RESCORING}.
 
 The v2 export improves this state by promoting the frozen R5 observer-path
 source vectors into the same residual-blind schema.  It records \(387\)
@@ -2196,14 +2189,41 @@ feature rows, including five observer-path source features on the selected
 does not authorize a penalty: observer-path remains caveated by the open R6
 leakage review, and KiDS still has no common source-feature vector.  The
 recorded verdict is
-\(\texttt{COMMON\_EXPORT\_V2\_OBSERVER\_FEATURES\_ADDED\_KIDS\_AND\_R6\_STILL\_BLOCK}\).
+\texttt{COMMON\_\allowbreak{}EXPORT\_\allowbreak{}V2\_\allowbreak{}OBSERVER\_\allowbreak{}FEATURES\_\allowbreak{}ADDED\_\allowbreak{}KIDS\_\allowbreak{}AND\_\allowbreak{}R6\_\allowbreak{}STILL\_\allowbreak{}BLOCK}.
 
 After the completed R6 reviewer response is imported, the v3 export marks the
 observer-path source features as accepted for caveated source-side use.  The
 common export still has \(387\) rows and remains residual-blind and
 candidate/control symmetric.  Its blocker is now narrower: KiDS still lacks a
 common source-native row feature, so the recorded verdict is
-\(\texttt{COMMON\_EXPORT\_V3\_OBSERVER\_R6\_CLOSED\_KIDS\_STILL\_BLOCKS\_PENALTY}\).
+\texttt{COMMON\_\allowbreak{}EXPORT\_\allowbreak{}V3\_\allowbreak{}OBSERVER\_\allowbreak{}R6\_\allowbreak{}CLOSED\_\allowbreak{}KIDS\_\allowbreak{}STILL\_\allowbreak{}BLOCKS\_\allowbreak{}PENALTY}.
+
+
+\subsection{Synchronization with main-manuscript penalized replay (14 November 2026)}
+
+Subsequent to the common v3 export above, the main Paper~10 manuscript resolves
+the narrow observer-path versus DESI shape/readout channel-exchange margin
+within the guarded two-channel row-alignment scope ($\lambda_{\rm row}=1$)
+without imputing a synthetic KiDS per-row feature vector:
+\begin{itemize}[leftmargin=1.5em]
+\item Under the strict all-channel alignment rule ($6$ matched controls limited
+by the DESI shape/readout control pool), the penalized preflight statistic reaches
+$T_{\rm joint}^{\rm penalized}=\allowbreak 4.212744622365$
+(\texttt{ROW\_\allowbreak{}LEVEL\_\allowbreak{}PENALIZED\_\allowbreak{}STRICT\_\allowbreak{}CONTROL\_\allowbreak{}REPLAY\_\allowbreak{}POSITIVE}),
+with no strict aligned control exceeding the candidate.
+\item Under the relaxed cyclic $25$-control stress expansion (reusing the six
+DESI controls across the observer-path rows), $17/25$ relaxed controls match or
+exceed the candidate row penalty
+(\texttt{RELAXED\_\allowbreak{}CONTROL\_\allowbreak{}STRESS\_\allowbreak{}CAVEATED\_\allowbreak{}NEGATIVE}),
+preventing promotion to population validation.
+\item Upstream provenance in the main manuscript is synchronized with the 14
+November 2026 canonical three-pillar closures (Theorems U1--U4, F1--F4,
+\texttt{COV-DIR}, \texttt{HOMOG-K4}, and $W_{\mathrm{COCA}}(s)$ with $k=0$ free
+parameters; \texttt{NATURE\_\allowbreak{}LEVEL\_\allowbreak{}CLOSURE = false}),
+leaving every Paper~10 channel gate, route verdict, and cross-probe covariance
+blocker (\texttt{PREFLIGHT\_\allowbreak{}NOT\_\allowbreak{}VALIDATION})
+unchanged.
+\end{itemize}
 
 \bibliographystyle{plain}
 \bibliography{refs}
