@@ -257,10 +257,11 @@ W_\tau(z)\to 0 \quad (z\gg 1), \qquad
 W_\tau(z)\to 1 \quad (z\to 0).
 \]
 
-One source-side activation shell is
+One normalized source-side activation shell satisfying both boundary conditions identically is
 \begin{equation}
-W_\tau(a)=\frac{a^q}{a^q+a_\tau^q}.
+\widehat{W}_\tau(a)=\frac{(1+a_\tau^q)\,a^q}{a^q+a_\tau^q}, \qquad \widehat{W}_\tau(a=1)\equiv 1, \qquad \widehat{W}_\tau(a\to 0)=0 \quad (q>0),
 \end{equation}
+where we note that any monotonic activation profile $\widehat{W}_\tau(a)$ has $w_{\mathrm{eff}}(a) = -1 - \frac{1}{3}\frac{\mathrm{d}\ln\widehat{W}_\tau}{\mathrm{d}\ln a} = -1 - \frac{q\,a_\tau^q}{3(a^q+a_\tau^q)}$ of fixed sign relative to $w=-1$, whereas crossing $w=-1$ requires a non-monotonic derivative $\mathrm{d}W/\mathrm{d}a$.
 
 If a four-dimensional observer reconstructs the residual as an effective dark
 energy component, then
@@ -291,7 +292,7 @@ E_D^2(a)
 +\Omega_\tau W_V(a),
 \end{equation}
 where \(W_V\) must be frozen from a void-maturity source block before distance
-scoring.
+scoring. In particular, as shown in the 2025 \textit{MNRAS} inhomogeneous supernova analyses of Lane, Seifert, Ridden-Harper, and Wiltshire \cite{LaneWiltshire2025MNRAS,SeifertWiltshire2025MNRAS} (see also Efstathiou \cite{Efstathiou2025SN} and \texttt{DES} Year~6 \cite{DES2026DynDE}) and in Paper~20's Cosmic Time-Landscape audit, when supernova photons propagate across expanding cosmic voids where clocks tick faster than in bound galaxy filaments ($\mathrm{d}\tau/\mathrm{d}t > 1$), a single-clock FLRW template infers an apparent $w_0^{\mathrm{app}} > -1$ (which in unweighted Timescape with fitted $f_{v,0}$ would over-shift to $w_0^{\mathrm{app}} \approx -0.677$). In Tau Core, locking the Buchert--Wiltshire void-fraction acceleration root $f_{\mathrm{acc}} = 0.586708$ ($q_{\mathrm{wall}}(f_{\mathrm{acc}}) = 0$) to $z_{\mathrm{acc}} = (2\Omega_{\Lambda,0}/\Omega_{m,0})^{1/3} - 1 = 0.631556$ uniquely fixes the present void volume fraction to $f_{v,0} = 0.723358$ ($72.34\%$) with zero free parameters, and weighting the void-clock null distance $D_{\mathrm{TS}}(z)$ by the locked optical susceptibility $\alpha_{\mathrm{OCSR}} = \frac{5\sqrt{3}}{24} = 0.360844$ ($D_{\mathrm{obs}} = (1-\alpha_{\mathrm{OCSR}})D_{\mathrm{hor}} + \alpha_{\mathrm{OCSR}}D_{\mathrm{TS}}$) yields an observer-reconstructed apparent equation of state $w_0^{\mathrm{app}}(0) = -0.8996$ ($w_0^{\mathrm{app}} = -0.8843$, $w_a^{\mathrm{app}} = -0.2042$ across $z \in [0.02,1.20]$, matching \texttt{DES} 2026 $w_0 = -0.82 \pm 0.05$ within $0.10\sigma$) without altering the underlying $w_{\mathrm{hor}} = -1$ horizon background that governs the $z_{\mathrm{dip}} = 0.6316$ galactic rotation-curve trough.
 
 The minimal growth shell is
 \begin{equation}
